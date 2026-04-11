@@ -9,7 +9,12 @@ h1{margin:0 0 10px;font-size:18px}
 .tab{padding:8px 16px;background:var(--panel);border:1px solid var(--border);border-radius:8px;cursor:pointer;color:var(--mut)}
 .tab.on{color:var(--fg);border-color:var(--acc)}
 #q{width:100%;padding:10px 14px;background:var(--panel);border:1px solid var(--border);border-radius:8px;color:var(--fg);font-size:14px}
-#chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.filterbar{display:flex;align-items:center;gap:8px;margin-top:8px}
+#toggle{padding:6px 12px;background:var(--panel);border:1px solid var(--border);border-radius:8px;color:var(--mut);cursor:pointer;font-size:12px;white-space:nowrap}
+#toggle.on{color:var(--acc);border-color:var(--acc)}
+#chips{display:flex;flex-wrap:wrap;gap:6px;flex:1}
+#chips.collapsed{display:none}
+#count{color:var(--acc);font-size:11px;margin-left:4px}
 .chip{padding:4px 10px;background:var(--panel);border:1px solid var(--border);border-radius:999px;cursor:pointer;font-size:12px;color:var(--mut)}
 .chip.on{color:var(--acc);border-color:var(--acc)}
 main{padding:20px;max-width:1400px;margin:0 auto}
@@ -33,13 +38,13 @@ main{padding:20px;max-width:1400px;margin:0 auto}
 <h1>📊 Investment Hub</h1>
 <div class="tabs"><div class="tab on" data-t="stocks">💹 US Stocks</div><div class="tab" data-t="ai">🤖 AI Players</div></div>
 <input id="q" placeholder="검색: 티커 / 기업 / 제품 / 설명…">
-<div id="chips"></div>
+<div class="filterbar"><button id="toggle">🔽 필터<span id="count"></span></button><div id="chips" class="collapsed"></div></div>
 </header>
 <main id="out">로딩중…</main>
 <script>
 // ⬇️⬇️⬇️ 여기 두 줄만 본인 GitHub 사용자명으로 바꾸세요 ⬇️⬇️⬇️
-const STOCKS_URL='https://YOUR_USERNAME.github.io/us-stocks-atlas/data.js';
-const AI_URL    ='https://YOUR_USERNAME.github.io/ai-players/data.js';
+const STOCKS_URL='https://rookiejj.github.io/us-stocks-atlas/data.js';
+const AI_URL    ='https://rookiejj.github.io/ai-players/data.js';
 // ⬆️⬆️⬆️ 위 두 줄만 수정하면 됨. 나머지는 건드릴 필요 없음 ⬆️⬆️⬆️
 
 async function loadJS(url){
@@ -95,10 +100,19 @@ function renderChips(){
 }
 
 document.addEventListener('click',e=>{
-  const t=e.target.closest('.tab');if(t){STATE.tab=t.dataset.t;STATE.filter.clear();document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));renderChips();render();return}
-  const c=e.target.closest('.chip');if(c){const f=c.dataset.f;STATE.filter.has(f)?STATE.filter.delete(f):STATE.filter.add(f);renderChips();render()}
+  const t=e.target.closest('.tab');if(t){STATE.tab=t.dataset.t;STATE.filter.clear();document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));renderChips();updateCount();render();return}
+  const c=e.target.closest('.chip');if(c){const f=c.dataset.f;STATE.filter.has(f)?STATE.filter.delete(f):STATE.filter.add(f);renderChips();updateCount();render()}
 });
 document.getElementById('q').oninput=e=>{STATE.q=e.target.value;render()};
+document.getElementById('toggle').onclick=()=>{
+  const c=document.getElementById('chips');
+  c.classList.toggle('collapsed');
+  document.getElementById('toggle').classList.toggle('on',!c.classList.contains('collapsed'));
+};
+function updateCount(){
+  const n=STATE.filter.size;
+  document.getElementById('count').textContent=n?` (${n})`:'';
+}
 
 (async()=>{
   try{
