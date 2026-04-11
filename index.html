@@ -1,0 +1,111 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><title>Hub</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--bg:#0b0d12;--panel:#151823;--border:#262a38;--fg:#e6e8ef;--mut:#8a90a2;--acc:#7aa2ff;--new:#ff6b6b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 -apple-system,Segoe UI,sans-serif}
+header{position:sticky;top:0;background:#0b0d12ee;backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:12px 20px;z-index:10}
+h1{margin:0 0 10px;font-size:18px}
+.tabs{display:flex;gap:6px;margin-bottom:10px}
+.tab{padding:8px 16px;background:var(--panel);border:1px solid var(--border);border-radius:8px;cursor:pointer;color:var(--mut)}
+.tab.on{color:var(--fg);border-color:var(--acc)}
+#q{width:100%;padding:10px 14px;background:var(--panel);border:1px solid var(--border);border-radius:8px;color:var(--fg);font-size:14px}
+#chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{padding:4px 10px;background:var(--panel);border:1px solid var(--border);border-radius:999px;cursor:pointer;font-size:12px;color:var(--mut)}
+.chip.on{color:var(--acc);border-color:var(--acc)}
+main{padding:20px;max-width:1400px;margin:0 auto}
+.group{margin-bottom:28px}
+.gh{font-size:15px;font-weight:600;margin:0 0 4px}
+.gt{color:var(--mut);font-size:12px;margin-bottom:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px;transition:.15s}
+.card:hover{border-color:var(--acc)}
+.ct{font-weight:600;margin-bottom:4px}
+.cs{color:var(--mut);font-size:12px;margin-bottom:6px}
+.cd{font-size:12px;color:#b8bccb;line-height:1.5}
+.badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.b{font-size:10px;padding:2px 6px;background:#1f2333;border-radius:4px;color:var(--acc)}
+.new{background:var(--new);color:#fff}
+.nums{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:8px;font-size:11px;color:var(--mut)}
+.nums b{color:var(--fg)}
+.hide{display:none}
+</style>
+<header>
+<h1>📊 Investment Hub</h1>
+<div class="tabs"><div class="tab on" data-t="stocks">💹 US Stocks</div><div class="tab" data-t="ai">🤖 AI Players</div></div>
+<input id="q" placeholder="검색: 티커 / 기업 / 제품 / 설명…">
+<div id="chips"></div>
+</header>
+<main id="out">로딩중…</main>
+<script>
+// ⬇️⬇️⬇️ 여기 두 줄만 본인 GitHub 사용자명으로 바꾸세요 ⬇️⬇️⬇️
+const STOCKS_URL='https://rookiejj.github.io/us-stocks-atlas/data.js';
+const AI_URL    ='https://rookiejj.github.io/ai-players/data.js';
+// ⬆️⬆️⬆️ 위 두 줄만 수정하면 됨. 나머지는 건드릴 필요 없음 ⬆️⬆️⬆️
+
+async function loadJS(url){
+  const r=await fetch(url);const t=await r.text();
+  return new Function(t+';return {data:typeof data!=="undefined"?data:null,META:typeof META!=="undefined"?META:null,BL:typeof BL!=="undefined"?BL:null};')();
+}
+
+let STATE={tab:'stocks',q:'',filter:new Set(),ai:null,st:null};
+
+function norm(raw,kind){
+  if(kind==='stocks')return raw.data.map(g=>({group:g.title,tag:g.tag,items:g.stocks.map(s=>({
+    title:`${s.tk} · ${s.nm}`,sub:s.rs,badges:[g.title.replace(/^\S+\s/,'')],
+    meta:{r25:s.r25,p25:s.p25,r26:s.r26,p26:s.p26},_raw:`${s.tk} ${s.nm} ${s.rs}`
+  }))}));
+  // ai: flatten 기업→products, group=기업
+  return raw.data.map(c=>({group:`#${c.rank} ${c.name}`,tag:`${c.type} · ${c.focus}`,items:c.products.map(p=>({
+    title:p.name,sub:c.name,desc:p.desc,badges:p.badges||[],isNew:p.isNew,
+    _raw:`${c.name} ${p.name} ${p.desc}`
+  }))}));
+}
+
+function render(){
+  const src=STATE.tab==='stocks'?STATE.st:STATE.ai;if(!src){out.textContent='로딩중…';return}
+  const q=STATE.q.toLowerCase();const f=STATE.filter;
+  const html=src.map(g=>{
+    const items=g.items.filter(it=>{
+      if(q&&!it._raw.toLowerCase().includes(q))return false;
+      if(f.size){
+        if(STATE.tab==='stocks')return f.has(g.group);
+        return it.badges.some(b=>f.has(b));
+      }
+      return true;
+    });
+    if(!items.length)return '';
+    return `<div class="group"><div class="gh">${g.group}</div><div class="gt">${g.tag||''}</div><div class="grid">${
+      items.map(it=>`<div class="card"><div class="ct">${it.title}${it.isNew?' <span class="b new">NEW</span>':''}</div><div class="cs">${it.sub||''}</div>${
+        it.desc?`<div class="cd">${it.desc}</div>`:''
+      }${it.badges&&it.badges.length?`<div class="badges">${it.badges.map(b=>`<span class="b">${BL_MAP[b]||b}</span>`).join('')}</div>`:''}${
+        it.meta?`<div class="nums"><span>매출25 <b>${it.meta.r25}</b></span><span>EPS25 <b>${it.meta.p25}</b></span><span>매출26 <b>${it.meta.r26}</b></span><span>EPS26 <b>${it.meta.p26}</b></span></div>`:''
+      }</div>`).join('')
+    }</div></div>`;
+  }).join('');
+  out.innerHTML=html||'<p style="color:var(--mut)">결과 없음</p>';
+}
+
+let BL_MAP={};
+function renderChips(){
+  const box=document.getElementById('chips');
+  const opts=STATE.tab==='stocks'
+    ? (STATE.st||[]).map(g=>g.group)
+    : Object.keys(BL_MAP);
+  box.innerHTML=opts.map(o=>`<span class="chip${STATE.filter.has(o)?' on':''}" data-f="${o}">${BL_MAP[o]||o}</span>`).join('');
+}
+
+document.addEventListener('click',e=>{
+  const t=e.target.closest('.tab');if(t){STATE.tab=t.dataset.t;STATE.filter.clear();document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));renderChips();render();return}
+  const c=e.target.closest('.chip');if(c){const f=c.dataset.f;STATE.filter.has(f)?STATE.filter.delete(f):STATE.filter.add(f);renderChips();render()}
+});
+document.getElementById('q').oninput=e=>{STATE.q=e.target.value;render()};
+
+(async()=>{
+  try{
+    const[st,ai]=await Promise.all([loadJS(STOCKS_URL),loadJS(AI_URL)]);
+    STATE.st=norm(st,'stocks');STATE.ai=norm(ai,'ai');
+    BL_MAP=ai.BL||{};
+    renderChips();render();
+  }catch(e){out.innerHTML='<p style="color:#f66">로드 실패: '+e.message+'<br>같은 폴더에 stocks-data.js / ai-players-data.js 두거나 상단 URL 수정</p>'}
+})();
+</script>
