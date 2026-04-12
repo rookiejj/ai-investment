@@ -1,4 +1,4 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>Investment Hub</title>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>넥서스</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,7 +46,6 @@ h1 span{
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
 }
-.subtitle{font-size:14px;color:var(--mut);font-weight:400;letter-spacing:0}
 
 .tabs{display:flex;gap:8px;margin-bottom:14px}
 .tab{
@@ -66,19 +65,25 @@ h1 span{
 .tab.on::before{opacity:1}
 .tab span{position:relative;z-index:1}
 
+/* ═══ TAB DESC ═══ */
+.tab-desc{
+  font-size:12px;color:var(--mut);line-height:1.5;
+  margin-bottom:12px;letter-spacing:-0.1px;
+}
+
 /* ═══ SEARCH ═══ */
 .search-wrap{position:relative}
 .search-wrap::before{
-  content:'';position:absolute;left:16px;top:50%;transform:translateY(-50%);
-  width:18px;height:18px;
+  content:'';position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  width:15px;height:15px;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23888'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'/%3E%3C/svg%3E");
   background-size:contain;pointer-events:none;
   transition:opacity .2s;
 }
 #q{
-  width:100%;padding:11px 20px 11px 44px;
+  width:100%;padding:6px 16px 6px 38px;
   background:var(--bg);border:1.5px solid var(--border-md);border-radius:9999px;
-  color:var(--fg);font:400 15px/1.5 'Inter',sans-serif;
+  color:var(--fg);font:400 13px/1.5 'Inter',sans-serif;
   outline:none;transition:all .3s cubic-bezier(.4,0,.2,1);
 }
 #q::placeholder{color:var(--placeholder)}
@@ -261,6 +266,56 @@ main{padding:40px 32px 80px;max-width:1200px;margin:0 auto;position:relative;z-i
 
 .hide{display:none}
 
+/* ═══ UPDATE BANNER ═══ */
+.update-box{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;padding:20px 24px;margin-bottom:40px;
+  position:relative;overflow:hidden;
+  animation:fadeSlideIn .5s ease forwards;
+}
+.update-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--acc),#10b981,var(--acc));
+}
+.update-header{
+  display:flex;align-items:center;gap:10px;margin-bottom:14px;
+}
+.update-tag{
+  font:600 11px/1 'Geist Mono','SF Mono',monospace;
+  padding:4px 10px;border-radius:9999px;
+  background:linear-gradient(135deg,var(--acc),#10b981);color:#fff;
+  letter-spacing:0.5px;text-transform:uppercase;
+}
+.update-date{
+  font:500 12px/1 'Geist Mono','SF Mono',monospace;
+  color:var(--mut);letter-spacing:0.3px;
+}
+.update-summary{
+  font-size:14px;font-weight:600;color:var(--fg);margin-bottom:12px;
+  letter-spacing:-0.14px;
+}
+.update-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.update-item{
+  font-size:13px;color:var(--fg2);line-height:1.6;
+  padding:8px 12px;background:var(--panel);
+  border:1px solid var(--border);border-radius:10px;
+  transition:all .2s;
+}
+.update-item:hover{border-color:rgba(24,226,153,0.25)}
+.update-item-type{
+  font:600 10px/1 'Geist Mono','SF Mono',monospace;
+  padding:2px 7px;border-radius:9999px;margin-right:6px;
+  background:var(--acc-light);color:var(--acc-deep);
+  text-transform:uppercase;letter-spacing:0.3px;
+  display:inline-block;vertical-align:middle;
+}
+.update-more{
+  margin-top:10px;font-size:13px;font-weight:500;
+  color:var(--acc-deep);cursor:pointer;
+  transition:color .2s;display:inline-block;
+}
+.update-more:hover{color:var(--fg)}
+
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:768px){
   .hero-glow{width:100%;height:300px;top:-80px}
@@ -292,19 +347,19 @@ main{padding:40px 32px 80px;max-width:1200px;margin:0 auto;position:relative;z-i
 <header id="header">
   <div class="header-top">
     <div>
-      <h1>Investment <span>Hub</span></h1>
-      <div class="subtitle">Real-time market intelligence & AI landscape</div>
+      <h1><span>넥서스</span></h1>
     </div>
   </div>
   <div class="tabs">
-    <div class="tab on" data-t="stocks"><span>US Stocks</span></div>
-    <div class="tab" data-t="ai"><span>AI Players</span></div>
+    <div class="tab on" data-t="stocks"><span>미국 주식</span></div>
+    <div class="tab" data-t="ai"><span>AI 기업</span></div>
   </div>
+  <div class="tab-desc" id="tabDesc">미국 상장 주요 종목의 섹터별 분류와 실적·전망 요약</div>
   <div class="search-wrap">
-    <input id="q" placeholder="Search by ticker, company, product, or description...">
+    <input id="q" placeholder="티커, 기업명, 제품, 설명으로 검색...">
   </div>
   <div class="filterbar">
-    <button id="toggle">Filters<span id="count"></span></button>
+    <button id="toggle">필터<span id="count"></span></button>
     <div id="chips" class="collapsed"></div>
   </div>
 </header>
@@ -312,15 +367,21 @@ main{padding:40px 32px 80px;max-width:1200px;margin:0 auto;position:relative;z-i
 <main id="out">
   <div class="loading">
     <div class="loader"></div>
-    <div style="font-size:14px;font-weight:500">Loading data...</div>
+    <div style="font-size:14px;font-weight:500">데이터 불러오는 중...</div>
   </div>
 </main>
 
-<footer class="footer">Investment Hub · Data refreshed periodically</footer>
+<footer class="footer">넥서스 · 데이터는 주기적으로 갱신됩니다</footer>
 
 <script>
+const TAB_DESC={
+  stocks:'미국 상장 주요 종목의 섹터별 분류와 실적·전망 요약',
+  ai:'글로벌 AI 주요 기업의 모델·제품·투자 동향 한눈에 보기'
+};
 const STOCKS_URL='https://rookiejj.github.io/us-stocks-atlas/data.js';
 const AI_URL    ='https://rookiejj.github.io/ai-players/data.js';
+const STOCKS_UPD_URL='https://rookiejj.github.io/us-stocks-atlas/update.js';
+const AI_UPD_URL    ='https://rookiejj.github.io/ai-players/update.js';
 
 // Header shrink on scroll
 const header=document.getElementById('header');
@@ -333,11 +394,61 @@ window.addEventListener('scroll',()=>{
 });
 
 async function loadJS(url){
-  const r=await fetch(url);const t=await r.text();
+  const r=await fetch(url);const buf=await r.arrayBuffer();
+  const t=new TextDecoder('utf-8').decode(buf);
   return new Function(t+';return {data:typeof data!=="undefined"?data:null,META:typeof META!=="undefined"?META:null,BL:typeof BL!=="undefined"?BL:null};')();
 }
 
-let STATE={tab:'stocks',q:'',filter:new Set(),ai:null,st:null};
+let STATE={tab:'stocks',q:'',filter:new Set(),ai:null,st:null,stUpd:null,aiUpd:null};
+
+async function loadUpdJS(url,varName){
+  const r=await fetch(url);const buf=await r.arrayBuffer();
+  const t=new TextDecoder('utf-8').decode(buf);
+  return new Function(t+`;return typeof ${varName}!=="undefined"?${varName}:[];`)();
+}
+
+function renderUpdateBox(tab){
+  const upd=tab==='stocks'?STATE.stUpd:STATE.aiUpd;
+  if(!upd||!upd.length)return '';
+  const latest=upd[0];
+  let items=[];
+  if(tab==='stocks'){
+    items=latest.changes.map(c=>`<span class="update-item-type">${c.type}</span>${c.detail}`);
+  }else{
+    items=latest.entries.map(e=>e);
+  }
+  if(!items.length)return '';
+  const MAX=4;
+  const visible=items.slice(0,MAX);
+  const hidden=items.slice(MAX);
+  const hasMore=hidden.length>0;
+  const dateStr=latest.date;
+  const versionStr=tab==='stocks'?` · ${latest.version}`:'';
+  const summaryStr=tab==='stocks'&&latest.summary?`<div class="update-summary">${latest.summary}</div>`:'';
+  let html=`<div class="update-box"><div class="update-header"><span class="update-tag">업데이트</span><span class="update-date">${dateStr}${versionStr}</span></div>${summaryStr}<ul class="update-list">`;
+  visible.forEach(it=>html+=`<li class="update-item">${it}</li>`);
+  if(hasMore){
+    html+=`</ul><div class="update-hidden" style="display:none"><ul class="update-list">`;
+    hidden.forEach(it=>html+=`<li class="update-item">${it}</li>`);
+    html+=`</ul></div>`;
+    html+=`<span class="update-more" onclick="toggleUpdateMore(this)">외 ${hidden.length}건 › 더보기</span>`;
+  }else{
+    html+=`</ul>`;
+  }
+  html+=`</div>`;
+  return html;
+}
+function toggleUpdateMore(el){
+  const box=el.parentElement;
+  const hiddenDiv=box.querySelector('.update-hidden');
+  if(hiddenDiv.style.display==='none'){
+    hiddenDiv.style.display='block';
+    el.textContent='간단히';
+  }else{
+    hiddenDiv.style.display='none';
+    el.textContent=`외 ${hiddenDiv.querySelectorAll('.update-item').length}건 › 더보기`;
+  }
+}
 
 function norm(raw,kind){
   if(kind==='stocks')return raw.data.map(g=>({group:g.title,tag:g.tag,items:g.stocks.map(s=>({
@@ -352,7 +463,7 @@ function norm(raw,kind){
 
 function render(){
   const src=STATE.tab==='stocks'?STATE.st:STATE.ai;
-  if(!src){out.innerHTML='<div class="loading"><div class="loader"></div><div style="font-size:14px;font-weight:500">Loading data...</div></div>';return}
+  if(!src){out.innerHTML='<div class="loading"><div class="loader"></div><div style="font-size:14px;font-weight:500">데이터 불러오는 중...</div></div>';return}
   const q=STATE.q.toLowerCase();const f=STATE.filter;
   let totalItems=0;
   const html=src.map(g=>{
@@ -367,17 +478,18 @@ function render(){
     if(!items.length)return '';
     totalItems+=items.length;
     return `<div class="group"><div class="gh">${g.group}</div><div class="gt">${g.tag||''}</div><div class="grid">${
-      items.map(it=>`<div class="card"><div class="ct">${it.title}${it.isNew?' <span class="b new">NEW</span>':''}</div><div class="cs">${it.sub||''}</div>${
+      items.map(it=>`<div class="card"><div class="ct">${it.title}${it.isNew?' <span class="b new">신규</span>':''}</div><div class="cs">${it.sub||''}</div>${
         it.desc?`<div class="cd">${it.desc}</div>`:''
       }${it.badges&&it.badges.length?`<div class="badges">${it.badges.map(b=>`<span class="b">${BL_MAP[b]||b}</span>`).join('')}</div>`:''}${
         it.meta?`<div class="nums"><span>매출25 <b>${it.meta.r25}</b></span><span>EPS25 <b>${it.meta.p25}</b></span><span>매출26 <b>${it.meta.r26}</b></span><span>EPS26 <b>${it.meta.p26}</b></span></div>`:''
       }</div>`).join('')
     }</div></div>`;
   }).join('');
+  const updateHtml=(!STATE.q&&!STATE.filter.size)?renderUpdateBox(STATE.tab):'';
   if(!html){
-    out.innerHTML='<div class="empty"><div class="empty-icon">🔍</div><div class="empty-text">No results found</div></div>';
+    out.innerHTML=updateHtml+'<div class="empty"><div class="empty-icon">🔍</div><div class="empty-text">검색 결과가 없습니다</div></div>';
   }else{
-    out.innerHTML=html;
+    out.innerHTML=updateHtml+html;
   }
 }
 
@@ -391,7 +503,7 @@ function renderChips(){
 }
 
 document.addEventListener('click',e=>{
-  const t=e.target.closest('.tab');if(t){STATE.tab=t.dataset.t;STATE.filter.clear();document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));renderChips();updateCount();render();return}
+  const t=e.target.closest('.tab');if(t){STATE.tab=t.dataset.t;STATE.filter.clear();document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));document.getElementById('tabDesc').textContent=TAB_DESC[STATE.tab]||'';renderChips();updateCount();render();return}
   const c=e.target.closest('.chip');if(c){const f=c.dataset.f;STATE.filter.has(f)?STATE.filter.delete(f):STATE.filter.add(f);renderChips();updateCount();render()}
 });
 document.getElementById('q').oninput=e=>{STATE.q=e.target.value;render()};
@@ -407,11 +519,12 @@ function updateCount(){
 
 (async()=>{
   try{
-    const[st,ai]=await Promise.all([loadJS(STOCKS_URL),loadJS(AI_URL)]);
+    const[st,ai,stUpd,aiUpd]=await Promise.all([loadJS(STOCKS_URL),loadJS(AI_URL),loadUpdJS(STOCKS_UPD_URL,'updates'),loadUpdJS(AI_UPD_URL,'UPDATES')]);
     STATE.st=norm(st,'stocks');STATE.ai=norm(ai,'ai');
+    STATE.stUpd=stUpd;STATE.aiUpd=aiUpd;
     BL_MAP=ai.BL||{};
     renderChips();render();
-  }catch(e){out.innerHTML='<p style="color:#ef4444;text-align:center;padding:64px 0;font-weight:500">Load failed: '+e.message+'</p>'}
+  }catch(e){out.innerHTML='<p style="color:#ef4444;text-align:center;padding:64px 0;font-weight:500">불러오기 실패: '+e.message+'</p>'}
 })();
 </script>
 </body></html>
