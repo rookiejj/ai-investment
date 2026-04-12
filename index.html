@@ -111,7 +111,7 @@ h1 span{
 .chip.on{color:var(--acc-deep);background:var(--acc-light);border-color:var(--acc)}
 
 /* ═══ MAIN CONTENT ═══ */
-main{padding:40px 32px 80px;max-width:1200px;margin:0 auto;position:relative;z-index:1}
+main{padding:40px 32px 80px;position:relative;z-index:1}
 
 /* ═══ GROUP SECTIONS ═══ */
 .group{margin-bottom:56px;opacity:0;transform:translateY(24px);animation:fadeSlideIn .6s ease forwards}
@@ -126,7 +126,7 @@ main{padding:40px 32px 80px;max-width:1200px;margin:0 auto;position:relative;z-i
 }
 
 /* ═══ CARD GRID ═══ */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(280px,100%),1fr));gap:14px}
 
 /* ═══ CARDS — THE STAR ═══ */
 .card{

@@ -12,7 +12,11 @@
       "Bash(curl -s http://localhost:3847/data/ai-update.js)",
       "Bash(curl -sL http://localhost:3847/index.html)",
       "Bash(curl -sL http://localhost:3847/)",
-      "WebSearch"
+      "WebSearch",
+      "WebFetch(domain:rookiejj.github.io)",
+      "Bash(python:*)",
+      "Bash(netstat -ano)",
+      "Bash(npx:*)"
     ]
   }
 }
