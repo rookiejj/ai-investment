@@ -263,6 +263,21 @@ main{padding:40px 32px 80px;max-width:1200px;margin:0 auto;position:relative;z-i
 
 .hide{display:none}
 
+/* ═══ SCROLL TO TOP ═══ */
+.scroll-top{
+  position:fixed;bottom:32px;right:32px;z-index:20;
+  width:40px;height:40px;border-radius:9999px;
+  background:var(--fg);color:#fff;border:none;cursor:pointer;
+  box-shadow:var(--btn-shadow),0 4px 12px rgba(0,0,0,0.1);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s ease,transform .3s ease;
+  transform:translateY(8px);
+}
+.scroll-top.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.scroll-top:hover{opacity:0.9}
+.scroll-top svg{width:18px;height:18px}
+
 /* ═══ UPDATE BANNER ═══ */
 .update-box{
   background:var(--surface);border:1px solid var(--border);
@@ -371,6 +386,9 @@ main{padding:40px 32px 80px;max-width:1200px;margin:0 auto;position:relative;z-i
   </div>
 </main>
 
+<button class="scroll-top" id="scrollTop" aria-label="맨 위로">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"/></svg>
+</button>
 <footer class="footer">브리핑 · 데이터는 주기적으로 갱신됩니다</footer>
 
 <script>
@@ -378,6 +396,17 @@ const TAB_DESC={
   stocks:'미국 상장 주요 종목의 섹터별 분류와 실적·전망 요약',
   ai:'글로벌 AI 주요 기업의 모델·제품·투자 동향 한눈에 보기'
 };
+// Scroll to top
+const _stBtn=document.getElementById('scrollTop');
+let _stTick=false;
+window.addEventListener('scroll',()=>{
+  if(!_stTick){window.requestAnimationFrame(()=>{
+    _stBtn.classList.toggle('show',window.scrollY>300);
+    _stTick=false;
+  });_stTick=true;}
+});
+_stBtn.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+
 const STOCKS_URL='./data/stocks-data.js';
 const AI_URL    ='./data/ai-data.js';
 const STOCKS_UPD_URL='./data/stocks-update.js';
