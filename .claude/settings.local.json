@@ -2,7 +2,17 @@
   "permissions": {
     "allow": [
       "Bash(start:*)",
-      "WebFetch(domain:rookiejj.github.io)"
+      "Bash(npx -y serve . -p 3847)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3847/index.html)",
+      "WebFetch(domain:localhost)",
+      "Bash(curl -s http://localhost:3847/index.html)",
+      "Bash(curl -s http://localhost:3847/data/stocks-data.js)",
+      "Bash(curl -s http://localhost:3847/data/ai-data.js)",
+      "Bash(curl -s http://localhost:3847/data/stocks-update.js)",
+      "Bash(curl -s http://localhost:3847/data/ai-update.js)",
+      "Bash(curl -sL http://localhost:3847/index.html)",
+      "Bash(curl -sL http://localhost:3847/)",
+      "WebSearch"
     ]
   }
 }

@@ -1,15 +1,26 @@
 // US Stocks Atlas - Update Log
-// 종목 교체·수치 갱신 등 데이터 변경 이력. 기술적 구조 변경은 README.md Changelog 참조.
+// 종목 교체·수치 갱신 등 데이터 변경 이력.
 
 const updates = [
   {
-    date: "2026-04-13",
-    version: "v5.2",
+    date: "2026-04-13 02:26 KST",
+    summary: "종목 정보 갱신 3건 (AMZN·GS·NVO)",
+    changes: [
+      { type: "종목 정보 갱신", sector: "소비·리테일",
+        detail: "Amazon(AMZN) rs 갱신. CEO Jassy 4/9 주주서한 — Trainium 칩 사업 연환산 매출 $20B 돌파, Trainium2 전량 소진·Trainium3도 거의 완판, 서드파티 랙 판매 검토 시사." },
+      { type: "종목 정보 갱신", sector: "금융·은행",
+        detail: "Goldman Sachs(GS) rs 갱신. Q1 2026 IB 백로그 4년 최고, 어드바이저리+언더라이팅 수수료 $2.42B(+26% YoY) 예상. 4/13 실적 발표 예정." },
+      { type: "종목 정보 갱신", sector: "바이오·헬스케어",
+        detail: "Novo Nordisk(NVO) rs 갱신. Wegovy 경구제 1월 출시($149/월), 주 5만건 처방. 단 Q4 매출 YoY -7.6%, 9,000명 감원으로 구조조정 병행." },
+    ]
+  },
+  {
+    date: "2026-04-13 01:30 KST",
     summary: "PLUG 제외·BE 편입, 종목 정보 갱신 8건",
     changes: [
       { type: "종목 교체", sector: "친환경·청정기술",
         detail: "Plug Power(PLUG) 제외 → Bloom Energy(BE) 편입. DOE $1.66B 대출 관련 증권 사기 집단소송(2026-02 제기), 2023년 SEC 재무보고 위반 과징금 이력. 주가 $1.80 수준, 애널리스트 컨센서스 하향." },
-      { type: "종목 정보 ��신", sector: "바이오·헬스케어",
+      { type: "종목 정보 갱신", sector: "바이오·헬스케어",
         detail: "Eli Lilly(LLY) rs 갱신. FDA, 경구 GLP-1 Foundayo(orforglipron) 4/1 승인. 기존 Zepbound 대신 Foundayo 반영." },
       { type: "종목 정보 갱신", sector: "사이버보안",
         detail: "Palo Alto(PANW) CyberArk $25B 인수 완료(2/11) 반영. FY26E 매출 $10.5B → $11B(CyberArk 5개월분 기여)." },
@@ -26,8 +37,7 @@ const updates = [
     ]
   },
   {
-    date: "2026-04-12",
-    version: "v5.1",
+    date: "2026-04-12 23:00 KST",
     summary: "FY25 확정 실적 반영 및 FY26E 컨센서스 전면 갱신",
     changes: [
       { type: "종목 교체", sector: "로봇·자동화",
@@ -67,8 +77,7 @@ const updates = [
     ]
   },
   {
-    date: "2026-04-12",
-    version: "v5",
+    date: "2026-04-12 15:00 KST",
     summary: "18 카테고리 108 종목 체제 확립, FY25 실적 대규모 반영",
     changes: [
       { type: "수치 갱신", sector: "전체",
@@ -85,7 +94,6 @@ const updates = [
   },
   {
     date: "2026-03-15",
-    version: "v4",
     summary: "5개 신규 카테고리 추가, 총 18 카테고리 108 종목",
     changes: [
       { type: "카테고리 추가", sector: "신규 5개",

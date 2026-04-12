@@ -378,10 +378,10 @@ const TAB_DESC={
   stocks:'미국 상장 주요 종목의 섹터별 분류와 실적·전망 요약',
   ai:'글로벌 AI 주요 기업의 모델·제품·투자 동향 한눈에 보기'
 };
-const STOCKS_URL='https://rookiejj.github.io/us-stocks-atlas/data.js';
-const AI_URL    ='https://rookiejj.github.io/ai-players/data.js';
-const STOCKS_UPD_URL='https://rookiejj.github.io/us-stocks-atlas/update.js';
-const AI_UPD_URL    ='https://rookiejj.github.io/ai-players/update.js';
+const STOCKS_URL='./data/stocks-data.js';
+const AI_URL    ='./data/ai-data.js';
+const STOCKS_UPD_URL='./data/stocks-update.js';
+const AI_UPD_URL    ='./data/ai-update.js';
 
 // Header shrink on scroll
 const header=document.getElementById('header');
@@ -423,9 +423,8 @@ function renderUpdateBox(tab){
   const hidden=items.slice(MAX);
   const hasMore=hidden.length>0;
   const dateStr=latest.date;
-  const versionStr=tab==='stocks'?` · ${latest.version}`:'';
   const summaryStr=tab==='stocks'&&latest.summary?`<div class="update-summary">${latest.summary}</div>`:'';
-  let html=`<div class="update-box"><div class="update-header"><span class="update-tag">업데이트</span><span class="update-date">${dateStr}${versionStr}</span></div>${summaryStr}<ul class="update-list">`;
+  let html=`<div class="update-box"><div class="update-header"><span class="update-tag">업데이트</span><span class="update-date">${dateStr}</span></div>${summaryStr}<ul class="update-list">`;
   visible.forEach(it=>html+=`<li class="update-item">${it}</li>`);
   if(hasMore){
     html+=`</ul><div class="update-hidden" style="display:none"><ul class="update-list">`;
