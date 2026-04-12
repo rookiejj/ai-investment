@@ -103,7 +103,6 @@ h1 span{
 #toggle:hover{color:var(--fg2);border-color:var(--fg2)}
 #toggle.on{color:var(--acc-deep);border-color:var(--acc);background:var(--acc-light)}
 #chips{display:flex;flex-wrap:wrap;gap:6px;flex:1}
-#chips.collapsed{display:none}
 #count{color:var(--acc-deep);font-size:11px;margin-left:4px}
 .chip{
   padding:4px 14px;background:var(--bg);border:1px solid var(--border-md);
@@ -321,10 +320,17 @@ main{padding:40px 32px 80px;max-width:1200px;margin:0 auto;position:relative;z-i
   .hero-glow{width:100%;height:300px;top:-80px}
   header{padding:14px 16px 12px}
   header.scrolled{padding:10px 16px}
+  header.scrolled .header-top{display:none}
+  header.scrolled .tab-desc{display:none}
   h1{font-size:22px;letter-spacing:-0.44px}
   .subtitle{font-size:13px}
+  .tab-desc{display:none}
   .tabs{gap:6px}
   .tab{padding:6px 14px;font-size:13px}
+  /* 필터 칩: 가로 스크롤 1줄 */
+  #chips{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px}
+  #chips::-webkit-scrollbar{display:none}
+  .chip{flex-shrink:0}
   main{padding:20px 16px 60px}
   .group{margin-bottom:36px}
   .grid{grid-template-columns:1fr;gap:12px}
@@ -360,7 +366,7 @@ main{padding:40px 32px 80px;max-width:1200px;margin:0 auto;position:relative;z-i
   </div>
   <div class="filterbar">
     <button id="toggle">필터<span id="count"></span></button>
-    <div id="chips" class="collapsed"></div>
+    <div id="chips"></div>
   </div>
 </header>
 
@@ -400,6 +406,7 @@ async function loadJS(url){
 }
 
 let STATE={tab:'stocks',q:'',filter:new Set(),ai:null,st:null,stUpd:null,aiUpd:null};
+const TAB_FILTERS={stocks:new Set(),ai:new Set()};
 
 async function loadUpdJS(url,varName){
   const r=await fetch(url);const buf=await r.arrayBuffer();
@@ -502,16 +509,26 @@ function renderChips(){
 }
 
 document.addEventListener('click',e=>{
-  const t=e.target.closest('.tab');if(t){STATE.tab=t.dataset.t;STATE.filter.clear();document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));document.getElementById('tabDesc').textContent=TAB_DESC[STATE.tab]||'';renderChips();updateCount();render();return}
+  const t=e.target.closest('.tab');if(t){const prev=STATE.tab;TAB_FILTERS[prev]=new Set(STATE.filter);STATE.tab=t.dataset.t;STATE.filter=new Set(TAB_FILTERS[STATE.tab]);document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));document.getElementById('tabDesc').textContent=TAB_DESC[STATE.tab]||'';renderChips();updateCount();render();return}
   const c=e.target.closest('.chip');if(c){const f=c.dataset.f;STATE.filter.has(f)?STATE.filter.delete(f):STATE.filter.add(f);renderChips();updateCount();render()}
 });
 document.getElementById('q').oninput=e=>{STATE.q=e.target.value;render()};
 document.getElementById('toggle').onclick=()=>{
-  const c=document.getElementById('chips');
-  c.classList.toggle('collapsed');
-  document.getElementById('toggle').classList.toggle('on',!c.classList.contains('collapsed'));
+  const opts=STATE.tab==='stocks'
+    ? (STATE.st||[]).map(g=>g.group)
+    : Object.keys(BL_MAP);
+  const allOn=opts.length>0&&opts.every(o=>STATE.filter.has(o));
+  STATE.filter.clear();
+  if(!allOn) opts.forEach(o=>STATE.filter.add(o));
+  renderChips();updateCount();render();
 };
 function updateCount(){
+  const opts=STATE.tab==='stocks'
+    ? (STATE.st||[]).map(g=>g.group)
+    : Object.keys(BL_MAP);
+  const allOn=opts.length>0&&opts.every(o=>STATE.filter.has(o));
+  const btn=document.getElementById('toggle');
+  btn.classList.toggle('on',allOn);
   const n=STATE.filter.size;
   document.getElementById('count').textContent=n?` (${n})`:'';
 }
