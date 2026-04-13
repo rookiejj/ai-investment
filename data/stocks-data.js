@@ -12,6 +12,7 @@ const data = [
       { tk:"ORCL", nm:"Oracle", rs:"OCI·Stargate RPO $523B", r1:"57", p1:"12", r2:"68", p2:"15" },
       { tk:"PLTR", nm:"Palantir", rs:"AIP 국방·상용", r1:"4.5", p1:"0.6", r2:"7.2", p2:"1.5" },
       { tk:"CRM", nm:"Salesforce", rs:"Agentforce·Data Cloud", r1:"42", p1:"7.6", r2:"46", p2:"8.5" },
+      { tk:"NOW", nm:"ServiceNow", rs:"IT워크플로우·에이전트 AI 플랫폼", r1:"11", p1:"2.2", r2:"13", p2:"3.0" },
     ]
   },
   {
@@ -24,6 +25,7 @@ const data = [
       { tk:"ASML", nm:"ASML", rs:"EUV 독점", r1:"33", p1:"9", r2:"40", p2:"11" },
       { tk:"LRCX", nm:"Lam Research", rs:"HBM·NAND 장비", r1:"18", p1:"5", r2:"22", p2:"6.3" },
       { tk:"MU", nm:"Micron", rs:"HBM4 램프·26년 전량 완판", r1:"37", p1:"8", r2:"79", p2:"23" },
+      { tk:"AMD", nm:"AMD", rs:"MI350 GPU·데이터센터·AI PC", r1:"26", p1:"3.5", r2:"32", p2:"5.0" },
     ]
   },
   {
@@ -36,6 +38,7 @@ const data = [
       { tk:"DELL", nm:"Dell Tech", rs:"AI 서버 ISG", r1:"102", p1:"5.0", r2:"115", p2:"6.2" },
       { tk:"CRWV", nm:"CoreWeave", rs:"GPU 클라우드·백로그 $66.8B", r1:"5.1", p1:"-1.2", r2:"12.5", p2:"-0.5" },
       { tk:"CSCO", nm:"Cisco", rs:"AI 네트워킹·보안", r1:"54", p1:"11", r2:"58", p2:"12.5" },
+      { tk:"HPE", nm:"HP Enterprise", rs:"AI 서버·GreenLake 하이브리드", r1:"33", p1:"2.0", r2:"38", p2:"2.5" },
     ]
   },
   {
@@ -48,6 +51,7 @@ const data = [
       { tk:"JCI", nm:"Johnson Controls", rs:"빌딩·DC HVAC", r1:"23", p1:"2.0", r2:"24", p2:"2.3" },
       { tk:"CARR", nm:"Carrier", rs:"열관리·히트펌프", r1:"22", p1:"2.4", r2:"24", p2:"2.8" },
       { tk:"LII", nm:"Lennox Intl", rs:"상업 HVAC", r1:"5.6", p1:"0.78", r2:"6.0", p2:"0.88" },
+      { tk:"GNRC", nm:"Generac", rs:"발전기·에너지 스토리지·DC백업", r1:"4.0", p1:"0.35", r2:"4.5", p2:"0.45" },
     ]
   },
   {
@@ -60,6 +64,7 @@ const data = [
       { tk:"WTS", nm:"Watts Water", rs:"배관·유량제어", r1:"2.2", p1:"0.27", r2:"2.3", p2:"0.30" },
       { tk:"ROP", nm:"Roper Tech", rs:"Neptune 수도계량", r1:"7.4", p1:"1.6", r2:"8.0", p2:"1.8" },
       { tk:"PNR", nm:"Pentair", rs:"수처리·수영장", r1:"4.2", p1:"0.65", r2:"4.4", p2:"0.72" },
+      { tk:"WTRG", nm:"Essential Utilities", rs:"수도·가스 유틸리티", r1:"1.8", p1:"0.30", r2:"1.9", p2:"0.32" },
     ]
   },
   {
@@ -72,6 +77,7 @@ const data = [
       { tk:"HUBB", nm:"Hubbell", rs:"전력 유틸 장비", r1:"5.9", p1:"0.85", r2:"6.3", p2:"0.95" },
       { tk:"NEE", nm:"NextEra", rs:"재생+원전 최대 유틸", r1:"27", p1:"7.5", r2:"29", p2:"8.2" },
       { tk:"PH", nm:"Parker Hannifin", rs:"전력·산업 모션", r1:"20", p1:"3.2", r2:"21", p2:"3.6" },
+      { tk:"AME", nm:"AMETEK", rs:"전자계측·전력 장비", r1:"7.0", p1:"1.5", r2:"7.5", p2:"1.7" },
     ]
   },
   {
@@ -84,6 +90,7 @@ const data = [
       { tk:"LEU", nm:"Centrus", rs:"HALEU 농축", r1:"0.45", p1:"0.05", r2:"0.55", p2:"0.07" },
       { tk:"OKLO", nm:"Oklo", rs:"고속로 SMR", r1:"0.0", p1:"-0.08", r2:"0.05", p2:"-0.10" },
       { tk:"CCJ", nm:"Cameco", rs:"우라늄 채굴 메이저", r1:"3.2", p1:"0.45", r2:"3.8", p2:"0.60" },
+      { tk:"TLN", nm:"Talen Energy", rs:"원전+가스 발전·DC PPA", r1:"4.5", p1:"0.8", r2:"5.0", p2:"1.0" },
     ]
   },
   {
@@ -96,6 +103,7 @@ const data = [
       { tk:"VRTX", nm:"Vertex Pharma", rs:"낭포성섬유증·통증", r1:"11", p1:"4.0", r2:"12.5", p2:"4.6" },
       { tk:"REGN", nm:"Regeneron", rs:"Eylea·종양", r1:"14", p1:"4.2", r2:"15", p2:"4.7" },
       { tk:"MRK", nm:"Merck", rs:"Keytruda 종양", r1:"64", p1:"18", r2:"68", p2:"20" },
+      { tk:"ABBV", nm:"AbbVie", rs:"Skyrizi·Rinvoq 면역·종양", r1:"56", p1:"8", r2:"62", p2:"11" },
     ]
   },
   {
@@ -108,6 +116,7 @@ const data = [
       { tk:"SLB", nm:"Schlumberger", rs:"유전서비스 1위", r1:"37", p1:"4.5", r2:"39", p2:"5.0" },
       { tk:"COP", nm:"ConocoPhillips", rs:"상류 E&P", r1:"60", p1:"10", r2:"64", p2:"11" },
       { tk:"KMI", nm:"Kinder Morgan", rs:"가스 파이프라인", r1:"16", p1:"2.7", r2:"17", p2:"3.0" },
+      { tk:"EOG", nm:"EOG Resources", rs:"셰일 E&P 고효율", r1:"23", p1:"5.5", r2:"24", p2:"5.8" },
     ]
   },
   {
@@ -120,6 +129,7 @@ const data = [
       { tk:"BE", nm:"Bloom Energy", rs:"고체산화물 연료전지·DC 전력", r1:"2.0", p1:"0.05", r2:"3.2", p2:"0.20" },
       { tk:"LIN", nm:"Linde", rs:"산업가스·수소 1위", r1:"34", p1:"7.0", r2:"36", p2:"7.7" },
       { tk:"APD", nm:"Air Products", rs:"수소·산업가스", r1:"12.5", p1:"2.6", r2:"13.2", p2:"2.9" },
+      { tk:"RUN", nm:"Sunrun", rs:"주택용 태양광·ESS 1위", r1:"1.9", p1:"-0.1", r2:"2.2", p2:"0.05" },
     ]
   },
   {
@@ -132,6 +142,7 @@ const data = [
       { tk:"RIVN", nm:"Rivian", rs:"R2 양산 개시·VW JV", r1:"4.5", p1:"-3.6", r2:"6.9", p2:"-1.9" },
       { tk:"MBLY", nm:"Mobileye", rs:"ADAS·자율주행 칩", r1:"1.8", p1:"0.2", r2:"2.1", p2:"0.3" },
       { tk:"UBER", nm:"Uber", rs:"라이드·배송·로보택시", r1:"47", p1:"5.5", r2:"54", p2:"7.0" },
+      { tk:"F", nm:"Ford", rs:"F-150·EV 전환·상용차", r1:"176", p1:"5.0", r2:"180", p2:"5.5" },
     ]
   },
   {
@@ -144,6 +155,7 @@ const data = [
       { tk:"GD", nm:"General Dynamics", rs:"잠수함·Gulfstream", r1:"49", p1:"4.2", r2:"52", p2:"4.6" },
       { tk:"BA", nm:"Boeing", rs:"흑자 전환·인도 700대 목표", r1:"89.5", p1:"2.2", r2:"80", p2:"3.5" },
       { tk:"RKLB", nm:"Rocket Lab", rs:"Neutron·SDA·HASTE 수주 확대", r1:"0.60", p1:"-0.15", r2:"0.90", p2:"-0.08" },
+      { tk:"LHX", nm:"L3Harris", rs:"전자전·ISR·위성통신", r1:"21", p1:"2.0", r2:"23", p2:"2.3" },
     ]
   },
   {
@@ -156,6 +168,7 @@ const data = [
       { tk:"COIN", nm:"Coinbase", rs:"미 최대 거래소", r1:"7.5", p1:"2.3", r2:"9.0", p2:"2.9" },
       { tk:"MSTR", nm:"Strategy", rs:"BTC 77만개 트레저리", r1:"0.5", p1:"-0.2", r2:"0.55", p2:"-0.15" },
       { tk:"MARA", nm:"Marathon Digital", rs:"BTC 채굴", r1:"0.75", p1:"0.10", r2:"1.0", p2:"0.20" },
+      { tk:"RIOT", nm:"Riot Platforms", rs:"BTC 채굴·인프라", r1:"0.35", p1:"0.05", r2:"0.50", p2:"0.10" },
     ]
   },
   {
@@ -168,6 +181,7 @@ const data = [
       { tk:"FTNT", nm:"Fortinet", rs:"통합 보안 어플라이언스", r1:"6.0", p1:"1.75", r2:"6.7", p2:"2.0" },
       { tk:"NET", nm:"Cloudflare", rs:"엣지 네트워크·보안", r1:"1.9", p1:"0.15", r2:"2.4", p2:"0.25" },
       { tk:"S", nm:"SentinelOne", rs:"AI 기반 EDR", r1:"0.85", p1:"-0.10", r2:"1.05", p2:"0.02" },
+      { tk:"OKTA", nm:"Okta", rs:"ID 보안·제로트러스트", r1:"2.7", p1:"0.20", r2:"3.2", p2:"0.35" },
     ]
   },
   {
@@ -180,6 +194,7 @@ const data = [
       { tk:"PYPL", nm:"PayPal", rs:"온라인 결제·턴어라운드", r1:"32", p1:"4.5", r2:"34", p2:"5.0" },
       { tk:"XYZ", nm:"Block", rs:"Square·Cash App", r1:"25", p1:"1.5", r2:"28", p2:"2.2" },
       { tk:"FI", nm:"Fiserv", rs:"가맹점 결제 인프라", r1:"21", p1:"3.8", r2:"22.5", p2:"4.3" },
+      { tk:"GPN", nm:"Global Payments", rs:"가맹점 결제 솔루션", r1:"10", p1:"1.8", r2:"10.5", p2:"2.0" },
     ]
   },
   {
@@ -192,6 +207,7 @@ const data = [
       { tk:"BAC", nm:"Bank of America", rs:"소매·상업은행", r1:"105", p1:"28", r2:"110", p2:"31" },
       { tk:"SCHW", nm:"Charles Schwab", rs:"리테일 브로커·자산관리", r1:"21", p1:"7.0", r2:"23", p2:"8.0" },
       { tk:"BLK", nm:"BlackRock", rs:"글로벌 자산운용 1위", r1:"21", p1:"6.8", r2:"23", p2:"7.6" },
+      { tk:"WFC", nm:"Wells Fargo", rs:"미 3대 소매은행·턴어라운드", r1:"83", p1:"19", r2:"87", p2:"21" },
     ]
   },
   {
@@ -204,6 +220,7 @@ const data = [
       { tk:"CGNX", nm:"Cognex", rs:"머신비전 팩토리 자동화 1위", r1:"1.07", p1:"0.17", r2:"1.17", p2:"0.22" },
       { tk:"TER", nm:"Teradyne", rs:"반도체 테스트·협동로봇", r1:"3.0", p1:"0.55", r2:"3.4", p2:"0.70" },
       { tk:"ZBRA", nm:"Zebra Tech", rs:"물류 스캐너·로봇", r1:"5.0", p1:"0.55", r2:"5.4", p2:"0.70" },
+      { tk:"PATH", nm:"UiPath", rs:"RPA·AI 자동화 플랫폼", r1:"1.5", p1:"0.10", r2:"1.8", p2:"0.18" },
     ]
   },
   {
@@ -216,6 +233,7 @@ const data = [
       { tk:"HD", nm:"Home Depot", rs:"홈 리모델링 1위", r1:"160", p1:"15.5", r2:"166", p2:"16.5" },
       { tk:"CMG", nm:"Chipotle", rs:"QSR 고성장", r1:"11.5", p1:"1.7", r2:"13", p2:"2.0" },
       { tk:"LULU", nm:"Lululemon", rs:"프리미엄 애슬레저", r1:"11", p1:"1.8", r2:"11.8", p2:"2.0" },
+      { tk:"SBUX", nm:"Starbucks", rs:"글로벌 커피 체인 1위", r1:"36", p1:"3.5", r2:"38", p2:"4.0" },
     ]
   },
 ];

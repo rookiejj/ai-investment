@@ -236,6 +236,7 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
 .card:nth-child(7){animation-delay:.35s}
 .card:nth-child(8){animation-delay:.4s}
 .card:nth-child(9){animation-delay:.45s}
+.card:nth-child(10){animation-delay:.5s}
 
 /* ═══ EMPTY STATE ═══ */
 .empty{
@@ -412,8 +413,8 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
 
 <script>
 const TAB_DESC={
-  stocks:'미국 상장 주요 종목의 섹터별 분류와 실적·전망 요약 (단위: $B)',
-  kr:'한국 상장 주요 종목의 섹터별 분류와 실적·전망 요약 (단위: 천억원)',
+  stocks:'미국 상장 섹터별 TOP 7 — 실적·전망 요약',
+  kr:'한국 상장 섹터별 TOP 7 — 실적·전망 요약',
   ai:'글로벌 AI 주요 기업의 모델·제품·투자 동향 한눈에 보기'
 };
 const TAB_CRITERIA={
@@ -533,6 +534,7 @@ function norm(raw,kind){
 }
 
 function render(){
+  const _u=STATE.tab==='stocks'?['$','B']:STATE.tab==='kr'?['','천억']:['',''];
   const src=STATE.tab==='stocks'?STATE.st:STATE.tab==='kr'?STATE.kr:STATE.ai;
   if(!src){out.innerHTML='<div class="loading"><div class="loader"></div><div style="font-size:14px;font-weight:500">데이터 불러오는 중...</div></div>';return}
   const q=STATE.q.toLowerCase();const f=STATE.filter;
@@ -552,7 +554,7 @@ function render(){
       items.map(it=>`<div class="card"><div class="ct">${it.title}${it.isNew?' <span class="b new">신규</span>':''}</div><div class="cs">${it.sub||''}</div>${
         it.desc?`<div class="cd">${it.desc}</div>`:''
       }${it.badges&&it.badges.length?`<div class="badges">${it.badges.map(b=>`<span class="b">${BL_MAP[b]||b}</span>`).join('')}</div>`:''}${
-        it.meta?`<div class="nums"><span>매출${_fy1} <b>${fmtN(it.meta.r1)}</b></span><span>순익${_fy1} <b>${fmtN(it.meta.p1)}</b></span><span>매출${_fy2}E <b>${fmtN(it.meta.r2)}</b></span><span>순익${_fy2}E <b>${fmtN(it.meta.p2)}</b></span></div>`:''
+        it.meta?`<div class="nums"><span>매출${_fy1} <b>${_u[0]}${fmtN(it.meta.r1)}${_u[1]}</b></span><span>순익${_fy1} <b>${_u[0]}${fmtN(it.meta.p1)}${_u[1]}</b></span><span>매출${_fy2}E <b>${_u[0]}${fmtN(it.meta.r2)}${_u[1]}</b></span><span>순익${_fy2}E <b>${_u[0]}${fmtN(it.meta.p2)}${_u[1]}</b></span></div>`:''
       }</div>`).join('')
     }</div></div>`;
   }).join('');

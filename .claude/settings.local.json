@@ -16,7 +16,8 @@
       "WebFetch(domain:rookiejj.github.io)",
       "Bash(python:*)",
       "Bash(netstat -ano)",
-      "Bash(npx:*)"
+      "Bash(npx:*)",
+      "Bash(node -e ':*)"
     ]
   }
 }

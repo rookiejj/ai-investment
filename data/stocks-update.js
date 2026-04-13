@@ -3,6 +3,30 @@
 
 const updates = [
   {
+    date: "2026-04-13 12:30 KST",
+    summary: "카테고리당 6→7종목 확장, 18개 카테고리 신규 종목 편입 (총 126종목)",
+    changes: [
+      { type: "종목 추가", sector: "AI 플랫폼", detail: "ServiceNow(NOW) 편입. IT워크플로우 자동화·에이전트 AI 플랫폼. FY25 매출 $11B, FY26E $13B." },
+      { type: "종목 추가", sector: "반도체", detail: "AMD(AMD) 편입. MI350 GPU·데이터센터·AI PC. FY25 매출 $26B, FY26E $32B." },
+      { type: "종목 추가", sector: "데이터센터", detail: "HP Enterprise(HPE) 편입. AI 서버·GreenLake 하이브리드 클라우드. FY25 매출 $33B, FY26E $38B." },
+      { type: "종목 추가", sector: "냉각 시스템", detail: "Generac(GNRC) 편입. 발전기·에너지 스토리지·DC 백업 전력." },
+      { type: "종목 추가", sector: "물·수자원", detail: "Essential Utilities(WTRG) 편입. 수도·가스 유틸리티." },
+      { type: "종목 추가", sector: "전력·그리드", detail: "AMETEK(AME) 편입. 전자계측·전력 장비." },
+      { type: "종목 추가", sector: "원자력·SMR", detail: "Talen Energy(TLN) 편입. 원전+가스 발전·데이터센터 PPA." },
+      { type: "종목 추가", sector: "바이오·헬스케어", detail: "AbbVie(ABBV) 편입. Skyrizi·Rinvoq 면역·종양. FY25 매출 $56B, FY26E $62B." },
+      { type: "종목 추가", sector: "에너지", detail: "EOG Resources(EOG) 편입. 셰일 E&P 고효율." },
+      { type: "종목 추가", sector: "친환경·청정기술", detail: "Sunrun(RUN) 편입. 미국 주택용 태양광·ESS 1위." },
+      { type: "종목 추가", sector: "자동차·모빌리티", detail: "Ford(F) 편입. F-150·EV 전환·상용차." },
+      { type: "종목 추가", sector: "항공우주·방산", detail: "L3Harris(LHX) 편입. 전자전·ISR·위성통신." },
+      { type: "종목 추가", sector: "양자·크립토", detail: "Riot Platforms(RIOT) 편입. BTC 채굴·인프라." },
+      { type: "종목 추가", sector: "사이버보안", detail: "Okta(OKTA) 편입. ID 보안·제로트러스트." },
+      { type: "종목 추가", sector: "핀테크·결제", detail: "Global Payments(GPN) 편입. 가맹점 결제 솔루션." },
+      { type: "종목 추가", sector: "금융·은행", detail: "Wells Fargo(WFC) 편입. 미국 3대 소매은행." },
+      { type: "종목 추가", sector: "로봇·자동화", detail: "UiPath(PATH) 편입. RPA·AI 자동화 플랫폼." },
+      { type: "종목 추가", sector: "소비·리테일", detail: "Starbucks(SBUX) 편입. 글로벌 커피 체인 1위." },
+    ]
+  },
+  {
     date: "2026-04-13 10:05 KST",
     summary: "TSMC Q1 사상 최대 실적 반영",
     changes: [
