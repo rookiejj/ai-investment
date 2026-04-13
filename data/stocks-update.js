@@ -3,6 +3,14 @@
 
 const updates = [
   {
+    date: "2026-04-13 10:05 KST",
+    summary: "TSMC Q1 사상 최대 실적 반영",
+    changes: [
+      { type: "종목 정보 갱신", sector: "반도체",
+        detail: "TSMC(TSM) rs 갱신. Q1 2026 매출 $35.6B(NT$1.13T), YoY +35%, 가이던스 상단 적중. 3월 단월 +45.2%로 가장 강한 성장. AI칩 수요가 성장 전량 견인. 4/16 실적 콘퍼런스콜에서 연간 가이던스 상향 기대." },
+    ]
+  },
+  {
     date: "2026-04-13 02:26 KST",
     summary: "종목 정보 갱신 3건 (AMZN·GS·NVO)",
     changes: [

@@ -6,8 +6,8 @@ const data=[
   {name:"GPT-5.4 mini / nano",url:"https://openai.com/chatgpt/",isNew:false,badges:["llm"],desc:"Free·Go 사용자 대상 'Thinking' 기능으로 제공. 유료 사용자의 사용량 초과 시 폴백 모델. nano는 초경량 버전. GPT-5.3 Instant Mini도 병행 운영 중."},
   {name:"GPT-5.5 'Spud' (출시 예정)",url:"https://openai.com/news/",isNew:true,badges:["llm"],desc:"사전훈련 완료, Q2 2026 공개 예정. GPT-5.5 또는 GPT-6 브랜딩 검토 중. 컴퓨터 사용·에이전틱 능력 대폭 강화 예상. 독립 Sora 앱 종료로 확보한 컴퓨팅 자원을 Spud에 집중 투입."},
   {name:"Codex (에이전틱 코딩)",url:"https://openai.com/index/introducing-codex/",isNew:false,badges:["code","agt"],desc:"팀 단위 종량제(pay-as-you-go) 과금 도입(4/2). Codex 전용 시트 신설 — 고정 좌석비 없이 사용량 기반 청구. Plus($20): 일상적 코딩, Pro($100): 장시간 고강도 세션, Pro($200): 최대 사용량. 멀티 파일 리팩토링·대형 코드베이스 자율 실행."},
-  {name:"ChatGPT 플랫폼",url:"https://chatgpt.com",isNew:false,badges:["agt"],desc:"주간 활성 사용자 9억 명. 연환산 매출 $240억(월 $20억), 기업가치 $8,400억. 4/9 신규 ChatGPT Pro $100/월 개인 요금제 출시 — Plus($20)와 Pro($200) 사이, Codex 사용량 Plus 대비 5배. Anthropic Claude Code 견제 목적. 주주 메모 공개로 Anthropic 직접 저격. 3월 $1,220억 펀딩(Amazon·NVIDIA·SoftBank). TBPN 테크 팟캐스트 인수(4/2). IPO 2026년 말 검토 중."},
-  {name:"Sora → ChatGPT 통합",url:"https://openai.com/sora/",isNew:true,badges:["vid"],desc:"독립 Sora 앱 2026년 초 종료 — DAU 50만 미만, 분당 $15,000 추산 컴퓨팅 비용 대비 누적 매출 $210만. Disney $10억 파트너십도 해소. 동영상 생성 기능은 ChatGPT 메인 플랫폼으로 통합 이전."},
+  {name:"ChatGPT 플랫폼",url:"https://chatgpt.com",isNew:false,badges:["agt"],desc:"주간 활성 사용자 9억 명. 연환산 매출 $240억(월 $20억), 기업가치 $8,400억. DOD 분류 네트워크 배포 계약으로 #QuitGPT 운동 250만 서명·삭제 295% 급증, Claude가 앱스토어 1위 탈환. 계약 수정하여 국내 감시·NSA 사용 배제 명시. 4/9 ChatGPT Pro $100/월 출시. 3월 $1,220억 펀딩. IPO 2026년 말 검토 중."},
+  {name:"Sora → ChatGPT 통합",url:"https://openai.com/sora/",isNew:false,badges:["vid"],desc:"독립 Sora 앱 2026년 초 종료 — DAU 50만 미만, 분당 $15,000 추산 컴퓨팅 비용 대비 누적 매출 $210만. Disney $10억 파트너십도 해소. 동영상 생성 기능은 ChatGPT 메인 플랫폼으로 통합 이전."},
   {name:"OpenAI 사이버보안 제품",url:"https://openai.com/news/",isNew:true,badges:["agt","code"],desc:"'Trusted Access for Cyber' 파일럿 프로그램. GPT-5.3-Codex 기반, 고급 취약점 탐지·익스플로잇 역량. 소수 파트너에만 제한 배포. Anthropic Mythos와 동일한 보안 우려로 비공개 접근 방식 채택."},
   {name:"Project Stargate",url:"https://openai.com/index/announcing-the-stargate-project/",isNew:false,badges:["hw"],desc:"MS·Oracle·SoftBank와의 $5,000억 AI 인프라 합작. Amazon과 별도 $1,000억 컴퓨팅 협약. NVIDIA Vera Rubin 수백만 개 탑재 목표."}
 ]},
@@ -18,7 +18,7 @@ const data=[
   {name:"Coefficient Bio 인수",url:"https://www.anthropic.com/news",isNew:true,badges:["sci","agt"],desc:"4/2 약 $40억 규모 주식 인수 — 라이프사이언스 R&D 파이프라인 진입. 2025년 12월 Bun(JS 런타임, Claude Code 인프라), 2026년 2월 Vercept(컴퓨터 사용 에이전트)에 이은 세 번째 전략 인수. Anthropic의 과학·생명공학 AI 확장 본격화."},
   {name:"Claude Sonnet 4.6",url:"https://claude.ai",isNew:false,badges:["llm","code"],desc:"Claude.ai 기본 무료 모델. API $3/$15(100만 토큰). 엔터프라이즈 코딩 시장 점유율 50% 기여. 4/4 OpenClaw 등 서드파티 에이전틱 하네스로의 구독 사용 제한 — 추론 용량을 고가치 엔터프라이즈 고객에 집중."},
   {name:"Claude Code",url:"https://docs.anthropic.com/en/docs/claude-code/overview",isNew:false,badges:["code","agt"],desc:"개발자 전용 코딩 에이전트. 엔터프라이즈 AI 코딩 시장 50%+ 점유. 멀티 에이전트 병렬 처리. Anthropic 전체 매출의 절반 이상 기여."},
-  {name:"MCP (Model Context Protocol)",url:"https://modelcontextprotocol.io",isNew:false,badges:["agt"],desc:"AI 에이전트 간 통신 표준 프로토콜. Linux Foundation 오픈 거버넌스 이관. 3월 누적 설치 9,700만 건 돌파 — 실험적 표준에서 핵심 인프라로 전환. 모든 주요 AI 프로바이더가 MCP 호환 툴링 탑재. Google Stitch·Cursor 등 주요 개발 도구 연동."},
+  {name:"MCP (Model Context Protocol)",url:"https://modelcontextprotocol.io",isNew:false,badges:["agt"],desc:"AI 에이전트 간 통신 표준 프로토콜. Linux Foundation 오픈 거버넌스 이관. 3월 누적 설치 9,700만 건 돌파. 4/6 OpenAI·Google과 Frontier Model Forum 통해 대중국 적대적 증류(distillation) 공동 대응 — DeepSeek·Moonshot·MiniMax 등 3개사 2.4만 가짜 계정, 1,600만 건 추출 적발. 업계 최초 위협 인텔리전스 공유."},
   {name:"메모리 기능 + 엔터프라이즈 플러그인",url:"https://claude.ai",isNew:false,badges:["agt"],desc:"3월 전체 사용자 롤아웃. 대화 간 컨텍스트·선호도 기억 유지. 엔터프라이즈 커스터마이저블 플러그인: 기업 소프트웨어 내 태스크 자율 실행."}
 ]},
 {rank:3,name:"Google DeepMind",url:"https://deepmind.google",type:"AI 연구 + 빅테크",focus:"멀티모달·과학 AI 통합",products:[
@@ -37,7 +37,7 @@ const data=[
   {name:"Grok 5 (출시 예정)",url:"https://x.ai/grok",isNew:true,badges:["llm"],desc:"Q2 2026 목표. 6조 파라미터 MoE 아키텍처 — 역대 공개 발표 모델 중 최대 규모. Colossus 2 슈퍼클러스터(1.5GW 풀 가동)에서 훈련 중. 스케일 베팅: '가장 큰 모델이 가장 강하다'는 가정 검증 예정."},
   {name:"Grok 4.1 / Grok 4 시리즈",url:"https://x.ai/grok",isNew:false,badges:["llm"],desc:"Grok 4.1: LMArena Text Arena 1위(Elo 1483). ARC-AGI v2 15.9% SOTA, Humanity's Last Exam 25.4%. 'Think'·'Big Brain' 고급 추론 모드."},
   {name:"Grok Imagine (비디오 생성)",url:"https://x.ai",isNew:false,badges:["vid"],desc:"2/2 출시. 15초 720p 영상+동기화 오디오·배경음악·효과음 생성. 4/3 Speed/Quality 듀얼 모드 추가 — Quality 모드는 고해상도 4장, Speed 모드는 초고속 생성. 음성 프롬프트·키즈 세이프 모드 지원. Imagine 2.0(표정·오디오 일관성 대폭 강화) 수주 내 출시 예정. Pro 모드도 4월 중 공개 예고."},
-  {name:"xAI-SpaceX 합병",url:"https://x.ai",isNew:true,badges:["hw","sci"],desc:"Elon Musk의 두 핵심 사업 통합 발표. Grok 모델을 SpaceX 운영에 내장, 자율 우주선·화성 식민지 프로젝트에 AI 의사결정 통합 목표. Colossus 2 슈퍼클러스터(1.5GW): 세계 최대 AI 훈련 인프라 중 하나."}
+  {name:"xAI-SpaceX 합병 ($1.25T)",url:"https://x.ai",isNew:false,badges:["hw","sci"],desc:"2/2 사상 최대 합병 완료: SpaceX $1T + xAI $250B = $1.25T. 4/10 CFO Armstrong 퇴임, SpaceX Starlink VP Michael Nicholls가 xAI 사장 취임. Grok-Sat 프로토타입 LEO 테스트 확인 — 궤도 AI 처리 비용 지상 대비 40% 절감 가능성. Colossus 2 슈퍼클러스터(1.5GW). SpaceX $1.75T IPO 추진 중."}
 ]},
 {rank:5,name:"Meta AI",url:"https://ai.meta.com",type:"빅테크 (AI 재건 전략)",focus:"슈퍼인텔리전스 연구 + 광고 AI 통합",products:[
   {name:"Muse Spark (Meta Superintelligence Labs)",url:"https://meta.ai",isNew:true,badges:["llm","agt"],desc:"4월 8일 출시. 전직 Scale AI CEO Alexandr Wang 주도, $143억 투자로 재건한 Meta Superintelligence Labs 첫 모델(코드명 Avocado). 오픈소스 Llama 전략에서 전환 — 현재 프로프라이어터리, 향후 오픈소스화 검토. Artificial Analysis Intelligence Index 4위(52점). 10배 적은 컴퓨팅으로 Opus급 성능 주장. 쇼핑 모드·Contemplating 모드(병렬 서브에이전트) 내장. meta.ai 및 Meta AI 앱 제공. Instagram·WhatsApp·Facebook 통합 예정. 사설 API 프리뷰 선별 파트너 제공."},

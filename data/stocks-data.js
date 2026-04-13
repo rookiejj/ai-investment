@@ -20,7 +20,7 @@ const data = [
     stocks: [
       { tk:"NVDA", nm:"NVIDIA", rs:"Blackwell·Rubin·CUDA 해자", r25:"216", p25:"117", r26:"337", p26:"192" },
       { tk:"AVGO", nm:"Broadcom", rs:"커스텀 ASIC·AI 백로그 $73B", r25:"64", p25:"23", r26:"88", p26:"34" },
-      { tk:"TSM", nm:"TSMC", rs:"첨단공정 파운드리", r25:"117", p25:"55", r26:"150", p26:"68" },
+      { tk:"TSM", nm:"TSMC", rs:"Q1 $35.6B 사상 최대·첨단공정", r25:"117", p25:"55", r26:"150", p26:"68" },
       { tk:"ASML", nm:"ASML", rs:"EUV 독점", r25:"33", p25:"9", r26:"40", p26:"11" },
       { tk:"LRCX", nm:"Lam Research", rs:"HBM·NAND 장비", r25:"18", p25:"5", r26:"22", p26:"6.3" },
       { tk:"MU", nm:"Micron", rs:"HBM4 램프·26년 전량 완판", r25:"37", p25:"8", r26:"79", p26:"23" },

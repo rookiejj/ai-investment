@@ -6,6 +6,15 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-13 10:05 KST",
+    entries: [
+      "OpenAI — DOD 분류 네트워크 AI 배포 계약으로 #QuitGPT 운동 확산(250만 서명, 앱 삭제 295% 급증). CEO Altman '성급했다' 인정 후 계약 수정(국내 감시·NSA 사용 배제). Claude가 앱스토어 1위 탈환",
+      "Anthropic·OpenAI·Google — Frontier Model Forum 통해 대중국 적대적 증류(adversarial distillation) 공동 대응 개시(4/6). DeepSeek·Moonshot·MiniMax 3사 대상 2.4만 가짜 계정·1,600만 건 추출 적발. 업계 최초 위협 인텔리전스 공유 체계",
+      "xAI — SpaceX 합병 후 구조조정: CFO Anthony Armstrong 퇴임, SpaceX Starlink VP Michael Nicholls xAI 사장 취임(4/10). Grok-Sat LEO 프로토타입 테스트 완료. SpaceX $1.75T IPO 추진 중",
+      "xAI-SpaceX 합병 — isNew:false 처리(2/2 완료, 10주 경과). OpenAI Sora 통합 — isNew:false 처리(2026년 초 종료, 2개월+ 경과)"
+    ]
+  },
+  {
     date: "2026-04-13 02:26 KST",
     entries: [
       "xAI — Grok Imagine 비디오 업데이트: 15초 영상+동기화 오디오 생성, Speed/Quality 듀얼 모드(4/3), 음성 프롬프트·키즈 세이프 모드 추가. Imagine 2.0 및 Pro 모드 4월 중 출시 예고",
