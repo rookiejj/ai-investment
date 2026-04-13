@@ -723,11 +723,12 @@ function switchTab(id,dir){
 
 (async()=>{
   try{
-    const[st,ai,kr,jp,etf,commodity,unicorn,stUpd,aiUpd,krUpd,jpUpd,etfUpd,commodityUpd,unicornUpd]=await Promise.all([loadJS(STOCKS_URL),loadJS(AI_URL),loadJS(KR_URL),loadJS(JP_URL),loadJS(ETF_URL),loadJS(COMMODITY_URL),loadJS(UNICORN_URL),loadUpdJS(STOCKS_UPD_URL,'updates'),loadUpdJS(AI_UPD_URL,'UPDATES'),loadUpdJS(KR_UPD_URL,'updates'),loadUpdJS(JP_UPD_URL,'updates'),loadUpdJS(ETF_UPD_URL,'updates'),loadUpdJS(COMMODITY_UPD_URL,'updates'),loadUpdJS(UNICORN_UPD_URL,'updates')]);
+    _dataVersion=await fetchVersion();
+    const _v=_dataVersion||Date.now();
+    const[st,ai,kr,jp,etf,commodity,unicorn,stUpd,aiUpd,krUpd,jpUpd,etfUpd,commodityUpd,unicornUpd]=await Promise.all([loadJS(STOCKS_URL,_v),loadJS(AI_URL,_v),loadJS(KR_URL,_v),loadJS(JP_URL,_v),loadJS(ETF_URL,_v),loadJS(COMMODITY_URL,_v),loadJS(UNICORN_URL,_v),loadUpdJS(STOCKS_UPD_URL,'updates',_v),loadUpdJS(AI_UPD_URL,'UPDATES',_v),loadUpdJS(KR_UPD_URL,'updates',_v),loadUpdJS(JP_UPD_URL,'updates',_v),loadUpdJS(ETF_UPD_URL,'updates',_v),loadUpdJS(COMMODITY_UPD_URL,'updates',_v),loadUpdJS(UNICORN_UPD_URL,'updates',_v)]);
     STATE.st=norm(st,'stocks');STATE.ai=norm(ai,'ai');STATE.kr=norm(kr,'kr');STATE.jp=norm(jp,'jp');STATE.etf=norm(etf,'etf');STATE.commodity=norm(commodity,'commodity');STATE.unicorn=norm(unicorn,'unicorn');
     STATE.stUpd=stUpd;STATE.aiUpd=aiUpd;STATE.krUpd=krUpd;STATE.jpUpd=jpUpd;STATE.etfUpd=etfUpd;STATE.commodityUpd=commodityUpd;STATE.unicornUpd=unicornUpd;
     BL_MAP=ai.BL||{};
-    _dataVersion=await fetchVersion();
     document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t===STATE.tab));
     document.getElementById('tabDesc').textContent=TAB_DESC[STATE.tab]||'';
     document.getElementById('tabCriteria').textContent=TAB_CRITERIA[STATE.tab]||'';
