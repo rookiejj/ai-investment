@@ -438,8 +438,8 @@ const AI_UPD_URL    ='./data/ai-update.js';
 const KR_UPD_URL    ='./data/kr-stocks-update.js';
 
 
-async function loadJS(url){
-  const r=await fetch(url);const buf=await r.arrayBuffer();
+async function loadJS(url,v){
+  const r=await fetch(v?url+'?v='+v:url);const buf=await r.arrayBuffer();
   const t=new TextDecoder('utf-8').decode(buf);
   return new Function(t+';return {data:typeof data!=="undefined"?data:null,META:typeof META!=="undefined"?META:null,BL:typeof BL!=="undefined"?BL:null};')();
 }
@@ -451,8 +451,24 @@ function saveState(){
   sessionStorage.setItem('briefState',JSON.stringify({tab:STATE.tab,filters:{stocks:[...TAB_FILTERS.stocks],kr:[...TAB_FILTERS.kr],ai:[...TAB_FILTERS.ai]}}));
 }
 
-async function loadUpdJS(url,varName){
-  const r=await fetch(url);const buf=await r.arrayBuffer();
+// ═══ DATA VERSION CHECK ═══
+let _dataVersion=null;
+async function fetchVersion(){
+  try{const r=await fetch('./data/version.js?_='+Date.now());const t=await r.text();
+  const m=t.match(/DATA_VERSION\s*=\s*["'](.+?)["']/);return m?m[1]:null;}catch(e){return null;}
+}
+async function refreshIfNeeded(){
+  const v=await fetchVersion();if(!v)return;
+  if(!_dataVersion){_dataVersion=v;return;}
+  if(v===_dataVersion)return;
+  _dataVersion=v;
+  const[st,ai,kr,stUpd,aiUpd,krUpd]=await Promise.all([loadJS(STOCKS_URL,v),loadJS(AI_URL,v),loadJS(KR_URL,v),loadUpdJS(STOCKS_UPD_URL,'updates',v),loadUpdJS(AI_UPD_URL,'UPDATES',v),loadUpdJS(KR_UPD_URL,'updates',v)]);
+  STATE.st=norm(st,'stocks');STATE.ai=norm(ai,'ai');STATE.kr=norm(kr,'kr');
+  STATE.stUpd=stUpd;STATE.aiUpd=aiUpd;STATE.krUpd=krUpd;BL_MAP=ai.BL||{};
+}
+
+async function loadUpdJS(url,varName,v){
+  const r=await fetch(v?url+'?v='+v:url);const buf=await r.arrayBuffer();
   const t=new TextDecoder('utf-8').decode(buf);
   return new Function(t+`;return typeof ${varName}!=="undefined"?${varName}:[];`)();
 }
@@ -586,6 +602,7 @@ let _sliding=false;
 const _scrollPos={stocks:0,kr:0,ai:0};
 function switchTab(id,dir){
   if(_sliding||id===STATE.tab)return;
+  const _refreshP=refreshIfNeeded();
   const m=document.getElementById('out');
   if(dir==null) dir=TAB_ORDER.indexOf(id)>TAB_ORDER.indexOf(STATE.tab)?1:-1;
   _sliding=true;
@@ -593,9 +610,10 @@ function switchTab(id,dir){
   const outCls=dir>0?'slide-out-left':'slide-out-right';
   const inCls=dir>0?'slide-in-right':'slide-in-left';
   m.classList.add(outCls);
-  m.addEventListener('animationend',function once(){
+  m.addEventListener('animationend',async function once(){
     m.removeEventListener('animationend',once);
     m.classList.remove(outCls);
+    await _refreshP;
     const prev=STATE.tab;TAB_FILTERS[prev]=new Set(STATE.filter);
     STATE.tab=id;STATE.filter=new Set(TAB_FILTERS[id]);
     document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t===id));
@@ -632,6 +650,7 @@ function switchTab(id,dir){
     STATE.st=norm(st,'stocks');STATE.ai=norm(ai,'ai');STATE.kr=norm(kr,'kr');
     STATE.stUpd=stUpd;STATE.aiUpd=aiUpd;STATE.krUpd=krUpd;
     BL_MAP=ai.BL||{};
+    _dataVersion=await fetchVersion();
     document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t===STATE.tab));
     document.getElementById('tabDesc').textContent=TAB_DESC[STATE.tab]||'';
     document.getElementById('tabCriteria').textContent=TAB_CRITERIA[STATE.tab]||'';
