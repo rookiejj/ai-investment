@@ -17,7 +17,7 @@ const data = [
     title: "💳 핀테크",
     tag: "결제·뱅킹·BNPL",
     stocks: [
-      { nm:"Stripe", rs:"글로벌 결제 인프라 1위", val:"$95B", round:"직원 주식 매각", sector:"결제", ipo:"2026 H2" },
+      { nm:"Stripe", rs:"글로벌 결제 인프라 1위", val:"$65B", round:"직원 주식 매각", sector:"결제", ipo:"2026 H2" },
       { nm:"Klarna", rs:"BNPL·AI 쇼핑 어시스턴트", val:"$15B", round:"Series H", sector:"BNPL", ipo:"2026 Q2" },
       { nm:"Revolut", rs:"디지털 뱅킹·크립토·글로벌", val:"$45B", round:"Series F", sector:"네오뱅크", ipo:"2027" },
       { nm:"Chime", rs:"미국 네오뱅크 1위·무수수료", val:"$25B", round:"Series H", sector:"네오뱅크", ipo:"2026" },
