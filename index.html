@@ -40,6 +40,7 @@ header{
 }
 
 .header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.last-updated{font-size:12px;font-weight:400;color:#10b981;-webkit-text-fill-color:#10b981;background:none;white-space:nowrap;margin-left:12px}
 h1{font-size:28px;font-weight:600;letter-spacing:-0.56px;line-height:1.2;color:var(--fg);position:relative}
 h1 span{
   background:linear-gradient(135deg,var(--acc) 0%,#10b981 100%);
@@ -393,7 +394,7 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
 <header id="header">
   <div class="header-top">
     <div>
-      <h1><span>브리핑</span></h1>
+      <h1><span>브리핑</span> <span class="last-updated" id="lastUpdated"></span></h1>
     </div>
   </div>
   <div class="tabs">
@@ -605,7 +606,15 @@ const META_CFG={
   unicorn:{labels:['밸류에이션','최근 라운드','섹터','IPO 전망'],keys:['val','round','sector','ipo'],pre:'',suf:'',col:true},
 };
 const TAB_SRC={stocks:'st',kr:'kr',jp:'jp',ai:'ai',etf:'etf',commodity:'commodity',unicorn:'unicorn'};
+function updateLastUpdated(){
+  const el=document.getElementById('lastUpdated');
+  if(!el||!_dataVersion)return;
+  const v=_dataVersion;
+  const y=v.slice(0,4),mo=v.slice(4,6),d=v.slice(6,8),h=v.slice(9,11),mi=v.slice(11,13);
+  el.textContent='최종 '+y+'.'+mo+'.'+d+' '+h+':'+mi+' KST';
+}
 function render(){
+  updateLastUpdated();
   const mc=META_CFG[STATE.tab];
   const src=STATE[TAB_SRC[STATE.tab]];
   if(!src){out.innerHTML='<div class="loading"><div class="loader"></div><div style="font-size:14px;font-weight:500">데이터 불러오는 중...</div></div>';return}

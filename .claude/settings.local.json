@@ -17,7 +17,11 @@
       "Bash(python:*)",
       "Bash(netstat -ano)",
       "Bash(npx:*)",
-      "Bash(node -e ':*)"
+      "Bash(node -e ':*)",
+      "Bash(wmic process:*)",
+      "Bash(tasklist /fi \"PID eq 21044\" /v /fo list)",
+      "Bash(curl -s http://localhost:8080/)",
+      "Bash(curl -s http://localhost:8080/data/stocks-update.js)"
     ]
   }
 }
