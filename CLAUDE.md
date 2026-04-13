@@ -1,24 +1,32 @@
 # 브리핑 — 유지보수 컨텍스트
 
-미국 주식 + 한국 주식 + AI 기업 데이터를 하나의 페이지에서 보여주는 통합 브리핑 대시보드.
+미국·한국·일본 주식 + AI 기업 + 글로벌 ETF + 원자재·매크로 + 유니콘을 7개 탭으로 보여주는 통합 브리핑 대시보드.
 
-- 파일: `index.html`(렌더링 UI) / `data/`(데이터 6개 파일) / `README.md`
+- 파일: `index.html`(렌더링 UI) / `data/`(데이터 14개 파일 + version.js) / `README.md`
 - 데이터 파일은 로컬 상대경로로 fetch (`./data/*.js`)
 
 ## 파일 구조
 
 ```
 ai-investment/
-├── index.html              ← 통합 UI (탭 전환)
-├── CLAUDE.md               ← 이 파일
+├── index.html                  ← 통합 UI (7개 탭)
+├── CLAUDE.md                   ← 이 파일
 ├── data/
-│   ├── version.js          ← 데이터 버전 (탭 전환 시 자동 체크)
-│   ├── stocks-data.js      ← 미국 주식 데이터
-│   ├── stocks-update.js    ← 미국 주식 변경 이력
-│   ├── kr-stocks-data.js   ← 한국 주식 데이터
-│   ├── kr-stocks-update.js ← 한국 주식 변경 이력
-│   ├── ai-data.js          ← AI 기업 데이터
-│   └── ai-update.js        ← AI 변경 이력
+│   ├── version.js              ← 데이터 버전 (탭 전환 시 자동 체크)
+│   ├── stocks-data.js          ← 미국 주식 데이터
+│   ├── stocks-update.js        ← 미국 주식 변경 이력
+│   ├── kr-stocks-data.js       ← 한국 주식 데이터
+│   ├── kr-stocks-update.js     ← 한국 주식 변경 이력
+│   ├── jp-stocks-data.js       ← 일본 주식 데이터
+│   ├── jp-stocks-update.js     ← 일본 주식 변경 이력
+│   ├── ai-data.js              ← AI 기업 데이터
+│   ├── ai-update.js            ← AI 변경 이력
+│   ├── etf-data.js             ← 글로벌 ETF 데이터
+│   ├── etf-update.js           ← ETF 변경 이력
+│   ├── commodity-data.js       ← 원자재·매크로 데이터
+│   ├── commodity-update.js     ← 원자재 변경 이력
+│   ├── unicorn-data.js         ← 유니콘·프리IPO 데이터
+│   └── unicorn-update.js       ← 유니콘 변경 이력
 └── README.md
 ```
 
@@ -246,6 +254,135 @@ const UPDATES = [{
 6. `README.md` 버전 히스토리 — 기술적 변경이 있을 때만 추가
 7. `data/version.js`의 `DATA_VERSION` 값을 현재 KST 시간으로 갱신
 8. 변경 사항 요약을 채팅으로 보고 (커밋은 사용자가 직접)
+
+---
+
+## 일본 주식 (jp)
+
+대상 파일: `data/jp-stocks-data.js`, `data/jp-stocks-update.js`
+
+### 현재 상태
+- 10 카테고리 × 정확히 7종목 = 70종목
+- 재무단위 천억엔, FY25 실적(3월 결산) / FY26E 컨센서스, 적자는 음수 표기
+- 도쿄증권거래소 프라임 상장 종목 대상
+
+### 10개 카테고리
+반도체 장비 · 자동차 · 전자·IT · 금융 · 로봇·자동화 · 방산·중공업 · 소비·리테일 · 게임·엔터 · 제약·헬스케어 · 소재·화학
+
+### data/jp-stocks-data.js 구조
+```js
+const data = [{
+  title: "카테고리명",
+  tag: "카테고리 설명 (1줄)",
+  stocks: [
+    { tk:"4자리코드", nm:"기업명", rs:"한 줄 이유", r1:"전년매출", p1:"전년순익", r2:"올해매출E", p2:"올해순익E" }
+  ]
+}]
+```
+
+### 일본 주식 업데이트 체크리스트 (매 요청 시 이 순서로)
+1. 웹검색으로 오늘 날짜 기준 최신 컨센서스·이벤트 확인
+2. `data/jp-stocks-data.js` 수정 — 변경된 종목만 최소 diff로
+3. 회계/거버넌스 이슈 발생 기업은 즉시 제외하고 동일 섹터 대체주로 교체
+4. `data/jp-stocks-update.js`에 데이터 변경 이력 추가 (날짜+시간 KST)
+5. `data/version.js`의 `DATA_VERSION` 값을 현재 KST 시간으로 갱신
+6. 변경 사항 요약을 채팅으로 보고 (커밋은 사용자가 직접)
+
+---
+
+## 글로벌 ETF (etf)
+
+대상 파일: `data/etf-data.js`, `data/etf-update.js`
+
+### 현재 상태
+- 8 카테고리 × 5 ETF = 40 ETF
+- 필드: 운용규모($B), 보수(%), YTD 수익률, 1Y 수익률
+
+### 8개 카테고리
+AI·반도체 · 방산·보안 · 에너지·원자력 · 클린에너지 · 크립토·블록체인 · 미국 대형주 · 배당·인컴 · 신흥국·글로벌
+
+### data/etf-data.js 구조
+```js
+const data = [{
+  title: "카테고리명",
+  tag: "카테고리 설명",
+  stocks: [
+    { tk:"TICKER", nm:"ETF명", rs:"한 줄 설명", aum:"운용규모$B", er:"보수%", ytd:"YTD수익률", y1:"1Y수익률" }
+  ]
+}]
+```
+
+### 글로벌 ETF 업데이트 체크리스트 (매 요청 시 이 순서로)
+1. 웹검색으로 각 ETF의 최신 AUM·수익률·보수 확인
+2. `data/etf-data.js` 수정 — 변경된 ETF만 최소 diff로
+3. 상장폐지·합병된 ETF는 즉시 교체
+4. `data/etf-update.js`에 데이터 변경 이력 추가 (날짜+시간 KST)
+5. `data/version.js`의 `DATA_VERSION` 값을 현재 KST 시간으로 갱신
+6. 변경 사항 요약을 채팅으로 보고 (커밋은 사용자가 직접)
+
+---
+
+## 원자재·매크로 (commodity)
+
+대상 파일: `data/commodity-data.js`, `data/commodity-update.js`
+
+### 현재 상태
+- 6 카테고리 × 4 항목 = 24 항목
+- 필드: 현재가, YTD 변동, 1Y 변동, 52주 범위
+
+### 6개 카테고리
+귀금속 · 에너지 · 산업금속 · 배터리 소재 · 농산물 · 매크로 지표
+
+### data/commodity-data.js 구조
+```js
+const data = [{
+  title: "카테고리명",
+  tag: "카테고리 설명",
+  stocks: [
+    { tk:"심볼", nm:"원자재명", rs:"한 줄 설명", price:"현재가", ytd:"YTD", y1:"1Y", range:"52주 범위" }
+  ]
+}]
+```
+
+### 원자재·매크로 업데이트 체크리스트 (매 요청 시 이 순서로)
+1. 웹검색으로 최신 선물 가격·매크로 지표 확인
+2. `data/commodity-data.js` 수정 — 변경된 항목만 최소 diff로
+3. `data/commodity-update.js`에 데이터 변경 이력 추가 (날짜+시간 KST)
+4. `data/version.js`의 `DATA_VERSION` 값을 현재 KST 시간으로 갱신
+5. 변경 사항 요약을 채팅으로 보고 (커밋은 사용자가 직접)
+
+---
+
+## 유니콘·프리IPO (unicorn)
+
+대상 파일: `data/unicorn-data.js`, `data/unicorn-update.js`
+
+### 현재 상태
+- 6 카테고리 × 5 기업 = 30 기업
+- 필드: 밸류에이션, 최근 라운드, 섹터, IPO 전망
+- 비상장 기업만 수록 (상장 시 즉시 제외)
+
+### 6개 카테고리
+AI·ML · 핀테크 · 엔터프라이즈 SW · 우주·모빌리티 · 바이오·헬스 · 크립토·Web3
+
+### data/unicorn-data.js 구조
+```js
+const data = [{
+  title: "카테고리명",
+  tag: "카테고리 설명",
+  stocks: [
+    { nm:"기업명", rs:"한 줄 설명", val:"밸류에이션", round:"최근 라운드", sector:"섹터", ipo:"IPO 전망" }
+  ]
+}]
+```
+
+### 유니콘 업데이트 체크리스트 (매 요청 시 이 순서로)
+1. 웹검색으로 각 기업의 최신 펀딩/밸류에이션/IPO 동향 확인
+2. `data/unicorn-data.js` 수정 — 변경된 기업만 최소 diff로
+3. 상장 완료된 기업은 즉시 제외하고 동일 카테고리 대체 기업 편입
+4. `data/unicorn-update.js`에 데이터 변경 이력 추가 (날짜+시간 KST)
+5. `data/version.js`의 `DATA_VERSION` 값을 현재 KST 시간으로 갱신
+6. 변경 사항 요약을 채팅으로 보고 (커밋은 사용자가 직접)
 
 ---
 
