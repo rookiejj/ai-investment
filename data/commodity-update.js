@@ -1,7 +1,7 @@
 // Commodity & Macro - Update Log
 const updates = [
   {
-    date: "2026-04-13 12:04 KST",
+    date: "2026-04-13 21:04 KST",
     summary: "전체 24개 항목 최신 시세 반영 — 관세전쟁·OPEC+ 증산·스태그플레이션 환경",
     changes: [
       { type: "수치 갱신", sector: "귀금속", detail: "금 $4,787→$3,220. 이전 호르무즈 봉쇄 프리미엄 제거, 실제 시세 $3,100~3,300 구간 반영." },
