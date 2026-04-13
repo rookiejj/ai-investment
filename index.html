@@ -1,5 +1,7 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><title>브리핑</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MHK455J1GP"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MHK455J1GP');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -411,7 +413,7 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
 <script>
 const TAB_DESC={
   stocks:'미국 상장 주요 종목의 섹터별 분류와 실적·전망 요약 (단위: $B)',
-  kr:'한국 상장 주요 종목의 섹터별 분류와 실적·전망 요약 (단위: 조원)',
+  kr:'한국 상장 주요 종목의 섹터별 분류와 실적·전망 요약 (단위: 천억원)',
   ai:'글로벌 AI 주요 기업의 모델·제품·투자 동향 한눈에 보기'
 };
 const TAB_CRITERIA={
@@ -429,6 +431,10 @@ window.addEventListener('scroll',()=>{
   });_stTick=true;}
 });
 _stBtn.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+
+const _fy1=String(new Date().getFullYear()-1).slice(-2);
+const _fy2=String(new Date().getFullYear()).slice(-2);
+function fmtN(s){return /^-?\d+$/.test(s)?Number(s).toLocaleString():s;}
 
 const STOCKS_URL='./data/stocks-data.js';
 const AI_URL    ='./data/ai-data.js';
@@ -518,7 +524,7 @@ function toggleUpdateMore(el){
 function norm(raw,kind){
   if(kind==='stocks'||kind==='kr')return raw.data.map(g=>({group:g.title,tag:g.tag,items:g.stocks.map(s=>({
     title:`${s.tk} · ${s.nm}`,sub:s.rs,badges:[g.title.replace(/^\S+\s/,'')],
-    meta:{r25:s.r25,p25:s.p25,r26:s.r26,p26:s.p26},_raw:`${s.tk} ${s.nm} ${s.rs}`
+    meta:{r1:s.r1,p1:s.p1,r2:s.r2,p2:s.p2},_raw:`${s.tk} ${s.nm} ${s.rs}`
   }))}));
   return raw.data.map(c=>({group:`#${c.rank} ${c.name}`,tag:`${c.type} · ${c.focus}`,items:c.products.map(p=>({
     title:p.name,sub:c.name,desc:p.desc,badges:p.badges||[],isNew:p.isNew,
@@ -546,7 +552,7 @@ function render(){
       items.map(it=>`<div class="card"><div class="ct">${it.title}${it.isNew?' <span class="b new">신규</span>':''}</div><div class="cs">${it.sub||''}</div>${
         it.desc?`<div class="cd">${it.desc}</div>`:''
       }${it.badges&&it.badges.length?`<div class="badges">${it.badges.map(b=>`<span class="b">${BL_MAP[b]||b}</span>`).join('')}</div>`:''}${
-        it.meta?`<div class="nums"><span>매출25 <b>${it.meta.r25}</b></span><span>순익25 <b>${it.meta.p25}</b></span><span>매출26 <b>${it.meta.r26}</b></span><span>순익26 <b>${it.meta.p26}</b></span></div>`:''
+        it.meta?`<div class="nums"><span>매출${_fy1} <b>${fmtN(it.meta.r1)}</b></span><span>순익${_fy1} <b>${fmtN(it.meta.p1)}</b></span><span>매출${_fy2}E <b>${fmtN(it.meta.r2)}</b></span><span>순익${_fy2}E <b>${fmtN(it.meta.p2)}</b></span></div>`:''
       }</div>`).join('')
     }</div></div>`;
   }).join('');
