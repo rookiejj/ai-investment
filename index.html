@@ -398,7 +398,7 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
     </div>
   </div>
   <div class="tabs">
-    <div class="tab on" data-t="stocks"><span>미국 마켓</span></div>
+    <div class="tab" data-t="stocks"><span>미국 마켓</span></div>
     <div class="tab" data-t="kr"><span>한국 마켓</span></div>
     <div class="tab" data-t="jp"><span>일본 마켓</span></div>
     <div class="tab" data-t="ai"><span>AI 기업</span></div>
@@ -406,7 +406,8 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
     <div class="tab" data-t="commodity"><span>원자재·매크로</span></div>
     <div class="tab" data-t="unicorn"><span>유니콘</span></div>
   </div>
-  <div class="tab-desc" id="tabDesc">미국 상장 주요 종목의 섹터별 분류와 실적·전망 요약</div>
+  <script>!function(){var t=JSON.parse(sessionStorage.getItem('briefState')||'null'),s=t&&t.tab||'stocks';document.querySelector('.tab[data-t="'+s+'"]').classList.add('on')}()</script>
+  <div class="tab-desc" id="tabDesc"></div>
   <div class="tab-criteria" id="tabCriteria"></div>
   <div class="search-wrap">
     <input id="q" placeholder="티커, 기업명, 제품, 설명으로 검색...">
