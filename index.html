@@ -66,7 +66,12 @@ h1 span{
 /* ═══ TAB DESC ═══ */
 .tab-desc{
   font-size:12px;color:var(--mut);line-height:1.5;
-  margin-bottom:12px;letter-spacing:-0.1px;
+  margin-bottom:4px;letter-spacing:-0.1px;
+}
+.tab-criteria{
+  font-size:11px;color:var(--placeholder);line-height:1.5;
+  margin-bottom:12px;letter-spacing:0.2px;
+  font-family:'Geist Mono','SF Mono',monospace;
 }
 
 /* ═══ SEARCH ═══ */
@@ -371,6 +376,7 @@ main{padding:40px 32px 80px;position:relative;z-index:1}
     <div class="tab" data-t="ai"><span>AI 기업</span></div>
   </div>
   <div class="tab-desc" id="tabDesc">미국 상장 주요 종목의 섹터별 분류와 실적·전망 요약</div>
+  <div class="tab-criteria" id="tabCriteria"></div>
   <div class="search-wrap">
     <input id="q" placeholder="티커, 기업명, 제품, 설명으로 검색...">
   </div>
@@ -397,6 +403,11 @@ const TAB_DESC={
   stocks:'미국 상장 주요 종목의 섹터별 분류와 실적·전망 요약 (단위: $B)',
   kr:'한국 상장 주요 종목의 섹터별 분류와 실적·전망 요약 (단위: 조원)',
   ai:'글로벌 AI 주요 기업의 모델·제품·투자 동향 한눈에 보기'
+};
+const TAB_CRITERIA={
+  stocks:'선정 기준: 섹터 대표성 · FY26E 컨센서스 존재 · ETF/레버리지 제외 · 회계이슈 시 즉시 교체',
+  kr:'선정 기준: 섹터 대표성 · FY26E 컨센서스 존재 · ETF/레버리지 제외 · 회계이슈 시 즉시 교체',
+  ai:'선정 기준: 프론티어 모델 · 생태계 영향력 · 인프라 지배력 · 오픈소스 기여 · 시장 규모'
 };
 // Scroll to top
 const _stBtn=document.getElementById('scrollTop');
@@ -533,7 +544,7 @@ function renderChips(){
 }
 
 document.addEventListener('click',e=>{
-  const t=e.target.closest('.tab');if(t){const prev=STATE.tab;TAB_FILTERS[prev]=new Set(STATE.filter);STATE.tab=t.dataset.t;STATE.filter=new Set(TAB_FILTERS[STATE.tab]);document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));document.getElementById('tabDesc').textContent=TAB_DESC[STATE.tab]||'';renderChips();updateCount();render();saveState();return}
+  const t=e.target.closest('.tab');if(t){const prev=STATE.tab;TAB_FILTERS[prev]=new Set(STATE.filter);STATE.tab=t.dataset.t;STATE.filter=new Set(TAB_FILTERS[STATE.tab]);document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));document.getElementById('tabDesc').textContent=TAB_DESC[STATE.tab]||'';document.getElementById('tabCriteria').textContent=TAB_CRITERIA[STATE.tab]||'';renderChips();updateCount();render();saveState();return}
   const c=e.target.closest('.chip');if(c){const f=c.dataset.f;STATE.filter.has(f)?STATE.filter.delete(f):STATE.filter.add(f);TAB_FILTERS[STATE.tab]=new Set(STATE.filter);renderChips();updateCount();render();saveState()}
 });
 document.getElementById('q').oninput=e=>{STATE.q=e.target.value;render()};
@@ -567,6 +578,7 @@ function updateCount(){
     BL_MAP=ai.BL||{};
     document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t===STATE.tab));
     document.getElementById('tabDesc').textContent=TAB_DESC[STATE.tab]||'';
+    document.getElementById('tabCriteria').textContent=TAB_CRITERIA[STATE.tab]||'';
     renderChips();updateCount();render();
   }catch(e){out.innerHTML='<p style="color:#ef4444;text-align:center;padding:64px 0;font-weight:500">불러오기 실패: '+e.message+'</p>'}
 })();
