@@ -47,7 +47,8 @@ h1 span{
   background-clip:text;
 }
 
-.tabs{display:flex;gap:8px;margin-bottom:14px}
+.tabs{display:flex;gap:8px;margin-bottom:14px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px}
+.tabs::-webkit-scrollbar{display:none}
 .tab{
   padding:8px 22px;background:transparent;border:1px solid var(--border-md);
   border-radius:9999px;cursor:pointer;color:var(--mut);
@@ -85,8 +86,16 @@ h1 span{
   background-size:contain;pointer-events:none;
   transition:opacity .2s;
 }
+.search-clear{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  width:18px;height:18px;border:none;background:var(--border-md);
+  border-radius:50%;cursor:pointer;display:none;align-items:center;justify-content:center;
+  color:var(--mut);font-size:12px;line-height:1;transition:background .2s;padding:0;
+}
+.search-clear:hover{background:var(--fg);color:#fff}
+.search-clear.show{display:flex}
 #q{
-  width:100%;padding:6px 16px 6px 38px;
+  width:100%;padding:6px 36px 6px 38px;
   background:var(--bg);border:1.5px solid var(--border-md);border-radius:9999px;
   color:var(--fg);font:400 13px/1.5 'Inter',sans-serif;
   outline:none;transition:all .3s cubic-bezier(.4,0,.2,1);
@@ -174,8 +183,9 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
 .ct{
   font-weight:600;font-size:16px;letter-spacing:-0.16px;
   margin-bottom:6px;color:var(--fg);
-  display:flex;align-items:center;gap:8px;
+  display:flex;align-items:flex-start;gap:8px;
 }
+.ct .b{flex-shrink:0;white-space:nowrap}
 .cs{
   color:var(--mut);font-size:13px;font-weight:500;margin-bottom:8px;
   font-family:'Geist Mono','SF Mono',monospace;letter-spacing:0.3px;
@@ -184,7 +194,7 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
 .cd{font-size:14px;color:var(--fg2);line-height:1.65}
 
 /* ═══ BADGES ═══ */
-.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:14px}
 .b{
   font:500 11px/1.5 'Inter',sans-serif;padding:3px 10px;
   background:var(--surface);border:1px solid var(--border);
@@ -209,9 +219,10 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
   background:var(--surface);border-radius:12px;padding:14px;
   border:1px solid var(--border);
 }
+.nums-col{grid-template-columns:1fr;gap:4px}
 .nums span{
   display:flex;justify-content:space-between;align-items:center;
-  padding:2px 0;
+  padding:2px 0;white-space:nowrap;overflow:hidden;gap:6px;
 }
 .nums b{
   color:var(--fg);font-weight:600;
@@ -353,7 +364,7 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
   h1{font-size:22px;letter-spacing:-0.44px}
   .subtitle{font-size:13px}
   .tabs{gap:6px}
-  .tab{padding:6px 14px;font-size:13px}
+  .tab{padding:6px 14px;font-size:13px;flex-shrink:0}
   /* 필터 칩: 가로 스크롤 1줄 */
   #chips{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px}
   #chips::-webkit-scrollbar{display:none}
@@ -362,6 +373,7 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
   .group{margin-bottom:36px}
   .grid{grid-template-columns:1fr;gap:12px}
   .card{padding:18px;border-radius:14px}
+  .b{font-size:10px;padding:2px 8px}
   .gh{font-size:19px}
 }
 
@@ -386,12 +398,17 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
   <div class="tabs">
     <div class="tab on" data-t="stocks"><span>미국 마켓</span></div>
     <div class="tab" data-t="kr"><span>한국 마켓</span></div>
+    <div class="tab" data-t="jp"><span>일본 마켓</span></div>
     <div class="tab" data-t="ai"><span>AI 기업</span></div>
+    <div class="tab" data-t="etf"><span>글로벌 ETF</span></div>
+    <div class="tab" data-t="commodity"><span>원자재·매크로</span></div>
+    <div class="tab" data-t="unicorn"><span>유니콘</span></div>
   </div>
   <div class="tab-desc" id="tabDesc">미국 상장 주요 종목의 섹터별 분류와 실적·전망 요약</div>
   <div class="tab-criteria" id="tabCriteria"></div>
   <div class="search-wrap">
     <input id="q" placeholder="티커, 기업명, 제품, 설명으로 검색...">
+    <button class="search-clear" id="qClear" aria-label="검색 초기화">✕</button>
   </div>
   <div class="filterbar">
     <button id="toggle">필터<span id="count"></span></button>
@@ -415,12 +432,20 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
 const TAB_DESC={
   stocks:'미국 상장 섹터별 TOP 7 — 실적·전망 요약',
   kr:'한국 상장 섹터별 TOP 7 — 실적·전망 요약',
-  ai:'글로벌 AI 주요 기업의 모델·제품·투자 동향 한눈에 보기'
+  jp:'일본 상장 섹터별 TOP 7 — 실적·전망 요약',
+  ai:'글로벌 AI 주요 기업의 모델·제품·투자 동향 한눈에 보기',
+  etf:'글로벌 테마별 대표 ETF — 운용규모·수익률 비교',
+  commodity:'원자재 가격·매크로 지표 한눈에 보기',
+  unicorn:'비상장 유니콘·프리IPO 기업 — 밸류에이션·IPO 전망',
 };
 const TAB_CRITERIA={
   stocks:'선정 기준: 섹터 대표성 · FY26E 컨센서스 존재 · ETF/레버리지 제외 · 회계이슈 시 즉시 교체',
   kr:'선정 기준: 섹터 대표성 · FY26E 컨센서스 존재 · ETF/레버리지 제외 · 회계이슈 시 즉시 교체',
-  ai:'선정 기준: 프론티어 모델 · 생태계 영향력 · 인프라 지배력 · 오픈소스 기여 · 시장 규모'
+  jp:'선정 기준: 섹터 대표성 · 도쿄증권거래소 프라임 · FY26E 컨센서스 기반',
+  ai:'선정 기준: 프론티어 모델 · 생태계 영향력 · 인프라 지배력 · 오픈소스 기여 · 시장 규모',
+  etf:'선정 기준: AUM · 유동성 · 테마 대표성 · 보수율',
+  commodity:'데이터: 선물 기준가 · YTD/1Y 변동률 · 52주 범위',
+  unicorn:'선정 기준: 밸류에이션 $1B+ · 펀딩 실적 · IPO 가능성',
 };
 // Scroll to top
 const _stBtn=document.getElementById('scrollTop');
@@ -436,13 +461,29 @@ _stBtn.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
 const _fy1=String(new Date().getFullYear()-1).slice(-2);
 const _fy2=String(new Date().getFullYear()).slice(-2);
 function fmtN(s){return /^-?\d+$/.test(s)?Number(s).toLocaleString():s;}
+function fitNums(){
+  document.querySelectorAll('.nums span').forEach(sp=>{
+    const b=sp.querySelector('b');if(!b)return;
+    b.style.fontSize='';
+    let fs=13;
+    while(sp.scrollWidth>sp.clientWidth&&fs>8){fs-=1;b.style.fontSize=fs+'px';}
+  });
+}
 
 const STOCKS_URL='./data/stocks-data.js';
 const AI_URL    ='./data/ai-data.js';
 const KR_URL    ='./data/kr-stocks-data.js';
+const JP_URL    ='./data/jp-stocks-data.js';
+const ETF_URL   ='./data/etf-data.js';
+const COMMODITY_URL='./data/commodity-data.js';
+const UNICORN_URL='./data/unicorn-data.js';
 const STOCKS_UPD_URL='./data/stocks-update.js';
 const AI_UPD_URL    ='./data/ai-update.js';
 const KR_UPD_URL    ='./data/kr-stocks-update.js';
+const JP_UPD_URL    ='./data/jp-stocks-update.js';
+const ETF_UPD_URL   ='./data/etf-update.js';
+const COMMODITY_UPD_URL='./data/commodity-update.js';
+const UNICORN_UPD_URL='./data/unicorn-update.js';
 
 
 async function loadJS(url,v){
@@ -452,10 +493,11 @@ async function loadJS(url,v){
 }
 
 const _saved=JSON.parse(sessionStorage.getItem('briefState')||'null');
-let STATE={tab:_saved?.tab||'stocks',q:'',filter:new Set(_saved?.filters?.[_saved?.tab]||[]),ai:null,st:null,kr:null,stUpd:null,aiUpd:null,krUpd:null};
-const TAB_FILTERS={stocks:new Set(_saved?.filters?.stocks||[]),kr:new Set(_saved?.filters?.kr||[]),ai:new Set(_saved?.filters?.ai||[])};
+let STATE={tab:_saved?.tab||'stocks',q:'',filter:new Set(_saved?.filters?.[_saved?.tab]||[]),ai:null,st:null,kr:null,jp:null,etf:null,commodity:null,unicorn:null,stUpd:null,aiUpd:null,krUpd:null,jpUpd:null,etfUpd:null,commodityUpd:null,unicornUpd:null};
+const TAB_FILTERS={stocks:new Set(_saved?.filters?.stocks||[]),kr:new Set(_saved?.filters?.kr||[]),ai:new Set(_saved?.filters?.ai||[]),jp:new Set(_saved?.filters?.jp||[]),etf:new Set(_saved?.filters?.etf||[]),commodity:new Set(_saved?.filters?.commodity||[]),unicorn:new Set(_saved?.filters?.unicorn||[])};
 function saveState(){
-  sessionStorage.setItem('briefState',JSON.stringify({tab:STATE.tab,filters:{stocks:[...TAB_FILTERS.stocks],kr:[...TAB_FILTERS.kr],ai:[...TAB_FILTERS.ai]}}));
+  const f={};for(const k in TAB_FILTERS)f[k]=[...TAB_FILTERS[k]];
+  sessionStorage.setItem('briefState',JSON.stringify({tab:STATE.tab,filters:f}));
 }
 
 // ═══ DATA VERSION CHECK ═══
@@ -469,9 +511,9 @@ async function refreshIfNeeded(){
   if(!_dataVersion){_dataVersion=v;return false;}
   if(v===_dataVersion)return false;
   _dataVersion=v;
-  const[st,ai,kr,stUpd,aiUpd,krUpd]=await Promise.all([loadJS(STOCKS_URL,v),loadJS(AI_URL,v),loadJS(KR_URL,v),loadUpdJS(STOCKS_UPD_URL,'updates',v),loadUpdJS(AI_UPD_URL,'UPDATES',v),loadUpdJS(KR_UPD_URL,'updates',v)]);
-  STATE.st=norm(st,'stocks');STATE.ai=norm(ai,'ai');STATE.kr=norm(kr,'kr');
-  STATE.stUpd=stUpd;STATE.aiUpd=aiUpd;STATE.krUpd=krUpd;BL_MAP=ai.BL||{};
+  const[st,ai,kr,jp,etf,commodity,unicorn,stUpd,aiUpd,krUpd,jpUpd,etfUpd,commodityUpd,unicornUpd]=await Promise.all([loadJS(STOCKS_URL,v),loadJS(AI_URL,v),loadJS(KR_URL,v),loadJS(JP_URL,v),loadJS(ETF_URL,v),loadJS(COMMODITY_URL,v),loadJS(UNICORN_URL,v),loadUpdJS(STOCKS_UPD_URL,'updates',v),loadUpdJS(AI_UPD_URL,'UPDATES',v),loadUpdJS(KR_UPD_URL,'updates',v),loadUpdJS(JP_UPD_URL,'updates',v),loadUpdJS(ETF_UPD_URL,'updates',v),loadUpdJS(COMMODITY_UPD_URL,'updates',v),loadUpdJS(UNICORN_UPD_URL,'updates',v)]);
+  STATE.st=norm(st,'stocks');STATE.ai=norm(ai,'ai');STATE.kr=norm(kr,'kr');STATE.jp=norm(jp,'jp');STATE.etf=norm(etf,'etf');STATE.commodity=norm(commodity,'commodity');STATE.unicorn=norm(unicorn,'unicorn');
+  STATE.stUpd=stUpd;STATE.aiUpd=aiUpd;STATE.krUpd=krUpd;STATE.jpUpd=jpUpd;STATE.etfUpd=etfUpd;STATE.commodityUpd=commodityUpd;STATE.unicornUpd=unicornUpd;BL_MAP=ai.BL||{};
   return true;
 }
 // 페이지 포커스 복귀 시 버전 체크 → 현재 탭 즉시 갱신
@@ -488,11 +530,12 @@ async function loadUpdJS(url,varName,v){
 }
 
 function renderUpdateBox(tab){
-  const upd=tab==='stocks'?STATE.stUpd:tab==='kr'?STATE.krUpd:STATE.aiUpd;
+  const updMap={stocks:STATE.stUpd,kr:STATE.krUpd,jp:STATE.jpUpd,ai:STATE.aiUpd,etf:STATE.etfUpd,commodity:STATE.commodityUpd,unicorn:STATE.unicornUpd};
+  const upd=updMap[tab];
   if(!upd||!upd.length)return '';
   const latest=upd[0];
   let items=[];
-  if(tab==='stocks'||tab==='kr'){
+  if(tab!=='ai'){
     items=latest.changes.map(c=>`<span class="update-item-type">${c.type}</span>${c.detail}`);
   }else{
     items=latest.entries.map(e=>e);
@@ -503,7 +546,7 @@ function renderUpdateBox(tab){
   const hidden=items.slice(MAX);
   const hasMore=hidden.length>0;
   const dateStr=latest.date;
-  const summaryStr=tab==='stocks'&&latest.summary?`<div class="update-summary">${latest.summary}</div>`:'';
+  const summaryStr=latest.summary?`<div class="update-summary">${latest.summary}</div>`:'';
   let html=`<div class="update-box"><div class="update-header"><span class="update-tag">업데이트</span><span class="update-date">${dateStr}</span></div>${summaryStr}<ul class="update-list">`;
   visible.forEach(it=>html+=`<li class="update-item">${it}</li>`);
   if(hasMore){
@@ -530,9 +573,21 @@ function toggleUpdateMore(el){
 }
 
 function norm(raw,kind){
-  if(kind==='stocks'||kind==='kr')return raw.data.map(g=>({group:g.title,tag:g.tag,items:g.stocks.map(s=>({
+  if(['stocks','kr','jp'].includes(kind))return raw.data.map(g=>({group:g.title,tag:g.tag,items:g.stocks.map(s=>({
     title:`${s.tk} · ${s.nm}`,sub:s.rs,badges:[g.title.replace(/^\S+\s/,'')],
     meta:{r1:s.r1,p1:s.p1,r2:s.r2,p2:s.p2},_raw:`${s.tk} ${s.nm} ${s.rs}`
+  }))}));
+  if(kind==='etf')return raw.data.map(g=>({group:g.title,tag:g.tag,items:g.stocks.map(s=>({
+    title:`${s.tk} · ${s.nm}`,sub:s.rs,badges:[g.title.replace(/^\S+\s/,'')],
+    meta:{aum:s.aum,er:s.er,ytd:s.ytd,y1:s.y1},_raw:`${s.tk} ${s.nm} ${s.rs}`
+  }))}));
+  if(kind==='commodity')return raw.data.map(g=>({group:g.title,tag:g.tag,items:g.stocks.map(s=>({
+    title:s.tk!=='—'?`${s.tk} · ${s.nm}`:s.nm,sub:s.rs,badges:[g.title.replace(/^\S+\s/,'')],
+    meta:{price:s.price,ytd:s.ytd,y1:s.y1,range:s.range},_raw:`${s.tk} ${s.nm} ${s.rs}`
+  }))}));
+  if(kind==='unicorn')return raw.data.map(g=>({group:g.title,tag:g.tag,items:g.stocks.map(s=>({
+    title:s.nm,sub:s.rs,badges:[g.title.replace(/^\S+\s/,'')],
+    meta:{val:s.val,round:s.round,sector:s.sector,ipo:s.ipo},_raw:`${s.nm} ${s.rs} ${s.sector}`
   }))}));
   return raw.data.map(c=>({group:`#${c.rank} ${c.name}`,tag:`${c.type} · ${c.focus}`,items:c.products.map(p=>({
     title:p.name,sub:c.name,desc:p.desc,badges:p.badges||[],isNew:p.isNew,
@@ -540,9 +595,18 @@ function norm(raw,kind){
   }))}));
 }
 
+const META_CFG={
+  stocks:{labels:['매출'+_fy1,'순익'+_fy1,'매출'+_fy2+'E','순익'+_fy2+'E'],keys:['r1','p1','r2','p2'],pre:'$',suf:'B'},
+  kr:{labels:['매출'+_fy1,'순익'+_fy1,'매출'+_fy2+'E','순익'+_fy2+'E'],keys:['r1','p1','r2','p2'],pre:'',suf:'천억'},
+  jp:{labels:['매출'+_fy1,'순익'+_fy1,'매출'+_fy2+'E','순익'+_fy2+'E'],keys:['r1','p1','r2','p2'],pre:'¥',suf:'천억'},
+  etf:{labels:['운용규모','보수','YTD','1Y'],keys:['aum','er','ytd','y1'],pre:'',suf:''},
+  commodity:{labels:['현재가','YTD','1Y','52주'],keys:['price','ytd','y1','range'],pre:'',suf:''},
+  unicorn:{labels:['밸류에이션','최근 라운드','섹터','IPO 전망'],keys:['val','round','sector','ipo'],pre:'',suf:'',col:true},
+};
+const TAB_SRC={stocks:'st',kr:'kr',jp:'jp',ai:'ai',etf:'etf',commodity:'commodity',unicorn:'unicorn'};
 function render(){
-  const _u=STATE.tab==='stocks'?['$','B']:STATE.tab==='kr'?['','천억']:['',''];
-  const src=STATE.tab==='stocks'?STATE.st:STATE.tab==='kr'?STATE.kr:STATE.ai;
+  const mc=META_CFG[STATE.tab];
+  const src=STATE[TAB_SRC[STATE.tab]];
   if(!src){out.innerHTML='<div class="loading"><div class="loader"></div><div style="font-size:14px;font-weight:500">데이터 불러오는 중...</div></div>';return}
   const q=STATE.q.toLowerCase();const f=STATE.filter;
   let totalItems=0;
@@ -550,7 +614,7 @@ function render(){
     const items=g.items.filter(it=>{
       if(q&&!it._raw.toLowerCase().includes(q))return false;
       if(f.size){
-        if(STATE.tab==='stocks'||STATE.tab==='kr')return f.has(g.group);
+        if(STATE.tab!=='ai')return f.has(g.group);
         return it.badges.some(b=>f.has(b));
       }
       return true;
@@ -561,7 +625,7 @@ function render(){
       items.map(it=>`<div class="card"><div class="ct">${it.title}${it.isNew?' <span class="b new">신규</span>':''}</div><div class="cs">${it.sub||''}</div>${
         it.desc?`<div class="cd">${it.desc}</div>`:''
       }${it.badges&&it.badges.length?`<div class="badges">${it.badges.map(b=>`<span class="b">${BL_MAP[b]||b}</span>`).join('')}</div>`:''}${
-        it.meta?`<div class="nums"><span>매출${_fy1} <b>${_u[0]}${fmtN(it.meta.r1)}${_u[1]}</b></span><span>순익${_fy1} <b>${_u[0]}${fmtN(it.meta.p1)}${_u[1]}</b></span><span>매출${_fy2}E <b>${_u[0]}${fmtN(it.meta.r2)}${_u[1]}</b></span><span>순익${_fy2}E <b>${_u[0]}${fmtN(it.meta.p2)}${_u[1]}</b></span></div>`:''
+        it.meta&&mc?`<div class="nums${mc.col?' nums-col':''}">${mc.keys.map((k,i)=>`<span>${mc.labels[i]} <b>${mc.pre}${fmtN(it.meta[k])}${mc.suf}</b></span>`).join('')}</div>`:''
       }</div>`).join('')
     }</div></div>`;
   }).join('');
@@ -571,16 +635,13 @@ function render(){
   }else{
     out.innerHTML=updateHtml+html;
   }
+  requestAnimationFrame(fitNums);
 }
 
 let BL_MAP={};
 function renderChips(){
   const box=document.getElementById('chips');
-  const opts=STATE.tab==='stocks'
-    ? (STATE.st||[]).map(g=>g.group)
-    : STATE.tab==='kr'
-    ? (STATE.kr||[]).map(g=>g.group)
-    : Object.keys(BL_MAP);
+  const opts=STATE.tab==='ai'?Object.keys(BL_MAP):(STATE[TAB_SRC[STATE.tab]]||[]).map(g=>g.group);
   box.innerHTML=opts.map(o=>`<span class="chip${STATE.filter.has(o)?' on':''}" data-f="${o}">${BL_MAP[o]||o}</span>`).join('');
 }
 
@@ -588,11 +649,11 @@ document.addEventListener('click',e=>{
   const t=e.target.closest('.tab');if(t){switchTab(t.dataset.t);return}
   const c=e.target.closest('.chip');if(c){const f=c.dataset.f;STATE.filter.has(f)?STATE.filter.delete(f):STATE.filter.add(f);TAB_FILTERS[STATE.tab]=new Set(STATE.filter);renderChips();updateCount();render();saveState()}
 });
-document.getElementById('q').oninput=e=>{STATE.q=e.target.value;render()};
+const _qInput=document.getElementById('q'),_qClear=document.getElementById('qClear');
+_qInput.oninput=e=>{STATE.q=e.target.value;_qClear.classList.toggle('show',!!e.target.value);render()};
+_qClear.onclick=()=>{_qInput.value='';STATE.q='';_qClear.classList.remove('show');render();_qInput.focus()};
 function getOpts(){
-  return STATE.tab==='stocks'?(STATE.st||[]).map(g=>g.group)
-    :STATE.tab==='kr'?(STATE.kr||[]).map(g=>g.group)
-    :Object.keys(BL_MAP);
+  return STATE.tab==='ai'?Object.keys(BL_MAP):(STATE[TAB_SRC[STATE.tab]]||[]).map(g=>g.group);
 }
 document.getElementById('toggle').onclick=()=>{
   const opts=getOpts();
@@ -612,7 +673,7 @@ function updateCount(){
 }
 
 // ═══ SWIPE NAV ═══
-const TAB_ORDER=['stocks','kr','ai'];
+const TAB_ORDER=['stocks','kr','jp','ai','etf','commodity','unicorn'];
 let _sliding=false;
 const _scrollPos={stocks:0,kr:0,ai:0};
 function switchTab(id,dir){
@@ -661,9 +722,9 @@ function switchTab(id,dir){
 
 (async()=>{
   try{
-    const[st,ai,kr,stUpd,aiUpd,krUpd]=await Promise.all([loadJS(STOCKS_URL),loadJS(AI_URL),loadJS(KR_URL),loadUpdJS(STOCKS_UPD_URL,'updates'),loadUpdJS(AI_UPD_URL,'UPDATES'),loadUpdJS(KR_UPD_URL,'updates')]);
-    STATE.st=norm(st,'stocks');STATE.ai=norm(ai,'ai');STATE.kr=norm(kr,'kr');
-    STATE.stUpd=stUpd;STATE.aiUpd=aiUpd;STATE.krUpd=krUpd;
+    const[st,ai,kr,jp,etf,commodity,unicorn,stUpd,aiUpd,krUpd,jpUpd,etfUpd,commodityUpd,unicornUpd]=await Promise.all([loadJS(STOCKS_URL),loadJS(AI_URL),loadJS(KR_URL),loadJS(JP_URL),loadJS(ETF_URL),loadJS(COMMODITY_URL),loadJS(UNICORN_URL),loadUpdJS(STOCKS_UPD_URL,'updates'),loadUpdJS(AI_UPD_URL,'UPDATES'),loadUpdJS(KR_UPD_URL,'updates'),loadUpdJS(JP_UPD_URL,'updates'),loadUpdJS(ETF_UPD_URL,'updates'),loadUpdJS(COMMODITY_UPD_URL,'updates'),loadUpdJS(UNICORN_UPD_URL,'updates')]);
+    STATE.st=norm(st,'stocks');STATE.ai=norm(ai,'ai');STATE.kr=norm(kr,'kr');STATE.jp=norm(jp,'jp');STATE.etf=norm(etf,'etf');STATE.commodity=norm(commodity,'commodity');STATE.unicorn=norm(unicorn,'unicorn');
+    STATE.stUpd=stUpd;STATE.aiUpd=aiUpd;STATE.krUpd=krUpd;STATE.jpUpd=jpUpd;STATE.etfUpd=etfUpd;STATE.commodityUpd=commodityUpd;STATE.unicornUpd=unicornUpd;
     BL_MAP=ai.BL||{};
     _dataVersion=await fetchVersion();
     document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t===STATE.tab));
