@@ -67,11 +67,11 @@ h1 span{
 
 /* ═══ TAB DESC ═══ */
 .tab-desc{
-  font-size:12px;color:var(--mut);line-height:1.5;
-  margin-bottom:4px;letter-spacing:-0.1px;
+  font-size:14px;color:var(--fg2);line-height:1.5;
+  margin-bottom:6px;letter-spacing:-0.1px;font-weight:500;
 }
 .tab-criteria{
-  font-size:11px;color:var(--placeholder);line-height:1.5;
+  font-size:12px;color:var(--mut);line-height:1.5;
   margin-bottom:12px;letter-spacing:0.2px;
   font-family:'Geist Mono','SF Mono',monospace;
 }
@@ -465,14 +465,21 @@ async function fetchVersion(){
   const m=t.match(/DATA_VERSION\s*=\s*["'](.+?)["']/);return m?m[1]:null;}catch(e){return null;}
 }
 async function refreshIfNeeded(){
-  const v=await fetchVersion();if(!v)return;
-  if(!_dataVersion){_dataVersion=v;return;}
-  if(v===_dataVersion)return;
+  const v=await fetchVersion();if(!v)return false;
+  if(!_dataVersion){_dataVersion=v;return false;}
+  if(v===_dataVersion)return false;
   _dataVersion=v;
   const[st,ai,kr,stUpd,aiUpd,krUpd]=await Promise.all([loadJS(STOCKS_URL,v),loadJS(AI_URL,v),loadJS(KR_URL,v),loadUpdJS(STOCKS_UPD_URL,'updates',v),loadUpdJS(AI_UPD_URL,'UPDATES',v),loadUpdJS(KR_UPD_URL,'updates',v)]);
   STATE.st=norm(st,'stocks');STATE.ai=norm(ai,'ai');STATE.kr=norm(kr,'kr');
   STATE.stUpd=stUpd;STATE.aiUpd=aiUpd;STATE.krUpd=krUpd;BL_MAP=ai.BL||{};
+  return true;
 }
+// 페이지 포커스 복귀 시 버전 체크 → 현재 탭 즉시 갱신
+document.addEventListener('visibilitychange',async()=>{
+  if(document.visibilityState==='visible'&&_dataVersion){
+    if(await refreshIfNeeded()){renderChips();updateCount();render();}
+  }
+});
 
 async function loadUpdJS(url,varName,v){
   const r=await fetch(v?url+'?v='+v:url);const buf=await r.arrayBuffer();
