@@ -116,7 +116,17 @@ h1 span{
 .chip.on{color:var(--acc-deep);background:var(--acc-light);border-color:var(--acc)}
 
 /* ═══ MAIN CONTENT ═══ */
-main{padding:40px 32px 80px;position:relative;z-index:1}
+main{padding:40px 32px 80px;position:relative;z-index:1;overflow:hidden}
+
+/* ═══ TAB SLIDE TRANSITION ═══ */
+@keyframes slideOutLeft{from{transform:translateX(0);opacity:1}to{transform:translateX(-60px);opacity:0}}
+@keyframes slideInRight{from{transform:translateX(60px);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes slideOutRight{from{transform:translateX(0);opacity:1}to{transform:translateX(60px);opacity:0}}
+@keyframes slideInLeft{from{transform:translateX(-60px);opacity:0}to{transform:translateX(0);opacity:1}}
+main.slide-out-left{animation:slideOutLeft .18s ease-in forwards}
+main.slide-in-right{animation:slideInRight .22s ease-out forwards}
+main.slide-out-right{animation:slideOutRight .18s ease-in forwards}
+main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
 
 /* ═══ GROUP SECTIONS ═══ */
 .group{margin-bottom:56px;opacity:0;transform:translateY(24px);animation:fadeSlideIn .6s ease forwards}
@@ -544,7 +554,7 @@ function renderChips(){
 }
 
 document.addEventListener('click',e=>{
-  const t=e.target.closest('.tab');if(t){const prev=STATE.tab;TAB_FILTERS[prev]=new Set(STATE.filter);STATE.tab=t.dataset.t;STATE.filter=new Set(TAB_FILTERS[STATE.tab]);document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));document.getElementById('tabDesc').textContent=TAB_DESC[STATE.tab]||'';document.getElementById('tabCriteria').textContent=TAB_CRITERIA[STATE.tab]||'';renderChips();updateCount();render();saveState();return}
+  const t=e.target.closest('.tab');if(t){switchTab(t.dataset.t);return}
   const c=e.target.closest('.chip');if(c){const f=c.dataset.f;STATE.filter.has(f)?STATE.filter.delete(f):STATE.filter.add(f);TAB_FILTERS[STATE.tab]=new Set(STATE.filter);renderChips();updateCount();render();saveState()}
 });
 document.getElementById('q').oninput=e=>{STATE.q=e.target.value;render()};
@@ -568,6 +578,52 @@ function updateCount(){
   btn.classList.toggle('on',allOn);
   const n=STATE.filter.size;
   document.getElementById('count').textContent=n?` (${n})`:'';
+}
+
+// ═══ SWIPE NAV ═══
+const TAB_ORDER=['stocks','kr','ai'];
+let _sliding=false;
+const _scrollPos={stocks:0,kr:0,ai:0};
+function switchTab(id,dir){
+  if(_sliding||id===STATE.tab)return;
+  const m=document.getElementById('out');
+  if(dir==null) dir=TAB_ORDER.indexOf(id)>TAB_ORDER.indexOf(STATE.tab)?1:-1;
+  _sliding=true;
+  _scrollPos[STATE.tab]=window.scrollY;
+  const outCls=dir>0?'slide-out-left':'slide-out-right';
+  const inCls=dir>0?'slide-in-right':'slide-in-left';
+  m.classList.add(outCls);
+  m.addEventListener('animationend',function once(){
+    m.removeEventListener('animationend',once);
+    m.classList.remove(outCls);
+    const prev=STATE.tab;TAB_FILTERS[prev]=new Set(STATE.filter);
+    STATE.tab=id;STATE.filter=new Set(TAB_FILTERS[id]);
+    document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t===id));
+    document.getElementById('tabDesc').textContent=TAB_DESC[id]||'';
+    document.getElementById('tabCriteria').textContent=TAB_CRITERIA[id]||'';
+    renderChips();updateCount();render();saveState();
+    window.scrollTo(0,_scrollPos[id]);
+    m.classList.add(inCls);
+    m.addEventListener('animationend',function once2(){
+      m.removeEventListener('animationend',once2);
+      m.classList.remove(inCls);
+      _sliding=false;
+    });
+  });
+}
+{
+  let sx=0,sy=0,tracking=false;
+  const el=document.getElementById('out');
+  el.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;tracking=true},{passive:true});
+  el.addEventListener('touchend',e=>{
+    if(!tracking)return;tracking=false;
+    const dx=e.changedTouches[0].clientX-sx;
+    const dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)<50||Math.abs(dy)>Math.abs(dx)*0.7)return;
+    const i=TAB_ORDER.indexOf(STATE.tab);
+    if(dx<0&&i<TAB_ORDER.length-1)switchTab(TAB_ORDER[i+1],1);
+    else if(dx>0&&i>0)switchTab(TAB_ORDER[i-1],-1);
+  },{passive:true});
 }
 
 (async()=>{
