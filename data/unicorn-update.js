@@ -1,6 +1,19 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-13 21:16 KST",
+    summary: "재검증 — Navan 상장 확인·제외, 밸류에이션 10건 정정, Anduril 편입",
+    changes: [
+      { type: "제외(상장)", sector: "핀테크", detail: "Navan 2025.10 나스닥 IPO(NAVN) 확인. Anduril($60B 방산AI·美 육군 $20B 계약) 편입." },
+      { type: "수치 정정", sector: "AI·ML", detail: "Anthropic 라운드명 Series H→Series G 정정 (공식 발표 기준)." },
+      { type: "수치 갱신", sector: "핀테크", detail: "Ramp $13B→$32B(Series F $300M, ARR $1B+), Plaid 다운라운드→업라운드 정정." },
+      { type: "수치 갱신", sector: "엔터프라이즈 SW", detail: "Perplexity AI $20B→$22.6B(ARR $454M), Canva ARR $4B→$6B+(IPO 2026 H2 전망)." },
+      { type: "수치 갱신", sector: "바이오·헬스", detail: "Xaira $1B+→$3.5B(펀딩 $1.3B), Cohere $6.8B→$7B." },
+      { type: "수치 갱신", sector: "크립토·Web3", detail: "Kraken $12B→$20B($800M 조달, IPO 보류), Ripple IPO 전망→경영진 IPO 부정." },
+      { type: "수치 갱신", sector: "우주·모빌리티", detail: "Stoke Space $3B→$3.4B(Series D $860M 확장)." },
+    ]
+  },
+  {
     date: "2026-04-13 20:52 KST",
     summary: "7개 기업 제외(상장·인수) + 대체 편입, 전체 밸류에이션 갱신",
     changes: [
