@@ -3,6 +3,14 @@
 
 const updates = [
   {
+    date: "2026-04-14 14:25 KST",
+    summary: "JPMorgan Q1 2026 실적 반영",
+    changes: [
+      { type: "종목 정보 갱신", sector: "금융·은행",
+        detail: "JPMorgan(JPM) Q1 2026 실적 반영. 순매출 $49.2B(YoY +8%), 순익 $16B, EPS $5.42(컨센서스 $5.15 상회). 투자은행·NII 동반 성장, 주가 사상 최고($248.50, +4.2%). Jamie Dimon 후계자 선정 공식화." },
+    ]
+  },
+  {
     date: "2026-04-14 14:12 KST",
     summary: "Goldman Sachs Q1 2026 실적 반영, FY26E 컨센서스 상향",
     changes: [

@@ -201,7 +201,7 @@ const data = [
     title: "🏦 금융·은행",
     tag: "규제완화·M&A 부활 테마",
     stocks: [
-      { tk:"JPM", nm:"JPMorgan", rs:"미 최대 은행", r1:"186", p1:"57", r2:"192", p2:"56" },
+      { tk:"JPM", nm:"JPMorgan", rs:"Q1 매출 49B·순익 16B 어닝비트·Dimon 후계 공표", r1:"186", p1:"57", r2:"192", p2:"56" },
       { tk:"GS", nm:"Goldman Sachs", rs:"Q1 IB수수료 48%↑·주식트레이딩 사상 최고·M&A 글로벌 1위", r1:"55", p1:"14", r2:"63", p2:"18" },
       { tk:"MS", nm:"Morgan Stanley", rs:"자산관리·IB", r1:"62", p1:"13", r2:"66", p2:"14.5" },
       { tk:"BAC", nm:"Bank of America", rs:"소매·상업은행", r1:"105", p1:"28", r2:"110", p2:"31" },
