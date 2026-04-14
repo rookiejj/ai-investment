@@ -202,7 +202,7 @@ const data = [
     tag: "규제완화·M&A 부활 테마",
     stocks: [
       { tk:"JPM", nm:"JPMorgan", rs:"미 최대 은행", r1:"186", p1:"57", r2:"192", p2:"56" },
-      { tk:"GS", nm:"Goldman Sachs", rs:"IB 백로그 4년 최고·트레이딩", r1:"55", p1:"14", r2:"60", p2:"16" },
+      { tk:"GS", nm:"Goldman Sachs", rs:"Q1 IB수수료 48%↑·주식트레이딩 사상 최고·M&A 글로벌 1위", r1:"55", p1:"14", r2:"63", p2:"18" },
       { tk:"MS", nm:"Morgan Stanley", rs:"자산관리·IB", r1:"62", p1:"13", r2:"66", p2:"14.5" },
       { tk:"BAC", nm:"Bank of America", rs:"소매·상업은행", r1:"105", p1:"28", r2:"110", p2:"31" },
       { tk:"SCHW", nm:"Charles Schwab", rs:"리테일 브로커·자산관리", r1:"21", p1:"7.0", r2:"23", p2:"8.0" },
