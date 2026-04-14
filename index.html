@@ -688,6 +688,13 @@ function updateCount(){
 const TAB_ORDER=['stocks','kr','jp','ai','etf','commodity','unicorn'];
 let _sliding=false;
 const _scrollPos={stocks:0,kr:0,ai:0};
+function ensureActiveTabVisible(){
+  const t=document.querySelector('.tab.on');if(!t)return;
+  const bar=t.parentElement;
+  const l=t.offsetLeft,r=l+t.offsetWidth,sl=bar.scrollLeft,vr=sl+bar.clientWidth;
+  if(l<sl) bar.scrollTo({left:Math.max(0,l-8),behavior:'smooth'});
+  else if(r>vr) bar.scrollTo({left:r-bar.clientWidth+8,behavior:'smooth'});
+}
 function switchTab(id,dir){
   if(_sliding||id===STATE.tab)return;
   const _refreshP=refreshIfNeeded();
@@ -705,6 +712,7 @@ function switchTab(id,dir){
     const prev=STATE.tab;TAB_FILTERS[prev]=new Set(STATE.filter);
     STATE.tab=id;STATE.filter=new Set(TAB_FILTERS[id]);
     document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t===id));
+    ensureActiveTabVisible();
     document.getElementById('tabDesc').textContent=TAB_DESC[id]||'';
     document.getElementById('tabCriteria').textContent=TAB_CRITERIA[id]||'';
     renderChips();updateCount();render();saveState();
@@ -741,6 +749,7 @@ function switchTab(id,dir){
     STATE.stUpd=stUpd;STATE.aiUpd=aiUpd;STATE.krUpd=krUpd;STATE.jpUpd=jpUpd;STATE.etfUpd=etfUpd;STATE.commodityUpd=commodityUpd;STATE.unicornUpd=unicornUpd;
     BL_MAP=ai.BL||{};
     document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t===STATE.tab));
+    ensureActiveTabVisible();
     document.getElementById('tabDesc').textContent=TAB_DESC[STATE.tab]||'';
     document.getElementById('tabCriteria').textContent=TAB_CRITERIA[STATE.tab]||'';
     renderChips();updateCount();render();
