@@ -22,7 +22,11 @@
       "Bash(tasklist /fi \"PID eq 21044\" /v /fo list)",
       "Bash(curl -s http://localhost:8080/)",
       "Bash(curl -s http://localhost:8080/data/stocks-update.js)",
-      "Skill(schedule)"
+      "Skill(schedule)",
+      "Bash(git fetch:*)",
+      "Bash(git restore:*)",
+      "Bash(git pull:*)",
+      "Bash(git stash:*)"
     ]
   }
 }
