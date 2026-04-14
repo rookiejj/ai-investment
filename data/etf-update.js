@@ -1,11 +1,13 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
-    date: "2026-04-14 07:23 KST",
-    summary: "AI·반도체 ETF AUM 대폭 상향 갱신 — SMH $28B→$71B, SOXX $16B→$22B",
+    date: "2026-04-14 20:35 KST",
+    summary: "AI·반도체 ETF AUM 상향 + QQQ AUM 갱신",
     changes: [
       { type: "수치 갱신", sector: "AI·반도체",
-        detail: "SMH(VanEck Semiconductor) AUM $28B→$71B(+154%). AI 인프라 투자 붐·반도체 슈퍼사이클로 2026년 초 이후 자금 대거 유입. 4월 한 달 약 +20% 랠리. SOXX(iShares Semiconductor) AUM $16B→$22B(+37.5%). Morningstar Bronze 유지. 두 ETF 모두 1위 자리 경쟁 심화. 이번 갱신은 AUM만 반영, YTD·1Y 수익률은 기존 유지." }
+        detail: "SMH(VanEck Semiconductor) AUM $28B→$71B(+154%). AI 인프라 투자 붐·반도체 슈퍼사이클로 2026년 초 이후 자금 대거 유입. 4월 한 달 약 +20% 랠리. SOXX(iShares Semiconductor) AUM $16B→$22B(+37.5%). Morningstar Bronze 유지. 두 ETF 모두 1위 자리 경쟁 심화. 이번 갱신은 AUM만 반영, YTD·1Y 수익률은 기존 유지." },
+      { type: "수치 갱신", sector: "미국 대형주",
+        detail: "QQQ(Invesco QQQ Trust) AUM $320B→$400B. 나스닥 100 빅테크 랠리 지속, AI·반도체 비중 확대와 GPT-5.4·Gemini 3.1 출시로 투자자 관심 유입. SPY·VOO와 함께 3대 최대 ETF 자리 공고히." }
     ]
   },
   {

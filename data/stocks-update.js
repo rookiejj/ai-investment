@@ -3,6 +3,14 @@
 
 const updates = [
   {
+    date: "2026-04-14 20:35 KST",
+    summary: "Wells Fargo Q1 2026 실적 반영",
+    changes: [
+      { type: "종목 정보 갱신", sector: "금융·은행",
+        detail: "Wells Fargo(WFC) Q1 2026 실적 반영. 순매출 $21.45B(YoY +6%, 컨센 $21.76B 소폭 하회), 조정 EPS $1.60(컨센 $1.58 상회). 순이자수익 $12.1B(+5%), 비이자수익 $9.35B(+8%), 평균 대출 $996B(+10%), 평균 예금 $1.42T(+6%), ROE 12.2%로 전년 11.5%에서 개선. CEO Scharf '투자 결실' 코멘트. FY26E 컨센서스 매출 $87B → $88B, 순익 $21B → $22B 소폭 상향." },
+    ]
+  },
+  {
     date: "2026-04-14 14:25 KST",
     summary: "JPMorgan Q1 2026 실적 반영",
     changes: [

@@ -62,7 +62,7 @@ const data = [
     tag: "S&P500·나스닥·다우",
     stocks: [
       { tk:"SPY", nm:"SPDR S&P 500", rs:"S&P 500 최대 ETF", aum:"580", er:"0.09%", ytd:"+12%", y1:"+22%" },
-      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"나스닥 100 빅테크", aum:"320", er:"0.20%", ytd:"+15%", y1:"+28%" },
+      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"나스닥 100 빅테크", aum:"400", er:"0.20%", ytd:"+15%", y1:"+28%" },
       { tk:"VOO", nm:"Vanguard S&P 500", rs:"S&P 500 최저 보수", aum:"500", er:"0.03%", ytd:"+12%", y1:"+22%" },
       { tk:"VTI", nm:"Vanguard Total Stock", rs:"미국 전체 시장", aum:"420", er:"0.03%", ytd:"+11%", y1:"+20%" },
       { tk:"DIA", nm:"SPDR Dow Jones", rs:"다우 30 우량주", aum:"35", er:"0.16%", ytd:"+8%", y1:"+15%" },
