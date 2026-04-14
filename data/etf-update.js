@@ -1,6 +1,14 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
+    date: "2026-04-15 07:20 KST",
+    summary: "SMH AUM 실측치 반영 정정·rs 구체화",
+    changes: [
+      { type: "수치 정정", sector: "AI·반도체",
+        detail: "SMH(VanEck Semiconductor) AUM $71B→$42B으로 정정. VanEck 공식·ETF Database 4월 중순 수치 기준 실제 AUM $42B+로 확인(전일 반영치 과대). 여전히 섹터 최대 ETF 지위 유지, 4/14 기준 SOXX($22B) 대비 약 2배. 25종·MVIS US Listed Semiconductor 지수 추종 특성을 rs에 명시." }
+    ]
+  },
+  {
     date: "2026-04-14 20:35 KST",
     summary: "AI·반도체 ETF AUM 상향 + QQQ AUM 갱신",
     changes: [
