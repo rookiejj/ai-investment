@@ -1,6 +1,14 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-14 07:23 KST",
+    summary: "SpaceX IPO 목표 밸류에이션 및 로드쇼 일정 갱신",
+    changes: [
+      { type: "수치 갱신", sector: "우주·모빌리티",
+        detail: "SpaceX IPO 공식 목표 정정: 기존 '$2T+ 추진' → $1.75T 목표. S-1 비밀 제출(4/1) 후 로드쇼 6/8, 소매 이벤트 6/11 일정 공식화. 조달 목표 $50~75B. 상장 후 가격이 $2T+ 도달 가능성은 있으나 공모 목표는 $1.75T." }
+    ]
+  },
+  {
     date: "2026-04-13 21:16 KST",
     summary: "재검증 — Navan 상장 확인·제외, 밸류에이션 10건 정정, Anduril 편입",
     changes: [

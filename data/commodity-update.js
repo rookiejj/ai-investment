@@ -1,6 +1,14 @@
 // Commodity & Macro - Update Log
 const updates = [
   {
+    date: "2026-04-14 07:23 KST",
+    summary: "금 현재가 갱신 및 1Y 수익률 정정",
+    changes: [
+      { type: "수치 갱신", sector: "귀금속",
+        detail: "금(Gold) $4,724→$4,761(+0.8%). 1Y 수익률 +51%→+46%로 정정(trading economics 4/14 기준). 조기 금리 인하 선반영·안전자산 선호 지속. YTD +11%로 소폭 상향." }
+    ]
+  },
+  {
     date: "2026-04-14 16:00 KST",
     summary: "구리 가격 대폭 상향 — AI 인프라 수요·3월 고점 수준 회복",
     changes: [

@@ -39,7 +39,7 @@ const data = [
     title: "🚀 우주·모빌리티",
     tag: "발사체·위성·UAM",
     stocks: [
-      { nm:"SpaceX", rs:"Starlink·Starship·xAI 합병", val:"$1.25T", round:"S-1 비밀 제출 (4/1)", sector:"우주", ipo:"$2T+ IPO 추진" },
+      { nm:"SpaceX", rs:"Starlink·Starship·xAI 합병", val:"$1.25T", round:"S-1 비밀 제출 (4/1)", sector:"우주", ipo:"$1.75T 목표·6월 로드쇼 예정" },
       { nm:"Stoke Space", rs:"완전 재사용 로켓·2단 회수", val:"$3.4B", round:"Series D ($860M)", sector:"우주", ipo:"미정" },
       { nm:"Boom Supersonic", rs:"초음속 여객기·DC 터빈 피벗", val:"$1.5B", round:"Series B ($300M)", sector:"항공", ipo:"미정" },
       { nm:"Zipline", rs:"드론 배송·누적 200만 건", val:"$7.6B", round:"Series H ($800M)", sector:"드론·물류", ipo:"2027" },
