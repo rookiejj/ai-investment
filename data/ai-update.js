@@ -8,9 +8,10 @@ const UPDATES = [
   {
     date: "2026-04-15 21:38 KST",
     badge: "개별",
-    entries: [
-      { text: "xAI — Grok 5 Q1 2026 목표 공식 지연 → Q2 2026(5~6월 퍼블릭 베타) 윈도우로 재조정. Colossus 2(1.5GW) 훈련 여전히 진행 중, 6T 파라미터 MoE 아키텍처 유지. Musk 4/14 '내 AGI 달성 확률 추정 10% 수준, 상승 중' 발언. XChat(위챗 경쟁 서비스) 4/17 Grok 엔진 탑재 출시 예정. ai-data.js의 Grok 5 항목에 Q2 2026 윈도우 재확인 반영.", time: "2026-04-15 21:38 KST" },
-      { text: "OpenAI — GPT-6 루머 추가 정리: Polymarket 4/30 이전 출시 확률 78% 유지, 5/25까지 윈도우 컨센서스. 3/24 Spud 프리트레이닝 종료 이후 외부 공식 발표 부재. GPT-5.5 vs GPT-6 네이밍 미확정(퍼포먼스 점프 크기에 따라 결정). 출시 임박 스탠스 유지.", time: "2026-04-15 21:38 KST" },
+    summary: "xAI Grok 5 출시 Q2 2026으로 재조정·XChat 예정 + OpenAI GPT-6 루머 정리",
+    changes: [
+      { type: "모델 출시 예정", sector: "xAI", detail: "Grok 5 Q1 2026 목표 공식 지연 → Q2 2026(5~6월 퍼블릭 베타) 윈도우로 재조정. Colossus 2(1.5GW) 훈련 여전히 진행 중, 6T 파라미터 MoE 아키텍처 유지. Musk 4/14 '내 AGI 달성 확률 추정 10% 수준, 상승 중' 발언. XChat(위챗 경쟁 서비스) 4/17 Grok 엔진 탑재 출시 예정. ai-data.js의 Grok 5 항목에 Q2 2026 윈도우 재확인 반영.", time: "2026-04-15 21:38 KST" },
+      { type: "모델 출시 예정", sector: "OpenAI", detail: "GPT-6 루머 추가 정리: Polymarket 4/30 이전 출시 확률 78% 유지, 5/25까지 윈도우 컨센서스. 3/24 Spud 프리트레이닝 종료 이후 외부 공식 발표 부재. GPT-5.5 vs GPT-6 네이밍 미확정(퍼포먼스 점프 크기에 따라 결정). 출시 임박 스탠스 유지.", time: "2026-04-15 21:38 KST" }
     ]
   },
   {
