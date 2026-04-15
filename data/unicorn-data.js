@@ -29,7 +29,7 @@ const data = [
     tag: "생산성·디자인·협업",
     stocks: [
       { nm:"Canva", rs:"디자인 플랫폼·AI 생성·ARR $6B+", val:"$42B", round:"세컨더리", sector:"디자인", ipo:"2026 H2" },
-      { nm:"Perplexity AI", rs:"AI 검색·답변 엔진·ARR $454M", val:"$22.6B", round:"Series E-6", sector:"AI 검색", ipo:"2027" },
+      { nm:"Perplexity AI", rs:"AI 검색·Computer 에이전트·ARR $500M +335% YoY", val:"$22.6B", round:"Series E-6", sector:"AI 검색", ipo:"2027" },
       { nm:"Notion", rs:"AI 워크스페이스·문서·위키", val:"$11B", round:"세컨더리 ($270M)", sector:"생산성", ipo:"미정" },
       { nm:"Discord", rs:"커뮤니티 플랫폼·IPO 비밀 신청", val:"$15B", round:"Series I", sector:"소셜", ipo:"2026 나스닥" },
       { nm:"Airtable", rs:"노코드 데이터베이스·자동화", val:"$4B", round:"세컨더리 (다운)", sector:"노코드", ipo:"미정" },

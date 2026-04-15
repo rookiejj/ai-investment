@@ -1,6 +1,15 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-15 21:38 KST",
+    badge: "개별",
+    summary: "Perplexity ARR $500M 돌파 반영 (Computer 에이전트·업라운드)",
+    changes: [
+      { type: "수치 갱신", sector: "엔터프라이즈 SW",
+        detail: "Perplexity AI ARR $454M → $500M 상향. 2026년 4월 기준 연환산 매출 $500M 돌파, 전년 대비 +335% 가속(2025 $232M 대비 2배+). 2월 AI 에이전트 'Computer' 출시와 사용량 기반 가격 레이어 도입이 주요 촉매. 밸류 $22.6B 유지(2026 초반 Series E-6 종결).", time: "2026-04-15 21:38 KST" },
+    ]
+  },
+  {
     date: "2026-04-15 12:40 KST",
     summary: "Anthropic $800B 오퍼·Cerebras 4월 IPO 가격 임박·SpaceX $1.75T 로드쇼 확정",
     changes: [

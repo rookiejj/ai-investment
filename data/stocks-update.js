@@ -3,6 +3,19 @@
 
 const updates = [
   {
+    date: "2026-04-15 21:38 KST",
+    badge: "개별",
+    summary: "Morgan Stanley·BAC Q1 2026 실적 + ASML Q1·가이던스 상향 반영",
+    changes: [
+      { type: "종목 정보 갱신", sector: "금융·은행",
+        detail: "Morgan Stanley(MS) Q1 2026 실적 반영. 순매출 $20.6B 사상 최고(컨센 $19.23B 상회), 순익 $5.57B(+29% YoY), EPS $3.43(컨센 $2.95 큰 폭 상회). Institutional Securities IB수수료 +36%, M&A 어드바이저리 +74%. Wealth Management 순유입 $118B 기록적·ROTCE 27.1%. 자사주 매입 $1.75B·배당 $1.00. FY26E 컨센서스 매출 $66B → $70B, 순익 $14.5B → $16B 상향.", time: "2026-04-15 21:38 KST" },
+      { type: "종목 정보 갱신", sector: "금융·은행",
+        detail: "Bank of America(BAC) Q1 2026 실적 반영. 순매출 $30.3B(YoY +7%, 컨센 $29.93B 상회), 순익 $8.6B, EPS $1.11(컨센 $1.00 비트)로 20년 내 분기 최고치. NII $15.9B(+9%), 에쿼티 트레이딩 +30%, GWIM 매출 $6.7B(+12%)·고객자산 $4.6T(+10%). 충당금 $1.3B로 개선. CEO Moynihan '소비 건전' 코멘트. FY26E 컨센서스 매출 $110B → $113B, 순익 $31B → $33B 상향.", time: "2026-04-15 21:38 KST" },
+      { type: "종목 정보 갱신", sector: "반도체",
+        detail: "ASML rs 갱신. Q1 2026 순매출 €8.8B(가이던스 내), 순익 €2.8B, GM 53.0%(가이던스 상단). EUV 16대 포함 79대 출하. 2026 연간 가이던스 €34~39B → €36~40B로 상향, GM 51~53%. Q2 가이던스 €8.4~9.0B. AI 수요로 로직·메모리 고객 CapEx 가속, 수주 강세 지속. FY26E 컨센서스 매출 €40B → €42B, 순익 €11B → €12B 상향.", time: "2026-04-15 21:38 KST" },
+    ]
+  },
+  {
     date: "2026-04-15 20:14 KST",
     badge: "개별",
     summary: "AMD·NVDA·TSMC 주요 반도체주 rs 갱신 — Meta $60B 딜·H20 라이선스·TSMC N2 램프",

@@ -1,6 +1,17 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
+    date: "2026-04-15 21:38 KST",
+    badge: "개별",
+    summary: "미국 대형주 ETF YTD 갱신(SPY -4%·QQQ +1%) + IBIT AUM·YTD 소폭 정정",
+    changes: [
+      { type: "수치 갱신", sector: "미국 대형주",
+        detail: "SPY YTD +12→-4%·QQQ +15→+1%·VOO +12→-4%·VTI +11→-4%·DIA +8→-3%로 재조정. 2026 초반 S&P500 -6.7%(4/3)까지 밀렸다가 중순 반등 국면. QQQ는 AI 리더십으로 상대 강세 유지(YTD +0.6%). 1Y 수익률도 최근 조정 반영해 하향. 현재 S&P 500 6,950·나스닥 23,500 수준.", time: "2026-04-15 21:38 KST" },
+      { type: "수치 갱신", sector: "크립토·블록체인",
+        detail: "IBIT AUM $57B → $54B로 재조정(Q1 2026 종료 시점 $54B·시장점유 49% 공식). YTD -24% → -22%(최근 BTC 소폭 반등). rs에 커스터디 BTC 78.2만개, 일평균 거래대금 $3.2B 부가.", time: "2026-04-15 21:38 KST" },
+    ]
+  },
+  {
     date: "2026-04-15 20:14 KST",
     badge: "개별",
     summary: "SMH AUM 재조정·IBIT YTD 추가 하향 — BTC $70,800 권역 하락폭 반영",

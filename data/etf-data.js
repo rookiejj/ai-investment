@@ -50,7 +50,7 @@ const data = [
     title: "₿ 크립토·블록체인",
     tag: "비트코인·이더리움·디파이",
     stocks: [
-      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"비트코인 현물 최대·AUM $56.8B·Q1 순유입 $8.4B", aum:"57", er:"0.25%", ytd:"-24%", y1:"-20%" },
+      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"비트코인 현물 최대·Q1 AUM $54B·순유입 $8.4B·BTC 78.2만개 보유", aum:"54", er:"0.25%", ytd:"-22%", y1:"-18%" },
       { tk:"FBTC", nm:"Fidelity Wise Origin BTC", rs:"비트코인 현물·피델리티", aum:"17", er:"0.25%", ytd:"-16%", y1:"-15%" },
       { tk:"ETHA", nm:"iShares Ethereum Trust", rs:"이더리움 현물·4/14 +7%", aum:"10", er:"0.25%", ytd:"-12%", y1:"-8%" },
       { tk:"BITO", nm:"ProShares Bitcoin Strategy", rs:"비트코인 선물 최초", aum:"3", er:"0.95%", ytd:"-18%", y1:"-18%" },
@@ -61,11 +61,11 @@ const data = [
     title: "🇺🇸 미국 대형주",
     tag: "S&P500·나스닥·다우",
     stocks: [
-      { tk:"SPY", nm:"SPDR S&P 500", rs:"S&P 500 최대 ETF", aum:"580", er:"0.09%", ytd:"+12%", y1:"+22%" },
-      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"나스닥 100 빅테크", aum:"400", er:"0.20%", ytd:"+15%", y1:"+28%" },
-      { tk:"VOO", nm:"Vanguard S&P 500", rs:"S&P 500 최저 보수", aum:"500", er:"0.03%", ytd:"+12%", y1:"+22%" },
-      { tk:"VTI", nm:"Vanguard Total Stock", rs:"미국 전체 시장", aum:"420", er:"0.03%", ytd:"+11%", y1:"+20%" },
-      { tk:"DIA", nm:"SPDR Dow Jones", rs:"다우 30 우량주", aum:"35", er:"0.16%", ytd:"+8%", y1:"+15%" },
+      { tk:"SPY", nm:"SPDR S&P 500", rs:"S&P 500 최대 ETF·4월 변동장 반등 국면", aum:"580", er:"0.09%", ytd:"-4%", y1:"+10%" },
+      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"나스닥 100 빅테크·AI 리더십 유지", aum:"400", er:"0.20%", ytd:"+1%", y1:"+15%" },
+      { tk:"VOO", nm:"Vanguard S&P 500", rs:"S&P 500 최저 보수", aum:"500", er:"0.03%", ytd:"-4%", y1:"+10%" },
+      { tk:"VTI", nm:"Vanguard Total Stock", rs:"미국 전체 시장", aum:"420", er:"0.03%", ytd:"-4%", y1:"+9%" },
+      { tk:"DIA", nm:"SPDR Dow Jones", rs:"다우 30 우량주", aum:"35", er:"0.16%", ytd:"-3%", y1:"+7%" },
     ]
   },
   {
