@@ -10,7 +10,7 @@ const data = [
       { nm:"Anthropic", rs:"Claude·ARR $30B·OpenAI 추월", val:"$380B", round:"Series G ($30B)", sector:"프론티어 AI", ipo:"2026.10 $400B+" },
       { nm:"Databricks", rs:"레이크하우스·AI 통합·ARR $5.4B", val:"$134B", round:"Series L ($11B)", sector:"데이터·AI", ipo:"2026 H2 S-1" },
       { nm:"Scale AI", rs:"데이터 라벨링·RLHF·Meta 전략투자", val:"$29B", round:"Meta 투자 ($14.3B)", sector:"AI 인프라", ipo:"2027" },
-      { nm:"Cerebras", rs:"웨이퍼급 AI칩·OpenAI $10B 계약", val:"$22B", round:"Series H + IPO 로드쇼", sector:"AI 하드웨어", ipo:"2026 Q2 나스닥" },
+      { nm:"Cerebras", rs:"웨이퍼급 AI칩·OpenAI $10B 계약", val:"$23B", round:"Series H 완료(2/26)·IPO 로드쇼", sector:"AI 하드웨어", ipo:"2026 4월 IPO·$22~25B" },
     ]
   },
   {
@@ -39,7 +39,7 @@ const data = [
     title: "🚀 우주·모빌리티",
     tag: "발사체·위성·UAM",
     stocks: [
-      { nm:"SpaceX", rs:"Starlink·Starship·xAI 합병", val:"$1.25T", round:"S-1 비밀 제출 (4/1)", sector:"우주", ipo:"$1.75T 목표·6월 로드쇼 예정" },
+      { nm:"SpaceX", rs:"Starlink·Starship·xAI 합병", val:"$1.25T", round:"S-1 비밀 제출 (4/1)", sector:"우주", ipo:"6월 IPO 목표 $1.75T~2T" },
       { nm:"Stoke Space", rs:"완전 재사용 로켓·2단 회수", val:"$3.4B", round:"Series D ($860M)", sector:"우주", ipo:"미정" },
       { nm:"Boom Supersonic", rs:"초음속 여객기·DC 터빈 피벗", val:"$1.5B", round:"Series B ($300M)", sector:"항공", ipo:"미정" },
       { nm:"Zipline", rs:"드론 배송·누적 200만 건", val:"$7.6B", round:"Series H ($800M)", sector:"드론·물류", ipo:"2027" },

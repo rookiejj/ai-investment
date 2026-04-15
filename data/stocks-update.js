@@ -3,6 +3,14 @@
 
 const updates = [
   {
+    date: "2026-04-15 10:46 KST",
+    summary: "JPMorgan Q1 2026 실적 추가 반영(매출 50.5B로 상향, 트레이딩 부문 사상 최고)",
+    changes: [
+      { type: "종목 정보 갱신", sector: "금융·은행",
+        detail: "JPMorgan(JPM) Q1 2026 최종 발표 반영. 순매출 $50.5B(YoY +8%, 컨센 상회), 순익 $16.5B, 트레이딩 부문 매출 $11.6B로 분기 사상 최고(YoY +20%). FICC·주식 모두 컨센 상회. 다만 NII 풀이어 가이던스를 $103B로 소폭 하향 조정해 주가는 시간외 -1%. FY26E 컨센서스 매출 $192B → $193B, 순익 $56B → $58B 추가 상향." },
+    ]
+  },
+  {
     date: "2026-04-14 20:35 KST",
     summary: "Wells Fargo Q1 2026 실적 반영",
     changes: [

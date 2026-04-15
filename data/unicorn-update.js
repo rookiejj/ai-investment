@@ -1,6 +1,16 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-15 10:46 KST",
+    summary: "Cerebras IPO 4월 가격 결정 임박·SpaceX 목표 폭 확장",
+    changes: [
+      { type: "수치 갱신", sector: "AI·ML",
+        detail: "Cerebras 밸류에이션 $22B → $23B(Series H 2/26 완료 기준). IPO는 4월 중 가격 결정 임박, 공모 가격대 $22~25B 범위로 가이드. 시드 OpenAI $10B 컴퓨팅 계약이 핵심 모멘텀. round 필드를 'Series H 완료(2/26)·IPO 로드쇼'로 갱신." },
+      { type: "수치 갱신", sector: "우주·모빌리티",
+        detail: "SpaceX IPO 목표 가격대 폭 확장: 기존 '$1.75T' → '$1.75T~2T'로 갱신. xAI 합병 후 스케일·향후 업사이드 반영. 6월 로드쇼 일정 변동 없음." },
+    ]
+  },
+  {
     date: "2026-04-14 07:23 KST",
     summary: "SpaceX IPO 목표 밸류에이션 및 로드쇼 일정 갱신",
     changes: [

@@ -1,11 +1,13 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
-    date: "2026-04-15 07:20 KST",
-    summary: "SMH AUM 실측치 반영 정정·rs 구체화",
+    date: "2026-04-15 10:46 KST",
+    summary: "SMH AUM 49B로 갱신·크립토 ETF YTD 음전환 반영",
     changes: [
-      { type: "수치 정정", sector: "AI·반도체",
-        detail: "SMH(VanEck Semiconductor) AUM $71B→$42B으로 정정. VanEck 공식·ETF Database 4월 중순 수치 기준 실제 AUM $42B+로 확인(전일 반영치 과대). 여전히 섹터 최대 ETF 지위 유지, 4/14 기준 SOXX($22B) 대비 약 2배. 25종·MVIS US Listed Semiconductor 지수 추종 특성을 rs에 명시." }
+      { type: "수치 갱신", sector: "AI·반도체",
+        detail: "SMH(VanEck Semiconductor) AUM $42B→$49B로 갱신(VanEck 공식 4/10 기준 $49.20B). YTD +21%로 미세 조정. SOXX($22B) 대비 약 2.2배 격차 유지." },
+      { type: "수치 갱신", sector: "크립토·블록체인",
+        detail: "비트코인 4/14 종가 ~$74,500(연초 $88,722 대비 -16%, 1Y 약 -15%). IBIT YTD +30%/1Y +65% → -16%/-15%로 정정. FBTC AUM $18B→$17B, 동일 패턴 음전환. ETHA(이더리움)도 4/14 일중 +7% 반등에도 YTD -12%. BITO·BLOK 동반 음전환. 다만 4/14 IBIT는 5주 최대인 +$269.3M 순유입으로 5일 연속 유출 흐름 종료. BlackRock Q1 어닝에서 IBIT AUM $54B·점유 49% 공식 확인." }
     ]
   },
   {

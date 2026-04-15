@@ -6,7 +6,7 @@ const data = [
     title: "🤖 AI·반도체",
     tag: "인공지능·칩·데이터센터",
     stocks: [
-      { tk:"SMH", nm:"VanEck Semiconductor", rs:"반도체 25종·MVIS 지수·AI 최대 수혜", aum:"42", er:"0.35%", ytd:"+22%", y1:"+45%" },
+      { tk:"SMH", nm:"VanEck Semiconductor", rs:"반도체 25종·MVIS 지수·AI 최대 수혜", aum:"49", er:"0.35%", ytd:"+21%", y1:"+44%" },
       { tk:"SOXX", nm:"iShares Semiconductor", rs:"반도체 30종·ICE 지수", aum:"22", er:"0.35%", ytd:"+20%", y1:"+42%" },
       { tk:"BOTZ", nm:"Global X Robotics & AI", rs:"로봇·AI 자동화", aum:"3.5", er:"0.68%", ytd:"+18%", y1:"+35%" },
       { tk:"AIQ", nm:"Global X AI & Tech", rs:"AI·빅데이터·클라우드", aum:"2.8", er:"0.68%", ytd:"+15%", y1:"+30%" },
@@ -50,11 +50,11 @@ const data = [
     title: "₿ 크립토·블록체인",
     tag: "비트코인·이더리움·디파이",
     stocks: [
-      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"비트코인 현물 최대", aum:"55", er:"0.25%", ytd:"+30%", y1:"+65%" },
-      { tk:"FBTC", nm:"Fidelity Wise Origin BTC", rs:"비트코인 현물·피델리티", aum:"18", er:"0.25%", ytd:"+30%", y1:"+64%" },
-      { tk:"ETHA", nm:"iShares Ethereum Trust", rs:"이더리움 현물", aum:"10", er:"0.25%", ytd:"+20%", y1:"+45%" },
-      { tk:"BITO", nm:"ProShares Bitcoin Strategy", rs:"비트코인 선물 최초", aum:"3", er:"0.95%", ytd:"+28%", y1:"+58%" },
-      { tk:"BLOK", nm:"Amplify Blockchain", rs:"블록체인 기업 테마", aum:"1.5", er:"0.71%", ytd:"+22%", y1:"+40%" },
+      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"비트코인 현물 최대·점유 49%", aum:"54", er:"0.25%", ytd:"-16%", y1:"-15%" },
+      { tk:"FBTC", nm:"Fidelity Wise Origin BTC", rs:"비트코인 현물·피델리티", aum:"17", er:"0.25%", ytd:"-16%", y1:"-15%" },
+      { tk:"ETHA", nm:"iShares Ethereum Trust", rs:"이더리움 현물·4/14 +7%", aum:"10", er:"0.25%", ytd:"-12%", y1:"-8%" },
+      { tk:"BITO", nm:"ProShares Bitcoin Strategy", rs:"비트코인 선물 최초", aum:"3", er:"0.95%", ytd:"-18%", y1:"-18%" },
+      { tk:"BLOK", nm:"Amplify Blockchain", rs:"블록체인 기업 테마", aum:"1.5", er:"0.71%", ytd:"-10%", y1:"-5%" },
     ]
   },
   {
