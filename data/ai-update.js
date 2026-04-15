@@ -7,16 +7,14 @@
 const UPDATES = [
   {
     date: "2026-04-15 21:38 KST",
-    badge: "개별",
     summary: "xAI Grok 5 출시 Q2 2026으로 재조정·XChat 예정 + OpenAI GPT-6 루머 정리",
     changes: [
-      { type: "모델 출시 예정", sector: "xAI", detail: "Grok 5 Q1 2026 목표 공식 지연 → Q2 2026(5~6월 퍼블릭 베타) 윈도우로 재조정. Colossus 2(1.5GW) 훈련 여전히 진행 중, 6T 파라미터 MoE 아키텍처 유지. Musk 4/14 '내 AGI 달성 확률 추정 10% 수준, 상승 중' 발언. XChat(위챗 경쟁 서비스) 4/17 Grok 엔진 탑재 출시 예정. ai-data.js의 Grok 5 항목에 Q2 2026 윈도우 재확인 반영.", time: "2026-04-15 21:38 KST" },
+      { type: "모델 출시 예정", sector: "xAI", detail: "Grok 5 Q1 2026 목표 공식 지연 → Q2 2026(5~6월 퍼블릭 베타) 윈도우로 재조정. Colossus 2(1.5GW) 훈련 여전히 진행 중, 6T 파라미터 MoE 아키텍처 유지. Musk 4/14 '내 AGI 달성 확률 추정 10% 수준, 상승 중' 발언. XChat(위챗 경쟁 서비스) 4/17 Grok 엔진 탑재 출시 예정. ai-data.js의 Grok 5 항목에 Q2 2026 윈도우 재확인.", time: "2026-04-15 21:38 KST" },
       { type: "모델 출시 예정", sector: "OpenAI", detail: "GPT-6 루머 추가 정리: Polymarket 4/30 이전 출시 확률 78% 유지, 5/25까지 윈도우 컨센서스. 3/24 Spud 프리트레이닝 종료 이후 외부 공식 발표 부재. GPT-5.5 vs GPT-6 네이밍 미확정(퍼포먼스 점프 크기에 따라 결정). 출시 임박 스탠스 유지.", time: "2026-04-15 21:38 KST" }
     ]
   },
   {
     date: "2026-04-15 20:14 KST",
-    badge: "개별",
     summary: "Anthropic Opus 4.7·AI 디자인 툴 출시 임박 + Mistral 최근성 관리",
     changes: [
       { type: "모델·제품 출시 예정", sector: "Anthropic", detail: "Claude Opus 4.7 및 AI 디자인 툴(웹사이트·프레젠테이션 자동 생성, Figma/Word/PPT 연동) 금주 출시 예정(4/15 Information 특종). Opus 4.7은 Opus 4.6 점진 업그레이드로 멀티스텝 추론·장시간 태스크·에이전트 오케스트레이션에 집중, Opus 4.6과 Mythos(비공개) 사이 포지셔닝. 발표 직후 Adobe·Wix·Figma 주가 -2%+ 반응. ai-data.js의 Opus 4.6 entry를 'Opus 4.6 / Opus 4.7 (금주 출시 임박)'으로 확장.", time: "2026-04-15 20:14 KST" },
@@ -35,7 +33,7 @@ const UPDATES = [
     summary: "GPT-6 스펙·가격 구체화, Anthropic $800B 밸류·Narasimhan 이사 선임, NVIDIA Ising·Project Glasswing·xAI 재건",
     changes: [
       { type: "모델 출시 예정", sector: "OpenAI", detail: "GPT-6 출시 임박: 4/14 루머는 부인, 'Spud' 프리트레이닝은 3/24 완료. 컨텍스트 200만 토큰(GPT-5.4 대비 2배), HumanEval 95%+, MATH ~85%, 에이전트 태스크 완료율 62%→87%, 환각률 0.1% 미만 주장. ChatGPT·Codex·Atlas 브라우저를 단일 에이전트로 통합. 가격은 input $2.50/M·output $12/M로 GPT-5.4와 동등. ai-data.js 항목은 '출시 임박'으로 표기.", time: "2026-04-15 12:40 KST" },
-      { type: "펀딩", sector: "Anthropic", detail: "투자자들이 $800B 밸류에이션 신규 펀딩 오퍼 제시(4/14 Bloomberg). 2월 Series G pre-money $350B의 2배 이상, IPO 10월 $380B 타깃 부각. 매출·인프라·밸류 마일스톤 항목에 통합 반영.", time: "2026-04-15 12:40 KST" },
+      { type: "펀딩", sector: "Anthropic", detail: "투자자들이 $800B 밸류에이션 신규 펀딩 오퍼 제시(4/14 Bloomberg). 2월 Series G pre-money $350B의 2배 이상, IPO 10월 $380B 타깃 부각. 매출·인프라·밸류 마일스톤 항목에 통합.", time: "2026-04-15 12:40 KST" },
       { type: "리더십", sector: "Anthropic", detail: "Long-Term Benefit Trust가 Vas Narasimhan(전 Novartis CEO)을 Board of Directors로 지명(4/14). 바이오·거버넌스 전문성 보강. Coefficient Bio 인수 이후 라이프사이언스 진출 연장선.", time: "2026-04-15 12:40 KST" },
       { type: "제품 출시", sector: "Project Glasswing", detail: "약 50개 조직(AWS·Apple·Microsoft·Google·NVIDIA·Cisco·CrowdStrike·JPMorgan·Linux Foundation 등)에 Claude Mythos 방어용 액세스 부여 확정. Mythos는 SWE-bench Verified 93.9%·GPQA Diamond 94.6%·주요 OS·브라우저에서 수천 건의 zero-day 자율 발견.", time: "2026-04-15 12:40 KST" },
       { type: "제품 출시", sector: "NVIDIA", detail: "Ising 공개(4/14): 양자 컴퓨팅 보정·오류정정용 세계 최초 오픈 AI 모델 패밀리. Ising Calibration(VLM, 캘리브레이션 일→시간 단축) + Ising Decoding(3D CNN 2.5배 빠르고 3배 정확). Academia Sinica·Fermilab·Harvard·IQM·Infleqtion·LBNL AQT·UK NPL 채택. 자회사 DELL·HPQ 인수설은 공식 부인. 주가 +3.78%, 10거래일 연속 상승으로 2년 최장.", time: "2026-04-15 12:40 KST" },
@@ -98,11 +96,11 @@ const UPDATES = [
     summary: "GTC 2026 발표 제품·Stitch·Desktop 슈퍼앱·Copilot Tasks·Manus AI·Siri+Gemini",
     changes: [
       { type: "제품 출시", sector: "Google DeepMind", detail: "Stitch(이미지 편집 AI) 추가.", time: "2026-03-23" },
-      { type: "제품 라인업", sector: "NVIDIA", detail: "GTC 2026 발표 제품 반영: Isaac GR00T·Cosmos·DGX Spark·Nemotron 3 Super.", time: "2026-03-23" },
+      { type: "제품 라인업", sector: "NVIDIA", detail: "GTC 2026 발표 제품: Isaac GR00T·Cosmos·DGX Spark·Nemotron 3 Super.", time: "2026-03-23" },
       { type: "제품·모델 출시", sector: "OpenAI", detail: "Desktop 슈퍼앱·GPT-5.4 mini 추가.", time: "2026-03-23" },
       { type: "제품 출시", sector: "Microsoft", detail: "Copilot Tasks·MAI-Image-2 추가.", time: "2026-03-23" },
       { type: "제품 출시", sector: "Meta AI", detail: "Manus AI(자율 에이전트) 추가.", time: "2026-03-23" },
-      { type: "제품 출시", sector: "Apple", detail: "신형 Siri + Gemini 연동 정보 반영.", time: "2026-03-23" }
+      { type: "제품 출시", sector: "Apple", detail: "신형 Siri + Gemini 연동 정보 추가.", time: "2026-03-23" }
     ]
   },
   {

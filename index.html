@@ -364,17 +364,9 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
 .update-more{
   margin-top:10px;font-size:13px;font-weight:500;
   color:var(--acc-deep);cursor:pointer;
-  transition:color .2s;display:inline-block;
+  transition:opacity .2s;display:inline-block;
 }
-.update-more:hover{color:var(--fg)}
-.update-badge{
-  font:600 10px/1 'Geist Mono','SF Mono',monospace;
-  padding:3px 8px;border-radius:9999px;
-  letter-spacing:0.4px;text-transform:uppercase;
-  display:inline-block;vertical-align:middle;
-}
-.update-badge-integ{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
-.update-badge-indiv{background:rgba(255,255,255,0.06);color:var(--mut);border:1px solid var(--border)}
+.update-more:hover{opacity:0.7}
 .update-item-time{
   font:600 10px/1 'Geist Mono','SF Mono',monospace;
   padding:2px 6px;border-radius:9999px;margin-right:6px;
@@ -382,22 +374,14 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
   letter-spacing:0.3px;display:inline-block;vertical-align:middle;
   transform:translateY(-1px);
 }
-.update-individuals{
-  margin-top:16px;padding-top:14px;border-top:1px dashed var(--border);
-}
-.update-individuals-head{
-  font:600 11px/1 'Geist Mono','SF Mono',monospace;
-  color:var(--mut);letter-spacing:0.5px;text-transform:uppercase;
-  margin-bottom:10px;
-}
-.update-individual{margin-bottom:12px}
+.update-individuals{margin-top:16px}
+.update-individual{margin-bottom:18px}
 .update-individual:last-child{margin-bottom:0}
-.update-individual-head{
-  display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;
-}
-.update-individual-sum{font-size:12px;color:var(--fg2);font-weight:500}
+.update-individual .update-summary{margin-bottom:10px}
+.update-summary .update-item-time{margin-left:8px}
 .update-list-sub{gap:6px}
-.update-list-sub .update-item{font-size:12px;padding:6px 10px}
+.update-box:not(.expanded) .update-details{display:none}
+.update-details{margin-top:10px}
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:768px){
@@ -580,82 +564,78 @@ function _hm(t){ // extract HH:MM from "YYYY-MM-DD HH:MM KST" or similar
 function _renderItems(entry){
   if(entry.changes){
     return entry.changes.map(c=>{
-      const hm=_hm(c.time);
       const sec=c.sector?`<span class="update-item-sector">${c.sector}</span>`:'';
-      return (hm?`<span class="update-item-time">${hm}</span>`:'')+`<span class="update-item-type">${c.type}</span>${sec}${c.detail}`;
+      return `<span class="update-item-type">${c.type}</span>${sec}${c.detail}`;
     });
   }
   // 레거시 AI entries[] fallback
   if(entry.entries){
     return entry.entries.map(e=>{
       if(typeof e==='string')return e;
-      const hm=_hm(e.time);
-      return (hm?`<span class="update-item-time">${hm}</span>`:'')+e.text;
+      return e.text;
     });
   }
   return [];
 }
-function _badgeHtml(b){
-  if(!b)return '';
-  return `<span class="update-badge update-badge-${b==='통합'?'integ':'indiv'}">${b}</span>`;
-}
+const _updateExpand={stocks:false,kr:false,jp:false,ai:false,etf:false,commodity:false,unicorn:false};
 function renderUpdateBox(tab){
   const updMap={stocks:STATE.stUpd,kr:STATE.krUpd,jp:STATE.jpUpd,ai:STATE.aiUpd,etf:STATE.etfUpd,commodity:STATE.commodityUpd,unicorn:STATE.unicornUpd};
   const upd=updMap[tab];
   if(!upd||!upd.length)return '';
   const latest=upd[0];
   const items=_renderItems(latest);
-  if(!items.length)return '';
-  const MAX=4;
-  const visible=items.slice(0,MAX);
-  const hidden=items.slice(MAX);
-  const hasMore=hidden.length>0;
   const dateStr=latest.date;
-  const badgeStr=_badgeHtml(latest.badge);
-  const summaryStr=latest.summary?`<div class="update-summary">${latest.summary}</div>`:'';
-  let html=`<div class="update-box"><div class="update-header"><span class="update-tag">업데이트</span>${badgeStr}<span class="update-date">${dateStr}</span></div>${summaryStr}<ul class="update-list">`;
-  visible.forEach(it=>html+=`<li class="update-item">${it}</li>`);
-  if(hasMore){
-    html+=`</ul><div class="update-hidden" style="display:none"><ul class="update-list">`;
-    hidden.forEach(it=>html+=`<li class="update-item">${it}</li>`);
+  const latestHm=_hm(dateStr);
+  const latestTimeStr=latestHm?`<span class="update-item-time">${latestHm}</span>`:'';
+  const summaryStr=latest.summary?`<div class="update-summary">${latest.summary}${latestTimeStr}</div>`:'';
+  const expanded=!!_updateExpand[tab];
+  let html=`<div class="update-box${expanded?' expanded':''}" data-tab="${tab}"><div class="update-header"><span class="update-tag">업데이트</span><span class="update-date">${dateStr}</span></div>${summaryStr}`;
+  let hasAnyDetails=false;
+  if(items.length){
+    hasAnyDetails=true;
+    html+=`<div class="update-details"><ul class="update-list">`;
+    items.forEach(it=>html+=`<li class="update-item">${it}</li>`);
     html+=`</ul></div>`;
-    html+=`<span class="update-more" onclick="toggleUpdateMore(this)">외 ${hidden.length}건 › 더보기</span>`;
-  }else{
-    html+=`</ul>`;
   }
-  // 같은 날 나머지 엔트리 섹션 (badge 무관, 레거시 엔트리 포함)
+  // 같은 날 나머지 엔트리 섹션 (레거시 엔트리 포함)
   if(typeof dateStr==='string'){
     const todayPrefix=dateStr.slice(0,10);
     const sameDay=upd.slice(1).filter(e=>typeof e.date==='string' && e.date.startsWith(todayPrefix));
     if(sameDay.length){
-      html+=`<div class="update-individuals"><div class="update-individuals-head">당일 이력</div>`;
+      html+=`<div class="update-individuals">`;
       sameDay.forEach(e=>{
         const hm=_hm(e.date);
         const subItems=_renderItems(e);
-        const badgeH=e.badge?_badgeHtml(e.badge):'';
-        html+=`<div class="update-individual"><div class="update-individual-head">${badgeH}${hm?`<span class="update-item-time">${hm}</span>`:''}${e.summary?`<span class="update-individual-sum">${e.summary}</span>`:''}</div>`;
+        const sumStr=e.summary?`<div class="update-summary">${e.summary}${hm?`<span class="update-item-time">${hm}</span>`:''}</div>`:'';
+        html+=`<div class="update-individual">${sumStr}`;
         if(subItems.length){
-          html+=`<ul class="update-list update-list-sub">`;
+          hasAnyDetails=true;
+          html+=`<div class="update-details"><ul class="update-list update-list-sub">`;
           subItems.forEach(it=>html+=`<li class="update-item">${it}</li>`);
-          html+=`</ul>`;
+          html+=`</ul></div>`;
         }
         html+=`</div>`;
       });
       html+=`</div>`;
     }
   }
+  if(hasAnyDetails){
+    html+=`<span class="update-more" onclick="toggleUpdateMore(this)">${expanded?'간단히 보기':'펼쳐보기'}</span>`;
+  }
   html+=`</div>`;
   return html;
 }
 function toggleUpdateMore(el){
-  const box=el.parentElement;
-  const hiddenDiv=box.querySelector('.update-hidden');
-  if(hiddenDiv.style.display==='none'){
-    hiddenDiv.style.display='block';
-    el.textContent='간단히';
+  const box=el.closest('.update-box');
+  const tab=box.dataset.tab;
+  if(box.classList.contains('expanded')){
+    box.classList.remove('expanded');
+    el.textContent='펼쳐보기';
+    if(tab) _updateExpand[tab]=false;
   }else{
-    hiddenDiv.style.display='none';
-    el.textContent=`외 ${hiddenDiv.querySelectorAll('.update-item').length}건 › 더보기`;
+    box.classList.add('expanded');
+    el.textContent='간단히 보기';
+    if(tab) _updateExpand[tab]=true;
   }
 }
 

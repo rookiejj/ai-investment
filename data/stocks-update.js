@@ -4,82 +4,80 @@
 const updates = [
   {
     date: "2026-04-15 21:38 KST",
-    badge: "개별",
-    summary: "Morgan Stanley·BAC Q1 2026 실적 + ASML Q1·가이던스 상향 반영",
+    summary: "Morgan Stanley·BAC Q1 2026 실적 + ASML Q1·가이던스 상향",
     changes: [
-      { type: "종목 정보 갱신", sector: "금융·은행",
-        detail: "Morgan Stanley(MS) Q1 2026 실적 반영. 순매출 $20.6B 사상 최고(컨센 $19.23B 상회), 순익 $5.57B(+29% YoY), EPS $3.43(컨센 $2.95 큰 폭 상회). Institutional Securities IB수수료 +36%, M&A 어드바이저리 +74%. Wealth Management 순유입 $118B 기록적·ROTCE 27.1%. 자사주 매입 $1.75B·배당 $1.00. FY26E 컨센서스 매출 $66B → $70B, 순익 $14.5B → $16B 상향.", time: "2026-04-15 21:38 KST" },
-      { type: "종목 정보 갱신", sector: "금융·은행",
-        detail: "Bank of America(BAC) Q1 2026 실적 반영. 순매출 $30.3B(YoY +7%, 컨센 $29.93B 상회), 순익 $8.6B, EPS $1.11(컨센 $1.00 비트)로 20년 내 분기 최고치. NII $15.9B(+9%), 에쿼티 트레이딩 +30%, GWIM 매출 $6.7B(+12%)·고객자산 $4.6T(+10%). 충당금 $1.3B로 개선. CEO Moynihan '소비 건전' 코멘트. FY26E 컨센서스 매출 $110B → $113B, 순익 $31B → $33B 상향.", time: "2026-04-15 21:38 KST" },
-      { type: "종목 정보 갱신", sector: "반도체",
-        detail: "ASML rs 갱신. Q1 2026 순매출 €8.8B(가이던스 내), 순익 €2.8B, GM 53.0%(가이던스 상단). EUV 16대 포함 79대 출하. 2026 연간 가이던스 €34~39B → €36~40B로 상향, GM 51~53%. Q2 가이던스 €8.4~9.0B. AI 수요로 로직·메모리 고객 CapEx 가속, 수주 강세 지속. FY26E 컨센서스 매출 €40B → €42B, 순익 €11B → €12B 상향.", time: "2026-04-15 21:38 KST" },
+      { type: "정보 갱신", sector: "금융·은행",
+        detail: "Morgan Stanley(MS) Q1 2026 실적 발표. 순매출 $20.6B 사상 최고(컨센 $19.23B 상회), 순익 $5.57B(+29% YoY), EPS $3.43(컨센 $2.95 큰 폭 상회). Institutional Securities IB수수료 +36%, M&A 어드바이저리 +74%. Wealth Management 순유입 $118B 기록적·ROTCE 27.1%. 자사주 매입 $1.75B·배당 $1.00. FY26E 컨센서스 매출 $66B → $70B, 순익 $14.5B → $16B 상향.", time: "2026-04-15 21:38 KST" },
+      { type: "정보 갱신", sector: "금융·은행",
+        detail: "Bank of America(BAC) Q1 2026 실적 발표. 순매출 $30.3B(YoY +7%, 컨센 $29.93B 상회), 순익 $8.6B, EPS $1.11(컨센 $1.00 비트)로 20년 내 분기 최고치. NII $15.9B(+9%), 에쿼티 트레이딩 +30%, GWIM 매출 $6.7B(+12%)·고객자산 $4.6T(+10%). 충당금 $1.3B로 개선. CEO Moynihan '소비 건전' 코멘트. FY26E 컨센서스 매출 $110B → $113B, 순익 $31B → $33B 상향.", time: "2026-04-15 21:38 KST" },
+      { type: "정보 갱신", sector: "반도체",
+        detail: "ASML. Q1 2026 순매출 €8.8B(가이던스 내), 순익 €2.8B, GM 53.0%(가이던스 상단). EUV 16대 포함 79대 출하. 2026 연간 가이던스 €34~39B → €36~40B로 상향, GM 51~53%. Q2 가이던스 €8.4~9.0B. AI 수요로 로직·메모리 고객 CapEx 가속, 수주 강세 지속. FY26E 컨센서스 매출 €40B → €42B, 순익 €11B → €12B 상향.", time: "2026-04-15 21:38 KST" },
     ]
   },
   {
     date: "2026-04-15 20:14 KST",
-    badge: "개별",
-    summary: "AMD·NVDA·TSMC 주요 반도체주 rs 갱신 — Meta $60B 딜·H20 라이선스·TSMC N2 램프",
+    summary: "AMD·NVDA·TSMC 주요 반도체주 — Meta $60B 딜·H20 라이선스·TSMC N2 램프",
     changes: [
-      { type: "종목 정보 갱신", sector: "반도체",
-        detail: "AMD rs 갱신. Meta와 6GW 규모·약 $60B 장기 공급 계약 체결(MI450 Instinct GPU + 6세대 EPYC 'Venice' 2nm CPU 조합, Helios 랙 아키텍처). 2H26 첫 1GW 출하 개시, Meta에 최대 10% 지분 워런트 구조 포함. FY26E 컨센서스 매출 $32B → $34B, 순익 $5.0B → $5.5B 상향.", time: "2026-04-15 20:14 KST" },
-      { type: "종목 정보 갱신", sector: "반도체",
-        detail: "NVIDIA(NVDA) rs 갱신. 美 상무부 4/15 발효 H20 중국 수출 라이선스 의무화로 단기 중국 매출 약 $5.5B 노출. 시간외 -6% 반응. 다만 Blackwell Ultra 풀가동·Rubin 백로그 유지, 4/14까지 10거래일 연속 상승($188 근방).", time: "2026-04-15 20:14 KST" },
-      { type: "종목 정보 갱신", sector: "반도체",
-        detail: "TSMC(TSM) rs 갱신. 4/10 Q1 매출 $35.71B(YoY +35%, 자체 가이던스 $34.6~35.8B 상단) 사상 최대. 3월 단월 +45.2% YoY로 AI·N2 램프 가속. N2 HVM 2025 Q4 가동 후 스마트폰·HPC 수요 강세, A16(GAA+백사이드전력) 2H26 양산 준비. 4/16 어닝콜 예정.", time: "2026-04-15 20:14 KST" },
+      { type: "정보 갱신", sector: "반도체",
+        detail: "AMD — Meta와 6GW 규모·약 $60B 장기 공급 계약 체결(MI450 Instinct GPU + 6세대 EPYC 'Venice' 2nm CPU 조합, Helios 랙 아키텍처). 2H26 첫 1GW 출하 개시, Meta에 최대 10% 지분 워런트 구조 포함. FY26E 컨센서스 매출 $32B → $34B, 순익 $5.0B → $5.5B 상향.", time: "2026-04-15 20:14 KST" },
+      { type: "정보 갱신", sector: "반도체",
+        detail: "NVIDIA(NVDA) — 美 상무부 4/15 발효 H20 중국 수출 라이선스 의무화로 단기 중국 매출 약 $5.5B 노출. 시간외 -6% 반응. 다만 Blackwell Ultra 풀가동·Rubin 백로그 유지, 4/14까지 10거래일 연속 상승($188 근방).", time: "2026-04-15 20:14 KST" },
+      { type: "정보 갱신", sector: "반도체",
+        detail: "TSMC(TSM). 4/10 Q1 매출 $35.71B(YoY +35%, 자체 가이던스 $34.6~35.8B 상단) 사상 최대. 3월 단월 +45.2% YoY로 AI·N2 램프 가속. N2 HVM 2025 Q4 가동 후 스마트폰·HPC 수요 강세, A16(GAA+백사이드전력) 2H26 양산 준비. 4/16 어닝콜 예정.", time: "2026-04-15 20:14 KST" },
     ]
   },
   {
     date: "2026-04-15 19:10 KST",
-    summary: "BlackRock Q1 2026 실적 반영 (AUM $13.9T 사상 최고·iShares 순유입 $132B 기록)",
+    summary: "BlackRock Q1 2026 실적 발표 (AUM $13.9T 사상 최고·iShares 순유입 $132B 기록)",
     changes: [
-      { type: "종목 정보 갱신", sector: "금융·은행",
-        detail: "BlackRock(BLK) rs 갱신. Q1 2026 매출 $6.70B(컨센 $6.46B 상회, YoY +27%), 조정 EPS $12.53(컨센 $11.48 비트), AUM $13.9T 사상 최고, 분기 순유입 $130B·iShares ETF 순유입 $132B 분기 기록. 장기 유기적 자산 성장률 13% LTM(전년 3%에서 가속). CEO Fink '가장 강력한 시작 중 하나' 코멘트·미국 주식 bullish 스탠스로 전환." },
+      { type: "정보 갱신", sector: "금융·은행",
+        detail: "BlackRock(BLK). Q1 2026 매출 $6.70B(컨센 $6.46B 상회, YoY +27%), 조정 EPS $12.53(컨센 $11.48 비트), AUM $13.9T 사상 최고, 분기 순유입 $130B·iShares ETF 순유입 $132B 분기 기록. 장기 유기적 자산 성장률 13% LTM(전년 3%에서 가속). CEO Fink '가장 강력한 시작 중 하나' 코멘트·미국 주식 bullish 스탠스로 전환." },
     ]
   },
   {
     date: "2026-04-15 12:40 KST",
-    summary: "Oracle·NVIDIA·Lilly·Tesla rs 갱신 — Stargate 확장·Rubin 대형 수주·Foundayo 출시·Q1 인도 하회",
+    summary: "Oracle·NVIDIA·Lilly·Tesla — Stargate 확장·Rubin 대형 수주·Foundayo 출시·Q1 인도 하회",
     changes: [
-      { type: "종목 정보 갱신", sector: "AI 플랫폼",
-        detail: "Oracle(ORCL) rs 갱신. FY26 Q3 실적(2월 말 종료) 기준 RPO $523B → $553B(YoY +325%), OCI 매출 $4.9B(YoY +84%)로 가속. Stargate 프로젝트는 Abilene 1.2GW 가동 중이며 전체 계획 용량 7GW로 확대, 누적 투자 $400B 수준." },
-      { type: "종목 정보 갱신", sector: "반도체",
-        detail: "NVIDIA(NVDA) rs 갱신. Blackwell Ultra 풀가동·수요 폭증 지속, 4/9 Meta–CoreWeave와 Vera Rubin 기반 클러스터 조기 용량 확보 계약($21B) 확인. Blackwell+Rubin 누적 판매 $1T 전망(~2027)." },
-      { type: "종목 정보 갱신", sector: "바이오·헬스케어",
-        detail: "Eli Lilly(LLY) rs 갱신. 경구 GLP-1 Foundayo(orforglipron) 4/1 FDA 승인·4/9 시장 출시(최저가 $149/월, 개인보험/저축카드로 월 $25 수준). Mounjaro 2025 매출 약 $23B, Zepbound와 합산 GLP-1 매출 $36B. 7/1 Medicare Part D GLP-1 커버리지 확대가 추가 촉매." },
-      { type: "종목 정보 갱신", sector: "자동차·모빌리티",
-        detail: "Tesla(TSLA) rs 갱신. Q1 2026 글로벌 인도 약 336K(컨센서스 370K 하회), 생산-인도 갭 약 50K 발생. CyberCab 신공법 기반 Q4 2026 양산 시작 계획($25K 엔트리, Fremont 인접 신공장), 4/22 어닝콜 예정." },
+      { type: "정보 갱신", sector: "AI 플랫폼",
+        detail: "Oracle(ORCL). FY26 Q3 실적(2월 말 종료) 기준 RPO $523B → $553B(YoY +325%), OCI 매출 $4.9B(YoY +84%)로 가속. Stargate 프로젝트는 Abilene 1.2GW 가동 중이며 전체 계획 용량 7GW로 확대, 누적 투자 $400B 수준." },
+      { type: "정보 갱신", sector: "반도체",
+        detail: "NVIDIA(NVDA). Blackwell Ultra 풀가동·수요 폭증 지속, 4/9 Meta–CoreWeave와 Vera Rubin 기반 클러스터 조기 용량 확보 계약($21B) 확인. Blackwell+Rubin 누적 판매 $1T 전망(~2027)." },
+      { type: "정보 갱신", sector: "바이오·헬스케어",
+        detail: "Eli Lilly(LLY). 경구 GLP-1 Foundayo(orforglipron) 4/1 FDA 승인·4/9 시장 출시(최저가 $149/월, 개인보험/저축카드로 월 $25 수준). Mounjaro 2025 매출 약 $23B, Zepbound와 합산 GLP-1 매출 $36B. 7/1 Medicare Part D GLP-1 커버리지 확대가 추가 촉매." },
+      { type: "정보 갱신", sector: "자동차·모빌리티",
+        detail: "Tesla(TSLA). Q1 2026 글로벌 인도 약 336K(컨센서스 370K 하회), 생산-인도 갭 약 50K 발생. CyberCab 신공법 기반 Q4 2026 양산 시작 계획($25K 엔트리, Fremont 인접 신공장), 4/22 어닝콜 예정." },
     ]
   },
   {
     date: "2026-04-15 10:46 KST",
-    summary: "JPMorgan Q1 2026 실적 추가 반영(매출 50.5B로 상향, 트레이딩 부문 사상 최고)",
+    summary: "JPMorgan Q1 2026 최종 실적 추가(매출 50.5B로 상향, 트레이딩 부문 사상 최고)",
     changes: [
-      { type: "종목 정보 갱신", sector: "금융·은행",
-        detail: "JPMorgan(JPM) Q1 2026 최종 발표 반영. 순매출 $50.5B(YoY +8%, 컨센 상회), 순익 $16.5B, 트레이딩 부문 매출 $11.6B로 분기 사상 최고(YoY +20%). FICC·주식 모두 컨센 상회. 다만 NII 풀이어 가이던스를 $103B로 소폭 하향 조정해 주가는 시간외 -1%. FY26E 컨센서스 매출 $192B → $193B, 순익 $56B → $58B 추가 상향." },
+      { type: "정보 갱신", sector: "금융·은행",
+        detail: "JPMorgan(JPM) Q1 2026 최종 발표. 순매출 $50.5B(YoY +8%, 컨센 상회), 순익 $16.5B, 트레이딩 부문 매출 $11.6B로 분기 사상 최고(YoY +20%). FICC·주식 모두 컨센 상회. 다만 NII 풀이어 가이던스를 $103B로 소폭 하향 조정해 주가는 시간외 -1%. FY26E 컨센서스 매출 $192B → $193B, 순익 $56B → $58B 추가 상향." },
     ]
   },
   {
     date: "2026-04-14 20:35 KST",
-    summary: "Wells Fargo Q1 2026 실적 반영",
+    summary: "Wells Fargo Q1 2026 실적 발표",
     changes: [
-      { type: "종목 정보 갱신", sector: "금융·은행",
-        detail: "Wells Fargo(WFC) Q1 2026 실적 반영. 순매출 $21.45B(YoY +6%, 컨센 $21.76B 소폭 하회), 조정 EPS $1.60(컨센 $1.58 상회). 순이자수익 $12.1B(+5%), 비이자수익 $9.35B(+8%), 평균 대출 $996B(+10%), 평균 예금 $1.42T(+6%), ROE 12.2%로 전년 11.5%에서 개선. CEO Scharf '투자 결실' 코멘트. FY26E 컨센서스 매출 $87B → $88B, 순익 $21B → $22B 소폭 상향." },
+      { type: "정보 갱신", sector: "금융·은행",
+        detail: "Wells Fargo(WFC) Q1 2026 실적 발표. 순매출 $21.45B(YoY +6%, 컨센 $21.76B 소폭 하회), 조정 EPS $1.60(컨센 $1.58 상회). 순이자수익 $12.1B(+5%), 비이자수익 $9.35B(+8%), 평균 대출 $996B(+10%), 평균 예금 $1.42T(+6%), ROE 12.2%로 전년 11.5%에서 개선. CEO Scharf '투자 결실' 코멘트. FY26E 컨센서스 매출 $87B → $88B, 순익 $21B → $22B 소폭 상향." },
     ]
   },
   {
     date: "2026-04-14 14:25 KST",
-    summary: "JPMorgan Q1 2026 실적 반영",
+    summary: "JPMorgan Q1 2026 실적 발표",
     changes: [
-      { type: "종목 정보 갱신", sector: "금융·은행",
-        detail: "JPMorgan(JPM) Q1 2026 실적 반영. 순매출 $49.2B(YoY +8%), 순익 $16B, EPS $5.42(컨센서스 $5.15 상회). 투자은행·NII 동반 성장, 주가 사상 최고($248.50, +4.2%). Jamie Dimon 후계자 선정 공식화." },
+      { type: "정보 갱신", sector: "금융·은행",
+        detail: "JPMorgan(JPM) Q1 2026 실적 발표. 순매출 $49.2B(YoY +8%), 순익 $16B, EPS $5.42(컨센서스 $5.15 상회). 투자은행·NII 동반 성장, 주가 사상 최고($248.50, +4.2%). Jamie Dimon 후계자 선정 공식화." },
     ]
   },
   {
     date: "2026-04-14 14:12 KST",
-    summary: "Goldman Sachs Q1 2026 실적 반영, FY26E 컨센서스 상향",
+    summary: "Goldman Sachs Q1 2026 실적 발표, FY26E 컨센서스 상향",
     changes: [
       { type: "상향", sector: "금융·은행",
-        detail: "Goldman Sachs(GS) Q1 2026 실적 반영. 순매출 $17.23B(YoY +14%, 역대 2위), 순익 $5.63B(YoY +19%), EPS $17.55(컨센서스 $16.47 상회). 주식트레이딩 $5.33B 사상 최고(+27%), IB수수료 $2.84B(+48%), M&A 어드바이저리 글로벌 1위. FY26E 컨센서스 매출 $60B → $63B, 순익 $16B → $18B." },
+        detail: "Goldman Sachs(GS) Q1 2026 실적 발표. 순매출 $17.23B(YoY +14%, 역대 2위), 순익 $5.63B(YoY +19%), EPS $17.55(컨센서스 $16.47 상회). 주식트레이딩 $5.33B 사상 최고(+27%), IB수수료 $2.84B(+48%), M&A 어드바이저리 글로벌 1위. FY26E 컨센서스 매출 $60B → $63B, 순익 $16B → $18B." },
     ]
   },
   {
@@ -108,22 +106,22 @@ const updates = [
   },
   {
     date: "2026-04-13 10:05 KST",
-    summary: "TSMC Q1 사상 최대 실적 반영",
+    summary: "TSMC Q1 사상 최대 실적 발표",
     changes: [
-      { type: "종목 정보 갱신", sector: "반도체",
-        detail: "TSMC(TSM) rs 갱신. Q1 2026 매출 $35.6B(NT$1.13T), YoY +35%, 가이던스 상단 적중. 3월 단월 +45.2%로 가장 강한 성장. AI칩 수요가 성장 전량 견인. 4/16 실적 콘퍼런스콜에서 연간 가이던스 상향 기대." },
+      { type: "정보 갱신", sector: "반도체",
+        detail: "TSMC(TSM). Q1 2026 매출 $35.6B(NT$1.13T), YoY +35%, 가이던스 상단 적중. 3월 단월 +45.2%로 가장 강한 성장. AI칩 수요가 성장 전량 견인. 4/16 실적 콘퍼런스콜에서 연간 가이던스 상향 기대." },
     ]
   },
   {
     date: "2026-04-13 02:26 KST",
     summary: "종목 정보 갱신 3건 (AMZN·GS·NVO)",
     changes: [
-      { type: "종목 정보 갱신", sector: "소비·리테일",
-        detail: "Amazon(AMZN) rs 갱신. CEO Jassy 4/9 주주서한 — Trainium 칩 사업 연환산 매출 $20B 돌파, Trainium2 전량 소진·Trainium3도 거의 완판, 서드파티 랙 판매 검토 시사." },
-      { type: "종목 정보 갱신", sector: "금융·은행",
-        detail: "Goldman Sachs(GS) rs 갱신. Q1 2026 IB 백로그 4년 최고, 어드바이저리+언더라이팅 수수료 $2.42B(+26% YoY) 예상. 4/13 실적 발표 예정." },
-      { type: "종목 정보 갱신", sector: "바이오·헬스케어",
-        detail: "Novo Nordisk(NVO) rs 갱신. Wegovy 경구제 1월 출시($149/월), 주 5만건 처방. 단 Q4 매출 YoY -7.6%, 9,000명 감원으로 구조조정 병행." },
+      { type: "정보 갱신", sector: "소비·리테일",
+        detail: "Amazon(AMZN). CEO Jassy 4/9 주주서한 — Trainium 칩 사업 연환산 매출 $20B 돌파, Trainium2 전량 소진·Trainium3도 거의 완판, 서드파티 랙 판매 검토 시사." },
+      { type: "정보 갱신", sector: "금융·은행",
+        detail: "Goldman Sachs(GS). Q1 2026 IB 백로그 4년 최고, 어드바이저리+언더라이팅 수수료 $2.42B(+26% YoY) 예상. 4/13 실적 발표 예정." },
+      { type: "정보 갱신", sector: "바이오·헬스케어",
+        detail: "Novo Nordisk(NVO). Wegovy 경구제 1월 출시($149/월), 주 5만건 처방. 단 Q4 매출 YoY -7.6%, 9,000명 감원으로 구조조정 병행." },
     ]
   },
   {
@@ -132,25 +130,25 @@ const updates = [
     changes: [
       { type: "종목 교체", sector: "친환경·청정기술",
         detail: "Plug Power(PLUG) 제외 → Bloom Energy(BE) 편입. DOE $1.66B 대출 관련 증권 사기 집단소송(2026-02 제기), 2023년 SEC 재무보고 위반 과징금 이력. 주가 $1.80 수준, 애널리스트 컨센서스 하향." },
-      { type: "종목 정보 갱신", sector: "바이오·헬스케어",
-        detail: "Eli Lilly(LLY) rs 갱신. FDA, 경구 GLP-1 Foundayo(orforglipron) 4/1 승인. 기존 Zepbound 대신 Foundayo 반영." },
-      { type: "종목 정보 갱신", sector: "사이버보안",
-        detail: "Palo Alto(PANW) CyberArk $25B 인수 완료(2/11) 반영. FY26E 매출 $10.5B → $11B(CyberArk 5개월분 기여)." },
-      { type: "종목 정보 갱신", sector: "양자·크립토",
-        detail: "MicroStrategy → Strategy Inc 사명 변경 반영. BTC 보유량 76.7만개(4/6 기준)." },
+      { type: "정보 갱신", sector: "바이오·헬스케어",
+        detail: "Eli Lilly(LLY). FDA, 경구 GLP-1 Foundayo(orforglipron) 4/1 승인. 기존 Zepbound 대신 Foundayo로 교체." },
+      { type: "정보 갱신", sector: "사이버보안",
+        detail: "Palo Alto(PANW) CyberArk $25B 인수 완료(2/11). FY26E 매출 $10.5B → $11B(CyberArk 5개월분 기여)." },
+      { type: "정보 갱신", sector: "양자·크립토",
+        detail: "MicroStrategy → Strategy Inc 사명 변경. BTC 보유량 76.7만개(4/6 기준)." },
       { type: "상향", sector: "AI 플랫폼",
         detail: "Meta(META) FY26E 매출 $230B → $235B, 순익 $68B → $72B. Q1 2026 가이던스 $53.5~56.5B로 컨센서스 $51.3B 상회." },
-      { type: "종목 정보 갱신", sector: "데이터센터",
-        detail: "CoreWeave(CRWV) 백로그 $66.8B(전년 대비 300%↑) 반영. FY26 가이던스 $12~13B 유지." },
-      { type: "종목 정보 갱신", sector: "자동차·모빌리티",
+      { type: "정보 갱신", sector: "데이터센터",
+        detail: "CoreWeave(CRWV) 백로그 $66.8B(전년 대비 300%↑). FY26 가이던스 $12~13B 유지." },
+      { type: "정보 갱신", sector: "자동차·모빌리티",
         detail: "Rivian(RIVN) R2 양산 개시, 4월 직원 인도 시작. FY26 인도 가이던스 62~67K대 재확인." },
-      { type: "종목 정보 갱신", sector: "항공우주·방산",
+      { type: "정보 갱신", sector: "항공우주·방산",
         detail: "Rocket Lab(RKLB) $474M 유상증자 완료(4/8). SDA $1.3B 위성 계약, HASTE $190M 극초음속 시험 수주." },
     ]
   },
   {
     date: "2026-04-12 23:00 KST",
-    summary: "FY25 확정 실적 반영 및 FY26E 컨센서스 전면 갱신",
+    summary: "FY25 확정 실적 및 FY26E 컨센서스 전면 갱신",
     changes: [
       { type: "종목 교체", sector: "로봇·자동화",
         detail: "Symbotic(SYM) 제외 → Cognex(CGNX) 편입. SEC 내부고발자 방해 조사 진행 중, 중대 취약점 및 부적정 감사의견 확인." },
@@ -185,19 +183,19 @@ const updates = [
       { type: "수치 갱신", sector: "냉각 시스템",
         detail: "Vertiv(VRT) FY25 순익 $1.3B → $1.5B(확정). FY26E 순익 $2.3B. 백로그 $15B." },
       { type: "수치 갱신", sector: "전력·그리드",
-        detail: "GE Vernova(GEV) FY26E 매출 $44.5B → $45B. 회사 가이던스 $44~$45B 반영." },
+        detail: "GE Vernova(GEV) FY26E 매출 $44.5B → $45B. 회사 가이던스 $44~$45B 기준." },
     ]
   },
   {
     date: "2026-04-12 15:00 KST",
-    summary: "18 카테고리 108 종목 체제 확립, FY25 실적 대규모 반영",
+    summary: "18 카테고리 108 종목 체제 확립, FY25 실적 대규모 갱신",
     changes: [
       { type: "수치 갱신", sector: "전체",
-        detail: "FY25 실적 확정분 일괄 반영: MSFT·GOOGL·META·AMZN·XOM·TSLA·BA·AVGO·TSM·LLY·JPM·V·MA·WMT·COST." },
+        detail: "FY25 실적 확정분 일괄 갱신: MSFT·GOOGL·META·AMZN·XOM·TSLA·BA·AVGO·TSM·LLY·JPM·V·MA·WMT·COST." },
       { type: "상향", sector: "반도체",
-        detail: "NVIDIA(NVDA) FY27E 컨센서스 상향(매출 $335B / 순익 $190B). Micron(MU) HBM 슈퍼사이클 반영($75B)." },
+        detail: "NVIDIA(NVDA) FY27E 컨센서스 상향(매출 $335B / 순익 $190B). Micron(MU) HBM 슈퍼사이클 상향($75B)." },
       { type: "상향", sector: "AI 플랫폼",
-        detail: "Palantir(PLTR) 2026 가이던스 $7.2B 반영. 미 상업 매출 YoY 137% 성장." },
+        detail: "Palantir(PLTR) 2026 가이던스 $7.2B 상향. 미 상업 매출 YoY 137% 성장." },
       { type: "상향", sector: "원자력·SMR",
         detail: "Constellation(CEG) Calpine $16.4B 인수 완료(1월). 매출·순익 대폭 상향." },
       { type: "상향", sector: "냉각·전력·데이터센터",
