@@ -97,7 +97,7 @@ const data = [
     title: "🧬 바이오·헬스케어",
     tag: "GLP-1·종양·로봇수술",
     stocks: [
-      { tk:"LLY", nm:"Eli Lilly", rs:"Foundayo 경구 GLP-1 4/9 출시·Mounjaro $23B", r1:"65", p1:"22", r2:"81", p2:"28" },
+      { tk:"LLY", nm:"Eli Lilly", rs:"Foundayo 경구출시·retatrutide Ph3 28.7% 감량·경구 GLP-1 파이프라인 1위", r1:"65", p1:"22", r2:"81", p2:"28" },
       { tk:"NVO", nm:"Novo Nordisk", rs:"Wegovy 경구제 $149·가격 압력", r1:"47", p1:"15", r2:"43", p2:"13" },
       { tk:"ISRG", nm:"Intuitive Surgical", rs:"da Vinci 로봇수술", r1:"8.8", p1:"2.6", r2:"10", p2:"3.0" },
       { tk:"VRTX", nm:"Vertex Pharma", rs:"낭포성섬유증·통증", r1:"11", p1:"4.0", r2:"12.5", p2:"4.6" },
@@ -162,7 +162,7 @@ const data = [
     title: "⚛️ 양자·크립토",
     tag: "고변동 테마 (양자3+크립토3)",
     stocks: [
-      { tk:"IONQ", nm:"IonQ", rs:"이온트랩 양자", r1:"0.05", p1:"-0.30", r2:"0.12", p2:"-0.35" },
+      { tk:"IONQ", nm:"IonQ", rs:"SkyWater $1.8B 인수·풀스택 양자 수직통합·Q2~Q3 클로징", r1:"0.05", p1:"-0.30", r2:"0.12", p2:"-0.35" },
       { tk:"RGTI", nm:"Rigetti", rs:"초전도 양자", r1:"0.012", p1:"-0.08", r2:"0.025", p2:"-0.10" },
       { tk:"QBTS", nm:"D-Wave", rs:"어닐링 양자", r1:"0.015", p1:"-0.07", r2:"0.030", p2:"-0.08" },
       { tk:"COIN", nm:"Coinbase", rs:"미 최대 거래소", r1:"7.5", p1:"2.3", r2:"9.0", p2:"2.9" },

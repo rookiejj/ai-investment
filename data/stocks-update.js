@@ -3,6 +3,16 @@
 
 const updates = [
   {
+    date: "2026-04-16 01:15 KST",
+    summary: "IonQ SkyWater $1.8B 인수 + Eli Lilly retatrutide Phase 3 데이터",
+    changes: [
+      { type: "정보 갱신", sector: "양자·크립토",
+        detail: "IonQ(IONQ). 1월 26일 SkyWater Technology를 약 $1.8B(현금+주식)에 인수 발표 — 세계 최초 풀스택 수직통합 양자 플랫폼 탄생. 미네소타·플로리다·텍사스 3개 지역 Quantum Production Hub로 전환, Q2~Q3 클로징 예정. SkyWater는 중립 파운드리 지위를 유지하며 IonQ 제품을 외부 고객에도 공급, 미국산 양자 공급망 자립 구조 구축.", time: "2026-04-16 01:15 KST" },
+      { type: "정보 갱신", sector: "바이오·헬스케어",
+        detail: "Eli Lilly(LLY). 경구 GLP-1 Foundayo(orforglipron) 4월 6일 FDA 승인·출시 완료, Wegovy 경구제 대비 식이 제한 없는 복용 편의성으로 시장 차별화. 삼중 작용제 retatrutide Phase 3 최고용량 체중감량 28.7%(71.2 lbs) 달성 발표 — 동급 최강 감량 효과 확인. Novo Nordisk(NVO) 연초 대비 -25% 하락하며 경구 GLP-1 시장 리더십 LLY로 이동.", time: "2026-04-16 01:15 KST" },
+    ]
+  },
+  {
     date: "2026-04-15 21:38 KST",
     summary: "Morgan Stanley·BAC Q1 2026 실적 + ASML Q1·가이던스 상향",
     changes: [
