@@ -232,12 +232,28 @@ const data = [{
 ```
 
 ### data/ai-update.js 구조
+다른 탭과 동일한 공통 스키마 사용 (`badge`, `summary`, `changes[].time` 포함).
 ```js
 const UPDATES = [{
-  date: "2026-04-13 00:40 KST",   // 한국 시간(GMT+9) 기준, 시·분 포함
-  entries: ["변경 내용 문자열", ...]
+  date: "2026-04-15 20:14 KST",
+  badge: "개별" | "통합",
+  summary: "요약 한 줄",
+  changes: [
+    { type: "모델 출시|제품 출시|펀딩|인수|리더십|거버넌스|전략|구조조정|최근성 관리|수록 변경 등",
+      sector: "기업명(OpenAI·Anthropic·xAI 등, 다중은 '·' 연결)",
+      detail: "원문 내용",
+      time: "2026-04-15 20:14 KST" }
+  ]
 }]
 ```
+AI 탭의 `sector`는 **기업명**(주식 탭의 섹터 대신). type은 AI 성격상 아래 범주 사용:
+- `모델 출시` / `모델 출시 예정` — Claude 5·GPT-6·Gemini 등
+- `제품 출시` — Agent·Tool·App
+- `펀딩` / `인수` / `마일스톤` / `가격`
+- `리더십` / `거버넌스` / `구조조정` / `전략`
+- `인프라` / `생태계` / `플랫폼`
+- `최근성 관리` — isNew:false 처리
+- `수록 변경` — 수록 기업 교체·추가·제거
 
 ### 작성 규칙
 - isNew: 이번 업데이트 신규 항목만 true. 출시 4~6주 경과 시 false로 내림.

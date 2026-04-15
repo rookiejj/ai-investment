@@ -353,6 +353,14 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
   display:inline-block;vertical-align:middle;
   transform:translateY(-1px);
 }
+.update-item-sector{
+  font:600 10px/1.5 'Inter',sans-serif;
+  padding:2px 7px;border-radius:9999px;margin-right:6px;
+  background:rgba(99,102,241,0.12);color:#818cf8;
+  letter-spacing:0.3px;
+  display:inline-block;vertical-align:middle;
+  transform:translateY(-1px);
+}
 .update-more{
   margin-top:10px;font-size:13px;font-weight:500;
   color:var(--acc-deep);cursor:pointer;
@@ -569,18 +577,23 @@ function _hm(t){ // extract HH:MM from "YYYY-MM-DD HH:MM KST" or similar
   const m=String(t).match(/(\d{2}:\d{2})/);
   return m?m[1]:'';
 }
-function _renderItems(entry,tab){
-  if(tab==='ai'){
-    return (entry.entries||[]).map(e=>{
+function _renderItems(entry){
+  if(entry.changes){
+    return entry.changes.map(c=>{
+      const hm=_hm(c.time);
+      const sec=c.sector?`<span class="update-item-sector">${c.sector}</span>`:'';
+      return (hm?`<span class="update-item-time">${hm}</span>`:'')+`<span class="update-item-type">${c.type}</span>${sec}${c.detail}`;
+    });
+  }
+  // 레거시 AI entries[] fallback
+  if(entry.entries){
+    return entry.entries.map(e=>{
       if(typeof e==='string')return e;
       const hm=_hm(e.time);
       return (hm?`<span class="update-item-time">${hm}</span>`:'')+e.text;
     });
   }
-  return (entry.changes||[]).map(c=>{
-    const hm=_hm(c.time);
-    return (hm?`<span class="update-item-time">${hm}</span>`:'')+`<span class="update-item-type">${c.type}</span>${c.detail}`;
-  });
+  return [];
 }
 function _badgeHtml(b){
   if(!b)return '';
@@ -591,7 +604,7 @@ function renderUpdateBox(tab){
   const upd=updMap[tab];
   if(!upd||!upd.length)return '';
   const latest=upd[0];
-  const items=_renderItems(latest,tab);
+  const items=_renderItems(latest);
   if(!items.length)return '';
   const MAX=4;
   const visible=items.slice(0,MAX);
@@ -618,7 +631,7 @@ function renderUpdateBox(tab){
       html+=`<div class="update-individuals"><div class="update-individuals-head">당일 이력</div>`;
       sameDay.forEach(e=>{
         const hm=_hm(e.date);
-        const subItems=_renderItems(e,tab);
+        const subItems=_renderItems(e);
         const badgeH=e.badge?_badgeHtml(e.badge):'';
         html+=`<div class="update-individual"><div class="update-individual-head">${badgeH}${hm?`<span class="update-item-time">${hm}</span>`:''}${e.summary?`<span class="update-individual-sum">${e.summary}</span>`:''}</div>`;
         if(subItems.length){
