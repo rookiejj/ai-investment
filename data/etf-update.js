@@ -1,13 +1,13 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
-    date: "2026-04-15 10:46 KST",
-    summary: "SMH AUM 49B로 갱신·크립토 ETF YTD 음전환 반영",
+    date: "2026-04-15 12:40 KST",
+    summary: "반도체 ETF YTD 재집계·크립토 ETF YTD 음전환 반영",
     changes: [
       { type: "수치 갱신", sector: "AI·반도체",
-        detail: "SMH(VanEck Semiconductor) AUM $42B→$49B로 갱신(VanEck 공식 4/10 기준 $49.20B). YTD +21%로 미세 조정. SOXX($22B) 대비 약 2.2배 격차 유지." },
+        detail: "SMH(VanEck Semiconductor) AUM $42B→$49B로 갱신(VanEck 공식 4/10 기준), YTD 수익률도 Yahoo 기준 +21%→+25.5%(4/14), 1Y +48%로 재집계. SOXX(iShares Semiconductor)는 YTD +20%→+28.5%(4/10 기준), 1Y +46%로 상향. AI 인프라 투자 붐·Blackwell Ultra 공급 지속 + TSMC Q1 $35.7B 사상 최대 실적이 촉매." },
       { type: "수치 갱신", sector: "크립토·블록체인",
-        detail: "비트코인 4/14 종가 ~$74,500(연초 $88,722 대비 -16%, 1Y 약 -15%). IBIT YTD +30%/1Y +65% → -16%/-15%로 정정. FBTC AUM $18B→$17B, 동일 패턴 음전환. ETHA(이더리움)도 4/14 일중 +7% 반등에도 YTD -12%. BITO·BLOK 동반 음전환. 다만 4/14 IBIT는 5주 최대인 +$269.3M 순유입으로 5일 연속 유출 흐름 종료. BlackRock Q1 어닝에서 IBIT AUM $54B·점유 49% 공식 확인." }
+        detail: "비트코인 4/14 종가 ~$74,500(연초 $88,722 대비 -16%, 1Y 약 -15%). IBIT YTD +30%/1Y +65% → -16%/-15%로 정정. FBTC AUM $18B→$17B, 동일 패턴 음전환. ETHA(이더리움)도 4/14 일중 +7% 반등에도 YTD -12%. BITO·BLOK 동반 음전환. 다만 4/14 IBIT는 5주 최대인 +$269.3M 순유입으로 5일 연속 유출 흐름 종료. BlackRock Q1 어닝에서 IBIT AUM $54B·점유 49% 공식 확인, Q1 순유입 $8.4B·보유 BTC 약 78.2만개." }
     ]
   },
   {

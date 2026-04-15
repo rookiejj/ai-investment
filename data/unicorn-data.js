@@ -7,10 +7,10 @@ const data = [
     tag: "프론티어 모델·AI 인프라",
     stocks: [
       { nm:"OpenAI", rs:"ChatGPT·GPT-5·AGI 추구", val:"$852B", round:"$122B 펀딩", sector:"AGI", ipo:"2026 말 $1T+" },
-      { nm:"Anthropic", rs:"Claude·ARR $30B·OpenAI 추월", val:"$380B", round:"Series G ($30B)", sector:"프론티어 AI", ipo:"2026.10 $400B+" },
+      { nm:"Anthropic", rs:"ARR $30B·VC $800B 오퍼·Series G 2배+", val:"$380B", round:"$800B 오퍼 수신(4/14)", sector:"프론티어 AI", ipo:"2026.10 $400B+" },
       { nm:"Databricks", rs:"레이크하우스·AI 통합·ARR $5.4B", val:"$134B", round:"Series L ($11B)", sector:"데이터·AI", ipo:"2026 H2 S-1" },
       { nm:"Scale AI", rs:"데이터 라벨링·RLHF·Meta 전략투자", val:"$29B", round:"Meta 투자 ($14.3B)", sector:"AI 인프라", ipo:"2027" },
-      { nm:"Cerebras", rs:"웨이퍼급 AI칩·OpenAI $10B 계약", val:"$23B", round:"Series H 완료(2/26)·IPO 로드쇼", sector:"AI 하드웨어", ipo:"2026 4월 IPO·$22~25B" },
+      { nm:"Cerebras", rs:"WSE-3·OpenAI $10B·MS 주관 $2B 공모", val:"$23B", round:"4월 IPO 가격 임박·$2B 조달", sector:"AI 하드웨어", ipo:"2026 4월 IPO·$22~25B" },
     ]
   },
   {

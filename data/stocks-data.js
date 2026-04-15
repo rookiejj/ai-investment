@@ -9,7 +9,7 @@ const data = [
       { tk:"MSFT", nm:"Microsoft", rs:"Azure AI·Copilot·OpenAI", r1:"282", p1:"101", r2:"325", p2:"118" },
       { tk:"GOOGL", nm:"Alphabet", rs:"Gemini·TPU·검색", r1:"403", p1:"132", r2:"455", p2:"148" },
       { tk:"META", nm:"Meta", rs:"Llama·광고 AI", r1:"201", p1:"66", r2:"235", p2:"72" },
-      { tk:"ORCL", nm:"Oracle", rs:"OCI·Stargate RPO $523B", r1:"57", p1:"12", r2:"68", p2:"15" },
+      { tk:"ORCL", nm:"Oracle", rs:"OCI +84% YoY·RPO $553B·Stargate 7GW", r1:"57", p1:"12", r2:"68", p2:"15" },
       { tk:"PLTR", nm:"Palantir", rs:"AIP 국방·상용", r1:"4.5", p1:"0.6", r2:"7.2", p2:"1.5" },
       { tk:"CRM", nm:"Salesforce", rs:"Agentforce·Data Cloud", r1:"42", p1:"7.6", r2:"46", p2:"8.5" },
       { tk:"NOW", nm:"ServiceNow", rs:"IT워크플로우·에이전트 AI 플랫폼", r1:"11", p1:"2.2", r2:"13", p2:"3.0" },
@@ -19,7 +19,7 @@ const data = [
     title: "🔩 반도체",
     tag: "AI칩·파운드리·장비·메모리",
     stocks: [
-      { tk:"NVDA", nm:"NVIDIA", rs:"Blackwell·Rubin·CUDA 해자", r1:"216", p1:"117", r2:"337", p2:"192" },
+      { tk:"NVDA", nm:"NVIDIA", rs:"Blackwell Ultra 풀가동·Rubin Meta/CoreWeave $21B", r1:"216", p1:"117", r2:"337", p2:"192" },
       { tk:"AVGO", nm:"Broadcom", rs:"커스텀 ASIC·AI 백로그 $73B", r1:"64", p1:"23", r2:"88", p2:"34" },
       { tk:"TSM", nm:"TSMC", rs:"Q1 $35.6B 사상 최대·첨단공정", r1:"117", p1:"55", r2:"150", p2:"68" },
       { tk:"ASML", nm:"ASML", rs:"EUV 독점", r1:"33", p1:"9", r2:"40", p2:"11" },
@@ -97,7 +97,7 @@ const data = [
     title: "🧬 바이오·헬스케어",
     tag: "GLP-1·종양·로봇수술",
     stocks: [
-      { tk:"LLY", nm:"Eli Lilly", rs:"Mounjaro·Foundayo 경구 GLP-1 승인", r1:"65", p1:"22", r2:"81", p2:"28" },
+      { tk:"LLY", nm:"Eli Lilly", rs:"Foundayo 경구 GLP-1 4/9 출시·Mounjaro $23B", r1:"65", p1:"22", r2:"81", p2:"28" },
       { tk:"NVO", nm:"Novo Nordisk", rs:"Wegovy 경구제 $149·가격 압력", r1:"47", p1:"15", r2:"43", p2:"13" },
       { tk:"ISRG", nm:"Intuitive Surgical", rs:"da Vinci 로봇수술", r1:"8.8", p1:"2.6", r2:"10", p2:"3.0" },
       { tk:"VRTX", nm:"Vertex Pharma", rs:"낭포성섬유증·통증", r1:"11", p1:"4.0", r2:"12.5", p2:"4.6" },
@@ -136,7 +136,7 @@ const data = [
     title: "🚗 자동차·모빌리티",
     tag: "EV·레거시·자율주행",
     stocks: [
-      { tk:"TSLA", nm:"Tesla", rs:"EV·FSD·로보택시", r1:"95", p1:"3.8", r2:"109", p2:"7.2" },
+      { tk:"TSLA", nm:"Tesla", rs:"Q1 인도 336K 하회·CyberCab Q4 양산", r1:"95", p1:"3.8", r2:"109", p2:"7.2" },
       { tk:"TM", nm:"Toyota", rs:"하이브리드 강자", r1:"305", p1:"28", r2:"315", p2:"30" },
       { tk:"GM", nm:"General Motors", rs:"레거시 EV 전환", r1:"185", p1:"10", r2:"190", p2:"11" },
       { tk:"RIVN", nm:"Rivian", rs:"R2 양산 개시·VW JV", r1:"4.5", p1:"-3.6", r2:"6.9", p2:"-1.9" },

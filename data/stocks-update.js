@@ -3,6 +3,20 @@
 
 const updates = [
   {
+    date: "2026-04-15 12:40 KST",
+    summary: "Oracle·NVIDIA·Lilly·Tesla rs 갱신 — Stargate 확장·Rubin 대형 수주·Foundayo 출시·Q1 인도 하회",
+    changes: [
+      { type: "종목 정보 갱신", sector: "AI 플랫폼",
+        detail: "Oracle(ORCL) rs 갱신. FY26 Q3 실적(2월 말 종료) 기준 RPO $523B → $553B(YoY +325%), OCI 매출 $4.9B(YoY +84%)로 가속. Stargate 프로젝트는 Abilene 1.2GW 가동 중이며 전체 계획 용량 7GW로 확대, 누적 투자 $400B 수준." },
+      { type: "종목 정보 갱신", sector: "반도체",
+        detail: "NVIDIA(NVDA) rs 갱신. Blackwell Ultra 풀가동·수요 폭증 지속, 4/9 Meta–CoreWeave와 Vera Rubin 기반 클러스터 조기 용량 확보 계약($21B) 확인. Blackwell+Rubin 누적 판매 $1T 전망(~2027)." },
+      { type: "종목 정보 갱신", sector: "바이오·헬스케어",
+        detail: "Eli Lilly(LLY) rs 갱신. 경구 GLP-1 Foundayo(orforglipron) 4/1 FDA 승인·4/9 시장 출시(최저가 $149/월, 개인보험/저축카드로 월 $25 수준). Mounjaro 2025 매출 약 $23B, Zepbound와 합산 GLP-1 매출 $36B. 7/1 Medicare Part D GLP-1 커버리지 확대가 추가 촉매." },
+      { type: "종목 정보 갱신", sector: "자동차·모빌리티",
+        detail: "Tesla(TSLA) rs 갱신. Q1 2026 글로벌 인도 약 336K(컨센서스 370K 하회), 생산-인도 갭 약 50K 발생. CyberCab 신공법 기반 Q4 2026 양산 시작 계획($25K 엔트리, Fremont 인접 신공장), 4/22 어닝콜 예정." },
+    ]
+  },
+  {
     date: "2026-04-15 10:46 KST",
     summary: "JPMorgan Q1 2026 실적 추가 반영(매출 50.5B로 상향, 트레이딩 부문 사상 최고)",
     changes: [

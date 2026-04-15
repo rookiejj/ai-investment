@@ -1,13 +1,15 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
-    date: "2026-04-15 10:46 KST",
-    summary: "Cerebras IPO 4월 가격 결정 임박·SpaceX 목표 폭 확장",
+    date: "2026-04-15 12:40 KST",
+    summary: "Anthropic $800B 오퍼·Cerebras 4월 IPO 가격 임박·SpaceX $1.75T 로드쇼 확정",
     changes: [
       { type: "수치 갱신", sector: "AI·ML",
-        detail: "Cerebras 밸류에이션 $22B → $23B(Series H 2/26 완료 기준). IPO는 4월 중 가격 결정 임박, 공모 가격대 $22~25B 범위로 가이드. 시드 OpenAI $10B 컴퓨팅 계약이 핵심 모멘텀. round 필드를 'Series H 완료(2/26)·IPO 로드쇼'로 갱신." },
+        detail: "Anthropic VC $800B 밸류 신규 펀딩 오퍼 수신(4/14 Bloomberg). 2월 Series G pre-money $350B의 2배 이상, ARR $30B(연초 $9B 대비 3배 이상 가속)가 촉매. round 필드를 'Series G ($30B)' → '$800B 오퍼 수신(4/14)'로 갱신. rs도 'VC $800B 오퍼·Series G 2배+' 문구로 반영. 공식 수락은 아직 없으며 val은 기존 $380B(Series G 포스트) 유지." },
+      { type: "수치 갱신", sector: "AI·ML",
+        detail: "Cerebras 4월 IPO 가격 결정 임박. Morgan Stanley 주관으로 $2B 조달, $22~25B 공모 가격대 가이드. 6개월 전 $8.1B 대비 약 3배. rs를 'WSE-3·OpenAI $10B·MS 주관 $2B 공모', round를 '4월 IPO 가격 임박·$2B 조달'로 갱신." },
       { type: "수치 갱신", sector: "우주·모빌리티",
-        detail: "SpaceX IPO 목표 가격대 폭 확장: 기존 '$1.75T' → '$1.75T~2T'로 갱신. xAI 합병 후 스케일·향후 업사이드 반영. 6월 로드쇼 일정 변동 없음." },
+        detail: "SpaceX IPO 세부 일정 공식화(CNBC/Reuters 4/7). 6/8 로드쇼, 6/11 1,500명 리테일 투자자 이벤트. MS·BofA·Citi·JPM·GS 주관, 16개 추가 은행. 리테일 30% 할당 전례 없는 규모. 목표 $1.75T·$75B 조달. 기존 val $1.25T는 xAI 합병 후 combined 기준, ipo 필드는 '$1.75T~2T' 밴드 유지." }
     ]
   },
   {

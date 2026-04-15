@@ -6,8 +6,8 @@ const data = [
     title: "🤖 AI·반도체",
     tag: "인공지능·칩·데이터센터",
     stocks: [
-      { tk:"SMH", nm:"VanEck Semiconductor", rs:"반도체 25종·MVIS 지수·AI 최대 수혜", aum:"49", er:"0.35%", ytd:"+21%", y1:"+44%" },
-      { tk:"SOXX", nm:"iShares Semiconductor", rs:"반도체 30종·ICE 지수", aum:"22", er:"0.35%", ytd:"+20%", y1:"+42%" },
+      { tk:"SMH", nm:"VanEck Semiconductor", rs:"반도체 25종·MVIS 지수·AI 최대 수혜", aum:"49", er:"0.35%", ytd:"+25.5%", y1:"+48%" },
+      { tk:"SOXX", nm:"iShares Semiconductor", rs:"반도체 30종·ICE 지수", aum:"22", er:"0.35%", ytd:"+28.5%", y1:"+46%" },
       { tk:"BOTZ", nm:"Global X Robotics & AI", rs:"로봇·AI 자동화", aum:"3.5", er:"0.68%", ytd:"+18%", y1:"+35%" },
       { tk:"AIQ", nm:"Global X AI & Tech", rs:"AI·빅데이터·클라우드", aum:"2.8", er:"0.68%", ytd:"+15%", y1:"+30%" },
       { tk:"QTUM", nm:"Defiance Quantum", rs:"양자컴퓨팅·머신러닝", aum:"1.2", er:"0.40%", ytd:"+12%", y1:"+25%" },
