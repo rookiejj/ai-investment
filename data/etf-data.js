@@ -61,9 +61,9 @@ const data = [
     title: "🇺🇸 미국 대형주",
     tag: "S&P500·나스닥·다우",
     stocks: [
-      { tk:"SPY", nm:"SPDR S&P 500", rs:"S&P 500 최대 ETF·4월 변동장 반등 국면", aum:"580", er:"0.09%", ytd:"-4%", y1:"+10%" },
+      { tk:"SPY", nm:"SPDR S&P 500", rs:"S&P 500 대형주 ETF·4월 변동장 반등 국면", aum:"590", er:"0.09%", ytd:"-4%", y1:"+10%" },
       { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"나스닥 100 빅테크·AI 리더십 유지", aum:"400", er:"0.20%", ytd:"+1%", y1:"+15%" },
-      { tk:"VOO", nm:"Vanguard S&P 500", rs:"S&P 500 최저 보수", aum:"500", er:"0.03%", ytd:"-4%", y1:"+10%" },
+      { tk:"VOO", nm:"Vanguard S&P 500", rs:"S&P 500 최대 ETF·최저 보수", aum:"827", er:"0.03%", ytd:"-4%", y1:"+10%" },
       { tk:"VTI", nm:"Vanguard Total Stock", rs:"미국 전체 시장", aum:"420", er:"0.03%", ytd:"-4%", y1:"+9%" },
       { tk:"DIA", nm:"SPDR Dow Jones", rs:"다우 30 우량주", aum:"35", er:"0.16%", ytd:"-3%", y1:"+7%" },
     ]

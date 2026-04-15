@@ -1,6 +1,14 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
+    date: "2026-04-16 08:45 KST",
+    summary: "VOO AUM $827B 갱신 — SPY 추월해 세계 최대 ETF 등극",
+    changes: [
+      { type: "수치 갱신", sector: "미국 대형주",
+        detail: "Vanguard S&P 500 ETF(VOO) AUM $500B → $827B로 갱신(4/6 공식 기준). 자금 유입 지속으로 SPY를 제치고 세계 최대 ETF 등극(VOO $827B > IVV ~$750B > SPY ~$590B 순). 수수료 0.03%의 압도적 저비용 구조가 장기 연금·IRA 자금 흡인. SPY rs를 '최대 ETF' → '대형주 ETF'로 수정, VOO rs에 '최대 ETF' 추가.", time: "2026-04-16 08:45 KST" },
+    ]
+  },
+  {
     date: "2026-04-15 21:38 KST",
     summary: "미국 대형주 ETF YTD 갱신(SPY -4%·QQQ +1%) + IBIT AUM·YTD 소폭 정정",
     changes: [
