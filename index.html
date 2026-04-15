@@ -610,16 +610,17 @@ function renderUpdateBox(tab){
   }else{
     html+=`</ul>`;
   }
-  // 같은 날 개별 엔트리 섹션 (통합 엔트리가 최상단일 때만 노출)
-  if(latest.badge==='통합' && typeof dateStr==='string'){
+  // 같은 날 나머지 엔트리 섹션 (badge 무관, 레거시 엔트리 포함)
+  if(typeof dateStr==='string'){
     const todayPrefix=dateStr.slice(0,10);
-    const indiv=upd.slice(1).filter(e=>e.badge==='개별' && typeof e.date==='string' && e.date.startsWith(todayPrefix));
-    if(indiv.length){
-      html+=`<div class="update-individuals"><div class="update-individuals-head">당일 개별 이력</div>`;
-      indiv.forEach(e=>{
+    const sameDay=upd.slice(1).filter(e=>typeof e.date==='string' && e.date.startsWith(todayPrefix));
+    if(sameDay.length){
+      html+=`<div class="update-individuals"><div class="update-individuals-head">당일 이력</div>`;
+      sameDay.forEach(e=>{
         const hm=_hm(e.date);
         const subItems=_renderItems(e,tab);
-        html+=`<div class="update-individual"><div class="update-individual-head">${_badgeHtml('개별')}${hm?`<span class="update-item-time">${hm}</span>`:''}${e.summary?`<span class="update-individual-sum">${e.summary}</span>`:''}</div>`;
+        const badgeH=e.badge?_badgeHtml(e.badge):'';
+        html+=`<div class="update-individual"><div class="update-individual-head">${badgeH}${hm?`<span class="update-item-time">${hm}</span>`:''}${e.summary?`<span class="update-individual-sum">${e.summary}</span>`:''}</div>`;
         if(subItems.length){
           html+=`<ul class="update-list update-list-sub">`;
           subItems.forEach(it=>html+=`<li class="update-item">${it}</li>`);
