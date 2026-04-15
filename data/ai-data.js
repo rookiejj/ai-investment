@@ -13,7 +13,7 @@ const data=[
 ]},
 {rank:2,name:"Anthropic",url:"https://anthropic.com",type:"AI 안전 전문 기업",focus:"안전·신뢰 기반 엔터프라이즈 AI",products:[
   {name:"Claude Mythos Preview + Project Glasswing",url:"https://red.anthropic.com/2026/mythos-preview/",isNew:true,badges:["llm","code","sci"],desc:"4월 7일 공개 — 역대 가장 강력한 모델이나 공개 배포 없음. 17개/18개 벤치마크 1위. CyberGym 취약점 재현 83.1%(Opus 4.6 66.6%). 17년 된 FreeBSD 원격 코드 실행 취약점(CVE-2026-4747) 완전 자율 발견·익스플로잇. 'Opus 위의 새로운 티어(코드명 Capybara)'. Project Glasswing으로 사이버보안 방어 기업 40여 곳 제한 배포, 방어자에게 $1억 크레딧 제공. CrowdStrike·Palo Alto 등 보안주 급락."},
-  {name:"Claude Opus 4.6",url:"https://claude.ai",isNew:false,badges:["llm","code"],desc:"현재 공개 플래그십. SWE-Bench Verified 80.8%로 GPT-5.4(77.2%) 상회, 코딩 에이전트 1위. 100만 토큰 컨텍스트(베타). Mythos 등장으로 사실상 '두 번째로 강력한 Anthropic 모델'."},
+  {name:"Claude Opus 4.6 / Opus 4.7 (금주 출시 임박)",url:"https://claude.ai",isNew:true,badges:["llm","code","agt"],desc:"4/15 Information 특종: Opus 4.7과 AI 디자인 툴(웹사이트·프레젠테이션 자동 생성, Figma/Word/PPT 연동) 금주 공개 예정. Opus 4.7은 멀티스텝 추론·장시간 태스크·에이전트 오케스트레이션에 집중한 점진 업그레이드. 발표 직후 Adobe·Wix·Figma 주가 -2%+. Opus 4.6은 여전히 SWE-Bench Verified 80.8%·100만 토큰 베타로 공개 플래그십."},
   {name:"매출·인프라·밸류 마일스톤",url:"https://www.anthropic.com/news",isNew:true,badges:["llm","agt"],desc:"4월 연환산 매출 $300억 돌파 — 사상 처음 OpenAI($250억) 추월(3월 $190억→4월 $300억). $1M+ 엔터프라이즈 고객 1,000+ (2월 500→2개월 2배), 매출의 80% B2B, 훈련비 OpenAI의 약 1/4. 4/14 Bloomberg 보도 — 투자자들이 $800B 밸류 신규 펀딩 오퍼 제시(2월 $350B의 2배 이상). 4/7 Google·Broadcom과 3.5GW TPU 확장 딜. IPO 10월 $380B 타깃 거론."},
   {name:"Coefficient Bio 인수",url:"https://www.anthropic.com/news",isNew:true,badges:["sci","agt"],desc:"4/2 약 $40억 규모 주식 인수 — 라이프사이언스 R&D 파이프라인 진입. 2025년 12월 Bun(JS 런타임, Claude Code 인프라), 2026년 2월 Vercept(컴퓨터 사용 에이전트)에 이은 세 번째 전략 인수. Anthropic의 과학·생명공학 AI 확장 본격화."},
   {name:"Claude Sonnet 4.6",url:"https://claude.ai",isNew:false,badges:["llm","code"],desc:"Claude.ai 기본 무료 모델. API $3/$15(100만 토큰). 엔터프라이즈 코딩 시장 점유율 50% 기여. 4/4 OpenClaw 등 서드파티 에이전틱 하네스로의 구독 사용 제한 — 추론 용량을 고가치 엔터프라이즈 고객에 집중."},
@@ -79,8 +79,8 @@ const data=[
 ]},
 {rank:10,name:"Mistral AI",url:"https://mistral.ai",type:"유럽 AI 전문 기업",focus:"오픈소스·효율·AI 주권",products:[
   {name:"Mistral Large 2 / Large 3",url:"https://mistral.ai/models/",isNew:false,badges:["llm"],desc:"유럽 최강 클로즈드 모델. 영·불·독·서·이탈 다국어 특화. Tesco 등 대형 기업과 파트너십. EU 데이터 주권 준수로 유럽 규제 시장 강점."},
-  {name:"Mistral Small 4 (오픈소스)",url:"https://mistral.ai/models/",isNew:true,badges:["llm"],desc:"2026년 3월 출시. Apache 2.0 라이선스. 경량 고효율 최신작. NVIDIA와 공동 튜닝된 오픈 모델 패밀리로 확장. 자체 GitHub 커뮤니티 fork·PR이 3개월 만에 2배 성장 — 오픈소스 생태계 모멘텀 지속."},
-  {name:"Mistral Forge",url:"https://mistral.ai/products/forge",isNew:true,badges:["llm","agt","code"],desc:"GTC 2026(3/17) 공개. 기업이 자사 데이터로 커스텀 파운데이션 모델을 직접 구축·파인튜닝하는 엔터프라이즈 플랫폼. OpenAI·Anthropic의 폐쇄형 모델 대안. 'Build-your-own AI' 포지셔닝 — EU 데이터 주권·규제 준수 환경 강점. NVIDIA 인프라 통합."},
+  {name:"Mistral Small 4 (오픈소스)",url:"https://mistral.ai/models/",isNew:false,badges:["llm"],desc:"2026년 3월 출시. Apache 2.0 라이선스. 경량 고효율 최신작. NVIDIA와 공동 튜닝된 오픈 모델 패밀리로 확장. 자체 GitHub 커뮤니티 fork·PR이 3개월 만에 2배 성장 — 오픈소스 생태계 모멘텀 지속."},
+  {name:"Mistral Forge",url:"https://mistral.ai/products/forge",isNew:false,badges:["llm","agt","code"],desc:"GTC 2026(3/17) 공개. 기업이 자사 데이터로 커스텀 파운데이션 모델을 직접 구축·파인튜닝하는 엔터프라이즈 플랫폼. OpenAI·Anthropic의 폐쇄형 모델 대안. 'Build-your-own AI' 포지셔닝 — EU 데이터 주권·규제 준수 환경 강점. NVIDIA 인프라 통합."},
   {name:"파리 데이터센터 + $830M 부채 펀딩",url:"https://mistral.ai",isNew:true,badges:["hw"],desc:"3/30 $8.3억 규모 부채 펀딩으로 파리 인근 Bruyères-le-Châtel 자체 데이터센터 구축. 13,800개 NVIDIA GPU 배치, 초기 용량 44MW, 2026년 하반기 가동. 유럽 AI 주권 인프라의 첫 대규모 실물 구현."},
   {name:"Mixtral 8x22B / Mistral 7B (오픈소스)",url:"https://huggingface.co/mistralai",isNew:false,badges:["llm"],desc:"Mixtral 8x22B: MoE 아키텍처로 대형 모델급 성능 효율적 구현. Mistral 7B: 엣지·온프레미스 표준. 서방 오픈소스 AI의 대표 주자."},
   {name:"Le Chat (AI 어시스턴트)",url:"https://chat.mistral.ai",isNew:false,badges:["agt"],desc:"초당 최대 1,000단어 생성 속도 — 업계 최고 수준. 유럽·기업 사용자 대상 ChatGPT 대안."},

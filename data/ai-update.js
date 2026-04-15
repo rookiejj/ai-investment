@@ -6,6 +6,14 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-15 20:14 KST",
+    badge: "개별",
+    entries: [
+      { text: "Anthropic — Claude Opus 4.7 및 AI 디자인 툴(웹사이트·프레젠테이션 자동 생성, Figma/Word/PPT 연동) 금주 출시 예정(4/15 Information 특종). Opus 4.7은 Opus 4.6 점진 업그레이드로 멀티스텝 추론·장시간 태스크·에이전트 오케스트레이션에 집중, Opus 4.6과 Mythos(비공개) 사이 포지셔닝. 발표 직후 Adobe·Wix·Figma 주가 -2%+ 반응. ai-data.js의 Opus 4.6 entry를 'Opus 4.6 / Opus 4.7 (금주 출시 임박)'으로 확장.", time: "2026-04-15 20:14 KST" },
+      { text: "Mistral — Small 4(3월 출시), Forge(3/17) 4주+ 경과로 isNew:false 처리. 최근성 관리.", time: "2026-04-15 20:14 KST" },
+    ]
+  },
+  {
     date: "2026-04-15 19:18 KST",
     entries: [
       "OpenAI — GPT-6 '4/14 글로벌 공개' 루머 공식 부인 확인. OpenAI 블로그·모델카드·API 공지 모두 미발생. Altman은 3/24 프리트레이닝 종료 후 '수 주 내 출시' 언급에 머물러 있음. Polymarket 4/30 내 출시 확률 78%, 시장 컨센서스는 4/21~5/25 윈도우로 압축. ai-data.js의 GPT-6 entry는 '글로벌 출시' → '출시 임박'으로 정정, 런칭 타이밍을 Stargate 1단계 가동과 맞춤."

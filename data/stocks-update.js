@@ -3,6 +3,19 @@
 
 const updates = [
   {
+    date: "2026-04-15 20:14 KST",
+    badge: "개별",
+    summary: "AMD·NVDA·TSMC 주요 반도체주 rs 갱신 — Meta $60B 딜·H20 라이선스·TSMC N2 램프",
+    changes: [
+      { type: "종목 정보 갱신", sector: "반도체",
+        detail: "AMD rs 갱신. Meta와 6GW 규모·약 $60B 장기 공급 계약 체결(MI450 Instinct GPU + 6세대 EPYC 'Venice' 2nm CPU 조합, Helios 랙 아키텍처). 2H26 첫 1GW 출하 개시, Meta에 최대 10% 지분 워런트 구조 포함. FY26E 컨센서스 매출 $32B → $34B, 순익 $5.0B → $5.5B 상향.", time: "2026-04-15 20:14 KST" },
+      { type: "종목 정보 갱신", sector: "반도체",
+        detail: "NVIDIA(NVDA) rs 갱신. 美 상무부 4/15 발효 H20 중국 수출 라이선스 의무화로 단기 중국 매출 약 $5.5B 노출. 시간외 -6% 반응. 다만 Blackwell Ultra 풀가동·Rubin 백로그 유지, 4/14까지 10거래일 연속 상승($188 근방).", time: "2026-04-15 20:14 KST" },
+      { type: "종목 정보 갱신", sector: "반도체",
+        detail: "TSMC(TSM) rs 갱신. 4/10 Q1 매출 $35.71B(YoY +35%, 자체 가이던스 $34.6~35.8B 상단) 사상 최대. 3월 단월 +45.2% YoY로 AI·N2 램프 가속. N2 HVM 2025 Q4 가동 후 스마트폰·HPC 수요 강세, A16(GAA+백사이드전력) 2H26 양산 준비. 4/16 어닝콜 예정.", time: "2026-04-15 20:14 KST" },
+    ]
+  },
+  {
     date: "2026-04-15 19:10 KST",
     summary: "BlackRock Q1 2026 실적 반영 (AUM $13.9T 사상 최고·iShares 순유입 $132B 기록)",
     changes: [

@@ -19,13 +19,13 @@ const data = [
     title: "🔩 반도체",
     tag: "AI칩·파운드리·장비·메모리",
     stocks: [
-      { tk:"NVDA", nm:"NVIDIA", rs:"Blackwell Ultra 풀가동·Rubin Meta/CoreWeave $21B", r1:"216", p1:"117", r2:"337", p2:"192" },
+      { tk:"NVDA", nm:"NVIDIA", rs:"H20 중국 라이선스 의무화·Blackwell·Rubin 백로그", r1:"216", p1:"117", r2:"337", p2:"192" },
       { tk:"AVGO", nm:"Broadcom", rs:"커스텀 ASIC·AI 백로그 $73B", r1:"64", p1:"23", r2:"88", p2:"34" },
-      { tk:"TSM", nm:"TSMC", rs:"Q1 $35.6B 사상 최대·첨단공정", r1:"117", p1:"55", r2:"150", p2:"68" },
+      { tk:"TSM", nm:"TSMC", rs:"Q1 $35.7B 사상 최대·N2 양산 램프·A16 H2 준비", r1:"117", p1:"55", r2:"150", p2:"68" },
       { tk:"ASML", nm:"ASML", rs:"EUV 독점", r1:"33", p1:"9", r2:"40", p2:"11" },
       { tk:"LRCX", nm:"Lam Research", rs:"HBM·NAND 장비", r1:"18", p1:"5", r2:"22", p2:"6.3" },
       { tk:"MU", nm:"Micron", rs:"HBM4 램프·26년 전량 완판", r1:"37", p1:"8", r2:"79", p2:"23" },
-      { tk:"AMD", nm:"AMD", rs:"MI350 GPU·데이터센터·AI PC", r1:"26", p1:"3.5", r2:"32", p2:"5.0" },
+      { tk:"AMD", nm:"AMD", rs:"Meta 6GW·$60B MI450+Venice 장기 계약", r1:"26", p1:"3.5", r2:"34", p2:"5.5" },
     ]
   },
   {

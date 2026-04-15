@@ -1,6 +1,17 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
+    date: "2026-04-15 20:14 KST",
+    badge: "개별",
+    summary: "SMH AUM 재조정·IBIT YTD 추가 하향 — BTC $70,800 권역 하락폭 반영",
+    changes: [
+      { type: "수치 갱신", sector: "AI·반도체",
+        detail: "SMH(VanEck Semiconductor) AUM 공식 $42B로 재정립(전 $49B는 일시 피크치). VanEck 4/10 팩트시트 기준. YTD +22%·1Y +45%로 미세 조정. 규모 1위 지위 유지.", time: "2026-04-15 20:14 KST" },
+      { type: "수치 갱신", sector: "크립토·블록체인",
+        detail: "IBIT — BTC가 4/15 시점 ~$70,777(연초 $93k 대비 -24%, 1Y -20%)로 추가 하락. YTD -16%→-24%, 1Y -15%→-20% 정정. 4/10 IBIT AUM $56.80B, 동일자 +$269.3M 순유입. rs에 최신 AUM 수치 $56.8B 명시.", time: "2026-04-15 20:14 KST" },
+    ]
+  },
+  {
     date: "2026-04-15 19:20 KST",
     summary: "IBIT AUM 갱신 ($54B → $57B) 및 Q1 순유입 $8.4B 반영",
     changes: [
