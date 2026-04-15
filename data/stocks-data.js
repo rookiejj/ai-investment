@@ -206,7 +206,7 @@ const data = [
       { tk:"MS", nm:"Morgan Stanley", rs:"자산관리·IB", r1:"62", p1:"13", r2:"66", p2:"14.5" },
       { tk:"BAC", nm:"Bank of America", rs:"소매·상업은행", r1:"105", p1:"28", r2:"110", p2:"31" },
       { tk:"SCHW", nm:"Charles Schwab", rs:"리테일 브로커·자산관리", r1:"21", p1:"7.0", r2:"23", p2:"8.0" },
-      { tk:"BLK", nm:"BlackRock", rs:"글로벌 자산운용 1위", r1:"21", p1:"6.8", r2:"23", p2:"7.6" },
+      { tk:"BLK", nm:"BlackRock", rs:"Q1 AUM $13.9T·iShares 순유입 $132B 기록", r1:"21", p1:"6.8", r2:"23", p2:"7.6" },
       { tk:"WFC", nm:"Wells Fargo", rs:"Q1 매출 21.5B·EPS 1.60 비트·대출 +11%·ROE 12.2%", r1:"83", p1:"19", r2:"88", p2:"22" },
     ]
   },

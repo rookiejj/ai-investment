@@ -3,6 +3,14 @@
 
 const updates = [
   {
+    date: "2026-04-15 19:10 KST",
+    summary: "BlackRock Q1 2026 실적 반영 (AUM $13.9T 사상 최고·iShares 순유입 $132B 기록)",
+    changes: [
+      { type: "종목 정보 갱신", sector: "금융·은행",
+        detail: "BlackRock(BLK) rs 갱신. Q1 2026 매출 $6.70B(컨센 $6.46B 상회, YoY +27%), 조정 EPS $12.53(컨센 $11.48 비트), AUM $13.9T 사상 최고, 분기 순유입 $130B·iShares ETF 순유입 $132B 분기 기록. 장기 유기적 자산 성장률 13% LTM(전년 3%에서 가속). CEO Fink '가장 강력한 시작 중 하나' 코멘트·미국 주식 bullish 스탠스로 전환." },
+    ]
+  },
+  {
     date: "2026-04-15 12:40 KST",
     summary: "Oracle·NVIDIA·Lilly·Tesla rs 갱신 — Stargate 확장·Rubin 대형 수주·Foundayo 출시·Q1 인도 하회",
     changes: [

@@ -1,6 +1,14 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
+    date: "2026-04-15 19:20 KST",
+    summary: "IBIT AUM 갱신 ($54B → $57B) 및 Q1 순유입 $8.4B 반영",
+    changes: [
+      { type: "수치 갱신", sector: "크립토·블록체인",
+        detail: "IBIT(iShares Bitcoin Trust) AUM $54B → $57B로 갱신(4/10 $56.8B 기준). Q1 2026 순유입 $8.4B 공식 확인 — BTC 25% 드로다운에도 기관 장기 배분 수요 유지. 시장 점유율 49%, 일평균 거래대금 $3.2B, 커스터디 BTC 약 78.2만개. BlackRock Q1 실적에서 디지털 자산 AUM $60.7B로 공시, 4/14 IBIT +$269M 순유입으로 5일 연속 유출 종료. rs에 Q1 순유입 지표 추가." }
+    ]
+  },
+  {
     date: "2026-04-15 12:40 KST",
     summary: "반도체 ETF YTD 재집계·크립토 ETF YTD 음전환 반영",
     changes: [

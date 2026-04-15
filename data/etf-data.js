@@ -50,7 +50,7 @@ const data = [
     title: "₿ 크립토·블록체인",
     tag: "비트코인·이더리움·디파이",
     stocks: [
-      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"비트코인 현물 최대·점유 49%", aum:"54", er:"0.25%", ytd:"-16%", y1:"-15%" },
+      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"비트코인 현물 최대·Q1 순유입 $8.4B", aum:"57", er:"0.25%", ytd:"-16%", y1:"-15%" },
       { tk:"FBTC", nm:"Fidelity Wise Origin BTC", rs:"비트코인 현물·피델리티", aum:"17", er:"0.25%", ytd:"-16%", y1:"-15%" },
       { tk:"ETHA", nm:"iShares Ethereum Trust", rs:"이더리움 현물·4/14 +7%", aum:"10", er:"0.25%", ytd:"-12%", y1:"-8%" },
       { tk:"BITO", nm:"ProShares Bitcoin Strategy", rs:"비트코인 선물 최초", aum:"3", er:"0.95%", ytd:"-18%", y1:"-18%" },

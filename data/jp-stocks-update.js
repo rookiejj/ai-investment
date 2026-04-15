@@ -3,6 +3,14 @@
 
 const updates = [
   {
+    date: "2026-04-15 19:15 KST",
+    summary: "도요타 CEO 교체·관세 추정치 $9.5B 상향 반영 (신 CEO Kenta Kon 4/1 취임)",
+    changes: [
+      { type: "종목 정보 갱신", sector: "자동차",
+        detail: "도요타(7203) rs 갱신. 사토 고지(Sato) 사장 3년 만에 사임, CFO 켄타 콘(Kenta Kon) 4/1 신 사장 취임. FY26 미 관세 영향 추정치 $9.1B → $9.5B 소폭 상향 조정, 다만 4개월 연속 글로벌 생산·판매 증가(4월 글로벌 판매 876,864대·YoY +10%, 미국 +10%)로 HEV 수요 견조. 가격 인상 대신 수익성 관리 전략 유지." },
+    ]
+  },
+  {
     date: "2026-04-15 12:40 KST",
     summary: "반도체 장비 AI 랠리 + 자동차 관세 + 닌텐도 Switch 2 + 닛폰제철 US Steel 반영",
     changes: [
