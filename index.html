@@ -359,6 +359,37 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
   transition:color .2s;display:inline-block;
 }
 .update-more:hover{color:var(--fg)}
+.update-badge{
+  font:600 10px/1 'Geist Mono','SF Mono',monospace;
+  padding:3px 8px;border-radius:9999px;
+  letter-spacing:0.4px;text-transform:uppercase;
+  display:inline-block;vertical-align:middle;
+}
+.update-badge-integ{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}
+.update-badge-indiv{background:rgba(255,255,255,0.06);color:var(--mut);border:1px solid var(--border)}
+.update-item-time{
+  font:600 10px/1 'Geist Mono','SF Mono',monospace;
+  padding:2px 6px;border-radius:9999px;margin-right:6px;
+  background:rgba(24,226,153,0.08);color:var(--acc-deep);
+  letter-spacing:0.3px;display:inline-block;vertical-align:middle;
+  transform:translateY(-1px);
+}
+.update-individuals{
+  margin-top:16px;padding-top:14px;border-top:1px dashed var(--border);
+}
+.update-individuals-head{
+  font:600 11px/1 'Geist Mono','SF Mono',monospace;
+  color:var(--mut);letter-spacing:0.5px;text-transform:uppercase;
+  margin-bottom:10px;
+}
+.update-individual{margin-bottom:12px}
+.update-individual:last-child{margin-bottom:0}
+.update-individual-head{
+  display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;
+}
+.update-individual-sum{font-size:12px;color:var(--fg2);font-weight:500}
+.update-list-sub{gap:6px}
+.update-list-sub .update-item{font-size:12px;padding:6px 10px}
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:768px){
@@ -533,25 +564,43 @@ async function loadUpdJS(url,varName,v){
   return new Function(t+`;return typeof ${varName}!=="undefined"?${varName}:[];`)();
 }
 
+function _hm(t){ // extract HH:MM from "YYYY-MM-DD HH:MM KST" or similar
+  if(!t)return '';
+  const m=String(t).match(/(\d{2}:\d{2})/);
+  return m?m[1]:'';
+}
+function _renderItems(entry,tab){
+  if(tab==='ai'){
+    return (entry.entries||[]).map(e=>{
+      if(typeof e==='string')return e;
+      const hm=_hm(e.time);
+      return (hm?`<span class="update-item-time">${hm}</span>`:'')+e.text;
+    });
+  }
+  return (entry.changes||[]).map(c=>{
+    const hm=_hm(c.time);
+    return (hm?`<span class="update-item-time">${hm}</span>`:'')+`<span class="update-item-type">${c.type}</span>${c.detail}`;
+  });
+}
+function _badgeHtml(b){
+  if(!b)return '';
+  return `<span class="update-badge update-badge-${b==='통합'?'integ':'indiv'}">${b}</span>`;
+}
 function renderUpdateBox(tab){
   const updMap={stocks:STATE.stUpd,kr:STATE.krUpd,jp:STATE.jpUpd,ai:STATE.aiUpd,etf:STATE.etfUpd,commodity:STATE.commodityUpd,unicorn:STATE.unicornUpd};
   const upd=updMap[tab];
   if(!upd||!upd.length)return '';
   const latest=upd[0];
-  let items=[];
-  if(tab!=='ai'){
-    items=latest.changes.map(c=>`<span class="update-item-type">${c.type}</span>${c.detail}`);
-  }else{
-    items=latest.entries.map(e=>e);
-  }
+  const items=_renderItems(latest,tab);
   if(!items.length)return '';
   const MAX=4;
   const visible=items.slice(0,MAX);
   const hidden=items.slice(MAX);
   const hasMore=hidden.length>0;
   const dateStr=latest.date;
+  const badgeStr=_badgeHtml(latest.badge);
   const summaryStr=latest.summary?`<div class="update-summary">${latest.summary}</div>`:'';
-  let html=`<div class="update-box"><div class="update-header"><span class="update-tag">업데이트</span><span class="update-date">${dateStr}</span></div>${summaryStr}<ul class="update-list">`;
+  let html=`<div class="update-box"><div class="update-header"><span class="update-tag">업데이트</span>${badgeStr}<span class="update-date">${dateStr}</span></div>${summaryStr}<ul class="update-list">`;
   visible.forEach(it=>html+=`<li class="update-item">${it}</li>`);
   if(hasMore){
     html+=`</ul><div class="update-hidden" style="display:none"><ul class="update-list">`;
@@ -560,6 +609,26 @@ function renderUpdateBox(tab){
     html+=`<span class="update-more" onclick="toggleUpdateMore(this)">외 ${hidden.length}건 › 더보기</span>`;
   }else{
     html+=`</ul>`;
+  }
+  // 같은 날 개별 엔트리 섹션 (통합 엔트리가 최상단일 때만 노출)
+  if(latest.badge==='통합' && typeof dateStr==='string'){
+    const todayPrefix=dateStr.slice(0,10);
+    const indiv=upd.slice(1).filter(e=>e.badge==='개별' && typeof e.date==='string' && e.date.startsWith(todayPrefix));
+    if(indiv.length){
+      html+=`<div class="update-individuals"><div class="update-individuals-head">당일 개별 이력</div>`;
+      indiv.forEach(e=>{
+        const hm=_hm(e.date);
+        const subItems=_renderItems(e,tab);
+        html+=`<div class="update-individual"><div class="update-individual-head">${_badgeHtml('개별')}${hm?`<span class="update-item-time">${hm}</span>`:''}${e.summary?`<span class="update-individual-sum">${e.summary}</span>`:''}</div>`;
+        if(subItems.length){
+          html+=`<ul class="update-list update-list-sub">`;
+          subItems.forEach(it=>html+=`<li class="update-item">${it}</li>`);
+          html+=`</ul>`;
+        }
+        html+=`</div>`;
+      });
+      html+=`</div>`;
+    }
   }
   html+=`</div>`;
   return html;
