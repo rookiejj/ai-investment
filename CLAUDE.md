@@ -272,9 +272,9 @@ AI 탭의 `sector`는 **기업명**(주식 탭의 섹터 대신). type은 AI 성
 
 ---
 
-## 일본 주식 (jp) — ⚠️ 자동 갱신 임시 제외
+## 일본 주식 (jp) — ⚠️ UI·자동 갱신 모두 제외
 
-> **임시 제외 중**: 리모트 트리거 자동 갱신 대상에서 일시 제외. 수동 요청 시에만 업데이트. UI 탭은 유지.
+> **UI에서 제거됨**: `index.html` 탭에서 일본 마켓 제거. 자동 갱신 대상에서도 제외. 데이터 파일(`data/jp-stocks-data.js`, `data/jp-stocks-update.js`)은 보존 중이며 수동 요청 시에만 업데이트.
 
 대상 파일: `data/jp-stocks-data.js`, `data/jp-stocks-update.js`
 

@@ -424,13 +424,12 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
   <div class="tabs">
     <div class="tab" data-t="stocks"><span>미국 마켓</span></div>
     <div class="tab" data-t="kr"><span>한국 마켓</span></div>
-    <div class="tab" data-t="jp"><span>일본 마켓</span></div>
     <div class="tab" data-t="ai"><span>AI 기업</span></div>
     <div class="tab" data-t="etf"><span>글로벌 ETF</span></div>
     <div class="tab" data-t="commodity"><span>원자재·매크로</span></div>
     <div class="tab" data-t="unicorn"><span>유니콘</span></div>
   </div>
-  <script>!function(){var t=JSON.parse(sessionStorage.getItem('briefState')||'null'),s=t&&t.tab||'stocks';document.querySelector('.tab[data-t="'+s+'"]').classList.add('on')}()</script>
+  <script>!function(){var t=JSON.parse(sessionStorage.getItem('briefState')||'null'),s=t&&t.tab||'stocks';if(s==='jp')s='stocks';var el=document.querySelector('.tab[data-t="'+s+'"]');if(el)el.classList.add('on');else document.querySelector('.tab[data-t="stocks"]').classList.add('on')}()</script>
   <div class="tab-desc" id="tabDesc"></div>
   <div class="tab-criteria" id="tabCriteria"></div>
   <div class="search-wrap">
@@ -459,7 +458,6 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
 const TAB_DESC={
   stocks:'미국 상장 섹터별 TOP 7 — 실적·전망 요약',
   kr:'한국 상장 섹터별 TOP 7 — 실적·전망 요약',
-  jp:'일본 상장 섹터별 TOP 7 — 실적·전망 요약',
   ai:'글로벌 AI 주요 기업의 모델·제품·투자 동향 한눈에 보기',
   etf:'글로벌 테마별 대표 ETF — 운용규모·수익률 비교',
   commodity:'원자재 가격·매크로 지표 한눈에 보기',
@@ -468,7 +466,6 @@ const TAB_DESC={
 const TAB_CRITERIA={
   stocks:'선정 기준: 섹터 대표성 · FY26E 컨센서스 존재 · ETF/레버리지 제외 · 회계이슈 시 즉시 교체',
   kr:'선정 기준: 섹터 대표성 · FY26E 컨센서스 존재 · ETF/레버리지 제외 · 회계이슈 시 즉시 교체',
-  jp:'선정 기준: 섹터 대표성 · 도쿄증권거래소 프라임 · FY26E 컨센서스 기반',
   ai:'선정 기준: 프론티어 모델 · 생태계 영향력 · 인프라 지배력 · 오픈소스 기여 · 시장 규모',
   etf:'선정 기준: AUM · 유동성 · 테마 대표성 · 보수율',
   commodity:'데이터: 선물 기준가 · YTD/1Y 변동률 · 52주 범위',
@@ -500,14 +497,12 @@ function fitNums(){
 const STOCKS_URL='./data/stocks-data.js';
 const AI_URL    ='./data/ai-data.js';
 const KR_URL    ='./data/kr-stocks-data.js';
-const JP_URL    ='./data/jp-stocks-data.js';
 const ETF_URL   ='./data/etf-data.js';
 const COMMODITY_URL='./data/commodity-data.js';
 const UNICORN_URL='./data/unicorn-data.js';
 const STOCKS_UPD_URL='./data/stocks-update.js';
 const AI_UPD_URL    ='./data/ai-update.js';
 const KR_UPD_URL    ='./data/kr-stocks-update.js';
-const JP_UPD_URL    ='./data/jp-stocks-update.js';
 const ETF_UPD_URL   ='./data/etf-update.js';
 const COMMODITY_UPD_URL='./data/commodity-update.js';
 const UNICORN_UPD_URL='./data/unicorn-update.js';
@@ -520,8 +515,9 @@ async function loadJS(url,v){
 }
 
 const _saved=JSON.parse(sessionStorage.getItem('briefState')||'null');
-let STATE={tab:_saved?.tab||'stocks',q:'',filter:new Set(_saved?.filters?.[_saved?.tab]||[]),ai:null,st:null,kr:null,jp:null,etf:null,commodity:null,unicorn:null,stUpd:null,aiUpd:null,krUpd:null,jpUpd:null,etfUpd:null,commodityUpd:null,unicornUpd:null};
-const TAB_FILTERS={stocks:new Set(_saved?.filters?.stocks||[]),kr:new Set(_saved?.filters?.kr||[]),ai:new Set(_saved?.filters?.ai||[]),jp:new Set(_saved?.filters?.jp||[]),etf:new Set(_saved?.filters?.etf||[]),commodity:new Set(_saved?.filters?.commodity||[]),unicorn:new Set(_saved?.filters?.unicorn||[])};
+let STATE={tab:_saved?.tab||'stocks',q:'',filter:new Set(_saved?.filters?.[_saved?.tab]||[]),ai:null,st:null,kr:null,etf:null,commodity:null,unicorn:null,stUpd:null,aiUpd:null,krUpd:null,etfUpd:null,commodityUpd:null,unicornUpd:null};
+if(STATE.tab==='jp')STATE.tab='stocks';
+const TAB_FILTERS={stocks:new Set(_saved?.filters?.stocks||[]),kr:new Set(_saved?.filters?.kr||[]),ai:new Set(_saved?.filters?.ai||[]),etf:new Set(_saved?.filters?.etf||[]),commodity:new Set(_saved?.filters?.commodity||[]),unicorn:new Set(_saved?.filters?.unicorn||[])};
 function saveState(){
   const f={};for(const k in TAB_FILTERS)f[k]=[...TAB_FILTERS[k]];
   sessionStorage.setItem('briefState',JSON.stringify({tab:STATE.tab,filters:f}));
@@ -538,9 +534,9 @@ async function refreshIfNeeded(){
   if(!_dataVersion){_dataVersion=v;return false;}
   if(v===_dataVersion)return false;
   _dataVersion=v;
-  const[st,ai,kr,jp,etf,commodity,unicorn,stUpd,aiUpd,krUpd,jpUpd,etfUpd,commodityUpd,unicornUpd]=await Promise.all([loadJS(STOCKS_URL,v),loadJS(AI_URL,v),loadJS(KR_URL,v),loadJS(JP_URL,v),loadJS(ETF_URL,v),loadJS(COMMODITY_URL,v),loadJS(UNICORN_URL,v),loadUpdJS(STOCKS_UPD_URL,'updates',v),loadUpdJS(AI_UPD_URL,'UPDATES',v),loadUpdJS(KR_UPD_URL,'updates',v),loadUpdJS(JP_UPD_URL,'updates',v),loadUpdJS(ETF_UPD_URL,'updates',v),loadUpdJS(COMMODITY_UPD_URL,'updates',v),loadUpdJS(UNICORN_UPD_URL,'updates',v)]);
-  STATE.st=norm(st,'stocks');STATE.ai=norm(ai,'ai');STATE.kr=norm(kr,'kr');STATE.jp=norm(jp,'jp');STATE.etf=norm(etf,'etf');STATE.commodity=norm(commodity,'commodity');STATE.unicorn=norm(unicorn,'unicorn');
-  STATE.stUpd=stUpd;STATE.aiUpd=aiUpd;STATE.krUpd=krUpd;STATE.jpUpd=jpUpd;STATE.etfUpd=etfUpd;STATE.commodityUpd=commodityUpd;STATE.unicornUpd=unicornUpd;BL_MAP=ai.BL||{};
+  const[st,ai,kr,etf,commodity,unicorn,stUpd,aiUpd,krUpd,etfUpd,commodityUpd,unicornUpd]=await Promise.all([loadJS(STOCKS_URL,v),loadJS(AI_URL,v),loadJS(KR_URL,v),loadJS(ETF_URL,v),loadJS(COMMODITY_URL,v),loadJS(UNICORN_URL,v),loadUpdJS(STOCKS_UPD_URL,'updates',v),loadUpdJS(AI_UPD_URL,'UPDATES',v),loadUpdJS(KR_UPD_URL,'updates',v),loadUpdJS(ETF_UPD_URL,'updates',v),loadUpdJS(COMMODITY_UPD_URL,'updates',v),loadUpdJS(UNICORN_UPD_URL,'updates',v)]);
+  STATE.st=norm(st,'stocks');STATE.ai=norm(ai,'ai');STATE.kr=norm(kr,'kr');STATE.etf=norm(etf,'etf');STATE.commodity=norm(commodity,'commodity');STATE.unicorn=norm(unicorn,'unicorn');
+  STATE.stUpd=stUpd;STATE.aiUpd=aiUpd;STATE.krUpd=krUpd;STATE.etfUpd=etfUpd;STATE.commodityUpd=commodityUpd;STATE.unicornUpd=unicornUpd;BL_MAP=ai.BL||{};
   return true;
 }
 // 페이지 포커스 복귀 시 버전 체크 → 현재 탭 즉시 갱신
@@ -577,9 +573,9 @@ function _renderItems(entry){
   }
   return [];
 }
-const _updateExpand={stocks:false,kr:false,jp:false,ai:false,etf:false,commodity:false,unicorn:false};
+const _updateExpand={stocks:false,kr:false,ai:false,etf:false,commodity:false,unicorn:false};
 function renderUpdateBox(tab){
-  const updMap={stocks:STATE.stUpd,kr:STATE.krUpd,jp:STATE.jpUpd,ai:STATE.aiUpd,etf:STATE.etfUpd,commodity:STATE.commodityUpd,unicorn:STATE.unicornUpd};
+  const updMap={stocks:STATE.stUpd,kr:STATE.krUpd,ai:STATE.aiUpd,etf:STATE.etfUpd,commodity:STATE.commodityUpd,unicorn:STATE.unicornUpd};
   const upd=updMap[tab];
   if(!upd||!upd.length)return '';
   const latest=upd[0];
@@ -640,7 +636,7 @@ function toggleUpdateMore(el){
 }
 
 function norm(raw,kind){
-  if(['stocks','kr','jp'].includes(kind))return raw.data.map(g=>({group:g.title,tag:g.tag,items:g.stocks.map(s=>({
+  if(['stocks','kr'].includes(kind))return raw.data.map(g=>({group:g.title,tag:g.tag,items:g.stocks.map(s=>({
     title:`${s.tk} · ${s.nm}`,sub:s.rs,badges:[g.title.replace(/^\S+\s/,'')],
     meta:{r1:s.r1,p1:s.p1,r2:s.r2,p2:s.p2},_raw:`${s.tk} ${s.nm} ${s.rs}`
   }))}));
@@ -665,12 +661,11 @@ function norm(raw,kind){
 const META_CFG={
   stocks:{labels:['매출'+_fy1,'순익'+_fy1,'매출'+_fy2+'E','순익'+_fy2+'E'],keys:['r1','p1','r2','p2'],pre:'$',suf:'B'},
   kr:{labels:['매출'+_fy1,'순익'+_fy1,'매출'+_fy2+'E','순익'+_fy2+'E'],keys:['r1','p1','r2','p2'],pre:'',suf:'천억'},
-  jp:{labels:['매출'+_fy1,'순익'+_fy1,'매출'+_fy2+'E','순익'+_fy2+'E'],keys:['r1','p1','r2','p2'],pre:'¥',suf:'천억'},
   etf:{labels:['운용규모','보수','YTD','1Y'],keys:['aum','er','ytd','y1'],pre:'',suf:''},
   commodity:{labels:['현재가','YTD','1Y','52주'],keys:['price','ytd','y1','range'],pre:'',suf:''},
   unicorn:{labels:['밸류에이션','최근 라운드','섹터','IPO 전망'],keys:['val','round','sector','ipo'],pre:'',suf:'',col:true},
 };
-const TAB_SRC={stocks:'st',kr:'kr',jp:'jp',ai:'ai',etf:'etf',commodity:'commodity',unicorn:'unicorn'};
+const TAB_SRC={stocks:'st',kr:'kr',ai:'ai',etf:'etf',commodity:'commodity',unicorn:'unicorn'};
 function updateLastUpdated(){
   const el=document.getElementById('lastUpdated');
   if(!el||!_dataVersion)return;
@@ -748,7 +743,7 @@ function updateCount(){
 }
 
 // ═══ SWIPE NAV ═══
-const TAB_ORDER=['stocks','kr','jp','ai','etf','commodity','unicorn'];
+const TAB_ORDER=['stocks','kr','ai','etf','commodity','unicorn'];
 let _sliding=false;
 const _scrollPos={stocks:0,kr:0,ai:0};
 function ensureActiveTabVisible(){
@@ -807,9 +802,9 @@ function switchTab(id,dir){
   try{
     _dataVersion=await fetchVersion();
     const _v=_dataVersion||Date.now();
-    const[st,ai,kr,jp,etf,commodity,unicorn,stUpd,aiUpd,krUpd,jpUpd,etfUpd,commodityUpd,unicornUpd]=await Promise.all([loadJS(STOCKS_URL,_v),loadJS(AI_URL,_v),loadJS(KR_URL,_v),loadJS(JP_URL,_v),loadJS(ETF_URL,_v),loadJS(COMMODITY_URL,_v),loadJS(UNICORN_URL,_v),loadUpdJS(STOCKS_UPD_URL,'updates',_v),loadUpdJS(AI_UPD_URL,'UPDATES',_v),loadUpdJS(KR_UPD_URL,'updates',_v),loadUpdJS(JP_UPD_URL,'updates',_v),loadUpdJS(ETF_UPD_URL,'updates',_v),loadUpdJS(COMMODITY_UPD_URL,'updates',_v),loadUpdJS(UNICORN_UPD_URL,'updates',_v)]);
-    STATE.st=norm(st,'stocks');STATE.ai=norm(ai,'ai');STATE.kr=norm(kr,'kr');STATE.jp=norm(jp,'jp');STATE.etf=norm(etf,'etf');STATE.commodity=norm(commodity,'commodity');STATE.unicorn=norm(unicorn,'unicorn');
-    STATE.stUpd=stUpd;STATE.aiUpd=aiUpd;STATE.krUpd=krUpd;STATE.jpUpd=jpUpd;STATE.etfUpd=etfUpd;STATE.commodityUpd=commodityUpd;STATE.unicornUpd=unicornUpd;
+    const[st,ai,kr,etf,commodity,unicorn,stUpd,aiUpd,krUpd,etfUpd,commodityUpd,unicornUpd]=await Promise.all([loadJS(STOCKS_URL,_v),loadJS(AI_URL,_v),loadJS(KR_URL,_v),loadJS(ETF_URL,_v),loadJS(COMMODITY_URL,_v),loadJS(UNICORN_URL,_v),loadUpdJS(STOCKS_UPD_URL,'updates',_v),loadUpdJS(AI_UPD_URL,'UPDATES',_v),loadUpdJS(KR_UPD_URL,'updates',_v),loadUpdJS(ETF_UPD_URL,'updates',_v),loadUpdJS(COMMODITY_UPD_URL,'updates',_v),loadUpdJS(UNICORN_UPD_URL,'updates',_v)]);
+    STATE.st=norm(st,'stocks');STATE.ai=norm(ai,'ai');STATE.kr=norm(kr,'kr');STATE.etf=norm(etf,'etf');STATE.commodity=norm(commodity,'commodity');STATE.unicorn=norm(unicorn,'unicorn');
+    STATE.stUpd=stUpd;STATE.aiUpd=aiUpd;STATE.krUpd=krUpd;STATE.etfUpd=etfUpd;STATE.commodityUpd=commodityUpd;STATE.unicornUpd=unicornUpd;
     BL_MAP=ai.BL||{};
     document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t===STATE.tab));
     ensureActiveTabVisible();

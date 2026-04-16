@@ -35,7 +35,8 @@
       "Bash(ls /Users/roy/.claude/schedule*)",
       "Bash(git rebase *)",
       "Bash(git reset *)",
-      "Bash(git merge *)"
+      "Bash(git merge *)",
+      "Bash(cat *)"
     ]
   }
 }
