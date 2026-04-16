@@ -426,8 +426,8 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
     <div class="tab" data-t="kr"><span>한국 마켓</span></div>
     <div class="tab" data-t="ai"><span>AI 기업</span></div>
     <div class="tab" data-t="etf"><span>글로벌 ETF</span></div>
-    <div class="tab" data-t="commodity"><span>시장·원자재</span></div>
     <div class="tab" data-t="unicorn"><span>유니콘</span></div>
+    <div class="tab" data-t="commodity"><span>시장·원자재</span></div>
   </div>
   <script>!function(){var t=JSON.parse(sessionStorage.getItem('briefState')||'null'),s=t&&t.tab||'stocks';if(s==='jp')s='stocks';var el=document.querySelector('.tab[data-t="'+s+'"]');if(el)el.classList.add('on');else document.querySelector('.tab[data-t="stocks"]').classList.add('on')}()</script>
   <div class="tab-desc" id="tabDesc"></div>
@@ -743,7 +743,7 @@ function updateCount(){
 }
 
 // ═══ SWIPE NAV ═══
-const TAB_ORDER=['stocks','kr','ai','etf','commodity','unicorn'];
+const TAB_ORDER=['stocks','kr','ai','etf','unicorn','commodity'];
 let _sliding=false;
 const _scrollPos={stocks:0,kr:0,ai:0};
 function ensureActiveTabVisible(){

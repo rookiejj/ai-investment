@@ -1,6 +1,44 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-16 16:10 KST",
+    summary: "유니콘 카테고리 전면 재분류 — Anduril·Figure AI·Cohere를 올바른 위치로 이동. 우주·모빌리티 → 우주·모빌리티·방산으로 카테고리명 확장",
+    changes: [
+      { type: "카테고리 변경", sector: "우주·모빌리티·방산",
+        detail: "카테고리명 '🚀 우주·모빌리티' → '🚀 우주·모빌리티·방산'으로 확장. 자율무기·피지컬 AI까지 포괄하도록 재정의. Anduril(Lattice OS·자율무기·美 육군 $20B)과 Figure AI(휴머노이드 로봇·BMW 공장 운영)를 편입해 자율시스템·피지컬 AI 중심 카테고리로 통합. 향후 Shield AI·Saronic 등 신규 방산 유니콘 추가 여지 확보.", time: "2026-04-16 16:10 KST" },
+      { type: "기업 이동", sector: "AI·ML",
+        detail: "제외: Scale AI — Meta가 2025-06에 49% 지분을 $14.3B에 인수하며 사실상 Meta 자회사 성격이 되어 독립 유니콘 포지셔닝이 모호해짐. 추가: Cohere(기존 바이오·헬스에서 이동) — 엔터프라이즈 LLM·ARR $240M+·프론티어 모델 제공사로서 OpenAI·Anthropic과 동일 범주. AI·ML 카테고리를 프론티어 AI 라인업으로 집중.", time: "2026-04-16 16:10 KST" },
+      { type: "기업 이동", sector: "핀테크",
+        detail: "제외: Anduril — 방산 AI 기업이므로 신설된 우주·모빌리티·방산 카테고리로 이동. 추가: Mercury — SMB 뱅킹·재무관리, Brex(Capital One 인수) 공백을 대체. ARR $650M(+30% YoY)·30만 SMB 고객·$248B 거래량·현재 $5B+ 밸류로 신규 라운드 협상 중.", time: "2026-04-16 16:10 KST" },
+      { type: "기업 이동", sector: "우주·모빌리티·방산",
+        detail: "제외: Boom Supersonic($1.5B·DC 터빈 사업 피벗으로 우주·모빌리티 정체성 흔들림)·Stoke Space($3.4B·재사용 로켓은 SpaceX·Relativity로 대표 가능, 미완성 프로젝트라 대표성 약함). 추가: Anduril(기존 핀테크에서 이동·$60B·방산 AI)·Figure AI(기존 바이오·헬스에서 이동·$39B·휴머노이드 로봇).", time: "2026-04-16 16:10 KST" },
+      { type: "기업 이동", sector: "바이오·헬스",
+        detail: "제외: Figure AI(휴머노이드 로봇으로 바이오·헬스 부적합 → 우주·모빌리티·방산 이동)·Cohere(엔터프라이즈 LLM으로 바이오·헬스 부적합 → AI·ML 이동). 추가: Devoted Health($13B·Series F-Prime $317M 2026-01·메디케어 어드밴티지 46.6만 멤버·전년 +121% 성장)·Sword Health($3B·Series E $130M 2024-06·AI 기반 MSK 디지털 치료·Hinge Health 경쟁사). 당초 Hinge Health 편입 검토했으나 2025-05 NYSE 상장 완료(HNGE·$2.6B·전 $6.2B 대비 다운 라운드)로 유니콘 자격 상실 확인.", time: "2026-04-16 16:10 KST" },
+      { type: "제외 사유 정리", sector: "전체",
+        detail: "순 제외: Scale AI(Meta 49% 인수)·Boom Supersonic(방향성 흔들림)·Stoke Space(대표성 부족). 순 추가: Mercury·Devoted Health·Sword Health. 재분류 이동: Anduril(핀테크→우주·모빌리티·방산)·Figure AI(바이오·헬스→우주·모빌리티·방산)·Cohere(바이오·헬스→AI·ML). 총 42개 유지(6 카테고리 × 7).", time: "2026-04-16 16:10 KST" },
+    ]
+  },
+  {
+    date: "2026-04-16 15:40 KST",
+    summary: "카테고리당 기업 5→7개 확장(Top7 일관성). 12개 신규 편입. Circle·Brex·Melio 상장/인수로 제외",
+    changes: [
+      { type: "구성 변경", sector: "AI·ML",
+        detail: "추가: Safe Superintelligence($32B·Sutskever 창업·제품 없이 Alphabet/NVIDIA 베팅한 AGI 안전 연구소)·Thinking Machines Lab($12B 확정·Murati 창업·Tinker API 출시·$50B 신규 라운드 협상 중). Cerebras는 4월 IPO 임박 상태 유지(상장 확정 시 즉시 제외 예정).", time: "2026-04-16 15:40 KST" },
+      { type: "구성 변경", sector: "핀테크",
+        detail: "추가: Gusto($10B·Series F $175M 2025-10·SMB HR/급여 30만 고객·2023 FCF 양전환)·Checkout.com($12B·피크 $40B 대비 70% 재평가·유럽 최대 독립 결제 게이트웨이). 제외 후보였던 Brex는 2026-01 Capital One이 $5.15B(피크 $12.3B 대비 58% 할인) 인수 확정, Melio도 2025-10 Xero가 $2.5B 인수 완료로 양쪽 다 유니콘 자격 상실.", time: "2026-04-16 15:40 KST" },
+      { type: "구성 변경", sector: "엔터프라이즈 SW",
+        detail: "추가: Cursor/Anysphere($29.3B 확정·Series D $2.3B 2025-11·ARR $2B 돌파·$60B 신규 라운드 협상 중)·Hugging Face($4.5B·Google/NVIDIA/AMD 공동 투자·오픈소스 AI 모델 허브 산업 표준).", time: "2026-04-16 15:40 KST" },
+      { type: "구성 변경", sector: "우주·모빌리티",
+        detail: "추가: Relativity Space($4.2B·Eric Schmidt CEO·Terran R 2026년 말 첫 발사 목표)·Waymo($126B·2026-02 $16B Series D·연 1,500만 트립·11개 도시 확장·자율주행 최대 유니콘). Vast는 2026-03 $500M Series B 확정으로 수치 갱신.", time: "2026-04-16 15:40 KST" },
+      { type: "구성 변경", sector: "바이오·헬스",
+        detail: "추가: Neuralink($9B·Series E $650M 2025-06·12명 이식 완료·양산 개시·Blindsight 시각 복원 프로젝트 착수)·Verily($300M Series X 2026-03·Alphabet 지분 축소 후 Verily Health 독립법인 전환).", time: "2026-04-16 15:40 KST" },
+      { type: "구성 변경", sector: "크립토·Web3",
+        detail: "추가: Alchemy($10.2B·Series C1 $200M 2022-02·이더리움/솔라나 RPC 인프라·4월 Solana $20M 개발자 펀드)·Anchorage Digital($4.2B·Tether $100M 투자 2026-02·미 최초 연방 인가 크립토 은행). 당초 Circle로 충원하려 했으나 2025-06 NYSE 상장 완료(CRCL, 첫날 +168%)로 유니콘 자격 상실 확인.", time: "2026-04-16 15:40 KST" },
+      { type: "제외 사유 정리", sector: "핀테크·크립토",
+        detail: "제외: Circle(스테이블코인 USDC 발행사, 2025-06 NYSE 상장 완료 CRCL)·Brex(2026-01 Capital One $5.15B 인수 확정)·Melio(2025-10 Xero $2.5B 인수 완료). 대체로 Gusto·Checkout.com·Alchemy·Anchorage Digital 편입.", time: "2026-04-16 15:40 KST" },
+    ]
+  },
+  {
     date: "2026-04-15 21:38 KST",
     summary: "Perplexity ARR $500M 돌파 (Computer 에이전트·업라운드)",
     changes: [

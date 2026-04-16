@@ -1,6 +1,28 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
+    date: "2026-04-16 15:40 KST",
+    summary: "카테고리당 ETF 5→7종 확장(Top7 일관성). 16개 신규 편입 + 기존 수치 전반 갱신",
+    changes: [
+      { type: "구성 변경", sector: "AI·반도체",
+        detail: "추가: IGV(iShares Tech-Software, AUM $10.7B·YTD -26%·AI 대체 우려로 SaaS 전반 급락)·WCLD(WisdomTree Cloud, AUM $0.38B·YTD -19%). 반도체 중심 5종에 소프트웨어·클라우드 커버리지 보강.", time: "2026-04-16 15:40 KST" },
+      { type: "구성 변경", sector: "방산·보안",
+        detail: "추가: SHLD(Global X Defense Tech, AUM $8.7B·YTD +80%·2026년 ETF 전체 최상위권 수익)·PAVE(Global X Infrastructure, AUM $12.4B·YTD +4%·미 인프라 재건 수혜). ITA AUM $8B→$17B, PPA $5B→$6.5B, XAR $3B→$1.9B, HACK YTD +16%→0% 등 수치 현행화.", time: "2026-04-16 15:40 KST" },
+      { type: "구성 변경", sector: "에너지·원자력",
+        detail: "추가: VDE(Vanguard Energy, AUM $13.2B·YTD +30%·저보수 0.09%)·IEO(iShares US Oil & Gas E&P, AUM $0.60B). 중동 유가 급등 반영해 XLE YTD +8%→+38%, XOP +6%→+43% 대폭 상향.", time: "2026-04-16 15:40 KST" },
+      { type: "구성 변경", sector: "클린에너지",
+        detail: "추가: FAN(First Trust Wind, AUM $0.26B·1Y +78%)·HYDR(Global X Hydrogen, AUM $0.063B·YTD +57%·1Y +110%). ICLN YTD +5%→+50%, TAN +8%→+46% 카운터랠리 반영.", time: "2026-04-16 15:40 KST" },
+      { type: "구성 변경", sector: "크립토·블록체인",
+        detail: "추가: BITW(Bitwise 10 Crypto Index, 시총 상위 10 분산)·DAPP(VanEck Digital Transformation, Web3 기업 테마). IBIT AUM $54B→$58B, YTD -22%→-16% 현행화(IBIT+FBTC+ETHA 등 스폿 ETF 합산 AUM $96.5B 돌파).", time: "2026-04-16 15:40 KST" },
+      { type: "구성 변경", sector: "미국 대형주",
+        detail: "추가: RSP(Invesco S&P 500 등가중, AUM $83B·빅테크 집중 리스크 분산)·IWM(iShares Russell 2000, AUM $73B·1Y +43%·소형주 반등). DIA YTD 0%→-3%(다우 부진).", time: "2026-04-16 15:40 KST" },
+      { type: "구성 변경", sector: "배당·인컴",
+        detail: "추가: NOBL(ProShares Dividend Aristocrats, 25년+ 배당성장 166종)·DGRO(iShares Core Dividend Growth, AUM $39B·1Y +27%). VYM AUM $60B→$89B, SCHD YTD +7%→+11%(에너지 비중 수혜), JEPI $38B→$44B 갱신.", time: "2026-04-16 15:40 KST" },
+      { type: "구성 변경", sector: "신흥국·글로벌",
+        detail: "추가: FXI(iShares China Large-Cap, 중국 H주·관세 변동성)·EWY(iShares MSCI South Korea, AUM $16B·YTD +49%·1Y +173%·반도체 HBM+방산 수출 주도 급등). VWO AUM $80B→$116B.", time: "2026-04-16 15:40 KST" },
+    ]
+  },
+  {
     date: "2026-04-16 11:49 KST",
     summary: "S&P 500 7,023·나스닥 24,016 사상 최고가 경신 — 미국 대형주 ETF YTD 전면 상향",
     changes: [
