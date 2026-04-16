@@ -3,7 +3,7 @@
 
 const data = [
   {
-    title: "📊 매크로 지표",
+    title: "📊 시장 지표",
     tag: "금리·달러·변동성",
     stocks: [
       { tk:"FFRATE", nm:"미 기준금리", rs:"3월 FOMC 동결·연내 1회 추가 인하 시사", price:"3.50–3.75%", ytd:"-50bp", y1:"-150bp", range:"3.50–5.25%" },
