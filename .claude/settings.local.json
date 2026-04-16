@@ -1,5 +1,4 @@
 {
-  "model": "sonnet",
   "permissions": {
     "allow": [
       "Bash(start:*)",
@@ -33,7 +32,9 @@
       "Bash(git commit:*)",
       "Bash(python3 *)",
       "Bash(open *)",
-      "Bash(ls /Users/roy/.claude/schedule*)"
+      "Bash(ls /Users/roy/.claude/schedule*)",
+      "Bash(git rebase *)"
     ]
-  }
+  },
+  "model": "sonnet"
 }
