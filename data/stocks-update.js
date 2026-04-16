@@ -3,6 +3,14 @@
 
 const updates = [
   {
+    date: "2026-04-16 11:49 KST",
+    summary: "Tesla Q1 2026 인도 358K 확정 + Model S/X 단종 + 4/22 실적발표 앞둔 시장 우려",
+    changes: [
+      { type: "정보 갱신", sector: "자동차·모빌리티",
+        detail: "Tesla(TSLA). Q1 2026 인도 358,023대 확정(전년 동기 336,681대 +6.3%, 월스트리트 컨센 369K 하회). 생산 408K vs 인도 358K로 재고 5만대 누적, JPMorgan 164K 미판매 재고 경고. 4/1 Model S·Model X 단종(로봇·CyberCab 집중). 4/22 Q1 실적발표 예정, TD Cowen 가이던스 하향 리스크 낮다 평가하나 현금소진 $7B·TeraFab 투자 부담 부각.", time: "2026-04-16 11:49 KST" },
+    ]
+  },
+  {
     date: "2026-04-16 10:30 KST",
     summary: "NVIDIA H20 관련 $5.5B Q1 차지 SEC 공시 확정 + TSMC 오늘 15시(KST) Q1 어닝콜",
     changes: [

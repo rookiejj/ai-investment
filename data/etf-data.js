@@ -61,11 +61,11 @@ const data = [
     title: "🇺🇸 미국 대형주",
     tag: "S&P500·나스닥·다우",
     stocks: [
-      { tk:"SPY", nm:"SPDR S&P 500", rs:"S&P 500 대형주 ETF·4월 변동장 반등 국면", aum:"590", er:"0.09%", ytd:"-4%", y1:"+10%" },
-      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"나스닥 100 빅테크·AI 리더십 유지", aum:"400", er:"0.20%", ytd:"+1%", y1:"+15%" },
-      { tk:"VOO", nm:"Vanguard S&P 500", rs:"S&P 500 최대 ETF·최저 보수", aum:"827", er:"0.03%", ytd:"-4%", y1:"+10%" },
-      { tk:"VTI", nm:"Vanguard Total Stock", rs:"미국 전체 시장", aum:"420", er:"0.03%", ytd:"-4%", y1:"+9%" },
-      { tk:"DIA", nm:"SPDR Dow Jones", rs:"다우 30 우량주", aum:"35", er:"0.16%", ytd:"-3%", y1:"+7%" },
+      { tk:"SPY", nm:"SPDR S&P 500", rs:"S&P 500 4/15 7,023 사상 최고가 경신", aum:"590", er:"0.09%", ytd:"+3%", y1:"+15%" },
+      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"나스닥 100 4/15 24,016 사상 최고가·AI 리더십", aum:"400", er:"0.20%", ytd:"+7%", y1:"+22%" },
+      { tk:"VOO", nm:"Vanguard S&P 500", rs:"세계 최대 ETF·AUM $827B·최저 보수", aum:"827", er:"0.03%", ytd:"+3%", y1:"+15%" },
+      { tk:"VTI", nm:"Vanguard Total Stock", rs:"미국 전체 시장·4월 신고가 랠리", aum:"420", er:"0.03%", ytd:"+2%", y1:"+14%" },
+      { tk:"DIA", nm:"SPDR Dow Jones", rs:"다우 30 우량주·48,463 수준", aum:"35", er:"0.16%", ytd:"0%", y1:"+10%" },
     ]
   },
   {

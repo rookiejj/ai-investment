@@ -3,6 +3,14 @@
 
 const updates = [
   {
+    date: "2026-04-16 11:49 KST",
+    summary: "SK하이닉스 NVIDIA Rubin 지연으로 HBM4 감산 20~30% 관측 + Goldman Sachs TP 135만 상향",
+    changes: [
+      { type: "정보 갱신", sector: "반도체",
+        detail: "SK하이닉스(000660). DigiTimes 4/15 보도 — NVIDIA 차세대 Vera Rubin 플랫폼 램프 지연으로 SK하이닉스의 2026년 HBM4 출하량 20~30% 축소 검토. HBM4 양산 1위 지위 유지되나 단기 물량 조정 리스크 부각. Goldman Sachs 4월 초 목표가 120만→135만원 상향(AI 메모리 슈퍼사이클·2027년 HBM4 본격 수요 반영). Q1 실적발표 4/23 예정.", time: "2026-04-16 11:49 KST" },
+    ]
+  },
+  {
     date: "2026-04-16 10:30 KST",
     summary: "KOSPI 6,140선 돌파·SK하이닉스 116.6만원 장중 신고가·반도체 업황 가속 확인",
     changes: [
