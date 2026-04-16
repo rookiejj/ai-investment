@@ -33,8 +33,9 @@
       "Bash(python3 *)",
       "Bash(open *)",
       "Bash(ls /Users/roy/.claude/schedule*)",
-      "Bash(git rebase *)"
+      "Bash(git rebase *)",
+      "Bash(git reset *)",
+      "Bash(git merge *)"
     ]
-  },
-  "model": "sonnet"
+  }
 }

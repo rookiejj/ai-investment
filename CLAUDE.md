@@ -449,12 +449,6 @@ const data = [{
 - **update.js 파일들** — 일반 사용자 대상. 어떤 기업/종목의 무엇이 왜 변경되었는지를 전문적이고 읽기 쉬운 문체로 기록. 기술적 세부사항 제외.
 - **README.md** — 개발자/기여자 대상. 소스코드 구조 변경, 파일 추가/삭제, UI 로직 수정 등 기술적 변경만 기록.
 
-### 실행 모델 통일
-- 로컬·리모트 모두 **Claude Sonnet 4.6**으로 통일해 결과 재현성 확보.
-- 로컬: `.claude/settings.local.json`의 `"model": "sonnet"`이 강제.
-- 리모트: 스케줄 트리거의 `session_context.model`이 `claude-sonnet-4-6`.
-- 필요 시 `/model`로 일시 전환은 가능하지만 기본값은 Sonnet 유지.
-
 ### update.js 사용자향 문체 규칙 (절대 지킬 것)
 update.js의 `summary`·`detail`·`text`에 내부 구현 용어를 쓰지 마. 사용자는 데이터 필드명이나 편집 작업 단위를 몰라도 된다.
 
