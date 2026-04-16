@@ -3,6 +3,14 @@
 
 const updates = [
   {
+    date: "2026-04-16 19:08 KST",
+    summary: "TSMC Q1 2026 어닝콜 완료 — Q2 가이던스 $39~40.2B 상향·GM 상단 66%·26년 USD 매출 +30%·CapEx 상단",
+    changes: [
+      { type: "정보 갱신", sector: "반도체",
+        detail: "TSMC(TSM). 한국시간 4/16 오후 어닝콜에서 Q1 매출 $35.7B(+35% YoY)·GM 66.2%·OM 58.1% 확정. Q2 가이던스 $39.0~40.2B(컨센 $38.1B 상회)·GM 65.5~67.5% 제시, 2026 연간 USD 매출 +30% 근접·$52~56B CapEx는 상단으로 유도. AI 가속기 매출은 2029년까지 mid-to-high 50% CAGR 지속 전망. 장기 GM 목표도 56%+로 상향.", time: "2026-04-16 19:08 KST" },
+    ]
+  },
+  {
     date: "2026-04-16 17:30 KST",
     summary: "Q1 실적 시즌 본격화 — NVIDIA FY26 $216B 확정·Micron HBM4 램프·Goldman·Morgan·BAC 대형은행 일제히 사상 최고",
     changes: [

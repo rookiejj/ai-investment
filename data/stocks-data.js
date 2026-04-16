@@ -21,7 +21,7 @@ const data = [
     stocks: [
       { tk:"NVDA", nm:"NVIDIA", rs:"FY26 $216B 확정·Rubin 풀프로덕션 진입·Blackwell+Rubin $1T 파이프라인", r1:"216", p1:"117", r2:"337", p2:"192" },
       { tk:"AVGO", nm:"Broadcom", rs:"커스텀 ASIC·AI 백로그 $73B", r1:"64", p1:"23", r2:"88", p2:"34" },
-      { tk:"TSM", nm:"TSMC", rs:"Q1 $35.7B 사상 최대·N2 양산 램프·A16 H2 준비", r1:"117", p1:"55", r2:"150", p2:"68" },
+      { tk:"TSM", nm:"TSMC", rs:"Q1 $35.7B 확정·Q2 가이던스 $39~40.2B 상향·GM 65.5~67.5%·26년 USD +30%·CapEx 상단", r1:"117", p1:"55", r2:"153", p2:"70" },
       { tk:"ASML", nm:"ASML", rs:"Q1 €8.8B·2026 가이던스 €36~40B 상향·EUV 독점", r1:"33", p1:"9", r2:"42", p2:"12" },
       { tk:"LRCX", nm:"Lam Research", rs:"HBM·NAND 장비", r1:"18", p1:"5", r2:"22", p2:"6.3" },
       { tk:"MU", nm:"Micron", rs:"Q1 FY26 $13.6B 사상 최대·HBM4 2Q 램프·26년 전량 완판", r1:"37", p1:"8", r2:"79", p2:"23" },
