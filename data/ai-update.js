@@ -6,6 +6,17 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-16 17:30 KST",
+    summary: "Google Gemini Robotics-ER 1.6 공개·Mistral Codestral 2 Apache 2.0 출시·Apple Siri·Vera Rubin 풀프로덕션 등 최근성 정리",
+    changes: [
+      { type: "제품 출시", sector: "Google DeepMind", detail: "Gemini Robotics-ER 1.6 4/14 공개. 공간 추론·다뷰 성공 감지·에이전틱 비전으로 고정밀 산업 태스크에 특화. Boston Dynamics와 공동 개발해 Atlas·Spot이 아날로그 게이지·온도계·디지털 판독값을 시설 점검 중 해석. Gemini API·AI Studio에 배포, Orbit AIVI 시스템에 통합.", time: "2026-04-16 17:30 KST" },
+      { type: "모델 출시", sector: "Mistral AI", detail: "Codestral 2 4/8 출시. 22B 밀집 모델·Apache 2.0 라이선스로 상업 제한 해제. HumanEval·MBPP에서 GPT-4o 상회, Fill-in-the-Middle 네이티브 학습. 출시 1주일 만에 다운로드 38만+ — 유럽 오픈 코딩 모델 새 기준.", time: "2026-04-16 17:30 KST" },
+      { type: "전략", sector: "Apple", detail: "신 Siri + Gemini 연동 일정 재조정: iOS 26.4 → iOS 26.5(5월) 엔지니어링 이슈로 연기, 완전 대화 경험은 iOS 27(9월) 예정. Gemini 1.2조 파라미터 커스텀 모델을 Private Cloud Compute에서 구동. WKA(World Knowledge Answers) AI 검색 엔진 탑재로 Perplexity·ChatGPT와 직접 경쟁, 연 $10억 파트너십.", time: "2026-04-16 17:30 KST" },
+      { type: "인프라", sector: "NVIDIA", detail: "Vera Rubin 4월 풀 프로덕션 진입. GTC 2026에서 6개 신규 칩과 Rubin CPX 'massive-context inference' GPU 추가 공개. Meta·CoreWeave 대형 딜 확정, Blackwell 대비 추론 토큰 비용 10배 절감·MoE 훈련 GPU 수 4배 절감. 하반기 AWS·GCP·Azure·OCI·CoreWeave에서 Rubin 인스턴스 첫 배포.", time: "2026-04-16 17:30 KST" },
+      { type: "최근성 관리", sector: "Anthropic·Google DeepMind·Microsoft·Mistral AI", detail: "4월 초~중순 출시 항목 NEW 배지 해제: Anthropic Coefficient Bio 인수, Google Gemini 3.1 Ultra·Gemma 4, Microsoft Copilot Cowork, Mistral 파리 데이터센터·Voxtral TTS.", time: "2026-04-16 17:30 KST" },
+    ]
+  },
+  {
     date: "2026-04-15 21:38 KST",
     summary: "xAI Grok 5 출시 Q2 2026으로 재조정·XChat 예정 + OpenAI GPT-6 루머 정리",
     changes: [

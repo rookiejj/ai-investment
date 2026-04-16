@@ -1,6 +1,22 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-16 17:30 KST",
+    summary: "Anthropic $800B 오퍼 고사·SpaceX 6월 로드쇼 $75B 조달·Canva $134B·Anduril Series H 협상 등 최신 펀딩·IPO 동향",
+    changes: [
+      { type: "정보 갱신", sector: "AI·ML",
+        detail: "Anthropic. ARR $300억 돌파(OpenAI $250억 추월)·$800B 신규 펀딩 오퍼 고사 보도(2월 $350B의 2배 이상). Claude Mythos Preview 보안 시연으로 CrowdStrike·Palo Alto 보안주 급락 유발. Thinking Machines Lab. NVIDIA GW 파트너십 확보하고 $50B 신규 라운드 협상 중이나 난항.", time: "2026-04-16 17:30 KST" },
+      { type: "정보 갱신", sector: "핀테크",
+        detail: "Fireblocks. TRES $130M 인수(1/7) — 디지털 자산 재무·회계 자동화 역량 추가로 기관 크립토 인프라 지배력 확장.", time: "2026-04-16 17:30 KST" },
+      { type: "정보 갱신", sector: "엔터프라이즈 SW",
+        detail: "Canva. 밸류에이션 $42B→$134B로 3배 이상 재평가(2025-12 Insight·Fidelity·JPM 주도 세컨더리). AI 디자인 스튜디오·엔터프라이즈 확장으로 Figma와 양강 구도 공고화.", time: "2026-04-16 17:30 KST" },
+      { type: "정보 갱신", sector: "우주·모빌리티·방산",
+        detail: "SpaceX. 6월 첫째 주 로드쇼 시작·세컨더리 라운드 $75B 조달 예정·밸류 $1.75T 사상 최대 거론. Anduril. Series H 최대 $8B 협상 중, 2차시장 밸류 $73B 상회로 방산 AI 유니콘 1위 굳힘.", time: "2026-04-16 17:30 KST" },
+      { type: "정보 갱신", sector: "크립토·Web3",
+        detail: "Kraken. IPO 목표 2026 Q3로 연기·시장 여건에 따라 재조정 가능. Discord. IPO 목표 2026 H1로 설정했으나 지연 가능성 상존.", time: "2026-04-16 17:30 KST" },
+    ]
+  },
+  {
     date: "2026-04-16 16:10 KST",
     summary: "유니콘 카테고리 전면 재분류 — Anduril·Figure AI·Cohere를 올바른 위치로 이동. 우주·모빌리티 → 우주·모빌리티·방산으로 카테고리명 확장",
     changes: [

@@ -3,6 +3,34 @@
 
 const updates = [
   {
+    date: "2026-04-16 17:30 KST",
+    summary: "Q1 실적 시즌 본격화 — NVIDIA FY26 $216B 확정·Micron HBM4 램프·Goldman·Morgan·BAC 대형은행 일제히 사상 최고",
+    changes: [
+      { type: "정보 갱신", sector: "AI 플랫폼",
+        detail: "Oracle(ORCL). OCI 성장률 +44% YoY로 앞선 +84% 대비 정상화, RPO $553B·Stargate 7GW 계약·AI 인프라 투자 $400B 규모 공식화. 클라우드 수익성보다 하이퍼스케일 자본집약 경쟁에 방점.", time: "2026-04-16 17:30 KST" },
+      { type: "정보 갱신", sector: "반도체",
+        detail: "NVIDIA(NVDA). FY26 매출 $216B 확정, Rubin 풀프로덕션 진입·Blackwell+Rubin 합산 파이프라인 $1T 규모 거론. GTC 2026에서 6개 신규 칩과 Rubin CPX 공개. Micron(MU). Q1 FY26 매출 $13.6B 사상 최대, HBM4 2분기 본격 램프 시작하며 2026년 물량 전량 완판 확인.", time: "2026-04-16 17:30 KST" },
+      { type: "정보 갱신", sector: "데이터센터",
+        detail: "Arista(ANET). 2026 매출 성장 가이던스 25%로 상향 — AI 클러스터 스위칭 수요가 기존 추정치를 계속 상회. CoreWeave(CRWV). NVIDIA 2대주주 지분 참여·Dell과 전략 파트너십 확장으로 GPU 클라우드 자본조달과 공급망 모두 강화.", time: "2026-04-16 17:30 KST" },
+      { type: "정보 갱신", sector: "원자력·SMR",
+        detail: "Vistra(VST). Meta와 2.6GW PPA 체결, Comanche Peak 원전 1.2GW 확장 계획 — 원전+가스 믹스 전력회사 중 AI 데이터센터 수주 선두 굳힘.", time: "2026-04-16 17:30 KST" },
+      { type: "정보 갱신", sector: "바이오·헬스케어",
+        detail: "Eli Lilly(LLY). 경구 GLP-1 Foundayo $149 판매 개시로 Novo Nordisk Wegovy 경구제와 가격 동일 라인업 형성, retatrutide Phase 3 체중감량 데이터 하반기 공개 예정. 경구 GLP-1 파이프라인 1위 포지션 공고화.", time: "2026-04-16 17:30 KST" },
+      { type: "정보 갱신", sector: "자동차·모빌리티",
+        detail: "Tesla(TSLA). Q1 2026 인도 358K 부진 확정·생산-인도 격차로 재고 16.4만대 누적·Model S/X 단종. 4/22 실적 발표 앞두고 하이브리드(HEV) 성장세에 판매 추월 우려 부각.", time: "2026-04-16 17:30 KST" },
+      { type: "정보 갱신", sector: "항공우주·방산",
+        detail: "Boeing(BA). Q1 인도 143대(737 114대 포함)로 Airbus 추월, 4/22 실적 발표 예정. Rocket Lab(RKLB). Neutron 첫 비행 4Q26로 재지연됐으나 $816M SDA 수주·국방 프라임으로 전환 가속.", time: "2026-04-16 17:30 KST" },
+      { type: "정보 갱신", sector: "양자·크립토",
+        detail: "Strategy(MSTR). BTC 보유량 78만 개 돌파, $1B 추가 매입 공시로 80만 개 임박 — BTC 트레저리 모델 확장 지속.", time: "2026-04-16 17:30 KST" },
+      { type: "정보 갱신", sector: "사이버보안",
+        detail: "Palo Alto(PANW). CyberArk $25B 인수 2/11 완료, ID 시큐리티와 통합 보안 플랫폼 결합 본격화.", time: "2026-04-16 17:30 KST" },
+      { type: "정보 갱신", sector: "금융·은행",
+        detail: "Goldman Sachs(GS). Q1 EPS $17.55·주식트레이딩 매출 $5.33B 사상 최고·IB수수료 +48%. Morgan Stanley(MS). Q1 고객자산 $9T 돌파, $10T 목표로 WM 순유입 강세. Bank of America(BAC). Q1 매출 30.3B +7%·EPS $1.11 +25%·NII $15.7B +9% 전 부문 성장.", time: "2026-04-16 17:30 KST" },
+      { type: "정보 갱신", sector: "소비·리테일",
+        detail: "Lululemon(LULU). 2026 가이던스 하향·Texas 주 회계 관련 조사 보도 — 프리미엄 애슬레저 성장 둔화와 규제 리스크 동시 부각.", time: "2026-04-16 17:30 KST" },
+    ]
+  },
+  {
     date: "2026-04-16 11:49 KST",
     summary: "Tesla Q1 2026 인도 358K 확정 + Model S/X 단종 + 4/22 실적발표 앞둔 시장 우려",
     changes: [

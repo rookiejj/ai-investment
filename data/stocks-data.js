@@ -9,7 +9,7 @@ const data = [
       { tk:"MSFT", nm:"Microsoft", rs:"Azure AI·Copilot·OpenAI", r1:"282", p1:"101", r2:"325", p2:"118" },
       { tk:"GOOGL", nm:"Alphabet", rs:"Gemini·TPU·검색", r1:"403", p1:"132", r2:"455", p2:"148" },
       { tk:"META", nm:"Meta", rs:"Llama·광고 AI", r1:"201", p1:"66", r2:"235", p2:"72" },
-      { tk:"ORCL", nm:"Oracle", rs:"OCI +84% YoY·RPO $553B·Stargate 7GW", r1:"57", p1:"12", r2:"68", p2:"15" },
+      { tk:"ORCL", nm:"Oracle", rs:"OCI +44% YoY·RPO $553B·Stargate 7GW·$400B 투자", r1:"57", p1:"12", r2:"68", p2:"15" },
       { tk:"PLTR", nm:"Palantir", rs:"AIP 국방·상용", r1:"4.5", p1:"0.6", r2:"7.2", p2:"1.5" },
       { tk:"CRM", nm:"Salesforce", rs:"Agentforce·Data Cloud", r1:"42", p1:"7.6", r2:"46", p2:"8.5" },
       { tk:"NOW", nm:"ServiceNow", rs:"IT워크플로우·에이전트 AI 플랫폼", r1:"11", p1:"2.2", r2:"13", p2:"3.0" },
@@ -19,12 +19,12 @@ const data = [
     title: "🔩 반도체",
     tag: "AI칩·파운드리·장비·메모리",
     stocks: [
-      { tk:"NVDA", nm:"NVIDIA", rs:"H20 $5.5B 차지 공시·Blackwell Ultra 풀가동·Rubin 샘플 출하", r1:"216", p1:"117", r2:"337", p2:"192" },
+      { tk:"NVDA", nm:"NVIDIA", rs:"FY26 $216B 확정·Rubin 풀프로덕션 진입·Blackwell+Rubin $1T 파이프라인", r1:"216", p1:"117", r2:"337", p2:"192" },
       { tk:"AVGO", nm:"Broadcom", rs:"커스텀 ASIC·AI 백로그 $73B", r1:"64", p1:"23", r2:"88", p2:"34" },
       { tk:"TSM", nm:"TSMC", rs:"Q1 $35.7B 사상 최대·N2 양산 램프·A16 H2 준비", r1:"117", p1:"55", r2:"150", p2:"68" },
       { tk:"ASML", nm:"ASML", rs:"Q1 €8.8B·2026 가이던스 €36~40B 상향·EUV 독점", r1:"33", p1:"9", r2:"42", p2:"12" },
       { tk:"LRCX", nm:"Lam Research", rs:"HBM·NAND 장비", r1:"18", p1:"5", r2:"22", p2:"6.3" },
-      { tk:"MU", nm:"Micron", rs:"HBM4 램프·26년 전량 완판", r1:"37", p1:"8", r2:"79", p2:"23" },
+      { tk:"MU", nm:"Micron", rs:"Q1 FY26 $13.6B 사상 최대·HBM4 2Q 램프·26년 전량 완판", r1:"37", p1:"8", r2:"79", p2:"23" },
       { tk:"AMD", nm:"AMD", rs:"Meta 6GW·$60B MI450+Venice 장기 계약", r1:"26", p1:"3.5", r2:"34", p2:"5.5" },
     ]
   },
@@ -34,9 +34,9 @@ const data = [
     stocks: [
       { tk:"DLR", nm:"Digital Realty", rs:"글로벌 DC REIT", r1:"5.8", p1:"0.6", r2:"6.4", p2:"0.8" },
       { tk:"EQIX", nm:"Equinix", rs:"상호접속 허브", r1:"9.1", p1:"1.0", r2:"9.9", p2:"1.2" },
-      { tk:"ANET", nm:"Arista", rs:"AI 클러스터 스위칭", r1:"9.0", p1:"3.5", r2:"11", p2:"4.2" },
+      { tk:"ANET", nm:"Arista", rs:"AI 클러스터 스위칭·2026 성장 25% 가이던스 상향", r1:"9.0", p1:"3.5", r2:"11", p2:"4.2" },
       { tk:"DELL", nm:"Dell Tech", rs:"AI 서버 ISG", r1:"102", p1:"5.0", r2:"115", p2:"6.2" },
-      { tk:"CRWV", nm:"CoreWeave", rs:"GPU 클라우드·백로그 $66.8B", r1:"5.1", p1:"-1.2", r2:"12.5", p2:"-0.5" },
+      { tk:"CRWV", nm:"CoreWeave", rs:"GPU 클라우드·NVIDIA 2대주주 투자·Dell 파트너 확장", r1:"5.1", p1:"-1.2", r2:"12.5", p2:"-0.5" },
       { tk:"CSCO", nm:"Cisco", rs:"AI 네트워킹·보안", r1:"54", p1:"11", r2:"58", p2:"12.5" },
       { tk:"HPE", nm:"HP Enterprise", rs:"AI 서버·GreenLake 하이브리드", r1:"33", p1:"2.0", r2:"38", p2:"2.5" },
     ]
@@ -85,7 +85,7 @@ const data = [
     tag: "가동원전·연료·차세대",
     stocks: [
       { tk:"CEG", nm:"Constellation", rs:"Calpine 통합·AI PPA", r1:"27", p1:"2.9", r2:"30", p2:"3.5" },
-      { tk:"VST", nm:"Vistra", rs:"원전+가스", r1:"18", p1:"2.6", r2:"20", p2:"3.0" },
+      { tk:"VST", nm:"Vistra", rs:"Meta 2.6GW PPA·Comanche Peak 1.2GW·원전+가스", r1:"18", p1:"2.6", r2:"20", p2:"3.0" },
       { tk:"BWXT", nm:"BWX Tech", rs:"해군원자로·SMR 연료", r1:"2.9", p1:"0.33", r2:"3.2", p2:"0.38" },
       { tk:"LEU", nm:"Centrus", rs:"HALEU 농축", r1:"0.45", p1:"0.05", r2:"0.55", p2:"0.07" },
       { tk:"OKLO", nm:"Oklo", rs:"고속로 SMR", r1:"0.0", p1:"-0.08", r2:"0.05", p2:"-0.10" },
@@ -97,7 +97,7 @@ const data = [
     title: "🧬 바이오·헬스케어",
     tag: "GLP-1·종양·로봇수술",
     stocks: [
-      { tk:"LLY", nm:"Eli Lilly", rs:"Foundayo 경구출시·retatrutide Ph3 28.7% 감량·경구 GLP-1 파이프라인 1위", r1:"65", p1:"22", r2:"81", p2:"28" },
+      { tk:"LLY", nm:"Eli Lilly", rs:"Foundayo $149 판매개시·retatrutide Ph3 H2 데이터·경구 GLP-1 1위", r1:"65", p1:"22", r2:"81", p2:"28" },
       { tk:"NVO", nm:"Novo Nordisk", rs:"Wegovy 경구제 $149·가격 압력", r1:"47", p1:"15", r2:"43", p2:"13" },
       { tk:"ISRG", nm:"Intuitive Surgical", rs:"da Vinci 로봇수술", r1:"8.8", p1:"2.6", r2:"10", p2:"3.0" },
       { tk:"VRTX", nm:"Vertex Pharma", rs:"낭포성섬유증·통증", r1:"11", p1:"4.0", r2:"12.5", p2:"4.6" },
@@ -136,7 +136,7 @@ const data = [
     title: "🚗 자동차·모빌리티",
     tag: "EV·레거시·자율주행",
     stocks: [
-      { tk:"TSLA", nm:"Tesla", rs:"Q1 인도 358K 예상 하회·재고 5만대·Model S/X 단종·4/22 실적발표", r1:"95", p1:"3.8", r2:"109", p2:"7.2" },
+      { tk:"TSLA", nm:"Tesla", rs:"Q1 인도 358K 부진·재고 16.4만대·4/22 실적·HEV 추월 우려", r1:"95", p1:"3.8", r2:"109", p2:"7.2" },
       { tk:"TM", nm:"Toyota", rs:"하이브리드 강자", r1:"305", p1:"28", r2:"315", p2:"30" },
       { tk:"GM", nm:"General Motors", rs:"레거시 EV 전환", r1:"185", p1:"10", r2:"190", p2:"11" },
       { tk:"RIVN", nm:"Rivian", rs:"R2 양산 개시·VW JV", r1:"4.5", p1:"-3.6", r2:"6.9", p2:"-1.9" },
@@ -153,8 +153,8 @@ const data = [
       { tk:"RTX", nm:"RTX Corp", rs:"패트리엇·엔진", r1:"82", p1:"6.5", r2:"86", p2:"7.2" },
       { tk:"NOC", nm:"Northrop Grumman", rs:"B-21·전략무기", r1:"42", p1:"4.0", r2:"44", p2:"4.3" },
       { tk:"GD", nm:"General Dynamics", rs:"잠수함·Gulfstream", r1:"49", p1:"4.2", r2:"52", p2:"4.6" },
-      { tk:"BA", nm:"Boeing", rs:"흑자 전환·인도 700대 목표", r1:"89.5", p1:"2.2", r2:"80", p2:"3.5" },
-      { tk:"RKLB", nm:"Rocket Lab", rs:"Neutron·SDA·HASTE 수주 확대", r1:"0.60", p1:"-0.15", r2:"0.90", p2:"-0.08" },
+      { tk:"BA", nm:"Boeing", rs:"Q1 인도 143대·737 114대·Airbus 추월·4/22 실적", r1:"89.5", p1:"2.2", r2:"80", p2:"3.5" },
+      { tk:"RKLB", nm:"Rocket Lab", rs:"Neutron 4Q26 재지연·$816M SDA 수주·국방 프라임 전환", r1:"0.60", p1:"-0.15", r2:"0.90", p2:"-0.08" },
       { tk:"LHX", nm:"L3Harris", rs:"전자전·ISR·위성통신", r1:"21", p1:"2.0", r2:"23", p2:"2.3" },
     ]
   },
@@ -166,7 +166,7 @@ const data = [
       { tk:"RGTI", nm:"Rigetti", rs:"초전도 양자", r1:"0.012", p1:"-0.08", r2:"0.025", p2:"-0.10" },
       { tk:"QBTS", nm:"D-Wave", rs:"어닐링 양자", r1:"0.015", p1:"-0.07", r2:"0.030", p2:"-0.08" },
       { tk:"COIN", nm:"Coinbase", rs:"미 최대 거래소", r1:"7.5", p1:"2.3", r2:"9.0", p2:"2.9" },
-      { tk:"MSTR", nm:"Strategy", rs:"BTC 77만개 트레저리", r1:"0.5", p1:"-0.2", r2:"0.55", p2:"-0.15" },
+      { tk:"MSTR", nm:"Strategy", rs:"BTC 78만개 보유·$1B 추가매입·80만개 임박", r1:"0.5", p1:"-0.2", r2:"0.55", p2:"-0.15" },
       { tk:"MARA", nm:"Marathon Digital", rs:"BTC 채굴", r1:"0.75", p1:"0.10", r2:"1.0", p2:"0.20" },
       { tk:"RIOT", nm:"Riot Platforms", rs:"BTC 채굴·인프라", r1:"0.35", p1:"0.05", r2:"0.50", p2:"0.10" },
     ]
@@ -176,7 +176,7 @@ const data = [
     tag: "AI 시대 필수 인프라",
     stocks: [
       { tk:"CRWD", nm:"CrowdStrike", rs:"Falcon 플랫폼·ARR 41% CAGR", r1:"4.8", p1:"0.65", r2:"5.8", p2:"1.1" },
-      { tk:"PANW", nm:"Palo Alto", rs:"CyberArk $25B 인수·통합 보안", r1:"9.1", p1:"1.6", r2:"11", p2:"2.0" },
+      { tk:"PANW", nm:"Palo Alto", rs:"CyberArk $25B 인수 2/11 완료·ID 시큐리티 통합", r1:"9.1", p1:"1.6", r2:"11", p2:"2.0" },
       { tk:"ZS", nm:"Zscaler", rs:"제로트러스트 클라우드", r1:"2.6", p1:"0.25", r2:"3.2", p2:"0.38" },
       { tk:"FTNT", nm:"Fortinet", rs:"통합 보안 어플라이언스", r1:"6.0", p1:"1.75", r2:"6.7", p2:"2.0" },
       { tk:"NET", nm:"Cloudflare", rs:"엣지 네트워크·보안", r1:"1.9", p1:"0.15", r2:"2.4", p2:"0.25" },
@@ -202,9 +202,9 @@ const data = [
     tag: "규제완화·M&A 부활 테마",
     stocks: [
       { tk:"JPM", nm:"JPMorgan", rs:"Q1 매출 50.5B·순익 16.5B·트레이딩 11.6B 사상 최고", r1:"186", p1:"57", r2:"193", p2:"58" },
-      { tk:"GS", nm:"Goldman Sachs", rs:"Q1 IB수수료 48%↑·주식트레이딩 사상 최고·M&A 글로벌 1위", r1:"55", p1:"14", r2:"63", p2:"18" },
-      { tk:"MS", nm:"Morgan Stanley", rs:"Q1 매출 20.6B 사상 최고·WM 순유입 118B·ROTCE 27%", r1:"62", p1:"13", r2:"70", p2:"16" },
-      { tk:"BAC", nm:"Bank of America", rs:"Q1 EPS 1.11 20년 최고·매출 30.3B·트레이딩 +30%", r1:"105", p1:"28", r2:"113", p2:"33" },
+      { tk:"GS", nm:"Goldman Sachs", rs:"Q1 EPS $17.55·주식트레이딩 $5.33B 사상 최고·IB +48%", r1:"55", p1:"14", r2:"63", p2:"18" },
+      { tk:"MS", nm:"Morgan Stanley", rs:"Q1 고객자산 $9T 돌파·$10T 목표·WM 유입 강세", r1:"62", p1:"13", r2:"70", p2:"16" },
+      { tk:"BAC", nm:"Bank of America", rs:"Q1 매출 30.3B +7%·EPS $1.11 +25%·NII $15.7B +9%", r1:"105", p1:"28", r2:"113", p2:"33" },
       { tk:"SCHW", nm:"Charles Schwab", rs:"리테일 브로커·자산관리", r1:"21", p1:"7.0", r2:"23", p2:"8.0" },
       { tk:"BLK", nm:"BlackRock", rs:"Q1 AUM $13.9T·iShares 순유입 $132B 기록", r1:"21", p1:"6.8", r2:"23", p2:"7.6" },
       { tk:"WFC", nm:"Wells Fargo", rs:"Q1 매출 21.5B·EPS 1.60 비트·대출 +11%·ROE 12.2%", r1:"83", p1:"19", r2:"88", p2:"22" },
@@ -232,7 +232,7 @@ const data = [
       { tk:"COST", nm:"Costco", rs:"회원제 창고형 1위", r1:"270", p1:"8.1", r2:"295", p2:"8.8" },
       { tk:"HD", nm:"Home Depot", rs:"홈 리모델링 1위", r1:"160", p1:"15.5", r2:"166", p2:"16.5" },
       { tk:"CMG", nm:"Chipotle", rs:"QSR 고성장", r1:"11.5", p1:"1.7", r2:"13", p2:"2.0" },
-      { tk:"LULU", nm:"Lululemon", rs:"프리미엄 애슬레저", r1:"11", p1:"1.8", r2:"11.8", p2:"2.0" },
+      { tk:"LULU", nm:"Lululemon", rs:"프리미엄 애슬레저·2026 가이던스 하향·Texas 조사 악재", r1:"11", p1:"1.8", r2:"11.8", p2:"2.0" },
       { tk:"SBUX", nm:"Starbucks", rs:"글로벌 커피 체인 1위", r1:"36", p1:"3.5", r2:"38", p2:"4.0" },
     ]
   },
