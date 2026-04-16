@@ -633,13 +633,14 @@ function renderUpdateBox(tab){
 function toggleUpdateMore(el){
   const box=el.closest('.update-box');
   const tab=box.dataset.tab;
+  const textEl=box.querySelector('.update-more');
   if(box.classList.contains('expanded')){
     box.classList.remove('expanded');
-    el.textContent='펼쳐보기';
+    if(textEl) textEl.textContent='펼쳐보기';
     if(tab) _updateExpand[tab]=false;
   }else{
     box.classList.add('expanded');
-    el.textContent='간단히 보기';
+    if(textEl) textEl.textContent='간단히 보기';
     if(tab) _updateExpand[tab]=true;
   }
 }
