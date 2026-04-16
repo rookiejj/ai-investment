@@ -9,7 +9,7 @@ const data = [
       { nm:"OpenAI", rs:"ChatGPT·GPT-5·AGI 추구", val:"$852B", round:"$122B 펀딩", sector:"AGI", ipo:"2026 말 $1T+" },
       { nm:"Anthropic", rs:"ARR $30B·$800B 오퍼 고사·Claude Mythos 보안 시연", val:"$380B", round:"Feb '26 Series G $30B @ $350B pre", sector:"프론티어 AI", ipo:"2026.10 $60B+ 조달 협상" },
       { nm:"Databricks", rs:"레이크하우스·AI 통합·ARR $5.4B", val:"$134B", round:"Series L ($11B)", sector:"데이터·AI", ipo:"2026 H2 S-1" },
-      { nm:"Cerebras", rs:"WSE-3·OpenAI $10B·MS 주관 $2B 공모", val:"$23B", round:"4월 IPO 가격 임박·$2B 조달", sector:"AI 하드웨어", ipo:"2026 4월 IPO·$22~25B" },
+      { nm:"Cerebras", rs:"WSE-3·OpenAI $10B 계약·MS 주관 4월 로드쇼 개시", val:"$23B", round:"4월 나스닥 상장·$2B 조달", sector:"AI 하드웨어", ipo:"2026 4월 나스닥·$22~25B" },
       { nm:"Safe Superintelligence", rs:"Sutskever 창업·제품 전무·Alphabet·NVIDIA 베팅 AGI 연구소", val:"$32B", round:"Series B ($2B, 2025-04)", sector:"AGI 안전", ipo:"미정" },
       { nm:"Thinking Machines Lab", rs:"Murati 창업·Tinker API·NVIDIA GW 파트너십·$50B 라운드 난항", val:"$12B", round:"Seed ($2B, 2025-07)", sector:"멀티모달 AI", ipo:"미정" },
       { nm:"Cohere", rs:"엔터프라이즈 LLM·ARR $240M+·프론티어 모델 제공사", val:"$7B", round:"Series D 확장 ($600M)", sector:"엔터프라이즈 LLM", ipo:"2026 CFO 영입" },

@@ -22,7 +22,7 @@ const data = [
       { tk:"NVDA", nm:"NVIDIA", rs:"FY26 $216B 확정·Rubin 풀프로덕션 진입·Blackwell+Rubin $1T 파이프라인", r1:"216", p1:"117", r2:"337", p2:"192" },
       { tk:"AVGO", nm:"Broadcom", rs:"커스텀 ASIC·AI 백로그 $73B", r1:"64", p1:"23", r2:"88", p2:"34" },
       { tk:"TSM", nm:"TSMC", rs:"Q1 $35.7B 확정·Q2 가이던스 $39~40.2B 상향·GM 65.5~67.5%·26년 USD +30%·CapEx 상단", r1:"117", p1:"55", r2:"153", p2:"70" },
-      { tk:"ASML", nm:"ASML", rs:"Q1 €8.8B·2026 가이던스 €36~40B 상향·EUV 독점", r1:"33", p1:"9", r2:"42", p2:"12" },
+      { tk:"ASML", nm:"ASML", rs:"Q1 €8.8B EPS €7.15 비트·수요>공급 지속·2026 €36~40B·EUV 독점", r1:"33", p1:"9", r2:"42", p2:"12" },
       { tk:"LRCX", nm:"Lam Research", rs:"HBM·NAND 장비", r1:"18", p1:"5", r2:"22", p2:"6.3" },
       { tk:"MU", nm:"Micron", rs:"Q1 FY26 $13.6B 사상 최대·HBM4 2Q 램프·26년 전량 완판", r1:"37", p1:"8", r2:"79", p2:"23" },
       { tk:"AMD", nm:"AMD", rs:"Meta 6GW·$60B MI450+Venice 장기 계약", r1:"26", p1:"3.5", r2:"34", p2:"5.5" },
@@ -136,7 +136,7 @@ const data = [
     title: "🚗 자동차·모빌리티",
     tag: "EV·레거시·자율주행",
     stocks: [
-      { tk:"TSLA", nm:"Tesla", rs:"Q1 인도 358K 부진·재고 16.4만대·4/22 실적·HEV 추월 우려", r1:"95", p1:"3.8", r2:"109", p2:"7.2" },
+      { tk:"TSLA", nm:"Tesla", rs:"AI5 칩 테이프아웃·Optimus 우선·FSD 네덜란드 승인·4/22 실적·UBS Hold 상향", r1:"95", p1:"3.8", r2:"109", p2:"7.2" },
       { tk:"TM", nm:"Toyota", rs:"하이브리드 강자", r1:"305", p1:"28", r2:"315", p2:"30" },
       { tk:"GM", nm:"General Motors", rs:"레거시 EV 전환", r1:"185", p1:"10", r2:"190", p2:"11" },
       { tk:"RIVN", nm:"Rivian", rs:"R2 양산 개시·VW JV", r1:"4.5", p1:"-3.6", r2:"6.9", p2:"-1.9" },
@@ -205,7 +205,7 @@ const data = [
       { tk:"GS", nm:"Goldman Sachs", rs:"Q1 EPS $17.55·주식트레이딩 $5.33B 사상 최고·IB +48%", r1:"55", p1:"14", r2:"63", p2:"18" },
       { tk:"MS", nm:"Morgan Stanley", rs:"Q1 고객자산 $9T 돌파·$10T 목표·WM 유입 강세", r1:"62", p1:"13", r2:"70", p2:"16" },
       { tk:"BAC", nm:"Bank of America", rs:"Q1 매출 30.3B +7%·EPS $1.11 +25%·NII $15.7B +9%", r1:"105", p1:"28", r2:"113", p2:"33" },
-      { tk:"SCHW", nm:"Charles Schwab", rs:"리테일 브로커·자산관리", r1:"21", p1:"7.0", r2:"23", p2:"8.0" },
+      { tk:"SCHW", nm:"Charles Schwab", rs:"Q1 EPS $1.43 기록·매출 $6.5B +16%·고객자산 $11.8T·일평균 990만 트레이드", r1:"21", p1:"7.0", r2:"23", p2:"8.0" },
       { tk:"BLK", nm:"BlackRock", rs:"Q1 AUM $13.9T·iShares 순유입 $132B 기록", r1:"21", p1:"6.8", r2:"23", p2:"7.6" },
       { tk:"WFC", nm:"Wells Fargo", rs:"Q1 매출 21.5B·EPS 1.60 비트·대출 +11%·ROE 12.2%", r1:"83", p1:"19", r2:"88", p2:"22" },
     ]

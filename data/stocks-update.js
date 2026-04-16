@@ -3,6 +3,18 @@
 
 const updates = [
   {
+    date: "2026-04-17 07:04 KST",
+    summary: "Tesla AI5 칩 테이프아웃 +8%·UBS Hold 상향·FSD 네덜란드 승인, Schwab Q1 기록 실적, ASML Q1 비트, 나스닥 12일 연속 상승",
+    changes: [
+      { type: "정보 갱신", sector: "자동차·모빌리티",
+        detail: "Tesla(TSLA). 4/15 AI5 칩 테이프아웃 완료 — Musk가 X에 칩 이미지 공개하며 +8% 급등. AI5는 AI4 대비 10배 성능·9배 메모리, 삼성 텍사스+TSMC 애리조나 팹에서 2H 2026 양산 목표. 초기 탑재 대상은 Optimus 로봇·슈퍼컴퓨터(차량용 FSD는 AI4로 충분). UBS가 Sell→Hold 상향($360 TP). 네덜란드 RDW가 4/10 FSD Supervised 유럽 최초 공도 승인(Level 2), 독일·프랑스·이탈리아 4~8주 내 후속 승인 예상.", time: "2026-04-17 07:04 KST" },
+      { type: "정보 갱신", sector: "금융·은행",
+        detail: "Charles Schwab(SCHW). Q1 EPS $1.43(컨센 $1.42 소폭 비트)·매출 $6.5B +16%·모든 주요 항목 두 자릿수 성장. 고객자산 $11.8T 사상 최대, 신규 계좌 130만(+10%), 일평균 트레이드 990만 건 기록. 다만 매출이 컨센 $6.6B를 소폭 하회하며 주가 -10% 하락.", time: "2026-04-17 07:04 KST" },
+      { type: "정보 갱신", sector: "반도체",
+        detail: "ASML. Q1 매출 €8.77B·EPS €7.15 컨센서스 상회. CEO Fouquet '수요가 공급을 초과하는 상태가 당분간 지속' 발언, AI·스마트폰·PC 전 부문 공급 제약 확인. 연초 대비 +36% 상승.", time: "2026-04-17 07:04 KST" },
+    ]
+  },
+  {
     date: "2026-04-16 19:08 KST",
     summary: "TSMC Q1 2026 어닝콜 완료 — Q2 가이던스 $39~40.2B 상향·GM 상단 66%·26년 USD 매출 +30%·CapEx 상단",
     changes: [

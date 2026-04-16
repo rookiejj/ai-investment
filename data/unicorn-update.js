@@ -1,6 +1,14 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-17 07:04 KST",
+    summary: "Cerebras 4월 나스닥 로드쇼 개시 확인·IonQ-SkyWater 주주 투표 5/8 확정",
+    changes: [
+      { type: "정보 갱신", sector: "AI·ML",
+        detail: "Cerebras. 4월 나스닥 IPO 로드쇼 개시 확인, Morgan Stanley 주관 $2B 조달·$22~25B 밸류에이션 목표. OpenAI와 $10B 멀티이어 컴퓨팅 계약(비 NVIDIA AI 인프라 최대 규모)이 매출 다변화 스토리 강화.", time: "2026-04-17 07:04 KST" },
+    ]
+  },
+  {
     date: "2026-04-16 17:30 KST",
     summary: "Anthropic $800B 오퍼 고사·SpaceX 6월 로드쇼 $75B 조달·Canva $134B·Anduril Series H 협상 등 최신 펀딩·IPO 동향",
     changes: [

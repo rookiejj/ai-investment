@@ -71,8 +71,8 @@ const data = [
     title: "🇺🇸 미국 대형주",
     tag: "S&P500·나스닥·소형주",
     stocks: [
-      { tk:"SPY", nm:"SPDR S&P 500", rs:"S&P 500 4/15 7,023 사상 최고가 경신", aum:"590", er:"0.09%", ytd:"+2%", y1:"+15%" },
-      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"나스닥 100 4/15 24,016 사상 최고가·AI 리더십", aum:"400", er:"0.20%", ytd:"+7%", y1:"+22%" },
+      { tk:"SPY", nm:"SPDR S&P 500", rs:"S&P 500 4/16 7,041 연속 사상 최고가 경신", aum:"590", er:"0.09%", ytd:"+2%", y1:"+15%" },
+      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"나스닥 4/16 24,103 12일 연속 상승·09년 이후 최장", aum:"400", er:"0.20%", ytd:"+7%", y1:"+22%" },
       { tk:"VOO", nm:"Vanguard S&P 500", rs:"세계 최대 ETF·AUM $827B·최저 보수", aum:"827", er:"0.03%", ytd:"+2%", y1:"+15%" },
       { tk:"VTI", nm:"Vanguard Total Stock", rs:"미국 전체 시장·4월 신고가 랠리", aum:"420", er:"0.03%", ytd:"+2%", y1:"+14%" },
       { tk:"DIA", nm:"SPDR Dow Jones", rs:"다우 30 우량주·다우 부진", aum:"35", er:"0.16%", ytd:"-3%", y1:"+10%" },

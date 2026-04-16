@@ -6,6 +6,14 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-17 07:04 KST",
+    summary: "Anthropic Claude Opus 4.7 정식 출시 + AI 디자인 도구 동시 공개 — SWE-bench Pro 64.3%로 공개 모델 1위 탈환",
+    changes: [
+      { type: "모델 출시", sector: "Anthropic", detail: "Claude Opus 4.7 4/16 정식 출시. SWE-bench Pro 64.3%(GPT-5.4 57.7% 상회)·코딩 벤치마크 +13%·에이전틱 추론 +14%·툴 에러 1/3 감소. 3.75MP 고해상도 비전(기존 1.15MP 대비 3배), 새 xhigh effort 레벨 추가, 장시간 에이전트 메모리 대폭 개선. 사이버보안 자동 차단 최초 탑재. API·claude.ai·Bedrock·Vertex·Foundry 동시 출시, Opus 4.6과 동일 가격.", time: "2026-04-17 07:04 KST" },
+      { type: "제품 출시", sector: "Anthropic", detail: "Anthropic AI 디자인 도구 4/16 공개. 자연어 프롬프트로 웹사이트·랜딩 페이지·프레젠테이션 자동 생성. Figma 연동(AI 생성 코드→편집 가능 디자인 변환)·Word·PPT 통합. 비개발자도 사용 가능한 프로덕트로 Adobe·Wix·Figma 주가 -2%+ 하락. 순수 모델 회사에서 디자인 프로덕트 회사로의 확장 신호.", time: "2026-04-17 07:04 KST" },
+    ]
+  },
+  {
     date: "2026-04-16 17:30 KST",
     summary: "Google Gemini Robotics-ER 1.6 공개·Mistral Codestral 2 Apache 2.0 출시·Apple Siri·Vera Rubin 풀프로덕션 등 최근성 정리",
     changes: [
