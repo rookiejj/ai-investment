@@ -3,6 +3,16 @@
 
 const updates = [
   {
+    date: "2026-04-16 10:30 KST",
+    summary: "NVIDIA H20 관련 $5.5B Q1 차지 SEC 공시 확정 + TSMC 오늘 15시(KST) Q1 어닝콜",
+    changes: [
+      { type: "정보 갱신", sector: "반도체",
+        detail: "NVIDIA(NVDA). 4/15 장마감 후 SEC 8-K 공시로 H20 관련 $5.5B Q1 차지(회계연도 FY26 Q1, 4/27 종료 분기) 확정 — 재고·구매약정·관련 충당금이 구성. 美 상무부 4/9 통지·4/14 '무기한 유지' 재통보로 라이선스 요건이 사실상 금수로 작용. 시간외 -6% 반응, 정규장 전 반등 시도. Blackwell Ultra 풀가동·Rubin 샘플 출하 펀더멘털은 유지, 다만 2026 상반기 중국향 매출 공백은 구조화.", time: "2026-04-16 10:30 KST" },
+      { type: "정보 갱신", sector: "반도체",
+        detail: "TSMC(TSM). 한국시간 오늘 15:00(타이베이 14:00)에 Q1 2026 공식 어닝콜. Q1 매출 $35.71B(자체 가이던스 상단) 이미 공시됐고, 시장은 Q2 가이던스 $37~38B·2026 연간 매출 'USD 기준 +30% 근접' 재확인·기존 $52~56B 캐펙스 가이던스 유지 여부에 주목. N2 HVM 연말 가동·A16(GAA+BSPDN) 2H26 양산 준비, Rubin 샘플 출하 개시가 추가 촉매.", time: "2026-04-16 10:30 KST" },
+    ]
+  },
+  {
     date: "2026-04-16 01:15 KST",
     summary: "IonQ SkyWater $1.8B 인수 + Eli Lilly retatrutide Phase 3 데이터",
     changes: [

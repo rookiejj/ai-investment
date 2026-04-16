@@ -19,7 +19,7 @@ const data = [
     title: "🔩 반도체",
     tag: "AI칩·파운드리·장비·메모리",
     stocks: [
-      { tk:"NVDA", nm:"NVIDIA", rs:"H20 중국 라이선스 의무화·Blackwell·Rubin 백로그", r1:"216", p1:"117", r2:"337", p2:"192" },
+      { tk:"NVDA", nm:"NVIDIA", rs:"H20 $5.5B 차지 공시·Blackwell Ultra 풀가동·Rubin 샘플 출하", r1:"216", p1:"117", r2:"337", p2:"192" },
       { tk:"AVGO", nm:"Broadcom", rs:"커스텀 ASIC·AI 백로그 $73B", r1:"64", p1:"23", r2:"88", p2:"34" },
       { tk:"TSM", nm:"TSMC", rs:"Q1 $35.7B 사상 최대·N2 양산 램프·A16 H2 준비", r1:"117", p1:"55", r2:"150", p2:"68" },
       { tk:"ASML", nm:"ASML", rs:"Q1 €8.8B·2026 가이던스 €36~40B 상향·EUV 독점", r1:"33", p1:"9", r2:"42", p2:"12" },
