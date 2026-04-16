@@ -333,6 +333,15 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
   font:500 12px/1 'Geist Mono','SF Mono',monospace;
   color:var(--mut);letter-spacing:0.3px;
 }
+.update-toggle{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:22px;height:22px;border-radius:6px;
+  color:var(--acc-deep);cursor:pointer;
+  transition:background .2s,transform .25s ease;
+}
+.update-toggle:hover{background:rgba(24,226,153,0.1)}
+.update-toggle svg{width:14px;height:14px;display:block}
+.update-box.expanded .update-toggle{transform:rotate(180deg)}
 .update-summary{
   font-size:14px;font-weight:600;color:var(--fg);margin-bottom:12px;
   letter-spacing:-0.14px;
@@ -585,35 +594,35 @@ function renderUpdateBox(tab){
   const latestTimeStr=latestHm?`<span class="update-item-time">${latestHm}</span>`:'';
   const summaryStr=latest.summary?`<div class="update-summary">${latest.summary}${latestTimeStr}</div>`:'';
   const expanded=!!_updateExpand[tab];
-  let html=`<div class="update-box${expanded?' expanded':''}" data-tab="${tab}"><div class="update-header"><span class="update-tag">업데이트</span><span class="update-date">${dateStr}</span></div>${summaryStr}`;
-  let hasAnyDetails=false;
+  let sameDay=[];
+  if(typeof dateStr==='string'){
+    const todayPrefix=dateStr.slice(0,10);
+    sameDay=upd.slice(1).filter(e=>typeof e.date==='string' && e.date.startsWith(todayPrefix));
+  }
+  const hasAnyDetails=items.length>0 || sameDay.some(e=>_renderItems(e).length>0);
+  const toggleIcon=hasAnyDetails?`<span class="update-toggle" onclick="toggleUpdateMore(this)" aria-label="펼쳐보기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>`:'';
+  let html=`<div class="update-box${expanded?' expanded':''}" data-tab="${tab}"><div class="update-header"><span class="update-tag">업데이트</span><span class="update-date">${dateStr}</span>${toggleIcon}</div>${summaryStr}`;
   if(items.length){
-    hasAnyDetails=true;
     html+=`<div class="update-details"><ul class="update-list">`;
     items.forEach(it=>html+=`<li class="update-item">${it}</li>`);
     html+=`</ul></div>`;
   }
   // 같은 날 나머지 엔트리 섹션 (레거시 엔트리 포함)
-  if(typeof dateStr==='string'){
-    const todayPrefix=dateStr.slice(0,10);
-    const sameDay=upd.slice(1).filter(e=>typeof e.date==='string' && e.date.startsWith(todayPrefix));
-    if(sameDay.length){
-      html+=`<div class="update-individuals">`;
-      sameDay.forEach(e=>{
-        const hm=_hm(e.date);
-        const subItems=_renderItems(e);
-        const sumStr=e.summary?`<div class="update-summary">${e.summary}${hm?`<span class="update-item-time">${hm}</span>`:''}</div>`:'';
-        html+=`<div class="update-individual">${sumStr}`;
-        if(subItems.length){
-          hasAnyDetails=true;
-          html+=`<div class="update-details"><ul class="update-list update-list-sub">`;
-          subItems.forEach(it=>html+=`<li class="update-item">${it}</li>`);
-          html+=`</ul></div>`;
-        }
-        html+=`</div>`;
-      });
+  if(sameDay.length){
+    html+=`<div class="update-individuals">`;
+    sameDay.forEach(e=>{
+      const hm=_hm(e.date);
+      const subItems=_renderItems(e);
+      const sumStr=e.summary?`<div class="update-summary">${e.summary}${hm?`<span class="update-item-time">${hm}</span>`:''}</div>`:'';
+      html+=`<div class="update-individual">${sumStr}`;
+      if(subItems.length){
+        html+=`<div class="update-details"><ul class="update-list update-list-sub">`;
+        subItems.forEach(it=>html+=`<li class="update-item">${it}</li>`);
+        html+=`</ul></div>`;
+      }
       html+=`</div>`;
-    }
+    });
+    html+=`</div>`;
   }
   if(hasAnyDetails){
     html+=`<span class="update-more" onclick="toggleUpdateMore(this)">${expanded?'간단히 보기':'펼쳐보기'}</span>`;
