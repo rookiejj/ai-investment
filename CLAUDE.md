@@ -1,6 +1,6 @@
 # Top7 — 유지보수 컨텍스트
 
-미국·한국·일본 주식 + AI 기업 + 글로벌 ETF + 원자재·매크로 + 유니콘을 7개 탭으로 보여주는 통합 투자 대시보드.
+미국·한국 주식 + AI 기업 + 글로벌 ETF + 시장·원자재 + 유니콘을 6개 탭으로 보여주는 통합 투자 대시보드. (일본 주식은 UI에서 제외, 데이터 파일만 보존)
 
 - 파일: `index.html`(렌더링 UI) / `data/`(데이터 14개 파일 + version.js) / `README.md`
 - 데이터 파일은 로컬 상대경로로 fetch (`./data/*.js`)
@@ -23,8 +23,8 @@ ai-investment/
 │   ├── ai-update.js            ← AI 변경 이력
 │   ├── etf-data.js             ← 글로벌 ETF 데이터
 │   ├── etf-update.js           ← ETF 변경 이력
-│   ├── commodity-data.js       ← 원자재·매크로 데이터
-│   ├── commodity-update.js     ← 원자재 변경 이력
+│   ├── commodity-data.js       ← 시장·원자재 데이터
+│   ├── commodity-update.js     ← 시장·원자재 변경 이력
 │   ├── unicorn-data.js         ← 유니콘·프리IPO 데이터
 │   └── unicorn-update.js       ← 유니콘 변경 이력
 └── README.md
@@ -339,16 +339,17 @@ const data = [{
 
 ---
 
-## 원자재·매크로 (commodity)
+## 시장·원자재 (commodity)
 
 대상 파일: `data/commodity-data.js`, `data/commodity-update.js`
 
 ### 현재 상태
 - 6 카테고리 × 4 항목 = 24 항목
 - 필드: 현재가, YTD 변동, 1Y 변동, 52주 범위
+- 카드 순서: 매크로 지표 먼저, 원자재 카테고리 후행
 
-### 6개 카테고리
-귀금속 · 에너지 · 산업금속 · 배터리 소재 · 농산물 · 매크로 지표
+### 6개 카테고리 (렌더링 순서)
+매크로 지표 · 귀금속 · 에너지 · 산업금속 · 배터리 소재 · 농산물
 
 ### data/commodity-data.js 구조
 ```js
@@ -361,7 +362,7 @@ const data = [{
 }]
 ```
 
-### 원자재·매크로 업데이트 체크리스트 (매 요청 시 이 순서로)
+### 시장·원자재 업데이트 체크리스트 (매 요청 시 이 순서로)
 1. 웹검색으로 최신 선물 가격·매크로 지표 확인
 2. `data/commodity-data.js` 수정 — 변경된 항목만 최소 diff로
 3. `data/commodity-update.js`에 데이터 변경 이력 추가 (날짜+시간 KST)

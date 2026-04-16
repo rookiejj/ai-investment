@@ -426,7 +426,7 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
     <div class="tab" data-t="kr"><span>한국 마켓</span></div>
     <div class="tab" data-t="ai"><span>AI 기업</span></div>
     <div class="tab" data-t="etf"><span>글로벌 ETF</span></div>
-    <div class="tab" data-t="commodity"><span>원자재·매크로</span></div>
+    <div class="tab" data-t="commodity"><span>시장·원자재</span></div>
     <div class="tab" data-t="unicorn"><span>유니콘</span></div>
   </div>
   <script>!function(){var t=JSON.parse(sessionStorage.getItem('briefState')||'null'),s=t&&t.tab||'stocks';if(s==='jp')s='stocks';var el=document.querySelector('.tab[data-t="'+s+'"]');if(el)el.classList.add('on');else document.querySelector('.tab[data-t="stocks"]').classList.add('on')}()</script>
@@ -460,7 +460,7 @@ const TAB_DESC={
   kr:'한국 상장 섹터별 TOP 7 — 실적·전망 요약',
   ai:'글로벌 AI 주요 기업의 모델·제품·투자 동향 한눈에 보기',
   etf:'글로벌 테마별 대표 ETF — 운용규모·수익률 비교',
-  commodity:'원자재 가격·매크로 지표 한눈에 보기',
+  commodity:'시장 지표·원자재 가격 한눈에 보기',
   unicorn:'비상장 유니콘·프리IPO 기업 — 밸류에이션·IPO 전망',
 };
 const TAB_CRITERIA={

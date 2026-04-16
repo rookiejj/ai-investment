@@ -1,7 +1,17 @@
 // Commodity & Macro Atlas - data source
-// 원자재·매크로 지표. index.html 자동 렌더링.
+// 시장 지표·원자재. index.html 자동 렌더링.
 
 const data = [
+  {
+    title: "📊 매크로 지표",
+    tag: "금리·달러·변동성",
+    stocks: [
+      { tk:"FFRATE", nm:"미 기준금리", rs:"3월 FOMC 동결·연내 1회 추가 인하 시사", price:"3.50–3.75%", ytd:"-50bp", y1:"-150bp", range:"3.50–5.25%" },
+      { tk:"US10Y", nm:"미 10년물 금리", rs:"3.3% CPI 이후 하락 인하 기대 약화·소폭 상승", price:"4.30%", ytd:"0bp", y1:"-30bp", range:"3.60–4.80%" },
+      { tk:"DXY", nm:"달러 인덱스", rs:"美-이란 협상 진전 기대·6주래 최저·98선 하회", price:"98.0", ytd:"-8%", y1:"-2%", range:"97–108" },
+      { tk:"VIX", nm:"VIX 공포지수", rs:"S&P 500 사상 최고가 경신으로 변동성 수축", price:"18.2", ytd:"+1pt", y1:"+5pt", range:"12–52" },
+    ]
+  },
   {
     title: "🥇 귀금속",
     tag: "안전자산·인플레 헤지",
@@ -50,16 +60,6 @@ const data = [
       { tk:"ZC", nm:"옥수수 (Corn)", rs:"글로벌 공급 풍부·4주 연속 하락", price:"$445/bu", ytd:"+4%", y1:"+6%", range:"$380–520" },
       { tk:"ZS", nm:"대두 (Soybean)", rs:"브라질 기록 수확에도 단기 반등", price:"$1,168/bu", ytd:"+16%", y1:"+19%", range:"$950–1,200" },
       { tk:"KC", nm:"커피 (Arabica)", rs:"브라질 풍작 전망 공급과잉 급락", price:"$2.93/lb", ytd:"-5%", y1:"+42%", range:"$1.80–4.20" },
-    ]
-  },
-  {
-    title: "📊 매크로 지표",
-    tag: "금리·달러·변동성",
-    stocks: [
-      { tk:"FFRATE", nm:"미 기준금리", rs:"3월 FOMC 동결·연내 1회 추가 인하 시사", price:"3.50–3.75%", ytd:"-50bp", y1:"-150bp", range:"3.50–5.25%" },
-      { tk:"US10Y", nm:"미 10년물 금리", rs:"3.3% CPI 이후 하락 인하 기대 약화·소폭 상승", price:"4.30%", ytd:"0bp", y1:"-30bp", range:"3.60–4.80%" },
-      { tk:"DXY", nm:"달러 인덱스", rs:"美-이란 협상 진전 기대·6주래 최저·98선 하회", price:"98.0", ytd:"-8%", y1:"-2%", range:"97–108" },
-      { tk:"VIX", nm:"VIX 공포지수", rs:"S&P 500 사상 최고가 경신으로 변동성 수축", price:"18.2", ytd:"+1pt", y1:"+5pt", range:"12–52" },
     ]
   },
 ];
