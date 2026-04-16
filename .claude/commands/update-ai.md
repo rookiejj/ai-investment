@@ -1,3 +1,24 @@
-오늘 날짜 기준으로 AI 기업 탭의 최신 정보를 웹검색으로 조사해줘. 파일은 절대 수정하지 마.
+오늘 날짜 기준으로 AI 기업 탭 최신 정보를 조사하고 `data/ai-data.js`를 갱신해 커밋·푸시까지 완료해. 질문 없이 끝까지 진행 — 모든 판단은 에이전트가 내린다.
 
-CLAUDE.md의 "AI 업데이트 체크리스트" 기준으로 각 기업의 최신 모델/제품/펀딩/인수를 확인하고, 현재 data/ai-data.js와 비교하여 "수정이 필요한 항목" 테이블로 보고해줘. 내가 지시하면 그때 파일을 수정해.
+**파이프라인**:
+
+1. **조사** — CLAUDE.md의 "AI 업데이트 체크리스트" 준수. 수록 10개 기업 개별 검색으로 최신 모델·제품·펀딩·인수·리더십 확인. 대형 오픈소스 릴리스·프런티어 모델 출시·생태계 변화 광역 스캔.
+
+2. **판단** — 현재 `data/ai-data.js`와 비교, 새 모델·제품·주요 뉴스만 추가. 기존 NEW 배지들은 isNew:false로 내림(출시 4~6주 경과 기준). 새 항목은 isNew:true.
+
+3. **편집** — `data/ai-data.js` 최소 diff 수정. desc는 기술 스펙 + 시장 맥락. 단순 스펙 나열 금지.
+
+4. **이력** — `data/ai-update.js` 맨 앞에 엔트리 prepend (AI 탭 공통 스키마, changes[].time 포함).
+   - date: `TZ=Asia/Seoul date +"%Y-%m-%d %H:%M KST"`
+   - sector는 기업명(OpenAI·Anthropic·xAI 등)
+   - type: 모델 출시·제품 출시·펀딩·인수·리더십·거버넌스·최근성 관리 등
+   - 사용자향 자연어 문체
+   - 동일 날짜 누적 원칙
+
+5. **버전** — `data/version.js`를 `TZ=Asia/Seoul date +"%Y%m%d-%H%M"`로 갱신.
+
+6. **커밋·푸시** — `git add data/ai-data.js data/ai-update.js data/version.js` → `git commit -m "데이터 자동 갱신 YYYY-MM-DD"` → `git push origin main`.
+
+**변경할 항목 없으면**: 커밋하지 말고 "변경 없음"만 보고 종료.
+
+**보고 포맷**: 변경 요약 3~5줄 + 커밋 해시.
