@@ -3,6 +3,16 @@
 
 const updates = [
   {
+    date: "2026-04-17 13:04 KST",
+    summary: "IonQ DARPA HARQ 수주·광자 얽힘 상용 최초 실증으로 +20%, Novo Nordisk OpenAI 전사 AI 파트너십 체결",
+    changes: [
+      { type: "정보 갱신", sector: "양자·크립토",
+        detail: "IonQ(IONQ). 4/16 주가 +20.16% $35.76로 마감. 두 개의 독립된 트랩된 이온 양자 시스템 간 광자 얽힘을 상용 환경에서 세계 최초 실증, 동시에 DARPA의 고속 양자 인터커넥트 개발 프로그램(HARQ) 계약을 확보. 주간 누적 +50% 급등하며 NVIDIA 오픈소스 AI 모델 발표에 따른 양자 섹터 반등 주도. Q4 2025 매출 $61.89M로 컨센 $40.26M 크게 상회, 연간 GAAP $100M 돌파한 첫 상장 양자 기업. 2026 가이던스 $225~245M. SkyWater $1.8B 인수는 Q2~Q3 클로징 예정.", time: "2026-04-17 13:04 KST" },
+      { type: "정보 갱신", sector: "바이오·헬스케어",
+        detail: "Novo Nordisk(NVO). 4/14 OpenAI와 전사적 AI 파트너십 체결 — 신약 발굴·제조·공급망·상용 전 영역에 AI 배치. 다만 2026 매출 가이던스를 -5~-13%(환율 중립)로 제시하며 GLP-1 가격 압박 경고, 9천명 감원 진행. Eli Lilly Foundayo 경구제 진입·Wegovy 경구제 주간 5만 처방 수준. 52주 저점 근처에서 AI 변신 승부수.", time: "2026-04-17 13:04 KST" },
+    ]
+  },
+  {
     date: "2026-04-17 07:04 KST",
     summary: "Tesla AI5 칩 테이프아웃 +8%·UBS Hold 상향·FSD 네덜란드 승인, Schwab Q1 기록 실적, ASML Q1 비트, 나스닥 12일 연속 상승",
     changes: [
