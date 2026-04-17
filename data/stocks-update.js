@@ -3,6 +3,14 @@
 
 const updates = [
   {
+    date: "2026-04-17 19:11 KST",
+    summary: "AMD 프랑스 엑사스케일 파트너십+TSMC 호실적으로 +7.8%·12일 연속 +41% 랠리",
+    changes: [
+      { type: "정보 갱신", sector: "반도체",
+        detail: "AMD(AMD). 4/16 +7.80% $278.26로 12일 연속 상승, 누적 +41%로 2005년 이래 최장 랠리. 프랑스 정부와 AI 전략 파트너십 체결 — 프랑스 최초 엑사스케일 슈퍼컴 Alice Recoque에 AMD 기술 공급, 파리 재정부에서 LOI 서명. GENCI·Jules Verne·CEA와 AI Center of Excellence 설립. Bernstein·Erste 목표가 상향(컨센 $289), TSMC Q1 호실적과 Meta $60B·OpenAI 계약이 겹쳐 MI450 하반기 런치 기대감 확대.", time: "2026-04-17 19:11 KST" },
+    ]
+  },
+  {
     date: "2026-04-17 13:04 KST",
     summary: "IonQ DARPA HARQ 수주·광자 얽힘 상용 최초 실증으로 +20%, Novo Nordisk OpenAI 전사 AI 파트너십 체결",
     changes: [

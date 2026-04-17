@@ -35,6 +35,7 @@ const data=[
   {name:"Gemini CLI / Vertex AI",url:"https://cloud.google.com/vertex-ai",isNew:false,badges:["code","agt"],desc:"Gemini CLI: 개발자용 오픈소스 AI 에이전트. Vertex AI: 엔터프라이즈 맞춤 모델 구축. Google Cloud AI 매출 $150억+(2025년)."}
 ]},
 {rank:4,name:"xAI",url:"https://x.ai",type:"AI 전문 기업 (Elon Musk)",focus:"추론 특화 + 피지컬 AI 확장",products:[
+  {name:"XChat (슈퍼앱 + Grok 통합)",url:"https://x.com",isNew:true,badges:["agt","llm"],desc:"4/17 iOS 정식 출시. 암호화 메신저·음성·영상통화·대형 그룹·파일 공유를 전화번호 없이 지원, 46개 언어·X 계정 로그인. Grok 엔진 네이티브 탑재로 채팅 내 문서 요약·질문 응답·일정 계획 실행. WeChat·WhatsApp 대항마 포지셔닝, X Money 결제·Grok Computer 확장 예정. Android는 이후 출시 예고. Musk의 'Everything App' 전환 첫 실체화 단계."},
   {name:"Grok 4.20 (멀티에이전트 아키텍처)",url:"https://x.ai/grok",isNew:false,badges:["llm","agt"],desc:"2월 출시, 3/3 Beta 2 업데이트로 지시 따르기·환각 감소·LaTeX 강화. 업계 최초 네이티브 멀티에이전트 추론 구조 — 복잡한 쿼리마다 4개 전문 에이전트(Grok·Harper·Benjamin·Lucas)가 병렬 실행, 실시간 토론 후 단일 답변 생성. Alpha Arena 실거래 AI 투자 경쟁에서 유일하게 수익 달성. X 플랫폼 실시간 데이터 접근. API 공개."},
   {name:"Grok 5 (출시 예정)",url:"https://x.ai/grok",isNew:true,badges:["llm"],desc:"Q2 2026 목표. 6조 파라미터 MoE 아키텍처 — 역대 공개 발표 모델 중 최대 규모. Colossus 2 슈퍼클러스터(1.5GW 풀 가동)에서 훈련 중. 스케일 베팅: '가장 큰 모델이 가장 강하다'는 가정 검증 예정."},
   {name:"Grok 4.1 / Grok 4 시리즈",url:"https://x.ai/grok",isNew:false,badges:["llm"],desc:"Grok 4.1: LMArena Text Arena 1위(Elo 1483). ARC-AGI v2 15.9% SOTA, Humanity's Last Exam 25.4%. 'Think'·'Big Brain' 고급 추론 모드."},

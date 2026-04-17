@@ -25,7 +25,7 @@ const data = [
       { tk:"ASML", nm:"ASML", rs:"Q1 €8.8B EPS €7.15 비트·수요>공급 지속·2026 €36~40B·EUV 독점", r1:"33", p1:"9", r2:"42", p2:"12" },
       { tk:"LRCX", nm:"Lam Research", rs:"HBM·NAND 장비", r1:"18", p1:"5", r2:"22", p2:"6.3" },
       { tk:"MU", nm:"Micron", rs:"Q1 FY26 $13.6B 사상 최대·HBM4 2Q 램프·26년 전량 완판", r1:"37", p1:"8", r2:"79", p2:"23" },
-      { tk:"AMD", nm:"AMD", rs:"Meta 6GW·$60B MI450+Venice 장기 계약", r1:"26", p1:"3.5", r2:"34", p2:"5.5" },
+      { tk:"AMD", nm:"AMD", rs:"프랑스 Alice Recoque 엑사스케일 파트너십·12일 연속 +41%·Bernstein·Erste 목표가 상향", r1:"26", p1:"3.5", r2:"34", p2:"5.5" },
     ]
   },
   {

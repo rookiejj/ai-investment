@@ -6,6 +6,13 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-17 19:11 KST",
+    summary: "xAI XChat iOS 정식 출시 — Grok 엔진 탑재 암호화 메신저로 WeChat·WhatsApp 대항 슈퍼앱 전환 본격화",
+    changes: [
+      { type: "제품 출시", sector: "xAI", detail: "xAI XChat. 4/17 iOS App Store 정식 출시. 전화번호 없이 X 계정으로 로그인 가능한 엔드투엔드 암호화 메신저 — 음성·영상통화·대형 그룹·사라지는 메시지·파일 공유 지원, 46개 언어. Grok 엔진이 채팅 레이어에 네이티브 통합돼 문서 요약·질문 응답·일정 계획을 실시간 실행. X Money·Grok Computer와 결합해 Musk의 'Everything App' 로드맵 첫 실체화 단계. Android는 이후 출시. WeChat 모델을 겨냥한 슈퍼앱 시동으로 WhatsApp·Telegram·Signal과 직접 경쟁.", time: "2026-04-17 19:11 KST" },
+    ]
+  },
+  {
     date: "2026-04-17 07:04 KST",
     summary: "Anthropic Claude Opus 4.7 정식 출시 + AI 디자인 도구 동시 공개 — SWE-bench Pro 64.3%로 공개 모델 1위 탈환",
     changes: [
