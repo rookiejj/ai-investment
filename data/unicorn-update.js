@@ -1,6 +1,14 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-18 07:19 KST",
+    summary: "Cerebras 4/17 S-1 공식 제출 — 티커 CBRS·Morgan Stanley·Citi·Barclays·UBS 공동 주관·$22~25B 목표",
+    changes: [
+      { type: "정보 갱신", sector: "AI·ML",
+        detail: "Cerebras Systems. 4/17 SEC에 S-1 공식 제출, 나스닥 티커 CBRS로 확정. 공동 주관사 Morgan Stanley·Citigroup·Barclays·UBS 발표. 2025년 10월 철회 이후 두 번째 시도 — 당시 $8B에서 $22~25B로 밸류 급등, 배경에는 OpenAI와 $10B 멀티이어 컴퓨팅 계약. 로드쇼 중이며 4월 말 프라이싱, $2B 조달 목표. 비 NVIDIA AI 인프라 최대 규모 상장으로 주목.", time: "2026-04-18 07:19 KST" },
+    ]
+  },
+  {
     date: "2026-04-17 13:04 KST",
     summary: "SpaceX IPO 타임라인 구체화 — 6/8 로드쇼·6/15 프라이싱·PIF $5B 코너스톤·리테일 30%",
     changes: [

@@ -110,11 +110,11 @@ const data = [
     title: "🛢️ 에너지",
     tag: "석유메이저·LNG·유전서비스",
     stocks: [
-      { tk:"XOM", nm:"ExxonMobil", rs:"통합 메이저", r1:"332", p1:"29", r2:"345", p2:"32" },
-      { tk:"CVX", nm:"Chevron", rs:"상류·정유·기록적 생산", r1:"189", p1:"12", r2:"195", p2:"14" },
+      { tk:"XOM", nm:"ExxonMobil", rs:"Hormuz 재개로 WTI -10.8% $81·통합 메이저", r1:"332", p1:"29", r2:"345", p2:"32" },
+      { tk:"CVX", nm:"Chevron", rs:"상류·정유·기록적 생산·유가 급락 마진 변수", r1:"189", p1:"12", r2:"195", p2:"14" },
       { tk:"LNG", nm:"Cheniere", rs:"미 최대 LNG 수출", r1:"16", p1:"3.5", r2:"18", p2:"4.2" },
       { tk:"SLB", nm:"Schlumberger", rs:"유전서비스 1위", r1:"37", p1:"4.5", r2:"39", p2:"5.0" },
-      { tk:"COP", nm:"ConocoPhillips", rs:"상류 E&P", r1:"60", p1:"10", r2:"64", p2:"11" },
+      { tk:"COP", nm:"ConocoPhillips", rs:"상류 E&P·유가 $81로 후퇴에 마진 압박", r1:"60", p1:"10", r2:"64", p2:"11" },
       { tk:"KMI", nm:"Kinder Morgan", rs:"가스 파이프라인", r1:"16", p1:"2.7", r2:"17", p2:"3.0" },
       { tk:"EOG", nm:"EOG Resources", rs:"셰일 E&P 고효율", r1:"23", p1:"5.5", r2:"24", p2:"5.8" },
     ]

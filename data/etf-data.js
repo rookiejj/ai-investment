@@ -32,12 +32,12 @@ const data = [
     title: "⚡ 에너지·원자력",
     tag: "석유·가스·우라늄",
     stocks: [
-      { tk:"XLE", nm:"Energy Select SPDR", rs:"S&P 에너지 섹터·중동 유가 급등 수혜", aum:"38", er:"0.09%", ytd:"+38%", y1:"+25%" },
+      { tk:"XLE", nm:"Energy Select SPDR", rs:"S&P 에너지 섹터·호르무즈 재개방에 유가 -11% 급락", aum:"38", er:"0.09%", ytd:"+28%", y1:"+18%" },
       { tk:"URA", nm:"Global X Uranium", rs:"우라늄·원전 생태계·연초 조정 국면", aum:"4", er:"0.69%", ytd:"+6%", y1:"+30%" },
       { tk:"NLR", nm:"VanEck Uranium+Nuclear", rs:"원자력 밸류체인", aum:"1.5", er:"0.60%", ytd:"+22%", y1:"+35%" },
       { tk:"AMLP", nm:"Alerian MLP", rs:"MLP 파이프라인·배당", aum:"10", er:"0.85%", ytd:"+12%", y1:"+20%" },
-      { tk:"XOP", nm:"SPDR Oil & Gas E&P", rs:"석유·가스 탐사·생산·E&P 순수 급등", aum:"5", er:"0.35%", ytd:"+43%", y1:"+28%" },
-      { tk:"VDE", nm:"Vanguard Energy", rs:"Vanguard 에너지 광역 저보수·엑슨·쉐브론", aum:"13.2", er:"0.09%", ytd:"+30%", y1:"+25%" },
+      { tk:"XOP", nm:"SPDR Oil & Gas E&P", rs:"석유·가스 탐사·생산·호르무즈 재개방 직격", aum:"5", er:"0.35%", ytd:"+30%", y1:"+18%" },
+      { tk:"VDE", nm:"Vanguard Energy", rs:"Vanguard 에너지 광역 저보수·엑슨·쉐브론·유가 하락 타격", aum:"13.2", er:"0.09%", ytd:"+22%", y1:"+18%" },
       { tk:"IEO", nm:"iShares US Oil & Gas E&P", rs:"미 석유·가스 탐사·생산 순수·iShares", aum:"0.60", er:"0.38%", ytd:"+6%", y1:"+10%" },
     ]
   },
@@ -71,13 +71,13 @@ const data = [
     title: "🇺🇸 미국 대형주",
     tag: "S&P500·나스닥·소형주",
     stocks: [
-      { tk:"SPY", nm:"SPDR S&P 500", rs:"S&P 500 4/16 7,041 연속 사상 최고가 경신", aum:"590", er:"0.09%", ytd:"+2%", y1:"+15%" },
-      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"나스닥 4/16 24,103 12일 연속 상승·09년 이후 최장", aum:"400", er:"0.20%", ytd:"+7%", y1:"+22%" },
+      { tk:"SPY", nm:"SPDR S&P 500", rs:"S&P 500 7,100 최초 돌파·Dow +1,005p·3주 연속 주간 상승", aum:"590", er:"0.09%", ytd:"+3%", y1:"+16%" },
+      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"나스닥 +1.5%·신고점 연속·4/17 호르무즈 재개방 랠리", aum:"400", er:"0.20%", ytd:"+8%", y1:"+23%" },
       { tk:"VOO", nm:"Vanguard S&P 500", rs:"세계 최대 ETF·AUM $827B·최저 보수", aum:"827", er:"0.03%", ytd:"+2%", y1:"+15%" },
       { tk:"VTI", nm:"Vanguard Total Stock", rs:"미국 전체 시장·4월 신고가 랠리", aum:"420", er:"0.03%", ytd:"+2%", y1:"+14%" },
       { tk:"DIA", nm:"SPDR Dow Jones", rs:"다우 30 우량주·다우 부진", aum:"35", er:"0.16%", ytd:"-3%", y1:"+10%" },
       { tk:"RSP", nm:"Invesco S&P 500 Equal Weight", rs:"S&P 500 등가중·빅테크 집중 리스크 분산", aum:"83", er:"0.20%", ytd:"+5%", y1:"+11%" },
-      { tk:"IWM", nm:"iShares Russell 2000", rs:"미 소형주 2000종·경기 민감 지수·iShares", aum:"73", er:"0.19%", ytd:"+9%", y1:"+43%" },
+      { tk:"IWM", nm:"iShares Russell 2000", rs:"미 소형주 2000종·4/17 신고점·호르무즈 랠리 동참", aum:"73", er:"0.19%", ytd:"+10%", y1:"+45%" },
     ]
   },
   {

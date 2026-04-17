@@ -6,6 +6,13 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-18 07:19 KST",
+    summary: "OpenAI Codex 대규모 업데이트 — 데스크톱 컴퓨터 제어·메모리·90+ 플러그인·멀티에이전트 워크플로우로 Claude Code 정면 도전",
+    changes: [
+      { type: "제품 출시", sector: "OpenAI", detail: "OpenAI Codex. 4/16 'Codex for (almost) everything' 대규모 업데이트 공개. 핵심 추가 기능 세 가지 — (1) Computer Use: macOS에서 Codex가 자체 커서로 모든 앱을 보고·클릭·입력하며, 다수 에이전트를 사용자 작업과 간섭 없이 병렬 실행. (2) 메모리(preview): 선호·수정·맥락을 누적해 후속 작업 품질과 속도 향상, 아침마다 '어제 작업 이어가기' 제안. (3) 90+ 플러그인·앱내 브라우저·이미지 생성 내장으로 멀티 에이전트 워크플로우 완성. ChatGPT 로그인 데스크톱 사용자부터 순차 롤아웃, EU·UK·엔터프라이즈·에듀는 곧 추가. 주간 개발자 300만 명 규모로 Anthropic Claude Code의 코딩 패권에 정면 도전.", time: "2026-04-18 07:19 KST" },
+    ]
+  },
+  {
     date: "2026-04-17 19:11 KST",
     summary: "xAI XChat iOS 정식 출시 — Grok 엔진 탑재 암호화 메신저로 WeChat·WhatsApp 대항 슈퍼앱 전환 본격화",
     changes: [
