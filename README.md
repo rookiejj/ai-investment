@@ -1,37 +1,37 @@
 # Top7
 
-미국·한국·일본 주식 + AI 기업 + 글로벌 ETF + 원자재·매크로 + 유니콘을 7개 탭으로 보여주는 통합 투자 대시보드.
+미국·한국 주식 + AI 기업 + 글로벌 ETF + 시장·원자재 + 유니콘을 6개 탭으로 보여주는 통합 투자 대시보드. (일본 주식은 UI에서 제외, 데이터 파일만 보존)
 
 ## 구조
 
 ```
 ai-investment/
-├── index.html                  ← 통합 UI (7개 탭)
+├── index.html                  ← 통합 UI (6개 탭)
 ├── CLAUDE.md                   ← 유지보수 컨텍스트·업데이트 지침
 ├── data/
 │   ├── version.js              ← 데이터 버전 (탭 전환 시 자동 체크)
-│   ├── stocks-data.js          ← 미국 주식 (18 카테고리 × 7종목 = 126)
+│   ├── stocks-data.js          ← 미국 주식 (18 카테고리 × 7종목 = 108)
 │   ├── stocks-update.js        ← 미국 주식 변경 이력
-│   ├── kr-stocks-data.js       ← 한국 주식 (18 × 7 = 126)
+│   ├── kr-stocks-data.js       ← 한국 주식 (18 × 7 = 108)
 │   ├── kr-stocks-update.js     ← 한국 주식 변경 이력
-│   ├── jp-stocks-data.js       ← 일본 주식 (10 × 7 = 70)
-│   ├── jp-stocks-update.js     ← 일본 주식 변경 이력
+│   ├── jp-stocks-data.js       ← 일본 주식 (10 × 7 = 70, UI 제외·수동 갱신)
+│   ├── jp-stocks-update.js     ← 일본 주식 변경 이력 (UI 제외)
 │   ├── ai-data.js              ← AI 기업 (10사 + 제품)
 │   ├── ai-update.js            ← AI 변경 이력
-│   ├── etf-data.js             ← 글로벌 ETF (8 × 5 = 40)
+│   ├── etf-data.js             ← 글로벌 ETF (8 × 7 = 56)
 │   ├── etf-update.js           ← ETF 변경 이력
-│   ├── commodity-data.js       ← 원자재·매크로 (6 × 4 = 24)
-│   ├── commodity-update.js     ← 원자재 변경 이력
-│   ├── unicorn-data.js         ← 유니콘·프리IPO (6 × 5 = 30)
+│   ├── commodity-data.js       ← 시장·원자재 (6 × 4 = 24)
+│   ├── commodity-update.js     ← 시장·원자재 변경 이력
+│   ├── unicorn-data.js         ← 유니콘·프리IPO (6 × 7 = 42)
 │   └── unicorn-update.js       ← 유니콘 변경 이력
 └── README.md
 ```
 
-총 481개 항목, 7개 탭.
+UI 노출 총 348개 항목, 6개 탭 (일본 70항목은 데이터 파일만 보존).
 
 ## 기능
 
-- **7개 탭**: 미국 마켓 · 한국 마켓 · 일본 마켓 · AI 기업 · 글로벌 ETF · 원자재·매크로 · 유니콘
+- **6개 탭**: 미국 마켓 · 한국 마켓 · AI 기업 · 글로벌 ETF · 유니콘 · 시장·원자재
 - **검색**: 티커·기업명·제품명·설명 부분일치, X 버튼으로 초기화
 - **필터**: 탭별 카테고리(섹터/배지) 토글
 - **스와이프**: 모바일 좌우 스와이프로 탭 전환
@@ -40,7 +40,7 @@ ai-investment/
 - **연도 자동 전환**: 매출/순익 라벨(FY25, FY26E)이 현재 연도 기준으로 동적 생성
 - **단위 표시**: 미국($B), 한국(천억), 일본(¥천억) 숫자 옆에 직접 표시
 - **탭 상태 유지**: sessionStorage로 마지막 탭·필터 저장, 새로고침 시 깜빡임 없이 복원
-- **스케줄 자동 갱신**: 매일 오전 7시(KST) 원격 에이전트가 7개 탭 데이터를 웹검색·갱신·커밋·푸시
+- **스케줄 자동 갱신**: 원격 에이전트(Claude Opus 4.7 고정)가 매일 오전·오후 정기 주기로 6개 탭 데이터를 웹검색·갱신·커밋·푸시
 
 ## 업데이트 워크플로우
 
@@ -48,10 +48,10 @@ ai-investment/
 |---|---|
 | 미국 주식 | `stocks-data.js` + `stocks-update.js` |
 | 한국 주식 | `kr-stocks-data.js` + `kr-stocks-update.js` |
-| 일본 주식 | `jp-stocks-data.js` + `jp-stocks-update.js` |
+| 일본 주식 (UI 제외·수동만) | `jp-stocks-data.js` + `jp-stocks-update.js` |
 | AI 기업 | `ai-data.js` + `ai-update.js` |
 | 글로벌 ETF | `etf-data.js` + `etf-update.js` |
-| 원자재·매크로 | `commodity-data.js` + `commodity-update.js` |
+| 시장·원자재 | `commodity-data.js` + `commodity-update.js` |
 | 유니콘 | `unicorn-data.js` + `unicorn-update.js` |
 | UI·레이아웃 | `index.html` |
 
@@ -63,12 +63,14 @@ ai-investment/
 
 - 순수 정적 HTML 1개 (빌드 도구·프레임워크 없음)
 - `data/*.js`를 `fetch` → `new Function()`으로 격리 실행해 전역 오염 없이 로드
-- 초기 로드: `fetchVersion()` → 버전값을 캐시 방지 파라미터로 14개 파일 `Promise.all` 병렬 요청. 이후 탭 전환은 메모리에서 즉시
+- 초기 로드: `fetchVersion()` → 버전값을 캐시 방지 파라미터로 12개 파일 `Promise.all` 병렬 요청. 이후 탭 전환은 메모리에서 즉시
 - `META_CFG` 객체로 탭별 숫자 패널 라벨·단위를 선언적으로 관리
 - Google Analytics (G-MHK455J1GP) 연동
 
 ## Changelog
 
+- 2026-04-17: 자동화 실행 모델을 Claude Opus 4.7로 고정. 업데이트 박스 토글 아이콘 SVG 교체 버그 수정. 조사 윈도우를 최근 1~2일 + 진행 중 이벤트로 한정. 탭별 반복 규칙을 CLAUDE.md 공통 규칙으로 리팩토링.
+- 2026-04-16: 일본 주식 탭 UI 제거(데이터 파일은 보존·수동 `/update-jp`만). 시장·원자재 탭 명칭·순서 조정. 업데이트 박스 헤더에 접기/펼치기 쉐브론 추가.
 - 2026-04-14: 초기 로드 버전 기반 캐시 방지. 헤더 최종 업데이트 시간 표시. 탭 상태 복원 시 깜빡임 제거. 매일 7시 KST 자동 갱신 스케줄 설정.
 - 2026-04-13: 4개 탭 추가(일본·ETF·원자재·유니콘), 총 7탭 481항목. 카테고리당 6→7종목. 단위 직접 표시. 검색 X버튼. 데이터 버전 자동 체크. 연도 동적 생성.
 - 2026-04-13: 한국 마켓 탭 추가, 3탭 체제.
