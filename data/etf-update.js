@@ -1,6 +1,18 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
+    date: "2026-04-19 07:18 KST",
+    summary: "주간 결산 — IGV 2001년 10월 이후 최고 주간 +14%·IBIT 주간 순유입 $871M·SPY +4.5%로 2025년 5월 이후 최고 주간",
+    changes: [
+      { type: "수치 갱신", sector: "AI·반도체",
+        detail: "IGV. iShares Expanded Tech-Software ETF가 주간 +14%로 2001년 10월 이후 최고 주간 상승. Oracle·Microsoft·AMD 동반 랠리가 엔터프라이즈 SW·인프라 전반으로 확산. SMH·SOXX도 AMD +13% 주간·TSMC Q1 +58% 실적에 강세 지속, AIQ·QTUM도 기록 경신.", time: "2026-04-19 07:18 KST" },
+      { type: "수치 갱신", sector: "크립토·블록체인",
+        detail: "IBIT. Bitcoin이 $75K 돌파 후 $78K까지 재차 상승하며 미 스폿 BTC ETF 주간 순유입 $921M(1월 이후 최대). IBIT 단독 유입 $871M·AUM $58B 회복. MicroStrategy $1B 추가 매입으로 BTC 78.9만 개 보유. ETHA도 주간 반등, BITW 등 멀티자산 크립토 ETF 회복 구간.", time: "2026-04-19 07:18 KST" },
+      { type: "수치 갱신", sector: "미국 대형주",
+        detail: "SPY. 주간 +4.5%로 2025년 5월 이후 최고. 종가 7,126(+1.2% 금요)로 세 차례 신고점, Dow 49,447·Nasdaq 24,468. QQQ 13일 연속 상승은 1992년 이래 최장 기록 갱신. 4/22 Tesla·Boeing, 4/24 Alphabet·Intel 어닝 대기 — 가이던스 차별화가 다음 주 모멘텀 결정.", time: "2026-04-19 07:18 KST" },
+    ]
+  },
+  {
     date: "2026-04-18 13:17 KST",
     summary: "나스닥 13일 연속 상승·1992년 이래 최장 랠리·BTC $75K 돌파로 크립토 ETF 유입 재개",
     changes: [

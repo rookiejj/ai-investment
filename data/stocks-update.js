@@ -3,6 +3,20 @@
 
 const updates = [
   {
+    date: "2026-04-19 07:18 KST",
+    summary: "주간 결산 — Oracle 1999년 이후 최대 주간 상승 +27%·AMD 13일 연속·IGV 2001년 10월 이후 최고 주간·BTC 스폿 ETF 주간 순유입 $921M",
+    changes: [
+      { type: "정보 갱신", sector: "AI 플랫폼",
+        detail: "Oracle(ORCL). 지난 한 주 +27%로 1999년 닷컴 고점 이후 최고 주간 성과. AWS 협력 확장·Bloom Energy 2.8GW 연료전지 다년 계약·Stargate 7GW·$400B AI 인프라 투자 기대가 동시 작용. 시가총액 $1T 재진입 시점의 AI 매출 전환 내러티브가 iShares Expanded Tech-Software(IGV) 주간 +14%(2001년 10월 이후 최고)까지 견인.", time: "2026-04-19 07:18 KST" },
+      { type: "정보 갱신", sector: "반도체",
+        detail: "AMD(AMD). 4/17까지 13거래일 연속 상승·누적 +41%로 2005년 이래 최장 랠리 유지. 프랑스 Alice Recoque 엑사스케일 슈퍼컴 파트너십·Meta $60B·OpenAI 계약·MI450 2H 런치 모멘텀 중첩. 주간 기준 +13%로 전주 대비 상승폭 확대, 사상 최고가 갱신. Bernstein·Erste 목표가 상향 $289 유지.", time: "2026-04-19 07:18 KST" },
+      { type: "정보 갱신", sector: "양자·크립토",
+        detail: "Strategy(MSTR). 4/17 주간 약 +15% 마감. Bitcoin이 $78K대까지 반등하며 보유 78만 9천 BTC 평균단가 $75,577 기준 손실 구간을 빠르게 축소, TD Cowen 목표가 $385로 상향. 미 스폿 비트코인 ETF 주간 순유입 $921M(1월 이후 최대)·IBIT 단독 $871M 유입·AUM $58B. COIN·MARA·RIOT 동반 재평가.", time: "2026-04-19 07:18 KST" },
+      { type: "정보 갱신", sector: "시장",
+        detail: "미 증시 주간 결산 — S&P 500 7,126(+4.5%)·Nasdaq 24,468·Dow 49,447(+1,005p 금요 단일 세션). 2025년 5월 이후 최고 주간 성과. VIX 15.5로 3월 고점 대비 -41%. 금요 종가에 Netflix Q2 가이던스 쇼크가 시간외 -9%로 출현했으나 장중 지수는 3대 지수 모두 기록 경신. 다음 주 4/22 Tesla·Boeing·AT&T, 4/24 Intel·Alphabet 어닝 대기.", time: "2026-04-19 07:18 KST" },
+    ]
+  },
+  {
     date: "2026-04-18 13:17 KST",
     summary: "Trump-이란 2주 휴전 연장 협상·Nasdaq 13일 연속 상승 1992년 이래 최장·Netflix Q2 가이던스 쇼크",
     changes: [
