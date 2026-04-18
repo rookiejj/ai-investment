@@ -7,7 +7,7 @@ const data = [
     tag: "프론티어 모델·AI 인프라",
     stocks: [
       { nm:"OpenAI", rs:"ChatGPT·GPT-5·AGI 추구", val:"$852B", round:"$122B 펀딩", sector:"AGI", ipo:"2026 말 $1T+" },
-      { nm:"Anthropic", rs:"ARR $30B·$800B 오퍼 고사·Claude Mythos 보안 시연", val:"$380B", round:"Feb '26 Series G $30B @ $350B pre", sector:"프론티어 AI", ipo:"2026.10 $60B+ 조달 협상" },
+      { nm:"Anthropic", rs:"ARR 3월 $190B→4월 $300B 2배·$800B 신규 오퍼 수령·Opus 4.7 GA", val:"$380B", round:"Feb '26 Series G $30B @ $350B pre", sector:"프론티어 AI", ipo:"2026.10 $60B+ 조달 협상" },
       { nm:"Databricks", rs:"레이크하우스·AI 통합·ARR $5.4B", val:"$134B", round:"Series L ($11B)", sector:"데이터·AI", ipo:"2026 H2 S-1" },
       { nm:"Cerebras", rs:"4/17 나스닥 S-1 제출·티커 CBRS·OpenAI $10B 계약 앵커·MS·Citi·Barclays·UBS 주관", val:"$23B", round:"4월 말 프라이싱·$2B 조달", sector:"AI 하드웨어", ipo:"2026.04 나스닥·$22~25B" },
       { nm:"Safe Superintelligence", rs:"Sutskever 창업·제품 전무·Alphabet·NVIDIA 베팅 AGI 연구소", val:"$32B", round:"Series B ($2B, 2025-04)", sector:"AGI 안전", ipo:"미정" },
@@ -45,7 +45,7 @@ const data = [
     title: "🚀 우주·모빌리티·방산",
     tag: "발사체·자율주행·자율무기·피지컬 AI",
     stocks: [
-      { nm:"SpaceX", rs:"Starlink·Starship·xAI 합병·6/8 로드쇼·6/15 프라이싱·PIF $5B 코너스톤·리테일 30%", val:"$1.25T", round:"S-1 비밀 제출·$75B 조달", sector:"우주", ipo:"2026.06.15 프라이싱·$1.75T 사상 최대" },
+      { nm:"SpaceX", rs:"Starlink·Starship·xAI 합병·2025 통합매출 $18.7B(Starlink $11.4B)·6/15 프라이싱·PIF $5B", val:"$1.25T", round:"S-1 비밀 제출·$75B 조달", sector:"우주", ipo:"2026.06.15 프라이싱·$1.75T 사상 최대" },
       { nm:"Zipline", rs:"드론 배송·누적 200만 건", val:"$7.6B", round:"Series H ($800M)", sector:"드론·물류", ipo:"2027" },
       { nm:"Vast", rs:"민간 우주정거장·NASA 후보·$500M 조달", val:"$20B", round:"Series B ($500M, 2026-03)", sector:"우주 인프라", ipo:"미정" },
       { nm:"Relativity Space", rs:"Eric Schmidt CEO·Terran R 2026년 말 첫 발사 목표", val:"$4.2B", round:"Angel (Schmidt, 2025-01)", sector:"3D 프린트 로켓", ipo:"미정" },

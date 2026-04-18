@@ -6,6 +6,14 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-18 13:17 KST",
+    summary: "Meta MTIA 300~500 커스텀 AI 칩 4세대 로드맵 공개 — Broadcom 1GW+ 파트너십 확장으로 NVIDIA 의존도 축소",
+    changes: [
+      { type: "인프라", sector: "Meta AI", detail: "Meta MTIA 300/400/450/500 4세대 커스텀 AI 칩 로드맵 4/17 공식화. 2027년 말까지 자체 데이터센터에 단계 배포, Broadcom 공동설계로 학습·추론 분리 가속기 포함. Broadcom과 2029년까지 1GW+ 컴퓨트 다년 파트너십 확장 발표. 연 $1,200억 AI CapEx 방어와 NVIDIA 의존도 축소 동시 추진 — Llama·Muse Spark 차세대 훈련 투입 예정. 공개와 동시에 Broadcom 주가 호재로 반응.", time: "2026-04-18 13:17 KST" },
+      { type: "펀딩", sector: "Anthropic", detail: "Anthropic이 $8,000억 밸류 신규 펀딩 오퍼를 투자자들로부터 수령 — 2월 $3,500억 프리머니에서 두 달 만에 2배 이상. 연환산 매출이 3월 $190억에서 4월 $300억으로 급등하며 OpenAI($250억)를 사상 처음 추월한 직후 제시된 오퍼다. Opus 4.7 GA·Mythos Preview 공개·Project Glasswing(Apple·Google·Microsoft 등 40여 곳 제한 배포) 연속 이벤트가 밸류 재평가를 주도. Goldman·JPM·MS 주관 IPO는 10월 $60B+ 조달 협상 중.", time: "2026-04-18 13:17 KST" },
+    ]
+  },
+  {
     date: "2026-04-18 07:19 KST",
     summary: "OpenAI Codex 대규모 업데이트 — 데스크톱 컴퓨터 제어·메모리·90+ 플러그인·멀티에이전트 워크플로우로 Claude Code 정면 도전",
     changes: [

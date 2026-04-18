@@ -47,7 +47,8 @@ const data=[
   {name:"Muse Spark (Meta Superintelligence Labs)",url:"https://meta.ai",isNew:true,badges:["llm","agt"],desc:"4월 8일 출시. 전직 Scale AI CEO Alexandr Wang 주도, $143억 투자로 재건한 Meta Superintelligence Labs 첫 모델(코드명 Avocado). 오픈소스 Llama 전략에서 전환 — 현재 프로프라이어터리, 향후 오픈소스화 검토. Artificial Analysis Intelligence Index 4위(52점). 10배 적은 컴퓨팅으로 Opus급 성능 주장. 쇼핑 모드·Contemplating 모드(병렬 서브에이전트) 내장. meta.ai 및 Meta AI 앱 제공. Instagram·WhatsApp·Facebook 통합 예정. 사설 API 프리뷰 선별 파트너 제공."},
   {name:"Llama 4 (Scout / Maverick)",url:"https://llama.meta.com",isNew:false,badges:["llm","agt"],desc:"멀티모달 오픈소스. Scout: 경량, Maverick: 400B 파라미터, 1,000만 토큰 컨텍스트 윈도우. Hugging Face 누계 3.5억+ 다운로드. Muse Spark 등장으로 Meta의 오픈소스 플래그십 역할로 재포지셔닝."},
   {name:"Meta AI (소비자 어시스턴트)",url:"https://meta.ai",isNew:false,badges:["agt"],desc:"Instagram·WhatsApp·Facebook·Messenger 통합. 5억 사용자 돌파. 곧 Muse Spark로 엔진 교체 예정. Ray-Ban Meta 스마트 글라스 'Hear Better' AI 기능 탑재."},
-  {name:"Manus AI (자율 에이전트)",url:"https://ai.meta.com/blog/",isNew:false,badges:["agt"],desc:"2025년 말 인수. Ads Manager에 네이티브 통합. 시장 조사·보고서 작성·캠페인 분석 등 멀티스텝 태스크 자율 실행."}
+  {name:"Manus AI (자율 에이전트)",url:"https://ai.meta.com/blog/",isNew:false,badges:["agt"],desc:"2025년 말 인수. Ads Manager에 네이티브 통합. 시장 조사·보고서 작성·캠페인 분석 등 멀티스텝 태스크 자율 실행."},
+  {name:"MTIA 300/400/450/500 (자체 AI 칩)",url:"https://ai.meta.com",isNew:true,badges:["hw"],desc:"4/17 공개. 4세대 커스텀 실리콘 로드맵을 2027년까지 단계 배포 — Broadcom 공동설계, 학습·추론 분리 가속기 포함. Broadcom과 1GW 이상 컴퓨트 다년 파트너십 확장(2029년까지). 연 $1,200억 AI CapEx 방어를 위한 NVIDIA 의존도 축소 본격화. Llama·Muse Spark 차세대 훈련에 투입 예정."}
 ]},
 {rank:6,name:"Microsoft",url:"https://microsoft.com/en-us/ai",type:"빅테크 (AI 통합 전략)",focus:"생산성 AI 전면 통합",products:[
   {name:"Microsoft Copilot (M365 통합)",url:"https://copilot.microsoft.com",isNew:false,badges:["agt","code"],desc:"Word·Excel·Outlook·Teams·Windows·Azure 전 제품군 AI화. 멀티 에이전트 오케스트레이션. Anthropic에 $50억 투자. Azure AI 성장률 34% YoY. Mustafa Suleyman: 현재 프론티어 모델 자체 개발 역량 부족 인정, 2026년 말까지 컴퓨팅 규모 확보 목표."},

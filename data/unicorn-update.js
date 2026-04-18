@@ -1,6 +1,16 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-18 13:17 KST",
+    summary: "Anthropic ARR 4월 $300B 돌파·$800B 신규 오퍼·SpaceX 2025 통합 매출 $18.7B 공개·Meta MTIA 로드맵 반응",
+    changes: [
+      { type: "정보 갱신", sector: "AI·ML",
+        detail: "Anthropic. 연환산 매출이 3월 $190억에서 4월 $300억으로 한 달 만에 급등하며 OpenAI($250억)를 사상 처음 추월. 투자자들이 $800B 밸류 신규 펀딩 오퍼를 제시(2월 $350B 프리머니의 2배+). Opus 4.7 GA·Mythos Preview·Project Glasswing(Apple·Google·Microsoft 등 40여 곳 제한 배포) 연속 이벤트가 밸류 재평가 주도. 10월 $60B+ IPO 협상은 Goldman·JPM·MS 주관.", time: "2026-04-18 13:17 KST" },
+      { type: "정보 갱신", sector: "우주·모빌리티·방산",
+        detail: "SpaceX. The Information이 공개한 미공개 데이터에 따르면 2025년 SpaceX·xAI 통합 매출은 $18.7B — Starlink $11.4B·로켓 발사 $4.1B·xAI $3.2B 구성. 4월 말 애널리스트 데이·5월 말 S-1 공식 제출·6/8 로드쇼·6/15 프라이싱 일정 재확인, BofA·Citi·GS·JPM·MS 공동 주관. PIF $5B 코너스톤 협상 진행형, 개인 신주 배정 30%는 미 IPO 통상 5~10% 대비 이례적.", time: "2026-04-18 13:17 KST" },
+    ]
+  },
+  {
     date: "2026-04-18 07:19 KST",
     summary: "Cerebras 4/17 S-1 공식 제출 — 티커 CBRS·Morgan Stanley·Citi·Barclays·UBS 공동 주관·$22~25B 목표",
     changes: [
