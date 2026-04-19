@@ -9,7 +9,7 @@ const data = [
       { nm:"OpenAI", rs:"ChatGPT·GPT-5·AGI 추구", val:"$852B", round:"$122B 펀딩", sector:"AGI", ipo:"2026 말 $1T+" },
       { nm:"Anthropic", rs:"ARR 3월 $190B→4월 $300B 2배·$800B 신규 오퍼 수령·Opus 4.7 GA", val:"$380B", round:"Feb '26 Series G $30B @ $350B pre", sector:"프론티어 AI", ipo:"2026.10 $60B+ 조달 협상" },
       { nm:"Databricks", rs:"레이크하우스·AI 통합·ARR $5.4B", val:"$134B", round:"Series L ($11B)", sector:"데이터·AI", ipo:"2026 H2 S-1" },
-      { nm:"Cerebras", rs:"4/17 S-1 재제출·OpenAI 3년 $20B·750MW 컴퓨트 공급·Forge 2차시장 $26~28B·BoA·MS·Citi·Barclays 주관", val:"$23B", round:"5월 프라이싱·$2B 조달 목표", sector:"AI 하드웨어", ipo:"2026.05 나스닥 CBRS·$22~25B" },
+      { nm:"Cerebras", rs:"5월 중순 프라이싱 공식 확인·OpenAI 3년 $20B·750MW 공급·Forge 2차시장 $26~28B·MS 리드 주관", val:"$23B", round:"5월 중순 프라이싱·$2B 조달", sector:"AI 하드웨어", ipo:"2026.05 나스닥 CBRS·$22~25B" },
       { nm:"Safe Superintelligence", rs:"Sutskever 창업·제품 전무·Alphabet·NVIDIA 베팅 AGI 연구소", val:"$32B", round:"Series B ($2B, 2025-04)", sector:"AGI 안전", ipo:"미정" },
       { nm:"Thinking Machines Lab", rs:"Murati 창업·Tinker API·NVIDIA GW 파트너십·$50B 라운드 난항", val:"$12B", round:"Seed ($2B, 2025-07)", sector:"멀티모달 AI", ipo:"미정" },
       { nm:"Cohere", rs:"엔터프라이즈 LLM·ARR $240M+·프론티어 모델 제공사", val:"$7B", round:"Series D 확장 ($600M)", sector:"엔터프라이즈 LLM", ipo:"2026 CFO 영입" },
@@ -19,7 +19,7 @@ const data = [
     title: "💳 핀테크",
     tag: "결제·뱅킹·HR·SMB",
     stocks: [
-      { nm:"Stripe", rs:"결제 인프라 1위·TPV $1.9T", val:"$159B", round:"2/26 텐더오퍼", sector:"결제", ipo:"IPO 비우선" },
+      { nm:"Stripe", rs:"Tempo L1 메인넷 가동·Visa·Zodia 첫 외부 밸리데이터·결제 인프라 1위·TPV $1.9T", val:"$159B", round:"2/26 텐더오퍼", sector:"결제", ipo:"IPO 비우선" },
       { nm:"Revolut", rs:"디지털 뱅킹·매출 $9B·흑자", val:"$75B", round:"세컨더리 $100B 추진", sector:"네오뱅크", ipo:"2026 H2" },
       { nm:"Ramp", rs:"법인카드·지출관리·ARR $1B+", val:"$32B", round:"Series F ($300M)", sector:"법인 핀테크", ipo:"미정" },
       { nm:"Plaid", rs:"금융 데이터 API·오픈뱅킹", val:"$8B", round:"텐더오퍼 (업라운드)", sector:"핀테크 인프라", ipo:"2026 H2" },
@@ -72,7 +72,7 @@ const data = [
     tag: "거래소·인프라·분석·커스터디",
     stocks: [
       { nm:"Kraken", rs:"크립토 거래소 3위·co-CEO Sethi 공개 확인·Deutsche Börse $200M", val:"$13.3B", round:"IPO 비밀 신청 (4/14)", sector:"크립토 거래소", ipo:"2026 Q3 목표" },
-      { nm:"Ripple", rs:"XRP·크로스보더 결제·Citadel 투자", val:"$40B", round:"$500M (Citadel·Fortress)", sector:"블록체인 결제", ipo:"IPO 미정 (경영진 부정)" },
+      { nm:"Ripple", rs:"4/15 한국 교보생명 토큰화 국채 결제 파트너십·한국 최초 대형 보험사 협업·Citadel 투자", val:"$40B", round:"$500M (Citadel·Fortress)", sector:"블록체인 결제", ipo:"IPO 미정 (경영진 부정)" },
       { nm:"ConsenSys", rs:"이더리움 인프라·MetaMask", val:"$10B", round:"IPO 협의 (GS·JPM)", sector:"Web3 인프라", ipo:"2026 H2" },
       { nm:"Fireblocks", rs:"디지털자산 커스터디·TRES $130M 인수(1/7)·기관 보안", val:"$8B", round:"Series F", sector:"디지털자산", ipo:"2027" },
       { nm:"Chainalysis", rs:"블록체인 분석·컴플라이언스", val:"$8.6B", round:"Series G", sector:"블록체인 분석", ipo:"2027" },

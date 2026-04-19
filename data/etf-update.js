@@ -1,6 +1,18 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
+    date: "2026-04-20 07:16 KST",
+    summary: "어닝 위크 프리뷰 — 4/22 Tesla·Boeing·Google Cloud Next, 4/23 SK하이닉스, 4/24 Alphabet·Intel, BTC $75.5~76K 저항 박스권",
+    changes: [
+      { type: "수치 갱신", sector: "미국 대형주",
+        detail: "SPY·QQQ. S&P 500 Q1 블렌디드 EPS 컨센서스 +12.5% 설정, 4/22 Tesla(컨센 EPS $0.37·매출 $22.71B)·Boeing(EPS -$0.39~-$0.63·매출 $22.1B)·Verizon·AT&T, 4/23 IBM·ServiceNow, 4/24 Alphabet·Intel·T-Mobile로 이어지는 120개사 Q1 어닝 집중 주간. 이번 주 S&P 500 7,041·Nasdaq 24,102 신고점 방어 여부는 빅테크 가이던스에 달렸고, 4/25 OPEC+ 회의·5/1 FOMC가 매크로 뒷배경.", time: "2026-04-20 07:16 KST" },
+      { type: "수치 갱신", sector: "크립토·블록체인",
+        detail: "IBIT·FBTC. BTC가 주말 $75,996에서 안착, $75~76K 저항대가 단기 천장·$70.5K 지지 구간. $76K 상방 돌파 시 숏 스퀴즈로 $80~84K 복귀 가능성. 미 스폿 비트코인 ETF 복합체는 주말 유출입 소강, IBIT AUM $58B 유지. 박스권 장기화 시 파생 포지션 청산 리스크 누적.", time: "2026-04-20 07:16 KST" },
+      { type: "수치 갱신", sector: "AI·반도체",
+        detail: "SMH·SOXX·AIQ. NVIDIA Ising 오픈소스 양자 AI 모델 공개·AMD 12일 연속 랠리·TSMC Q1 실적 비트에 따라 AI 반도체 지수 프리미엄 유지. SK하이닉스 4/23 Q1 확정(OP 38.5~40조 컨센)·Intel 4/24 어닝이 반도체 섹터 상방·하방 변수. IGV는 Oracle +27% 주간 랠리 소화 구간.", time: "2026-04-20 07:16 KST" },
+    ]
+  },
+  {
     date: "2026-04-19 13:12 KST",
     summary: "주말 — BTC 스폿 ETF 금요 단독 +$664M 수개월 최대·WTI $83대 회복·다음 주 Tesla·Alphabet 어닝 시즌 개시",
     changes: [

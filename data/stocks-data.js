@@ -7,7 +7,7 @@ const data = [
     tag: "모델·엔터프라이즈 SW",
     stocks: [
       { tk:"MSFT", nm:"Microsoft", rs:"Azure AI·Copilot·OpenAI", r1:"282", p1:"101", r2:"325", p2:"118" },
-      { tk:"GOOGL", nm:"Alphabet", rs:"Gemini·TPU·검색", r1:"403", p1:"132", r2:"455", p2:"148" },
+      { tk:"GOOGL", nm:"Alphabet", rs:"4/22~24 Google Cloud Next·4/29 Q1 실적·Gemini·TPU·에이전틱 워크플로우", r1:"403", p1:"132", r2:"455", p2:"148" },
       { tk:"META", nm:"Meta", rs:"Llama·광고 AI", r1:"201", p1:"66", r2:"235", p2:"72" },
       { tk:"ORCL", nm:"Oracle", rs:"OCI +44% YoY·RPO $553B·Stargate 7GW·$400B 투자", r1:"57", p1:"12", r2:"68", p2:"15" },
       { tk:"PLTR", nm:"Palantir", rs:"AIP 국방·상용", r1:"4.5", p1:"0.6", r2:"7.2", p2:"1.5" },
@@ -19,7 +19,7 @@ const data = [
     title: "🔩 반도체",
     tag: "AI칩·파운드리·장비·메모리",
     stocks: [
-      { tk:"NVDA", nm:"NVIDIA", rs:"FY26 $216B 확정·Rubin 풀프로덕션 진입·Blackwell+Rubin $1T 파이프라인", r1:"216", p1:"117", r2:"337", p2:"192" },
+      { tk:"NVDA", nm:"NVIDIA", rs:"Ising 오픈소스 양자AI 모델 공개·FY26 $216B·Rubin 풀프로덕션·Blackwell+Rubin $1T 파이프라인", r1:"216", p1:"117", r2:"337", p2:"192" },
       { tk:"AVGO", nm:"Broadcom", rs:"커스텀 ASIC·AI 백로그 $73B", r1:"64", p1:"23", r2:"88", p2:"34" },
       { tk:"TSM", nm:"TSMC", rs:"Q1 $35.7B 확정·Q2 가이던스 $39~40.2B 상향·GM 65.5~67.5%·26년 USD +30%·CapEx 상단", r1:"117", p1:"55", r2:"153", p2:"70" },
       { tk:"ASML", nm:"ASML", rs:"Q1 €8.8B EPS €7.15 비트·수요>공급 지속·2026 €36~40B·EUV 독점", r1:"33", p1:"9", r2:"42", p2:"12" },
@@ -136,7 +136,7 @@ const data = [
     title: "🚗 자동차·모빌리티",
     tag: "EV·레거시·자율주행",
     stocks: [
-      { tk:"TSLA", nm:"Tesla", rs:"Model Y L 3열 6인승 내주 출시·AI5 테이프아웃·4/22 실적·FSD 주별 승인 목표 25~50%", r1:"95", p1:"3.8", r2:"109", p2:"7.2" },
+      { tk:"TSLA", nm:"Tesla", rs:"4/22 Q1 실적 임박·컨센 매출 $22.7B·EPS $0.37·Q1 인도 358k·Terafab capex 가이드·Model Y L 출시", r1:"95", p1:"3.8", r2:"109", p2:"7.2" },
       { tk:"TM", nm:"Toyota", rs:"하이브리드 강자", r1:"305", p1:"28", r2:"315", p2:"30" },
       { tk:"GM", nm:"General Motors", rs:"레거시 EV 전환", r1:"185", p1:"10", r2:"190", p2:"11" },
       { tk:"RIVN", nm:"Rivian", rs:"R2 양산 개시·VW JV", r1:"4.5", p1:"-3.6", r2:"6.9", p2:"-1.9" },
@@ -153,7 +153,7 @@ const data = [
       { tk:"RTX", nm:"RTX Corp", rs:"패트리엇·엔진", r1:"82", p1:"6.5", r2:"86", p2:"7.2" },
       { tk:"NOC", nm:"Northrop Grumman", rs:"B-21·전략무기", r1:"42", p1:"4.0", r2:"44", p2:"4.3" },
       { tk:"GD", nm:"General Dynamics", rs:"잠수함·Gulfstream", r1:"49", p1:"4.2", r2:"52", p2:"4.6" },
-      { tk:"BA", nm:"Boeing", rs:"Q1 인도 143대·737 114대·Airbus 추월·4/22 실적", r1:"89.5", p1:"2.2", r2:"80", p2:"3.5" },
+      { tk:"BA", nm:"Boeing", rs:"4/22 Q1 실적 임박·컨센 매출 $22.1B·EPS -$0.39~-$0.63·Q1 상업기 인도 +10% YoY·737 품질 25대 영향", r1:"89.5", p1:"2.2", r2:"80", p2:"3.5" },
       { tk:"RKLB", nm:"Rocket Lab", rs:"Neutron 4Q26 재지연·$816M SDA 수주·국방 프라임 전환", r1:"0.60", p1:"-0.15", r2:"0.90", p2:"-0.08" },
       { tk:"LHX", nm:"L3Harris", rs:"전자전·ISR·위성통신", r1:"21", p1:"2.0", r2:"23", p2:"2.3" },
     ]
@@ -166,7 +166,7 @@ const data = [
       { tk:"RGTI", nm:"Rigetti", rs:"초전도 양자", r1:"0.012", p1:"-0.08", r2:"0.025", p2:"-0.10" },
       { tk:"QBTS", nm:"D-Wave", rs:"어닐링 양자", r1:"0.015", p1:"-0.07", r2:"0.030", p2:"-0.08" },
       { tk:"COIN", nm:"Coinbase", rs:"미 최대 거래소", r1:"7.5", p1:"2.3", r2:"9.0", p2:"2.9" },
-      { tk:"MSTR", nm:"Strategy", rs:"BTC $77~78K 반등·78만 9천개 보유·TD Cowen TP $385 상향", r1:"0.5", p1:"-0.2", r2:"0.55", p2:"-0.15" },
+      { tk:"MSTR", nm:"Strategy", rs:"BTC $75.5~76K 박스권·$76K 저항 돌파 시 $80~84K 숏스퀴즈 가시·78만 9천 BTC 보유", r1:"0.5", p1:"-0.2", r2:"0.55", p2:"-0.15" },
       { tk:"MARA", nm:"Marathon Digital", rs:"BTC 채굴", r1:"0.75", p1:"0.10", r2:"1.0", p2:"0.20" },
       { tk:"RIOT", nm:"Riot Platforms", rs:"BTC 채굴·인프라", r1:"0.35", p1:"0.05", r2:"0.50", p2:"0.10" },
     ]

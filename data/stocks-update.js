@@ -3,6 +3,24 @@
 
 const updates = [
   {
+    date: "2026-04-20 07:16 KST",
+    summary: "이번 주 빅테크 어닝 러시 개시 — 4/22 Tesla·Boeing·Google Cloud Next, BTC $75.5~76K 저항 박스권, NVIDIA Ising 오픈소스 양자 AI 모델 공개",
+    changes: [
+      { type: "정보 갱신", sector: "자동차·모빌리티",
+        detail: "Tesla(TSLA). 4/22 장 마감 후 Q1 실적 발표 임박, 컨퍼런스콜 한국시간 4/23 오전 6:30. 스트리트 컨센서스 매출 $22.71B·조정 EPS $0.37(Refinitiv Smart Estimate는 $21.52B·$0.30으로 보수적, 서프라이즈 확률 -20.6%). 이미 공개된 Q1 인도 35만 8천대(컨센 36만 9천대 하회)와 생산 40만 8천대가 숫자의 바닥. Barclays Dan Levy는 CapEx 가이던스 상향 여부를 핵심 변수로 지목 — 기존 2026 가이던스 $20B+는 Terafab·Solar fab 미포함, 상향 시 장기 지배력 내러티브 강화. Robotaxi·Cybercab 양산·FSD 무감독 승인 주(州) 범위도 주시.", time: "2026-04-20 07:16 KST" },
+      { type: "정보 갱신", sector: "항공우주·방산",
+        detail: "Boeing(BA). 4/22 장전 Q1 실적·10:30 ET 컨콜. 컨센 매출 $22.1B(+12% YoY)·EPS -$0.39~-$0.63 수준. CFO Jay Malave가 사전 예고한 737 라인 품질 결함(약 25대 영향)에 따른 인도 차질 소화 구간, 반대급부로 상업기 인도 +10% YoY·방산 출하 +15% 회복 모멘텀. 공급망 관세·수출통제 압박은 진행형.", time: "2026-04-20 07:16 KST" },
+      { type: "정보 갱신", sector: "양자·크립토",
+        detail: "Strategy(MSTR). 4/19 주말 BTC가 $75,996에서 안착, $75,000~76,000 저항대가 단기 천장으로 형성. $76K 상방 돌파 시 숏 스퀴즈로 $80,000~84,000 구간 복귀 가시, 하단 지지선은 $70,500. 보유 78만 9천 BTC 평균단가 $75,577 기준 손실폭이 크게 축소됐으나 아직 박스권. 주말 동안 미 스폿 ETF 유출입은 소강.", time: "2026-04-20 07:16 KST" },
+      { type: "정보 갱신", sector: "AI 플랫폼",
+        detail: "Alphabet(GOOGL). 4/22~24 라스베이거스 Google Cloud Next 개막, Vertex AI·Gemini·에이전틱 워크플로우 확산이 주제. 컨퍼런스 직후 4/29 Q1 어닝 — 애널리스트는 검색 +16.5%·클라우드 +57.5% YoY를 예상, 에이전틱 코딩·Vertex AI 가격 체계 업데이트가 장기 가이던스의 핵심. 지난 Q4 매출 $113.8B 기록 후 첫 분기.", time: "2026-04-20 07:16 KST" },
+      { type: "정보 갱신", sector: "반도체",
+        detail: "NVIDIA(NVDA). Ising 오픈소스 양자 AI 모델 패밀리 공개 — 연구·엔터프라이즈 고객이 유용한 애플리케이션 실행 가능한 양자 프로세서를 구축하도록 지원. 주가 $201선에서 52주 고점 $212 재시도 구간, NAB Show 2026(라스베이거스, 4/18~22)에서 영상 편집 AI 가속 업데이트 동시 전개.", time: "2026-04-20 07:16 KST" },
+      { type: "정보 갱신", sector: "시장",
+        detail: "주간 프리뷰. S&P 500이 7,041로 첫 7,000대 종가 기록 후 첫 주 — 4/20 Steel Dynamics로 어닝 시즌 가볍게 재개, 4/22 Tesla·Boeing·Verizon·AT&T, 4/24 Alphabet·Intel·T-Mobile·American Airlines가 핵심. 블렌디드 S&P 500 Q1 EPS 성장 컨센은 +12.5%. 4/25 OPEC+ 화상 회의에서 5월 증산 속도 재조정이 원자재 축 변수.", time: "2026-04-20 07:16 KST" },
+    ]
+  },
+  {
     date: "2026-04-19 13:12 KST",
     summary: "주말 — BTC $77~78K 반등·미 스폿 BTC ETF 금요 +$664M 수개월 최대·Strategy 보유 단가 회복 구간 진입·WTI $83대 안정",
     changes: [

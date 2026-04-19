@@ -1,6 +1,18 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-20 07:16 KST",
+    summary: "Cerebras 5월 중순 프라이싱 공식화·Ripple 교보생명 토큰화 국채 결제 파트너십·Stripe Tempo L1 메인넷·Visa·Zodia 첫 외부 밸리데이터",
+    changes: [
+      { type: "정보 갱신", sector: "AI·ML",
+        detail: "Cerebras Systems. 회사 대변인이 IPO 일정을 5월 중순 프라이싱으로 공식 확인. 4/17 S-1 재제출 이후 로드쇼 일정 연장으로 4월 말 창구가 닫혔고 Morgan Stanley 리드 주관 + Citigroup·Barclays·UBS 공동 참여 체제가 유지. OpenAI 3년 $20B 다년 계약·750MW 컴퓨트 공급 조건과 워런트 옵션이 S-1에 기재된 상태로 앵커 투자자 가시성 확보. Hiive·Forge 2차시장 $26~28B 호가 유지, 공모가 밴드 $22~25B·$2B 조달 목표 — 비 NVIDIA AI 인프라 최대 IPO 지위 재확인.", time: "2026-04-20 07:16 KST" },
+      { type: "정보 갱신", sector: "크립토·Web3",
+        detail: "Ripple. 4/15 한국 교보생명과 토큰화 국채 결제 전략 파트너십 체결, 한국 최초 대형 보험사와의 본격 협업. 주 이슈는 RWA 토큰화된 원화 국고채 결제 인프라 구축, RLUSD·RLKRW 로드맵과 연계. Citadel·Fortress $500M 라운드($40B 밸류)와 함께 기관 레일 확장을 이어감. XRP·크로스보더 결제 외 아시아 RWA 시장 진입 가속.", time: "2026-04-20 07:16 KST" },
+      { type: "정보 갱신", sector: "핀테크",
+        detail: "Stripe. 4/14 Tempo L1 메인넷에 Visa·Standard Chartered 계열 Zodia Custody가 첫 외부 밸리데이터로 가동 개시. Tempo는 Stripe·Paradigm 공동 창업 결제 우선 Layer 1으로 2025 말 $500M 조달($5B 밸류) 후 3월 메인넷 런칭. 외부 밸리데이터 가동은 퍼블릭 탈중앙화 첫 단계로, Stripe의 결제 스택이 온체인 레일로 본격 확장되는 신호. TPV $1.9T 본업은 유지, IPO는 여전히 비우선.", time: "2026-04-20 07:16 KST" },
+    ]
+  },
+  {
     date: "2026-04-19 19:08 KST",
     summary: "Cerebras 프라이싱 윈도우 4월 말 → 5월로 이월·2차시장 호가 $26~28B·OpenAI 3년 $20B·750MW 공급 조건 재확인",
     changes: [

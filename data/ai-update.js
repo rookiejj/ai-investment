@@ -6,6 +6,16 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-20 07:16 KST",
+    summary: "xAI Grok 4.3 Beta SuperGrok Heavy 전용 출시, Anthropic Claude Code 데스크탑 리디자인+Routines 공개, GPT-6 출시 윈도우 재정비",
+    changes: [
+      { type: "모델 출시", sector: "xAI", detail: "xAI Grok 4.3 Beta. 4/17 iOS·Android·웹에 얼리 액세스로 공개, 접근 권한은 SuperGrok Heavy($300/월) 구독자 한정. 라이브 체크포인트는 0.5T 파라미터이고 1T 풀 버전은 초기 훈련 최종 약 5일 앞이라고 Musk가 4/18 명시. 네이티브 PDF·PPT·스프레드시트 생성과 비디오 인풋 추가로 오피스 문서 생산성·멀티모달 비디오 이해에 초점, 롱컨텍스트 처리 대폭 강화. 공식 블로그·모델카드·서드파티 벤치 없이 소프트 런치 — 'SpaceXAI 모델 팩토리'가 매일 개선 배포·2주마다 베이스 모델 갱신 체제로 전환.", time: "2026-04-20 07:16 KST" },
+      { type: "제품 출시", sector: "Anthropic", detail: "Anthropic Claude Code. 4/14 데스크탑 앱(Mac·Windows) 전면 리디자인과 함께 'Routines' 리서치 프리뷰 동시 공개. 앱은 Mission Control 멀티 세션 사이드바·드래그앤드롭 패널 레이아웃·통합 터미널·인앱 파일 에디터·HTML/PDF 프리뷰·고속 diff 뷰어로 재구성. Routines는 Claude Code 웹 인프라에서 실행되는 반복 자동화로 스케줄·API(HTTP POST·베어러 토큰)·GitHub 이벤트(pull_request·push·issues·releases·check_runs) 세 가지 트리거 지원 — Mac이 오프라인이어도 동작. Pro 5건/일·Max 15건·Team/Enterprise 25건 쿼터. 크론 자동화·엔터프라이즈 워크플로우 영역으로 Claude Code 영토 확장.", time: "2026-04-20 07:16 KST" },
+      { type: "모델 출시 예정", sector: "OpenAI", detail: "OpenAI GPT-6. 4/14 글로벌 출시설 공식 부인 이후 블로그·모델카드·API 공지 부재 상태 지속. 'Spud' 프리트레이닝 3/24 완료 이후 OpenAI 전형 3~6주 런치 사이클을 가정하면 4월 말~6월 초, 5월이 최고 확률 윈도우로 재정리. Polymarket은 4/30 내 출시 확률 78%·6/30 내 95%로 유지. Stargate Abilene 데이터센터 10만+ H100 GPU에서 훈련 확인, SWE-bench Pro 고70%대 도달 여부에 따라 GPT-6 vs GPT-5.5 최종 명명 결정 — 200만 토큰 컨텍스트·ChatGPT·Codex·Atlas 단일 에이전트 통합 스펙은 유지.", time: "2026-04-20 07:16 KST" },
+      { type: "생태계", sector: "Google DeepMind", detail: "Google. 4/22~24 라스베이거스 Google Cloud Next 2026 개막 대기 — Vertex AI·Gemini·에이전틱 코딩·Next at Night(Allegiant Stadium) 구성. 엔터프라이즈가 실제로 운영하는 에이전틱 시스템의 거버넌스·비용·파이프라인 통합이 메인 테마로 재편. 4/15 공개된 Gemini 3.1 Flash TTS(자연어로 속도·톤·강조 제어)는 ElevenLabs 정면 도전 포지션. 4/29 Q1 어닝 프리뷰: Search +16.5%·Cloud +57.5% YoY 기대.", time: "2026-04-20 07:16 KST" },
+    ]
+  },
+  {
     date: "2026-04-19 19:08 KST",
     summary: "OpenAI GPT-Rosalind 라이프사이언스 모델 공개, Mistral AI가 삼성 화성캠퍼스 방문해 HBM 공급 협의",
     changes: [
