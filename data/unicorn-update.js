@@ -1,6 +1,14 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-19 13:12 KST",
+    summary: "Cerebras-OpenAI $20B 다년 계약 공식화 — 워런트 옵션 포함·4월 말 나스닥 프라이싱 앞두고 앵커 투자자 가시성 확대",
+    changes: [
+      { type: "정보 갱신", sector: "AI·ML",
+        detail: "Cerebras Systems. 4/17 OpenAI와 향후 3년 $20B 이상 서버 용량 확보 다년 계약 보도, OpenAI가 Cerebras 지분 소수를 취득할 수 있는 워런트 옵션 포함. 4/17 S-1 제출 직후 나온 계약 뉴스로 $22~25B 밸류 정당화가 강화됐고, Stargate·Amazon 인프라 트랙과 별개로 NVIDIA 외 공급선 다변화 구도에서 WSE-4 웨이퍼 스케일 추론 아키텍처의 대규모 상업 검증 첫 사례. 4월 말 프라이싱·$2B 조달 목표, MS·Citi·Barclays·UBS 공동 주관.", time: "2026-04-19 13:12 KST" },
+    ]
+  },
+  {
     date: "2026-04-18 13:17 KST",
     summary: "Anthropic ARR 4월 $300B 돌파·$800B 신규 오퍼·SpaceX 2025 통합 매출 $18.7B 공개·Meta MTIA 로드맵 반응",
     changes: [

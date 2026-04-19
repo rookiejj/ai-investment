@@ -1,6 +1,18 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
+    date: "2026-04-19 13:12 KST",
+    summary: "주말 — BTC 스폿 ETF 금요 단독 +$664M 수개월 최대·WTI $83대 회복·다음 주 Tesla·Alphabet 어닝 시즌 개시",
+    changes: [
+      { type: "수치 갱신", sector: "크립토·블록체인",
+        detail: "IBIT. 미 스폿 비트코인 ETF 복합체 금요 단독 순유입 $663.9M, 4/14 $471M·4/16 $186M을 압도하는 수개월 최대. BTC가 $77~78K까지 반등하며 IBIT AUM $58B 안정, 주말 장외 거래도 $76K대 지지. FBTC·BITW 동반 반등, Strategy(MSTR) 78만 9천 BTC 평균단가 $75,577 손실 구간 빠르게 축소.", time: "2026-04-19 13:12 KST" },
+      { type: "수치 갱신", sector: "에너지·원자력",
+        detail: "XLE·XOP. WTI가 주말 $83.85 근처에서 안정, Hormuz 재개방 직후 $80.30 저점 대비 반등. 4/25 OPEC+ 화상 회의에서 5월 증산 속도 재조정 여부가 단기 최대 이벤트. URA·NLR 등 원자력 ETF는 Oracle·Meta·CoreWeave의 대형 원전 PPA 확장 서사로 차별화 유지.", time: "2026-04-19 13:12 KST" },
+      { type: "수치 갱신", sector: "미국 대형주",
+        detail: "SPY·QQQ. 다음 주 S&P 500 120개사 Q1 어닝 집중 — 4/22 Tesla·Boeing·AT&T, 4/23 IBM·ServiceNow, 4/24 Alphabet·Intel·T-Mobile. Tesla 컨센 매출 $21.4B·조정 EPS $0.33, Alphabet은 Gemini·Cloud·광고 가속 확인 구간. 이후 4/25 OPEC+·5/1 FOMC로 이어지는 매크로 3연속 이벤트가 5월 방향성을 결정.", time: "2026-04-19 13:12 KST" },
+    ]
+  },
+  {
     date: "2026-04-19 07:18 KST",
     summary: "주간 결산 — IGV 2001년 10월 이후 최고 주간 +14%·IBIT 주간 순유입 $871M·SPY +4.5%로 2025년 5월 이후 최고 주간",
     changes: [

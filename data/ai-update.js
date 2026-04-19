@@ -6,6 +6,13 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-19 13:12 KST",
+    summary: "OpenAI $20B Cerebras 다년 컴퓨트 계약 — Stargate·Amazon에 이은 NVIDIA 외 공급선 다변화 본격화",
+    changes: [
+      { type: "인프라", sector: "OpenAI", detail: "OpenAI. 4/17 Cerebras와 향후 3년 $20B 이상 서버 용량 확보 다년 계약 체결 보도. 계약에는 Cerebras 지분 소수를 취득할 수 있는 워런트 옵션 포함. Stargate($400B)·Amazon($100B) 인프라 트랙과 별개, NVIDIA 의존도를 낮추기 위한 인프라 공급선 다변화로 해석. Cerebras는 IPO를 앞둔 시점에서 재무 가시성 대폭 확대, WSE-4 웨이퍼 스케일 추론 아키텍처의 대규모 상업 검증 신호.", time: "2026-04-19 13:12 KST" },
+    ]
+  },
+  {
     date: "2026-04-18 13:17 KST",
     summary: "Meta MTIA 300~500 커스텀 AI 칩 4세대 로드맵 공개 — Broadcom 1GW+ 파트너십 확장으로 NVIDIA 의존도 축소",
     changes: [

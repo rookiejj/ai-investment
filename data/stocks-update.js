@@ -3,6 +3,20 @@
 
 const updates = [
   {
+    date: "2026-04-19 13:12 KST",
+    summary: "주말 — BTC $77~78K 반등·미 스폿 BTC ETF 금요 +$664M 수개월 최대·Strategy 보유 단가 회복 구간 진입·WTI $83대 안정",
+    changes: [
+      { type: "정보 갱신", sector: "양자·크립토",
+        detail: "Strategy(MSTR). 주말 BTC가 $77~78K대에서 반등, 한때 $78,300 터치 후 $76~77K에서 지지. 미 스폿 비트코인 ETF 복합체는 4/17 금요 하루 +$663.9M 순유입(4월 초 이후 최대), IBIT 단독 +$500M대 비중. Strategy 78만 9천 BTC 평균단가 $75,577 손실 구간 빠르게 축소, Coinbase·MARA·RIOT 동반 재평가. 주 초 발표 BTC 보유 확대 가이던스 유지.", time: "2026-04-19 13:12 KST" },
+      { type: "정보 갱신", sector: "에너지",
+        detail: "에너지 섹터. WTI가 주말 $83.85 근처에서 안정, 지난 금요 Hormuz 재개방 선언 이후 단기 낙폭 소화 구간. Brent는 $88대에서 거래. 이스라엘-레바논 10일 휴전·이란 2주 휴전 연장 협의는 주말 관측 구도 유지. 다음 주 4/25 OPEC+ 화상 회의에서 5월 증산 속도 재조정 여부가 단기 최대 이벤트.", time: "2026-04-19 13:12 KST" },
+      { type: "정보 갱신", sector: "AI 플랫폼",
+        detail: "OpenAI. 4/17 Cerebras와 향후 3년 $20B 이상의 서버 용량 확보 계약 체결 보도, OpenAI가 Cerebras 지분 소수를 취득할 수 있는 워런트 옵션 포함. Stargate 7GW·$400B 인프라와 별개 트랙, Nvidia 의존도를 낮추려는 인프라 다변화 시도로 해석. Cerebras는 IPO를 앞둔 상태에서 재무 가시성 대폭 확대.", time: "2026-04-19 13:12 KST" },
+      { type: "정보 갱신", sector: "시장",
+        detail: "다음 주 관전 포인트. 4/22 Tesla·Boeing·AT&T, 4/23 IBM·ServiceNow, 4/24 Alphabet·Intel·T-Mobile로 이어지는 S&P 500 120개사 Q1 어닝 러시. Tesla 컨센서스 매출 $21.4B·조정 EPS $0.33, Alphabet은 Gemini·TPU·Cloud 가속 확인 구간. 4/25 OPEC+ 회의·4/24 일본 BOJ 회의·ISM 제조업 발표가 매크로 축.", time: "2026-04-19 13:12 KST" },
+    ]
+  },
+  {
     date: "2026-04-19 07:18 KST",
     summary: "주간 결산 — Oracle 1999년 이후 최대 주간 상승 +27%·AMD 13일 연속·IGV 2001년 10월 이후 최고 주간·BTC 스폿 ETF 주간 순유입 $921M",
     changes: [
