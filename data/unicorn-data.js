@@ -9,7 +9,7 @@ const data = [
       { nm:"OpenAI", rs:"ChatGPT·GPT-5·AGI 추구", val:"$852B", round:"$122B 펀딩", sector:"AGI", ipo:"2026 말 $1T+" },
       { nm:"Anthropic", rs:"ARR 3월 $190B→4월 $300B 2배·$800B 신규 오퍼 수령·Opus 4.7 GA", val:"$380B", round:"Feb '26 Series G $30B @ $350B pre", sector:"프론티어 AI", ipo:"2026.10 $60B+ 조달 협상" },
       { nm:"Databricks", rs:"레이크하우스·AI 통합·ARR $5.4B", val:"$134B", round:"Series L ($11B)", sector:"데이터·AI", ipo:"2026 H2 S-1" },
-      { nm:"Cerebras", rs:"OpenAI 3년 $20B 다년 계약 확정·워런트 지분 옵션·4월 말 프라이싱·티커 CBRS", val:"$23B", round:"4월 말 프라이싱·$2B 조달", sector:"AI 하드웨어", ipo:"2026.04 나스닥·$22~25B" },
+      { nm:"Cerebras", rs:"4/17 S-1 재제출·OpenAI 3년 $20B·750MW 컴퓨트 공급·Forge 2차시장 $26~28B·BoA·MS·Citi·Barclays 주관", val:"$23B", round:"5월 프라이싱·$2B 조달 목표", sector:"AI 하드웨어", ipo:"2026.05 나스닥 CBRS·$22~25B" },
       { nm:"Safe Superintelligence", rs:"Sutskever 창업·제품 전무·Alphabet·NVIDIA 베팅 AGI 연구소", val:"$32B", round:"Series B ($2B, 2025-04)", sector:"AGI 안전", ipo:"미정" },
       { nm:"Thinking Machines Lab", rs:"Murati 창업·Tinker API·NVIDIA GW 파트너십·$50B 라운드 난항", val:"$12B", round:"Seed ($2B, 2025-07)", sector:"멀티모달 AI", ipo:"미정" },
       { nm:"Cohere", rs:"엔터프라이즈 LLM·ARR $240M+·프론티어 모델 제공사", val:"$7B", round:"Series D 확장 ($600M)", sector:"엔터프라이즈 LLM", ipo:"2026 CFO 영입" },

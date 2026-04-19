@@ -6,6 +6,14 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-19 19:08 KST",
+    summary: "OpenAI GPT-Rosalind 라이프사이언스 모델 공개 + Mistral AI가 삼성 화성캠퍼스 방문해 HBM 공급 협의",
+    changes: [
+      { type: "모델 출시", sector: "OpenAI", detail: "OpenAI GPT-Rosalind. 4/16 공개된 로잘린드 프랭클린 이름의 첫 라이프사이언스 전용 프론티어 추론 모델. 유전체·단백질 엔지니어링·화학 파인튜닝으로 증거 합성·가설 생성·실험 설계 자동화. BixBench 공개 SOTA, LABBench2 11개 과제 중 6개에서 GPT-5.4 상회(CloningQA 격차 최대). Trusted Access 리서치 프리뷰로 미국 엔터프라이즈 한정, Amgen·Moderna·Allen Institute·Thermo Fisher가 초기 파트너. 일반 공개·오픈소스 없이 안전 심사 통과 연구 조직에만 배포해 이중 용도 위험 통제. Anthropic Coefficient Bio 인수에 이어 양대 프론티어의 바이오 AI 전선 격화.", time: "2026-04-19 19:08 KST" },
+      { type: "인프라", sector: "Mistral AI", detail: "Mistral AI. 4/19 국내 보도 — Arthur Mensch CEO와 경영진이 4/16 삼성전자 화성 캠퍼스를 방문, 반도체 부문 전영현 부회장과 AI 메모리 협력을 논의한 사실이 확인됨. HBM4·차세대 메모리 공급선 확보가 주제였으며 공식 계약은 미체결. 파리 Bruyères 자체 데이터센터(13,800 NVIDIA GPU·44MW) 하반기 가동과 맞물려 SK하이닉스 독점 구도에 의존하지 않는 유럽 AI 주권 인프라 전략을 가속. 삼성 입장에서는 엔비디아·하이퍼스케일러 외 프론티어 고객 확장의 신호.", time: "2026-04-19 19:08 KST" },
+    ]
+  },
+  {
     date: "2026-04-19 13:12 KST",
     summary: "OpenAI $20B Cerebras 다년 컴퓨트 계약 — Stargate·Amazon에 이은 NVIDIA 외 공급선 다변화 본격화",
     changes: [

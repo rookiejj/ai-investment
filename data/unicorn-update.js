@@ -1,6 +1,14 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-19 19:08 KST",
+    summary: "Cerebras 프라이싱 윈도우 4월 말 → 5월로 이월·2차시장 호가 $26~28B·OpenAI 3년 $20B·750MW 공급 조건 재확인",
+    changes: [
+      { type: "정보 갱신", sector: "AI·ML",
+        detail: "Cerebras Systems. 4/17 나스닥 S-1 재제출 직후 로드쇼 일정이 길어지면서 프라이싱 윈도우가 4월 말에서 5월로 이월된 것으로 파악. 2025년 매출 $510M(+76% YoY)·순이익 $87.9M로 흑자 전환, Forge·Hiive·Notice 2차시장 호가 $102~107/주로 환산 시 $26~28B 수준이 형성. OpenAI와는 2028년까지 최대 750MW 컴퓨트 공급·3년 $20B 계약 조건을 S-1에 명기, 워런트 옵션은 앵커 투자자 가시성을 보강. 공모가 밴드는 $22~25B 유지, $2B 조달 목표.", time: "2026-04-19 19:08 KST" },
+    ]
+  },
+  {
     date: "2026-04-19 13:12 KST",
     summary: "Cerebras-OpenAI $20B 다년 계약 공식화 — 워런트 옵션 포함·4월 말 나스닥 프라이싱 앞두고 앵커 투자자 가시성 확대",
     changes: [
