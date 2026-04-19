@@ -1,5 +1,4 @@
 {
-  "model": "opus",
   "permissions": {
     "allow": [
       "Bash(start:*)",
@@ -39,7 +38,9 @@
       "Bash(git merge *)",
       "Bash(cat *)",
       "Bash(find /Users/roy -name \"*.md\" -type f -exec grep -l \"CronCreate\\\\|커밋\\\\|자동.*업데이트\\\\|schedule.*trigger\" {} \\\\;)",
-      "Skill(update-config)"
+      "Skill(update-config)",
+      "Bash(grep -v \"+$\")"
     ]
-  }
+  },
+  "model": "opus"
 }

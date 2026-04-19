@@ -58,7 +58,7 @@ const updates = [
   },
   {
     date: "2026-04-17 19:11 KST",
-    summary: "AMD 프랑스 엑사스케일 파트너십+TSMC 호실적으로 +7.8%·12일 연속 +41% 랠리",
+    summary: "AMD 프랑스 엑사스케일 파트너십, TSMC 호실적으로 +7.8%·12일 연속 +41% 랠리",
     changes: [
       { type: "정보 갱신", sector: "반도체",
         detail: "AMD(AMD). 4/16 +7.80% $278.26로 12일 연속 상승, 누적 +41%로 2005년 이래 최장 랠리. 프랑스 정부와 AI 전략 파트너십 체결 — 프랑스 최초 엑사스케일 슈퍼컴 Alice Recoque에 AMD 기술 공급, 파리 재정부에서 LOI 서명. GENCI·Jules Verne·CEA와 AI Center of Excellence 설립. Bernstein·Erste 목표가 상향(컨센 $289), TSMC Q1 호실적과 Meta $60B·OpenAI 계약이 겹쳐 MI450 하반기 런치 기대감 확대.", time: "2026-04-17 19:11 KST" },
@@ -124,7 +124,7 @@ const updates = [
   },
   {
     date: "2026-04-16 11:49 KST",
-    summary: "Tesla Q1 2026 인도 358K 확정 + Model S/X 단종 + 4/22 실적발표 앞둔 시장 우려",
+    summary: "Tesla Q1 2026 인도 358K 확정, Model S/X 단종, 4/22 실적발표 앞둔 시장 우려",
     changes: [
       { type: "정보 갱신", sector: "자동차·모빌리티",
         detail: "Tesla(TSLA). Q1 2026 인도 358,023대 확정(전년 동기 336,681대 +6.3%, 월스트리트 컨센 369K 하회). 생산 408K vs 인도 358K로 재고 5만대 누적, JPMorgan 164K 미판매 재고 경고. 4/1 Model S·Model X 단종(로봇·CyberCab 집중). 4/22 Q1 실적발표 예정, TD Cowen 가이던스 하향 리스크 낮다 평가하나 현금소진 $7B·TeraFab 투자 부담 부각.", time: "2026-04-16 11:49 KST" },
@@ -132,7 +132,7 @@ const updates = [
   },
   {
     date: "2026-04-16 10:30 KST",
-    summary: "NVIDIA H20 관련 $5.5B Q1 차지 SEC 공시 확정 + TSMC 오늘 15시(KST) Q1 어닝콜",
+    summary: "NVIDIA H20 관련 $5.5B Q1 차지 SEC 공시 확정, TSMC 오늘 15시(KST) Q1 어닝콜",
     changes: [
       { type: "정보 갱신", sector: "반도체",
         detail: "NVIDIA(NVDA). 4/15 장마감 후 SEC 8-K 공시로 H20 관련 $5.5B Q1 차지(회계연도 FY26 Q1, 4/27 종료 분기) 확정 — 재고·구매약정·관련 충당금이 구성. 美 상무부 4/9 통지·4/14 '무기한 유지' 재통보로 라이선스 요건이 사실상 금수로 작용. 시간외 -6% 반응, 정규장 전 반등 시도. Blackwell Ultra 풀가동·Rubin 샘플 출하 펀더멘털은 유지, 다만 2026 상반기 중국향 매출 공백은 구조화.", time: "2026-04-16 10:30 KST" },
@@ -142,7 +142,7 @@ const updates = [
   },
   {
     date: "2026-04-16 01:15 KST",
-    summary: "IonQ SkyWater $1.8B 인수 + Eli Lilly retatrutide Phase 3 데이터",
+    summary: "IonQ SkyWater $1.8B 인수, Eli Lilly retatrutide Phase 3 데이터",
     changes: [
       { type: "정보 갱신", sector: "양자·크립토",
         detail: "IonQ(IONQ). 1월 26일 SkyWater Technology를 약 $1.8B(현금+주식)에 인수 발표 — 세계 최초 풀스택 수직통합 양자 플랫폼 탄생. 미네소타·플로리다·텍사스 3개 지역 Quantum Production Hub로 전환, Q2~Q3 클로징 예정. SkyWater는 중립 파운드리 지위를 유지하며 IonQ 제품을 외부 고객에도 공급, 미국산 양자 공급망 자립 구조 구축.", time: "2026-04-16 01:15 KST" },
@@ -152,7 +152,7 @@ const updates = [
   },
   {
     date: "2026-04-15 21:38 KST",
-    summary: "Morgan Stanley·BAC Q1 2026 실적 + ASML Q1·가이던스 상향",
+    summary: "Morgan Stanley·BAC Q1 2026 실적, ASML Q1·가이던스 상향",
     changes: [
       { type: "정보 갱신", sector: "금융·은행",
         detail: "Morgan Stanley(MS) Q1 2026 실적 발표. 순매출 $20.6B 사상 최고(컨센 $19.23B 상회), 순익 $5.57B(+29% YoY), EPS $3.43(컨센 $2.95 큰 폭 상회). Institutional Securities IB수수료 +36%, M&A 어드바이저리 +74%. Wealth Management 순유입 $118B 기록적·ROTCE 27.1%. 자사주 매입 $1.75B·배당 $1.00. FY26E 컨센서스 매출 $66B → $70B, 순익 $14.5B → $16B 상향.", time: "2026-04-15 21:38 KST" },

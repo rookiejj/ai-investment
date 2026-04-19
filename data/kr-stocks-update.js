@@ -82,7 +82,7 @@ const updates = [
   },
   {
     date: "2026-04-16 11:49 KST",
-    summary: "SK하이닉스 NVIDIA Rubin 지연으로 HBM4 감산 20~30% 관측 + Goldman Sachs TP 135만 상향",
+    summary: "SK하이닉스 NVIDIA Rubin 지연으로 HBM4 감산 20~30% 관측, Goldman Sachs TP 135만 상향",
     changes: [
       { type: "정보 갱신", sector: "반도체",
         detail: "SK하이닉스(000660). DigiTimes 4/15 보도 — NVIDIA 차세대 Vera Rubin 플랫폼 램프 지연으로 SK하이닉스의 2026년 HBM4 출하량 20~30% 축소 검토. HBM4 양산 1위 지위 유지되나 단기 물량 조정 리스크 부각. Goldman Sachs 4월 초 목표가 120만→135만원 상향(AI 메모리 슈퍼사이클·2027년 HBM4 본격 수요 반영). Q1 실적발표 4/23 예정.", time: "2026-04-16 11:49 KST" },
@@ -100,7 +100,7 @@ const updates = [
   },
   {
     date: "2026-04-15 21:38 KST",
-    summary: "NAVER 2025 확정 실적 + AI 에이전트 로드맵, 삼성중공업 Q1 수주, 두산에너빌리티 SMR 전용공장 착공",
+    summary: "NAVER 2025 확정 실적, AI 에이전트 로드맵, 삼성중공업 Q1 수주, 두산에너빌리티 SMR 전용공장 착공",
     changes: [
       { type: "정보 갱신", sector: "AI·소프트웨어",
         detail: "NAVER(035420). 2025 매출 12조350억원·영업이익 2.2조원 사상 최대 확정(기존 r1:110→120, p1:18→22). 2026 Q1 '쇼핑 AI 에이전트' 네이버플러스 스토어 적용, Q2 통합검색 기반 'AI 탭' 공개 예정. 에이전트N으로 검색·쇼핑·지도·예약 통합. FY26E 컨센 매출 14조·영업이익 2.5조(p2:23→25).", time: "2026-04-15 21:38 KST" },

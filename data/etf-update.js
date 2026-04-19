@@ -72,7 +72,7 @@ const updates = [
   },
   {
     date: "2026-04-16 15:40 KST",
-    summary: "카테고리당 ETF 5→7종 확장(Top7 일관성). 16개 신규 편입 + 기존 수치 전반 갱신",
+    summary: "카테고리당 ETF 5→7종 확장(Top7 일관성). 16개 신규 편입, 기존 수치 전반 갱신",
     changes: [
       { type: "구성 변경", sector: "AI·반도체",
         detail: "추가: IGV(iShares Tech-Software, AUM $10.7B·YTD -26%·AI 대체 우려로 SaaS 전반 급락)·WCLD(WisdomTree Cloud, AUM $0.38B·YTD -19%). 반도체 중심 5종에 소프트웨어·클라우드 커버리지 보강.", time: "2026-04-16 15:40 KST" },
@@ -110,7 +110,7 @@ const updates = [
   },
   {
     date: "2026-04-15 21:38 KST",
-    summary: "미국 대형주 ETF YTD 갱신(SPY -4%·QQQ +1%) + IBIT AUM·YTD 소폭 정정",
+    summary: "미국 대형주 ETF YTD 갱신(SPY -4%·QQQ +1%), IBIT AUM·YTD 소폭 정정",
     changes: [
       { type: "수치 갱신", sector: "미국 대형주",
         detail: "SPY YTD +12→-4%·QQQ +15→+1%·VOO +12→-4%·VTI +11→-4%·DIA +8→-3%로 재조정. 2026 초반 S&P500 -6.7%(4/3)까지 밀렸다가 중순 반등 국면. QQQ는 AI 리더십으로 상대 강세 유지(YTD +0.6%). 1Y 수익률도 최근 조정분을 감안해 하향. 현재 S&P 500 6,950·나스닥 23,500 수준.", time: "2026-04-15 21:38 KST" },
@@ -148,7 +148,7 @@ const updates = [
   },
   {
     date: "2026-04-14 20:35 KST",
-    summary: "AI·반도체 ETF AUM 상향 + QQQ AUM 갱신",
+    summary: "AI·반도체 ETF AUM 상향, QQQ AUM 갱신",
     changes: [
       { type: "수치 갱신", sector: "AI·반도체",
         detail: "SMH(VanEck Semiconductor) AUM $28B→$71B(+154%). AI 인프라 투자 붐·반도체 슈퍼사이클로 2026년 초 이후 자금 대거 유입. 4월 한 달 약 +20% 랠리. SOXX(iShares Semiconductor) AUM $16B→$22B(+37.5%). Morningstar Bronze 유지. 두 ETF 모두 1위 자리 경쟁 심화. 이번 갱신은 AUM만 조정, YTD·1Y 수익률은 기존 유지." },

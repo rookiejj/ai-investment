@@ -147,7 +147,7 @@ const updates = [
   },
   {
     date: "2026-04-13 20:52 KST",
-    summary: "7개 기업 제외(상장·인수) + 대체 편입, 전체 밸류에이션 갱신",
+    summary: "7개 기업 제외(상장·인수), 대체 편입, 전체 밸류에이션 갱신",
     changes: [
       { type: "제외(상장)", sector: "핀테크", detail: "Klarna(2025.9 NYSE IPO), Chime(2025.6 나스닥 IPO) 제외. Ramp($13B 법인카드), Navan($9.4B 법인출장) 편입." },
       { type: "제외(상장)", sector: "엔터프라이즈 SW", detail: "Figma(2025.7 NYSE IPO) 제외. Perplexity AI($20B AI 검색) 편입." },
