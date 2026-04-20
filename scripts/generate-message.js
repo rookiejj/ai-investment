@@ -2,11 +2,13 @@
 /**
  * 브리픽 일일 카카오 친구톡 메시지 생성기
  *
- * 각 탭의 최신 summary를 뽑아 카카오 친구톡 포맷으로 출력.
+ * 탭별 포맷:
+ *   • 최신 1건 : MM-DD HH:MM + full summary
+ *   + 직전 1건 : HH:MM + 25자 내외 축약 (단어 경계 정돈)
+ *
  * 사용:
- *   node scripts/generate-message.js                # stdout
- *   node scripts/generate-message.js > out/brief.txt
- *   node scripts/generate-message.js --json         # JSON 메타 포함
+ *   node scripts/generate-message.js
+ *   node scripts/generate-message.js --json
  */
 
 const fs = require('fs');
@@ -15,6 +17,8 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const SITE_URL = 'https://rookiejj.github.io/ai-investment/';
 const LIMIT = 1000;
+const PER_TAB = 2;
+const SHORT_CUT = 25;
 
 const TABS = [
   { file: 'stocks-update.js',    var: 'updates', emoji: '🇺🇸', label: '미국 마켓' },
@@ -25,14 +29,16 @@ const TABS = [
   { file: 'commodity-update.js', var: 'updates', emoji: '📉', label: '시장·원자재' },
 ];
 
-function loadLatest(file, varName) {
+function loadEntries(file, varName, n) {
   const src = fs.readFileSync(path.join(ROOT, 'data', file), 'utf8');
   const list = new Function(
     `${src};return typeof ${varName}!=="undefined"?${varName}:[];`
   )();
-  if (!Array.isArray(list) || list.length === 0) return null;
-  const e = list[0];
-  return { date: e.date || '', summary: (e.summary || '').trim() };
+  if (!Array.isArray(list)) return [];
+  return list
+    .slice(0, n)
+    .filter(e => e && e.summary)
+    .map(e => ({ date: e.date || '', summary: String(e.summary).trim() }));
 }
 
 function kstDateLabel() {
@@ -45,51 +51,92 @@ function kstDateLabel() {
   return `${y}-${m}-${d} (${dow})`;
 }
 
-function render(entries) {
-  const lines = [];
-  lines.push(`📊 브리픽 · ${kstDateLabel()}`);
-  lines.push('━━━━━━━━━━━━━━━━');
-  for (const e of entries) {
-    lines.push('');
-    lines.push(`${e.emoji} ${e.label}`);
-    lines.push(e.summary);
+function fmtFullDateTime(dateStr) {
+  const m = String(dateStr).match(/^\d{4}-(\d{2})-(\d{2})\s+(\d{2}:\d{2})/);
+  return m ? `${m[1]}-${m[2]} ${m[3]}` : '';
+}
+
+function fmtTimeOnly(dateStr) {
+  const m = String(dateStr).match(/^\d{4}-\d{2}-\d{2}\s+(\d{2}:\d{2})/);
+  return m ? m[1] : '';
+}
+
+// 단어 경계 정돈: em dash → 쉼표/중간점 → 공백 우선순위로 자연스러운 지점에서 끊음
+function smartCut(s, max) {
+  const raw = s.trim();
+  if (raw.length <= max) return raw;
+  const window = raw.slice(0, max);
+  const minKeep = Math.floor(max * 0.5);
+
+  const emIdx = Math.max(window.lastIndexOf(' — '), window.lastIndexOf('—'));
+  if (emIdx >= minKeep) return raw.slice(0, emIdx).trimEnd() + '…';
+
+  let lastSep = -1;
+  for (let i = 0; i < window.length; i++) {
+    if (window[i] === ',' || window[i] === '·') lastSep = i;
   }
-  lines.push('');
-  lines.push('━━━━━━━━━━━━━━━━');
-  lines.push('▸ 전체 보기');
-  lines.push(SITE_URL);
+  if (lastSep >= minKeep) return raw.slice(0, lastSep).trimEnd() + '…';
+
+  const sp = window.lastIndexOf(' ');
+  if (sp >= minKeep) return raw.slice(0, sp).trimEnd() + '…';
+
+  return raw.slice(0, max - 1) + '…';
+}
+
+function buildTabBlock(tab) {
+  const lines = [`${tab.emoji} ${tab.label}`];
+  const [first, second] = tab.entries;
+  if (first) {
+    const dt = fmtFullDateTime(first.date);
+    lines.push(dt ? `• ${dt}  ${first.summary}` : `• ${first.summary}`);
+  }
+  if (second) {
+    const t = fmtTimeOnly(second.date);
+    const cut = smartCut(second.summary, SHORT_CUT);
+    lines.push(t ? `  + ${t}  ${cut}` : `  + ${cut}`);
+  }
   return lines.join('\n');
+}
+
+function buildMessage(tabs) {
+  const parts = [`📊 브리픽 · ${kstDateLabel()}\n━━━━━━━━━━━━━━━━`];
+  for (const tab of tabs) {
+    if (!tab.entries.length) continue;
+    parts.push(buildTabBlock(tab));
+  }
+  parts.push(`━━━━━━━━━━━━━━━━\n▸ 전체 보기\n${SITE_URL}`);
+  return parts.join('\n\n');
 }
 
 function main() {
   const asJson = process.argv.includes('--json');
 
-  const entries = [];
-  for (const tab of TABS) {
-    const d = loadLatest(tab.file, tab.var);
-    if (!d) {
-      process.stderr.write(`[warn] ${tab.file} 최신 summary 없음\n`);
+  const tabs = [];
+  for (const t of TABS) {
+    const entries = loadEntries(t.file, t.var, PER_TAB);
+    if (!entries.length) {
+      process.stderr.write(`[warn] ${t.file} summary 없음\n`);
       continue;
     }
-    entries.push({ ...tab, ...d });
+    tabs.push({ ...t, entries });
   }
 
-  const msg = render(entries);
+  const msg = buildMessage(tabs);
+  const overflow = msg.length > LIMIT;
 
   if (asJson) {
     process.stdout.write(JSON.stringify({
       generatedAt: new Date().toISOString(),
       charCount: msg.length,
       limit: LIMIT,
-      overflow: msg.length > LIMIT,
-      entries: entries.map(({ emoji, label, date, summary }) => ({ emoji, label, date, summary })),
+      overflow,
       message: msg,
     }, null, 2) + '\n');
   } else {
     process.stdout.write(msg + '\n');
   }
 
-  process.stderr.write(`\n[글자수 ${msg.length} / ${LIMIT}${msg.length > LIMIT ? ' · 초과' : ''}]\n`);
+  process.stderr.write(`\n[글자수 ${msg.length} / ${LIMIT}${overflow ? ' · 초과' : ''}]\n`);
 }
 
 main();
