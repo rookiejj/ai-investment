@@ -985,7 +985,7 @@ function switchTab(id,dir){
       showStatus('error','결제 SDK 로드 실패. 새로고침 후 다시 시도해주세요.');return;
     }
 
-    const paymentId = 'briefick-'+Date.now()+'-'+Math.random().toString(36).slice(2,8);
+    const paymentId = 'briefick'+Date.now()+Math.random().toString(36).slice(2,8);
     submit.disabled=true;submit.textContent='결제창 여는 중...';
     try{
       const pay = await PortOne.requestPayment({
