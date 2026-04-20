@@ -104,6 +104,7 @@ header{
 .modal-status.show{display:block}
 .modal-status.success{background:var(--acc-light);color:var(--acc-deep)}
 .modal-status.error{background:#fde8e8;color:var(--new)}
+.modal-status.info{background:#fff4e5;color:#a35a00}
 .modal-success-actions{margin-top:16px;display:none;flex-direction:column;gap:8px}
 .modal-success-actions.show{display:flex}
 .modal-success-actions .kakao-link{
@@ -944,6 +945,8 @@ function switchTab(id,dir){
   const status  = document.getElementById('subStatus');
   const success = document.getElementById('subSuccess');
 
+  let extendConfirmed = false;
+
   function openModal(){
     modal.classList.add('show');
     modal.setAttribute('aria-hidden','false');
@@ -952,6 +955,7 @@ function switchTab(id,dir){
     consent.disabled=false;
     submit.disabled=false;
     submit.textContent='결제하고 구독 시작';
+    extendConfirmed=false;
     resetStatus();
     setTimeout(()=>phoneEl.focus(),100);
   }
@@ -989,6 +993,28 @@ function switchTab(id,dir){
     }
     if(typeof PortOne==='undefined'){
       showStatus('error','결제 SDK 로드 실패. 새로고침 후 다시 시도해주세요.');return;
+    }
+
+    // 첫 클릭: 이미 구독 중인지 확인
+    if(!extendConfirmed){
+      submit.disabled=true;submit.textContent='확인 중...';
+      try{
+        const checkRes = await fetch(SUPABASE_URL+'/functions/v1/check-subscription',{
+          method:'POST',
+          headers:{'Content-Type':'application/json','Authorization':'Bearer '+SUPABASE_ANON_KEY,'apikey':SUPABASE_ANON_KEY},
+          body:JSON.stringify({phone}),
+        });
+        const chk = await checkRes.json();
+        if(checkRes.ok && chk.ok && chk.subscription_active){
+          const until = chk.paid_until ? chk.paid_until.slice(0,10) : '';
+          showStatus('info','이 번호는 '+until+'까지 구독 중입니다. 지금 결제하면 만료 이후 +30일 연장됩니다.');
+          submit.disabled=false;
+          submit.textContent='그래도 연장 결제하기';
+          extendConfirmed=true;
+          return;
+        }
+      }catch(_e){/* 체크 실패 시 정상 결제 플로우로 진행 */}
+      submit.disabled=false;submit.textContent='결제하고 구독 시작';
     }
 
     const paymentId = 'briefick'+Date.now()+Math.random().toString(36).slice(2,8);
