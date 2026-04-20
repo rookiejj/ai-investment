@@ -1,6 +1,16 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-21 07:07 KST",
+    summary: "Cursor 신규 $2B 라운드·$50B+ 밸류 협상 공식 보도·Revolut Storonsky CEO IPO 2028+ 연기 공식화",
+    changes: [
+      { type: "정보 갱신", sector: "엔터프라이즈 SW",
+        detail: "Cursor. 4/19 CNBC — 신규 $2B 라운드가 $50B+ 밸류로 협상 중, a16z가 리드하고 NVIDIA·Thrive Capital이 공동 참여하는 구조로 확인. 11월 Series D($2.3B·$29.3B 밸류) 이후 5개월 만의 업라운드로 AI IDE 카테고리 독보적 지배력 재강화. ARR은 연말 $6B+ 도달 목표가 공개됐고, Claude Code·Copilot 대비 에이전트 통합·레포지토리 컨텍스트 우위를 수치로 증명 중. Anysphere 모회사의 시리즈 E 클로징은 2~3주 내 가능성으로 보도.", time: "2026-04-21 07:07 KST" },
+      { type: "정보 갱신", sector: "핀테크",
+        detail: "Revolut. CEO Nik Storonsky가 4/20 블룸버그 인터뷰에서 IPO를 2028년 이후로 공식 연기 — 기존 2026년 하반기 시장 기대를 사실상 철회. 2026 매출 $9B·순익 $3.5B 목표와 함께 '펀드 없이도 자체 캐시로 성장 가능'해 IPO 서두를 이유가 없다는 입장. 세컨더리 $100B 추진은 유지, 40여 개 시장 확장·디지털 뱅킹 라이선스 확대 경로가 우선. 유럽 핀테크 IPO 기대 테이프에서 Klarna·N26과 함께 최대 연기 사례로 기록.", time: "2026-04-21 07:07 KST" },
+    ]
+  },
+  {
     date: "2026-04-20 07:16 KST",
     summary: "Cerebras 5월 중순 프라이싱 공식화·Ripple 교보생명 토큰화 국채 결제 파트너십·Stripe Tempo L1 메인넷·Visa·Zodia 첫 외부 밸리데이터",
     changes: [

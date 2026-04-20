@@ -20,7 +20,7 @@ const data = [
     tag: "결제·뱅킹·HR·SMB",
     stocks: [
       { nm:"Stripe", rs:"Tempo L1 메인넷 가동·Visa·Zodia 첫 외부 밸리데이터·결제 인프라 1위·TPV $1.9T", val:"$159B", round:"2/26 텐더오퍼", sector:"결제", ipo:"IPO 비우선" },
-      { nm:"Revolut", rs:"디지털 뱅킹·매출 $9B·흑자", val:"$75B", round:"세컨더리 $100B 추진", sector:"네오뱅크", ipo:"2026 H2" },
+      { nm:"Revolut", rs:"CEO Storonsky 4/20 IPO 2028+ 연기 공식화·2026 매출 $9B·순익 $3.5B 목표", val:"$75B", round:"세컨더리 $100B 추진", sector:"네오뱅크", ipo:"2028+ 연기" },
       { nm:"Ramp", rs:"법인카드·지출관리·ARR $1B+", val:"$32B", round:"Series F ($300M)", sector:"법인 핀테크", ipo:"미정" },
       { nm:"Plaid", rs:"금융 데이터 API·오픈뱅킹", val:"$8B", round:"텐더오퍼 (업라운드)", sector:"핀테크 인프라", ipo:"2026 H2" },
       { nm:"Gusto", rs:"SMB HR·급여 30만 고객·2023 FCF 양전환", val:"$10B", round:"Series F ($175M, 2025-10)", sector:"HR·급여 핀테크", ipo:"미정 (IPO 후보)" },
@@ -37,7 +37,7 @@ const data = [
       { nm:"Notion", rs:"AI 워크스페이스·문서·위키", val:"$11B", round:"세컨더리 ($270M)", sector:"생산성", ipo:"미정" },
       { nm:"Discord", rs:"커뮤니티 플랫폼·1/6 S-1 비밀 제출·나스닥 로드쇼 준비", val:"$15B", round:"Series I", sector:"소셜", ipo:"2026 H1 목표(지연 가능)" },
       { nm:"Airtable", rs:"노코드 데이터베이스·자동화", val:"$4B", round:"세컨더리 (다운)", sector:"노코드", ipo:"미정" },
-      { nm:"Cursor", rs:"ARR $2B 돌파·$60B 신규 라운드 협상 중·AI IDE 1위", val:"$29.3B", round:"Series D ($2.3B, 2025-11)", sector:"AI 코딩", ipo:"미정" },
+      { nm:"Cursor", rs:"4/19 신규 $2B 라운드·$50B+ 밸류 협상 공식 보도·a16z 리드·NVIDIA·Thrive 참여·ARR 연말 $6B+ 목표", val:"$29.3B", round:"Series D ($2.3B, 2025-11)", sector:"AI 코딩", ipo:"미정" },
       { nm:"Hugging Face", rs:"Google·NVIDIA·AMD 공동 투자·오픈 AI 모델 허브 표준", val:"$4.5B", round:"Series D ($235M, 2023-08)", sector:"오픈소스 AI 허브", ipo:"미정" },
     ]
   },
