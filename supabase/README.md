@@ -81,24 +81,28 @@ supabase functions deploy daily-send
 
 ## 운영
 
-### 구독자 추가/삭제
-```sql
--- 추가
-insert into subscribers (phone, name) values ('01012345678', '홍길동');
+### 구독자 등록 플로우
 
--- 일시 정지
-update subscribers set status = 'paused' where phone = '01012345678';
+MVP 단계는 **수동 등록**으로 운영합니다. 정식 자동화 전까지는 아래 단계로 진행:
 
--- 해지
-update subscribers set status = 'cancelled' where phone = '01012345678';
-```
+1. 사용자가 카카오톡 채널(`브리픽`) **친구 추가**
+2. 채널 채팅으로 전화번호 + 광고 수신 동의 의사 받기
+3. `supabase/queries.sql`의 **구독자 등록** 섹션 실행 (SQL Editor)
+4. 다음 날 08:00 KST부터 자동 발송 시작
 
-### 발송 이력 확인
-```sql
-select sent_at, status, count(*)
-from send_logs
-group by 1, 2 order by 1 desc;
-```
+> 향후 확장: 웹 랜딩 페이지에서 SMS 본인인증 → `/functions/subscribe` Edge Function이 `subscribers` insert. 결제는 카카오페이 정기결제 빌링키 발급 플로우로 분리. 설계는 `docs/kakao-subscription-plan.md` 참고.
+
+### 광고 수신 동의 관리
+
+친구톡은 **광고성 메시지**이므로 정보통신망법상 수신자의 사전 동의가 필수입니다.
+
+- 등록 시점의 동의를 `subscribers.metadata.ad_consent_at` 타임스탬프로 기록
+- **2년마다 재동의** 권장 (법정 주기). 만료 임박 구독자 조회는 `queries.sql` 참고.
+- 해지 요청은 즉시 반영 (`status = 'cancelled'`). 24시간 이내 처리 의무.
+
+### 자주 쓰는 쿼리
+
+전체 템플릿은 `supabase/queries.sql` — Dashboard SQL Editor에 필요한 섹션만 복사해 쓰세요.
 
 ### 수동 테스트 발송
 ```bash
