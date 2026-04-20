@@ -100,6 +100,14 @@ header{
 }
 .modal-submit:hover{background:#000}
 .modal-submit:disabled{background:var(--placeholder);cursor:not-allowed}
+.modal-cancel{
+  width:100%;padding:12px;margin-top:8px;background:transparent;color:var(--mut);
+  border:1px solid var(--border-md);border-radius:10px;
+  font:500 14px/1 'Inter',sans-serif;cursor:pointer;display:none;
+  transition:all .2s;
+}
+.modal-cancel:hover{background:var(--border-md);color:var(--fg)}
+.modal-cancel.show{display:block}
 .modal-status{margin-top:14px;padding:12px;border-radius:8px;font-size:13px;line-height:1.5;display:none}
 .modal-status.show{display:block}
 .modal-status.success{background:var(--acc-light);color:var(--acc-deep)}
@@ -905,7 +913,7 @@ function switchTab(id,dir){
   <div class="modal">
     <button class="modal-close" type="button" aria-label="닫기" id="subscribeClose">✕</button>
     <h2 id="subscribeTitle">브리픽 구독하기</h2>
-    <p class="sub">매일 아침 8시, 6개 마켓 탭의 최신 업데이트를 카카오 친구톡으로 받아보세요. <b>월 100원</b> (테스트 가격)</p>
+    <p class="sub">매일 아침 8시, 6개 마켓 탭의 최신 업데이트를 카카오 친구톡으로 받아보세요.<br><b>월 100원 · 1회 결제당 30일 이용</b> (자동결제 아님, 연장 시 수동 재결제)</p>
     <form id="subscribeForm" novalidate autocomplete="off">
       <div class="modal-field">
         <label for="subPhone">전화번호 (하이픈 없이)</label>
@@ -917,6 +925,7 @@ function switchTab(id,dir){
         <span>카카오 친구톡을 통한 <b>광고성 정보 수신</b>에 동의합니다. 매일 오전 8시 발송되며, 언제든지 해지 요청으로 수신을 중단할 수 있습니다.</span>
       </label>
       <button class="modal-submit" id="subSubmit" type="submit">결제하고 구독 시작</button>
+      <button class="modal-cancel" id="subCancel" type="button">취소</button>
       <div class="modal-status" id="subStatus"></div>
       <div class="modal-success-actions" id="subSuccess">
         <a class="kakao-link" href="https://pf.kakao.com/_lpxkCX/friend" target="_blank" rel="noopener">카카오톡 채널 친구 추가하기</a>
@@ -942,6 +951,7 @@ function switchTab(id,dir){
   const phoneEl = document.getElementById('subPhone');
   const consent = document.getElementById('subConsent');
   const submit  = document.getElementById('subSubmit');
+  const cancel  = document.getElementById('subCancel');
   const status  = document.getElementById('subStatus');
   const success = document.getElementById('subSuccess');
 
@@ -955,10 +965,12 @@ function switchTab(id,dir){
     consent.disabled=false;
     submit.disabled=false;
     submit.textContent='결제하고 구독 시작';
+    cancel.classList.remove('show');
     extendConfirmed=false;
     resetStatus();
     setTimeout(()=>phoneEl.focus(),100);
   }
+  cancel.addEventListener('click',closeModal);
   function closeModal(){
     modal.classList.remove('show');
     modal.setAttribute('aria-hidden','true');
@@ -1005,11 +1017,17 @@ function switchTab(id,dir){
           body:JSON.stringify({phone}),
         });
         const chk = await checkRes.json();
-        if(checkRes.ok && chk.ok && chk.subscription_active){
-          const until = chk.paid_until ? chk.paid_until.slice(0,10) : '';
-          showStatus('info','이 번호는 '+until+'까지 구독 중입니다. 지금 결제하면 만료 이후 +30일 연장됩니다.');
+        if(checkRes.ok && chk.ok && chk.subscription_active && chk.paid_until){
+          const until = new Date(chk.paid_until);
+          const now = new Date();
+          const daysLeft = Math.max(0, Math.ceil((until - now) / 86400000));
+          const extended = new Date(until.getTime() + 30 * 86400000);
+          const untilStr = until.toISOString().slice(0,10);
+          const extStr = extended.toISOString().slice(0,10);
+          showStatus('info','이 번호는 '+untilStr+'까지 구독 중입니다 (남은 '+daysLeft+'일). 지금 결제하면 '+extStr+'까지 연장됩니다.');
           submit.disabled=false;
-          submit.textContent='그래도 연장 결제하기';
+          submit.textContent='확인하고 연장 결제';
+          cancel.classList.add('show');
           extendConfirmed=true;
           return;
         }
