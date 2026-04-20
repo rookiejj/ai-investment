@@ -32,12 +32,12 @@ const data = [
     title: "⚡ 에너지·원자력",
     tag: "석유·가스·우라늄",
     stocks: [
-      { tk:"XLE", nm:"Energy Select SPDR", rs:"S&P 에너지 섹터·WTI $83대 회복·4/25 OPEC+ 증산 이벤트", aum:"38", er:"0.09%", ytd:"+28%", y1:"+18%" },
+      { tk:"XLE", nm:"Energy Select SPDR", rs:"호르무즈 재봉쇄·美 Touska 나포로 유가 리프라이싱·4/25 OPEC+ 이벤트", aum:"38", er:"0.09%", ytd:"+28%", y1:"+18%" },
       { tk:"URA", nm:"Global X Uranium", rs:"우라늄·원전 생태계·연초 조정 국면", aum:"4", er:"0.69%", ytd:"+6%", y1:"+30%" },
       { tk:"NLR", nm:"VanEck Uranium+Nuclear", rs:"원자력 밸류체인", aum:"1.5", er:"0.60%", ytd:"+22%", y1:"+35%" },
       { tk:"AMLP", nm:"Alerian MLP", rs:"MLP 파이프라인·배당", aum:"10", er:"0.85%", ytd:"+12%", y1:"+20%" },
-      { tk:"XOP", nm:"SPDR Oil & Gas E&P", rs:"석유·가스 탐사·생산·호르무즈 재개방 직격", aum:"5", er:"0.35%", ytd:"+30%", y1:"+18%" },
-      { tk:"VDE", nm:"Vanguard Energy", rs:"Vanguard 에너지 광역 저보수·엑슨·쉐브론·유가 하락 타격", aum:"13.2", er:"0.09%", ytd:"+22%", y1:"+18%" },
+      { tk:"XOP", nm:"SPDR Oil & Gas E&P", rs:"석유·가스 탐사·생산·호르무즈 재봉쇄로 재반등 구도 복귀", aum:"5", er:"0.35%", ytd:"+30%", y1:"+18%" },
+      { tk:"VDE", nm:"Vanguard Energy", rs:"Vanguard 에너지 광역 저보수·엑슨·쉐브론·호르무즈 재점화로 재평가", aum:"13.2", er:"0.09%", ytd:"+22%", y1:"+18%" },
       { tk:"IEO", nm:"iShares US Oil & Gas E&P", rs:"미 석유·가스 탐사·생산 순수·iShares", aum:"0.60", er:"0.38%", ytd:"+6%", y1:"+10%" },
     ]
   },
@@ -58,7 +58,7 @@ const data = [
     title: "₿ 크립토·블록체인",
     tag: "비트코인·이더리움·디파이",
     stocks: [
-      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"BTC $75.5~76K 저항 박스권·$80K 돌파 시 숏스퀴즈 경로·AUM $58B", aum:"58", er:"0.25%", ytd:"+4%", y1:"-12%" },
+      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"BTC $75~78K 박스권 지속·호르무즈 재봉쇄로 지정학 프리미엄 재부각·AUM $58B", aum:"58", er:"0.25%", ytd:"+4%", y1:"-12%" },
       { tk:"FBTC", nm:"Fidelity Wise Origin BTC", rs:"비트코인 현물·피델리티·AUM $18B", aum:"18", er:"0.25%", ytd:"+2%", y1:"-14%" },
       { tk:"ETHA", nm:"iShares Ethereum Trust", rs:"이더리움 현물·4/14 +7%", aum:"10", er:"0.25%", ytd:"-12%", y1:"-8%" },
       { tk:"BITO", nm:"ProShares Bitcoin Strategy", rs:"비트코인 선물 최초", aum:"3", er:"0.95%", ytd:"-18%", y1:"-18%" },
@@ -77,7 +77,7 @@ const data = [
       { tk:"VTI", nm:"Vanguard Total Stock", rs:"미국 전체 시장·4월 신고가 랠리", aum:"420", er:"0.03%", ytd:"+2%", y1:"+14%" },
       { tk:"DIA", nm:"SPDR Dow Jones", rs:"다우 30 우량주·다우 부진", aum:"35", er:"0.16%", ytd:"-3%", y1:"+10%" },
       { tk:"RSP", nm:"Invesco S&P 500 Equal Weight", rs:"S&P 500 등가중·빅테크 집중 리스크 분산", aum:"83", er:"0.20%", ytd:"+5%", y1:"+11%" },
-      { tk:"IWM", nm:"iShares Russell 2000", rs:"미 소형주 2000종·4/17 신고점·호르무즈 랠리 동참", aum:"73", er:"0.19%", ytd:"+10%", y1:"+45%" },
+      { tk:"IWM", nm:"iShares Russell 2000", rs:"미 소형주 2000종·4/17 신고점 이후 호르무즈 재봉쇄로 변동성 재점화", aum:"73", er:"0.19%", ytd:"+10%", y1:"+45%" },
     ]
   },
   {

@@ -110,11 +110,11 @@ const data = [
     title: "🛢️ 에너지",
     tag: "석유메이저·LNG·유전서비스",
     stocks: [
-      { tk:"XOM", nm:"ExxonMobil", rs:"Hormuz 재개로 WTI $83대 5주 저점·통합 메이저", r1:"332", p1:"29", r2:"345", p2:"32" },
-      { tk:"CVX", nm:"Chevron", rs:"상류·정유·기록적 생산·유가 $83 마진 압박", r1:"189", p1:"12", r2:"195", p2:"14" },
-      { tk:"LNG", nm:"Cheniere", rs:"미 최대 LNG 수출", r1:"16", p1:"3.5", r2:"18", p2:"4.2" },
-      { tk:"SLB", nm:"Schlumberger", rs:"유전서비스 1위", r1:"37", p1:"4.5", r2:"39", p2:"5.0" },
-      { tk:"COP", nm:"ConocoPhillips", rs:"상류 E&P·유가 $83 후퇴에 마진 압박", r1:"60", p1:"10", r2:"64", p2:"11" },
+      { tk:"XOM", nm:"ExxonMobil", rs:"이란 호르무즈 재봉쇄·美 Touska 억류로 유가 리프라이싱·월요 +5~8% 갭업 가시", r1:"332", p1:"29", r2:"345", p2:"32" },
+      { tk:"CVX", nm:"Chevron", rs:"호르무즈 재봉쇄·미 네이비 Touska 억류·휴전 4/22 만료 임박", r1:"189", p1:"12", r2:"195", p2:"14" },
+      { tk:"LNG", nm:"Cheniere", rs:"미 최대 LNG 수출·중동 리스크 재점화로 프리미엄 복귀", r1:"16", p1:"3.5", r2:"18", p2:"4.2" },
+      { tk:"SLB", nm:"Schlumberger", rs:"유전서비스 1위·중동 CapEx 재개 기대", r1:"37", p1:"4.5", r2:"39", p2:"5.0" },
+      { tk:"COP", nm:"ConocoPhillips", rs:"상류 E&P·호르무즈 재폐쇄로 마진 재확대 기대", r1:"60", p1:"10", r2:"64", p2:"11" },
       { tk:"KMI", nm:"Kinder Morgan", rs:"가스 파이프라인", r1:"16", p1:"2.7", r2:"17", p2:"3.0" },
       { tk:"EOG", nm:"EOG Resources", rs:"셰일 E&P 고효율", r1:"23", p1:"5.5", r2:"24", p2:"5.8" },
     ]
@@ -166,7 +166,7 @@ const data = [
       { tk:"RGTI", nm:"Rigetti", rs:"초전도 양자", r1:"0.012", p1:"-0.08", r2:"0.025", p2:"-0.10" },
       { tk:"QBTS", nm:"D-Wave", rs:"어닐링 양자", r1:"0.015", p1:"-0.07", r2:"0.030", p2:"-0.08" },
       { tk:"COIN", nm:"Coinbase", rs:"미 최대 거래소", r1:"7.5", p1:"2.3", r2:"9.0", p2:"2.9" },
-      { tk:"MSTR", nm:"Strategy", rs:"BTC $75.5~76K 박스권·$76K 저항 돌파 시 $80~84K 숏스퀴즈 가시·78만 9천 BTC 보유", r1:"0.5", p1:"-0.2", r2:"0.55", p2:"-0.15" },
+      { tk:"MSTR", nm:"Strategy", rs:"BTC $75~78K 주말 박스권·호르무즈 재폐쇄 지정학 재부상·78만 9천 BTC 보유·Coinbase 연동", r1:"0.5", p1:"-0.2", r2:"0.55", p2:"-0.15" },
       { tk:"MARA", nm:"Marathon Digital", rs:"BTC 채굴", r1:"0.75", p1:"0.10", r2:"1.0", p2:"0.20" },
       { tk:"RIOT", nm:"Riot Platforms", rs:"BTC 채굴·인프라", r1:"0.35", p1:"0.05", r2:"0.50", p2:"0.10" },
     ]

@@ -1,6 +1,20 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
+    date: "2026-04-20 13:08 KST",
+    summary: "호르무즈 재봉쇄·美 Touska 나포로 에너지 ETF 재평가 구간 — XLE·XOP·VDE 월요 갭업 가시, ITA·SHLD 방산 재평가 동반",
+    changes: [
+      { type: "수치 갱신", sector: "에너지·원자력",
+        detail: "XLE·XOP·VDE. 이란이 4/18 호르무즈 해협을 재봉쇄하고 4/19 미 해군 이지스 USS Spruance가 이란 국적 선박 Touska를 나포하며 중동 리스크 프리미엄 복귀. 금요 WTI $83 마감에서 월요 아시아 장 +5~8% 갭업 가시, XLE·XOP·VDE 일제히 리프라이싱 구간 진입. 4/22 이스라엘-레바논 휴전 만료 여부와 4/25 OPEC+ 화상회의가 단기 경로 결정. URA·NLR은 지정학 충격과 별개로 Oracle·Meta PPA 서사 차별화 유지.", time: "2026-04-20 13:08 KST" },
+      { type: "수치 갱신", sector: "방산·보안",
+        detail: "ITA·PPA·XAR·SHLD. 美 해군의 Touska 직접 나포·사격 사건과 함께 중동 긴장 재점화. Lockheed·RTX·Northrop·General Dynamics·L3Harris 추가 패트리엇·SM-6·해상방공 수요 재평가. SHLD는 2026년 대표 테마 ETF 포지션 유지, AI·사이버·첨단 방산 축이 두 번째 상승 모멘텀. CIBR·HACK도 국가단위 사이버 긴장 반영 구간.", time: "2026-04-20 13:08 KST" },
+      { type: "수치 갱신", sector: "크립토·블록체인",
+        detail: "IBIT·FBTC. BTC가 주말 $75~78K 박스권에서 지지력 테스트, 미 스폿 BTC ETF 주말 유출입 소강. 호르무즈 재봉쇄·미국-이란 직접 충돌은 단기 위험자산 이탈 압력이지만 인플레 헤지 수요는 중기 지지. IBIT AUM $58B 유지, 월요 프리마켓에서 $75K 지지 여부가 단기 방향.", time: "2026-04-20 13:08 KST" },
+      { type: "수치 갱신", sector: "미국 대형주",
+        detail: "SPY·QQQ·IWM. 4/17 7,041 S&P 500 신고점에서 주말 지정학 재점화로 월요 개장 갭다운 가시, 다만 Q1 블렌디드 EPS +12.5% 컨센 유지. 이번 주 4/22 Tesla·Boeing·4/24 Alphabet·Intel 어닝 줄줄이 대기, 4/25 OPEC+·5/1 FOMC로 이어지는 매크로 연쇄 이벤트가 5월 방향성 결정.", time: "2026-04-20 13:08 KST" },
+    ]
+  },
+  {
     date: "2026-04-20 07:16 KST",
     summary: "어닝 위크 프리뷰 — 4/22 Tesla·Boeing·Google Cloud Next, 4/23 SK하이닉스, 4/24 Alphabet·Intel, BTC $75.5~76K 저항 박스권",
     changes: [
