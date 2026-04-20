@@ -3,6 +3,22 @@
 
 const updates = [
   {
+    date: "2026-04-20 19:19 KST",
+    summary: "월요 프리마켓 — Brent $95 급등·S&P 선물 -0.8%·NVIDIA-Marvell NVLink Fusion 파트너십·Tesla $400 유지",
+    changes: [
+      { type: "정보 갱신", sector: "에너지",
+        detail: "에너지 섹터. Brent가 월요 아시아~유럽 장에서 +5~7% 점프해 $95/배럴 돌파, WTI는 $90선 회복. 금요 이란 외무장관의 호르무즈 완전 재개 선언에 -10% 급락했던 직전 흐름이 48시간 만에 완전 리바운드. 트리거는 트럼프의 이란 국적선 Touska 억류·미 해군 USS Spruance 사격 발표, 이란의 호르무즈 재봉쇄 번복. ExxonMobil(XOM)·Chevron(CVX)·ConocoPhillips(COP) 일제히 마진 재확대 구간 복귀, LNG·SLB 동반 재평가. 4/22 이스라엘-레바논 휴전 만료와 4/25 OPEC+ 회의가 연달아 대기.", time: "2026-04-20 19:19 KST" },
+      { type: "정보 갱신", sector: "반도체",
+        detail: "NVIDIA(NVDA). 5/20 Q1 FY27 실적 컨센 매출 $78B(±2%) 약 1개월 앞 — Blackwell Ultra·Rubin 풀 프로덕션 전환 구간의 첫 분기 숫자가 공개된다. NAB Show 2026(라스베이거스, 4/18~22)에서 영상 편집 AI 가속 업데이트 병행 전개, Ising 오픈소스 양자 AI 패밀리 채택 기관 확산(Fermilab·Harvard·IQM·NPL 등)도 장기 내러티브로 유지. 5월 FOMC·Q1 어닝 마무리 구간과 맞물려 AI 반도체 사이클의 후기 체크포인트.", time: "2026-04-20 19:19 KST" },
+      { type: "정보 갱신", sector: "자동차·모빌리티",
+        detail: "Tesla(TSLA). 4/17 종가 $400.62로 지난 주 +3% 마감, Q1 실적 직전 주 고점 재도전 구간 진입. 4/22 장 마감 후 Q1 실적·컨콜 한국시간 4/23 오전 6:30. 컨센서스 매출은 데이터 소스별로 $22.26~22.71B·조정 EPS $0.37로 수렴. Q1 인도 358k(컨센 366k 미스)는 이미 반영됐고, 시장은 Model Y L 출시·Cybercab 양산 일정·FSD 무감독 승인 주(州) 확대·Terafab CapEx 가이드 상향 여부에 집중.", time: "2026-04-20 19:19 KST" },
+      { type: "정보 갱신", sector: "양자·크립토",
+        detail: "Strategy(MSTR). 주말~월요 BTC $74~76K 박스권, $75K가 단기 저항. 미 스폿 BTC ETF 유출입 소강 국면에서 호르무즈 재폐쇄·미 해군 직접 교전이라는 지정학 변수 복귀로 단기 변동성 확대 예상. 역사적 패턴에선 지정학 충격 시 BTC 단기 하방 후 인플레 헤지 수요 반등. Strategy 78만 9천 BTC 평균단가 $75,577 부근 방어선 재공방 구간.", time: "2026-04-20 19:19 KST" },
+      { type: "정보 갱신", sector: "시장",
+        detail: "월요 프리마켓. S&P 500 선물 -0.8%, Nasdaq100 선물 -0.6%, Dow 선물 -1% — 호르무즈 재봉쇄와 이란 선박 나포로 위험자산 일시 후퇴. 지난 주 S&P +4.54%·Nasdaq +6.84% 후 첫 조정 시도. 이번 주 핵심 이벤트: 4/20 장 마감 후 Steel Dynamics(STLD) Q1 가이던스 EPS $2.73~2.77·Intel(INTC), 4/22 Tesla·Boeing 실적과 Google Cloud Next 개막, 4/24 Intel·American Airlines, 4/25 OPEC+ 화상 회의. 4/22 현 이스라엘-레바논 휴전 만료로 지정학·실적·매크로 삼중 이벤트 주간.", time: "2026-04-20 19:19 KST" },
+    ]
+  },
+  {
     date: "2026-04-20 13:08 KST",
     summary: "호르무즈 해협 재폐쇄·美 Touska 억류 에스컬레이션 — 이스라엘-레바논 휴전 4/22 만료 임박, 원유·방산 리프라이싱 임박",
     changes: [

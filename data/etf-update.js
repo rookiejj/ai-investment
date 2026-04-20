@@ -1,6 +1,20 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
+    date: "2026-04-20 19:19 KST",
+    summary: "월요 Brent $95 급등 +5~7%·S&P 선물 -0.8%·KOSPI 6,260선 돌파로 EWY·XLE 재평가, IBIT $74~76K 박스권",
+    changes: [
+      { type: "수치 갱신", sector: "에너지·원자력",
+        detail: "XLE·XOP·VDE·IEO. Brent가 월요 아시아~유럽 장에서 +5~7% 점프해 $95/배럴 돌파, WTI도 $90선 회복하며 금요 -10% 급락분을 48시간 만에 완전 반납. 호르무즈 재봉쇄와 이란-미 해군 직접 충돌이 지정학 프리미엄을 재소환, 금요 저점 대비 에너지 ETF 구간 전반 +3~5% 반등 가시. 4/22 이스라엘-레바논 휴전 만료·4/25 OPEC+ 회의 순차 이벤트가 이번 주 에너지 지표 경로 결정.", time: "2026-04-20 19:19 KST" },
+      { type: "수치 갱신", sector: "미국 대형주",
+        detail: "SPY·QQQ·DIA. 월요 미 주가지수 선물 S&P -0.8%·Nasdaq -0.6%·Dow -1%로 하락 출발 — 지난 주 S&P +4.54%·Nasdaq +6.84% 사상 최고 랠리 후 첫 숨고르기. 4/20 장 마감 후 Intel·Steel Dynamics Q1 시작, 4/22 Tesla·Boeing, 4/24 Alphabet·American Airlines, 4/25 OPEC+ 이벤트 대기. Q1 블렌디드 EPS 컨센 +12.5% 유지.", time: "2026-04-20 19:19 KST" },
+      { type: "수치 갱신", sector: "신흥국·글로벌",
+        detail: "EWY. KOSPI가 월요 개장 6,213.92(+0.36%)·장중 6,267.45(+1.22%)로 6,260선 돌파해 EWY 리프라이싱 강력. SK하이닉스 +3.10% 110만원 돌파·두산에너빌리티 +4.98%·LG에너지솔루션 +4.01%·SK스퀘어 +4.25%가 지수 견인, 기관 2,982억 순매수·외국인 KOSPI200 선물 2,038억 순매수. 4/23 SK하이닉스(OP 컨센 38.5조)·4/24 LGES 실적과 원/달러 1,475원 환율이 변수.", time: "2026-04-20 19:19 KST" },
+      { type: "수치 갱신", sector: "크립토·블록체인",
+        detail: "IBIT·FBTC. BTC가 $74~76K 구간으로 소폭 하방 조정, $75K 저항이 단기 천장으로 굳어짐. 호르무즈 충격으로 위험자산 일시 이탈이 주말 내내 미 스폿 BTC ETF 유출입 소강과 맞물림. IBIT AUM $58B 유지, 박스권 연장 시 Strategy(MSTR) 같은 레버리지 포지션의 변동성이 먼저 확대되는 구조.", time: "2026-04-20 19:19 KST" },
+    ]
+  },
+  {
     date: "2026-04-20 13:08 KST",
     summary: "호르무즈 재봉쇄·美 Touska 나포로 에너지 ETF 재평가 구간 — XLE·XOP·VDE 월요 갭업 가시, ITA·SHLD 방산 재평가 동반",
     changes: [

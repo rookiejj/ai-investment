@@ -19,7 +19,7 @@ const data = [
     title: "🔩 반도체",
     tag: "AI칩·파운드리·장비·메모리",
     stocks: [
-      { tk:"NVDA", nm:"NVIDIA", rs:"Ising 오픈소스 양자AI 모델 공개·FY26 $216B·Rubin 풀프로덕션·Blackwell+Rubin $1T 파이프라인", r1:"216", p1:"117", r2:"337", p2:"192" },
+      { tk:"NVDA", nm:"NVIDIA", rs:"5/20 Q1 FY27 실적 컨센 $78B·Ising 오픈소스 양자AI·Rubin 풀프로덕션·NAB Show AI 편집 업데이트", r1:"216", p1:"117", r2:"337", p2:"192" },
       { tk:"AVGO", nm:"Broadcom", rs:"커스텀 ASIC·AI 백로그 $73B", r1:"64", p1:"23", r2:"88", p2:"34" },
       { tk:"TSM", nm:"TSMC", rs:"Q1 $35.7B 확정·Q2 가이던스 $39~40.2B 상향·GM 65.5~67.5%·26년 USD +30%·CapEx 상단", r1:"117", p1:"55", r2:"153", p2:"70" },
       { tk:"ASML", nm:"ASML", rs:"Q1 €8.8B EPS €7.15 비트·수요>공급 지속·2026 €36~40B·EUV 독점", r1:"33", p1:"9", r2:"42", p2:"12" },
@@ -110,11 +110,11 @@ const data = [
     title: "🛢️ 에너지",
     tag: "석유메이저·LNG·유전서비스",
     stocks: [
-      { tk:"XOM", nm:"ExxonMobil", rs:"이란 호르무즈 재봉쇄·美 Touska 억류로 유가 리프라이싱·월요 +5~8% 갭업 가시", r1:"332", p1:"29", r2:"345", p2:"32" },
-      { tk:"CVX", nm:"Chevron", rs:"호르무즈 재봉쇄·미 네이비 Touska 억류·휴전 4/22 만료 임박", r1:"189", p1:"12", r2:"195", p2:"14" },
+      { tk:"XOM", nm:"ExxonMobil", rs:"Brent $95선 급등 +5~7%·호르무즈 재봉쇄·Touska 억류로 유가 리프라이싱", r1:"332", p1:"29", r2:"345", p2:"32" },
+      { tk:"CVX", nm:"Chevron", rs:"Brent $95·WTI $90선 회복·호르무즈 재봉쇄·이란-미 해군 직접 교전 리스크", r1:"189", p1:"12", r2:"195", p2:"14" },
       { tk:"LNG", nm:"Cheniere", rs:"미 최대 LNG 수출·중동 리스크 재점화로 프리미엄 복귀", r1:"16", p1:"3.5", r2:"18", p2:"4.2" },
       { tk:"SLB", nm:"Schlumberger", rs:"유전서비스 1위·중동 CapEx 재개 기대", r1:"37", p1:"4.5", r2:"39", p2:"5.0" },
-      { tk:"COP", nm:"ConocoPhillips", rs:"상류 E&P·호르무즈 재폐쇄로 마진 재확대 기대", r1:"60", p1:"10", r2:"64", p2:"11" },
+      { tk:"COP", nm:"ConocoPhillips", rs:"상류 E&P·Brent $95 급반등으로 마진 재확대", r1:"60", p1:"10", r2:"64", p2:"11" },
       { tk:"KMI", nm:"Kinder Morgan", rs:"가스 파이프라인", r1:"16", p1:"2.7", r2:"17", p2:"3.0" },
       { tk:"EOG", nm:"EOG Resources", rs:"셰일 E&P 고효율", r1:"23", p1:"5.5", r2:"24", p2:"5.8" },
     ]
@@ -136,7 +136,7 @@ const data = [
     title: "🚗 자동차·모빌리티",
     tag: "EV·레거시·자율주행",
     stocks: [
-      { tk:"TSLA", nm:"Tesla", rs:"4/22 Q1 실적 임박·컨센 매출 $22.7B·EPS $0.37·Q1 인도 358k·Terafab capex 가이드·Model Y L 출시", r1:"95", p1:"3.8", r2:"109", p2:"7.2" },
+      { tk:"TSLA", nm:"Tesla", rs:"금요 종가 $400.62·4/22 Q1 실적 임박·컨센 매출 $22.26B·EPS $0.37·Q1 인도 358k·Model Y L 출시", r1:"95", p1:"3.8", r2:"109", p2:"7.2" },
       { tk:"TM", nm:"Toyota", rs:"하이브리드 강자", r1:"305", p1:"28", r2:"315", p2:"30" },
       { tk:"GM", nm:"General Motors", rs:"레거시 EV 전환", r1:"185", p1:"10", r2:"190", p2:"11" },
       { tk:"RIVN", nm:"Rivian", rs:"R2 양산 개시·VW JV", r1:"4.5", p1:"-3.6", r2:"6.9", p2:"-1.9" },
@@ -166,7 +166,7 @@ const data = [
       { tk:"RGTI", nm:"Rigetti", rs:"초전도 양자", r1:"0.012", p1:"-0.08", r2:"0.025", p2:"-0.10" },
       { tk:"QBTS", nm:"D-Wave", rs:"어닐링 양자", r1:"0.015", p1:"-0.07", r2:"0.030", p2:"-0.08" },
       { tk:"COIN", nm:"Coinbase", rs:"미 최대 거래소", r1:"7.5", p1:"2.3", r2:"9.0", p2:"2.9" },
-      { tk:"MSTR", nm:"Strategy", rs:"BTC $75~78K 주말 박스권·호르무즈 재폐쇄 지정학 재부상·78만 9천 BTC 보유·Coinbase 연동", r1:"0.5", p1:"-0.2", r2:"0.55", p2:"-0.15" },
+      { tk:"MSTR", nm:"Strategy", rs:"BTC $74~76K 주말 박스권·$75K 저항대·호르무즈 재폐쇄 지정학 재부상·78만 9천 BTC 보유", r1:"0.5", p1:"-0.2", r2:"0.55", p2:"-0.15" },
       { tk:"MARA", nm:"Marathon Digital", rs:"BTC 채굴", r1:"0.75", p1:"0.10", r2:"1.0", p2:"0.20" },
       { tk:"RIOT", nm:"Riot Platforms", rs:"BTC 채굴·인프라", r1:"0.35", p1:"0.05", r2:"0.50", p2:"0.10" },
     ]
