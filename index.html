@@ -40,7 +40,77 @@ header{
   padding:16px 32px;
 }
 
-.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.header-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}
+
+/* ═══ SUBSCRIBE BUTTON ═══ */
+.subscribe-btn{
+  padding:10px 20px;background:linear-gradient(135deg,var(--acc) 0%,var(--acc-deep) 100%);
+  color:#fff;border:none;border-radius:9999px;cursor:pointer;
+  font:500 14px/1.2 'Inter',sans-serif;letter-spacing:-0.1px;white-space:nowrap;
+  box-shadow:0 1px 2px rgba(0,0,0,0.06);transition:transform .2s,box-shadow .2s;
+}
+.subscribe-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(24,226,153,0.25)}
+.subscribe-btn:active{transform:translateY(0)}
+@media (max-width:768px){.subscribe-btn{padding:8px 14px;font-size:13px}}
+
+/* ═══ SUBSCRIBE MODAL ═══ */
+.modal-backdrop{
+  position:fixed;inset:0;background:rgba(13,13,13,0.45);backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;
+  z-index:1000;padding:20px;
+}
+.modal-backdrop.show{display:flex}
+.modal{
+  background:var(--panel);border-radius:20px;padding:32px;width:100%;max-width:440px;
+  box-shadow:0 24px 60px rgba(0,0,0,0.18);position:relative;
+  animation:modalIn .25s cubic-bezier(.4,0,.2,1);
+}
+@keyframes modalIn{from{opacity:0;transform:translateY(12px) scale(0.98)}to{opacity:1;transform:none}}
+.modal h2{font:600 22px/1.3 'Pretendard Variable',Pretendard,sans-serif;letter-spacing:-0.44px;margin:0 0 8px}
+.modal p.sub{color:var(--mut);font-size:14px;line-height:1.5;margin:0 0 20px}
+.modal-close{
+  position:absolute;top:16px;right:16px;width:32px;height:32px;
+  border:none;background:var(--border-md);border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;color:var(--fg);
+  font-size:18px;line-height:1;transition:background .2s;
+}
+.modal-close:hover{background:var(--fg);color:#fff}
+.modal-field{margin-bottom:14px}
+.modal-field label{display:block;font:500 13px/1.4 'Inter',sans-serif;color:var(--fg2);margin-bottom:6px}
+.modal-field input[type="text"],.modal-field input[type="tel"]{
+  width:100%;padding:12px 14px;background:var(--bg);
+  border:1.5px solid var(--border-md);border-radius:10px;
+  font:400 15px/1.4 'Inter',sans-serif;color:var(--fg);
+  transition:border-color .2s;
+}
+.modal-field input[type="text"]:focus,.modal-field input[type="tel"]:focus{
+  outline:none;border-color:var(--acc);
+}
+.modal-consent{
+  display:flex;align-items:flex-start;gap:10px;padding:14px;
+  background:var(--acc-light);border-radius:10px;margin:16px 0 20px;
+  font-size:13px;color:var(--fg2);line-height:1.5;
+}
+.modal-consent input[type="checkbox"]{margin-top:2px;accent-color:var(--acc-deep);flex-shrink:0}
+.modal-honeypot{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.modal-submit{
+  width:100%;padding:14px;background:var(--fg);color:#fff;border:none;
+  border-radius:10px;font:500 15px/1 'Inter',sans-serif;cursor:pointer;
+  transition:background .2s;
+}
+.modal-submit:hover{background:#000}
+.modal-submit:disabled{background:var(--placeholder);cursor:not-allowed}
+.modal-status{margin-top:14px;padding:12px;border-radius:8px;font-size:13px;line-height:1.5;display:none}
+.modal-status.show{display:block}
+.modal-status.success{background:var(--acc-light);color:var(--acc-deep)}
+.modal-status.error{background:#fde8e8;color:var(--new)}
+.modal-success-actions{margin-top:16px;display:none;flex-direction:column;gap:8px}
+.modal-success-actions.show{display:flex}
+.modal-success-actions .kakao-link{
+  display:block;padding:12px;background:#FEE500;color:#3c1e1e;text-decoration:none;
+  border-radius:10px;font:500 14px/1 'Inter',sans-serif;text-align:center;transition:transform .15s;
+}
+.modal-success-actions .kakao-link:hover{transform:translateY(-1px)}
 .last-updated{font-size:12px;font-weight:400;color:#10b981;-webkit-text-fill-color:#10b981;background:none;white-space:nowrap;margin-left:12px}
 h1{font-size:28px;font-weight:700;letter-spacing:-0.56px;line-height:1.2;color:var(--fg);position:relative;font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;display:flex;align-items:center;flex-wrap:wrap}
 h1 .logo{width:34px;height:34px;border-radius:50%;object-fit:cover;margin-right:10px;flex-shrink:0}
@@ -437,6 +507,7 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
     <div>
       <h1><img class="logo" src="./assets/briefick_profile_640.jpeg" alt="브리픽"><span>브리픽</span> <span class="last-updated" id="lastUpdated"></span></h1>
     </div>
+    <button class="subscribe-btn" id="subscribeBtn" type="button">구독하기</button>
   </div>
   <div class="tabs">
     <div class="tab" data-t="stocks"><span>미국 마켓</span></div>
@@ -826,6 +897,118 @@ function switchTab(id,dir){
     document.getElementById('tabCriteria').textContent=TAB_CRITERIA[STATE.tab]||'';
     renderChips();updateCount();render();
   }catch(e){out.innerHTML='<p style="color:#ef4444;text-align:center;padding:64px 0;font-weight:500">불러오기 실패: '+e.message+'</p>'}
+})();
+</script>
+
+<div class="modal-backdrop" id="subscribeModal" aria-hidden="true" role="dialog" aria-labelledby="subscribeTitle">
+  <div class="modal">
+    <button class="modal-close" type="button" aria-label="닫기" id="subscribeClose">✕</button>
+    <h2 id="subscribeTitle">브리픽 구독하기</h2>
+    <p class="sub">매일 아침 8시, 6개 마켓 탭의 최신 업데이트를 카카오 친구톡으로 받아보세요.</p>
+    <form id="subscribeForm" novalidate autocomplete="off">
+      <div class="modal-field">
+        <label for="subName">이름</label>
+        <input id="subName" name="name" type="text" maxlength="30" placeholder="홍길동" required>
+      </div>
+      <div class="modal-field">
+        <label for="subPhone">전화번호 (하이픈 없이)</label>
+        <input id="subPhone" name="phone" type="tel" inputmode="numeric" pattern="01[016789][0-9]{7,8}" maxlength="11" placeholder="01012345678" required>
+      </div>
+      <input class="modal-honeypot" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label class="modal-consent">
+        <input id="subConsent" type="checkbox" required>
+        <span>카카오 친구톡을 통한 <b>광고성 정보 수신</b>에 동의합니다. 매일 오전 8시 발송되며, 언제든지 해지 요청으로 수신을 중단할 수 있습니다.</span>
+      </label>
+      <button class="modal-submit" id="subSubmit" type="submit">등록하기</button>
+      <div class="modal-status" id="subStatus"></div>
+      <div class="modal-success-actions" id="subSuccess">
+        <a class="kakao-link" href="https://pf.kakao.com/_briefick/friend" target="_blank" rel="noopener">카카오톡 채널 친구 추가하기</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  const SUPABASE_URL = 'https://ytvcgoldauysvnqckzze.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl0dmNnb2xkYXV5c3ZucWNrenplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY2Nzk5NzEsImV4cCI6MjA5MjI1NTk3MX0.2zh3UDxzEqwVi4yVKn9UH4KXVbmuQy-nUXj--sDvFwY';
+
+  const modal   = document.getElementById('subscribeModal');
+  const openBtn = document.getElementById('subscribeBtn');
+  const closeBtn= document.getElementById('subscribeClose');
+  const form    = document.getElementById('subscribeForm');
+  const nameEl  = document.getElementById('subName');
+  const phoneEl = document.getElementById('subPhone');
+  const consent = document.getElementById('subConsent');
+  const submit  = document.getElementById('subSubmit');
+  const status  = document.getElementById('subStatus');
+  const success = document.getElementById('subSuccess');
+
+  function openModal(){
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden','false');
+    setTimeout(()=>nameEl.focus(),100);
+  }
+  function closeModal(){
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden','true');
+    resetStatus();
+  }
+  function resetStatus(){
+    status.className='modal-status';
+    status.textContent='';
+    success.classList.remove('show');
+  }
+  function showStatus(type,msg){
+    status.className='modal-status show '+type;
+    status.textContent=msg;
+  }
+
+  openBtn.addEventListener('click',openModal);
+  closeBtn.addEventListener('click',closeModal);
+  modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('show'))closeModal()});
+
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();
+    resetStatus();
+    const name = nameEl.value.trim();
+    const phone = phoneEl.value.replace(/[^0-9]/g,'');
+    if(!/^01[016789]\d{7,8}$/.test(phone)){
+      showStatus('error','전화번호 형식이 올바르지 않습니다.');
+      phoneEl.focus();return;
+    }
+    if(!consent.checked){
+      showStatus('error','광고 수신 동의가 필요합니다.');
+      consent.focus();return;
+    }
+    const honeypot = form.elements['website'].value;
+
+    submit.disabled=true;submit.textContent='등록 중...';
+    try{
+      const res = await fetch(SUPABASE_URL+'/functions/v1/subscribe',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+SUPABASE_ANON_KEY,'apikey':SUPABASE_ANON_KEY},
+        body:JSON.stringify({phone,name,ad_consent:true,honeypot}),
+      });
+      const j = await res.json();
+      if(!res.ok||!j.ok){
+        showStatus('error',j.error||'등록 중 오류가 발생했습니다.');
+      }else{
+        const msgMap={
+          registered:'등록 완료! 내일 아침 8시부터 친구톡을 보내드립니다.',
+          reactivated:'재구독 완료! 친구톡 수신이 재개됩니다.',
+          already_subscribed:'이미 구독 중이신 번호입니다.',
+        };
+        showStatus('success', msgMap[j.status] || '등록 완료!');
+        success.classList.add('show');
+      }
+    }catch(err){
+      showStatus('error','네트워크 오류: '+err.message);
+    }finally{
+      submit.disabled=false;submit.textContent='등록하기';
+    }
+  });
 })();
 </script>
 </body></html>
