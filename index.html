@@ -907,10 +907,6 @@ function switchTab(id,dir){
     <p class="sub">매일 아침 8시, 6개 마켓 탭의 최신 업데이트를 카카오 친구톡으로 받아보세요.</p>
     <form id="subscribeForm" novalidate autocomplete="off">
       <div class="modal-field">
-        <label for="subName">이름</label>
-        <input id="subName" name="name" type="text" maxlength="30" placeholder="홍길동" required>
-      </div>
-      <div class="modal-field">
         <label for="subPhone">전화번호 (하이픈 없이)</label>
         <input id="subPhone" name="phone" type="tel" inputmode="numeric" pattern="01[016789][0-9]{7,8}" maxlength="11" placeholder="01012345678" required>
       </div>
@@ -937,7 +933,6 @@ function switchTab(id,dir){
   const openBtn = document.getElementById('subscribeBtn');
   const closeBtn= document.getElementById('subscribeClose');
   const form    = document.getElementById('subscribeForm');
-  const nameEl  = document.getElementById('subName');
   const phoneEl = document.getElementById('subPhone');
   const consent = document.getElementById('subConsent');
   const submit  = document.getElementById('subSubmit');
@@ -947,7 +942,7 @@ function switchTab(id,dir){
   function openModal(){
     modal.classList.add('show');
     modal.setAttribute('aria-hidden','false');
-    setTimeout(()=>nameEl.focus(),100);
+    setTimeout(()=>phoneEl.focus(),100);
   }
   function closeModal(){
     modal.classList.remove('show');
@@ -972,7 +967,6 @@ function switchTab(id,dir){
   form.addEventListener('submit',async e=>{
     e.preventDefault();
     resetStatus();
-    const name = nameEl.value.trim();
     const phone = phoneEl.value.replace(/[^0-9]/g,'');
     if(!/^01[016789]\d{7,8}$/.test(phone)){
       showStatus('error','전화번호 형식이 올바르지 않습니다.');
@@ -989,7 +983,7 @@ function switchTab(id,dir){
       const res = await fetch(SUPABASE_URL+'/functions/v1/subscribe',{
         method:'POST',
         headers:{'Content-Type':'application/json','Authorization':'Bearer '+SUPABASE_ANON_KEY,'apikey':SUPABASE_ANON_KEY},
-        body:JSON.stringify({phone,name,ad_consent:true,honeypot}),
+        body:JSON.stringify({phone,ad_consent:true,honeypot}),
       });
       const j = await res.json();
       if(!res.ok||!j.ok){
