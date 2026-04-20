@@ -286,11 +286,16 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
 
 /* ═══ FOOTER ═══ */
 .footer{
-  text-align:center;padding:32px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  padding:24px 32px;
   border-top:1px solid var(--border);
   color:var(--placeholder);font-size:12px;
   font-family:'Geist Mono','SF Mono',monospace;
   letter-spacing:0.5px;text-transform:uppercase;
+}
+.footer .brand-mark{height:28px;width:auto;flex-shrink:0;opacity:0.75}
+@media (max-width:768px){
+  .footer{padding:20px 16px;gap:12px}
 }
 
 .hide{display:none}
@@ -463,7 +468,7 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
 <button class="scroll-top" id="scrollTop" aria-label="맨 위로">
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"/></svg>
 </button>
-<footer class="footer">브리픽 · 데이터는 주기적으로 갱신됩니다</footer>
+<footer class="footer"><img class="brand-mark" src="./assets/roysoft_profile.jpg" alt="로이소프트"><span>브리픽 · 데이터는 주기적으로 갱신됩니다</span></footer>
 
 <script>
 const TAB_DESC={
