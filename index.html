@@ -947,6 +947,12 @@ function switchTab(id,dir){
   function openModal(){
     modal.classList.add('show');
     modal.setAttribute('aria-hidden','false');
+    form.reset();
+    phoneEl.disabled=false;
+    consent.disabled=false;
+    submit.disabled=false;
+    submit.textContent='결제하고 구독 시작';
+    resetStatus();
     setTimeout(()=>phoneEl.focus(),100);
   }
   function closeModal(){
@@ -987,6 +993,7 @@ function switchTab(id,dir){
 
     const paymentId = 'briefick'+Date.now()+Math.random().toString(36).slice(2,8);
     submit.disabled=true;submit.textContent='결제창 여는 중...';
+    let completed = false;
     try{
       const pay = await PortOne.requestPayment({
         storeId: PORTONE_STORE_ID,
@@ -1019,11 +1026,18 @@ function switchTab(id,dir){
         const until = j.paid_until ? ' ('+j.paid_until.slice(0,10)+' 까지)' : '';
         showStatus('success', (msgMap[j.status] || '완료!') + until);
         success.classList.add('show');
+        phoneEl.disabled=true;
+        consent.disabled=true;
+        submit.textContent='구독 완료됨';
+        completed=true;
       }
     }catch(err){
       showStatus('error','오류: '+err.message);
     }finally{
-      submit.disabled=false;submit.textContent='결제하고 구독 시작';
+      if(!completed){
+        submit.disabled=false;
+        submit.textContent='결제하고 구독 시작';
+      }
     }
   });
 })();
