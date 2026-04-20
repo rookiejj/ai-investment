@@ -71,7 +71,10 @@ async function fetchTabEntries(tab: Tab): Promise<Entry[]> {
     headers["Accept"] = "application/vnd.github.raw";
   }
   const res = await fetch(url, { headers });
-  if (!res.ok) throw new Error(`fetch ${tab.file} failed: ${res.status}`);
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`fetch ${tab.file} failed ${res.status} (token=${GITHUB_TOKEN ? "yes" : "no"}): ${body.slice(0, 200)}`);
+  }
   const src = await res.text();
   const list = new Function(
     `${src};return typeof ${tab.var}!=="undefined"?${tab.var}:[];`
