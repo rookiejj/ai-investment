@@ -13,18 +13,10 @@
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
-const ALLOWED_ORIGINS = [
-  "https://rookiejj.github.io",
-  "http://localhost:8080",
-  "http://localhost:5173",
-  "http://localhost:3000",
-  "http://127.0.0.1:8080",
-];
-
+// 공개 구독 엔드포인트. 오용 방어는 phone 검증·honeypot·upsert 멱등성으로 커버.
 function corsHeaders(origin: string): Record<string, string> {
-  const allowOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
   return {
-    "Access-Control-Allow-Origin": allowOrigin,
+    "Access-Control-Allow-Origin": origin || "*",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "content-type, authorization, apikey, x-client-info",
     "Access-Control-Max-Age": "86400",
