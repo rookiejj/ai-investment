@@ -12,10 +12,13 @@
  *   ALIGO_USER_ID
  *   ALIGO_SENDER_KEY
  *   ALIGO_SENDER
+ *   GITHUB_TOKEN        (private repo일 때 필수, public이면 생략 가능)
  * 선택 ENV:
- *   GITHUB_DATA_BASE_URL (기본 rookiejj/ai-investment main)
+ *   GITHUB_OWNER        (기본 rookiejj)
+ *   GITHUB_REPO         (기본 ai-investment)
+ *   GITHUB_BRANCH       (기본 main)
  *   SITE_URL
- *   FAILOVER  (Y/N, 기본 N)
+ *   FAILOVER            (Y/N, 기본 N)
  */
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
@@ -34,8 +37,10 @@ type Entry = {
 
 type TabWithEntries = Tab & { entries: Entry[] };
 
-const GITHUB_BASE = Deno.env.get("GITHUB_DATA_BASE_URL")
-  ?? "https://raw.githubusercontent.com/rookiejj/ai-investment/main/data";
+const GITHUB_OWNER  = Deno.env.get("GITHUB_OWNER")  ?? "rookiejj";
+const GITHUB_REPO   = Deno.env.get("GITHUB_REPO")   ?? "ai-investment";
+const GITHUB_BRANCH = Deno.env.get("GITHUB_BRANCH") ?? "main";
+const GITHUB_TOKEN  = Deno.env.get("GITHUB_TOKEN");  // private repo 시 필수
 const SITE_URL = Deno.env.get("SITE_URL")
   ?? "https://rookiejj.github.io/ai-investment/";
 const FAILOVER = Deno.env.get("FAILOVER") === "Y" ? "Y" : "N";
@@ -57,7 +62,15 @@ const TABS: Tab[] = [
 // ═══ Data fetch ════════════════════════════════════════
 
 async function fetchTabEntries(tab: Tab): Promise<Entry[]> {
-  const res = await fetch(`${GITHUB_BASE}/${tab.file}`);
+  const url = GITHUB_TOKEN
+    ? `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/data/${tab.file}?ref=${GITHUB_BRANCH}`
+    : `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/data/${tab.file}`;
+  const headers: Record<string, string> = {};
+  if (GITHUB_TOKEN) {
+    headers["Authorization"] = `token ${GITHUB_TOKEN}`;
+    headers["Accept"] = "application/vnd.github.raw";
+  }
+  const res = await fetch(url, { headers });
   if (!res.ok) throw new Error(`fetch ${tab.file} failed: ${res.status}`);
   const src = await res.text();
   const list = new Function(
@@ -191,9 +204,13 @@ async function sendFriendtalkBatch(opts: {
 
 // ═══ Handler ══════════════════════════════════════════
 
-Deno.serve(async (_req) => {
+Deno.serve(async (req) => {
   const startedAt = Date.now();
   try {
+    const url = new URL(req.url);
+    const dryRun = url.searchParams.get("dry") === "1"
+      || url.searchParams.get("dryRun") === "1";
+
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
@@ -210,13 +227,28 @@ Deno.serve(async (_req) => {
       console.warn(`[warn] message exceeds limit: ${message.length}/${LIMIT}`);
     }
 
-    // 2) 구독자 조회
+    // 2) 구독자 조회 (dry-run에서도 수만 확인)
     const { data: subs, error: subErr } = await supabase
       .from("subscribers")
       .select("id, phone, name")
       .eq("status", "active")
       .returns<Subscriber[]>();
     if (subErr) throw subErr;
+
+    if (dryRun) {
+      return Response.json({
+        ok: true,
+        dryRun: true,
+        charCount: message.length,
+        limit: LIMIT,
+        overflow: message.length > LIMIT,
+        activeSubscribers: subs?.length ?? 0,
+        tabCount: tabs.length,
+        message,
+        elapsedMs: Date.now() - startedAt,
+      });
+    }
+
     if (!subs || subs.length === 0) {
       return Response.json({ ok: true, sent: 0, note: "no active subscribers", charCount: message.length });
     }

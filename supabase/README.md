@@ -41,10 +41,21 @@ supabase db push
 ```
 
 ### 4. Edge Function Secrets 등록
-알리고 사전 준비: API Key / User ID / 발신프로필 Senderkey / 등록된 발신번호.
+
+**GitHub PAT (private repo 시 필수)**
+
+Edge Function이 `data/*-update.js`를 읽으려면 GitHub 인증이 필요합니다.
+1. GitHub → Settings → Developer settings → Personal access tokens → **Fine-grained tokens** → Generate new token
+2. Repository access: `rookiejj/ai-investment` 하나만 선택
+3. Repository permissions → **Contents: Read-only**
+4. 토큰 생성 후 한 번만 노출되므로 복사 보관
+
+**알리고 (승인 후 등록)**
+- API Key / User ID / 발신프로필 Senderkey / 등록된 발신번호
 
 ```bash
 supabase secrets set \
+  GITHUB_TOKEN=github_pat_xxxxxxxx \
   ALIGO_API_KEY=xxxxxxxx \
   ALIGO_USER_ID=xxxxxxxx \
   ALIGO_SENDER_KEY=xxxxxxxx \
@@ -52,7 +63,7 @@ supabase secrets set \
 ```
 
 선택 secrets:
-- `GITHUB_DATA_BASE_URL` (기본값 이 repo의 `main/data`)
+- `GITHUB_OWNER` / `GITHUB_REPO` / `GITHUB_BRANCH` (다른 repo로 바꿀 때)
 - `SITE_URL` (기본값 GitHub Pages URL)
 - `FAILOVER=Y` 지정 시 친구톡 실패분 SMS 대체 발송
 
