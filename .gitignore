@@ -3,3 +3,7 @@ tmp/
 .env
 .env.*
 scripts/subscribers.json
+
+# Supabase CLI
+supabase/.branches
+supabase/.temp
