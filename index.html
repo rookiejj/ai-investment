@@ -904,7 +904,7 @@ function switchTab(id,dir){
   <div class="modal">
     <button class="modal-close" type="button" aria-label="닫기" id="subscribeClose">✕</button>
     <h2 id="subscribeTitle">브리픽 구독하기</h2>
-    <p class="sub">매일 아침 8시, 6개 마켓 탭의 최신 업데이트를 카카오 친구톡으로 받아보세요.</p>
+    <p class="sub">매일 아침 8시, 6개 마켓 탭의 최신 업데이트를 카카오 친구톡으로 받아보세요. <b>월 100원</b> (테스트 가격)</p>
     <form id="subscribeForm" novalidate autocomplete="off">
       <div class="modal-field">
         <label for="subPhone">전화번호 (하이픈 없이)</label>
@@ -915,7 +915,7 @@ function switchTab(id,dir){
         <input id="subConsent" type="checkbox" required>
         <span>카카오 친구톡을 통한 <b>광고성 정보 수신</b>에 동의합니다. 매일 오전 8시 발송되며, 언제든지 해지 요청으로 수신을 중단할 수 있습니다.</span>
       </label>
-      <button class="modal-submit" id="subSubmit" type="submit">등록하기</button>
+      <button class="modal-submit" id="subSubmit" type="submit">결제하고 구독 시작</button>
       <div class="modal-status" id="subStatus"></div>
       <div class="modal-success-actions" id="subSuccess">
         <a class="kakao-link" href="https://pf.kakao.com/_lpxkCX/friend" target="_blank" rel="noopener">카카오톡 채널 친구 추가하기</a>
@@ -924,10 +924,15 @@ function switchTab(id,dir){
   </div>
 </div>
 
+<script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
 <script>
 (function(){
   const SUPABASE_URL = 'https://ytvcgoldauysvnqckzze.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl0dmNnb2xkYXV5c3ZucWNrenplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY2Nzk5NzEsImV4cCI6MjA5MjI1NTk3MX0.2zh3UDxzEqwVi4yVKn9UH4KXVbmuQy-nUXj--sDvFwY';
+  const PORTONE_STORE_ID = 'imp03377735';
+  const PORTONE_CHANNEL_KEY = 'CHANNEL_KEY_PLACEHOLDER';  // 포트원 대시보드 > 결제 연동 > 채널에서 복사
+  const SUBSCRIPTION_PRICE = 100;
+  const SUBSCRIPTION_ORDER_NAME = '브리픽 월간 구독 (테스트)';
 
   const modal   = document.getElementById('subscribeModal');
   const openBtn = document.getElementById('subscribeBtn');
@@ -976,31 +981,49 @@ function switchTab(id,dir){
       showStatus('error','광고 수신 동의가 필요합니다.');
       consent.focus();return;
     }
-    const honeypot = form.elements['website'].value;
+    if(typeof PortOne==='undefined'){
+      showStatus('error','결제 SDK 로드 실패. 새로고침 후 다시 시도해주세요.');return;
+    }
 
-    submit.disabled=true;submit.textContent='등록 중...';
+    const paymentId = 'briefick-'+Date.now()+'-'+Math.random().toString(36).slice(2,8);
+    submit.disabled=true;submit.textContent='결제창 여는 중...';
     try{
-      const res = await fetch(SUPABASE_URL+'/functions/v1/subscribe',{
+      const pay = await PortOne.requestPayment({
+        storeId: PORTONE_STORE_ID,
+        channelKey: PORTONE_CHANNEL_KEY,
+        paymentId,
+        orderName: SUBSCRIPTION_ORDER_NAME,
+        totalAmount: SUBSCRIPTION_PRICE,
+        currency: 'KRW',
+        payMethod: 'CARD',
+        customer: { phoneNumber: phone },
+      });
+      if(pay.code){
+        showStatus('error','결제 실패: '+(pay.message||pay.code));
+        return;
+      }
+      submit.textContent='결제 확인 중...';
+      const res = await fetch(SUPABASE_URL+'/functions/v1/payment-confirm',{
         method:'POST',
         headers:{'Content-Type':'application/json','Authorization':'Bearer '+SUPABASE_ANON_KEY,'apikey':SUPABASE_ANON_KEY},
-        body:JSON.stringify({phone,ad_consent:true,honeypot}),
+        body:JSON.stringify({paymentId,phone,ad_consent:true,expected_amount:SUBSCRIPTION_PRICE}),
       });
       const j = await res.json();
       if(!res.ok||!j.ok){
-        showStatus('error',j.error||'등록 중 오류가 발생했습니다.');
+        showStatus('error',j.error||'결제 검증 중 오류가 발생했습니다.');
       }else{
         const msgMap={
-          registered:'등록 완료! 내일 아침 8시부터 친구톡을 보내드립니다.',
-          reactivated:'재구독 완료! 친구톡 수신이 재개됩니다.',
-          already_subscribed:'이미 구독 중이신 번호입니다.',
+          registered:'구독 완료! 내일 아침 8시부터 친구톡을 보내드립니다.',
+          extended:'구독 연장 완료!',
         };
-        showStatus('success', msgMap[j.status] || '등록 완료!');
+        const until = j.paid_until ? ' ('+j.paid_until.slice(0,10)+' 까지)' : '';
+        showStatus('success', (msgMap[j.status] || '완료!') + until);
         success.classList.add('show');
       }
     }catch(err){
-      showStatus('error','네트워크 오류: '+err.message);
+      showStatus('error','오류: '+err.message);
     }finally{
-      submit.disabled=false;submit.textContent='등록하기';
+      submit.disabled=false;submit.textContent='결제하고 구독 시작';
     }
   });
 })();

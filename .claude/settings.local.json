@@ -39,7 +39,12 @@
       "Bash(cat *)",
       "Bash(find /Users/roy -name \"*.md\" -type f -exec grep -l \"CronCreate\\\\|커밋\\\\|자동.*업데이트\\\\|schedule.*trigger\" {} \\\\;)",
       "Skill(update-config)",
-      "Bash(grep -v \"+$\")"
+      "Bash(grep -v \"+$\")",
+      "Bash(node *)",
+      "Bash(supabase secrets *)",
+      "Bash(curl *)",
+      "Bash(supabase functions *)",
+      "Bash(supabase db *)"
     ]
   },
   "model": "opus"
