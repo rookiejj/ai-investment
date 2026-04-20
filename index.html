@@ -286,16 +286,17 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
 
 /* ═══ FOOTER ═══ */
 .footer{
-  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
-  padding:24px 32px;
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+  padding:12px 32px;
   border-top:1px solid var(--border);
   color:var(--placeholder);font-size:12px;
   font-family:'Geist Mono','SF Mono',monospace;
   letter-spacing:0.5px;text-transform:uppercase;
 }
-.footer .brand-mark{height:28px;width:auto;flex-shrink:0;opacity:0.75}
+.footer .brand-mark{height:88px;width:auto;flex-shrink:0;display:block}
 @media (max-width:768px){
-  .footer{padding:20px 16px;gap:12px}
+  .footer{padding:8px 16px;gap:14px}
+  .footer .brand-mark{height:64px}
 }
 
 .hide{display:none}
