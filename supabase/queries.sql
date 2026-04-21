@@ -64,14 +64,14 @@ group by 1, 2
 order by 1 desc, 2;
 
 -- 특정 번호 최근 발송 이력 30건
-select sent_at, status, char_count, aligo_code, aligo_message
+select sent_at, status, char_count, provider, provider_code, provider_message
 from send_logs
 where phone = '01012345678'
 order by sent_at desc
 limit 30;
 
 -- 실패분만 최근 24시간
-select sent_at, phone, aligo_code, aligo_message
+select sent_at, phone, provider, provider_code, provider_message
 from send_logs
 where status = 'fail' and sent_at >= now() - interval '24 hours'
 order by sent_at desc;

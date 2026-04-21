@@ -298,9 +298,10 @@ Deno.serve(async (req) => {
           message,
           char_count: message.length,
           status: failed ? "fail" : "success",
-          aligo_code: result?.groupId ?? null,
-          aligo_message: errMsg ?? (failed ? "solapi failedMessageList" : "ok"),
-          aligo_msg_id: result?.groupId ?? null,
+          provider: "solapi",
+          provider_code: result?.groupId ?? null,
+          provider_message: errMsg ?? (failed ? "solapi failedMessageList" : "ok"),
+          provider_msg_id: result?.groupId ?? null,
           batch_id: batchId,
         });
       }
