@@ -49,10 +49,12 @@ begin
   end if;
 end $$;
 
--- UTC 23:00 = KST 08:00
+-- ⚠ 테스트 모드 : KST 08:00 ~ 24:00 매시 정각 (하루 17회)
+--   원래 운영 스케줄로 돌릴 때는 '0 23 * * *' 로 교체
+--   UTC 23:00 = KST 08:00, UTC 00~15:00 = KST 09~24:00
 select cron.schedule(
   'daily-friendtalk-send',
-  '0 23 * * *',
+  '0 0-15,23 * * *',
   $CRON$
     select net.http_post(
       url := 'https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/daily-send',
