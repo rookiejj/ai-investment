@@ -113,6 +113,24 @@ header{
 .modal-status.success{background:var(--acc-light);color:var(--acc-deep)}
 .modal-status.error{background:#fde8e8;color:var(--new)}
 .modal-status.info{background:#fff4e5;color:#a35a00}
+
+/* 번호 확인 블록 (결제 직전 큰 글씨로 재확인) */
+.confirm-box{
+  display:none;margin:16px 0;padding:20px;border-radius:12px;
+  background:var(--acc-light);text-align:center;
+}
+.confirm-box.show{display:block}
+.confirm-box .confirm-label{
+  display:block;font:500 12px/1.3 'Inter',sans-serif;
+  color:var(--acc-deep);letter-spacing:0.4px;text-transform:uppercase;
+}
+.confirm-box .confirm-num{
+  display:block;margin:6px 0;font:600 26px/1.2 'Pretendard Variable',Pretendard,sans-serif;
+  color:var(--fg);letter-spacing:-0.5px;
+}
+.confirm-box .confirm-note{
+  display:block;font:500 13px/1.5 'Inter',sans-serif;color:var(--fg2);
+}
 .modal-success-actions{margin-top:16px;display:flex;flex-direction:column;gap:8px}
 .modal-success-actions .kakao-link{
   display:block;padding:12px;background:#FEE500;color:#3c1e1e;text-decoration:none;
@@ -923,6 +941,7 @@ function switchTab(id,dir){
         <input id="subConsent" type="checkbox" required>
         <span>카카오 친구톡을 통한 <b>광고성 정보 수신</b>에 동의합니다. 매일 오전 8시 발송되며, 언제든지 해지 요청으로 수신을 중단할 수 있습니다.</span>
       </label>
+      <div class="confirm-box" id="subConfirm"></div>
       <button class="modal-submit" id="subSubmit" type="submit">결제하고 구독 시작</button>
       <button class="modal-cancel" id="subCancel" type="button">취소</button>
       <div class="modal-status" id="subStatus"></div>
@@ -951,30 +970,44 @@ function switchTab(id,dir){
   const consent = document.getElementById('subConsent');
   const submit  = document.getElementById('subSubmit');
   const cancel  = document.getElementById('subCancel');
+  const confirmBox = document.getElementById('subConfirm');
   const status  = document.getElementById('subStatus');
   const success = document.getElementById('subSuccess');
 
-  let extendConfirmed = false;
+  function fmtPhone(p){return p.replace(/(\d{3})(\d{3,4})(\d{4})/,'$1-$2-$3')}
+  function showConfirmBox(label,num,note){
+    confirmBox.innerHTML = '<span class="confirm-label">'+label+'</span>'+
+      '<span class="confirm-num">'+num+'</span>'+
+      '<span class="confirm-note">'+note+'</span>';
+    confirmBox.classList.add('show');
+  }
+  function hideConfirmBox(){
+    confirmBox.classList.remove('show');
+    confirmBox.innerHTML='';
+  }
 
+  // confirmState: null | 'number' | 'extend'
+  let confirmState = null;
+
+  function resetToInput(){
+    confirmState=null;
+    submit.disabled=false;
+    submit.textContent='결제하고 구독 시작';
+    cancel.classList.remove('show');
+    hideConfirmBox();
+    resetStatus();
+  }
   function openModal(){
     modal.classList.add('show');
     modal.setAttribute('aria-hidden','false');
     form.reset();
     phoneEl.disabled=false;
     consent.disabled=false;
-    submit.disabled=false;
-    submit.textContent='결제하고 구독 시작';
-    cancel.classList.remove('show');
-    extendConfirmed=false;
-    resetStatus();
+    resetToInput();
     setTimeout(()=>phoneEl.focus(),100);
   }
   cancel.addEventListener('click',()=>{
-    extendConfirmed=false;
-    submit.disabled=false;
-    submit.textContent='결제하고 구독 시작';
-    cancel.classList.remove('show');
-    resetStatus();
+    resetToInput();
     phoneEl.focus();
   });
   function closeModal(){
@@ -1012,9 +1045,10 @@ function switchTab(id,dir){
       showStatus('error','결제 SDK 로드 실패. 새로고침 후 다시 시도해주세요.');return;
     }
 
-    // 첫 클릭: 이미 구독 중인지 확인
-    if(!extendConfirmed){
+    // 1단계: 구독 상태 조회 후 확인 단계로 전환
+    if(confirmState===null){
       submit.disabled=true;submit.textContent='확인 중...';
+      let isActive=false, paidUntilStr='', extStr='', daysLeft=0;
       try{
         const checkRes = await fetch(SUPABASE_URL+'/functions/v1/check-subscription',{
           method:'POST',
@@ -1023,21 +1057,29 @@ function switchTab(id,dir){
         });
         const chk = await checkRes.json();
         if(checkRes.ok && chk.ok && chk.subscription_active && chk.paid_until){
+          isActive=true;
           const until = new Date(chk.paid_until);
-          const now = new Date();
-          const daysLeft = Math.max(0, Math.ceil((until - now) / 86400000));
+          const nowDate = new Date();
+          daysLeft = Math.max(0, Math.ceil((until - nowDate) / 86400000));
           const extended = new Date(until.getTime() + 30 * 86400000);
-          const untilStr = until.toISOString().slice(0,10);
-          const extStr = extended.toISOString().slice(0,10);
-          showStatus('info','이 번호는 '+untilStr+'까지 구독 중입니다 (남은 '+daysLeft+'일). 지금 결제하면 '+extStr+'까지 연장됩니다.');
-          submit.disabled=false;
-          submit.textContent='확인하고 연장 결제';
-          cancel.classList.add('show');
-          extendConfirmed=true;
-          return;
+          paidUntilStr = until.toISOString().slice(0,10);
+          extStr = extended.toISOString().slice(0,10);
         }
-      }catch(_e){/* 체크 실패 시 정상 결제 플로우로 진행 */}
-      submit.disabled=false;submit.textContent='결제하고 구독 시작';
+      }catch(_e){/* 체크 실패 시 번호 확인 단계로 진행 */}
+
+      if(isActive){
+        showConfirmBox('이 번호로 발송', fmtPhone(phone),
+          paidUntilStr+'까지 구독 중 (남은 '+daysLeft+'일). 지금 결제하면 '+extStr+'까지 연장');
+        submit.textContent='확인하고 연장 결제';
+        confirmState='extend';
+      }else{
+        showConfirmBox('이 번호로 매일 오전 8시 발송', fmtPhone(phone), '번호가 맞으신가요?');
+        submit.textContent='맞습니다, 결제하기';
+        confirmState='number';
+      }
+      submit.disabled=false;
+      cancel.classList.add('show');
+      return;
     }
 
     const paymentId = 'briefick'+Date.now()+Math.random().toString(36).slice(2,8);
