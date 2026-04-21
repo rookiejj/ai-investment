@@ -167,13 +167,23 @@ h1 span{
 
 /* ═══ TAB DESC ═══ */
 .tab-desc{
+  display:flex;align-items:center;gap:6px;
   font-size:14px;color:var(--fg2);line-height:1.5;
-  margin-bottom:6px;letter-spacing:-0.1px;font-weight:500;
+  margin-bottom:12px;letter-spacing:-0.1px;font-weight:500;
 }
-.tab-criteria{
-  font-size:12px;color:var(--mut);line-height:1.5;
-  margin-bottom:12px;letter-spacing:0.2px;
-  font-family:'Geist Mono','SF Mono',monospace;
+.tab-info-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:18px;height:18px;padding:0;border:none;background:transparent;
+  color:var(--mut);cursor:pointer;border-radius:50%;
+  transition:color .15s,background .15s;flex-shrink:0;
+}
+.tab-info-btn:hover{color:var(--fg);background:var(--border-md)}
+.tab-info-btn svg{width:15px;height:15px}
+.tab-criteria{display:none}
+/* 정보 팝업 본문 */
+.info-body{
+  font:400 13px/1.7 'Geist Mono','SF Mono',monospace;
+  color:var(--fg2);letter-spacing:0.1px;white-space:pre-wrap;margin:0;
 }
 
 /* ═══ SEARCH ═══ */
@@ -544,7 +554,12 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
     <div class="tab" data-t="commodity"><span>시장·원자재</span></div>
   </div>
   <script>!function(){var t=JSON.parse(sessionStorage.getItem('briefState')||'null'),s=t&&t.tab||'stocks';if(s==='jp')s='stocks';var el=document.querySelector('.tab[data-t="'+s+'"]');if(el)el.classList.add('on');else document.querySelector('.tab[data-t="stocks"]').classList.add('on')}()</script>
-  <div class="tab-desc" id="tabDesc"></div>
+  <div class="tab-desc">
+    <span id="tabDesc"></span>
+    <button class="tab-info-btn" id="tabInfoBtn" type="button" aria-label="선정 기준 자세히 보기">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+    </button>
+  </div>
   <div class="tab-criteria" id="tabCriteria"></div>
   <div class="search-wrap">
     <input id="q" placeholder="티커, 기업명, 제품, 설명으로 검색...">
@@ -926,6 +941,14 @@ function switchTab(id,dir){
 })();
 </script>
 
+<div class="modal-backdrop" id="infoModal" aria-hidden="true" role="dialog" aria-labelledby="infoTitle">
+  <div class="modal">
+    <button class="modal-close" type="button" aria-label="닫기" id="infoClose">✕</button>
+    <h2 id="infoTitle">선정 기준</h2>
+    <p class="info-body" id="infoBody"></p>
+  </div>
+</div>
+
 <div class="modal-backdrop" id="subscribeModal" aria-hidden="true" role="dialog" aria-labelledby="subscribeTitle">
   <div class="modal">
     <button class="modal-close" type="button" aria-label="닫기" id="subscribeClose">✕</button>
@@ -961,6 +984,29 @@ function switchTab(id,dir){
   const PORTONE_CHANNEL_KEY = 'channel-key-42ed198b-0afd-4ffd-aa62-ff7d00d9bcc5';
   const SUBSCRIPTION_PRICE = 100;
   const SUBSCRIPTION_ORDER_NAME = '브리픽 월간 구독 (테스트)';
+
+  // 탭 정보 팝업
+  (function(){
+    const im = document.getElementById('infoModal');
+    const ib = document.getElementById('infoBody');
+    const btn = document.getElementById('tabInfoBtn');
+    const cls = document.getElementById('infoClose');
+    function open(){
+      ib.textContent = document.getElementById('tabCriteria').textContent || '';
+      im.classList.add('show');
+      im.setAttribute('aria-hidden','false');
+    }
+    function close(){
+      im.classList.remove('show');
+      im.setAttribute('aria-hidden','true');
+    }
+    btn.addEventListener('click', open);
+    cls.addEventListener('click', close);
+    im.addEventListener('click', e => { if (e.target === im) close(); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && im.classList.contains('show')) close();
+    });
+  })();
 
   const modal   = document.getElementById('subscribeModal');
   const openBtn = document.getElementById('subscribeBtn');
