@@ -195,6 +195,17 @@ async function solapiSendFriendtalk(opts: {
 Deno.serve(async (req) => {
   const startedAt = Date.now();
   try {
+    // verify_jwt=false로 배포되므로 자체 인증 필수
+    const cronSecret = Deno.env.get("CRON_SECRET");
+    const headerSecret = req.headers.get("x-cron-secret")
+      ?? (req.headers.get("authorization") ?? "").replace(/^Bearer\s+/i, "");
+    if (!cronSecret || headerSecret !== cronSecret) {
+      return new Response(JSON.stringify({ ok: false, error: "unauthorized" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
     const url = new URL(req.url);
     const dryRun = url.searchParams.get("dry") === "1"
       || url.searchParams.get("dryRun") === "1";
