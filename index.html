@@ -60,6 +60,7 @@ header{
   z-index:1000;padding:20px;
 }
 .modal-backdrop.show{display:flex}
+body.modal-open{overflow:hidden}
 .modal{
   background:var(--panel);border-radius:20px;padding:32px;width:100%;max-width:440px;
   box-shadow:0 24px 60px rgba(0,0,0,0.18);position:relative;
@@ -995,10 +996,12 @@ function switchTab(id,dir){
       ib.textContent = document.getElementById('tabCriteria').textContent || '';
       im.classList.add('show');
       im.setAttribute('aria-hidden','false');
+      document.body.classList.add('modal-open');
     }
     function close(){
       im.classList.remove('show');
       im.setAttribute('aria-hidden','true');
+      document.body.classList.remove('modal-open');
     }
     btn.addEventListener('click', open);
     cls.addEventListener('click', close);
@@ -1046,6 +1049,7 @@ function switchTab(id,dir){
   function openModal(){
     modal.classList.add('show');
     modal.setAttribute('aria-hidden','false');
+    document.body.classList.add('modal-open');
     form.reset();
     phoneEl.disabled=false;
     consent.disabled=false;
@@ -1059,6 +1063,7 @@ function switchTab(id,dir){
   function closeModal(){
     modal.classList.remove('show');
     modal.setAttribute('aria-hidden','true');
+    document.body.classList.remove('modal-open');
     resetStatus();
   }
   function resetStatus(){
