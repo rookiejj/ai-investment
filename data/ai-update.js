@@ -6,6 +6,14 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-22 07:05 KST",
+    summary: "Apple 15년 만의 CEO 교체 — Tim Cook 9/1 물러나고 하드웨어 SVP John Ternus 취임, AI 전략 재정비가 최우선 과제",
+    changes: [
+      { type: "리더십", sector: "Apple", detail: "Apple. 4/20 이사회 만장일치로 CEO 승계 발표 — Tim Cook은 9/1부로 Executive Chairman 전환, 후임은 하드웨어 엔지니어링 SVP John Ternus(51). 2011년 잡스 타계 이후 15년 만의 교체이며 수개월간의 계승 플랜 결론. Ternus는 2001년 입사해 iPad·MacBook·iPhone·Apple Silicon 제품 엔지니어링을 총괄했고 공동 출원 특허 3,500건+. 최대 난제는 AI — MS·Google·Amazon·Meta 합산 연 CapEx 수천억 달러 전쟁에서 Apple은 자체 프론티어 LLM 없이 Private Cloud Compute·파트너십 기조를 유지했음. 연 $10억 Gemini 파트너십 기반 신 Siri(iOS 26.5 5월 목표)·WKA 검색·AI 웨어러블 3종(스마트글래스·펜던트·카메라 AirPods) 출시 속도 가속이 취임 전후 시험대. Trump·Altman·Buffett 즉각 반응하며 실리콘밸리 세대교체 상징.", time: "2026-04-22 07:05 KST" },
+      { type: "거버넌스", sector: "Anthropic", detail: "Anthropic. 4/21 공시 기준 2026년 Q1 연방 로비 지출 $1.6M으로 분기 기준 사상 최대 — 전년 동기 $360K 대비 4.4배 급증, OpenAI의 $1M(+78.6% YoY) 상회. 주제는 AI 조달·국방부 조달·공급망 리스크·acceptable use policy로 Pentagon과의 분류 설정 사용 제한 공방이 배경. Claude Mythos 사이버보안 역량 공개 이후 국방·인텔리전스 기관 배포 경계를 두고 정치적 갈등 심화, IPO $60B+ 조달 협상 국면에서 규제 리스크 선제 관리.", time: "2026-04-22 07:05 KST" },
+    ]
+  },
+  {
     date: "2026-04-21 19:21 KST",
     summary: "Amazon-Anthropic 추가 $25B 투자 확정·Cerebras IPO S-1 제출 $35B 밸류·AWS $100B+ 약정으로 AI 인프라 자금 지형 재편",
     changes: [

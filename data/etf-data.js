@@ -32,7 +32,7 @@ const data = [
     title: "⚡ 에너지·원자력",
     tag: "석유·가스·우라늄",
     stocks: [
-      { tk:"XLE", nm:"Energy Select SPDR", rs:"Brent $95.48·WTI $89.61 종가·호르무즈 통항 16척 급감·4/21 휴전 만료 정점·이집트·파키스탄 중재 복귀 시도", aum:"38", er:"0.09%", ytd:"+28%", y1:"+18%" },
+      { tk:"XLE", nm:"Energy Select SPDR", rs:"Brent $95대 유지·WTI $89~90·4/22 美-이란 휴전 만료·트럼프 연장 거부 시그널·호르무즈 통항 급감 지속", aum:"38", er:"0.09%", ytd:"+28%", y1:"+18%" },
       { tk:"URA", nm:"Global X Uranium", rs:"우라늄·원전 생태계·연초 조정 국면", aum:"4", er:"0.69%", ytd:"+6%", y1:"+30%" },
       { tk:"NLR", nm:"VanEck Uranium+Nuclear", rs:"원자력 밸류체인", aum:"1.5", er:"0.60%", ytd:"+22%", y1:"+35%" },
       { tk:"AMLP", nm:"Alerian MLP", rs:"MLP 파이프라인·배당", aum:"10", er:"0.85%", ytd:"+12%", y1:"+20%" },
@@ -58,7 +58,7 @@ const data = [
     title: "₿ 크립토·블록체인",
     tag: "비트코인·이더리움·디파이",
     stocks: [
-      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"BTC $75.6K·4/20 $74K 하방 테스트 후 $76K 회복·KelpDAO 해킹으로 DeFi $14B 이탈·호르무즈 휴전 4/21 만료·AUM $58B", aum:"58", er:"0.25%", ytd:"+4%", y1:"-12%" },
+      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"BTC $76K 회복·4/21 +2.7% 반등·휴전 협상 진전·Warsh 연준이사 청문회 대기·AUM $58B", aum:"58", er:"0.25%", ytd:"+4%", y1:"-12%" },
       { tk:"FBTC", nm:"Fidelity Wise Origin BTC", rs:"비트코인 현물·피델리티·AUM $18B", aum:"18", er:"0.25%", ytd:"+2%", y1:"-14%" },
       { tk:"ETHA", nm:"iShares Ethereum Trust", rs:"이더리움 현물·4/14 +7%", aum:"10", er:"0.25%", ytd:"-12%", y1:"-8%" },
       { tk:"BITO", nm:"ProShares Bitcoin Strategy", rs:"비트코인 선물 최초", aum:"3", er:"0.95%", ytd:"-18%", y1:"-18%" },
@@ -71,8 +71,8 @@ const data = [
     title: "🇺🇸 미국 대형주",
     tag: "S&P500·나스닥·소형주",
     stocks: [
-      { tk:"SPY", nm:"SPDR S&P 500", rs:"S&P 500 7,109 마감(-0.24%)·4/21 RTX 장전·4/22 Tesla·Boeing·4/23 Alphabet·Intel·LMT·현대차 실적 집중·Q1 블렌디드 EPS +12.5%", aum:"590", er:"0.09%", ytd:"+3%", y1:"+16%" },
-      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"Tesla·Alphabet·Intel·ServiceNow·IBM 어닝 주도·나스닥 24,468 신고점 부근", aum:"400", er:"0.20%", ytd:"+9%", y1:"+24%" },
+      { tk:"SPY", nm:"SPDR S&P 500", rs:"S&P 7,064(-0.63%)·4/21 휴전 만료 우려 리스크오프·RTX 비트·4/22 Tesla·Boeing·4/23 Alphabet·Intel·LMT 실적 집중", aum:"590", er:"0.09%", ytd:"+3%", y1:"+16%" },
+      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"나스닥 24,260(-0.59%)·Apple CEO 교체 발표·TSLA 4/22·GOOGL 4/23 어닝 주도", aum:"400", er:"0.20%", ytd:"+9%", y1:"+24%" },
       { tk:"VOO", nm:"Vanguard S&P 500", rs:"세계 최대 ETF·AUM $827B·최저 보수", aum:"827", er:"0.03%", ytd:"+2%", y1:"+15%" },
       { tk:"VTI", nm:"Vanguard Total Stock", rs:"미국 전체 시장·4월 신고가 랠리", aum:"420", er:"0.03%", ytd:"+2%", y1:"+14%" },
       { tk:"DIA", nm:"SPDR Dow Jones", rs:"다우 30 우량주·다우 부진", aum:"35", er:"0.16%", ytd:"-3%", y1:"+10%" },

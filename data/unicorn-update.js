@@ -1,6 +1,14 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-22 07:05 KST",
+    summary: "SpaceX 로드쇼 6/8 주 확정·6/11 리테일 이벤트 1,500명·프로스펙터스 5월말 공개·리테일 30% 할당은 역대 최대",
+    changes: [
+      { type: "정보 갱신", sector: "우주·모빌리티·방산",
+        detail: "SpaceX. IPO 로드쇼가 6월 8일 주(週)로 공식 확정, 6/11에는 약 1,500명 규모 리테일 투자자 전용 이벤트가 개최될 예정. 공식 프로스펙터스는 5월 말 공개 목표, 프라이싱은 6월 하순 창 유지. CFO Bret Johnsen은 가상 미팅에서 리테일 할당 비중을 전체의 약 30%로 안내 — Wall Street 표준(10%)의 3배이자 역대 IPO 최고 리테일 비중. $1.75T 목표 밸류는 2월 xAI 합병 당시 $1.25T 대비 +40% 스텝업, 총 조달 $75B로 사상 최대. Polymarket 기준 9월 말 이내 IPO 확률 90%·연말 93%·6월 말 45%.", time: "2026-04-22 07:05 KST" },
+    ]
+  },
+  {
     date: "2026-04-21 13:10 KST",
     summary: "Cerebras S-1 공개 제출·Anthropic $800B 프리엠프티브 오퍼 거절·$1T 밸류 시나리오·Q1 스타트업 $300B 투자",
     changes: [
