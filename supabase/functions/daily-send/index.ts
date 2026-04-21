@@ -26,7 +26,7 @@ const GITHUB_REPO   = Deno.env.get("GITHUB_REPO")   ?? "ai-investment";
 const GITHUB_BRANCH = Deno.env.get("GITHUB_BRANCH") ?? "main";
 const GITHUB_TOKEN  = Deno.env.get("GITHUB_TOKEN");
 const SITE_URL = Deno.env.get("SITE_URL")
-  ?? "https://rookiejj.github.io/ai-investment/";
+  ?? "https://roysbriefing.vercel.app";
 const DISABLE_SMS_FALLBACK = Deno.env.get("DISABLE_SMS_FALLBACK") === "Y";
 
 const LIMIT = 1000;

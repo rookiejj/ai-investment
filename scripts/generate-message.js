@@ -15,7 +15,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
-const SITE_URL = 'https://rookiejj.github.io/ai-investment/';
+const SITE_URL = 'https://roysbriefing.vercel.app';
 const LIMIT = 1000;
 const PER_TAB = 2;
 const SHORT_CUT = 25;
