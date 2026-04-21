@@ -15,8 +15,14 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
 const PORTONE_API = "https://api.portone.io";
+const SOLAPI_API  = "https://api.solapi.com";
 const EXPECTED_AMOUNT_DEFAULT = 100;        // 월 구독 상품 가격 (원)
 const MONTH_DAYS = 30;                       // 1개월 = 30일로 단순 계산
+
+// 결제 완료 알림톡 템플릿
+const ALIMTALK_TEMPLATE_ID = "KA01TP2604210407049408V99MiGpf2B";
+const SHOP_NAME    = "브리픽";
+const PRODUCT_NAME = "월간 구독";
 
 function corsHeaders(origin: string) {
   return {
@@ -33,6 +39,73 @@ function json(body: unknown, init: ResponseInit & { cors: Record<string, string>
     ...init,
     headers: { ...init.cors, "Content-Type": "application/json" },
   });
+}
+
+// ═══ 솔라피 알림톡 ═════════════════════════════════════
+
+async function solapiAuthHeader(apiKey: string, apiSecret: string): Promise<string> {
+  const date = new Date().toISOString();
+  const salt = crypto.randomUUID().replace(/-/g, "");
+  const msg = date + salt;
+  const keyBytes = new TextEncoder().encode(apiSecret);
+  const dataBytes = new TextEncoder().encode(msg);
+  const cryptoKey = await crypto.subtle.importKey(
+    "raw", keyBytes,
+    { name: "HMAC", hash: "SHA-256" },
+    false, ["sign"],
+  );
+  const sigBuf = await crypto.subtle.sign("HMAC", cryptoKey, dataBytes);
+  const sig = Array.from(new Uint8Array(sigBuf))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+  return `HMAC-SHA256 apiKey=${apiKey}, date=${date}, salt=${salt}, signature=${sig}`;
+}
+
+async function sendPaymentAlimtalk(opts: {
+  phone: string;
+  expiryDate: string;   // YYYY-MM-DD
+}): Promise<{ ok: boolean; groupId?: string; error?: string }> {
+  const apiKey    = Deno.env.get("SOLAPI_API_KEY");
+  const apiSecret = Deno.env.get("SOLAPI_API_SECRET");
+  const pfId      = Deno.env.get("SOLAPI_PFID");
+  const sender    = Deno.env.get("SOLAPI_SENDER");
+  if (!apiKey || !apiSecret || !pfId || !sender) {
+    return { ok: false, error: "solapi env missing" };
+  }
+
+  const auth = await solapiAuthHeader(apiKey, apiSecret);
+  const body = {
+    messages: [{
+      to: opts.phone,
+      from: sender,
+      type: "ATA",
+      kakaoOptions: {
+        pfId,
+        templateId: ALIMTALK_TEMPLATE_ID,
+        disableSms: true,
+        variables: {
+          "#{상점명}": SHOP_NAME,
+          "#{상품명}": PRODUCT_NAME,
+          "#{만료일}": opts.expiryDate,
+        },
+      },
+    }],
+  };
+
+  try {
+    const res = await fetch(`${SOLAPI_API}/messages/v4/send-many`, {
+      method: "POST",
+      headers: { "Authorization": auth, "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const j = await res.json();
+    if (!res.ok) {
+      return { ok: false, error: `solapi ${res.status}: ${JSON.stringify(j).slice(0, 300)}` };
+    }
+    return { ok: true, groupId: j.groupId };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : String(e) };
+  }
 }
 
 Deno.serve(async (req) => {
@@ -167,7 +240,31 @@ Deno.serve(async (req) => {
       raw_response: payment,
     });
 
-    return json({ ok: true, status, paid_until: newPaidUntil.toISOString() }, { cors });
+    // 5) 결제 완료 알림톡 발송 (실패해도 결제 자체는 성공 처리)
+    const expiryDate = newPaidUntil.toISOString().slice(0, 10);
+    const alim = await sendPaymentAlimtalk({ phone: cleaned, expiryDate });
+    await supabase.from("send_logs").insert({
+      subscriber_id: subscriberId,
+      phone: cleaned,
+      message: `결제 완료 알림 (${PRODUCT_NAME}, 만료일 ${expiryDate})`,
+      char_count: 0,
+      status: alim.ok ? "success" : "fail",
+      message_type: "alimtalk",
+      provider: "solapi",
+      provider_code: alim.groupId ?? null,
+      provider_message: alim.ok ? "ok" : (alim.error ?? ""),
+      provider_msg_id: alim.groupId ?? null,
+    });
+    if (!alim.ok) {
+      console.error("[payment-confirm] alimtalk failed:", alim.error);
+    }
+
+    return json({
+      ok: true,
+      status,
+      paid_until: newPaidUntil.toISOString(),
+      alimtalk_sent: alim.ok,
+    }, { cors });
   } catch (err) {
     console.error("[payment-confirm]", err);
     const msg = err instanceof Error ? err.message : String(err);
