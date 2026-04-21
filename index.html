@@ -1175,6 +1175,7 @@ function switchTab(id,dir){
         phoneEl.disabled=true;
         consent.disabled=true;
         submit.textContent='구독 완료됨';
+        cancel.classList.remove('show');
         completed=true;
       }
     }catch(err){
