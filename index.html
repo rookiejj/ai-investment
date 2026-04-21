@@ -134,12 +134,29 @@ body.modal-open{overflow:hidden}
 .confirm-box .confirm-note{
   display:block;font:500 13px/1.5 'Inter',sans-serif;color:var(--fg2);
 }
-.modal-success-actions{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.modal-success-actions{margin-top:16px;display:flex;flex-direction:column;gap:10px}
 .modal-success-actions .kakao-link{
   display:block;padding:12px;background:#FEE500;color:#3c1e1e;text-decoration:none;
   border-radius:10px;font:500 14px/1 'Inter',sans-serif;text-align:center;transition:transform .15s;
 }
 .modal-success-actions .kakao-link:hover{transform:translateY(-1px)}
+.modal-success-actions .kakao-link.emphasis{
+  font-size:15px;font-weight:600;padding:15px;
+  box-shadow:0 4px 12px rgba(254,229,0,0.45);
+}
+.complete-notice{
+  display:none;padding:14px 16px;border-radius:10px;
+  background:#fff4e5;color:#a35a00;border:1.5px solid #ffd38a;
+  font:500 13px/1.6 'Inter','Pretendard Variable',sans-serif;
+  text-align:center;letter-spacing:-0.1px;
+  animation:pulseNotice 2s ease-in-out infinite;
+}
+.complete-notice.show{display:block}
+.complete-notice b{color:#8b4500}
+@keyframes pulseNotice{
+  0%,100%{box-shadow:0 0 0 0 rgba(255,165,0,0.35)}
+  50%    {box-shadow:0 0 0 8px rgba(255,165,0,0)}
+}
 .last-updated{font-size:12px;font-weight:400;color:#10b981;-webkit-text-fill-color:#10b981;background:none;white-space:nowrap;margin-left:12px}
 h1{font-size:28px;font-weight:700;letter-spacing:-0.56px;line-height:1.2;color:var(--fg);position:relative;font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;display:flex;align-items:center;flex-wrap:wrap}
 h1 .logo{width:34px;height:34px;border-radius:50%;object-fit:cover;margin-right:10px;flex-shrink:0}
@@ -972,7 +989,11 @@ function switchTab(id,dir){
       <button class="modal-cancel" id="subCancel" type="button">취소</button>
       <div class="modal-status" id="subStatus"></div>
       <div class="modal-success-actions" id="subSuccess">
-        <a class="kakao-link" href="https://pf.kakao.com/_lpxkCX/friend" target="_blank" rel="noopener">카카오톡 채널 친구 추가하기</a>
+        <div class="complete-notice" id="subCompleteNotice">
+          친구톡을 받으려면 <b>카카오 채널 친구 추가</b>가 필수입니다.<br>
+          아래 버튼을 눌러 지금 바로 추가해주세요.
+        </div>
+        <a class="kakao-link" id="subKakaoLink" href="https://pf.kakao.com/_lpxkCX/friend" target="_blank" rel="noopener">카카오톡 채널 친구 추가하기</a>
       </div>
     </form>
   </div>
@@ -1046,6 +1067,8 @@ function switchTab(id,dir){
     submit.textContent='결제하고 구독 시작';
     cancel.classList.remove('show');
     hideConfirmBox();
+    document.getElementById('subCompleteNotice').classList.remove('show');
+    document.getElementById('subKakaoLink').classList.remove('emphasis');
     resetStatus();
   }
   function openModal(){
@@ -1172,6 +1195,8 @@ function switchTab(id,dir){
         };
         const until = j.paid_until ? ' ('+j.paid_until.slice(0,10)+' 까지)' : '';
         showStatus('success', (msgMap[j.status] || '완료!') + until);
+        document.getElementById('subCompleteNotice').classList.add('show');
+        document.getElementById('subKakaoLink').classList.add('emphasis');
         phoneEl.disabled=true;
         consent.disabled=true;
         submit.textContent='구독 완료됨';
