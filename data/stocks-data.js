@@ -10,7 +10,7 @@ const data = [
       { tk:"GOOGL", nm:"Alphabet", rs:"4/22~24 Google Cloud Next·4/29 Q1 실적·Gemini·TPU·에이전틱 워크플로우", r1:"403", p1:"132", r2:"455", p2:"148" },
       { tk:"META", nm:"Meta", rs:"Llama·광고 AI", r1:"201", p1:"66", r2:"235", p2:"72" },
       { tk:"ORCL", nm:"Oracle", rs:"AWS 멀티클라우드 확장·OCI-AWS 인터커넥트·주간 +30% 역사적 랠리·OCI 44% YoY·RPO $553B", r1:"57", p1:"12", r2:"68", p2:"15" },
-      { tk:"PLTR", nm:"Palantir", rs:"AIP 국방·상용", r1:"4.5", p1:"0.6", r2:"7.2", p2:"1.5" },
+      { tk:"PLTR", nm:"Palantir", rs:"카프 CEO 테크놀로지컬 리퍼블릭 22개조 선언·AI 억지력 독트린 공개·비판 여론 촉발·주가 $146 YTD -12%", r1:"4.5", p1:"0.6", r2:"7.2", p2:"1.5" },
       { tk:"CRM", nm:"Salesforce", rs:"Agentforce·Data Cloud", r1:"42", p1:"7.6", r2:"46", p2:"8.5" },
       { tk:"NOW", nm:"ServiceNow", rs:"4/22 Q1 실적·IT워크플로우·에이전틱 AI 플랫폼", r1:"11", p1:"2.2", r2:"13", p2:"3.0" },
     ]
@@ -110,11 +110,11 @@ const data = [
     title: "🛢️ 에너지",
     tag: "석유메이저·LNG·유전서비스",
     stocks: [
-      { tk:"XOM", nm:"ExxonMobil", rs:"Brent $95선 급등 +5~7%·호르무즈 재봉쇄·Touska 억류로 유가 리프라이싱", r1:"332", p1:"29", r2:"345", p2:"32" },
-      { tk:"CVX", nm:"Chevron", rs:"Brent $95·WTI $90선 회복·호르무즈 재봉쇄·이란-미 해군 직접 교전 리스크", r1:"189", p1:"12", r2:"195", p2:"14" },
-      { tk:"LNG", nm:"Cheniere", rs:"미 최대 LNG 수출·중동 리스크 재점화로 프리미엄 복귀", r1:"16", p1:"3.5", r2:"18", p2:"4.2" },
+      { tk:"XOM", nm:"ExxonMobil", rs:"Brent $95.48 WTI $89.61 종가·4/21 미-이란 휴전 만료·호르무즈 일 통행 16척 정상치 급감·지정학 프리미엄 지속", r1:"332", p1:"29", r2:"345", p2:"32" },
+      { tk:"CVX", nm:"Chevron", rs:"WTI $89.61 +6.8%·Brent $95.48 +5.6%·Touska 나포·4/21 휴전 만료·이집트·파키스탄 중재 복귀 시도", r1:"189", p1:"12", r2:"195", p2:"14" },
+      { tk:"LNG", nm:"Cheniere", rs:"미 최대 LNG 수출·호르무즈 통항 붕괴로 스팟 프리미엄 복귀·유럽 가스 리밸런싱", r1:"16", p1:"3.5", r2:"18", p2:"4.2" },
       { tk:"SLB", nm:"Schlumberger", rs:"유전서비스 1위·중동 CapEx 재개 기대", r1:"37", p1:"4.5", r2:"39", p2:"5.0" },
-      { tk:"COP", nm:"ConocoPhillips", rs:"상류 E&P·Brent $95 급반등으로 마진 재확대", r1:"60", p1:"10", r2:"64", p2:"11" },
+      { tk:"COP", nm:"ConocoPhillips", rs:"상류 E&P·Brent $95·WTI $90 회복으로 마진 재확대", r1:"60", p1:"10", r2:"64", p2:"11" },
       { tk:"KMI", nm:"Kinder Morgan", rs:"가스 파이프라인", r1:"16", p1:"2.7", r2:"17", p2:"3.0" },
       { tk:"EOG", nm:"EOG Resources", rs:"셰일 E&P 고효율", r1:"23", p1:"5.5", r2:"24", p2:"5.8" },
     ]
@@ -136,7 +136,7 @@ const data = [
     title: "🚗 자동차·모빌리티",
     tag: "EV·레거시·자율주행",
     stocks: [
-      { tk:"TSLA", nm:"Tesla", rs:"4/22 Q1 실적 임박·컨센 매출 $22.71B EPS $0.37·Q1 인도 358k 예상 하회·Terafab 1TW 컴퓨트 CapEx 가이던스 초점", r1:"95", p1:"3.8", r2:"109", p2:"7.2" },
+      { tk:"TSLA", nm:"Tesla", rs:"4/22 장후 Q1 실적·컨센 매출 $22.71B EPS $0.33~0.37·Robotaxi 댈러스·휴스턴 지오펜스 확장·Austin 무감독 서비스 $4.20 정액·Terafab CapEx 가이던스 관전", r1:"95", p1:"3.8", r2:"109", p2:"7.2" },
       { tk:"TM", nm:"Toyota", rs:"하이브리드 강자", r1:"305", p1:"28", r2:"315", p2:"30" },
       { tk:"GM", nm:"General Motors", rs:"레거시 EV 전환", r1:"185", p1:"10", r2:"190", p2:"11" },
       { tk:"RIVN", nm:"Rivian", rs:"R2 양산 개시·VW JV", r1:"4.5", p1:"-3.6", r2:"6.9", p2:"-1.9" },
@@ -150,10 +150,10 @@ const data = [
     tag: "전투기·미사일·우주·위성",
     stocks: [
       { tk:"LMT", nm:"Lockheed Martin", rs:"4/23 Q1 실적·컨센 EPS $6.73·수주잔고 $194B·F-35·미사일", r1:"72", p1:"7.0", r2:"75", p2:"7.5" },
-      { tk:"RTX", nm:"RTX Corp", rs:"4/21 Q1 실적·컨센 EPS $1.52·26년 매출 $92~93B·book-to-bill 1.3x 초과 관전 포인트", r1:"82", p1:"6.5", r2:"86", p2:"7.2" },
+      { tk:"RTX", nm:"RTX Corp", rs:"4/21 장전 Q1 실적 임박·컨센 EPS $1.51·매출 $21.46B·2025 수주잔고 $268B(상업 $161B+방산 $107B)·중동 수요 프리미엄", r1:"82", p1:"6.5", r2:"86", p2:"7.2" },
       { tk:"NOC", nm:"Northrop Grumman", rs:"B-21·전략무기", r1:"42", p1:"4.0", r2:"44", p2:"4.3" },
       { tk:"GD", nm:"General Dynamics", rs:"잠수함·Gulfstream", r1:"49", p1:"4.2", r2:"52", p2:"4.6" },
-      { tk:"BA", nm:"Boeing", rs:"4/22 Q1 실적 임박·컨센 매출 $22.1B·EPS -$0.39~-$0.63·Q1 상업기 인도 +10% YoY·737 품질 25대 영향", r1:"89.5", p1:"2.2", r2:"80", p2:"3.5" },
+      { tk:"BA", nm:"Boeing", rs:"4/22 장전 Q1 실적·10:30 ET 컨콜·컨센 매출 $22.15B·EPS -$0.39~-$0.69·737 MAX 양산 레이트·787 수요·Spirit 통합 진척 관건", r1:"89.5", p1:"2.2", r2:"80", p2:"3.5" },
       { tk:"RKLB", nm:"Rocket Lab", rs:"Neutron 4Q26 재지연·$816M SDA 수주·국방 프라임 전환", r1:"0.60", p1:"-0.15", r2:"0.90", p2:"-0.08" },
       { tk:"LHX", nm:"L3Harris", rs:"전자전·ISR·위성통신", r1:"21", p1:"2.0", r2:"23", p2:"2.3" },
     ]
@@ -166,7 +166,7 @@ const data = [
       { tk:"RGTI", nm:"Rigetti", rs:"초전도 양자", r1:"0.012", p1:"-0.08", r2:"0.025", p2:"-0.10" },
       { tk:"QBTS", nm:"D-Wave", rs:"어닐링 양자", r1:"0.015", p1:"-0.07", r2:"0.030", p2:"-0.08" },
       { tk:"COIN", nm:"Coinbase", rs:"미 최대 거래소", r1:"7.5", p1:"2.3", r2:"9.0", p2:"2.9" },
-      { tk:"MSTR", nm:"Strategy", rs:"BTC 주말 -2.5% $73.8K 하락 후 월요 $75.3K 회복·호르무즈 재봉쇄 지정학 리스크·78만 9천 BTC 보유", r1:"0.5", p1:"-0.2", r2:"0.55", p2:"-0.15" },
+      { tk:"MSTR", nm:"Strategy", rs:"BTC $75.6K·4/20 장중 $74K 하방 테스트 후 $76K 회복·KelpDAO 해킹 DeFi $14B 이탈·78만 9천 BTC 평균단가 $75,577 공방", r1:"0.5", p1:"-0.2", r2:"0.55", p2:"-0.15" },
       { tk:"MARA", nm:"Marathon Digital", rs:"BTC 채굴", r1:"0.75", p1:"0.10", r2:"1.0", p2:"0.20" },
       { tk:"RIOT", nm:"Riot Platforms", rs:"BTC 채굴·인프라", r1:"0.35", p1:"0.05", r2:"0.50", p2:"0.10" },
     ]

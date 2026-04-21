@@ -6,6 +6,14 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-21 19:21 KST",
+    summary: "Amazon-Anthropic 추가 $25B 투자 확정·Cerebras IPO S-1 제출 $35B 밸류·AWS $100B+ 약정으로 AI 인프라 자금 지형 재편",
+    changes: [
+      { type: "펀딩", sector: "Anthropic", detail: "Anthropic. 4/20 Amazon이 추가 최대 $25B 투자를 확정 — 즉시 $5B 집행 + 커머셜 마일스톤 달성 시 추가 $20B 구조. Anthropic은 향후 10년간 AWS 클라우드 서비스에 $100B+ 지출을 약정, Amazon의 기존 Anthropic 투자와 합쳐 AI 칩·인프라 동맹을 전면 강화. 연환산 매출 $300억·$1M+ 엔터프라이즈 1,000+·Google·Broadcom 3.5GW TPU 확장 딜과 병행하며 IPO $60B+ 조달 협상 유지.", time: "2026-04-21 19:21 KST" },
+      { type: "인프라", sector: "OpenAI", detail: "OpenAI. 4/17 Cerebras가 Nasdaq IPO S-1 제출(티커 CBRS) — 목표 밸류 $35B+·조달액 $3B+, 2월 시리즈H $23B 대비 +60% 프리미엄. OpenAI의 3년 $20B+ 서버 용량 계약이 핵심 앵커, 총 지출 $30B 도달 시 최대 10% 지분 워런트 행사 가능·$1B 데이터센터 건설 자금 추가 약정. 2025년 매출 $510M·순익 $87.9M·RPO $24.6B로 공시, AWS가 3/13 Bedrock에 Cerebras CS-3 배치 결정과 함께 탄력 공급 기반 구축.", time: "2026-04-21 19:21 KST" },
+    ]
+  },
+  {
     date: "2026-04-21 13:10 KST",
     summary: "프론티어 모델 경쟁 — Claude Opus 4.7 엔터프라이즈 코딩 지배력·OpenAI Codex 컴퓨터 제어·Grok 4.3 SpaceXAI 모델 팩토리 대결 구도",
     changes: [
