@@ -1009,6 +1009,64 @@ function switchTab(id,dir){
   const SUBSCRIPTION_PRICE = 100;
   const SUBSCRIPTION_ORDER_NAME = '브리픽 월간 구독 (테스트)';
 
+  // 포트원 모바일 REDIRECTION 복귀 처리
+  async function handlePortoneReturn(){
+    const params = new URLSearchParams(location.search);
+    const paymentId = params.get('paymentId');
+    if(!paymentId) return false;
+    history.replaceState(null, '', location.pathname);
+    let pending = null;
+    try{ pending = JSON.parse(sessionStorage.getItem('briefickPendingPayment') || 'null'); }catch(_e){}
+    if(!pending || pending.paymentId !== paymentId) return false;
+    sessionStorage.removeItem('briefickPendingPayment');
+
+    // 모달 띄우고 결과 처리
+    document.getElementById('subscribeModal').classList.add('show');
+    document.body.classList.add('modal-open');
+    const s = document.getElementById('subStatus');
+    const sub = document.getElementById('subSubmit');
+    const code = params.get('code');
+    if(code){
+      s.className='modal-status show error';
+      s.textContent='결제 실패: '+(params.get('message')||code);
+      sub.disabled=false;sub.textContent='결제하고 구독 시작';
+      return true;
+    }
+    s.className='modal-status show info';
+    s.textContent='결제 확인 중...';
+    sub.disabled=true;sub.textContent='결제 확인 중...';
+    try{
+      const res = await fetch(SUPABASE_URL+'/functions/v1/payment-confirm',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+SUPABASE_ANON_KEY,'apikey':SUPABASE_ANON_KEY},
+        body:JSON.stringify({paymentId,phone:pending.phone,ad_consent:true,expected_amount:SUBSCRIPTION_PRICE}),
+      });
+      const j = await res.json();
+      if(!res.ok||!j.ok){
+        s.className='modal-status show error';
+        s.textContent=j.error||'결제 검증 오류';
+        sub.disabled=false;sub.textContent='결제하고 구독 시작';
+      }else{
+        const msgMap={registered:'구독 완료! 내일 아침 8시부터 친구톡을 보내드립니다.',extended:'구독 연장 완료!'};
+        const until = j.paid_until ? ' ('+j.paid_until.slice(0,10)+' 까지)' : '';
+        s.className='modal-status show success';
+        s.textContent=(msgMap[j.status]||'완료!')+until;
+        document.getElementById('subCompleteNotice').classList.add('show');
+        document.getElementById('subKakaoLink').classList.add('emphasis');
+        document.getElementById('subPhone').disabled=true;
+        document.getElementById('subConsent').disabled=true;
+        sub.disabled=true;sub.textContent='구독 완료됨';
+        document.getElementById('subCancel').classList.remove('show');
+      }
+    }catch(err){
+      s.className='modal-status show error';
+      s.textContent='네트워크 오류: '+err.message;
+      sub.disabled=false;sub.textContent='결제하고 구독 시작';
+    }
+    return true;
+  }
+  handlePortoneReturn();
+
   // 탭 정보 팝업
   (function(){
     const im = document.getElementById('infoModal');
@@ -1164,6 +1222,10 @@ function switchTab(id,dir){
     const paymentId = 'briefick'+Date.now()+Math.random().toString(36).slice(2,8);
     submit.disabled=true;submit.textContent='결제창 여는 중...';
     let completed = false;
+    // 모바일 REDIRECTION 복귀 대비 세션 저장
+    try{
+      sessionStorage.setItem('briefickPendingPayment', JSON.stringify({ phone, paymentId }));
+    }catch(_e){}
     try{
       const pay = await PortOne.requestPayment({
         storeId: PORTONE_STORE_ID,
@@ -1174,7 +1236,8 @@ function switchTab(id,dir){
         currency: 'KRW',
         payMethod: 'CARD',
         customer: { phoneNumber: phone },
-        windowType: { pc: 'IFRAME', mobile: 'IFRAME' },
+        windowType: { pc: 'IFRAME', mobile: 'REDIRECTION' },
+        redirectUrl: location.origin + location.pathname,
       });
       if(pay.code){
         showStatus('error','결제 실패: '+(pay.message||pay.code));
