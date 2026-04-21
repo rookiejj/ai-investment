@@ -51,16 +51,6 @@ function kstDateLabel() {
   return `${y}-${m}-${d} (${dow})`;
 }
 
-function fmtFullDateTime(dateStr) {
-  const m = String(dateStr).match(/^\d{4}-(\d{2})-(\d{2})\s+(\d{2}:\d{2})/);
-  return m ? `${m[1]}-${m[2]} ${m[3]}` : '';
-}
-
-function fmtTimeOnly(dateStr) {
-  const m = String(dateStr).match(/^\d{4}-\d{2}-\d{2}\s+(\d{2}:\d{2})/);
-  return m ? m[1] : '';
-}
-
 // 단어 경계 정돈: em dash → 쉼표/중간점 → 공백 우선순위로 자연스러운 지점에서 끊음
 function smartCut(s, max) {
   const raw = s.trim();
@@ -86,15 +76,8 @@ function smartCut(s, max) {
 function buildTabBlock(tab) {
   const lines = [`${tab.emoji} ${tab.label}`];
   const [first, second] = tab.entries;
-  if (first) {
-    const dt = fmtFullDateTime(first.date);
-    lines.push(dt ? `• ${dt}  ${first.summary}` : `• ${first.summary}`);
-  }
-  if (second) {
-    const t = fmtTimeOnly(second.date);
-    const cut = smartCut(second.summary, SHORT_CUT);
-    lines.push(t ? `  + ${t}  ${cut}` : `  + ${cut}`);
-  }
+  if (first) lines.push(`• ${first.summary}`);
+  if (second) lines.push(`• ${smartCut(second.summary, SHORT_CUT)}`);
   return lines.join('\n');
 }
 

@@ -91,14 +91,6 @@ function kstDateLabel(): string {
   const dow = ["일", "월", "화", "수", "목", "금", "토"][kst.getUTCDay()];
   return `${y}-${m}-${d} (${dow})`;
 }
-function fmtFullDateTime(dateStr: string): string {
-  const m = String(dateStr).match(/^\d{4}-(\d{2})-(\d{2})\s+(\d{2}:\d{2})/);
-  return m ? `${m[1]}-${m[2]} ${m[3]}` : "";
-}
-function fmtTimeOnly(dateStr: string): string {
-  const m = String(dateStr).match(/^\d{4}-\d{2}-\d{2}\s+(\d{2}:\d{2})/);
-  return m ? m[1] : "";
-}
 function smartCut(s: string, max: number): string {
   const raw = s.trim();
   if (raw.length <= max) return raw;
@@ -118,15 +110,8 @@ function smartCut(s: string, max: number): string {
 function buildTabBlock(tab: TabWithEntries): string {
   const lines = [`${tab.emoji} ${tab.label}`];
   const [first, second] = tab.entries;
-  if (first) {
-    const dt = fmtFullDateTime(first.date);
-    lines.push(dt ? `• ${dt}  ${first.summary}` : `• ${first.summary}`);
-  }
-  if (second) {
-    const t = fmtTimeOnly(second.date);
-    const cut = smartCut(second.summary, SHORT_CUT);
-    lines.push(t ? `  + ${t}  ${cut}` : `  + ${cut}`);
-  }
+  if (first) lines.push(`• ${first.summary}`);
+  if (second) lines.push(`• ${smartCut(second.summary, SHORT_CUT)}`);
   return lines.join("\n");
 }
 function buildMessage(tabs: TabWithEntries[]): string {
