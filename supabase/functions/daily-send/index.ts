@@ -1,54 +1,44 @@
 /**
- * 브리픽 일일 카카오 친구톡 발송 Edge Function
+ * 브리픽 일일 카카오 친구톡 발송 Edge Function (솔라피 SOLAPI)
  *
- * 1) GitHub raw에서 data/*-update.js 6개 fetch
+ * 1) GitHub Contents API로 data/*-update.js 6개 fetch
  * 2) 탭별 최신 2건(헤드라인 + 단어경계 축약)으로 메시지 조립
- * 3) subscribers WHERE status='active' 조회
- * 4) 알리고 API로 친구톡 발송 (500명 청크)
+ * 3) subscribers WHERE status='active' AND paid_until > now() 조회
+ * 4) 솔라피 친구톡(CTA) API로 발송 (500명 청크)
  * 5) send_logs INSERT
  *
  * 필수 ENV (supabase secrets):
- *   ALIGO_API_KEY
- *   ALIGO_USER_ID
- *   ALIGO_SENDER_KEY
- *   ALIGO_SENDER
- *   GITHUB_TOKEN        (private repo일 때 필수, public이면 생략 가능)
+ *   SOLAPI_API_KEY
+ *   SOLAPI_API_SECRET
+ *   SOLAPI_PFID         (카카오 발신프로필 ID, KA01PF로 시작)
+ *   SOLAPI_SENDER       (SMS 폴백용 발신번호 · 친구톡에는 미사용 가능)
+ *   GITHUB_TOKEN        (private repo 접근)
  * 선택 ENV:
- *   GITHUB_OWNER        (기본 rookiejj)
- *   GITHUB_REPO         (기본 ai-investment)
- *   GITHUB_BRANCH       (기본 main)
+ *   GITHUB_OWNER / GITHUB_REPO / GITHUB_BRANCH
  *   SITE_URL
- *   FAILOVER            (Y/N, 기본 N)
+ *   DISABLE_SMS_FALLBACK=Y  (친구톡 실패 시 SMS 대체 발송 비활성화, 기본 활성)
  */
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
-type Tab = {
-  file: string;
-  var: string;
-  emoji: string;
-  label: string;
-};
-
-type Entry = {
-  date: string;
-  summary: string;
-};
-
-type TabWithEntries = Tab & { entries: Entry[] };
-
 const GITHUB_OWNER  = Deno.env.get("GITHUB_OWNER")  ?? "rookiejj";
 const GITHUB_REPO   = Deno.env.get("GITHUB_REPO")   ?? "ai-investment";
 const GITHUB_BRANCH = Deno.env.get("GITHUB_BRANCH") ?? "main";
-const GITHUB_TOKEN  = Deno.env.get("GITHUB_TOKEN");  // private repo 시 필수
+const GITHUB_TOKEN  = Deno.env.get("GITHUB_TOKEN");
 const SITE_URL = Deno.env.get("SITE_URL")
   ?? "https://rookiejj.github.io/ai-investment/";
-const FAILOVER = Deno.env.get("FAILOVER") === "Y" ? "Y" : "N";
+const DISABLE_SMS_FALLBACK = Deno.env.get("DISABLE_SMS_FALLBACK") === "Y";
 
 const LIMIT = 1000;
 const PER_TAB = 2;
 const SHORT_CUT = 25;
 const BATCH_SIZE = 500;
+const SOLAPI_API = "https://api.solapi.com";
+
+type Tab = { file: string; var: string; emoji: string; label: string; };
+type Entry = { date: string; summary: string; };
+type TabWithEntries = Tab & { entries: Entry[] };
+type Subscriber = { id: string; phone: string; name: string | null };
 
 const TABS: Tab[] = [
   { file: "stocks-update.js",    var: "updates", emoji: "🇺🇸", label: "미국 마켓" },
@@ -59,7 +49,7 @@ const TABS: Tab[] = [
   { file: "commodity-update.js", var: "updates", emoji: "📉", label: "시장·원자재" },
 ];
 
-// ═══ Data fetch ════════════════════════════════════════
+// ═══ GitHub fetch ═══════════════════════════════════════
 
 async function fetchTabEntries(tab: Tab): Promise<Entry[]> {
   const url = GITHUB_TOKEN
@@ -73,7 +63,7 @@ async function fetchTabEntries(tab: Tab): Promise<Entry[]> {
   const res = await fetch(url, { headers });
   if (!res.ok) {
     const body = await res.text();
-    throw new Error(`fetch ${tab.file} failed ${res.status} (token=${GITHUB_TOKEN ? "yes" : "no"}): ${body.slice(0, 200)}`);
+    throw new Error(`fetch ${tab.file} failed ${res.status}: ${body.slice(0, 200)}`);
   }
   const src = await res.text();
   const list = new Function(
@@ -90,7 +80,7 @@ async function fetchTabEntries(tab: Tab): Promise<Entry[]> {
     }));
 }
 
-// ═══ Message composition ════════════════════════════════
+// ═══ Message composition ═══════════════════════════════
 
 function kstDateLabel(): string {
   const now = new Date();
@@ -101,39 +91,30 @@ function kstDateLabel(): string {
   const dow = ["일", "월", "화", "수", "목", "금", "토"][kst.getUTCDay()];
   return `${y}-${m}-${d} (${dow})`;
 }
-
 function fmtFullDateTime(dateStr: string): string {
   const m = String(dateStr).match(/^\d{4}-(\d{2})-(\d{2})\s+(\d{2}:\d{2})/);
   return m ? `${m[1]}-${m[2]} ${m[3]}` : "";
 }
-
 function fmtTimeOnly(dateStr: string): string {
   const m = String(dateStr).match(/^\d{4}-\d{2}-\d{2}\s+(\d{2}:\d{2})/);
   return m ? m[1] : "";
 }
-
-// em dash → 쉼표/중간점 → 공백 우선으로 자연스러운 지점에서 컷
 function smartCut(s: string, max: number): string {
   const raw = s.trim();
   if (raw.length <= max) return raw;
   const w = raw.slice(0, max);
   const minKeep = Math.floor(max * 0.5);
-
   const emIdx = Math.max(w.lastIndexOf(" — "), w.lastIndexOf("—"));
   if (emIdx >= minKeep) return raw.slice(0, emIdx).trimEnd() + "…";
-
   let lastSep = -1;
   for (let i = 0; i < w.length; i++) {
     if (w[i] === "," || w[i] === "·") lastSep = i;
   }
   if (lastSep >= minKeep) return raw.slice(0, lastSep).trimEnd() + "…";
-
   const sp = w.lastIndexOf(" ");
   if (sp >= minKeep) return raw.slice(0, sp).trimEnd() + "…";
-
   return raw.slice(0, max - 1) + "…";
 }
-
 function buildTabBlock(tab: TabWithEntries): string {
   const lines = [`${tab.emoji} ${tab.label}`];
   const [first, second] = tab.entries;
@@ -148,64 +129,83 @@ function buildTabBlock(tab: TabWithEntries): string {
   }
   return lines.join("\n");
 }
-
 function buildMessage(tabs: TabWithEntries[]): string {
   const parts = [`📊 브리픽 · ${kstDateLabel()}\n━━━━━━━━━━━━━━━━`];
-  for (const t of tabs) {
-    if (t.entries.length) parts.push(buildTabBlock(t));
-  }
+  for (const t of tabs) if (t.entries.length) parts.push(buildTabBlock(t));
   parts.push(`━━━━━━━━━━━━━━━━\n▸ 전체 보기\n${SITE_URL}`);
   return parts.join("\n\n");
 }
 
-// ═══ Aligo API ════════════════════════════════════════
+// ═══ SOLAPI HMAC auth ══════════════════════════════════
 
-async function issueAligoToken(apiKey: string, userId: string): Promise<string> {
-  const form = new URLSearchParams({ apikey: apiKey, userid: userId });
-  const res = await fetch("https://kakaoapi.aligo.in/akv10/token/create/60/s/", {
-    method: "POST",
-    body: form,
-  });
-  const j = await res.json();
-  if (String(j.code) !== "0") {
-    throw new Error(`aligo token fail: ${j.message ?? JSON.stringify(j)}`);
-  }
-  return j.token;
+async function solapiAuthHeader(apiKey: string, apiSecret: string): Promise<string> {
+  const date = new Date().toISOString();
+  const salt = crypto.randomUUID().replace(/-/g, "");
+  const msg = date + salt;
+  const keyBytes = new TextEncoder().encode(apiSecret);
+  const dataBytes = new TextEncoder().encode(msg);
+  const cryptoKey = await crypto.subtle.importKey(
+    "raw", keyBytes,
+    { name: "HMAC", hash: "SHA-256" },
+    false, ["sign"],
+  );
+  const sigBuf = await crypto.subtle.sign("HMAC", cryptoKey, dataBytes);
+  const sig = Array.from(new Uint8Array(sigBuf))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+  return `HMAC-SHA256 apiKey=${apiKey}, date=${date}, salt=${salt}, signature=${sig}`;
 }
 
-type Subscriber = { id: string; phone: string; name: string | null };
+type SolapiSendResult = {
+  groupId: string;
+  groupInfo: { count: { total: number; registeredFailed?: number } };
+  failedMessageList: Array<{ to: string; statusMessage: string }>;
+  raw: unknown;
+};
 
-async function sendFriendtalkBatch(opts: {
+async function solapiSendFriendtalk(opts: {
   apiKey: string;
-  userId: string;
-  token: string;
-  senderKey: string;
+  apiSecret: string;
+  pfId: string;
   sender: string;
   receivers: Subscriber[];
   message: string;
-}): Promise<Record<string, unknown>> {
-  const { apiKey, userId, token, senderKey, sender, receivers, message } = opts;
-  const form = new URLSearchParams();
-  form.set("apikey", apiKey);
-  form.set("userid", userId);
-  form.set("token", token);
-  form.set("senderkey", senderKey);
-  form.set("sender", sender);
-  form.set("failover", FAILOVER);
-  receivers.forEach((r, i) => {
-    const n = i + 1;
-    form.set(`receiver_${n}`, r.phone);
-    form.set(`message_${n}`, message);
-    if (r.name) form.set(`recv_name_${n}`, r.name);
-  });
-  const res = await fetch("https://kakaoapi.aligo.in/akv10/friend/send/", {
+}): Promise<SolapiSendResult> {
+  const { apiKey, apiSecret, pfId, sender, receivers, message } = opts;
+
+  const messages = receivers.map((r) => ({
+    to: r.phone,
+    from: sender,
+    text: message,
+    type: "CTA",
+    kakaoOptions: {
+      pfId,
+      disableSms: DISABLE_SMS_FALLBACK,
+    },
+  }));
+
+  const auth = await solapiAuthHeader(apiKey, apiSecret);
+  const res = await fetch(`${SOLAPI_API}/messages/v4/send-many`, {
     method: "POST",
-    body: form,
+    headers: {
+      "Authorization": auth,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ messages }),
   });
-  return await res.json();
+  const json = await res.json();
+  if (!res.ok) {
+    throw new Error(`solapi ${res.status}: ${JSON.stringify(json).slice(0, 400)}`);
+  }
+  return {
+    groupId: json.groupId,
+    groupInfo: json.groupInfo,
+    failedMessageList: json.failedMessageList ?? [],
+    raw: json,
+  };
 }
 
-// ═══ Handler ══════════════════════════════════════════
+// ═══ Handler ═══════════════════════════════════════════
 
 Deno.serve(async (req) => {
   const startedAt = Date.now();
@@ -230,20 +230,20 @@ Deno.serve(async (req) => {
       console.warn(`[warn] message exceeds limit: ${message.length}/${LIMIT}`);
     }
 
-    // 2) 구독자 조회 (dry-run에서도 수만 확인)
+    // 2) 유료 활성 구독자 조회 (paid_until 미래 또는 NULL 관대 모드)
+    const nowIso = new Date().toISOString();
     const { data: subs, error: subErr } = await supabase
       .from("subscribers")
-      .select("id, phone, name")
+      .select("id, phone, name, paid_until")
       .eq("status", "active")
-      .returns<Subscriber[]>();
+      .or(`paid_until.gt.${nowIso},paid_until.is.null`)
+      .returns<Array<Subscriber & { paid_until: string | null }>>();
     if (subErr) throw subErr;
 
     if (dryRun) {
       return Response.json({
-        ok: true,
-        dryRun: true,
-        charCount: message.length,
-        limit: LIMIT,
+        ok: true, dryRun: true,
+        charCount: message.length, limit: LIMIT,
         overflow: message.length > LIMIT,
         activeSubscribers: subs?.length ?? 0,
         tabCount: tabs.length,
@@ -256,57 +256,65 @@ Deno.serve(async (req) => {
       return Response.json({ ok: true, sent: 0, note: "no active subscribers", charCount: message.length });
     }
 
-    // 3) 알리고 발송
-    const apiKey    = Deno.env.get("ALIGO_API_KEY")!;
-    const userId    = Deno.env.get("ALIGO_USER_ID")!;
-    const senderKey = Deno.env.get("ALIGO_SENDER_KEY")!;
-    const sender    = Deno.env.get("ALIGO_SENDER")!;
+    // 3) 솔라피 발송
+    const apiKey    = Deno.env.get("SOLAPI_API_KEY")!;
+    const apiSecret = Deno.env.get("SOLAPI_API_SECRET")!;
+    const pfId      = Deno.env.get("SOLAPI_PFID")!;
+    const sender    = Deno.env.get("SOLAPI_SENDER")!;
+    if (!apiKey || !apiSecret || !pfId || !sender) {
+      return Response.json({ ok: false, error: "solapi env missing" }, { status: 500 });
+    }
 
-    const token = await issueAligoToken(apiKey, userId);
     const batchId = crypto.randomUUID();
     const logs: Array<Record<string, unknown>> = [];
 
     for (let i = 0; i < subs.length; i += BATCH_SIZE) {
       const batch = subs.slice(i, i + BATCH_SIZE);
-      const result = await sendFriendtalkBatch({
-        apiKey, userId, token, senderKey, sender,
-        receivers: batch, message,
-      });
-      const ok = String(result.code ?? "") === "0";
+      let result: SolapiSendResult | null = null;
+      let errMsg: string | null = null;
+      try {
+        result = await solapiSendFriendtalk({
+          apiKey, apiSecret, pfId, sender,
+          receivers: batch, message,
+        });
+      } catch (e) {
+        errMsg = e instanceof Error ? e.message : String(e);
+      }
+
+      const failedTos = new Set((result?.failedMessageList ?? []).map((f) => f.to));
       for (const s of batch) {
+        const failed = !!errMsg || failedTos.has(s.phone);
         logs.push({
           subscriber_id: s.id,
           phone: s.phone,
           message,
           char_count: message.length,
-          status: ok ? "success" : "fail",
-          aligo_code: String(result.code ?? ""),
-          aligo_message: String(result.message ?? ""),
-          aligo_msg_id: result.msg_id != null ? String(result.msg_id) : null,
+          status: failed ? "fail" : "success",
+          aligo_code: result?.groupId ?? null,
+          aligo_message: errMsg ?? (failed ? "solapi failedMessageList" : "ok"),
+          aligo_msg_id: result?.groupId ?? null,
           batch_id: batchId,
         });
       }
-      if (!ok) {
-        console.error(`[error] batch ${i / BATCH_SIZE + 1} failed`, result);
+
+      if (errMsg) {
+        console.error(`[error] batch ${i / BATCH_SIZE + 1}`, errMsg);
         break;
       }
     }
 
-    // 4) 로그 기록
     const { error: logErr } = await supabase.from("send_logs").insert(logs);
     if (logErr) console.error("[error] log insert", logErr);
 
     const success = logs.filter((l) => l.status === "success").length;
     const fail = logs.filter((l) => l.status === "fail").length;
-    const elapsedMs = Date.now() - startedAt;
 
     return Response.json({
       ok: fail === 0,
-      sent: success,
-      failed: fail,
+      sent: success, failed: fail,
       charCount: message.length,
       batchId,
-      elapsedMs,
+      elapsedMs: Date.now() - startedAt,
     });
   } catch (err) {
     console.error("[fatal]", err);
