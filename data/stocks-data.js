@@ -9,10 +9,10 @@ const data = [
       { tk:"MSFT", nm:"Microsoft", rs:"Azure AI·Copilot·OpenAI", r1:"282", p1:"101", r2:"325", p2:"118" },
       { tk:"GOOGL", nm:"Alphabet", rs:"4/22~24 Google Cloud Next·4/29 Q1 실적·Gemini·TPU·에이전틱 워크플로우", r1:"403", p1:"132", r2:"455", p2:"148" },
       { tk:"META", nm:"Meta", rs:"Llama·광고 AI", r1:"201", p1:"66", r2:"235", p2:"72" },
-      { tk:"ORCL", nm:"Oracle", rs:"OCI +44% YoY·RPO $553B·Stargate 7GW·$400B 투자", r1:"57", p1:"12", r2:"68", p2:"15" },
+      { tk:"ORCL", nm:"Oracle", rs:"AWS 멀티클라우드 확장·OCI-AWS 인터커넥트·주간 +30% 역사적 랠리·OCI 44% YoY·RPO $553B", r1:"57", p1:"12", r2:"68", p2:"15" },
       { tk:"PLTR", nm:"Palantir", rs:"AIP 국방·상용", r1:"4.5", p1:"0.6", r2:"7.2", p2:"1.5" },
       { tk:"CRM", nm:"Salesforce", rs:"Agentforce·Data Cloud", r1:"42", p1:"7.6", r2:"46", p2:"8.5" },
-      { tk:"NOW", nm:"ServiceNow", rs:"IT워크플로우·에이전트 AI 플랫폼", r1:"11", p1:"2.2", r2:"13", p2:"3.0" },
+      { tk:"NOW", nm:"ServiceNow", rs:"4/22 Q1 실적·IT워크플로우·에이전틱 AI 플랫폼", r1:"11", p1:"2.2", r2:"13", p2:"3.0" },
     ]
   },
   {
@@ -97,7 +97,7 @@ const data = [
     title: "🧬 바이오·헬스케어",
     tag: "GLP-1·종양·로봇수술",
     stocks: [
-      { tk:"LLY", nm:"Eli Lilly", rs:"Foundayo $149 판매개시·retatrutide Ph3 H2 데이터·경구 GLP-1 1위", r1:"65", p1:"22", r2:"81", p2:"28" },
+      { tk:"LLY", nm:"Eli Lilly", rs:"Foundayo 출시 2주차 주간 1,390처방 완만한 램프업·Wegovy 경구제 선두 지속·retatrutide Ph3 데이터 대기", r1:"65", p1:"22", r2:"81", p2:"28" },
       { tk:"NVO", nm:"Novo Nordisk", rs:"OpenAI 전사 AI 파트너십·Wegovy 경구제·2026 매출 -5~-13% 가이던스", r1:"47", p1:"15", r2:"43", p2:"13" },
       { tk:"ISRG", nm:"Intuitive Surgical", rs:"da Vinci 로봇수술", r1:"8.8", p1:"2.6", r2:"10", p2:"3.0" },
       { tk:"VRTX", nm:"Vertex Pharma", rs:"낭포성섬유증·통증", r1:"11", p1:"4.0", r2:"12.5", p2:"4.6" },
@@ -136,7 +136,7 @@ const data = [
     title: "🚗 자동차·모빌리티",
     tag: "EV·레거시·자율주행",
     stocks: [
-      { tk:"TSLA", nm:"Tesla", rs:"금요 종가 $400.62·4/22 Q1 실적 임박·컨센 매출 $22.26B·EPS $0.37·Q1 인도 358k·Model Y L 출시", r1:"95", p1:"3.8", r2:"109", p2:"7.2" },
+      { tk:"TSLA", nm:"Tesla", rs:"4/22 Q1 실적 임박·컨센 매출 $22.71B EPS $0.37·Q1 인도 358k 예상 하회·Terafab 1TW 컴퓨트 CapEx 가이던스 초점", r1:"95", p1:"3.8", r2:"109", p2:"7.2" },
       { tk:"TM", nm:"Toyota", rs:"하이브리드 강자", r1:"305", p1:"28", r2:"315", p2:"30" },
       { tk:"GM", nm:"General Motors", rs:"레거시 EV 전환", r1:"185", p1:"10", r2:"190", p2:"11" },
       { tk:"RIVN", nm:"Rivian", rs:"R2 양산 개시·VW JV", r1:"4.5", p1:"-3.6", r2:"6.9", p2:"-1.9" },
@@ -149,8 +149,8 @@ const data = [
     title: "✈️ 항공우주·방산",
     tag: "전투기·미사일·우주·위성",
     stocks: [
-      { tk:"LMT", nm:"Lockheed Martin", rs:"F-35·미사일", r1:"72", p1:"7.0", r2:"75", p2:"7.5" },
-      { tk:"RTX", nm:"RTX Corp", rs:"패트리엇·엔진", r1:"82", p1:"6.5", r2:"86", p2:"7.2" },
+      { tk:"LMT", nm:"Lockheed Martin", rs:"4/23 Q1 실적·컨센 EPS $6.73·수주잔고 $194B·F-35·미사일", r1:"72", p1:"7.0", r2:"75", p2:"7.5" },
+      { tk:"RTX", nm:"RTX Corp", rs:"4/21 Q1 실적·컨센 EPS $1.52·26년 매출 $92~93B·book-to-bill 1.3x 초과 관전 포인트", r1:"82", p1:"6.5", r2:"86", p2:"7.2" },
       { tk:"NOC", nm:"Northrop Grumman", rs:"B-21·전략무기", r1:"42", p1:"4.0", r2:"44", p2:"4.3" },
       { tk:"GD", nm:"General Dynamics", rs:"잠수함·Gulfstream", r1:"49", p1:"4.2", r2:"52", p2:"4.6" },
       { tk:"BA", nm:"Boeing", rs:"4/22 Q1 실적 임박·컨센 매출 $22.1B·EPS -$0.39~-$0.63·Q1 상업기 인도 +10% YoY·737 품질 25대 영향", r1:"89.5", p1:"2.2", r2:"80", p2:"3.5" },
@@ -166,7 +166,7 @@ const data = [
       { tk:"RGTI", nm:"Rigetti", rs:"초전도 양자", r1:"0.012", p1:"-0.08", r2:"0.025", p2:"-0.10" },
       { tk:"QBTS", nm:"D-Wave", rs:"어닐링 양자", r1:"0.015", p1:"-0.07", r2:"0.030", p2:"-0.08" },
       { tk:"COIN", nm:"Coinbase", rs:"미 최대 거래소", r1:"7.5", p1:"2.3", r2:"9.0", p2:"2.9" },
-      { tk:"MSTR", nm:"Strategy", rs:"BTC $74~76K 주말 박스권·$75K 저항대·호르무즈 재폐쇄 지정학 재부상·78만 9천 BTC 보유", r1:"0.5", p1:"-0.2", r2:"0.55", p2:"-0.15" },
+      { tk:"MSTR", nm:"Strategy", rs:"BTC 주말 -2.5% $73.8K 하락 후 월요 $75.3K 회복·호르무즈 재봉쇄 지정학 리스크·78만 9천 BTC 보유", r1:"0.5", p1:"-0.2", r2:"0.55", p2:"-0.15" },
       { tk:"MARA", nm:"Marathon Digital", rs:"BTC 채굴", r1:"0.75", p1:"0.10", r2:"1.0", p2:"0.20" },
       { tk:"RIOT", nm:"Riot Platforms", rs:"BTC 채굴·인프라", r1:"0.35", p1:"0.05", r2:"0.50", p2:"0.10" },
     ]

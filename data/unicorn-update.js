@@ -1,6 +1,20 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-21 13:10 KST",
+    summary: "Cerebras S-1 공개 제출·Anthropic $800B 프리엠프티브 오퍼 거절·$1T 밸류 시나리오·Q1 스타트업 $300B 투자",
+    changes: [
+      { type: "정보 갱신", sector: "AI·ML",
+        detail: "Cerebras Systems. 4/17 나스닥 상장용 S-1 등록신청서 공개 제출 — 티커 CBRS. 2025년 매출 $510M으로 2024년 대비 +76% 증가, 순이익 $87.9M(전년 -$485M 적자 전환). 주요 고객 편중 리스크가 문서에 드러남 — 2025 매출의 62%가 MBZUAI(UAE AI 대학)·24%가 G42로 합계 86%. 주관사는 Morgan Stanley·Citi·Barclays·UBS 4파전. 밸류에이션 목표 $22~25B·$2B 조달·5월 중순 프라이싱 유지. OpenAI 3년 $20B·750MW 공급 계약이 성장 가시성 핵심 근거.", time: "2026-04-21 13:10 KST" },
+      { type: "정보 갱신", sector: "AI·ML",
+        detail: "Anthropic. Bloomberg 보도 — VC들이 $800B+ 밸류로 프리엠프티브 펀딩 오퍼 제시했으나 Anthropic은 관심 없음 표명. 연초 $350B 대비 2개월 만에 2배 이상 상승, 일부 투자자는 $1T 밸류 시나리오 제기. ARR은 3월 $190억에서 4월 $300억으로 2배 증가해 처음으로 OpenAI($250억) 추월. IPO는 빠르면 2026년 가을 가능성, Goldman·JPM·MS 주관 $60B+ 조달 협상 유지.", time: "2026-04-21 13:10 KST" },
+      { type: "정보 갱신", sector: "엔터프라이즈 SW",
+        detail: "Cursor. 신규 라운드 $2B 조달 $50B 밸류 협상 지속 — 11월 Series D($29.3B) 대비 6개월 만에 밸류 1.7배 상승. 2026년 말 ARR $6B+ 목표가 근거. a16z 리드, NVIDIA·Thrive 공동 참여 구조. AI IDE 카테고리 지배력 유지 중, Anysphere 모회사의 Series E 클로징이 2~3주 내 가능성.", time: "2026-04-21 13:10 KST" },
+      { type: "정보 갱신", sector: "AI·ML",
+        detail: "Q1 2026 스타트업 시장. Crunchbase 집계 Q1 전 세계 VC 투자 $300B로 분기 사상 최고. OpenAI $122B($852B 밸류) 종가·xAI-SpaceX $1.75T IPO 신청·Anthropic $30B Series G 후 $380B 등 하이퍼스케일 딜이 주도. 47개 신규 초기단계 유니콘 — 딥테크·AI·방산 인프라 중심으로 쏠림 가속.", time: "2026-04-21 13:10 KST" },
+    ]
+  },
+  {
     date: "2026-04-21 07:07 KST",
     summary: "Cursor 신규 $2B 라운드·$50B+ 밸류 협상 공식 보도·Revolut Storonsky CEO IPO 2028+ 연기 공식화",
     changes: [

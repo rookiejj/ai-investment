@@ -6,6 +6,15 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-21 13:10 KST",
+    summary: "프론티어 모델 경쟁 — Claude Opus 4.7 엔터프라이즈 코딩 지배력·OpenAI Codex 컴퓨터 제어·Grok 4.3 SpaceXAI 모델 팩토리 대결 구도",
+    changes: [
+      { type: "경쟁 지형", sector: "Anthropic", detail: "Anthropic. 4월 연환산 매출 $300억(OpenAI $250억 최초 추월)·$1M+ 엔터프라이즈 고객 1,000+ 유지. Claude Opus 4.7 SWE-bench Pro 64.3%·Claude Code 데스크탑 + Routines + AI 디자인 도구 3종 동시 공개로 엔터프라이즈 코딩 50%+ 점유 유지. 투자자들이 $800B 밸류에이션 신규 오퍼, Google·Broadcom 3.5GW TPU 확장 딜과 IPO $60B+ 조달 협상 병행.", time: "2026-04-21 13:10 KST" },
+      { type: "경쟁 지형", sector: "OpenAI", detail: "OpenAI. 4/16 'Codex for (almost) everything' 대규모 업데이트로 데스크톱 컴퓨터 제어·다수 에이전트 병렬·90+ 플러그인 탑재, Claude Code 정면 도전. 4/17 Cerebras와 3년 $20B+ 서버 용량 다년 계약 체결(지분 워런트 포함)로 Stargate($400B)·Amazon($100B) 외 세 번째 공급선 확보, NVIDIA 의존도 축소 본격화. GPT-6 출시 윈도우는 5월이 최고 확률(Polymarket 4/30 이내 78%).", time: "2026-04-21 13:10 KST" },
+      { type: "경쟁 지형", sector: "xAI", detail: "xAI. 4/17 Grok 4.3 Beta(SuperGrok Heavy $300/월 한정)·Grok Speech STT/TTS API·XChat 슈퍼앱을 3일간 연속 공개하며 'SpaceXAI 모델 팩토리' 일 단위 배포 체제 가동. Grok 5(6T MoE, Q2 2026 목표)는 Colossus 2 슈퍼클러스터 1.5GW 풀 가동 훈련 중. 4/14 Cursor 제품엔지니어링 리더 Andrew Milich·Jason Ginsberg 영입해 Grok 코딩 에이전트 '0에서 재구축' 착수 — Claude Code·Codex 열세 인정.", time: "2026-04-21 13:10 KST" },
+    ]
+  },
+  {
     date: "2026-04-20 19:19 KST",
     summary: "xAI Grok Speech STT·TTS API 엔터프라이즈 공개 — ElevenLabs·Deepgram 정면 경쟁, Tesla·Starlink 구동 스택의 API화",
     changes: [

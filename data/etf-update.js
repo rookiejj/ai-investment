@@ -1,6 +1,20 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
+    date: "2026-04-21 13:10 KST",
+    summary: "Brent $96 재돌파·IBIT BTC $73.8K 저점 후 회복·EWY KOSPI 7거래일 연속 상승·어닝 집중 주간 SPY·QQQ 집중 관전",
+    changes: [
+      { type: "수치 갱신", sector: "미국 대형주",
+        detail: "SPY·QQQ·VOO. 이번 주는 집중 어닝 주간 — 4/21 RTX·4/22 Tesla·Boeing·ServiceNow·IBM·4/23 Alphabet·Intel·LMT·4/24 American Airlines. Q1 블렌디드 EPS 컨센 +12.5% 기준선 유지, Dow 49,447·Nasdaq 24,468·S&P 7,126으로 지난 주 사상 최고 경신 마감. 기술주 중심 어닝 흐름이 AI CapEx 가시성을 재확인할지, 아니면 실망 가이던스로 이익 모멘텀이 꺾일지 결정되는 구간.", time: "2026-04-21 13:10 KST" },
+      { type: "수치 갱신", sector: "에너지·원자력",
+        detail: "XLE·XOP·VDE. Brent가 월요(4/20) +5~6% 반등해 $95~96/배럴 재돌파, WTI $90선. 이란이 미국 해상봉쇄 해제 거부에 맞서 호르무즈 재봉쇄 유지·미 해군의 이란 국적 Touska 나포로 긴장 격화. 4/21 화요일 미-이란 2주 휴전 만료가 에너지 ETF 단기 경로의 결정 변수, 4/25 OPEC+ 화상 회의 대기.", time: "2026-04-21 13:10 KST" },
+      { type: "수치 갱신", sector: "크립토·블록체인",
+        detail: "IBIT·FBTC. BTC 주말 -2.5% 하락해 월요 오픈 $73,820, 오전 9시 ET에 $75,324 회복. 미 스폿 BTC ETF 기관 매수세가 하방 방어, 호르무즈 재봉쇄·이란 선박 나포 지정학 헤드라인이 단기 압력. Kelp 해킹 $296M 손실(Lazarus 연관 의심)·RaveDAO 조작 의혹이 크립토 센티먼트 추가 악화 요인.", time: "2026-04-21 13:10 KST" },
+      { type: "수치 갱신", sector: "신흥국·글로벌",
+        detail: "EWY. KOSPI 4/20 +0.44% 상승해 6,219.09로 7거래일 연속 상승, 코스닥도 +0.41% 1,174.85. 반도체 쌍끌이가 지수 상승의 핵심 — SK하이닉스 +3.0%·삼성전자 +0.2%·LG엔솔 +2.8%·SK스퀘어 +4.4%·두산에너빌리티 +4.6%. 4/23 SK하이닉스 Q1(OP 컨센 34.9조, 키움·유안타·미래에셋 40조대 상향)과 LG엔솔 Q1 어닝쇼크(영업손실 2,078억)가 엇갈림.", time: "2026-04-21 13:10 KST" },
+    ]
+  },
+  {
     date: "2026-04-20 19:19 KST",
     summary: "월요 Brent $95 급등 +5~7%·S&P 선물 -0.8%·KOSPI 6,260선 돌파로 EWY·XLE 재평가, IBIT $74~76K 박스권",
     changes: [

@@ -7,9 +7,9 @@ const data = [
     tag: "프론티어 모델·AI 인프라",
     stocks: [
       { nm:"OpenAI", rs:"ChatGPT·GPT-5·AGI 추구", val:"$852B", round:"$122B 펀딩", sector:"AGI", ipo:"2026 말 $1T+" },
-      { nm:"Anthropic", rs:"ARR 3월 $190B→4월 $300B 2배·$800B 신규 오퍼 수령·Opus 4.7 GA", val:"$380B", round:"Feb '26 Series G $30B @ $350B pre", sector:"프론티어 AI", ipo:"2026.10 $60B+ 조달 협상" },
+      { nm:"Anthropic", rs:"ARR 3월 $190억→4월 $300억 2배·투자자 $800B 프리엠프티브 오퍼 거절·$1T 밸류 시나리오 부상·Opus 4.7 GA", val:"$380B", round:"Feb '26 Series G $30B @ $350B pre", sector:"프론티어 AI", ipo:"2026.10 $60B+ 조달 협상" },
       { nm:"Databricks", rs:"레이크하우스·AI 통합·ARR $5.4B", val:"$134B", round:"Series L ($11B)", sector:"데이터·AI", ipo:"2026 H2 S-1" },
-      { nm:"Cerebras", rs:"5월 중순 프라이싱 공식 확인·OpenAI 3년 $20B·750MW 공급·Forge 2차시장 $26~28B·MS 리드 주관", val:"$23B", round:"5월 중순 프라이싱·$2B 조달", sector:"AI 하드웨어", ipo:"2026.05 나스닥 CBRS·$22~25B" },
+      { nm:"Cerebras", rs:"4/17 S-1 공개 제출 확정·2025 매출 $510M 순익 $87.9M·G42·MBZUAI 86% 매출·Morgan Stanley 리드·OpenAI 3년 $20B", val:"$23B", round:"5월 중순 프라이싱·$2B 조달", sector:"AI 하드웨어", ipo:"2026.05 나스닥 CBRS·$22~25B" },
       { nm:"Safe Superintelligence", rs:"Sutskever 창업·제품 전무·Alphabet·NVIDIA 베팅 AGI 연구소", val:"$32B", round:"Series B ($2B, 2025-04)", sector:"AGI 안전", ipo:"미정" },
       { nm:"Thinking Machines Lab", rs:"Murati 창업·Tinker API·NVIDIA GW 파트너십·$50B 라운드 난항", val:"$12B", round:"Seed ($2B, 2025-07)", sector:"멀티모달 AI", ipo:"미정" },
       { nm:"Cohere", rs:"엔터프라이즈 LLM·ARR $240M+·프론티어 모델 제공사", val:"$7B", round:"Series D 확장 ($600M)", sector:"엔터프라이즈 LLM", ipo:"2026 CFO 영입" },
@@ -37,7 +37,7 @@ const data = [
       { nm:"Notion", rs:"AI 워크스페이스·문서·위키", val:"$11B", round:"세컨더리 ($270M)", sector:"생산성", ipo:"미정" },
       { nm:"Discord", rs:"커뮤니티 플랫폼·1/6 S-1 비밀 제출·나스닥 로드쇼 준비", val:"$15B", round:"Series I", sector:"소셜", ipo:"2026 H1 목표(지연 가능)" },
       { nm:"Airtable", rs:"노코드 데이터베이스·자동화", val:"$4B", round:"세컨더리 (다운)", sector:"노코드", ipo:"미정" },
-      { nm:"Cursor", rs:"4/19 신규 $2B 라운드·$50B+ 밸류 협상 공식 보도·a16z 리드·NVIDIA·Thrive 참여·ARR 연말 $6B+ 목표", val:"$29.3B", round:"Series D ($2.3B, 2025-11)", sector:"AI 코딩", ipo:"미정" },
+      { nm:"Cursor", rs:"최소 $2B 신규 라운드 $50B 밸류 협상·6개월 만에 밸류 1.7배·2026년 말 ARR $6B+ 예상·a16z 리드", val:"$29.3B", round:"Series D ($2.3B, 2025-11)", sector:"AI 코딩", ipo:"미정" },
       { nm:"Hugging Face", rs:"Google·NVIDIA·AMD 공동 투자·오픈 AI 모델 허브 표준", val:"$4.5B", round:"Series D ($235M, 2023-08)", sector:"오픈소스 AI 허브", ipo:"미정" },
     ]
   },
