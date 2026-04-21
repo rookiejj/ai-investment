@@ -215,14 +215,26 @@ Deno.serve(async (req) => {
       console.warn(`[warn] message exceeds limit: ${message.length}/${LIMIT}`);
     }
 
-    // 2) 유료 활성 구독자 조회 (paid_until 미래 또는 NULL 관대 모드)
+    // 2) 만료된 구독자 상태 최신화 (paid_until이 과거인 active → expired)
     const nowIso = new Date().toISOString();
+    const { error: expErr, count: expiredCount } = await supabase
+      .from("subscribers")
+      .update({ status: "expired" }, { count: "exact" })
+      .eq("status", "active")
+      .not("paid_until", "is", null)
+      .lte("paid_until", nowIso)
+      .select("id", { count: "exact", head: true });
+    if (expErr) console.warn("[warn] expire update failed", expErr);
+    if (expiredCount && expiredCount > 0) {
+      console.log(`[info] expired ${expiredCount} subscriber(s)`);
+    }
+
+    // 3) 활성 구독자 조회 (유료 유효 + 무료 NULL 모두 포함)
     const { data: subs, error: subErr } = await supabase
       .from("subscribers")
-      .select("id, phone, name, paid_until")
+      .select("id, phone, name")
       .eq("status", "active")
-      .or(`paid_until.gt.${nowIso},paid_until.is.null`)
-      .returns<Array<Subscriber & { paid_until: string | null }>>();
+      .returns<Subscriber[]>();
     if (subErr) throw subErr;
 
     if (dryRun) {
