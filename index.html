@@ -1174,6 +1174,8 @@ function switchTab(id,dir){
         currency: 'KRW',
         payMethod: 'CARD',
         customer: { phoneNumber: phone },
+        windowType: { pc: 'IFRAME', mobile: 'REDIRECTION' },
+        redirectUrl: window.location.href,
       });
       if(pay.code){
         showStatus('error','결제 실패: '+(pay.message||pay.code));
