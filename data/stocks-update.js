@@ -3,6 +3,20 @@
 
 const updates = [
   {
+    date: "2026-04-22 13:10 KST",
+    summary: "트럼프 이란 휴전 조건부 연장·WTI $90 유지·BTC $77.6K 24h +3%·Apple 승계 서프라이즈·TSLA 실적 당일 컨센 $22.27B 재확인",
+    changes: [
+      { type: "정보 갱신", sector: "에너지",
+        detail: "에너지 섹터. 4/21 저녁 트럼프가 미-이란 2주 휴전을 조건부 연장, '테헤란 지도부가 통일된 제안을 내놓을 때까지' 유효하다고 발표. 호르무즈 해협은 기능적 폐쇄 지속, 걸프 지역 4월 생산은 14.3mb/d로 3월 대비 -3mb/d·전쟁 이전 대비 -13mb/d 감산. WTI $90·Brent $95선 유지로 XOM·CVX·COP 마진 확대 구간 연장, LNG는 유럽 프리미엄 장기화 전제.", time: "2026-04-22 13:10 KST" },
+      { type: "정보 갱신", sector: "양자·크립토",
+        detail: "Strategy(MSTR). 4/22 오전 BTC $77,593 부근, 24시간 +3% 재가속. Capital Group American Funds Fundamental Investors 펀드가 MSTR 432만주·$747M 추가 매수해 총 1,033만주·$1.78B 보유로 대형 기관주주 진입. Strategy 4월 BTC gain $1.3B·YTD yield 9.5%·25년 풀해 yield 22.8% 누적, 78만 9천 BTC 평단 $75,577 안정적 상회.", time: "2026-04-22 13:10 KST" },
+      { type: "정보 갱신", sector: "자동차·모빌리티",
+        detail: "Tesla(TSLA). 4/22 한국시간 기준 장후 Q1 실적·컨센 매출 $22.27B(공식 제공은 $22.71B)·조정 EPS $0.25~0.37 범위. Q1 인도 358,023대(컨센 372,160대 미스), Wall Street는 YoY 매출 +13%·EPS +33% 성장 전망이나 직전 분기 대비 부진. 에너지 스토리지 반토막 우려와 약 5만대 재고 오버행이 단기 이익 압박 요인. 핵심 관전은 Terafab 1TW CapEx 가이던스·Robotaxi 확장 일정·FSD 무감독 승인 주 확대.", time: "2026-04-22 13:10 KST" },
+      { type: "정보 갱신", sector: "시장",
+        detail: "미 증시 주간 이벤트. 4/22 장전 Boeing(BA) Q1 결과·10:30 ET 컨콜, 장후 Tesla·ServiceNow Q1. 4/23 장전 Lockheed Martin(컨센 EPS $6.73)·American Airlines(중동 유가 +50% 여파로 Q1 부진 예상)·Intel(컨센 매출 $12.3~12.4B·EPS $0.05), 4/25 OPEC+ 화상 회의. Google Cloud Next 4/22~24 The Agentic Cloud 키노트, Thomas Kurian·Gemini 중심 에이전틱 발표 대기.", time: "2026-04-22 13:10 KST" },
+    ]
+  },
+  {
     date: "2026-04-22 07:05 KST",
     summary: "RTX Q1 비트·가이던스 상향·S&P 4/21 -0.63% 휴전 불확실성·Brent $95대·BTC $76K 회복·TSLA·BA 실적 당일 대기",
     changes: [

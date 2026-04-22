@@ -6,6 +6,13 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-22 13:14 KST",
+    summary: "Google Gemini 3.1 Flash TTS 퍼블릭 프리뷰·TTS 리더보드 2위·Grok Speech·ElevenLabs 3파전 본격화",
+    changes: [
+      { type: "제품 출시", sector: "Google DeepMind", detail: "Google DeepMind. 4/15 Gemini 3.1 Flash TTS 퍼블릭 프리뷰 출시 — 70+ 언어·30개 음성·네이티브 멀티스피커 다이얼로그 지원, 200+ 오디오 태그로 감정(laugh·sigh)·페이싱·억양·포맷 템플릿을 자연어 프롬프트로 네이티브 제어. 가격은 $0.50/1M 글자, AI Studio 무료 프로토타이핑·Gemini API·Vertex AI로 제공. Artificial Analysis TTS 리더보드 Elo 1,211로 ElevenLabs 뒤 종합 2위, OpenAI·Amazon Polly 상회. 4/17 xAI Grok Speech API 출시와 맞물려 보이스 AI 3파전 본격화, Google Cloud Next 4/22~24 키노트에서 엔터프라이즈 통합 시나리오 발표 임박.", time: "2026-04-22 13:14 KST" },
+    ]
+  },
+  {
     date: "2026-04-22 07:05 KST",
     summary: "Apple 15년 만의 CEO 교체 — Tim Cook 9/1 물러나고 하드웨어 SVP John Ternus 취임, AI 전략 재정비가 최우선 과제",
     changes: [

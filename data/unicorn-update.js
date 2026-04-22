@@ -1,6 +1,14 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-22 13:20 KST",
+    summary: "SpaceX 4/21~23 Starbase·Tennessee 3일 애널리스트 투어 진행 — 21개 은행 125명 참여·$75B 조달·6/8 로드쇼 직행",
+    changes: [
+      { type: "정보 갱신", sector: "우주·모빌리티·방산",
+        detail: "SpaceX. 4/21~23 Texas Boca Chica Starbase 발사장과 Tennessee 대형 데이터센터에서 3일간 비공개 애널리스트 투어 진행. IPO 주관 21개 투자은행 소속 약 125명의 애널리스트가 참여, 4/21 Starbase 종일 투어로 개막. $75B 조달·$1.75T 밸류 목표로 6월 하순 거래 개시를 위한 사전 분석가 브리핑 성격. IPO 프로스펙터스는 5월 말 공개 예정이고 공식 로드쇼는 6/8 주로 확정, 6/11 1,500명 리테일 이벤트 개최. 리테일 30% 할당은 역대 최대, UK·EU·호주·캐나다·일본·한국 글로벌 리테일 참여 허용.", time: "2026-04-22 13:20 KST" },
+    ]
+  },
+  {
     date: "2026-04-22 07:05 KST",
     summary: "SpaceX 로드쇼 6/8 주 확정·6/11 리테일 이벤트 1,500명·프로스펙터스 5월말 공개·리테일 30% 할당은 역대 최대",
     changes: [

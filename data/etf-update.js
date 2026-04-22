@@ -1,6 +1,18 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
+    date: "2026-04-22 13:16 KST",
+    summary: "트럼프 이란 휴전 조건부 연장으로 유가 안정·BTC $77.6K 재가속·EWY 벤츠 K-배터리 대형 수주로 2차전지 랠리",
+    changes: [
+      { type: "수치 갱신", sector: "에너지·원자력",
+        detail: "XLE·XOP·VDE. 4/21 저녁 트럼프가 美-이란 2주 휴전을 조건부 연장, '테헤란 지도부가 통일된 제안을 내놓을 때까지' 유효로 만료 우려 일부 해소. 호르무즈 해협은 여전히 기능적 폐쇄 상태이고 걸프 4월 생산은 14.3mb/d로 3월 대비 -3mb/d 감산 지속. Brent $95·WTI $90 안착으로 에너지 ETF 마진 구간 연장, 지정학 프리미엄은 약화됐으나 공급 제약은 유지.", time: "2026-04-22 13:16 KST" },
+      { type: "수치 갱신", sector: "크립토·블록체인",
+        detail: "IBIT·FBTC. 4/22 오전 BTC $77,593 재가속(24시간 +3%). Capital Group American Funds Fundamental Investors가 MSTR 432만주·$747M 추가 매수해 총 1,033만주·$1.78B 확보, 최대 기관주주 진입. Strategy 4월 BTC gain $1.3B·YTD yield 9.5% 복귀로 기관 매수 재점화 시그널, 크립토 ETF 순유입 재개 조짐.", time: "2026-04-22 13:16 KST" },
+      { type: "수치 갱신", sector: "신흥국·글로벌",
+        detail: "EWY. 4/21 KOSPI 사상 최고 6,376 유지, 삼성SDI +19.89%·LGES +11.42%·포스코퓨처엠 +8.46%·엘앤에프 +6.91% 2차전지 일제 급등. 트리거는 삼성SDI와 Mercedes-Benz 첫 배터리 공급 계약(업계 추정 10조원)과 LGES Mercedes LFP 2.06조원 7년 계약. 삼성SDI는 BMW·VW·벤츠 독일 Big 3 완성차 고객 완성, 한국 배터리 산업의 유럽 프리미엄 OEM 수주 모멘텀 재확인. 4/23 SK하이닉스 Q1 영업익 40조 컨센 서프라이즈 대기.", time: "2026-04-22 13:16 KST" },
+    ]
+  },
+  {
     date: "2026-04-22 07:05 KST",
     summary: "S&P -0.63%·Nasdaq -0.59% 4/21 동반 하락·RTX Q1 비트·BTC $76K 회복·4/22 美-이란 휴전 만료 초긴장",
     changes: [

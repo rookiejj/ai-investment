@@ -32,7 +32,7 @@ const data = [
     title: "⚡ 에너지·원자력",
     tag: "석유·가스·우라늄",
     stocks: [
-      { tk:"XLE", nm:"Energy Select SPDR", rs:"Brent $95대 유지·WTI $89~90·4/22 美-이란 휴전 만료·트럼프 연장 거부 시그널·호르무즈 통항 급감 지속", aum:"38", er:"0.09%", ytd:"+28%", y1:"+18%" },
+      { tk:"XLE", nm:"Energy Select SPDR", rs:"Brent $95·WTI $90 유지·트럼프 휴전 조건부 연장(통일 제안 전까지)·호르무즈 기능적 폐쇄·걸프 4월 -3mb/d 감산", aum:"38", er:"0.09%", ytd:"+28%", y1:"+18%" },
       { tk:"URA", nm:"Global X Uranium", rs:"우라늄·원전 생태계·연초 조정 국면", aum:"4", er:"0.69%", ytd:"+6%", y1:"+30%" },
       { tk:"NLR", nm:"VanEck Uranium+Nuclear", rs:"원자력 밸류체인", aum:"1.5", er:"0.60%", ytd:"+22%", y1:"+35%" },
       { tk:"AMLP", nm:"Alerian MLP", rs:"MLP 파이프라인·배당", aum:"10", er:"0.85%", ytd:"+12%", y1:"+20%" },
@@ -58,7 +58,7 @@ const data = [
     title: "₿ 크립토·블록체인",
     tag: "비트코인·이더리움·디파이",
     stocks: [
-      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"BTC $76K 회복·4/21 +2.7% 반등·휴전 협상 진전·Warsh 연준이사 청문회 대기·AUM $58B", aum:"58", er:"0.25%", ytd:"+4%", y1:"-12%" },
+      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"BTC $77.6K 24h +3% 재가속·Capital Group MSTR $747M 추가 매수·기관 자금 유입 재개 조짐·AUM $58B", aum:"58", er:"0.25%", ytd:"+4%", y1:"-12%" },
       { tk:"FBTC", nm:"Fidelity Wise Origin BTC", rs:"비트코인 현물·피델리티·AUM $18B", aum:"18", er:"0.25%", ytd:"+2%", y1:"-14%" },
       { tk:"ETHA", nm:"iShares Ethereum Trust", rs:"이더리움 현물·4/14 +7%", aum:"10", er:"0.25%", ytd:"-12%", y1:"-8%" },
       { tk:"BITO", nm:"ProShares Bitcoin Strategy", rs:"비트코인 선물 최초", aum:"3", er:"0.95%", ytd:"-18%", y1:"-18%" },
@@ -71,8 +71,8 @@ const data = [
     title: "🇺🇸 미국 대형주",
     tag: "S&P500·나스닥·소형주",
     stocks: [
-      { tk:"SPY", nm:"SPDR S&P 500", rs:"S&P 7,064(-0.63%)·4/21 휴전 만료 우려 리스크오프·RTX 비트·4/22 Tesla·Boeing·4/23 Alphabet·Intel·LMT 실적 집중", aum:"590", er:"0.09%", ytd:"+3%", y1:"+16%" },
-      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"나스닥 24,260(-0.59%)·Apple CEO 교체 발표·TSLA 4/22·GOOGL 4/23 어닝 주도", aum:"400", er:"0.20%", ytd:"+9%", y1:"+24%" },
+      { tk:"SPY", nm:"SPDR S&P 500", rs:"S&P 7,064(-0.63%)·트럼프 휴전 조건부 연장·4/22 Tesla·Boeing·NOW·4/23 Alphabet·Intel·LMT·AAL 실적 집중", aum:"590", er:"0.09%", ytd:"+3%", y1:"+16%" },
+      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"나스닥 24,260(-0.59%)·Apple Ternus 9/1 CEO 승계 확정·TSLA 4/22·GOOGL 4/23·Google Cloud Next 에이전틱 키노트", aum:"400", er:"0.20%", ytd:"+9%", y1:"+24%" },
       { tk:"VOO", nm:"Vanguard S&P 500", rs:"세계 최대 ETF·AUM $827B·최저 보수", aum:"827", er:"0.03%", ytd:"+2%", y1:"+15%" },
       { tk:"VTI", nm:"Vanguard Total Stock", rs:"미국 전체 시장·4월 신고가 랠리", aum:"420", er:"0.03%", ytd:"+2%", y1:"+14%" },
       { tk:"DIA", nm:"SPDR Dow Jones", rs:"다우 30 우량주·다우 부진", aum:"35", er:"0.16%", ytd:"-3%", y1:"+10%" },
@@ -103,7 +103,7 @@ const data = [
       { tk:"INDA", nm:"iShares MSCI India", rs:"인도 시장", aum:"12", er:"0.64%", ytd:"+10%", y1:"+18%" },
       { tk:"VEA", nm:"Vanguard FTSE Developed", rs:"선진국(미국 제외)", aum:"130", er:"0.05%", ytd:"+9%", y1:"+16%" },
       { tk:"FXI", nm:"iShares China Large-Cap", rs:"중국 대형주 50종·H주·관세 변동성", aum:"5.8", er:"0.74%", ytd:"-12%", y1:"+15%" },
-      { tk:"EWY", nm:"iShares MSCI South Korea", rs:"KOSPI 6,376 사상 최고 돌파·외인 1조원+ 순매수·4/23 SK하이닉스 실적·5/22 삼성·하이닉스 단일종목 2배 레버리지 ETF", aum:"16", er:"0.59%", ytd:"+54%", y1:"+150%" },
+      { tk:"EWY", nm:"iShares MSCI South Korea", rs:"KOSPI 6,376 사상 최고 돌파·2차전지 +9~19% 급등(벤츠 삼성SDI·LGES 대형 수주)·4/23 SK하이닉스 40조 컨센·5/22 단일종목 2배 레버리지 ETF", aum:"16", er:"0.59%", ytd:"+54%", y1:"+150%" },
     ]
   },
 ];

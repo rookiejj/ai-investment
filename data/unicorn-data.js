@@ -45,7 +45,7 @@ const data = [
     title: "🚀 우주·모빌리티·방산",
     tag: "발사체·자율주행·자율무기·피지컬 AI",
     stocks: [
-      { nm:"SpaceX", rs:"Starlink·Starship·xAI 합병·2025 통합매출 $18.7B(Starlink $11.4B)·6/8 로드쇼·6/11 리테일 이벤트 1,500명·PIF $5B", val:"$1.25T", round:"S-1 비밀 제출·프로스펙터스 5월말 공개", sector:"우주", ipo:"2026.06 프라이싱·$1.75T·리테일 30% 할당" },
+      { nm:"SpaceX", rs:"4/21~23 Starbase·Tennessee DC 3일 애널리스트 투어·21개 은행 125명 참여·$75B 조달 목표·6/8 로드쇼·5월말 프로스펙터스", val:"$1.25T", round:"S-1 비밀 제출·리테일 30% 할당(UK·EU·호주·캐나다·일본·한국)", sector:"우주", ipo:"2026.06 프라이싱·$1.75T" },
       { nm:"Zipline", rs:"드론 배송·누적 200만 건", val:"$7.6B", round:"Series H ($800M)", sector:"드론·물류", ipo:"2027" },
       { nm:"Vast", rs:"민간 우주정거장·NASA 후보·$500M 조달", val:"$20B", round:"Series B ($500M, 2026-03)", sector:"우주 인프라", ipo:"미정" },
       { nm:"Relativity Space", rs:"Eric Schmidt CEO·Terran R 2026년 말 첫 발사 목표", val:"$4.2B", round:"Angel (Schmidt, 2025-01)", sector:"3D 프린트 로켓", ipo:"미정" },

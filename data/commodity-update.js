@@ -1,6 +1,18 @@
 // Commodity & Macro - Update Log
 const updates = [
   {
+    date: "2026-04-22 13:18 KST",
+    summary: "트럼프 이란 휴전 조건부 연장·WTI $90·Brent $95 안착·BTC $77.6K 재가속·걸프 4월 -3mb/d 감산 지속",
+    changes: [
+      { type: "수치 갱신", sector: "에너지",
+        detail: "원유. 4/21 저녁 트럼프가 美-이란 2주 휴전을 조건부 연장, '테헤란 지도부가 통일된 제안을 내놓을 때까지' 유효로 만료 우려 일부 해소. WTI $90·Brent $95선 안착, 호르무즈 해협은 여전히 기능적 폐쇄 상태. 걸프 지역 4월 생산은 14.3mb/d로 3월 대비 -3mb/d·전쟁 이전 대비 -13mb/d 감산 지속, 공급 제약 프리미엄은 유지되나 지정학 급등 리스크는 약화. 4/25 OPEC+ 화상 회의가 공급 축 변수.", time: "2026-04-22 13:18 KST" },
+      { type: "수치 갱신", sector: "시장 지표",
+        detail: "비트코인. 4/22 오전 $77,593 재가속(24시간 +3%), $76K 지지선 상회 유지. Capital Group American Funds Fundamental Investors가 MSTR 432만주·$747M 추가 매수해 총 1,033만주·$1.78B 확보, 대형 기관주주 진입. Strategy 4월 BTC gain $1.3B·YTD yield 9.5% 복귀로 기관 매수 재점화 시그널, 크립토 ETF 순유입 재개 조짐.", time: "2026-04-22 13:18 KST" },
+      { type: "수치 갱신", sector: "시장 지표",
+        detail: "VIX·10년물. 트럼프 휴전 조건부 연장으로 지정학 프리미엄 일부 해소, 단 4/22 장전 Boeing(컨센 EPS -$0.69) Q1·장후 Tesla·ServiceNow 실적, 4/23 Alphabet·Intel·Lockheed Martin·American Airlines 동시 소화 구간 진입. 미 10년물 4.26% 강보합, Brent $95 인플레이션 프리미엄과 안전자산 수요가 균형.", time: "2026-04-22 13:18 KST" },
+    ]
+  },
+  {
     date: "2026-04-22 07:05 KST",
     summary: "Brent $95.75 유지·WTI $89대·금 $4,782 -0.8%·은 $78.9 -1%·BTC $76.5K 회복·S&P 7,064(-0.63%)·4/22 휴전 만료 D-데이",
     changes: [
