@@ -6,6 +6,14 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-22 19:12 KST",
+    summary: "Google Cloud Next 2026 개막(4/22~24) — Thomas Kurian '에이전틱 클라우드' 키노트·OpenAI GPT-6 Polymarket 확률 72%로 하향",
+    changes: [
+      { type: "생태계", sector: "Google DeepMind", detail: "Google DeepMind. 4/22~24 Las Vegas Michelob ULTRA Arena에서 Google Cloud Next 2026 개막, Thomas Kurian CEO가 오프닝 키노트 'The Agentic Cloud' 진행(9:00 AM PT = 4/23 01:00 KST). 올해 핵심 메시지는 'AI 에이전트는 더 이상 실험이 아니라 엔터프라이즈 전반에서 프로덕션 중' — 리테일·금융·헬스케어·공공 리더 200+ 세션에서 Gemini 기반 에이전트 확장 사례 공개 예정. Gemini 월 사용자 7.5억, 2025 Q4 클라우드 매출 $17.7B +48%, 백로그 $240B 지원. Gemini 3.1 Flash TTS·Imagen·Veo 3 라인업과 Vertex AI Agent Builder를 핵심 축으로 OpenAI Stargate·Anthropic AWS 동맹과 삼파전 재격돌.", time: "2026-04-22 19:12 KST" },
+      { type: "모델 출시 예정", sector: "OpenAI", detail: "OpenAI. 4/14 루머 출시일 무산 후 GPT-6 Polymarket 확률이 4/30 내 78% → 약 72%로 하향, 가장 방어 가능한 윈도우는 4/21~5월 말로 재설정됐다. 'Spud' 프리트레이닝은 3/24 완료, Altman은 'a few weeks' 코멘트를 유지했지만 블로그·모델카드·API 공지는 여전히 공백. 200만 토큰·ChatGPT·Codex·Atlas 단일 에이전트 통합 스펙은 유지, Stargate Abilene 10만+ H100 훈련 인프라와 Cerebras $20B 장기 공급 계약이 출시 대기 체제를 뒷받침.", time: "2026-04-22 19:12 KST" },
+    ]
+  },
+  {
     date: "2026-04-22 13:14 KST",
     summary: "Google Gemini 3.1 Flash TTS 퍼블릭 프리뷰·TTS 리더보드 2위·Grok Speech·ElevenLabs 3파전 본격화",
     changes: [

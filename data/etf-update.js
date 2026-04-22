@@ -1,6 +1,18 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
+    date: "2026-04-22 19:12 KST",
+    summary: "Strategy 34,164 BTC 매수로 IBIT 추월·BlackRock 넘어 세계 최대 BTC 보유자·JPM S&P 타겟 7,600 상향·유가 되돌림",
+    changes: [
+      { type: "수치 갱신", sector: "크립토·블록체인",
+        detail: "IBIT·FBTC. 4/20 Strategy가 34,164 BTC를 $2.54B(평단 $74,395)에 매수, 2024년 이후 최대·역사상 세 번째 큰 단일 매수로 총 보유 815,061 BTC. 이번 매수로 BlackRock iShares Bitcoin Trust(IBIT)를 제치고 세계 최대 기관 BTC 보유자로 복귀(2024년 2Q 이후 첫). IBIT는 여전히 AUM $58B·기관 유입 $1.29B로 여전히 최대 ETF 창구지만 보유량 순위 역전은 크립토 ETF 내러티브의 구조적 변화. BTC $77,541 4/22 오전 +2.2% 24h·주간 +4.3%.", time: "2026-04-22 19:12 KST" },
+      { type: "수치 갱신", sector: "에너지·원자력",
+        detail: "XLE·XOP·VDE. 4/22 Brent $97.91(-0.59%)·WTI $88.82(-0.95%), 트럼프 이란 휴전 '통일 제안 전까지' 연장 발표 후 되돌림. 장중 Brent는 JD 밴스 부통령 이슬라마바드 평화회담 취소 보도에 $101.15까지 브리프 돌파 후 후퇴. 호르무즈 해협은 24시간 통항 단 3척 기능적 봉쇄 지속, 에너지 ETF 마진 확대 구간 유지되나 지정학 프리미엄은 일부 희석.", time: "2026-04-22 19:12 KST" },
+      { type: "수치 갱신", sector: "미국 대형주",
+        detail: "SPY·QQQ. JPMorgan이 4/21 S&P 500 연말 타겟을 7,200 → 7,600 상향, 2026 EPS를 $315 → $330(YoY +22%)으로 올렸다. Anthropic Claude Mythos를 AI 랠리 재점화 촉매로 지목하며 Bullish AI trade 재활성화 논거 제시. 4/22 장전 BA Q1 상업기 143대 인도로 Airbus 114대 제쳐 2018년 이후 첫 분기 배송 역전, 장후 TSLA·NOW 실적·4/23 01:00 KST Google Cloud Next '에이전틱 클라우드' 키노트까지 이벤트 집중.", time: "2026-04-22 19:12 KST" },
+    ]
+  },
+  {
     date: "2026-04-22 13:16 KST",
     summary: "트럼프 이란 휴전 조건부 연장으로 유가 안정·BTC $77.6K 재가속·EWY 벤츠 K-배터리 대형 수주로 2차전지 랠리",
     changes: [

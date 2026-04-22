@@ -110,11 +110,11 @@ const data = [
     title: "🛢️ 에너지",
     tag: "석유메이저·LNG·유전서비스",
     stocks: [
-      { tk:"XOM", nm:"ExxonMobil", rs:"Brent $95대 유지·트럼프 이란 휴전 연장(통일 제안 전까지)·호르무즈 통항 정상치 대비 급감", r1:"332", p1:"29", r2:"345", p2:"32" },
-      { tk:"CVX", nm:"Chevron", rs:"WTI $90·4/21 휴전 만료 직전 트럼프 '통일 제안 전까지 연장' 발표·걸프 4월 생산 14.3mb/d 3mb/d 감산", r1:"189", p1:"12", r2:"195", p2:"14" },
+      { tk:"XOM", nm:"ExxonMobil", rs:"Brent $97.91 -0.59%·WTI $88.82 -0.95%·트럼프 이란 휴전 연장 후 소폭 조정·호르무즈 24시간 통항 3척 사실상 봉쇄 지속", r1:"332", p1:"29", r2:"345", p2:"32" },
+      { tk:"CVX", nm:"Chevron", rs:"WTI $88.82·Brent $97.91·휴전 연장 안도 반영 브리프 $100 터치 후 후퇴·Vance 파키스탄 평화회담 취소 영향", r1:"189", p1:"12", r2:"195", p2:"14" },
       { tk:"LNG", nm:"Cheniere", rs:"미 최대 LNG 수출·호르무즈 기능적 폐쇄 지속·유럽 LNG 프리미엄·아시아 재라우팅", r1:"16", p1:"3.5", r2:"18", p2:"4.2" },
       { tk:"SLB", nm:"Schlumberger", rs:"유전서비스 1위·중동 CapEx 재개 기대", r1:"37", p1:"4.5", r2:"39", p2:"5.0" },
-      { tk:"COP", nm:"ConocoPhillips", rs:"상류 E&P·Brent $95·WTI $90 유지로 마진 재확대", r1:"60", p1:"10", r2:"64", p2:"11" },
+      { tk:"COP", nm:"ConocoPhillips", rs:"상류 E&P·Brent $97.9·WTI $88.8 유지로 마진 재확대", r1:"60", p1:"10", r2:"64", p2:"11" },
       { tk:"KMI", nm:"Kinder Morgan", rs:"가스 파이프라인", r1:"16", p1:"2.7", r2:"17", p2:"3.0" },
       { tk:"EOG", nm:"EOG Resources", rs:"셰일 E&P 고효율", r1:"23", p1:"5.5", r2:"24", p2:"5.8" },
     ]
@@ -153,7 +153,7 @@ const data = [
       { tk:"RTX", nm:"RTX Corp", rs:"Q1 EPS $1.78 비트(+21% YoY)·매출 $22.1B +9%·Raytheon 섹그 +10%·가이던스 EPS $6.70~6.90 상향·FCF $1.9B", r1:"82", p1:"6.5", r2:"88", p2:"7.5" },
       { tk:"NOC", nm:"Northrop Grumman", rs:"B-21·전략무기", r1:"42", p1:"4.0", r2:"44", p2:"4.3" },
       { tk:"GD", nm:"General Dynamics", rs:"잠수함·Gulfstream", r1:"49", p1:"4.2", r2:"52", p2:"4.6" },
-      { tk:"BA", nm:"Boeing", rs:"4/22 장전 Q1 실적·10:30 ET 컨콜·컨센 매출 $22.15B·EPS -$0.39~-$0.69·737 MAX 양산 레이트·787 수요·Spirit 통합 진척 관건", r1:"89.5", p1:"2.2", r2:"80", p2:"3.5" },
+      { tk:"BA", nm:"Boeing", rs:"4/22 장전 Q1 실적 공개·10:30 ET 컨콜·Q1 상업기 143대 인도 에어버스 114대 제쳐·2018년 이후 첫 분기 배송 역전·737 MAX 양산 레이트·Spirit 통합", r1:"89.5", p1:"2.2", r2:"80", p2:"3.5" },
       { tk:"RKLB", nm:"Rocket Lab", rs:"Neutron 4Q26 재지연·$816M SDA 수주·국방 프라임 전환", r1:"0.60", p1:"-0.15", r2:"0.90", p2:"-0.08" },
       { tk:"LHX", nm:"L3Harris", rs:"전자전·ISR·위성통신", r1:"21", p1:"2.0", r2:"23", p2:"2.3" },
     ]
@@ -166,7 +166,7 @@ const data = [
       { tk:"RGTI", nm:"Rigetti", rs:"초전도 양자", r1:"0.012", p1:"-0.08", r2:"0.025", p2:"-0.10" },
       { tk:"QBTS", nm:"D-Wave", rs:"어닐링 양자", r1:"0.015", p1:"-0.07", r2:"0.030", p2:"-0.08" },
       { tk:"COIN", nm:"Coinbase", rs:"미 최대 거래소", r1:"7.5", p1:"2.3", r2:"9.0", p2:"2.9" },
-      { tk:"MSTR", nm:"Strategy", rs:"BTC $77,593 24h +3% 재가속·Capital Group $747M 추가 매수·4월 BTC gain $1.3B·YTD yield 9.5%·78만 9천 BTC 평단 $75,577 상회", r1:"0.5", p1:"-0.2", r2:"0.55", p2:"-0.15" },
+      { tk:"MSTR", nm:"Strategy", rs:"4/20 34,164 BTC·$2.54B 매수(세 번째 최대)·총 815,061 BTC 평단 $74,395·BlackRock IBIT 추월 세계 최대 기관 보유·BTC $77.5K +4.3% 주간", r1:"0.5", p1:"-0.2", r2:"0.55", p2:"-0.15" },
       { tk:"MARA", nm:"Marathon Digital", rs:"BTC 채굴", r1:"0.75", p1:"0.10", r2:"1.0", p2:"0.20" },
       { tk:"RIOT", nm:"Riot Platforms", rs:"BTC 채굴·인프라", r1:"0.35", p1:"0.05", r2:"0.50", p2:"0.10" },
     ]

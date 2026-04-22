@@ -1,6 +1,18 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-22 19:12 KST",
+    summary: "SpaceX Musk 2025 직원 $1.4B 자사주 매입·이중의결권 Class B 10표 공시·Cerebras 5월 중순 Nasdaq CBRS 상장 준비 가속",
+    changes: [
+      { type: "거버넌스", sector: "우주·모빌리티·방산",
+        detail: "SpaceX. 드래프트 IPO 프로스펙터스에서 Elon Musk가 2025년 현직·전직 임직원 보유 주식을 $1.4B 매입했다는 내역이 공개됐다. IPO 후 이중의결권 구조 도입 — Class B 1주당 10표, Class A는 1표로 Musk와 핵심 인사이더의 지배권이 공모 투자자를 압도한다. Musk는 IPO 이후에도 CEO·CTO·9인 이사회 의장을 겸임할 계획이며, 회사 밸류가 $6.6T까지 올라오면 수천만 주의 추가 성과급 부여 조항도 포함. 4/21~23 Starbase·Tennessee 3일 애널리스트 투어와 맞물려 창업자 지배 안정성을 기관 투자자에게 사전 설명하는 행보.", time: "2026-04-22 19:12 KST" },
+      { type: "정보 갱신", sector: "AI·ML",
+        detail: "Cerebras(CBRS). 4/17 나스닥 S-1 공개 제출 후 상장 준비 가속 — 5월 중순 상장 목표 재확인, 티커 CBRS, 목표 밸류 $22~25B·조달 $2B. 공식 가격 발표는 상장 10일 전 예정. OpenAI 3년 $20B·750MW 공급 계약이 성장 가시성 앵커, AWS Bedrock의 CS-3 배치 결정이 고객 기반 확장 근거. Morgan Stanley·Citi·Barclays·UBS 주관, Mizuho·TD Cowen 북런너. 2025 매출 $510M·순익 $87.9M·RPO $24.6B로 AI 칩 IPO 스토리 완성형.", time: "2026-04-22 19:12 KST" },
+      { type: "정보 갱신", sector: "AI·ML",
+        detail: "Anthropic. $800B+ 프리엠프티브 오퍼를 받았지만 거절 기조 유지 중, 다만 신규 라운드 가능성은 열어둔 상태. 2월 Series G $30B 당시 pre-$350B 대비 2개월 만에 2배 이상 급상승, 일부 투자자는 $1T 밸류 시나리오 제기. ARR은 3월 $190억 → 4월 $300억으로 2배, 연간 기준 OpenAI $250억 처음 추월. Goldman·JPM·MS 주관 10월 IPO 조달 $60B+ 협상이 병행 중이며, 성사 시 SpaceX에 이은 역대 두 번째 대형 IPO 후보.", time: "2026-04-22 19:12 KST" },
+    ]
+  },
+  {
     date: "2026-04-22 13:20 KST",
     summary: "SpaceX 4/21~23 Starbase·Tennessee 3일 애널리스트 투어 진행 — 21개 은행 125명 참여·$75B 조달·6/8 로드쇼 직행",
     changes: [
