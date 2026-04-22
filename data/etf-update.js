@@ -1,6 +1,22 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
+    date: "2026-04-23 07:05 KST",
+    summary: "S&P 500·Nasdaq 동반 기록 신고가·TSLA·BA 실적 비트·Google Cloud Next Gemini Enterprise·TPU 8세대·BTC $78.5K·KOSPI 6,417.93 사상 최고",
+    changes: [
+      { type: "수치 갱신", sector: "미국 대형주",
+        detail: "SPY·QQQ. S&P 500 7,137.90 +1.05%·Nasdaq 24,657.57 +1.64% 4/22 종가로 동반 기록 신고가, 휴전 연장 안도와 빅테크 실적 호조가 랠리 재점화. 장후 TSLA는 EPS $0.41 비트에 +3%, BA는 Q1 매출·EPS 대폭 비트·상업기 143대로 에어버스 역전. 반면 NOW는 중동 전쟁 온프레미스 딜 지연 헤드윈드로 -14% 급락, IBM도 가이던스 보수적 해석으로 -6.46% 혼조. 4/23 LMT Q1(컨센 EPS $6.73·매출 $18.24B)·장후 Intel Q1(컨센 EPS $0.02·매출 $12.42B) 대기.", time: "2026-04-23 07:05 KST" },
+      { type: "수치 갱신", sector: "AI·반도체",
+        detail: "SMH·AIQ·QQQ. Google Cloud Next 4/22 키노트에서 Vertex AI를 Gemini Enterprise Agent Platform으로 통합, Workspace Studio·Agent Designer·Memory Bank 공개로 엔터프라이즈 에이전트 성숙도 한 단계 상향. TPU 8세대를 트레이닝 8t·인퍼런스 8i로 분리 출시, NVIDIA와는 네트워킹 공동 엔지니어링 병행해 경쟁과 협력 이원화. Nvidia가 투자한 Vast Data는 $1B 조달·밸류 $30B로 3배 급등, AI 스토리지 수혜 체인 확인. NVDA는 $200~201 박스권 조정.", time: "2026-04-23 07:05 KST" },
+      { type: "수치 갱신", sector: "크립토·블록체인",
+        detail: "IBIT·FBTC. BTC가 4/22 오전 $78,500 돌파, 2월 초 이후 최고 구간·월간 +11.1%. Strategy는 총 815,061 BTC로 BlackRock IBIT 802,823 BTC를 넘어선 세계 최대 기관 BTC 보유자 지위 유지, MSTR은 4/22 +11.6%·5거래일 누적 +25%로 급등. BTC ETF 전반 순유입 재가속, 기관 자금 복귀 구간 진입. ETH는 박스권 지속.", time: "2026-04-23 07:05 KST" },
+      { type: "수치 갱신", sector: "신흥국·글로벌",
+        detail: "EWY. 코스피가 4/22 +29.46p(+0.46%) 오른 6,417.93으로 사상 첫 6,400선 안착·역사적 신고점 경신, 장중 6,423.29 터치. 4/23 장전 SK하이닉스 Q1(컨센 매출 50.1조·영업이익 34.9조·40조 서프라이즈 기대)과 현대차 Q1(컨센 매출 46.17조 역대 최대·영업이익 2.94조 -19% YoY 관세 부담)이 동시 공개되는 대형 이벤트 당일, 삼성SDI 벤츠 10조 수주가 지지. EWY는 YTD +54%·1Y +150%로 글로벌 ETF 중 최상위 수익률.", time: "2026-04-23 07:05 KST" },
+      { type: "수치 갱신", sector: "에너지·원자력",
+        detail: "XLE·XOP·VDE. 4/22 Brent $97.91(-0.59%)·WTI $88.82(-0.95%) 마감, 트럼프 '이란 지도부 제안 시까지' 조건부 휴전 연장 발표 영향. 이란은 미 해군 차단 지속 시 호르무즈 재개 불가 입장 고수, Vance 부통령 이슬라마바드 회담 취소. 아시아 중심으로 수요 파괴 4~5mb/d(글로벌 공급의 5%) 추정 지속, 에너지 ETF 마진 확대 구간은 유지되나 지정학 프리미엄 일부 희석.", time: "2026-04-23 07:05 KST" },
+    ]
+  },
+  {
     date: "2026-04-22 19:12 KST",
     summary: "Strategy 34,164 BTC 매수로 IBIT 추월·BlackRock 넘어 세계 최대 BTC 보유자·JPM S&P 타겟 7,600 상향·유가 되돌림",
     changes: [

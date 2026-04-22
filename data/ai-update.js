@@ -6,6 +6,16 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-23 07:05 KST",
+    summary: "Google Cloud Next 4/22 키노트 — Gemini Enterprise 통합·Workspace Studio·TPU 8t/8i·Apple 파운데이션 모델 파트너십 공식화·Nvidia Vast Data $30B 3배 밸류",
+    changes: [
+      { type: "제품 출시", sector: "Google DeepMind", detail: "Google DeepMind. 4/22 Cloud Next 키노트 Sundar Pichai·Thomas Kurian 공동 발표. Vertex AI를 'Gemini Enterprise Agent Platform'으로 리브랜딩, Agentspace를 흡수해 단일 Gemini Enterprise 제품으로 통합. Gemini 3.2 공식 발표 임박으로 100만 토큰 이상 컨텍스트 확장·인퍼런스 지연 감소 예고. Workspace Studio는 Gmail·Docs·Sheets·Drive·Meet·Chat 전반을 노코드 자연어 프롬프트로 에이전트화. Agent Designer 프리뷰, Agent Engine Sessions·Memory Bank GA로 지속 컨텍스트 운영. GE Appliances·Deutsche Bank 등 2,000곳 엔터프라이즈 도입 사례 공개.", time: "2026-04-23 07:05 KST" },
+      { type: "인프라", sector: "Google DeepMind", detail: "Google DeepMind. 4/22 8세대 TPU 발표 — 트레이닝 전용 TPU 8t와 인퍼런스 전용 TPU 8i로 목적별 분리. 동시에 NVIDIA 기반 시스템이 Google Cloud에서 더 효율적으로 작동하도록 네트워킹 공동 엔지니어링 협업 병행해 '경쟁과 협력' 기조. Anthropic 3.5GW TPU 딜·Apple Foundation Models 트레이닝 수요가 뒷받침, 자사 칩만으로 하이퍼스케일 AI 수요를 감당하지 못하는 현실 반영.", time: "2026-04-23 07:05 KST" },
+      { type: "전략", sector: "Apple", detail: "Apple. 4/22 Google Cloud Next 현장에서 Apple·Google 파트너십 격상 공식 확인 — Apple이 Google을 선호 클라우드 파트너로 선정, 차세대 Apple Foundation Models를 Gemini 기술 기반으로 공동 개발하기로 합의. 해당 모델이 2026 하반기 퍼스널라이즈드 Siri를 구동. 9/1 John Ternus CEO 취임 일정과 맞물려 AI 전략 재편 현실화, 자체 프론티어 LLM 부재 리스크를 Gemini 기반 공동 개발로 메우는 구조.", time: "2026-04-23 07:05 KST" },
+      { type: "펀딩", sector: "NVIDIA", detail: "NVIDIA. 4/22 Nvidia가 투자한 Vast Data가 신규 라운드 $1B 조달, 밸류 $30B로 3배 상향. Drive Capital·Access Industries 주도, 기존 Nvidia·Fidelity·NEA 참여. Vast Data는 AI 트레이닝·추론 워크로드용 고성능 스토리지 소프트웨어 공급사로 Stargate·Anthropic·Meta MSL 등 하이퍼스케일 AI 프로젝트의 데이터 레이크 핵심 계약을 다수 보유. NVDA는 같은 날 주가 $200~201대 박스권, 4/14 Ising 공개·10거래일 연속 상승 이후 조정.", time: "2026-04-23 07:05 KST" },
+    ]
+  },
+  {
     date: "2026-04-22 19:12 KST",
     summary: "Google Cloud Next 2026 개막(4/22~24) — Thomas Kurian '에이전틱 클라우드' 키노트·OpenAI GPT-6 Polymarket 확률 72%로 하향",
     changes: [

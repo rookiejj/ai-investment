@@ -1,6 +1,16 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-23 07:05 KST",
+    summary: "VAST Data Series F $1B 조달·밸류 $30B 3배 급등·AI 스토리지 엔터프라이즈 리딩·Nvidia 지분 유지·SpaceX 애널리스트 투어 4/22 Starbase 1일차 종료",
+    changes: [
+      { type: "정보 갱신", sector: "AI·ML",
+        detail: "VAST Data. 4/22 Series F $1B 조달·밸류 $30B 공식 확정, 2023년 말 Series E의 $9.1B 대비 3배 이상 급등. Drive Capital이 리드·Access Industries 공동 리드, Fidelity·NEA·NVIDIA 기존 투자자와 신규 투자자 공동 참여. AI 훈련·추론용 고성능 스토리지 소프트웨어 공급사로 누적 부킹 $4B 돌파·전 회계연도 말 커밋 ARR $500M+. Stargate·Anthropic·Meta MSL 등 대형 AI 인프라 프로젝트에 깊숙이 침투, IPO 가능성도 공개 검토. AI 인프라 스택에서 스토리지·데이터 레이어의 구조적 수혜 상징.", time: "2026-04-23 07:05 KST" },
+      { type: "정보 갱신", sector: "우주·모빌리티·방산",
+        detail: "SpaceX. 4/22(화) Boca Chica Starbase 1일차 애널리스트 투어 진행, 21개 주관 은행 약 125명 애널리스트가 참여. 참가자는 전자기기를 모두 사전 반납하는 초고보안 비공개 브리핑 방식, 주요 발표 자료는 실시간 유출 차단. Starbase 위성·로켓 발사 복합단지와 Memphis Colossus 메가 DC가 핵심 관람 포인트, Musk의 $1.75T 밸류·$75B 조달 방어 논거를 사전 공유. 4/23 Tennessee 일정으로 이어짐.", time: "2026-04-23 07:05 KST" },
+    ]
+  },
+  {
     date: "2026-04-22 19:12 KST",
     summary: "SpaceX Musk 2025 직원 $1.4B 자사주 매입·이중의결권 Class B 10표 공시·Cerebras 5월 중순 Nasdaq CBRS 상장 준비 가속",
     changes: [
