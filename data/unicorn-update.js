@@ -1,6 +1,16 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-23 19:15 KST",
+    summary: "SpaceX, Cursor 모회사 Anysphere 하반기 $60B 인수 옵션 확보·불발 시 $10B 브레이크업·$2B 신규 펀딩 대체·Microsoft 선수 실패·AI 코딩 유니콘 판도 재편",
+    changes: [
+      { type: "인수", sector: "AI·ML",
+        detail: "Cursor(Anysphere). 4/21~22 SpaceX가 하반기 내 $60B에 전량 인수할 수 있는 옵션 권리를 확보, 불발 시 공동 작업 대가로 $10B를 지급하는 브레이크업 구조로 합의됐다. 직전 $50B 밸류·$2B 신규 라운드 협상은 이 딜로 대체, SpaceX가 선제 락업으로 경쟁사 역딜을 봉쇄. CNBC 보도에 따르면 Microsoft도 Cursor 인수를 사전 검토했으나 SpaceX에 선점당했다. SpaceX는 $1.75T 밸류·$75B 조달 IPO를 앞둔 시점에 클로징을 지연시켜 증권공시 부담을 최소화, 옵션 행사 시 Anysphere 엔지니어·ARR·분포 채널을 Colossus 2 슈퍼컴퓨터 위에서 코딩 최강 모델로 흡수할 구상. Anysphere 창업자 Michael Truell은 Musk와 사전 논의 후 이사회 만장일치로 구조 승인.", time: "2026-04-23 19:15 KST" },
+      { type: "거버넌스", sector: "AI·ML",
+        detail: "Anthropic. 4/23 Axios가 $800B 밸류 IPO를 앞둔 Anthropic의 성장통을 상세 보도 — Opus 4.6 성능 저하 루머·컴퓨트 한도 타이트닝·Claude Code Pro 플랜 배제 A/B 테스트 반발 등이 동시 부각. 동시에 OpenAI CRO 내부 메모가 Anthropic을 '엘리트주의'로 공격하고 매출 런레이트 $10억 과대 계상 의혹을 제기, Altman이 팟캐스트에서 '공포 기반 마케팅'이라 반격하며 공방 고조. Google·Broadcom 3.5GW TPU와 AWS $100B 약정이 본격 가동되는 2027년 이전까지 공급·브랜드 3중 압박 구간 진입, 10월 IPO 조달 $60B+ 협상의 가격 결정 변수로 부상.", time: "2026-04-23 19:15 KST" },
+    ]
+  },
+  {
     date: "2026-04-23 13:11 KST",
     summary: "SpaceX 애널리스트 투어 2일차 Tennessee·Anthropic 2027년 멀티 기가와트 TPU 확정·BTC $79K 돌파 크립토 밸류체인 상승",
     changes: [

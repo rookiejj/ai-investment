@@ -6,6 +6,15 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-23 19:15 KST",
+    summary: "SpaceX, Cursor 모회사 Anysphere 하반기 $60B 인수 옵션 체결·불발 시 $10B 브레이크업·Anthropic IPO 앞두고 컴퓨트·브랜드 성장통 부각",
+    changes: [
+      { type: "인수", sector: "xAI", detail: "xAI/SpaceX. 4/21~22 SpaceX가 Cursor 모회사 Anysphere에 하반기 내 $60B에 전량 인수할 수 있는 옵션 권리 확보, 불발 시 양사 공동 작업 대가로 $10B를 지급하는 브레이크업 구조. SpaceX는 $1.75T 밸류·$75B 조달 IPO를 앞두고 클로징을 지연해 증권공시 리스크를 회피, 동시에 경쟁사의 역딜을 봉쇄했다. Microsoft도 사전에 Anysphere 인수를 타진했으나 SpaceX가 선점. 4/14 영입된 Milich·Ginsberg에 이어 옵션 행사 시 Anysphere 엔지니어·ARR·분포 채널을 xAI/SpaceX로 흡수, Colossus 2의 100만 H100 등가 슈퍼클러스터와 결합한 코딩 최강 모델 구축을 목표로 한다.", time: "2026-04-23 19:15 KST" },
+      { type: "거버넌스", sector: "Anthropic", detail: "Anthropic. 4/23 Axios가 $800B 밸류 IPO 준비 중인 Anthropic의 성장통을 상세 보도. Opus 4.6 성능 저하 루머가 커지자 회사는 의도적 다운그레이드 없음을 재확인, 수요 폭증으로 유저 한도·주기적 아웃티지 발생 구간. Claude Code의 $20/월 Pro 플랜 배제를 일부 사용자가 발견·대규모 반발한 뒤 '소수 A/B 테스트'라고 해명. 동시에 OpenAI CRO Denise Dresser 내부 메모가 Anthropic을 '엘리트주의'로 공격하고 매출 런레이트 $10억 과대 계상 의혹을 제기, Altman은 팟캐스트에서 '공포 기반 마케팅'이라 비판하며 공방 고조. Google·Broadcom 3.5GW TPU와 AWS $100B 약정이 본격 가동되는 2027년 전까지 공급·브랜드 3중 압박 구간.", time: "2026-04-23 19:15 KST" },
+      { type: "인프라", sector: "Microsoft", detail: "Microsoft. CNBC 4/22 보도에 따르면 Microsoft도 SpaceX에 앞서 Cursor(Anysphere) 인수를 진지하게 검토했으나 결국 SpaceX에 선점당한 것으로 확인. GitHub Copilot 생태계와 Cursor의 IDE 유저 베이스 결합을 노렸으나, SpaceX의 $60B 옵션 구조·$10B 브레이크업 규모에 가격을 맞추지 못한 것으로 보인다. Mustafa Suleyman이 이미 '현 프론티어 모델 자체 개발 역량 부족'을 공개 인정한 상태에서 차세대 개발자 툴 경쟁에서 xAI/SpaceX에 밀리는 신호로 해석된다.", time: "2026-04-23 19:15 KST" },
+    ]
+  },
+  {
     date: "2026-04-23 07:05 KST",
     summary: "Google Cloud Next 4/22 키노트 — Gemini Enterprise 통합·Workspace Studio·TPU 8t/8i·Apple 파운데이션 모델 파트너십 공식화·Nvidia Vast Data $30B 3배 밸류",
     changes: [
