@@ -120,6 +120,16 @@ function buildMessage(tabs: TabWithEntries[]): string {
   return parts.join("\n\n");
 }
 
+// 솔라피 실패 메시지를 구독자 배송 상태로 정규화
+function deriveDeliveryState(msg: string | null | undefined): string {
+  if (!msg) return "unknown";
+  const m = msg.toLowerCase();
+  if (m.includes("friend") || m.includes("친구") || m.includes("수신거부 친구")) return "not_friend";
+  if (m.includes("block") || m.includes("차단")) return "blocked";
+  if (m.includes("광고") || m.includes("ad ") || m.includes("ad_") || m.includes("marketing")) return "paused_ad";
+  return "unknown";
+}
+
 // ═══ SOLAPI HMAC auth ══════════════════════════════════
 
 async function solapiAuthHeader(apiKey: string, apiSecret: string): Promise<string> {
@@ -280,6 +290,8 @@ Deno.serve(async (req) => {
 
     const batchId = crypto.randomUUID();
     const logs: Array<Record<string, unknown>> = [];
+    // 상태별 id 집합 — 발송 후 subscribers.delivery_state 일괄 갱신
+    const stateGroups: Record<string, string[]> = { ok: [], not_friend: [], blocked: [], paused_ad: [], unknown: [] };
 
     for (let i = 0; i < subs.length; i += BATCH_SIZE) {
       const batch = subs.slice(i, i + BATCH_SIZE);
@@ -294,9 +306,15 @@ Deno.serve(async (req) => {
         errMsg = e instanceof Error ? e.message : String(e);
       }
 
-      const failedTos = new Set((result?.failedMessageList ?? []).map((f) => f.to));
+      const failedMap = new Map<string, string>();
+      for (const f of result?.failedMessageList ?? []) {
+        failedMap.set(f.to, f.statusMessage ?? "");
+      }
+
       for (const s of batch) {
-        const failed = !!errMsg || failedTos.has(s.phone);
+        const failedMsg = failedMap.get(s.phone);
+        const failed = !!errMsg || failedMap.has(s.phone);
+        const providerMsg = errMsg ?? (failed ? (failedMsg || "solapi failedMessageList") : "ok");
         logs.push({
           subscriber_id: s.id,
           phone: s.phone,
@@ -305,10 +323,12 @@ Deno.serve(async (req) => {
           status: failed ? "fail" : "success",
           provider: "solapi",
           provider_code: result?.groupId ?? null,
-          provider_message: errMsg ?? (failed ? "solapi failedMessageList" : "ok"),
+          provider_message: providerMsg,
           provider_msg_id: result?.groupId ?? null,
           batch_id: batchId,
         });
+        const state = failed ? deriveDeliveryState(providerMsg) : "ok";
+        stateGroups[state].push(s.id);
       }
 
       if (errMsg) {
@@ -318,6 +338,16 @@ Deno.serve(async (req) => {
     }
 
     const { error: logErr } = await supabase.from("send_logs").insert(logs);
+
+    // subscribers.delivery_state 배치 갱신
+    for (const [state, ids] of Object.entries(stateGroups)) {
+      if (ids.length === 0) continue;
+      const { error: updErr } = await supabase
+        .from("subscribers")
+        .update({ delivery_state: state })
+        .in("id", ids);
+      if (updErr) console.error(`[warn] delivery_state update (${state})`, updErr);
+    }
     if (logErr) console.error("[error] log insert", logErr);
 
     const success = logs.filter((l) => l.status === "success").length;
