@@ -1325,7 +1325,7 @@ function switchTab(id,dir){
         totalAmount: SUBSCRIPTION_PRICE,
         currency: 'KRW',
         payMethod: 'CARD',
-        customer: { phoneNumber: phone },
+        customer: { customerId: phone, phoneNumber: phone },
         windowType: { pc: 'IFRAME', mobile: 'REDIRECTION' },
         redirectUrl: location.origin + location.pathname,
       });
