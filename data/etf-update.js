@@ -1,6 +1,18 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
+    date: "2026-04-23 13:11 KST",
+    summary: "이란 호르무즈 선박 2척 나포·Brent $101.91 +3%·WTI $92.96 +3%·BTC $79K 돌파·SK하이닉스 Q1 OP 37.61조 사상 최대·KOSPI 신고점",
+    changes: [
+      { type: "수치 갱신", sector: "에너지·원자력",
+        detail: "XLE·XOP·VDE. 4/22 이란이 호르무즈 해협에서 상선 2척을 나포하며 트럼프의 휴전 조건부 연장을 무력화, Brent 장중 $101.91 +3%·WTI $92.96 +3% 재급등. 해협 통항량은 극심한 저점 지속, 걸프 원유 수출 붕괴 구간 연장. XLE·XOP·VDE 에너지 ETF 재평가, LNG는 유럽 프리미엄·아시아 재라우팅 수혜 재점화.", time: "2026-04-23 13:11 KST" },
+      { type: "수치 갱신", sector: "크립토·블록체인",
+        detail: "IBIT. BTC가 4/22 $79,000 상회로 2월 이후 최고가, 24시간 +4.5%·주간 +5.7% 재가속. MSTR 4/22 +10% 추가 급등, 5거래일 누적 +25%. Strategy 총 815,061 BTC·평단 $74,395로 평가익 약 40억 달러 구간, BlackRock IBIT 802,823 BTC 상회 세계 최대 기관 보유 지위 공고화.", time: "2026-04-23 13:11 KST" },
+      { type: "수치 갱신", sector: "신흥국·글로벌",
+        detail: "EWY. SK하이닉스 4/23 Q1 매출 52.58조·영업이익 37.61조 +405.5% YoY 사상 최대 서프라이즈, 영업이익률 72% 한국 대기업 역사상 최고. HBM3E·HBM4 AI 메모리 독점 공급이 견인, SK스퀘어 NAV 재평가 수혜. KOSPI 6,417.93 사상 최고 구간에서 AI 메모리 체인 주도주 교체 관전, EWY YTD +54%·1Y +150% 유지.", time: "2026-04-23 13:11 KST" },
+    ]
+  },
+  {
     date: "2026-04-23 07:05 KST",
     summary: "S&P 500·Nasdaq 동반 기록 신고가·TSLA·BA 실적 비트·Google Cloud Next Gemini Enterprise·TPU 8세대·BTC $78.5K·KOSPI 6,417.93 사상 최고",
     changes: [

@@ -1,6 +1,18 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-23 13:11 KST",
+    summary: "SpaceX 애널리스트 투어 2일차 Tennessee·Anthropic 2027년 멀티 기가와트 TPU 확정·BTC $79K 돌파 크립토 밸류체인 상승",
+    changes: [
+      { type: "정보 갱신", sector: "우주·모빌리티·방산",
+        detail: "SpaceX. 4/23(수) 2일차 애널리스트 투어는 Tennessee Memphis Colossus 메가 DC 일정으로 진행, xAI 합병 후 AI 컴퓨팅 자산을 직접 시연. 21개 주관사·125명 애널리스트 대상 초고보안 비공개 브리핑 기조 유지, Musk는 $1.75T 밸류·$75B 조달 방어 논거를 각국 투자자 대상으로 재설계. 폐막은 4/24 Cape Canaveral·Kennedy Space Center 일정, 6/8 로드쇼·6/11 1,500명 리테일 투자자 행사·6월 말 프라이싱 경로.", time: "2026-04-23 13:11 KST" },
+      { type: "정보 갱신", sector: "AI·ML",
+        detail: "Anthropic. 4/22 Google Cloud Next에서 2027년부터 차세대 TPU 멀티 기가와트 단위 사용 공식 확정, Alphabet·Broadcom 공급망 확대. Opus 4.7 이미 엔터프라이즈 코딩 50% 점유 유지·ARR $300억 돌파·투자자 $800B 프리엠프티브 오퍼 거절 상태에서 컴퓨트 자원만이 리스크. GS·JPM·MS 주관 10월 IPO $60B+ 조달 협상 지속, $1T 밸류 시나리오 잠재.", time: "2026-04-23 13:11 KST" },
+      { type: "정보 갱신", sector: "크립토·Web3",
+        detail: "Kraken·ConsenSys. BTC 4/22 $79,000 상회로 2월 이후 최고가, 24시간 +4.5% 재가속. 크립토 거래소·인프라 유니콘 가치 재평가 구간 진입, Kraken은 Deutsche Börse $200M 투자 확보 상태에서 2026 Q3 IPO 목표 재확인. ConsenSys는 GS·JPM 주관 2026 H2 IPO 협의 유지, MetaMask 사용자 기반 확장과 이더리움 생태계 수요 동반 상승.", time: "2026-04-23 13:11 KST" },
+    ]
+  },
+  {
     date: "2026-04-23 07:05 KST",
     summary: "VAST Data Series F $1B 조달·밸류 $30B 3배 급등·AI 스토리지 엔터프라이즈 리딩·Nvidia 지분 유지·SpaceX 애널리스트 투어 4/22 Starbase 1일차 종료",
     changes: [

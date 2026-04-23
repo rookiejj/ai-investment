@@ -110,11 +110,11 @@ const data = [
     title: "🛢️ 에너지",
     tag: "석유메이저·LNG·유전서비스",
     stocks: [
-      { tk:"XOM", nm:"ExxonMobil", rs:"휴전 조건부 연장·이란 제안 수용 전까지 유효·Brent $97.91·WTI $88.82·호르무즈 기능적 봉쇄 장기화·수요 파괴 4~5mb/d 추정", r1:"332", p1:"29", r2:"345", p2:"32" },
-      { tk:"CVX", nm:"Chevron", rs:"WTI $89 하회·휴전 연장 안도 반영·Vance 파키스탄 회담 취소·이란 호르무즈 재개 거부·Brent $97.91로 되돌림", r1:"189", p1:"12", r2:"195", p2:"14" },
-      { tk:"LNG", nm:"Cheniere", rs:"미 최대 LNG 수출·호르무즈 기능적 폐쇄 지속·유럽 LNG 프리미엄·아시아 재라우팅", r1:"16", p1:"3.5", r2:"18", p2:"4.2" },
+      { tk:"XOM", nm:"ExxonMobil", rs:"이란 호르무즈 선박 2척 나포·휴전 무력화·Brent $101.91 +3%·WTI $92.96 +3%·공급 쇼크 재점화", r1:"332", p1:"29", r2:"345", p2:"32" },
+      { tk:"CVX", nm:"Chevron", rs:"WTI $92.96 +3% 급등·이란 호르무즈 선박 2척 나포·휴전 연장 무력화·Vance 파키스탄 회담 취소", r1:"189", p1:"12", r2:"195", p2:"14" },
+      { tk:"LNG", nm:"Cheniere", rs:"미 최대 LNG 수출·이란 선박 나포로 호르무즈 봉쇄 장기화·유럽 LNG 프리미엄·아시아 재라우팅", r1:"16", p1:"3.5", r2:"18", p2:"4.2" },
       { tk:"SLB", nm:"Schlumberger", rs:"유전서비스 1위·중동 CapEx 재개 기대", r1:"37", p1:"4.5", r2:"39", p2:"5.0" },
-      { tk:"COP", nm:"ConocoPhillips", rs:"상류 E&P·Brent $97.9·WTI $88.8 유지로 마진 재확대", r1:"60", p1:"10", r2:"64", p2:"11" },
+      { tk:"COP", nm:"ConocoPhillips", rs:"상류 E&P·Brent $101.91·WTI $92.96 재급등으로 마진 확대 구간", r1:"60", p1:"10", r2:"64", p2:"11" },
       { tk:"KMI", nm:"Kinder Morgan", rs:"가스 파이프라인", r1:"16", p1:"2.7", r2:"17", p2:"3.0" },
       { tk:"EOG", nm:"EOG Resources", rs:"셰일 E&P 고효율", r1:"23", p1:"5.5", r2:"24", p2:"5.8" },
     ]
@@ -149,7 +149,7 @@ const data = [
     title: "✈️ 항공우주·방산",
     tag: "전투기·미사일·우주·위성",
     stocks: [
-      { tk:"LMT", nm:"Lockheed Martin", rs:"4/23 Q1 실적·컨센 EPS $6.73·수주잔고 $194B·F-35·미사일", r1:"72", p1:"7.0", r2:"75", p2:"7.5" },
+      { tk:"LMT", nm:"Lockheed Martin", rs:"4/23 장전 Q1 실적·컨센 EPS $6.73·매출 $18.24B·수주잔고 $194B·F-35·중동 미사일 수요", r1:"72", p1:"7.0", r2:"75", p2:"7.5" },
       { tk:"RTX", nm:"RTX Corp", rs:"Q1 EPS $1.78 비트(+21% YoY)·매출 $22.1B +9%·Raytheon 섹그 +10%·가이던스 EPS $6.70~6.90 상향·FCF $1.9B", r1:"82", p1:"6.5", r2:"88", p2:"7.5" },
       { tk:"NOC", nm:"Northrop Grumman", rs:"B-21·전략무기", r1:"42", p1:"4.0", r2:"44", p2:"4.3" },
       { tk:"GD", nm:"General Dynamics", rs:"잠수함·Gulfstream", r1:"49", p1:"4.2", r2:"52", p2:"4.6" },
@@ -166,7 +166,7 @@ const data = [
       { tk:"RGTI", nm:"Rigetti", rs:"초전도 양자", r1:"0.012", p1:"-0.08", r2:"0.025", p2:"-0.10" },
       { tk:"QBTS", nm:"D-Wave", rs:"어닐링 양자", r1:"0.015", p1:"-0.07", r2:"0.030", p2:"-0.08" },
       { tk:"COIN", nm:"Coinbase", rs:"미 최대 거래소", r1:"7.5", p1:"2.3", r2:"9.0", p2:"2.9" },
-      { tk:"MSTR", nm:"Strategy", rs:"BTC $78.5K 돌파(2월 이후 최고)·MSTR 4/22 +11.6%·5일간 +25%·총 815,061 BTC 평단 $74,395·BlackRock IBIT 추월 세계 최대 기관 보유", r1:"0.5", p1:"-0.2", r2:"0.55", p2:"-0.15" },
+      { tk:"MSTR", nm:"Strategy", rs:"BTC $79K 돌파 24h +4.5%·MSTR 4/22 +10%·5일간 +25%·총 815,061 BTC 평단 $74,395·BlackRock IBIT 추월 세계 최대 기관 보유", r1:"0.5", p1:"-0.2", r2:"0.55", p2:"-0.15" },
       { tk:"MARA", nm:"Marathon Digital", rs:"BTC 채굴", r1:"0.75", p1:"0.10", r2:"1.0", p2:"0.20" },
       { tk:"RIOT", nm:"Riot Platforms", rs:"BTC 채굴·인프라", r1:"0.35", p1:"0.05", r2:"0.50", p2:"0.10" },
     ]

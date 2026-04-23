@@ -32,7 +32,7 @@ const data = [
     title: "⚡ 에너지·원자력",
     tag: "석유·가스·우라늄",
     stocks: [
-      { tk:"XLE", nm:"Energy Select SPDR", rs:"휴전 조건부 연장·WTI $88.82·Brent $97.91 약세·이란 호르무즈 재개 거부·수요 파괴 4~5mb/d·수요 재편 구간 장기화", aum:"38", er:"0.09%", ytd:"+28%", y1:"+18%" },
+      { tk:"XLE", nm:"Energy Select SPDR", rs:"이란 호르무즈 선박 2척 나포·휴전 무력화·WTI $92.96 +3%·Brent $101.91 +3% 재급등·수요 파괴 장기화", aum:"38", er:"0.09%", ytd:"+28%", y1:"+18%" },
       { tk:"URA", nm:"Global X Uranium", rs:"우라늄·원전 생태계·연초 조정 국면", aum:"4", er:"0.69%", ytd:"+6%", y1:"+30%" },
       { tk:"NLR", nm:"VanEck Uranium+Nuclear", rs:"원자력 밸류체인", aum:"1.5", er:"0.60%", ytd:"+22%", y1:"+35%" },
       { tk:"AMLP", nm:"Alerian MLP", rs:"MLP 파이프라인·배당", aum:"10", er:"0.85%", ytd:"+12%", y1:"+20%" },
@@ -58,7 +58,7 @@ const data = [
     title: "₿ 크립토·블록체인",
     tag: "비트코인·이더리움·디파이",
     stocks: [
-      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"BTC $78.5K 돌파 2월 이후 최고·월간 +11.1%·Strategy 815,061 BTC로 IBIT 802,823 BTC 추월·ETF 순유입 재가속·MSTR 5거래일 +25%", aum:"58", er:"0.25%", ytd:"+4%", y1:"-12%" },
+      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"BTC $79K 돌파 2월 이후 최고·24h +4.5%·Strategy 815,061 BTC로 IBIT 802,823 BTC 추월·ETF 순유입 재가속·MSTR 5거래일 +25%", aum:"58", er:"0.25%", ytd:"+4%", y1:"-12%" },
       { tk:"FBTC", nm:"Fidelity Wise Origin BTC", rs:"비트코인 현물·피델리티·AUM $18B", aum:"18", er:"0.25%", ytd:"+2%", y1:"-14%" },
       { tk:"ETHA", nm:"iShares Ethereum Trust", rs:"이더리움 현물·4/14 +7%", aum:"10", er:"0.25%", ytd:"-12%", y1:"-8%" },
       { tk:"BITO", nm:"ProShares Bitcoin Strategy", rs:"비트코인 선물 최초", aum:"3", er:"0.95%", ytd:"-18%", y1:"-18%" },
@@ -103,7 +103,7 @@ const data = [
       { tk:"INDA", nm:"iShares MSCI India", rs:"인도 시장", aum:"12", er:"0.64%", ytd:"+10%", y1:"+18%" },
       { tk:"VEA", nm:"Vanguard FTSE Developed", rs:"선진국(미국 제외)", aum:"130", er:"0.05%", ytd:"+9%", y1:"+16%" },
       { tk:"FXI", nm:"iShares China Large-Cap", rs:"중국 대형주 50종·H주·관세 변동성", aum:"5.8", er:"0.74%", ytd:"-12%", y1:"+15%" },
-      { tk:"EWY", nm:"iShares MSCI South Korea", rs:"KOSPI 6,417.93 +0.46% 사상 첫 6,400선 안착·4/23 SK하이닉스 Q1 40조 기대·현대차 Q1 동반 공개·삼성SDI 벤츠 Big3 완성", aum:"16", er:"0.59%", ytd:"+54%", y1:"+150%" },
+      { tk:"EWY", nm:"iShares MSCI South Korea", rs:"KOSPI 6,417.93 사상 최고·4/23 SK하이닉스 Q1 OP 37.61조 +405% 사상 최대·영업이익률 72%·HBM4 폭발 수요", aum:"16", er:"0.59%", ytd:"+54%", y1:"+150%" },
     ]
   },
 ];
