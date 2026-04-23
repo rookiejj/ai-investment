@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>환불정책 · 브리픽</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css">
+<style>
+:root{
+  --bg:#ffffff;--fg:#0d0d0d;--fg2:#333333;--mut:#666666;
+  --border:rgba(0,0,0,0.05);--border-md:rgba(0,0,0,0.08);
+  --acc:#18E299;--acc-deep:#0fa76e;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg2);font:16px/1.7 Pretendard,-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:48px 24px 96px}
+.top-nav{margin-bottom:32px}
+.top-nav a{color:var(--mut);text-decoration:none;font-size:14px;letter-spacing:-0.1px}
+.top-nav a:hover{color:var(--acc-deep)}
+h1{font:700 28px/1.3 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.56px;margin-bottom:8px}
+.effective{color:var(--mut);font-size:13px;margin-bottom:40px;letter-spacing:0.1px}
+h2{font:600 18px/1.4 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.2px;margin:32px 0 10px}
+p{margin:8px 0;font-size:15px;letter-spacing:-0.1px}
+ul,ol{margin:8px 0 8px 20px;font-size:15px}
+li{margin:4px 0}
+.note{background:rgba(0,0,0,0.03);border-left:3px solid var(--acc);padding:14px 16px;border-radius:6px;font-size:14px;color:var(--mut);margin:16px 0}
+.emphasize{background:#fff4e5;color:#8b4500;padding:12px 14px;border-radius:8px;border:1px solid #ffd38a;font-size:14px;margin:12px 0}
+a{color:var(--acc-deep)}
+a.back{display:inline-block;margin-top:48px;padding:10px 18px;border:1px solid var(--border-md);border-radius:9999px;color:var(--fg2);text-decoration:none;font-size:14px;font-weight:500}
+a.back:hover{background:var(--border-md);color:var(--fg)}
+.formula{background:rgba(0,0,0,0.03);padding:10px 14px;border-radius:6px;font-family:'Geist Mono','SF Mono',monospace;font-size:14px;color:var(--fg);margin:8px 0}
+@media (max-width:640px){
+  .wrap{padding:32px 20px 64px}
+  h1{font-size:24px}
+  h2{font-size:16px;margin:28px 0 8px}
+  p,ul,ol{font-size:14px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="top-nav"><a href="./">← 홈으로</a></nav>
+  <h1>환불정책</h1>
+  <p class="effective">시행일: 2026년 4월 23일</p>
+
+  <p>브리픽(이하 "회사")은 「전자상거래 등에서의 소비자 보호에 관한 법률」(이하 "전상법") 및 「콘텐츠산업진흥법」에 따라 이용자의 환불 요청을 처리합니다.</p>
+
+  <h2>1. 환불 원칙</h2>
+  <p>본 서비스는 디지털 콘텐츠 구독 상품으로, 결제 후 서비스가 제공되기 시작하면 사용한 일수에 해당하는 금액을 제외한 잔여분을 환불합니다.</p>
+
+  <h2>2. 환불 가능한 경우</h2>
+  <ul>
+    <li>결제 완료 후 <strong>7일 이내이며 친구톡이 1회도 발송되지 않은 경우</strong>: 전액 환불</li>
+    <li>회사의 귀책사유로 서비스가 정상 제공되지 않은 경우: 전액 또는 해당 기간에 상응하는 금액 환불</li>
+    <li>그 외 이용자가 환불을 요청한 경우: 사용 일수 차감 후 잔여분 환불</li>
+  </ul>
+
+  <h2>3. 환불 불가 또는 제한되는 경우</h2>
+  <ul>
+    <li>이용자의 귀책사유로 서비스를 이용하지 못한 경우(예: 카카오 채널 친구 추가 미이행, 잘못된 전화번호 입력 등)에도 사용 일수는 정상 차감됩니다.</li>
+    <li>광고 수신 동의를 철회하거나 채널을 차단해 메시지를 받지 못한 경우</li>
+    <li>결제 후 <strong>30일</strong>이 경과한 경우(이미 만료된 구독)</li>
+    <li>이용자가 본 약관 위반으로 이용 제한된 경우</li>
+  </ul>
+
+  <h2>4. 환불 금액 산정</h2>
+  <p>부분 환불 시 다음과 같이 계산합니다.</p>
+  <div class="formula">환불금액 = 결제금액 × (1 − 사용일수 ÷ 30)</div>
+  <p>예: 100원 결제 후 10일 사용한 경우 → 100 × (1 − 10/30) ≈ 67원 환불</p>
+
+  <div class="emphasize">결제금액이 소액(예: 100원)인 경우 결제대행 수수료 및 은행 송금 수수료가 환불 처리 비용을 상회할 수 있어, 회사의 판단에 따라 대체 혜택(구독 기간 연장 등)으로 갈음할 수 있습니다.</div>
+
+  <h2>5. 환불 신청 방법</h2>
+  <ol>
+    <li>카카오 채널톡 또는 이메일(<a href="mailto:rookiejjj@gmail.com">rookiejjj@gmail.com</a>)로 환불 신청</li>
+    <li>신청 시 결제 시 사용한 전화번호, 결제 일자를 알려주시면 확인이 빠릅니다.</li>
+    <li>회사는 본인 확인 후 처리합니다.</li>
+  </ol>
+
+  <h2>6. 처리 기간</h2>
+  <ul>
+    <li>환불 신청 후 <strong>영업일 기준 3일 이내</strong> 처리</li>
+    <li>카드 결제 취소는 카드사 정책에 따라 실제 환불까지 3~7일이 추가로 소요될 수 있습니다.</li>
+    <li>결제대행사·은행의 장애 또는 정책으로 지연될 수 있습니다.</li>
+  </ul>
+
+  <h2>7. 자동 환불 특례</h2>
+  <p>회사의 귀책사유로 7일 연속 친구톡이 발송되지 않은 경우, 이용자의 별도 요청 없이도 해당 기간에 상응하는 금액을 자동 환불하거나 구독 기간을 연장합니다.</p>
+
+  <h2>8. 분쟁 해결</h2>
+  <p>환불과 관련하여 이용자와 회사 간 의견이 상이한 경우 원칙적으로 협의로 해결하며, 협의가 어려울 경우 한국소비자원 또는 공정거래위원회의 조정 절차를 따를 수 있습니다.</p>
+
+  <div class="note">본 환불정책은 2026년 4월 23일부터 적용됩니다. 보다 구체적인 내용은 <a href="./terms.html">이용약관</a>을 참조하세요.</div>
+
+  <a href="./" class="back">← 홈으로 돌아가기</a>
+</div>
+</body>
+</html>
