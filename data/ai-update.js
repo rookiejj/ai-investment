@@ -6,6 +6,15 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-24 07:15 KST",
+    summary: "OpenAI GPT-5.5 'Spud' 정식 출시·Terminal-Bench 2.0 82.7% SOTA로 Opus 4.7 반격·Anthropic 세컨더리 마켓 $1조 돌파해 OpenAI 추월",
+    changes: [
+      { type: "모델 출시", sector: "OpenAI", detail: "OpenAI. 4/23 GPT-5.5 공식 출시 — 내부 코드명 'Spud', 3/24 프리트레이닝 완료 이후 약 4주 만의 배포로 그간 GPT-6 출시설을 덮고 '5.5' 명명 택했다. 소비자 3계층(GPT-5.5·GPT-5.5 Thinking·GPT-5.5 Pro)이 ChatGPT·Codex에 동시 활성, API는 '수일 내' 공개. 핵심 벤치마크는 Terminal-Bench 2.0 82.7%로 Claude Opus 4.7의 69.4%·Gemini 3.1 Pro 68.5%를 크게 앞서는 SOTA, SWE-Bench Pro 58.6%로 싱글패스 GitHub 이슈 해결 신고점, FrontierMath Tier1-3 51.7%(Opus 4.7 43.8%), GDPval 44개 직업 지식노동 84.9%. 4/16 Anthropic Opus 4.7·Claude 디자인 도구 공개 이후 떨어졌던 모멘텀을 에이전틱 코딩 영역에서 되찾는 구간, ChatGPT Plus/Pro/Business/Enterprise 즉시 롤아웃.", time: "2026-04-24 07:15 KST" },
+      { type: "밸류에이션", sector: "Anthropic", detail: "Anthropic. 4/23 세컨더리 마켓 거래가 기준 $1조(1 trillion) 밸류 돌파, 사상 처음 OpenAI를 공식 추월하며 AI 분야 단독 1위 기업가치로 등극. 3월 $190B→4월 초 $800B→4/23 $1T로 6주 만에 +25% 급등, 10월 프라이머리 IPO 타겟은 $400~500B 구간이나 세컨더리 시장은 이미 훨씬 상회 평가. 배경에는 ①4월 연환산 매출 $300억 돌파로 OpenAI($250억) 추월 ②$1M+ 엔터 고객 1,000+ 돌파 ③Amazon $25B 추가 투자 확정 ④$1조 TPU 3.5GW·AWS $100B 10년 컴퓨트 파이프라인이 결합. Goldman·JPM·Morgan Stanley 공동 주관 IPO 경쟁 심화.", time: "2026-04-24 07:15 KST" },
+      { type: "제품 출시", sector: "OpenAI", detail: "OpenAI. 4/23 동시에 로컬 실행형 오픈웨이트 PII 탐지·리댁션 모델을 공개 배포 — 사용자 기기 내에서 개인정보 식별정보를 마스킹 후 외부 전송하는 구조로, 엔터프라이즈·거번먼트 사용자의 데이터 주권 우려를 차단. GPT-5.5 본체 출시와 함께 '사이버 보안·PII·바이오'로 확장한 Trusted Access 제품군 라인업을 주간 단위로 연속 공개 중.", time: "2026-04-24 07:15 KST" },
+    ]
+  },
+  {
     date: "2026-04-23 19:15 KST",
     summary: "SpaceX, Cursor 모회사 Anysphere 하반기 $60B 인수 옵션 체결·불발 시 $10B 브레이크업·Anthropic IPO 앞두고 컴퓨트·브랜드 성장통 부각",
     changes: [

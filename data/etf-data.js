@@ -32,7 +32,7 @@ const data = [
     title: "⚡ 에너지·원자력",
     tag: "석유·가스·우라늄",
     stocks: [
-      { tk:"XLE", nm:"Energy Select SPDR", rs:"이란 호르무즈 선박 2척 나포·휴전 무력화·WTI $92.96 +3%·Brent $101.91 +3% 재급등·수요 파괴 장기화", aum:"38", er:"0.09%", ytd:"+28%", y1:"+18%" },
+      { tk:"XLE", nm:"Energy Select SPDR", rs:"4/23 Brent $101+ 유지·호르무즈 기능적 봉쇄·4~5mb/d 수요 파괴 지속·OPEC+ 4/25 화상회의 대기", aum:"38", er:"0.09%", ytd:"+28%", y1:"+18%" },
       { tk:"URA", nm:"Global X Uranium", rs:"우라늄·원전 생태계·연초 조정 국면", aum:"4", er:"0.69%", ytd:"+6%", y1:"+30%" },
       { tk:"NLR", nm:"VanEck Uranium+Nuclear", rs:"원자력 밸류체인", aum:"1.5", er:"0.60%", ytd:"+22%", y1:"+35%" },
       { tk:"AMLP", nm:"Alerian MLP", rs:"MLP 파이프라인·배당", aum:"10", er:"0.85%", ytd:"+12%", y1:"+20%" },
@@ -58,7 +58,7 @@ const data = [
     title: "₿ 크립토·블록체인",
     tag: "비트코인·이더리움·디파이",
     stocks: [
-      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"BTC $79K 돌파 2월 이후 최고·24h +4.5%·Strategy 815,061 BTC로 IBIT 802,823 BTC 추월·ETF 순유입 재가속·MSTR 5거래일 +25%", aum:"58", er:"0.25%", ytd:"+4%", y1:"-12%" },
+      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"BTC $77.5K 되돌림·Fear&Greed 46 중립·Strategy 815,061 BTC로 IBIT 802,823 BTC 추월·ETF 순유입 유지", aum:"58", er:"0.25%", ytd:"+4%", y1:"-12%" },
       { tk:"FBTC", nm:"Fidelity Wise Origin BTC", rs:"비트코인 현물·피델리티·AUM $18B", aum:"18", er:"0.25%", ytd:"+2%", y1:"-14%" },
       { tk:"ETHA", nm:"iShares Ethereum Trust", rs:"이더리움 현물·4/14 +7%", aum:"10", er:"0.25%", ytd:"-12%", y1:"-8%" },
       { tk:"BITO", nm:"ProShares Bitcoin Strategy", rs:"비트코인 선물 최초", aum:"3", er:"0.95%", ytd:"-18%", y1:"-18%" },
@@ -71,8 +71,8 @@ const data = [
     title: "🇺🇸 미국 대형주",
     tag: "S&P500·나스닥·소형주",
     stocks: [
-      { tk:"SPY", nm:"SPDR S&P 500", rs:"S&P 500 7,137.90 +1.05% 사상 최고·TSLA EPS 비트·BA Q1 매출 비트·이란 휴전 연장 안도·4/23 LMT·INTC 실적 대기", aum:"590", er:"0.09%", ytd:"+3%", y1:"+16%" },
-      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"Nasdaq 24,657.57 +1.64% 기록 신고가·Google Cloud Next Gemini Enterprise 통합·Apple 파운데이션 파트너십·TPU 8세대 공개·IBM·NOW 혼조", aum:"400", er:"0.20%", ytd:"+9%", y1:"+24%" },
+      { tk:"SPY", nm:"SPDR S&P 500", rs:"4/23 S&P 500 7,108.40 -0.41% 기록고 조정·LMT Q1 미스 -6.3%·NOW -18% IBM -8% 소프트웨어 급락·유가 재점화·4/29 GOOGL 실적 대기", aum:"590", er:"0.09%", ytd:"+3%", y1:"+16%" },
+      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"4/23 Nasdaq 24,438.50 -0.89% 조정·OpenAI GPT-5.5 공식 출시·INTC AH +19%·TXN DC +90% YoY·Anthropic 세컨더리 $1조 돌파", aum:"400", er:"0.20%", ytd:"+9%", y1:"+24%" },
       { tk:"VOO", nm:"Vanguard S&P 500", rs:"세계 최대 ETF·AUM $827B·최저 보수", aum:"827", er:"0.03%", ytd:"+2%", y1:"+15%" },
       { tk:"VTI", nm:"Vanguard Total Stock", rs:"미국 전체 시장·4월 신고가 랠리", aum:"420", er:"0.03%", ytd:"+2%", y1:"+14%" },
       { tk:"DIA", nm:"SPDR Dow Jones", rs:"다우 30 우량주·다우 부진", aum:"35", er:"0.16%", ytd:"-3%", y1:"+10%" },
@@ -103,7 +103,7 @@ const data = [
       { tk:"INDA", nm:"iShares MSCI India", rs:"인도 시장", aum:"12", er:"0.64%", ytd:"+10%", y1:"+18%" },
       { tk:"VEA", nm:"Vanguard FTSE Developed", rs:"선진국(미국 제외)", aum:"130", er:"0.05%", ytd:"+9%", y1:"+16%" },
       { tk:"FXI", nm:"iShares China Large-Cap", rs:"중국 대형주 50종·H주·관세 변동성", aum:"5.8", er:"0.74%", ytd:"-12%", y1:"+15%" },
-      { tk:"EWY", nm:"iShares MSCI South Korea", rs:"KOSPI 종가 6,475.81 +0.9% 3거래일 연속 신고점·장중 6,557.76 첫 6,500 돌파·SK하이닉스 Q1 OP 37.61조·영업이익률 72%·현대차 Q1 OP -30.8% 컨센 미스", aum:"16", er:"0.59%", ytd:"+55%", y1:"+151%" },
+      { tk:"EWY", nm:"iShares MSCI South Korea", rs:"KOSPI 6,475.81 신고가 랠리 지속·SK하이닉스 Q1 영업이익률 72% 신기록·한화에어로 Northrop AReS MOA·4/24 기아 Q1 실적 대기", aum:"16", er:"0.59%", ytd:"+55%", y1:"+151%" },
     ]
   },
 ];

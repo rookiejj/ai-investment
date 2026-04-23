@@ -1,6 +1,20 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
+    date: "2026-04-24 07:20 KST",
+    summary: "SPY 7,108.40 -0.41%·QQQ -0.89% 기록고 조정·LMT -6.3%·NOW -18%·IBM -8%·INTC AH +19%·OpenAI GPT-5.5 출시·한화 방산 미 파트너십·BTC $77.5K 되돌림",
+    changes: [
+      { type: "수치 갱신", sector: "미국 대형주",
+        detail: "SPY·QQQ. 4/23 S&P 500 7,108.40 -0.41%·Nasdaq 24,438.50 -0.89%·다우 49,310.32 -0.36%로 직전일 기록 신고가에서 되돌림. 소프트웨어 섹터 폭락이 주 원인 — IBM -8%·NOW -18% 급락이 Nasdaq 낙폭 상당 기여, LMT도 Q1 EPS·매출 미스에 -6.3%. 반면 장후 INTC +19%(DC+AI 매출 +22%·Q1 EPS $0.29), TXN +16%(데이터센터 매출 YoY +90%·BofA 등급 Buy 상향)가 반도체 랠리 복원. S&P 500 중 87개 보고 기준 EPS 비트율 81%·매출 비트율 76%로 실적 펀더 양호, 4/29 GOOGL 컨센 EPS $2.68·매출 $106.88B 대기.", time: "2026-04-24 07:20 KST" },
+      { type: "수치 갱신", sector: "AI·반도체",
+        detail: "SMH·SOXX·AIQ. OpenAI가 4/23 GPT-5.5('Spud') 공식 출시하며 Terminal-Bench 2.0 82.7%로 Opus 4.7(69.4%)·Gemini 3.1 Pro(68.5%) 추월 SOTA 달성, 에이전틱 코딩 리더십 탈환으로 AI 플랫폼 투자 모멘텀 재확산. INTC Q1 서프라이즈와 TXN 데이터센터 +90% 모멘텀이 반도체 광역 수혜, 4/30 삼성전자·NVDA Q1 가이던스 주목.", time: "2026-04-24 07:20 KST" },
+      { type: "수치 갱신", sector: "방산·보안",
+        detail: "ITA·PPA·XAR·SHLD. 한화에어로스페이스가 Sea-Air-Space 2026에서 Northrop Grumman과 AReS 장거리미사일용 1단 고체 부스터 MOA 체결, 한화오션·한화시스템은 Leidos·Gibbs&Cox와 미 해군 함정 설계 협력 체결. LMT Q1 미스 -6.3%에도 K방산의 미 방산 생태계 직접 편입 모멘텀으로 글로벌 방산 ETF는 상대 강세 흐름 유지, SHLD YTD +19% 레벨에서 상단 시험.", time: "2026-04-24 07:20 KST" },
+      { type: "수치 갱신", sector: "크립토·블록체인",
+        detail: "IBIT·FBTC. BTC는 4/23 $77.8K → 4/24 $77.5K로 -$385 소폭 되돌림, Fear&Greed 46 중립화. Strategy 815,061 BTC 기준 약 28억 달러 평가익 유지하며 IBIT 802,823 BTC 대비 세계 최대 기관 보유자 지위 고수. 주간 +4%대 유지 구간이지만 미 증시 조정·트럼프-이란 긴장이 $80K 재돌파의 단기 저항.", time: "2026-04-24 07:20 KST" },
+    ]
+  },
+  {
     date: "2026-04-23 19:15 KST",
     summary: "KOSPI 종가 6,475.81 +0.9% 3일 연속 신고점·장중 6,557.76으로 첫 6,500 돌파·현대차 Q1 영업익 -30.8% 컨센 미스·TSLA 컨콜 CAPEX 가이던스 $20B→$25B 상향·Brent $101.55 재상승",
     changes: [

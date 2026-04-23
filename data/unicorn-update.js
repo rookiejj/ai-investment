@@ -1,6 +1,16 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-24 07:30 KST",
+    summary: "Anthropic 세컨더리 마켓 $1조 돌파 OpenAI 첫 공식 추월·4/23 OpenAI GPT-5.5 'Spud' 공식 출시로 에이전틱 코딩 리더십 탈환 시도·AI 유니콘 밸류 재설정",
+    changes: [
+      { type: "밸류에이션", sector: "AI·ML",
+        detail: "Anthropic. 4/23 세컨더리 마켓 거래가 기준 $1조(1 trillion) 밸류 돌파, 사상 처음 OpenAI($852B)를 공식 추월하며 AI 단독 1위 기업가치로 등극. 3월 $190B→4월 초 $800B→4/23 $1T로 6주 만에 +25% 급등, 10월 프라이머리 IPO 타겟 $400~500B 구간이나 세컨더리는 이미 배 이상 선반영. 근거는 ①연환산 매출 $300억(OpenAI $250억 초과) ②$1M+ 엔터 고객 1,000+ ③Amazon $25B 추가 확정 ④Google·Broadcom 3.5GW TPU·AWS $100B 10년 파이프라인. Goldman·JPM·Morgan Stanley 공동 주관 경쟁 심화.", time: "2026-04-24 07:30 KST" },
+      { type: "모델 출시", sector: "AI·ML",
+        detail: "OpenAI. 4/23 GPT-5.5 'Spud' 공식 출시로 에이전틱 코딩 리더십 탈환을 노린다. Terminal-Bench 2.0 82.7%로 Opus 4.7(69.4%)·Gemini 3.1 Pro(68.5%) 추월 SOTA 달성, SWE-Bench Pro 58.6%·FrontierMath Tier1-3 51.7%·GDPval 84.9%. ChatGPT Plus/Pro/Business/Enterprise 즉시 롤아웃, API는 수일 내. Anthropic $1조 밸류 소식과 대척점에서 프라이머리 밸류 $852B 유지 의지 과시, IPO 일정·밸류 재산정 가능성 부상.", time: "2026-04-24 07:30 KST" },
+    ]
+  },
+  {
     date: "2026-04-23 19:15 KST",
     summary: "SpaceX, Cursor 모회사 Anysphere 하반기 $60B 인수 옵션 확보·불발 시 $10B 브레이크업·$2B 신규 펀딩 대체·Microsoft 선수 실패·AI 코딩 유니콘 판도 재편",
     changes: [
