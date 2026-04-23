@@ -117,7 +117,6 @@ function buildTabBlock(tab: TabWithEntries): string {
 function buildMessage(tabs: TabWithEntries[]): string {
   const parts = [`📊 브리픽 · ${kstDateLabel()}\n━━━━━━━━━━━━`];
   for (const t of tabs) if (t.entries.length) parts.push(buildTabBlock(t));
-  parts.push(`━━━━━━━━━━━━\n▸ 전체 보기\n${SITE_URL}`);
   return parts.join("\n\n");
 }
 
@@ -166,6 +165,12 @@ async function solapiSendFriendtalk(opts: {
     kakaoOptions: {
       pfId,
       disableSms: DISABLE_SMS_FALLBACK,
+      buttons: [{
+        buttonType: "WL",
+        buttonName: "전체 뉴스 보기",
+        linkMo: SITE_URL,
+        linkPc: SITE_URL,
+      }],
     },
   }));
 
