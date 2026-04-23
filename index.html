@@ -1092,7 +1092,7 @@ function switchTab(id,dir){
   const SUPABASE_URL = 'https://ytvcgoldauysvnqckzze.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_BRlDRwvdanR1sLX2b_Iagg_AtLA8Wyf';
   const PORTONE_STORE_ID = 'store-94ded677-c4c2-45a7-adc2-eb735d601a52';
-  const PORTONE_CHANNEL_KEY = 'channel-key-e32b9dbf-38c1-43a0-a080-1e208f22ab40';
+  const PORTONE_CHANNEL_KEY = 'channel-key-42ed198b-0afd-4ffd-aa62-ff7d00d9bcc5';
   const SUBSCRIPTION_PRICE = 100;
   const SUBSCRIPTION_ORDER_NAME = '브리픽 월간 구독 (테스트)';
 
@@ -1328,6 +1328,7 @@ function switchTab(id,dir){
         customer: { customerId: phone, phoneNumber: phone },
         windowType: { pc: 'IFRAME', mobile: 'REDIRECTION' },
         redirectUrl: location.origin + location.pathname,
+
       });
       if(pay.code){
         showStatus('error','결제 실패: '+(pay.message||pay.code));
