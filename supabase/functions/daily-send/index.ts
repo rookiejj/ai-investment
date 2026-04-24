@@ -113,7 +113,7 @@ function buildTabBlock(tab: TabWithEntries): string {
   return lines.join("\n");
 }
 function buildMessage(tabs: TabWithEntries[]): string {
-  const parts = [`📊 브리픽 · ${kstDateLabel()}\n━━━━━━━━━━━━`];
+  const parts = [`📊 브리픽 · ${kstDateLabel()}`];
   for (const t of tabs) if (t.entries.length) parts.push(buildTabBlock(t));
   return parts.join("\n\n");
 }
