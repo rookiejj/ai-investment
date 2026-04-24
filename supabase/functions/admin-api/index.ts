@@ -164,8 +164,8 @@ Deno.serve(async (req) => {
     if (action === "change_password") {
       const curPw = String(body.currentPassword ?? "");
       const newPw = String(body.newPassword ?? "");
-      if (newPw.length < 8) {
-        return json({ ok: false, error: "새 비밀번호는 8자 이상이어야 합니다." }, { status: 400, cors });
+      if (newPw.length < 4) {
+        return json({ ok: false, error: "새 비밀번호는 4자 이상이어야 합니다." }, { status: 400, cors });
       }
       const storedHash = await getStoredHash(supabase, sessionSecret, password);
       const curHash = await hashPassword(curPw, sessionSecret);

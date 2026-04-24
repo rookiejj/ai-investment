@@ -186,7 +186,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
       <label for="pwCurrent">현재 비밀번호</label>
       <input type="password" id="pwCurrent" placeholder="현재 비밀번호" autocomplete="current-password">
       <label for="pwNew">새 비밀번호</label>
-      <input type="password" id="pwNew" placeholder="새 비밀번호 (8자 이상)" autocomplete="new-password">
+      <input type="password" id="pwNew" placeholder="새 비밀번호 (4자 이상)" autocomplete="new-password">
       <label for="pwConfirm">새 비밀번호 확인</label>
       <input type="password" id="pwConfirm" placeholder="다시 입력" autocomplete="new-password">
       <div class="pw-status" id="pwStatus"></div>
@@ -367,8 +367,8 @@ $('pwSubmit').addEventListener('click', async ()=>{
   if (!cur || !nw || !cf){
     st.className='pw-status error'; st.textContent='모든 필드를 입력하세요.'; return;
   }
-  if (nw.length < 8){
-    st.className='pw-status error'; st.textContent='새 비밀번호는 8자 이상이어야 합니다.'; return;
+  if (nw.length < 4){
+    st.className='pw-status error'; st.textContent='새 비밀번호는 4자 이상이어야 합니다.'; return;
   }
   if (nw !== cf){
     st.className='pw-status error'; st.textContent='새 비밀번호가 일치하지 않습니다.'; return;
