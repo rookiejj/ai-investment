@@ -13,7 +13,7 @@
 ai-investment/
 ├── index.html                    ← 통합 대시보드 UI + 구독 결제 모달 (루트)
 ├── views/
-│   ├── admin.html                ← 운영 대시보드 (통계·발송 이력·구독자·수동 발송)
+│   ├── admin.html                ← 운영 대시보드 (대시보드·구독자·결제·발송)
 │   ├── renew.html                ← 재구독 전용 페이지
 │   ├── terms.html                ← 이용약관
 │   ├── privacy.html              ← 개인정보처리방침
@@ -37,14 +37,14 @@ ai-investment/
 │   ├── send-friendtalk.js        ← 로컬 수동 발송 (디버깅)
 │   └── subscribers.example.json
 ├── supabase/
-│   ├── migrations/               ← 스키마 이력 (init / payment / message_type / delivery_state / admin_settings 등)
+│   ├── migrations/               ← 스키마 이력 (init / payment / message_type / delivery_state / admin_settings / template_code)
 │   ├── functions/
 │   │   ├── subscribe/            ← 웹 구독 요청 업서트
 │   │   ├── check-subscription/   ← 결제 전 기존 구독 확인
 │   │   ├── payment-confirm/      ← 포트원 결제 검증 + 구독 연장 + 결제완료 알림톡
 │   │   ├── daily-send/           ← 매일 친구톡 발송 (cron 트리거)
 │   │   ├── solapi-webhook/       ← 솔라피 발송 결과 수신 (실시간 상태 갱신)
-│   │   └── admin-api/            ← 운영 대시보드용 (login / change_password / stats / logs / subscribers / manual_send)
+│   │   └── admin-api/            ← 운영 대시보드용 (login / change_password / stats / logs / subscribers / payments / expiring_soon / manual_send)
 │   ├── schedule.sql              ← pg_cron 등록 SQL (Vault 기반)
 │   ├── queries.sql               ← 운영 조회·상태 변경 템플릿
 │   └── README.md                 ← Supabase 세팅 가이드
@@ -75,11 +75,12 @@ UI 노출 총 348개 항목, 6개 탭 (일본 70항목은 데이터 파일만 �
 
 ### 운영 대시보드 `/admin`
 - 비밀번호 인증 (Edge Function `admin-api` · DB 해시 저장 · 최소 4자)
-- **사이드바 레이아웃** 4개 뷰 (해시 라우팅 · 모바일 드로어)
-  - **대시보드**: 통계 카드(활성 구독자·7일 결제·배송 상태) + 차트(14일 일별 발송량 · 배송 상태 도넛)
-  - **발송 이력**: 상태·타입·번호·기간 필터 + 페이지네이션
-  - **구독자**: 상태·배송 상태 필터로 전체 목록 조회
-  - **수동 발송**: `delivery_state` 필터로 실패 구독자 선택 → 친구톡 재발송 (커스텀 메시지 지원)
+- **사이드바 3-도메인 구조** + 상단 오버뷰 (해시 라우팅 · 모바일 드로어 · 헤더 새로고침 버튼)
+  - **📊 대시보드**: 3개 도메인 통합 카드(활성·7일 매출·14일 성공률·만료 임박·채널 미가입·결제 실패) + 14일 발송 차트 + 구독 상태 도넛 + 최근 결제 5건 + 만료 임박 5건
+  - **👤 구독자**: 상태별 카운트 카드 + 구독 상태 분포 도넛 + 전체 목록(상태·구독 상태 필터)
+  - **💳 결제**: 7일/30일 매출 카드 + 만료 임박(D-7) 리스트 + 결제 이력(상태·기간 필터 + 페이지네이션)
+  - **📬 발송**: 14일 성공률 카드 + 일별 발송량 차트 + 수동 발송(실패 구독자 재전송) + 발송 이력(상태·타입·**용도**·번호·기간 필터)
+- **발송 이력 용도 분류** — `template_code` 컬럼 기반 색상 뱃지: 매일 뉴스 / 수동 발송 / 결제 완료 / 재구독 안내(예정) / 만료 안내(예정)
 - **비밀번호 변경** 모달 (헤더) — 현재 비번 확인 후 DB 해시 즉시 갱신
 
 ### 재구독 페이지 `/renew`
@@ -159,6 +160,7 @@ payments
 send_logs
   id bigserial, subscriber_id, phone, message, char_count
   status (success/fail/skipped), message_type (friendtalk/alimtalk/sms)
+  template_code (daily_news/manual/payment_complete/renew_reminder/expiry_notice/null)
   provider, provider_code (groupId), provider_message, provider_msg_id
   batch_id, sent_at
 
@@ -177,7 +179,7 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
-- **2026-04-24**: 정적 HTML 5개를 `views/`로 이관, `vercel.json` rewrite로 URL 유지(`/admin` 등). 재구독 전용 페이지 `/renew` 신설. 운영 대시보드 `/admin` 개편 — 사이드바 레이아웃, 4개 뷰(대시보드·발송이력·구독자·수동발송), 해시 라우팅, 모바일 드로어, 비밀번호 변경 모달(`admin_settings` 해시 저장, 최소 4자). `admin-api` Edge Function 6개 액션(login/change_password/stats/logs/subscribers/manual_send). 솔라피 발송 결과 webhook 도입 (`solapi-webhook`) — 실제 전달 성공·실패가 실시간 `send_logs`·`subscribers.delivery_state`에 반영. 친구톡 `bms.targeting="I"` 명시로 채널 미가입자 사전 필터링. 탭 선정 기준 팝업. 법정 문서 3종(이용약관·개인정보처리방침·환불정책) 신설. 푸터 2단 레이아웃·사업자 정보. 구독 완료 전용 화면·카카오 채널 추가 강조 배너. 갤럭시아 테스트 PG 전환 (bypass ITEM_CODE + customerId). 친구톡 메시지 각 탭 1건으로 축소, 타이틀·푸터 구분선 제거, 탭 제목 아래 빈 줄 추가.
+- **2026-04-24**: 정적 HTML 5개를 `views/`로 이관, `vercel.json` rewrite로 URL 유지(`/admin` 등). 재구독 전용 페이지 `/renew` 신설. 운영 대시보드 `/admin` 2차 개편 — 사이드바를 **3개 도메인(구독자·결제·발송) + 상단 오버뷰 대시보드**로 재편(총 4개 뷰). 대시보드 뷰에 3도메인 통합 카드·차트·최근 결제 5건·만료 임박 5건. 결제 뷰 신설 — 7일/30일 매출, D-7 만료 임박 리스트, 결제 이력 페이지네이션. 발송 뷰 — 수동 발송을 이력 위로 이동(액션은 리스트 위가 관행). `send_logs.template_code` 컬럼 추가 → 발송 이력에 용도 뱃지·필터(매일 뉴스/수동 발송/결제 완료/재구독 안내/만료 안내). `admin-api`에 `payments`·`expiring_soon` 액션 추가, `stats` 확장(상태별 구독·30일 결제·만료 임박). UI 용어 정리 — "배송" → "구독"으로 치환(delivery_state 라벨). 비밀번호 변경 모달(`admin_settings` 해시 저장, 최소 4자). 솔라피 발송 결과 webhook 도입 (`solapi-webhook`) — 실제 전달 성공·실패가 실시간 `send_logs`·`subscribers.delivery_state`에 반영. 친구톡 `bms.targeting="I"` 명시로 채널 미가입자 사전 필터링. 탭 선정 기준 팝업. 법정 문서 3종(이용약관·개인정보처리방침·환불정책) 신설. 푸터 2단 레이아웃·사업자 정보. 구독 완료 전용 화면·카카오 채널 추가 강조 배너. 갤럭시아 테스트 PG 전환 (bypass ITEM_CODE + customerId). 친구톡 메시지 각 탭 1건으로 축소, 타이틀·푸터 구분선 제거, 탭 제목 아래 빈 줄 추가.
 - **2026-04-23**: `subscribers.delivery_state` 컬럼 도입 — 발송 후 구독자별 상태 스냅샷 자동 갱신. 푸터 사업자 정보·반응형 배치.
 - **2026-04-22**: 친구톡 메시지 포맷 단순화(탭당 1건, 구분선 제거, 네이티브 CTA 버튼). 모바일 결제창 REDIRECTION + 복귀 처리. DB 타임존 KST 전환.
 - **2026-04-21**: 친구톡 구독 서비스 · 포트원 결제 · Supabase 백엔드 도입. 매일 08:00 KST 자동 발송. 구독 모달·결제 완료 알림톡. Supabase 신형 API 키(`sb_*`) 대응 — Edge Function `--no-verify-jwt` + 자체 webhook secret. 결제 완료 시 솔라피 알림톡 템플릿 발송.
