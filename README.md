@@ -18,7 +18,7 @@ ai-investment/
 │   ├── terms.html                ← 이용약관
 │   ├── privacy.html              ← 개인정보처리방침
 │   └── refund.html               ← 환불정책
-├── vercel.json                   ← /admin · /renew · /terms ... → views/ 리라이트
+├── vercel.json                   ← /admin · /renew · /terms ... → views/ rewrite (cleanUrls 비활성)
 ├── CLAUDE.md                     ← 데이터 유지보수·자동화 지침
 ├── assets/
 │   ├── briefick_profile_640.jpeg ← 헤더 로고
@@ -74,13 +74,18 @@ UI 노출 총 348개 항목, 6개 탭 (일본 70항목은 데이터 파일만 �
 - **친구톡**: 매일 08:00 KST, 탭별 최신 1건 요약 + "전체 뉴스 보기" 버튼 (네이티브 CTA)
 
 ### 운영 대시보드 `/admin`
-- 비밀번호 인증 (Edge Function `admin-api` · DB 해시 저장)
+- 비밀번호 인증 (Edge Function `admin-api` · DB 해시 저장 · 최소 4자)
 - **사이드바 레이아웃** 4개 뷰 (해시 라우팅 · 모바일 드로어)
   - **대시보드**: 통계 카드(활성 구독자·7일 결제·배송 상태) + 차트(14일 일별 발송량 · 배송 상태 도넛)
   - **발송 이력**: 상태·타입·번호·기간 필터 + 페이지네이션
   - **구독자**: 상태·배송 상태 필터로 전체 목록 조회
   - **수동 발송**: `delivery_state` 필터로 실패 구독자 선택 → 친구톡 재발송 (커스텀 메시지 지원)
-- **비밀번호 변경** 모달 (헤더) — 현재 비번 확인 후 DB 해시 즉시 갱신 (최소 4자)
+- **비밀번호 변경** 모달 (헤더) — 현재 비번 확인 후 DB 해시 즉시 갱신
+
+### 재구독 페이지 `/renew`
+- 독립 URL · 페이지 로드 즉시 구독 폼 노출
+- 동작은 헤더 "구독하기" 모달과 완전 동일 (전화번호 확인 → 연장 확인 → 결제 → 알림톡)
+- 만료 임박 알림톡 버튼 링크용 (템플릿 승인 후 활용)
 
 ### 콘텐츠 자동 갱신
 - Claude Opus 4.7 원격 에이전트가 매일 오전·오후 주기로 6개 탭 데이터 갱신·커밋·푸시
@@ -123,7 +128,7 @@ daily-send Edge Function
 | 레이어 | 도구 |
 |---|---|
 | 웹 프런트 | 정적 HTML 3종(`index` / `admin` / 법정 문서) · Inter / Pretendard |
-| 호스팅 | **Vercel** · `vercel.json`으로 `/admin` 리라이트 |
+| 호스팅 | **Vercel** · `vercel.json` rewrites로 `/admin`·`/renew`·`/terms`·`/privacy`·`/refund` → `views/` 매핑 |
 | 백엔드 | **Supabase Pro** (Postgres + Edge Functions + Vault + pg_cron + pg_net) |
 | 결제 | **포트원 V2** (galaxia 테스트 채널 · `windowType.mobile: REDIRECTION`) |
 | 메시지 | **솔라피(SOLAPI)** — 친구톡·알림톡, HMAC-SHA256 인증 · 발송 결과 webhook |
@@ -172,7 +177,7 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
-- **2026-04-24**: 운영 대시보드 `/admin` 개편 — 사이드바 레이아웃, 4개 뷰(대시보드·발송이력·구독자·수동발송), 해시 라우팅, 모바일 드로어. 비밀번호 변경 모달(`admin_settings` 해시 저장, 최소 4자). `admin-api` Edge Function 6개 액션(login/change_password/stats/logs/subscribers/manual_send). 솔라피 발송 결과 webhook 도입 (`solapi-webhook`) — 실제 전달 성공·실패가 실시간 `send_logs`·`subscribers.delivery_state`에 반영. 친구톡 `bms.targeting="I"` 명시로 채널 미가입자 사전 필터링. 탭 선정 기준 팝업. 법정 문서 3종(이용약관·개인정보처리방침·환불정책) 신설. 푸터 2단 레이아웃·사업자 정보. 구독 완료 전용 화면·카카오 채널 추가 강조 배너. 갤럭시아 테스트 PG 전환 (bypass ITEM_CODE + customerId). 친구톡 메시지 각 탭 1건으로 축소, 타이틀·푸터 구분선 제거, 탭 제목 아래 빈 줄 추가.
+- **2026-04-24**: 정적 HTML 5개를 `views/`로 이관, `vercel.json` rewrite로 URL 유지(`/admin` 등). 재구독 전용 페이지 `/renew` 신설. 운영 대시보드 `/admin` 개편 — 사이드바 레이아웃, 4개 뷰(대시보드·발송이력·구독자·수동발송), 해시 라우팅, 모바일 드로어, 비밀번호 변경 모달(`admin_settings` 해시 저장, 최소 4자). `admin-api` Edge Function 6개 액션(login/change_password/stats/logs/subscribers/manual_send). 솔라피 발송 결과 webhook 도입 (`solapi-webhook`) — 실제 전달 성공·실패가 실시간 `send_logs`·`subscribers.delivery_state`에 반영. 친구톡 `bms.targeting="I"` 명시로 채널 미가입자 사전 필터링. 탭 선정 기준 팝업. 법정 문서 3종(이용약관·개인정보처리방침·환불정책) 신설. 푸터 2단 레이아웃·사업자 정보. 구독 완료 전용 화면·카카오 채널 추가 강조 배너. 갤럭시아 테스트 PG 전환 (bypass ITEM_CODE + customerId). 친구톡 메시지 각 탭 1건으로 축소, 타이틀·푸터 구분선 제거, 탭 제목 아래 빈 줄 추가.
 - **2026-04-23**: `subscribers.delivery_state` 컬럼 도입 — 발송 후 구독자별 상태 스냅샷 자동 갱신. 푸터 사업자 정보·반응형 배치.
 - **2026-04-22**: 친구톡 메시지 포맷 단순화(탭당 1건, 구분선 제거, 네이티브 CTA 버튼). 모바일 결제창 REDIRECTION + 복귀 처리. DB 타임존 KST 전환.
 - **2026-04-21**: 친구톡 구독 서비스 · 포트원 결제 · Supabase 백엔드 도입. 매일 08:00 KST 자동 발송. 구독 모달·결제 완료 알림톡. Supabase 신형 API 키(`sb_*`) 대응 — Edge Function `--no-verify-jwt` + 자체 webhook secret. 결제 완료 시 솔라피 알림톡 템플릿 발송.
