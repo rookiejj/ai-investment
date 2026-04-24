@@ -70,6 +70,10 @@ async function solapiSendExpiryAlimtalk(opts: {
   renewUrl: string;
 }): Promise<{ ok: boolean; groupId?: string; raw: unknown; error?: string }> {
   const { apiKey, apiSecret, pfId, sender, templateId, targets, expiryDate, renewUrl } = opts;
+  // ⚠ 임시: 만료안내 템플릿 승인 전까지 결제완료 템플릿으로 대체 발송 (테스트용)
+  //   - variables 3개(상점명/상품명/만료일), AC(채널 추가) 버튼
+  //   - 승인 후엔 variables 2개(상점명/만료일) + WL('재구독하기', linkMo=/renew)로 원복
+  const useRenewWl = (Deno.env.get("ALIMTALK_EXPIRY_USE_RENEW_WL") ?? "") === "Y";
   const messages = targets.map((t) => ({
     to: t.phone,
     from: sender,
@@ -78,16 +82,12 @@ async function solapiSendExpiryAlimtalk(opts: {
       pfId,
       templateId,
       disableSms: true,
-      variables: {
-        "#{상점명}": SHOP_NAME,
-        "#{만료일}": expiryDate,
-      },
-      buttons: [{
-        buttonType: "WL",
-        buttonName: "재구독하기",
-        linkMo: renewUrl,
-        linkPc: renewUrl,
-      }],
+      variables: useRenewWl
+        ? { "#{상점명}": SHOP_NAME, "#{만료일}": expiryDate }
+        : { "#{상점명}": SHOP_NAME, "#{상품명}": "월간 구독", "#{만료일}": expiryDate },
+      buttons: useRenewWl
+        ? [{ buttonType: "WL", buttonName: "재구독하기", linkMo: renewUrl, linkPc: renewUrl }]
+        : [{ buttonType: "AC", buttonName: "채널 추가" }],
     },
   }));
   const auth = await solapiAuthHeader(apiKey, apiSecret);
