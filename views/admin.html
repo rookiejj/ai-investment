@@ -244,7 +244,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
       <span class="sub">OPS CONSOLE</span>
     </div>
     <nav class="nav">
-      <button class="nav-item active" data-view="subscribers"><span class="icon">👤</span>구독자</button>
+      <button class="nav-item active" data-view="overview"><span class="icon">📊</span>대시보드</button>
+      <button class="nav-item" data-view="subscribers"><span class="icon">👤</span>구독자</button>
       <button class="nav-item" data-view="payments"><span class="icon">💳</span>결제</button>
       <button class="nav-item" data-view="sends"><span class="icon">📬</span>발송</button>
     </nav>
@@ -258,7 +259,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
   <main class="main">
     <div class="topbar">
       <button class="menu-toggle" id="menuToggle" aria-label="메뉴">☰</button>
-      <h1 class="page-title" id="pageTitle">구독자</h1>
+      <h1 class="page-title" id="pageTitle">대시보드</h1>
       <span class="sub" id="lastRefresh"></span>
       <div class="header-actions">
         <button class="header-btn" id="refreshBtn" title="현재 뷰 새로고침">↻</button>
@@ -267,8 +268,44 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
       </div>
     </div>
 
+    <!-- ═══ 대시보드 (전체 오버뷰) ═══ -->
+    <section class="view" data-view="overview">
+      <div class="stats-grid" id="overviewStatsGrid"></div>
+      <div class="two-col">
+        <div class="section">
+          <div class="section-title">최근 14일 일별 발송량</div>
+          <div class="chart-wrap"><canvas id="overviewDailyChart"></canvas></div>
+        </div>
+        <div class="section">
+          <div class="section-title">배송 상태 분포 <span class="count">활성 구독자 기준</span></div>
+          <div class="chart-wrap"><canvas id="overviewStateChart"></canvas></div>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="section">
+          <div class="section-title">만료 임박 (7일 이내) <span class="count" id="overviewExpiringCount"></span></div>
+          <div class="section-subtitle">재구독 안내 수동 발송 대상입니다.</div>
+          <div class="tbl-scroll">
+            <table class="tbl">
+              <thead><tr><th>만료일</th><th>남은</th><th>전화번호</th><th>이름</th></tr></thead>
+              <tbody id="overviewExpiringBody"><tr><td colspan="4" class="loading">로딩 중…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="section">
+          <div class="section-title">최근 결제 <span class="count">최신 5건</span></div>
+          <div class="tbl-scroll">
+            <table class="tbl">
+              <thead><tr><th>결제일</th><th>전화번호</th><th>금액</th><th>상태</th></tr></thead>
+              <tbody id="overviewPaymentsBody"><tr><td colspan="4" class="loading">로딩 중…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ═══ 구독자 ═══ -->
-    <section class="view" data-view="subscribers">
+    <section class="view hidden" data-view="subscribers">
       <div class="stats-grid" id="subsStatsGrid"></div>
       <div class="section">
         <div class="section-title">배송 상태 분포 <span class="count">활성 구독자 기준</span></div>
@@ -347,6 +384,28 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
         <div class="section-title">최근 14일 일별 발송량</div>
         <div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
       </div>
+      <div class="section manual-send">
+        <div class="section-title">수동 발송</div>
+        <div class="section-subtitle">채널 미가입·차단 등 자동 발송 실패 구독자에게 친구톡을 다시 보냅니다.</div>
+        <div class="filter-bar">
+          <select id="mFilter">
+            <option value="not_friend">not_friend (채널 미가입)</option>
+            <option value="blocked">blocked (차단)</option>
+            <option value="paused_ad">paused_ad (광고 수신 거부)</option>
+            <option value="unknown">unknown (기타 실패)</option>
+            <option value="all">전체 활성 구독자</option>
+          </select>
+          <button class="btn" id="mReload">목록 새로고침</button>
+          <button class="btn ghost select-all" id="mSelectAll">모두 선택/해제</button>
+        </div>
+        <div class="targets" id="mTargets"><div class="loading">목록 로딩 중…</div></div>
+        <textarea id="mMessage" placeholder="메시지 본문 (비우면 기본 안내 메시지 발송)"></textarea>
+        <div class="actions">
+          <button class="primary" id="mSendBtn" disabled>선택한 구독자에게 발송</button>
+          <span id="mSelectedCount" style="color:var(--mut);font-size:13px"></span>
+        </div>
+        <div class="status" id="mStatus"></div>
+      </div>
       <div class="section">
         <div class="section-title">발송 이력 <span class="count" id="logsCount"></span></div>
         <div class="filter-bar">
@@ -375,28 +434,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
         </div>
         <div class="pager" id="logsPager"></div>
       </div>
-      <div class="section manual-send">
-        <div class="section-title">수동 발송</div>
-        <div class="section-subtitle">채널 미가입·차단 등 자동 발송 실패 구독자에게 친구톡을 다시 보냅니다.</div>
-        <div class="filter-bar">
-          <select id="mFilter">
-            <option value="not_friend">not_friend (채널 미가입)</option>
-            <option value="blocked">blocked (차단)</option>
-            <option value="paused_ad">paused_ad (광고 수신 거부)</option>
-            <option value="unknown">unknown (기타 실패)</option>
-            <option value="all">전체 활성 구독자</option>
-          </select>
-          <button class="btn" id="mReload">목록 새로고침</button>
-          <button class="btn ghost select-all" id="mSelectAll">모두 선택/해제</button>
-        </div>
-        <div class="targets" id="mTargets"><div class="loading">목록 로딩 중…</div></div>
-        <textarea id="mMessage" placeholder="메시지 본문 (비우면 기본 안내 메시지 발송)"></textarea>
-        <div class="actions">
-          <button class="primary" id="mSendBtn" disabled>선택한 구독자에게 발송</button>
-          <span id="mSelectedCount" style="color:var(--mut);font-size:13px"></span>
-        </div>
-        <div class="status" id="mStatus"></div>
-      </div>
     </section>
   </main>
 </div>
@@ -424,8 +461,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 const API = 'https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/admin-api';
 const KEY_TOKEN = 'briefick_admin_token';
 const KEY_EXPIRES = 'briefick_admin_expires';
-const VIEWS = ['subscribers','payments','sends'];
-const TITLES = { subscribers:'구독자', payments:'결제', sends:'발송' };
+const VIEWS = ['overview','subscribers','payments','sends'];
+const TITLES = { overview:'대시보드', subscribers:'구독자', payments:'결제', sends:'발송' };
 
 const $ = (id)=>document.getElementById(id);
 const loginView = $('loginView');
@@ -491,8 +528,8 @@ function showLogin(){
 function showApp(){
   loginView.style.display='none';
   appView.style.display='flex';
-  const h = (location.hash||'#subscribers').slice(1);
-  switchView(VIEWS.includes(h) ? h : 'subscribers');
+  const h = (location.hash||'#overview').slice(1);
+  switchView(VIEWS.includes(h) ? h : 'overview');
 }
 $('loginForm').addEventListener('submit', async e=>{
   e.preventDefault();
@@ -510,7 +547,7 @@ $('logoutBtn').addEventListener('click', ()=>{ clearToken(); showLogin(); });
 
 // ─── 뷰 전환 ───
 const loadedViews = new Set();
-let currentView = 'subscribers';
+let currentView = 'overview';
 function switchView(name){
   currentView = name;
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active', n.dataset.view===name));
@@ -522,7 +559,8 @@ function switchView(name){
 }
 function loadView(name){
   loadedViews.add(name);
-  if(name === 'subscribers'){ loadSubsStats(); loadSubscribers(); }
+  if(name === 'overview'){ loadOverview(); }
+  else if(name === 'subscribers'){ loadSubsStats(); loadSubscribers(); }
   else if(name === 'payments'){ loadPaysStats(); loadExpiring(); loadPayments(); }
   else if(name === 'sends'){ loadSendsStats(); loadLogs(); loadManualTargets(); }
 }
@@ -558,6 +596,111 @@ async function getStats(){
   return statsPromise;
 }
 function invalidateStats(){ statsCache = null; }
+
+// ═══ 대시보드 (오버뷰) ═══
+let overviewDailyChart, overviewStateChart;
+async function loadOverview(){
+  try{
+    const s = await getStats();
+    const sub = s.subscribers || {};
+    const pay = s.payments || {};
+    const sn = s.send || {};
+    const dlv = s.deliveryStates || {};
+    const total = (sn.success14d||0) + (sn.fail14d||0);
+    const rate = total ? Math.round((sn.success14d||0) / total * 1000) / 10 : 100;
+
+    const cards = [
+      { label:'활성 구독자', value:sub.active||0, unit:'명', cls:'accent' },
+      { label:'7일 매출', value:Math.round((pay.revenue7d||0)/10000), unit:'만원', hint:`${pay.payCount7d||0}건 결제`, cls:'accent' },
+      { label:'14일 발송 성공률', value:rate, unit:'%', hint:`${sn.success14d||0}/${total}건`, cls:rate>=95 ? 'accent' : (rate>=80 ? 'warn' : 'danger') },
+      { label:'만료 임박 (7일)', value:pay.expiringWithin7d||0, unit:'명', hint:'재구독 안내 필요', cls:(pay.expiringWithin7d||0) ? 'warn' : '' },
+      { label:'채널 미가입', value:dlv.not_friend||0, unit:'명', hint:'수동 발송 대상', cls:(dlv.not_friend||0) ? 'warn' : '' },
+      { label:'30일 결제 실패', value:pay.payFailed30d||0, unit:'건', cls:(pay.payFailed30d||0) ? 'danger' : '' },
+    ];
+    $('overviewStatsGrid').innerHTML = cards.map(renderStatCard).join('');
+
+    // 14일 일별 차트
+    const days = [];
+    for(let i=13;i>=0;i--){
+      const d = new Date(Date.now() - i*86400000);
+      days.push(d.toISOString().slice(0,10));
+    }
+    const success = days.map(d => (sn.daily14d?.[d]?.success)||0);
+    const fail = days.map(d => (sn.daily14d?.[d]?.fail)||0);
+    const labels = days.map(d => d.slice(5));
+    if(overviewDailyChart) overviewDailyChart.destroy();
+    overviewDailyChart = new Chart($('overviewDailyChart'), {
+      type:'bar',
+      data:{ labels, datasets:[
+        { label:'성공', data:success, backgroundColor:'#18E299' },
+        { label:'실패', data:fail, backgroundColor:'#d45656' },
+      ]},
+      options:{ responsive:true, maintainAspectRatio:false,
+        scales:{ x:{ stacked:true, grid:{ display:false } },
+                 y:{ stacked:true, beginAtZero:true, ticks:{ stepSize:1 } }},
+        plugins:{ legend:{ position:'bottom' } } }
+    });
+
+    // 배송 상태 도넛
+    const stateLabels = Object.keys(dlv);
+    const stateData = stateLabels.map(k => dlv[k]);
+    const colorMap = { ok:'#18E299', not_friend:'#f59e0b', blocked:'#d45656', paused_ad:'#ff9f6b', unknown:'#999' };
+    const stateColors = stateLabels.map(k => colorMap[k] || '#666');
+    if(overviewStateChart) overviewStateChart.destroy();
+    if(stateLabels.length){
+      overviewStateChart = new Chart($('overviewStateChart'), {
+        type:'doughnut',
+        data:{ labels:stateLabels, datasets:[{ data:stateData, backgroundColor:stateColors, borderWidth:0 }]},
+        options:{ responsive:true, maintainAspectRatio:false,
+          plugins:{ legend:{ position:'right' } } }
+      });
+    }
+
+    $('lastRefresh').textContent = '갱신: ' + new Date().toLocaleTimeString('ko-KR',{hour12:false});
+  }catch(err){ console.error(err); }
+
+  // 만료 임박 리스트 (최대 5건)
+  try{
+    const r = await api('expiring_soon', { days: 7 });
+    $('overviewExpiringCount').textContent = `총 ${r.rows.length}명`;
+    const rows = r.rows.slice(0, 5);
+    if(!rows.length){
+      $('overviewExpiringBody').innerHTML = `<tr><td colspan="4" class="empty">7일 이내 만료 예정자가 없습니다</td></tr>`;
+    }else{
+      $('overviewExpiringBody').innerHTML = rows.map(row=>{
+        const d = daysUntil(row.paid_until);
+        const urgent = d!==null && d<=1;
+        return `<tr>
+          <td>${fmtDate(row.paid_until)}</td>
+          <td>${d===null?'-':`<span class="badge ${urgent?'urgent':''}">D-${d}</span>`}</td>
+          <td class="c-phone">${row.phone}</td>
+          <td>${row.name||'-'}</td>
+        </tr>`;
+      }).join('');
+    }
+  }catch(err){
+    $('overviewExpiringBody').innerHTML = `<tr><td colspan="4" class="empty">오류: ${err.message}</td></tr>`;
+  }
+
+  // 최근 결제 5건
+  try{
+    const r = await api('payments', { filters: { limit: 5, offset: 0 } });
+    if(!r.rows.length){
+      $('overviewPaymentsBody').innerHTML = `<tr><td colspan="4" class="empty">결제 기록이 없습니다</td></tr>`;
+    }else{
+      $('overviewPaymentsBody').innerHTML = r.rows.map(row=>(
+        `<tr>
+          <td>${fmtKst(row.paid_at || row.created_at)}</td>
+          <td class="c-phone">${row.phone||'-'}</td>
+          <td class="c-amount">${fmtWon(row.amount)}</td>
+          <td><span class="badge ${row.status}">${row.status}</span></td>
+        </tr>`
+      )).join('');
+    }
+  }catch(err){
+    $('overviewPaymentsBody').innerHTML = `<tr><td colspan="4" class="empty">오류: ${err.message}</td></tr>`;
+  }
+}
 
 // ═══ 구독자 뷰 ═══
 let stateChart;
@@ -887,6 +1030,7 @@ $('mSendBtn').addEventListener('click', async ()=>{
       s.textContent = `발송 실패: ${JSON.stringify(r.rawResponse||{}).slice(0,200)}`;
     }
     invalidateStats();
+    loadedViews.delete('overview');
     loadManualTargets();
     loadSendsStats();
     loadLogs();
