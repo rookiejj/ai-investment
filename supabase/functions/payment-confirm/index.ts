@@ -250,6 +250,7 @@ Deno.serve(async (req) => {
       char_count: 0,
       status: alim.ok ? "success" : "fail",
       message_type: "alimtalk",
+      template_code: "payment_complete",
       provider: "solapi",
       provider_code: alim.groupId ?? null,
       provider_message: alim.ok ? "ok" : (alim.error ?? ""),

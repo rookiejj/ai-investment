@@ -320,6 +320,8 @@ Deno.serve(async (req) => {
           message,
           char_count: message.length,
           status: failed ? "fail" : "success",
+          message_type: "friendtalk",
+          template_code: "daily_news",
           provider: "solapi",
           provider_code: result?.groupId ?? null,
           provider_message: providerMsg,

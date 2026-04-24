@@ -129,6 +129,13 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 .badge.alimtalk{background:#f3e8ff;color:#6a0dad}
 .badge.sms{background:#f2f2f2;color:var(--mut)}
 .badge.urgent{background:#fde8e8;color:var(--danger)}
+/* 용도(template_code) 뱃지 */
+.badge.tpl{background:#fff;border:1px solid var(--border-md);color:var(--fg2);font-weight:500;text-transform:none;letter-spacing:0}
+.badge.tpl-payment_complete{background:#f3e8ff;color:#6a0dad;border:none}
+.badge.tpl-renew_reminder{background:#fff4e5;color:#a35a00;border:none}
+.badge.tpl-expiry_notice{background:#fde8e8;color:var(--danger);border:none}
+.badge.tpl-daily_news{background:#e8f4ff;color:#0a6abf;border:none}
+.badge.tpl-manual{background:#f2f2f2;color:var(--mut);border:none}
 
 /* 수동 발송 */
 .manual-send textarea{width:100%;min-height:100px;margin-bottom:10px;resize:vertical;font-family:Pretendard,sans-serif;line-height:1.5}
@@ -420,6 +427,14 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
             <option value="alimtalk">알림톡</option>
             <option value="sms">SMS</option>
           </select>
+          <select id="fTemplate">
+            <option value="">용도 전체</option>
+            <option value="daily_news">매일 뉴스</option>
+            <option value="manual">수동 발송</option>
+            <option value="payment_complete">결제 완료</option>
+            <option value="renew_reminder">재구독 안내</option>
+            <option value="expiry_notice">만료 안내</option>
+          </select>
           <input type="text" id="fPhone" placeholder="전화번호 (선택)" maxlength="11">
           <input type="date" id="fFrom">
           <input type="date" id="fTo">
@@ -428,8 +443,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
         </div>
         <div class="tbl-scroll">
           <table class="tbl">
-            <thead><tr><th>시각(KST)</th><th>전화번호</th><th>타입</th><th>상태</th><th>결과 메시지</th><th>groupId</th></tr></thead>
-            <tbody id="logsBody"><tr><td colspan="6" class="loading">로딩 중…</td></tr></tbody>
+            <thead><tr><th>시각(KST)</th><th>전화번호</th><th>타입</th><th>용도</th><th>상태</th><th>결과 메시지</th><th>groupId</th></tr></thead>
+            <tbody id="logsBody"><tr><td colspan="7" class="loading">로딩 중…</td></tr></tbody>
           </table>
         </div>
         <div class="pager" id="logsPager"></div>
@@ -908,28 +923,43 @@ async function loadSendsStats(){
 
 let logsOffset = 0;
 const LOGS_LIMIT = 50;
+const TEMPLATE_LABELS = {
+  daily_news: '매일 뉴스',
+  manual: '수동 발송',
+  payment_complete: '결제 완료',
+  renew_reminder: '재구독 안내',
+  expiry_notice: '만료 안내',
+};
+function renderTemplateBadge(code){
+  if(!code) return '<span class="badge tpl">-</span>';
+  const label = TEMPLATE_LABELS[code] || code;
+  return `<span class="badge tpl tpl-${code}">${label}</span>`;
+}
+
 async function loadLogs(){
   const filters = {
     status: $('fStatus').value || undefined,
     message_type: $('fType').value || undefined,
+    template_code: $('fTemplate').value || undefined,
     phone: $('fPhone').value.replace(/[^0-9]/g,'') || undefined,
     from: $('fFrom').value ? new Date($('fFrom').value).toISOString() : undefined,
     to: $('fTo').value ? new Date(new Date($('fTo').value).getTime() + 86400000 - 1).toISOString() : undefined,
     limit: LOGS_LIMIT,
     offset: logsOffset,
   };
-  $('logsBody').innerHTML = `<tr><td colspan="6" class="loading">로딩 중…</td></tr>`;
+  $('logsBody').innerHTML = `<tr><td colspan="7" class="loading">로딩 중…</td></tr>`;
   try{
     const r = await api('logs', { filters });
     $('logsCount').textContent = `총 ${r.total.toLocaleString()}건`;
     if(!r.rows.length){
-      $('logsBody').innerHTML = `<tr><td colspan="6" class="empty">기록이 없습니다</td></tr>`;
+      $('logsBody').innerHTML = `<tr><td colspan="7" class="empty">기록이 없습니다</td></tr>`;
     }else{
       $('logsBody').innerHTML = r.rows.map(row=>(
         `<tr>
           <td>${fmtKst(row.sent_at)}</td>
           <td class="c-phone">${row.phone||''}</td>
           <td><span class="badge ${row.message_type||''}">${row.message_type||''}</span></td>
+          <td>${renderTemplateBadge(row.template_code)}</td>
           <td><span class="badge ${row.status}">${row.status}</span></td>
           <td class="c-msg" title="${(row.provider_message||'').replace(/"/g,'&quot;')}">${row.provider_message||''}</td>
           <td class="c-phone">${row.provider_code||''}</td>
@@ -938,7 +968,7 @@ async function loadLogs(){
     }
     renderLogsPager(r.total);
   }catch(err){
-    $('logsBody').innerHTML = `<tr><td colspan="6" class="empty">오류: ${err.message}</td></tr>`;
+    $('logsBody').innerHTML = `<tr><td colspan="7" class="empty">오류: ${err.message}</td></tr>`;
   }
 }
 function renderLogsPager(total){
@@ -961,7 +991,7 @@ function renderLogsPager(total){
 }
 $('fApply').addEventListener('click', ()=>{ logsOffset=0; loadLogs(); });
 $('fReset').addEventListener('click', ()=>{
-  $('fStatus').value=''; $('fType').value=''; $('fPhone').value=''; $('fFrom').value=''; $('fTo').value='';
+  $('fStatus').value=''; $('fType').value=''; $('fTemplate').value=''; $('fPhone').value=''; $('fFrom').value=''; $('fTo').value='';
   logsOffset=0; loadLogs();
 });
 

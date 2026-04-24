@@ -319,11 +319,12 @@ Deno.serve(async (req) => {
     if (action === "logs") {
       const f = (body.filters ?? {}) as Record<string, unknown>;
       let q = supabase.from("send_logs").select(
-        "id, sent_at, phone, status, message_type, provider, provider_code, provider_message, char_count",
+        "id, sent_at, phone, status, message_type, template_code, provider, provider_code, provider_message, char_count",
         { count: "exact" },
       );
       if (typeof f.status === "string") q = q.eq("status", f.status);
       if (typeof f.message_type === "string") q = q.eq("message_type", f.message_type);
+      if (typeof f.template_code === "string" && f.template_code) q = q.eq("template_code", f.template_code);
       if (typeof f.phone === "string" && f.phone) q = q.eq("phone", f.phone);
       if (typeof f.from === "string" && f.from) q = q.gte("sent_at", f.from);
       if (typeof f.to === "string" && f.to) q = q.lte("sent_at", f.to);
@@ -382,6 +383,7 @@ Deno.serve(async (req) => {
         char_count: text.length,
         status: ok ? "success" : "fail",
         message_type: "friendtalk",
+        template_code: "manual",
         provider: "solapi",
         provider_code: ok ? ((result.body as { groupId?: string })?.groupId ?? null) : null,
         provider_message: ok ? "manual ok" : JSON.stringify(result.body).slice(0, 400),
