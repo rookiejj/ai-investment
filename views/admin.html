@@ -443,7 +443,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
         </div>
         <div class="tbl-scroll">
           <table class="tbl">
-            <thead><tr><th>시각(KST)</th><th>전화번호</th><th>타입</th><th>용도</th><th>상태</th><th>결과 메시지</th><th>groupId</th></tr></thead>
+            <thead><tr><th>시각</th><th>전화번호</th><th>타입</th><th>용도</th><th>상태</th><th>결과 메시지</th><th>groupId</th></tr></thead>
             <tbody id="logsBody"><tr><td colspan="7" class="loading">로딩 중…</td></tr></tbody>
           </table>
         </div>
@@ -515,15 +515,27 @@ async function api(action, payload={}){
 }
 
 // ─── 공용 유틸 ───
-function fmtKst(iso){
+// 시각 표기는 모두 브라우저 시스템 시간 기준
+function fmtDateTime(iso){
   if(!iso) return '-';
-  const dt = new Date(iso);
-  const kst = new Date(dt.getTime() + 9*3600000 + dt.getTimezoneOffset()*60000);
-  return kst.toISOString().replace('T',' ').slice(0,19);
+  const d = new Date(iso);
+  if(isNaN(d.getTime())) return '-';
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  const hh = String(d.getHours()).padStart(2,'0');
+  const mm = String(d.getMinutes()).padStart(2,'0');
+  const ss = String(d.getSeconds()).padStart(2,'0');
+  return `${y}-${m}-${day} ${hh}:${mm}:${ss}`;
 }
 function fmtDate(iso){
   if(!iso) return '-';
-  return iso.slice(0,10);
+  const d = new Date(iso);
+  if(isNaN(d.getTime())) return '-';
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
 }
 function fmtWon(n){
   return (n||0).toLocaleString('ko-KR') + '원';
@@ -705,7 +717,7 @@ async function loadOverview(){
     }else{
       $('overviewPaymentsBody').innerHTML = r.rows.map(row=>(
         `<tr>
-          <td>${fmtKst(row.paid_at || row.created_at)}</td>
+          <td>${fmtDateTime(row.paid_at || row.created_at)}</td>
           <td class="c-phone">${row.phone||'-'}</td>
           <td class="c-amount">${fmtWon(row.amount)}</td>
           <td><span class="badge ${row.status}">${row.status}</span></td>
@@ -845,7 +857,7 @@ async function loadPayments(){
     }else{
       $('paysBody').innerHTML = r.rows.map(row=>(
         `<tr>
-          <td>${fmtKst(row.paid_at || row.created_at)}</td>
+          <td>${fmtDateTime(row.paid_at || row.created_at)}</td>
           <td class="c-phone">${row.phone||'-'}</td>
           <td>${row.order_name||'-'}</td>
           <td class="c-amount">${fmtWon(row.amount)}</td>
@@ -956,7 +968,7 @@ async function loadLogs(){
     }else{
       $('logsBody').innerHTML = r.rows.map(row=>(
         `<tr>
-          <td>${fmtKst(row.sent_at)}</td>
+          <td>${fmtDateTime(row.sent_at)}</td>
           <td class="c-phone">${row.phone||''}</td>
           <td><span class="badge ${row.message_type||''}">${row.message_type||''}</span></td>
           <td>${renderTemplateBadge(row.template_code)}</td>
