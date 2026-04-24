@@ -224,15 +224,21 @@ input,textarea{font:inherit;outline:none}
     if(!pending || pending.paymentId !== paymentId) return false;
     sessionStorage.removeItem(PENDING_KEY);
 
+    // 복귀 시점에 즉시 입력·액션 잠금
+    phoneEl.disabled = true;
+    consent.disabled = true;
+    submit.disabled = true;
+    cancel.classList.remove('show');
     const code = params.get('code');
     if(code){
       showStatus('error','결제 실패: '+(params.get('message')||code));
-      submit.disabled=false;submit.textContent='결제하고 재구독 시작';
+      phoneEl.disabled=false; consent.disabled=false;
+      submit.disabled=false; submit.textContent='결제하고 재구독 시작';
       return true;
     }
     status.className='status show info';
     status.textContent='결제 확인 중...';
-    submit.disabled=true;submit.textContent='결제 확인 중...';
+    submit.style.display='none';
     try{
       const res = await fetch(SUPABASE_URL+'/functions/v1/payment-confirm',{
         method:'POST',
@@ -242,13 +248,15 @@ input,textarea{font:inherit;outline:none}
       const j = await res.json();
       if(!res.ok||!j.ok){
         showStatus('error', j.error||'결제 검증 오류');
-        submit.disabled=false;submit.textContent='결제하고 재구독 시작';
+        phoneEl.disabled=false; consent.disabled=false;
+        submit.style.display=''; submit.disabled=false; submit.textContent='결제하고 재구독 시작';
       }else{
         markComplete(j);
       }
     }catch(err){
       showStatus('error','네트워크 오류: '+err.message);
-      submit.disabled=false;submit.textContent='결제하고 재구독 시작';
+      phoneEl.disabled=false; consent.disabled=false;
+      submit.style.display=''; submit.disabled=false; submit.textContent='결제하고 재구독 시작';
     }
     return true;
   }

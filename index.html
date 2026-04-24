@@ -1112,16 +1112,26 @@ function switchTab(id,dir){
     document.body.classList.add('modal-open');
     const s = document.getElementById('subStatus');
     const sub = document.getElementById('subSubmit');
+    const phoneEl = document.getElementById('subPhone');
+    const consent = document.getElementById('subConsent');
+    const cancel = document.getElementById('subCancel');
+    // 복귀 시점에 즉시 입력·액션 잠금 (결제창 거쳐온 상태이므로 편집 불가)
+    phoneEl.disabled = true;
+    consent.disabled = true;
+    sub.disabled = true;
+    if(cancel) cancel.classList.remove('show');
     const code = params.get('code');
     if(code){
       s.className='modal-status show error';
       s.textContent='결제 실패: '+(params.get('message')||code);
-      sub.disabled=false;sub.textContent='결제하고 구독 시작';
+      // 실패 시엔 재시도 가능하도록 다시 풀어줌
+      phoneEl.disabled=false; consent.disabled=false;
+      sub.disabled=false; sub.textContent='결제하고 구독 시작';
       return true;
     }
     s.className='modal-status show info';
     s.textContent='결제 확인 중...';
-    sub.disabled=true;sub.textContent='결제 확인 중...';
+    sub.style.display='none';
     try{
       const res = await fetch(SUPABASE_URL+'/functions/v1/payment-confirm',{
         method:'POST',
@@ -1132,7 +1142,8 @@ function switchTab(id,dir){
       if(!res.ok||!j.ok){
         s.className='modal-status show error';
         s.textContent=j.error||'결제 검증 오류';
-        sub.disabled=false;sub.textContent='결제하고 구독 시작';
+        phoneEl.disabled=false; consent.disabled=false;
+        sub.style.display=''; sub.disabled=false; sub.textContent='결제하고 구독 시작';
       }else{
         const msgMap={ registered:'구독 완료!', extended:'구독 연장 완료!' };
         const mainMsg = msgMap[j.status] || '완료!';
@@ -1150,7 +1161,8 @@ function switchTab(id,dir){
     }catch(err){
       s.className='modal-status show error';
       s.textContent='네트워크 오류: '+err.message;
-      sub.disabled=false;sub.textContent='결제하고 구독 시작';
+      phoneEl.disabled=false; consent.disabled=false;
+      sub.style.display=''; sub.disabled=false; sub.textContent='결제하고 구독 시작';
     }
     return true;
   }
