@@ -10,7 +10,7 @@
 :root{
   --bg:#fafafa;--panel:#ffffff;--fg:#0d0d0d;--fg2:#333;--mut:#666;--sub:#999;
   --border:rgba(0,0,0,0.06);--border-md:rgba(0,0,0,0.1);
-  --acc:#18E299;--acc-deep:#0fa76e;--warn:#f59e0b;--danger:#d45656;
+  --acc:#18E299;--acc-deep:#0fa76e;--warn:#f59e0b;--danger:#d45656;--info:#0a6abf;
   --sidebar-bg:#0d0d0d;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -83,13 +83,18 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 .section{background:var(--panel);border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.03)}
 .section-title{font:600 14px/1.3 Pretendard,sans-serif;color:var(--fg);margin-bottom:16px;letter-spacing:-0.2px;display:flex;align-items:center;gap:8px}
 .section-title .count{font-size:12px;color:var(--mut);font-weight:400}
+.section-subtitle{font:400 12px/1.4 Pretendard,sans-serif;color:var(--mut);margin:-10px 0 14px}
 
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
-.stat-card{background:var(--panel);padding:18px;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.03)}
+.stat-card{background:var(--panel);padding:18px;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.03);position:relative}
 .stat-card .label{font-size:11px;color:var(--sub);margin-bottom:6px;letter-spacing:0.3px;text-transform:uppercase;font-weight:600}
 .stat-card .value{font:700 24px/1.1 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.5px}
 .stat-card .unit{font-size:13px;color:var(--mut);margin-left:3px;font-weight:400}
 .stat-card .hint{font-size:11px;color:var(--sub);margin-top:4px}
+.stat-card.accent{border-left:3px solid var(--acc)}
+.stat-card.warn{border-left:3px solid var(--warn)}
+.stat-card.danger{border-left:3px solid var(--danger)}
+.stat-card.info{border-left:3px solid var(--info)}
 
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 @media (max-width:900px){.two-col{grid-template-columns:1fr}}
@@ -110,17 +115,20 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 .tbl td{color:var(--fg2)}
 .tbl tr:hover td{background:rgba(24,226,153,0.05)}
 .tbl .c-phone{font-family:'Geist Mono','SF Mono',monospace;font-size:12px}
+.tbl .c-amount{font-family:'Geist Mono','SF Mono',monospace;text-align:right;font-weight:600;color:var(--fg)}
 .tbl .c-msg{max-width:360px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--mut)}
+.tbl .c-center{text-align:center}
 
 /* 배지 */
 .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.2px;text-transform:uppercase}
-.badge.success,.badge.active,.badge.ok{background:#d4fae8;color:#0a7a50}
-.badge.fail,.badge.cancelled,.badge.blocked{background:#fde8e8;color:var(--danger)}
-.badge.skipped,.badge.expired,.badge.unknown{background:#f2f2f2;color:var(--mut)}
+.badge.success,.badge.active,.badge.ok,.badge.paid{background:#d4fae8;color:#0a7a50}
+.badge.fail,.badge.cancelled,.badge.blocked,.badge.failed{background:#fde8e8;color:var(--danger)}
+.badge.skipped,.badge.expired,.badge.unknown,.badge.refunded{background:#f2f2f2;color:var(--mut)}
 .badge.paused,.badge.not_friend,.badge.paused_ad{background:#fff4e5;color:#a35a00}
 .badge.friendtalk{background:#e8f4ff;color:#0a6abf}
 .badge.alimtalk{background:#f3e8ff;color:#6a0dad}
 .badge.sms{background:#f2f2f2;color:var(--mut)}
+.badge.urgent{background:#fde8e8;color:var(--danger)}
 
 /* 수동 발송 */
 .manual-send textarea{width:100%;min-height:100px;margin-bottom:10px;resize:vertical;font-family:Pretendard,sans-serif;line-height:1.5}
@@ -177,25 +185,21 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
   .main{padding:14px 12px 60px;gap:14px}
   .menu-toggle{display:inline-flex}
 
-  /* topbar 재배치: 버튼은 줄바꿈 */
   .topbar{flex-wrap:wrap;row-gap:10px;column-gap:10px}
   .topbar .page-title{font-size:18px;flex:1 1 auto;min-width:0}
   .topbar .sub{display:none}
   .topbar .header-actions{order:3;flex-basis:100%;justify-content:flex-end}
   .header-btn,.logout{padding:7px 12px;font-size:12px}
 
-  /* 통계·섹션 */
   .stats-grid{grid-template-columns:repeat(2,1fr);gap:8px}
   .stat-card{padding:14px}
   .stat-card .value{font-size:20px}
   .section{padding:16px;border-radius:10px}
   .section-title{font-size:13px;margin-bottom:12px}
 
-  /* 차트 */
   .chart-wrap{height:200px}
   .two-col{gap:14px}
 
-  /* 필터·테이블 */
   .filter-bar{gap:6px}
   .filter-bar input,.filter-bar select{min-width:0;flex:1 1 140px;padding:6px 8px;font-size:12px}
   .filter-bar .btn{padding:6px 12px;font-size:12px;flex-shrink:0}
@@ -205,11 +209,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
   .tbl .c-msg{max-width:220px}
   .badge{font-size:10px;padding:2px 6px}
 
-  /* 수동 발송 */
   .manual-send textarea{min-height:80px;font-size:13px}
   .manual-send .targets{max-height:240px}
 
-  /* 페이지네이션 */
   .pager{gap:4px;flex-wrap:wrap}
   .pager button{padding:5px 10px;font-size:12px}
 }
@@ -242,10 +244,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
       <span class="sub">OPS CONSOLE</span>
     </div>
     <nav class="nav">
-      <button class="nav-item active" data-view="dashboard"><span class="icon">📊</span>대시보드</button>
-      <button class="nav-item" data-view="logs"><span class="icon">📬</span>발송 이력</button>
-      <button class="nav-item" data-view="subscribers"><span class="icon">👤</span>구독자</button>
-      <button class="nav-item" data-view="manual"><span class="icon">✉️</span>수동 발송</button>
+      <button class="nav-item active" data-view="subscribers"><span class="icon">👤</span>구독자</button>
+      <button class="nav-item" data-view="payments"><span class="icon">💳</span>결제</button>
+      <button class="nav-item" data-view="sends"><span class="icon">📬</span>발송</button>
     </nav>
     <div class="sidebar-footer">
       <a href="/" target="_blank">← 브리픽 홈</a>
@@ -257,31 +258,95 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
   <main class="main">
     <div class="topbar">
       <button class="menu-toggle" id="menuToggle" aria-label="메뉴">☰</button>
-      <h1 class="page-title" id="pageTitle">대시보드</h1>
+      <h1 class="page-title" id="pageTitle">구독자</h1>
       <span class="sub" id="lastRefresh"></span>
       <div class="header-actions">
+        <button class="header-btn" id="refreshBtn" title="현재 뷰 새로고침">↻</button>
         <button class="header-btn" id="pwChangeBtn">비밀번호 변경</button>
         <button class="logout" id="logoutBtn">로그아웃</button>
       </div>
     </div>
 
-    <!-- 대시보드 -->
-    <section class="view" data-view="dashboard">
-      <div class="stats-grid" id="statsGrid"></div>
-      <div class="two-col">
-        <div class="section">
-          <div class="section-title">최근 14일 일별 발송량</div>
-          <div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
+    <!-- ═══ 구독자 ═══ -->
+    <section class="view" data-view="subscribers">
+      <div class="stats-grid" id="subsStatsGrid"></div>
+      <div class="section">
+        <div class="section-title">배송 상태 분포 <span class="count">활성 구독자 기준</span></div>
+        <div class="chart-wrap"><canvas id="stateChart"></canvas></div>
+      </div>
+      <div class="section">
+        <div class="section-title">구독자 목록 <span class="count" id="subsCount"></span></div>
+        <div class="filter-bar">
+          <select id="sStatus">
+            <option value="active">active (활성)</option>
+            <option value="paused">paused (일시 중지)</option>
+            <option value="expired">expired (만료)</option>
+            <option value="cancelled">cancelled (해지)</option>
+            <option value="">상태 전체</option>
+          </select>
+          <select id="sDelivery">
+            <option value="">배송 상태 전체</option>
+            <option value="ok">ok (정상 수신)</option>
+            <option value="not_friend">not_friend (채널 미가입)</option>
+            <option value="blocked">blocked (차단)</option>
+            <option value="paused_ad">paused_ad (광고 거부)</option>
+            <option value="unknown">unknown (기타)</option>
+          </select>
+          <button class="btn" id="sApply">조회</button>
         </div>
-        <div class="section">
-          <div class="section-title">배송 상태 분포 (활성 구독자)</div>
-          <div class="chart-wrap"><canvas id="stateChart"></canvas></div>
+        <div class="tbl-scroll">
+          <table class="tbl">
+            <thead><tr><th>가입일</th><th>전화번호</th><th>이름</th><th>상태</th><th>배송</th><th>만료일</th></tr></thead>
+            <tbody id="subsBody"><tr><td colspan="6" class="loading">로딩 중…</td></tr></tbody>
+          </table>
         </div>
       </div>
     </section>
 
-    <!-- 발송 이력 -->
-    <section class="view hidden" data-view="logs">
+    <!-- ═══ 결제 ═══ -->
+    <section class="view hidden" data-view="payments">
+      <div class="stats-grid" id="paysStatsGrid"></div>
+      <div class="section">
+        <div class="section-title">만료 임박 (7일 이내) <span class="count" id="expiringCount"></span></div>
+        <div class="section-subtitle">만료일 하루 전쯤 재구독 안내를 수동 발송하세요.</div>
+        <div class="tbl-scroll">
+          <table class="tbl">
+            <thead><tr><th>만료일</th><th>남은 일수</th><th>전화번호</th><th>이름</th><th>배송</th></tr></thead>
+            <tbody id="expiringBody"><tr><td colspan="5" class="loading">로딩 중…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title">결제 이력 <span class="count" id="paysCount"></span></div>
+        <div class="filter-bar">
+          <select id="pStatus">
+            <option value="">전체</option>
+            <option value="paid">paid</option>
+            <option value="failed">failed</option>
+            <option value="refunded">refunded</option>
+          </select>
+          <input type="date" id="pFrom">
+          <input type="date" id="pTo">
+          <button class="btn" id="pApply">조회</button>
+          <button class="btn ghost" id="pReset">초기화</button>
+        </div>
+        <div class="tbl-scroll">
+          <table class="tbl">
+            <thead><tr><th>결제일</th><th>전화번호</th><th>상품</th><th>금액</th><th>상태</th><th>PG</th></tr></thead>
+            <tbody id="paysBody"><tr><td colspan="6" class="loading">로딩 중…</td></tr></tbody>
+          </table>
+        </div>
+        <div class="pager" id="paysPager"></div>
+      </div>
+    </section>
+
+    <!-- ═══ 발송 ═══ -->
+    <section class="view hidden" data-view="sends">
+      <div class="stats-grid" id="sendsStatsGrid"></div>
+      <div class="section">
+        <div class="section-title">최근 14일 일별 발송량</div>
+        <div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
+      </div>
       <div class="section">
         <div class="section-title">발송 이력 <span class="count" id="logsCount"></span></div>
         <div class="filter-bar">
@@ -310,43 +375,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
         </div>
         <div class="pager" id="logsPager"></div>
       </div>
-    </section>
-
-    <!-- 구독자 -->
-    <section class="view hidden" data-view="subscribers">
-      <div class="section">
-        <div class="section-title">구독자 목록 <span class="count" id="subsCount"></span></div>
-        <div class="filter-bar">
-          <select id="sStatus">
-            <option value="active">active</option>
-            <option value="paused">paused</option>
-            <option value="expired">expired</option>
-            <option value="cancelled">cancelled</option>
-            <option value="">상태 전체</option>
-          </select>
-          <select id="sDelivery">
-            <option value="">배송 상태 전체</option>
-            <option value="ok">ok</option>
-            <option value="not_friend">not_friend</option>
-            <option value="blocked">blocked</option>
-            <option value="paused_ad">paused_ad</option>
-            <option value="unknown">unknown</option>
-          </select>
-          <button class="btn" id="sApply">조회</button>
-        </div>
-        <div class="tbl-scroll">
-          <table class="tbl">
-            <thead><tr><th>가입일</th><th>전화번호</th><th>이름</th><th>상태</th><th>배송</th><th>만료일</th></tr></thead>
-            <tbody id="subsBody"><tr><td colspan="6" class="loading">로딩 중…</td></tr></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- 수동 발송 -->
-    <section class="view hidden" data-view="manual">
       <div class="section manual-send">
-        <div class="section-title">채널 미가입 / 배송 실패 구독자에게 수동 발송</div>
+        <div class="section-title">수동 발송</div>
+        <div class="section-subtitle">채널 미가입·차단 등 자동 발송 실패 구독자에게 친구톡을 다시 보냅니다.</div>
         <div class="filter-bar">
           <select id="mFilter">
             <option value="not_friend">not_friend (채널 미가입)</option>
@@ -393,8 +424,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 const API = 'https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/admin-api';
 const KEY_TOKEN = 'briefick_admin_token';
 const KEY_EXPIRES = 'briefick_admin_expires';
-const VIEWS = ['dashboard','logs','subscribers','manual'];
-const TITLES = { dashboard:'대시보드', logs:'발송 이력', subscribers:'구독자', manual:'수동 발송' };
+const VIEWS = ['subscribers','payments','sends'];
+const TITLES = { subscribers:'구독자', payments:'결제', sends:'발송' };
 
 const $ = (id)=>document.getElementById(id);
 const loginView = $('loginView');
@@ -431,6 +462,26 @@ async function api(action, payload={}){
   return j;
 }
 
+// ─── 공용 유틸 ───
+function fmtKst(iso){
+  if(!iso) return '-';
+  const dt = new Date(iso);
+  const kst = new Date(dt.getTime() + 9*3600000 + dt.getTimezoneOffset()*60000);
+  return kst.toISOString().replace('T',' ').slice(0,19);
+}
+function fmtDate(iso){
+  if(!iso) return '-';
+  return iso.slice(0,10);
+}
+function fmtWon(n){
+  return (n||0).toLocaleString('ko-KR') + '원';
+}
+function daysUntil(iso){
+  if(!iso) return null;
+  const diff = new Date(iso).getTime() - Date.now();
+  return Math.ceil(diff / 86400000);
+}
+
 // ─── 로그인 뷰 ───
 function showLogin(){
   loginView.style.display='flex';
@@ -440,8 +491,8 @@ function showLogin(){
 function showApp(){
   loginView.style.display='none';
   appView.style.display='flex';
-  const h = (location.hash||'#dashboard').slice(1);
-  switchView(VIEWS.includes(h) ? h : 'dashboard');
+  const h = (location.hash||'#subscribers').slice(1);
+  switchView(VIEWS.includes(h) ? h : 'subscribers');
 }
 $('loginForm').addEventListener('submit', async e=>{
   e.preventDefault();
@@ -459,20 +510,26 @@ $('logoutBtn').addEventListener('click', ()=>{ clearToken(); showLogin(); });
 
 // ─── 뷰 전환 ───
 const loadedViews = new Set();
+let currentView = 'subscribers';
 function switchView(name){
+  currentView = name;
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active', n.dataset.view===name));
   document.querySelectorAll('.view').forEach(v=>v.classList.toggle('hidden', v.dataset.view!==name));
   $('pageTitle').textContent = TITLES[name] || '';
   if(location.hash.slice(1) !== name) location.hash = name;
   closeSidebar();
-  // 최초 진입 시 로딩
-  if(!loadedViews.has(name)){
-    loadedViews.add(name);
-    if(name === 'dashboard') loadStats();
-    else if(name === 'logs') loadLogs();
-    else if(name === 'subscribers') loadSubscribers();
-    else if(name === 'manual') loadManualTargets();
-  }
+  if(!loadedViews.has(name)) loadView(name);
+}
+function loadView(name){
+  loadedViews.add(name);
+  if(name === 'subscribers'){ loadSubsStats(); loadSubscribers(); }
+  else if(name === 'payments'){ loadPaysStats(); loadExpiring(); loadPayments(); }
+  else if(name === 'sends'){ loadSendsStats(); loadLogs(); loadManualTargets(); }
+}
+function reloadCurrentView(){
+  loadedViews.delete(currentView);
+  loadView(currentView);
+  $('lastRefresh').textContent = '갱신: ' + new Date().toLocaleTimeString('ko-KR',{hour12:false});
 }
 document.querySelectorAll('.nav-item').forEach(n=>{
   n.addEventListener('click', ()=>switchView(n.dataset.view));
@@ -481,6 +538,7 @@ window.addEventListener('hashchange', ()=>{
   const h = location.hash.slice(1);
   if(VIEWS.includes(h)) switchView(h);
 });
+$('refreshBtn').addEventListener('click', reloadCurrentView);
 
 // ─── 모바일 사이드바 ───
 const sidebar = $('sidebar');
@@ -490,33 +548,205 @@ function closeSidebar(){ sidebar.classList.remove('open'); backdrop.classList.re
 $('menuToggle').addEventListener('click', openSidebar);
 backdrop.addEventListener('click', closeSidebar);
 
-// ─── 통계·차트 ───
-let dailyChart, stateChart;
-async function loadStats(){
+// ─── stats 캐시 (한 번만 호출) ───
+let statsCache = null;
+let statsPromise = null;
+async function getStats(){
+  if(statsCache) return statsCache;
+  if(statsPromise) return statsPromise;
+  statsPromise = api('stats').then(s => { statsCache = s; statsPromise = null; return s; });
+  return statsPromise;
+}
+function invalidateStats(){ statsCache = null; }
+
+// ═══ 구독자 뷰 ═══
+let stateChart;
+async function loadSubsStats(){
   try{
-    const s = await api('stats');
-    const stats = [
-      { label:'활성 구독자', value:s.activeSubscribers, unit:'명' },
-      { label:'7일 결제', value:s.payCount7d, unit:'건', hint:(s.revenue7d||0).toLocaleString()+'원' },
-      { label:'ok 배송', value:(s.deliveryStates?.ok ?? 0), unit:'명' },
-      { label:'not_friend', value:(s.deliveryStates?.not_friend ?? 0), unit:'명', hint:'채널 미가입' },
-      { label:'blocked', value:(s.deliveryStates?.blocked ?? 0), unit:'명' },
-      { label:'unknown', value:(s.deliveryStates?.unknown ?? 0), unit:'명' },
+    const s = await getStats();
+    const sub = s.subscribers || {};
+    const dlv = s.deliveryStates || {};
+    const cards = [
+      { label:'활성 구독자', value:sub.active||0, unit:'명', cls:'accent' },
+      { label:'일시중지', value:sub.paused||0, unit:'명' },
+      { label:'만료', value:sub.expired||0, unit:'명', cls:'warn' },
+      { label:'해지', value:sub.cancelled||0, unit:'명' },
+      { label:'정상 수신 (ok)', value:dlv.ok||0, unit:'명', cls:'accent' },
+      { label:'채널 미가입', value:dlv.not_friend||0, unit:'명', hint:'수동 발송 필요', cls:'warn' },
     ];
-    $('statsGrid').innerHTML = stats.map(c=>(
-      `<div class="stat-card"><div class="label">${c.label}</div>`
-      +`<div class="value">${c.value}<span class="unit">${c.unit||''}</span></div>`
-      +(c.hint?`<div class="hint">${c.hint}</div>`:'')
-      +`</div>`
-    )).join('');
+    $('subsStatsGrid').innerHTML = cards.map(renderStatCard).join('');
+
+    const stateLabels = Object.keys(dlv);
+    const stateData = stateLabels.map(k => dlv[k]);
+    const colorMap = { ok:'#18E299', not_friend:'#f59e0b', blocked:'#d45656', paused_ad:'#ff9f6b', unknown:'#999' };
+    const stateColors = stateLabels.map(k => colorMap[k] || '#666');
+    if(stateChart) stateChart.destroy();
+    if(stateLabels.length){
+      stateChart = new Chart($('stateChart'), {
+        type:'doughnut',
+        data:{ labels:stateLabels, datasets:[{ data:stateData, backgroundColor:stateColors, borderWidth:0 }]},
+        options:{ responsive:true, maintainAspectRatio:false,
+          plugins:{ legend:{ position:'right' } } }
+      });
+    }
+    $('lastRefresh').textContent = '갱신: ' + new Date().toLocaleTimeString('ko-KR',{hour12:false});
+  }catch(err){ console.error(err); }
+}
+function renderStatCard(c){
+  return `<div class="stat-card ${c.cls||''}"><div class="label">${c.label}</div>`
+    +`<div class="value">${(c.value||0).toLocaleString()}<span class="unit">${c.unit||''}</span></div>`
+    +(c.hint?`<div class="hint">${c.hint}</div>`:'')
+    +`</div>`;
+}
+
+async function loadSubscribers(){
+  const filter = {
+    status: $('sStatus').value || undefined,
+    delivery_state: $('sDelivery').value || undefined,
+  };
+  $('subsBody').innerHTML = `<tr><td colspan="6" class="loading">로딩 중…</td></tr>`;
+  try{
+    const r = await api('subscribers', { filter });
+    $('subsCount').textContent = `총 ${r.rows.length}명`;
+    if(!r.rows.length){
+      $('subsBody').innerHTML = `<tr><td colspan="6" class="empty">해당 조건의 구독자가 없습니다</td></tr>`;
+    }else{
+      $('subsBody').innerHTML = r.rows.map(row=>(
+        `<tr>
+          <td>${fmtDate(row.subscribed_at)}</td>
+          <td class="c-phone">${row.phone}</td>
+          <td>${row.name||'-'}</td>
+          <td><span class="badge ${row.status}">${row.status}</span></td>
+          <td><span class="badge ${row.delivery_state||'unknown'}">${row.delivery_state||'unknown'}</span></td>
+          <td>${fmtDate(row.paid_until)}</td>
+        </tr>`
+      )).join('');
+    }
+  }catch(err){
+    $('subsBody').innerHTML = `<tr><td colspan="6" class="empty">오류: ${err.message}</td></tr>`;
+  }
+}
+$('sApply').addEventListener('click', loadSubscribers);
+
+// ═══ 결제 뷰 ═══
+async function loadPaysStats(){
+  try{
+    const s = await getStats();
+    const p = s.payments || {};
+    const cards = [
+      { label:'7일 매출', value:Math.round((p.revenue7d||0)/10000), unit:'만원', hint:`${p.payCount7d||0}건`, cls:'accent' },
+      { label:'30일 매출', value:Math.round((p.revenue30d||0)/10000), unit:'만원', hint:`${p.payCount30d||0}건`, cls:'accent' },
+      { label:'30일 결제 실패', value:p.payFailed30d||0, unit:'건', cls:p.payFailed30d ? 'danger' : '' },
+      { label:'만료 임박 (7일)', value:p.expiringWithin7d||0, unit:'명', hint:'재구독 안내 대상', cls:'warn' },
+    ];
+    $('paysStatsGrid').innerHTML = cards.map(renderStatCard).join('');
+  }catch(err){ console.error(err); }
+}
+
+async function loadExpiring(){
+  $('expiringBody').innerHTML = `<tr><td colspan="5" class="loading">로딩 중…</td></tr>`;
+  try{
+    const r = await api('expiring_soon', { days: 7 });
+    $('expiringCount').textContent = `총 ${r.rows.length}명`;
+    if(!r.rows.length){
+      $('expiringBody').innerHTML = `<tr><td colspan="5" class="empty">7일 이내 만료 예정 구독자가 없습니다</td></tr>`;
+    }else{
+      $('expiringBody').innerHTML = r.rows.map(row=>{
+        const d = daysUntil(row.paid_until);
+        const urgent = d!==null && d<=1;
+        return `<tr>
+          <td>${fmtDate(row.paid_until)}</td>
+          <td>${d===null?'-':`<span class="badge ${urgent?'urgent':''}">D-${d}</span>`}</td>
+          <td class="c-phone">${row.phone}</td>
+          <td>${row.name||'-'}</td>
+          <td><span class="badge ${row.delivery_state||'unknown'}">${row.delivery_state||'unknown'}</span></td>
+        </tr>`;
+      }).join('');
+    }
+  }catch(err){
+    $('expiringBody').innerHTML = `<tr><td colspan="5" class="empty">오류: ${err.message}</td></tr>`;
+  }
+}
+
+let paysOffset = 0;
+const PAYS_LIMIT = 50;
+async function loadPayments(){
+  const filters = {
+    status: $('pStatus').value || undefined,
+    from: $('pFrom').value ? new Date($('pFrom').value).toISOString() : undefined,
+    to: $('pTo').value ? new Date(new Date($('pTo').value).getTime() + 86400000 - 1).toISOString() : undefined,
+    limit: PAYS_LIMIT,
+    offset: paysOffset,
+  };
+  $('paysBody').innerHTML = `<tr><td colspan="6" class="loading">로딩 중…</td></tr>`;
+  try{
+    const r = await api('payments', { filters });
+    $('paysCount').textContent = `총 ${r.total.toLocaleString()}건`;
+    if(!r.rows.length){
+      $('paysBody').innerHTML = `<tr><td colspan="6" class="empty">결제 기록이 없습니다</td></tr>`;
+    }else{
+      $('paysBody').innerHTML = r.rows.map(row=>(
+        `<tr>
+          <td>${fmtKst(row.paid_at || row.created_at)}</td>
+          <td class="c-phone">${row.phone||'-'}</td>
+          <td>${row.order_name||'-'}</td>
+          <td class="c-amount">${fmtWon(row.amount)}</td>
+          <td><span class="badge ${row.status}">${row.status}</span></td>
+          <td style="font-size:11px;color:var(--mut)">${row.provider||'-'}</td>
+        </tr>`
+      )).join('');
+    }
+    renderPaysPager(r.total);
+  }catch(err){
+    $('paysBody').innerHTML = `<tr><td colspan="6" class="empty">오류: ${err.message}</td></tr>`;
+  }
+}
+function renderPaysPager(total){
+  const pages = Math.max(1, Math.ceil(total / PAYS_LIMIT));
+  const cur = Math.floor(paysOffset / PAYS_LIMIT) + 1;
+  const btns = [
+    `<button ${cur<=1?'disabled':''} data-p="1">« 처음</button>`,
+    `<button ${cur<=1?'disabled':''} data-p="${cur-1}">이전</button>`,
+    `<span style="padding:6px 12px;color:var(--mut);font-size:13px">${cur} / ${pages}</span>`,
+    `<button ${cur>=pages?'disabled':''} data-p="${cur+1}">다음</button>`,
+    `<button ${cur>=pages?'disabled':''} data-p="${pages}">끝 »</button>`,
+  ];
+  $('paysPager').innerHTML = btns.join('');
+  $('paysPager').querySelectorAll('button[data-p]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      paysOffset = (parseInt(b.dataset.p,10)-1) * PAYS_LIMIT;
+      loadPayments();
+    });
+  });
+}
+$('pApply').addEventListener('click', ()=>{ paysOffset=0; loadPayments(); });
+$('pReset').addEventListener('click', ()=>{
+  $('pStatus').value=''; $('pFrom').value=''; $('pTo').value='';
+  paysOffset=0; loadPayments();
+});
+
+// ═══ 발송 뷰 ═══
+let dailyChart;
+async function loadSendsStats(){
+  try{
+    const s = await getStats();
+    const sn = s.send || {};
+    const total = (sn.success14d||0) + (sn.fail14d||0);
+    const rate = total ? Math.round((sn.success14d||0) / total * 1000) / 10 : 100;
+    const cards = [
+      { label:'14일 발송 성공', value:sn.success14d||0, unit:'건', cls:'accent' },
+      { label:'14일 발송 실패', value:sn.fail14d||0, unit:'건', cls:sn.fail14d ? 'danger' : '' },
+      { label:'성공률', value:rate, unit:'%', hint:`총 ${total}건 중`, cls:rate>=95 ? 'accent' : (rate>=80 ? 'warn' : 'danger') },
+    ];
+    $('sendsStatsGrid').innerHTML = cards.map(renderStatCard).join('');
 
     const days = [];
     for(let i=13;i>=0;i--){
       const d = new Date(Date.now() - i*86400000);
       days.push(d.toISOString().slice(0,10));
     }
-    const success = days.map(d => (s.daily14d?.[d]?.success)||0);
-    const fail = days.map(d => (s.daily14d?.[d]?.fail)||0);
+    const success = days.map(d => (sn.daily14d?.[d]?.success)||0);
+    const fail = days.map(d => (sn.daily14d?.[d]?.fail)||0);
     const labels = days.map(d => d.slice(5));
     if(dailyChart) dailyChart.destroy();
     dailyChart = new Chart($('dailyChart'), {
@@ -530,24 +760,9 @@ async function loadStats(){
                  y:{ stacked:true, beginAtZero:true, ticks:{ stepSize:1 } }},
         plugins:{ legend:{ position:'bottom' } } }
     });
-
-    const stateLabels = Object.keys(s.deliveryStates||{});
-    const stateData = stateLabels.map(k => s.deliveryStates[k]);
-    const colorMap = { ok:'#18E299', not_friend:'#f59e0b', blocked:'#d45656', paused_ad:'#ff9f6b', unknown:'#999' };
-    const stateColors = stateLabels.map(k => colorMap[k] || '#666');
-    if(stateChart) stateChart.destroy();
-    stateChart = new Chart($('stateChart'), {
-      type:'doughnut',
-      data:{ labels:stateLabels, datasets:[{ data:stateData, backgroundColor:stateColors, borderWidth:0 }]},
-      options:{ responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{ position:'right' } } }
-    });
-
-    $('lastRefresh').textContent = '갱신: ' + new Date().toLocaleTimeString('ko-KR',{hour12:false});
   }catch(err){ console.error(err); }
 }
 
-// ─── 발송 이력 ───
 let logsOffset = 0;
 const LOGS_LIMIT = 50;
 async function loadLogs(){
@@ -567,39 +782,36 @@ async function loadLogs(){
     if(!r.rows.length){
       $('logsBody').innerHTML = `<tr><td colspan="6" class="empty">기록이 없습니다</td></tr>`;
     }else{
-      $('logsBody').innerHTML = r.rows.map(row=>{
-        const dt = new Date(row.sent_at);
-        const kst = new Date(dt.getTime() + 9*3600000 + dt.getTimezoneOffset()*60000);
-        const ts = kst.toISOString().replace('T',' ').slice(0,19);
-        return `<tr>
-          <td>${ts}</td>
+      $('logsBody').innerHTML = r.rows.map(row=>(
+        `<tr>
+          <td>${fmtKst(row.sent_at)}</td>
           <td class="c-phone">${row.phone||''}</td>
           <td><span class="badge ${row.message_type||''}">${row.message_type||''}</span></td>
           <td><span class="badge ${row.status}">${row.status}</span></td>
           <td class="c-msg" title="${(row.provider_message||'').replace(/"/g,'&quot;')}">${row.provider_message||''}</td>
           <td class="c-phone">${row.provider_code||''}</td>
-        </tr>`;
-      }).join('');
+        </tr>`
+      )).join('');
     }
-    renderPager(r.total);
+    renderLogsPager(r.total);
   }catch(err){
     $('logsBody').innerHTML = `<tr><td colspan="6" class="empty">오류: ${err.message}</td></tr>`;
   }
 }
-function renderPager(total){
+function renderLogsPager(total){
   const pages = Math.max(1, Math.ceil(total / LOGS_LIMIT));
   const cur = Math.floor(logsOffset / LOGS_LIMIT) + 1;
-  const btns = [];
-  btns.push(`<button ${cur<=1?'disabled':''} data-p="1">« 처음</button>`);
-  btns.push(`<button ${cur<=1?'disabled':''} data-p="${cur-1}">이전</button>`);
-  btns.push(`<span style="padding:6px 12px;color:var(--mut);font-size:13px">${cur} / ${pages}</span>`);
-  btns.push(`<button ${cur>=pages?'disabled':''} data-p="${cur+1}">다음</button>`);
-  btns.push(`<button ${cur>=pages?'disabled':''} data-p="${pages}">끝 »</button>`);
+  const btns = [
+    `<button ${cur<=1?'disabled':''} data-p="1">« 처음</button>`,
+    `<button ${cur<=1?'disabled':''} data-p="${cur-1}">이전</button>`,
+    `<span style="padding:6px 12px;color:var(--mut);font-size:13px">${cur} / ${pages}</span>`,
+    `<button ${cur>=pages?'disabled':''} data-p="${cur+1}">다음</button>`,
+    `<button ${cur>=pages?'disabled':''} data-p="${pages}">끝 »</button>`,
+  ];
   $('logsPager').innerHTML = btns.join('');
   $('logsPager').querySelectorAll('button[data-p]').forEach(b=>{
     b.addEventListener('click', ()=>{
-      const p = parseInt(b.dataset.p,10);
-      logsOffset = (p-1) * LOGS_LIMIT;
+      logsOffset = (parseInt(b.dataset.p,10)-1) * LOGS_LIMIT;
       loadLogs();
     });
   });
@@ -609,38 +821,6 @@ $('fReset').addEventListener('click', ()=>{
   $('fStatus').value=''; $('fType').value=''; $('fPhone').value=''; $('fFrom').value=''; $('fTo').value='';
   logsOffset=0; loadLogs();
 });
-
-// ─── 구독자 목록 ───
-async function loadSubscribers(){
-  const filter = {
-    status: $('sStatus').value || undefined,
-    delivery_state: $('sDelivery').value || undefined,
-  };
-  $('subsBody').innerHTML = `<tr><td colspan="6" class="loading">로딩 중…</td></tr>`;
-  try{
-    const r = await api('subscribers', { filter });
-    $('subsCount').textContent = `총 ${r.rows.length}명`;
-    if(!r.rows.length){
-      $('subsBody').innerHTML = `<tr><td colspan="6" class="empty">해당 조건의 구독자가 없습니다</td></tr>`;
-    }else{
-      $('subsBody').innerHTML = r.rows.map(row=>{
-        const dt = row.subscribed_at ? row.subscribed_at.slice(0,10) : '-';
-        const exp = row.paid_until ? row.paid_until.slice(0,10) : '-';
-        return `<tr>
-          <td>${dt}</td>
-          <td class="c-phone">${row.phone}</td>
-          <td>${row.name||'-'}</td>
-          <td><span class="badge ${row.status}">${row.status}</span></td>
-          <td><span class="badge ${row.delivery_state||'unknown'}">${row.delivery_state||'unknown'}</span></td>
-          <td>${exp}</td>
-        </tr>`;
-      }).join('');
-    }
-  }catch(err){
-    $('subsBody').innerHTML = `<tr><td colspan="6" class="empty">오류: ${err.message}</td></tr>`;
-  }
-}
-$('sApply').addEventListener('click', loadSubscribers);
 
 // ─── 수동 발송 ───
 let manualRows = [];
@@ -661,7 +841,7 @@ async function loadManualTargets(){
       +`<input type="checkbox" data-id="${r.id}">`
       +`<span class="phone">${r.phone}</span>`
       +`<span style="color:var(--mut);font-size:12px">${r.name||''}</span>`
-      +`<span class="badge ${r.delivery_state}" style="margin-left:auto">${r.delivery_state}</span>`
+      +`<span class="badge ${r.delivery_state||'unknown'}" style="margin-left:auto">${r.delivery_state||'unknown'}</span>`
       +`</div>`
     )).join('');
     $('mTargets').querySelectorAll('input[type=checkbox]').forEach(c=>{
@@ -706,8 +886,10 @@ $('mSendBtn').addEventListener('click', async ()=>{
       s.className='status show error';
       s.textContent = `발송 실패: ${JSON.stringify(r.rawResponse||{}).slice(0,200)}`;
     }
+    invalidateStats();
     loadManualTargets();
-    loadedViews.delete('logs'); loadedViews.delete('dashboard'); // 다음 진입 시 재로딩
+    loadSendsStats();
+    loadLogs();
   }catch(err){
     s.className='status show error';
     s.textContent = '오류: ' + err.message;

@@ -3,10 +3,13 @@
  *
  * 엔드포인트(모두 POST, body.action으로 라우팅):
  *   action='login'            → { password }           → { ok, token }
- *   action='stats'            → { token }              → { activeSubscribers, deliveryStates, last7d, revenue }
+ *   action='change_password'  → { currentPassword, newPassword }
+ *   action='stats'            → { token }              → 도메인별 통합 집계
  *   action='logs'             → { token, filters }     → { rows, total }
- *   action='manual_send'      → { token, subscriberIds, message? } → { ok, sent, failed }
  *   action='subscribers'      → { token, filter? }     → { rows }
+ *   action='payments'         → { token, filters? }    → { rows, total }
+ *   action='expiring_soon'    → { token, days? }       → { rows } — 만료 임박
+ *   action='manual_send'      → { token, subscriberIds, message? } → { ok, sent, failed }
  *
  * 인증: login 외 모든 액션은 token(세션) 필요.
  *       token = HMAC(timestamp:version, ADMIN_SESSION_SECRET) + 만료 확인.
@@ -184,14 +187,26 @@ Deno.serve(async (req) => {
     if (action === "stats") {
       const now = new Date();
       const sevenDaysAgo = new Date(now.getTime() - 7 * 86400000).toISOString();
+      const thirtyDaysAgo = new Date(now.getTime() - 30 * 86400000).toISOString();
       const fourteenDaysAgo = new Date(now.getTime() - 14 * 86400000).toISOString();
+      const sevenDaysLater = new Date(now.getTime() + 7 * 86400000).toISOString();
 
-      const [subs, dlv, sendRows, payRows] = await Promise.all([
-        supabase.from("subscribers").select("id", { count: "exact", head: true }).eq("status", "active"),
+      const [subsAll, dlv, sendRows, pay7d, pay30d, expiring] = await Promise.all([
+        supabase.from("subscribers").select("status"),
         supabase.from("subscribers").select("delivery_state").eq("status", "active"),
         supabase.from("send_logs").select("sent_at, status, message_type").gte("sent_at", fourteenDaysAgo),
-        supabase.from("payments").select("amount, status, paid_at").eq("status", "paid").gte("paid_at", sevenDaysAgo),
+        supabase.from("payments").select("amount").eq("status", "paid").gte("paid_at", sevenDaysAgo),
+        supabase.from("payments").select("amount, status").gte("paid_at", thirtyDaysAgo),
+        supabase.from("subscribers").select("id", { count: "exact", head: true })
+          .eq("status", "active").gte("paid_until", now.toISOString()).lte("paid_until", sevenDaysLater),
       ]);
+
+      // 상태별 카운트
+      const statusCounts: Record<string, number> = { active:0, paused:0, expired:0, cancelled:0 };
+      for (const r of (subsAll.data ?? [])) {
+        const s = (r as { status: string }).status;
+        statusCounts[s] = (statusCounts[s] ?? 0) + 1;
+      }
 
       const deliveryStates: Record<string, number> = {};
       for (const r of (dlv.data ?? [])) {
@@ -199,27 +214,105 @@ Deno.serve(async (req) => {
         deliveryStates[s] = (deliveryStates[s] ?? 0) + 1;
       }
 
-      // 14일 일별 카운트 집계
+      // 14일 일별 발송량
       const dailyCounts: Record<string, { success: number; fail: number }> = {};
+      let send14Success = 0, send14Fail = 0;
       for (const r of (sendRows.data ?? [])) {
         const row = r as { sent_at: string; status: string };
         const day = row.sent_at.slice(0, 10);
         if (!dailyCounts[day]) dailyCounts[day] = { success: 0, fail: 0 };
-        if (row.status === "success") dailyCounts[day].success++;
-        else if (row.status === "fail") dailyCounts[day].fail++;
+        if (row.status === "success") { dailyCounts[day].success++; send14Success++; }
+        else if (row.status === "fail") { dailyCounts[day].fail++; send14Fail++; }
       }
 
-      const revenue7d = (payRows.data ?? []).reduce((sum, r) => sum + ((r as { amount: number }).amount ?? 0), 0);
-      const payCount7d = payRows.data?.length ?? 0;
+      const revenue7d = (pay7d.data ?? []).reduce((s, r) => s + ((r as { amount: number }).amount ?? 0), 0);
+      const payCount7d = pay7d.data?.length ?? 0;
+
+      // 30일 결제 통계
+      let revenue30d = 0, payCount30d = 0, payFailed30d = 0;
+      for (const r of (pay30d.data ?? [])) {
+        const row = r as { amount: number; status: string };
+        if (row.status === "paid") { revenue30d += row.amount ?? 0; payCount30d++; }
+        else if (row.status === "failed") payFailed30d++;
+      }
 
       return json({
         ok: true,
-        activeSubscribers: subs.count ?? 0,
+        subscribers: {
+          active: statusCounts.active,
+          paused: statusCounts.paused,
+          expired: statusCounts.expired,
+          cancelled: statusCounts.cancelled,
+          total: (subsAll.data ?? []).length,
+        },
         deliveryStates,
+        send: {
+          daily14d: dailyCounts,
+          success14d: send14Success,
+          fail14d: send14Fail,
+        },
+        payments: {
+          revenue7d, payCount7d,
+          revenue30d, payCount30d, payFailed30d,
+          expiringWithin7d: expiring.count ?? 0,
+        },
+        // 구버전 호환
+        activeSubscribers: statusCounts.active,
         daily14d: dailyCounts,
         revenue7d,
         payCount7d,
       }, { cors });
+    }
+
+    // ─── payments ───
+    if (action === "payments") {
+      const f = (body.filters ?? {}) as Record<string, unknown>;
+      let q = supabase.from("payments").select(
+        "id, subscriber_id, payment_id, provider, amount, currency, status, order_name, paid_at, created_at",
+        { count: "exact" },
+      );
+      if (typeof f.status === "string" && f.status) q = q.eq("status", f.status);
+      if (typeof f.from === "string" && f.from) q = q.gte("created_at", f.from);
+      if (typeof f.to === "string" && f.to) q = q.lte("created_at", f.to);
+      const limit = Math.min(200, Math.max(1, Number(f.limit ?? 50)));
+      const offset = Math.max(0, Number(f.offset ?? 0));
+      const { data, count, error } = await q.order("created_at", { ascending: false }).range(offset, offset + limit - 1);
+      if (error) throw error;
+
+      // 구독자 조인 (phone, name)
+      const ids = Array.from(new Set((data ?? []).map((r) => (r as { subscriber_id: string | null }).subscriber_id).filter(Boolean))) as string[];
+      const subMap: Record<string, { phone: string; name: string | null }> = {};
+      if (ids.length) {
+        const { data: subs } = await supabase.from("subscribers").select("id, phone, name").in("id", ids);
+        for (const s of (subs ?? [])) {
+          const row = s as { id: string; phone: string; name: string | null };
+          subMap[row.id] = { phone: row.phone, name: row.name };
+        }
+      }
+      const rows = (data ?? []).map((r) => {
+        const row = r as { subscriber_id: string | null };
+        const sub = row.subscriber_id ? subMap[row.subscriber_id] : null;
+        return { ...r, phone: sub?.phone ?? null, name: sub?.name ?? null };
+      });
+
+      return json({ ok: true, rows, total: count ?? 0, limit, offset }, { cors });
+    }
+
+    // ─── expiring_soon ───
+    if (action === "expiring_soon") {
+      const days = Math.min(30, Math.max(1, Number(body.days ?? 7)));
+      const now = new Date();
+      const until = new Date(now.getTime() + days * 86400000);
+      const { data, error } = await supabase
+        .from("subscribers")
+        .select("id, phone, name, status, delivery_state, paid_until, subscribed_at")
+        .eq("status", "active")
+        .gte("paid_until", now.toISOString())
+        .lte("paid_until", until.toISOString())
+        .order("paid_until", { ascending: true })
+        .limit(500);
+      if (error) throw error;
+      return json({ ok: true, rows: data ?? [], days }, { cors });
     }
 
     // ─── logs ───
