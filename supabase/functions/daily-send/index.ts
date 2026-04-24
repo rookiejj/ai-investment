@@ -175,6 +175,7 @@ async function solapiSendFriendtalk(opts: {
     kakaoOptions: {
       pfId,
       disableSms: DISABLE_SMS_FALLBACK,
+      bms: { targeting: "I" },  // I = 채널 친구만
       buttons: [{
         buttonType: "WL",
         buttonName: "전체 뉴스 보기",
