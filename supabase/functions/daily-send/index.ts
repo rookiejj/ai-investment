@@ -30,8 +30,7 @@ const SITE_URL = Deno.env.get("SITE_URL")
 const DISABLE_SMS_FALLBACK = Deno.env.get("DISABLE_SMS_FALLBACK") === "Y";
 
 const LIMIT = 1000;
-const PER_TAB = 2;
-const SHORT_CUT = 25;
+const PER_TAB = 1;
 const BATCH_SIZE = 500;
 const SOLAPI_API = "https://api.solapi.com";
 
@@ -109,9 +108,8 @@ function smartCut(s: string, max: number): string {
 }
 function buildTabBlock(tab: TabWithEntries): string {
   const lines = [`${tab.emoji} ${tab.label}`];
-  const [first, second] = tab.entries;
+  const [first] = tab.entries;
   if (first) lines.push(`• ${first.summary}`);
-  if (second) lines.push(`• ${smartCut(second.summary, SHORT_CUT)}`);
   return lines.join("\n");
 }
 function buildMessage(tabs: TabWithEntries[]): string {

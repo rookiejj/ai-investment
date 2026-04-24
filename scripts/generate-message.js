@@ -17,8 +17,7 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const SITE_URL = 'https://roysbriefing.vercel.app';
 const LIMIT = 1000;
-const PER_TAB = 2;
-const SHORT_CUT = 25;
+const PER_TAB = 1;
 
 const TABS = [
   { file: 'stocks-update.js',    var: 'updates', emoji: '🇺🇸', label: '미국 마켓' },
@@ -75,9 +74,8 @@ function smartCut(s, max) {
 
 function buildTabBlock(tab) {
   const lines = [`${tab.emoji} ${tab.label}`];
-  const [first, second] = tab.entries;
+  const [first] = tab.entries;
   if (first) lines.push(`• ${first.summary}`);
-  if (second) lines.push(`• ${smartCut(second.summary, SHORT_CUT)}`);
   return lines.join('\n');
 }
 
