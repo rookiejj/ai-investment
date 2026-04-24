@@ -20,7 +20,7 @@ const EXPECTED_AMOUNT_DEFAULT = 100;        // 월 구독 상품 가격 (원)
 const MONTH_DAYS = 30;                       // 1개월 = 30일로 단순 계산
 
 // 결제 완료 알림톡 템플릿
-const ALIMTALK_TEMPLATE_ID = "KA01TP2604210407049408V99MiGpf2B";
+const ALIMTALK_TEMPLATE_ID = "KA01TP260424050234328BFWH2f2vfrN";
 const SHOP_NAME    = "브리픽";
 const PRODUCT_NAME = "월간 구독";
 
