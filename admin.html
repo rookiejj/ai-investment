@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>브리픽 운영 대시보드</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#fafafa;--panel:#ffffff;--fg:#0d0d0d;--fg2:#333;--mut:#666;--sub:#999;
+  --border:rgba(0,0,0,0.06);--border-md:rgba(0,0,0,0.1);
+  --acc:#18E299;--acc-deep:#0fa76e;--warn:#f59e0b;--danger:#d45656;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg2);font:14px/1.5 Pretendard,-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:none;background:none}
+input,select,textarea{font:inherit;border:1px solid var(--border-md);border-radius:8px;padding:8px 12px;background:#fff;color:var(--fg);outline:none;transition:border-color .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--acc)}
+
+/* 레이아웃 */
+.app{max-width:1280px;margin:0 auto;padding:24px 20px 64px}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+.header h1{font:700 22px/1.3 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.4px}
+.header .sub{color:var(--sub);font-size:12px;margin-left:12px}
+.logout{padding:8px 16px;border:1px solid var(--border-md);border-radius:8px;color:var(--mut);font-size:13px}
+.logout:hover{background:#eee;color:var(--fg)}
+
+/* 로그인 화면 */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--bg)}
+.login-card{background:var(--panel);padding:40px;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,0.05);width:100%;max-width:380px}
+.login-card h1{font:700 24px/1.3 Pretendard,sans-serif;color:var(--fg);margin-bottom:8px}
+.login-card p{color:var(--mut);font-size:13px;margin-bottom:20px}
+.login-card input{width:100%;margin-bottom:12px}
+.login-card button{width:100%;padding:12px;background:var(--fg);color:#fff;border-radius:8px;font-weight:600}
+.login-card button:hover{background:#000}
+.login-card .err{color:var(--danger);font-size:12px;margin-top:8px;min-height:16px}
+
+/* 카드·섹션 */
+.section{background:var(--panel);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,0.03)}
+.section-title{font:600 14px/1.3 Pretendard,sans-serif;color:var(--fg);margin-bottom:16px;letter-spacing:-0.2px;display:flex;align-items:center;gap:8px}
+.section-title .count{font-size:12px;color:var(--mut);font-weight:400}
+
+/* 통계 카드 그리드 */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px}
+.stat-card{background:var(--panel);padding:18px;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.03)}
+.stat-card .label{font-size:12px;color:var(--sub);margin-bottom:6px;letter-spacing:0.2px;text-transform:uppercase}
+.stat-card .value{font:700 24px/1.1 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.5px}
+.stat-card .unit{font-size:13px;color:var(--mut);margin-left:3px;font-weight:400}
+.stat-card .hint{font-size:11px;color:var(--sub);margin-top:4px}
+
+/* 2컬럼 */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+@media (max-width:900px){.two-col{grid-template-columns:1fr}}
+
+/* 차트 */
+.chart-wrap{position:relative;height:240px}
+
+/* 필터 바 */
+.filter-bar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.filter-bar input,.filter-bar select{min-width:120px;padding:6px 10px;font-size:13px}
+.filter-bar .btn{padding:6px 14px;border-radius:8px;background:var(--fg);color:#fff;font-size:13px;font-weight:500}
+.filter-bar .btn:hover{background:#000}
+.filter-bar .btn.ghost{background:transparent;color:var(--mut);border:1px solid var(--border-md)}
+.filter-bar .btn.ghost:hover{background:#eee}
+
+/* 테이블 */
+.tbl-scroll{overflow-x:auto;margin:0 -20px;padding:0 20px}
+.tbl{width:100%;border-collapse:collapse;font-size:13px;min-width:700px}
+.tbl th,.tbl td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border)}
+.tbl th{background:rgba(0,0,0,0.02);font-weight:600;color:var(--fg2);font-size:12px;letter-spacing:0.1px;white-space:nowrap}
+.tbl td{color:var(--fg2)}
+.tbl tr:hover td{background:rgba(24,226,153,0.05)}
+.tbl .c-phone{font-family:'Geist Mono','SF Mono',monospace;font-size:12px}
+.tbl .c-msg{max-width:360px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--mut)}
+
+/* 배지 */
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.2px;text-transform:uppercase}
+.badge.success{background:#d4fae8;color:#0a7a50}
+.badge.fail{background:#fde8e8;color:var(--danger)}
+.badge.skipped{background:#f2f2f2;color:var(--mut)}
+.badge.ok{background:#d4fae8;color:#0a7a50}
+.badge.not_friend{background:#fff4e5;color:#a35a00}
+.badge.blocked{background:#fde8e8;color:var(--danger)}
+.badge.paused_ad{background:#fff4e5;color:#a35a00}
+.badge.unknown{background:#f2f2f2;color:var(--mut)}
+.badge.friendtalk{background:#e8f4ff;color:#0a6abf}
+.badge.alimtalk{background:#f3e8ff;color:#6a0dad}
+.badge.sms{background:#f2f2f2;color:var(--mut)}
+
+/* 수동 발송 */
+.manual-send{margin-top:6px}
+.manual-send textarea{width:100%;min-height:100px;margin-bottom:10px;resize:vertical;font-family:Pretendard,sans-serif;line-height:1.5}
+.manual-send .targets{display:flex;flex-direction:column;gap:4px;max-height:260px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;padding:10px;background:#fcfcfc;margin-bottom:12px}
+.manual-send .target-row{display:flex;align-items:center;gap:10px;padding:6px 4px;border-bottom:1px dashed var(--border)}
+.manual-send .target-row:last-child{border-bottom:none}
+.manual-send .target-row input[type="checkbox"]{margin:0;accent-color:var(--acc-deep)}
+.manual-send .target-row .phone{font-family:'Geist Mono','SF Mono',monospace;font-size:12px;color:var(--fg2)}
+.manual-send .actions{display:flex;gap:8px;align-items:center}
+.manual-send button.primary{padding:10px 16px;background:var(--fg);color:#fff;border-radius:8px;font-weight:600}
+.manual-send button.primary:hover{background:#000}
+.manual-send button.primary:disabled{background:var(--sub);cursor:not-allowed}
+.manual-send .select-all{font-size:13px;color:var(--mut);padding:6px 12px;border:1px solid var(--border-md);border-radius:6px}
+.manual-send .status{margin-top:10px;padding:10px;border-radius:8px;font-size:13px;display:none}
+.manual-send .status.show{display:block}
+.manual-send .status.success{background:#d4fae8;color:#0a7a50}
+.manual-send .status.error{background:#fde8e8;color:var(--danger)}
+
+.loading{color:var(--sub);padding:20px;text-align:center;font-size:13px}
+.empty{color:var(--sub);padding:30px 20px;text-align:center;font-size:13px;font-style:italic}
+
+/* 페이지네이션 */
+.pager{display:flex;gap:6px;justify-content:center;margin-top:14px}
+.pager button{padding:6px 12px;border:1px solid var(--border-md);border-radius:6px;background:#fff;color:var(--fg2);font-size:13px}
+.pager button:hover:not(:disabled){background:#eee}
+.pager button:disabled{color:var(--sub);cursor:not-allowed}
+
+/* 홈 링크 */
+.back-home{display:inline-block;margin-bottom:12px;color:var(--mut);font-size:13px}
+.back-home:hover{color:var(--acc-deep)}
+</style>
+</head>
+<body>
+
+<!-- 로그인 -->
+<div id="loginView" class="login-wrap">
+  <div class="login-card">
+    <h1>브리픽 운영자</h1>
+    <p>관리자 비밀번호를 입력하세요.</p>
+    <form id="loginForm">
+      <input type="password" id="pwInput" placeholder="비밀번호" required autofocus autocomplete="current-password">
+      <button type="submit">로그인</button>
+      <div class="err" id="loginErr"></div>
+    </form>
+  </div>
+</div>
+
+<!-- 메인 -->
+<div id="appView" class="app" style="display:none">
+  <a href="./" class="back-home">← 브리픽 홈</a>
+  <div class="header">
+    <div>
+      <h1>운영 대시보드<span class="sub" id="lastRefresh"></span></h1>
+    </div>
+    <button class="logout" id="logoutBtn">로그아웃</button>
+  </div>
+
+  <!-- 통계 카드 -->
+  <div class="stats-grid" id="statsGrid"></div>
+
+  <!-- 차트 영역 -->
+  <div class="two-col">
+    <div class="section">
+      <div class="section-title">최근 14일 일별 발송량</div>
+      <div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
+    </div>
+    <div class="section">
+      <div class="section-title">배송 상태 분포 (활성 구독자)</div>
+      <div class="chart-wrap"><canvas id="stateChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- 발송 이력 -->
+  <div class="section">
+    <div class="section-title">발송 이력 <span class="count" id="logsCount"></span></div>
+    <div class="filter-bar">
+      <select id="fStatus">
+        <option value="">상태 전체</option>
+        <option value="success">성공</option>
+        <option value="fail">실패</option>
+      </select>
+      <select id="fType">
+        <option value="">타입 전체</option>
+        <option value="friendtalk">친구톡</option>
+        <option value="alimtalk">알림톡</option>
+        <option value="sms">SMS</option>
+      </select>
+      <input type="text" id="fPhone" placeholder="전화번호 (선택)" maxlength="11">
+      <input type="date" id="fFrom">
+      <input type="date" id="fTo">
+      <button class="btn" id="fApply">조회</button>
+      <button class="btn ghost" id="fReset">초기화</button>
+    </div>
+    <div class="tbl-scroll">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>시각(KST)</th><th>전화번호</th><th>타입</th><th>상태</th><th>결과 메시지</th><th>groupId</th>
+          </tr>
+        </thead>
+        <tbody id="logsBody"><tr><td colspan="6" class="loading">데이터 로딩 중…</td></tr></tbody>
+      </table>
+    </div>
+    <div class="pager" id="logsPager"></div>
+  </div>
+
+  <!-- 수동 발송 (채널 미가입 등 문제 구독자 대상) -->
+  <div class="section">
+    <div class="section-title">채널 미가입 / 배송 실패 구독자에게 수동 발송</div>
+    <div class="manual-send">
+      <div class="filter-bar">
+        <select id="mFilter">
+          <option value="not_friend">not_friend (채널 미가입)</option>
+          <option value="blocked">blocked (차단)</option>
+          <option value="paused_ad">paused_ad (광고 수신 거부)</option>
+          <option value="unknown">unknown (기타 실패)</option>
+          <option value="all">전체 활성 구독자</option>
+        </select>
+        <button class="btn" id="mReload">목록 새로고침</button>
+        <button class="btn ghost select-all" id="mSelectAll">모두 선택/해제</button>
+      </div>
+      <div class="targets" id="mTargets"><div class="loading">목록 로딩 중…</div></div>
+      <textarea id="mMessage" placeholder="메시지 본문 (비우면 기본 안내 메시지 발송)"></textarea>
+      <div class="actions">
+        <button class="primary" id="mSendBtn" disabled>선택한 구독자에게 발송</button>
+        <span id="mSelectedCount" style="color:var(--mut);font-size:13px"></span>
+      </div>
+      <div class="status" id="mStatus"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+const API = 'https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/admin-api';
+const KEY_TOKEN = 'briefick_admin_token';
+const KEY_EXPIRES = 'briefick_admin_expires';
+
+const $ = (id)=>document.getElementById(id);
+const loginView = $('loginView');
+const appView = $('appView');
+
+// ─── 인증 ───
+function getToken(){
+  const token = localStorage.getItem(KEY_TOKEN);
+  const exp = parseInt(localStorage.getItem(KEY_EXPIRES)||'0', 10);
+  if(!token || !exp || Date.now() > exp) return null;
+  return token;
+}
+function saveToken(token, ttlMs){
+  localStorage.setItem(KEY_TOKEN, token);
+  localStorage.setItem(KEY_EXPIRES, String(Date.now() + ttlMs));
+}
+function clearToken(){
+  localStorage.removeItem(KEY_TOKEN);
+  localStorage.removeItem(KEY_EXPIRES);
+}
+async function api(action, payload={}){
+  const token = action==='login' ? null : getToken();
+  if(action!=='login' && !token){ showLogin(); throw new Error('no token'); }
+  const res = await fetch(API, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ action, token, ...payload }),
+  });
+  const j = await res.json();
+  if(!res.ok || !j.ok){
+    if(res.status === 401){ clearToken(); showLogin(); }
+    throw new Error(j.error || `HTTP ${res.status}`);
+  }
+  return j;
+}
+
+// ─── 로그인 ───
+function showLogin(){
+  loginView.style.display='flex';
+  appView.style.display='none';
+  setTimeout(()=>$('pwInput').focus(), 50);
+}
+function showApp(){
+  loginView.style.display='none';
+  appView.style.display='block';
+  loadAll();
+}
+$('loginForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const pw = $('pwInput').value;
+  $('loginErr').textContent = '';
+  try{
+    const r = await api('login', { password: pw });
+    saveToken(r.token, r.ttlMs);
+    $('pwInput').value='';
+    showApp();
+  }catch(err){
+    $('loginErr').textContent = '비밀번호가 틀렸거나 로그인에 실패했습니다.';
+  }
+});
+$('logoutBtn').addEventListener('click', ()=>{ clearToken(); showLogin(); });
+
+// ─── 통계 + 차트 ───
+let dailyChart, stateChart;
+async function loadStats(){
+  const s = await api('stats');
+  const stats = [
+    { label:'활성 구독자', value:s.activeSubscribers, unit:'명' },
+    { label:'7일 결제', value:s.payCount7d, unit:'건', hint:(s.revenue7d||0).toLocaleString()+'원' },
+    { label:'ok 배송', value:(s.deliveryStates?.ok ?? 0), unit:'명' },
+    { label:'not_friend', value:(s.deliveryStates?.not_friend ?? 0), unit:'명', hint:'채널 미가입' },
+    { label:'blocked', value:(s.deliveryStates?.blocked ?? 0), unit:'명' },
+    { label:'unknown', value:(s.deliveryStates?.unknown ?? 0), unit:'명' },
+  ];
+  $('statsGrid').innerHTML = stats.map(c=>(
+    `<div class="stat-card"><div class="label">${c.label}</div>`
+    +`<div class="value">${c.value}<span class="unit">${c.unit||''}</span></div>`
+    +(c.hint?`<div class="hint">${c.hint}</div>`:'')
+    +`</div>`
+  )).join('');
+
+  // 14일 차트
+  const days = [];
+  for(let i=13;i>=0;i--){
+    const d = new Date(Date.now() - i*86400000);
+    days.push(d.toISOString().slice(0,10));
+  }
+  const success = days.map(d => (s.daily14d?.[d]?.success)||0);
+  const fail = days.map(d => (s.daily14d?.[d]?.fail)||0);
+  const labels = days.map(d => d.slice(5));
+  if(dailyChart) dailyChart.destroy();
+  dailyChart = new Chart($('dailyChart'), {
+    type:'bar',
+    data:{ labels, datasets:[
+      { label:'성공', data:success, backgroundColor:'#18E299' },
+      { label:'실패', data:fail, backgroundColor:'#d45656' },
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false,
+      scales:{ x:{ stacked:true, grid:{ display:false } },
+               y:{ stacked:true, beginAtZero:true, ticks:{ stepSize:1 } }},
+      plugins:{ legend:{ position:'bottom' } } }
+  });
+
+  // 배송 상태 파이
+  const stateLabels = Object.keys(s.deliveryStates||{});
+  const stateData = stateLabels.map(k => s.deliveryStates[k]);
+  const colorMap = { ok:'#18E299', not_friend:'#f59e0b', blocked:'#d45656', paused_ad:'#ff9f6b', unknown:'#999' };
+  const stateColors = stateLabels.map(k => colorMap[k] || '#666');
+  if(stateChart) stateChart.destroy();
+  stateChart = new Chart($('stateChart'), {
+    type:'doughnut',
+    data:{ labels:stateLabels, datasets:[{ data:stateData, backgroundColor:stateColors, borderWidth:0 }]},
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{ position:'right' } } }
+  });
+
+  $('lastRefresh').textContent = ' · 갱신: ' + new Date().toLocaleTimeString('ko-KR',{hour12:false});
+}
+
+// ─── 발송 이력 ───
+let logsOffset = 0;
+const LOGS_LIMIT = 50;
+async function loadLogs(){
+  const filters = {
+    status: $('fStatus').value || undefined,
+    message_type: $('fType').value || undefined,
+    phone: $('fPhone').value.replace(/[^0-9]/g,'') || undefined,
+    from: $('fFrom').value ? new Date($('fFrom').value).toISOString() : undefined,
+    to: $('fTo').value ? new Date(new Date($('fTo').value).getTime() + 86400000 - 1).toISOString() : undefined,
+    limit: LOGS_LIMIT,
+    offset: logsOffset,
+  };
+  $('logsBody').innerHTML = `<tr><td colspan="6" class="loading">로딩 중…</td></tr>`;
+  try{
+    const r = await api('logs', { filters });
+    $('logsCount').textContent = `총 ${r.total.toLocaleString()}건`;
+    if(!r.rows.length){
+      $('logsBody').innerHTML = `<tr><td colspan="6" class="empty">기록이 없습니다</td></tr>`;
+    }else{
+      $('logsBody').innerHTML = r.rows.map(row=>{
+        const dt = new Date(row.sent_at);
+        const kst = new Date(dt.getTime() + 9*3600000 + dt.getTimezoneOffset()*60000);
+        const ts = kst.toISOString().replace('T',' ').slice(0,19);
+        return `<tr>
+          <td>${ts}</td>
+          <td class="c-phone">${row.phone||''}</td>
+          <td><span class="badge ${row.message_type||''}">${row.message_type||''}</span></td>
+          <td><span class="badge ${row.status}">${row.status}</span></td>
+          <td class="c-msg" title="${(row.provider_message||'').replace(/"/g,'&quot;')}">${row.provider_message||''}</td>
+          <td class="c-phone">${row.provider_code||''}</td>
+        </tr>`;
+      }).join('');
+    }
+    renderPager(r.total);
+  }catch(err){
+    $('logsBody').innerHTML = `<tr><td colspan="6" class="empty">오류: ${err.message}</td></tr>`;
+  }
+}
+function renderPager(total){
+  const pages = Math.max(1, Math.ceil(total / LOGS_LIMIT));
+  const cur = Math.floor(logsOffset / LOGS_LIMIT) + 1;
+  const btns = [];
+  btns.push(`<button ${cur<=1?'disabled':''} data-p="1">« 처음</button>`);
+  btns.push(`<button ${cur<=1?'disabled':''} data-p="${cur-1}">이전</button>`);
+  btns.push(`<span style="padding:6px 12px;color:var(--mut);font-size:13px">${cur} / ${pages}</span>`);
+  btns.push(`<button ${cur>=pages?'disabled':''} data-p="${cur+1}">다음</button>`);
+  btns.push(`<button ${cur>=pages?'disabled':''} data-p="${pages}">끝 »</button>`);
+  $('logsPager').innerHTML = btns.join('');
+  $('logsPager').querySelectorAll('button[data-p]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      const p = parseInt(b.dataset.p,10);
+      logsOffset = (p-1) * LOGS_LIMIT;
+      loadLogs();
+    });
+  });
+}
+$('fApply').addEventListener('click', ()=>{ logsOffset=0; loadLogs(); });
+$('fReset').addEventListener('click', ()=>{
+  $('fStatus').value=''; $('fType').value=''; $('fPhone').value=''; $('fFrom').value=''; $('fTo').value='';
+  logsOffset=0; loadLogs();
+});
+
+// ─── 수동 발송 ───
+let manualRows = [];
+async function loadManualTargets(){
+  const filter = $('mFilter').value;
+  $('mTargets').innerHTML = '<div class="loading">로딩 중…</div>';
+  try{
+    const payload = filter==='all' ? { status:'active' } : { status:'active', delivery_state: filter };
+    const r = await api('subscribers', { filter: payload });
+    manualRows = r.rows;
+    if(!manualRows.length){
+      $('mTargets').innerHTML = '<div class="empty">해당 조건의 구독자가 없습니다</div>';
+      updateSelectedCount();
+      return;
+    }
+    $('mTargets').innerHTML = manualRows.map(r=>(
+      `<div class="target-row">`
+      +`<input type="checkbox" data-id="${r.id}">`
+      +`<span class="phone">${r.phone}</span>`
+      +`<span style="color:var(--mut);font-size:12px">${r.name||''}</span>`
+      +`<span class="badge ${r.delivery_state}" style="margin-left:auto">${r.delivery_state}</span>`
+      +`</div>`
+    )).join('');
+    $('mTargets').querySelectorAll('input[type=checkbox]').forEach(c=>{
+      c.addEventListener('change', updateSelectedCount);
+    });
+    updateSelectedCount();
+  }catch(err){
+    $('mTargets').innerHTML = `<div class="empty">오류: ${err.message}</div>`;
+  }
+}
+function selectedIds(){
+  return [...$('mTargets').querySelectorAll('input[type=checkbox]:checked')].map(c=>c.dataset.id);
+}
+function updateSelectedCount(){
+  const n = selectedIds().length;
+  $('mSelectedCount').textContent = n ? `선택 ${n}명` : '';
+  $('mSendBtn').disabled = n===0;
+}
+$('mReload').addEventListener('click', loadManualTargets);
+$('mFilter').addEventListener('change', loadManualTargets);
+$('mSelectAll').addEventListener('click', ()=>{
+  const boxes = $('mTargets').querySelectorAll('input[type=checkbox]');
+  const allChecked = [...boxes].every(c=>c.checked);
+  boxes.forEach(c=>{ c.checked = !allChecked; });
+  updateSelectedCount();
+});
+$('mSendBtn').addEventListener('click', async ()=>{
+  const ids = selectedIds();
+  if(!ids.length) return;
+  if(!confirm(`${ids.length}명에게 친구톡을 수동 발송하시겠습니까?`)) return;
+  const msg = $('mMessage').value;
+  const s = $('mStatus');
+  s.className='status show';
+  s.textContent = '발송 요청 중…';
+  $('mSendBtn').disabled = true;
+  try{
+    const r = await api('manual_send', { subscriberIds: ids, message: msg });
+    if(r.ok){
+      s.className='status show success';
+      s.textContent = `발송 성공 ${r.sent}명 / 실패 ${r.failed}명 (${r.charCount}자)`;
+    }else{
+      s.className='status show error';
+      s.textContent = `발송 실패: ${JSON.stringify(r.rawResponse||{}).slice(0,200)}`;
+    }
+    loadManualTargets();
+    logsOffset=0; loadLogs(); loadStats();
+  }catch(err){
+    s.className='status show error';
+    s.textContent = '오류: ' + err.message;
+  }finally{
+    $('mSendBtn').disabled = selectedIds().length===0;
+  }
+});
+
+// ─── 최초 로드 ───
+async function loadAll(){
+  await Promise.all([loadStats(), loadLogs(), loadManualTargets()]);
+}
+
+// 부트
+if(getToken()) showApp();
+else showLogin();
+})();
+</script>
+</body>
+</html>

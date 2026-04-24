@@ -1,0 +1,274 @@
+/**
+ * 관리자 API Edge Function
+ *
+ * 엔드포인트(모두 POST, body.action으로 라우팅):
+ *   action='login'            → { password }           → { ok, token }
+ *   action='stats'            → { token }              → { activeSubscribers, deliveryStates, last7d, revenue }
+ *   action='logs'             → { token, filters }     → { rows, total }
+ *   action='manual_send'      → { token, subscriberIds, message? } → { ok, sent, failed }
+ *   action='subscribers'      → { token, filter? }     → { rows }
+ *
+ * 인증: login 외 모든 액션은 token(세션) 필요.
+ *       token = HMAC(timestamp:version, ADMIN_SESSION_SECRET) + 만료 확인.
+ */
+
+import { createClient } from "jsr:@supabase/supabase-js@2";
+
+const TOKEN_TTL_MS = 12 * 60 * 60 * 1000; // 12시간
+
+function corsHeaders(origin: string) {
+  return {
+    "Access-Control-Allow-Origin": origin || "*",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "content-type, authorization",
+    "Access-Control-Max-Age": "86400",
+    "Vary": "Origin",
+  };
+}
+
+function json(body: unknown, init: ResponseInit & { cors: Record<string, string> }) {
+  return new Response(JSON.stringify(body), {
+    ...init,
+    headers: { ...init.cors, "Content-Type": "application/json" },
+  });
+}
+
+// ───── Token ─────
+
+async function hmacHex(key: string, data: string): Promise<string> {
+  const k = new TextEncoder().encode(key);
+  const d = new TextEncoder().encode(data);
+  const ck = await crypto.subtle.importKey("raw", k, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  const sig = await crypto.subtle.sign("HMAC", ck, d);
+  return Array.from(new Uint8Array(sig)).map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+async function issueToken(secret: string): Promise<string> {
+  const exp = Date.now() + TOKEN_TTL_MS;
+  const payload = `${exp}`;
+  const sig = (await hmacHex(secret, payload)).slice(0, 32);
+  return `${exp}.${sig}`;
+}
+
+async function verifyToken(token: string, secret: string): Promise<boolean> {
+  if (!token || !token.includes(".")) return false;
+  const [expStr, sig] = token.split(".");
+  const exp = parseInt(expStr, 10);
+  if (!exp || Date.now() > exp) return false;
+  const expected = (await hmacHex(secret, expStr)).slice(0, 32);
+  return expected === sig;
+}
+
+// ───── Solapi 직접 호출 (수동 발송용) ─────
+
+async function solapiAuthHeader(apiKey: string, apiSecret: string): Promise<string> {
+  const date = new Date().toISOString();
+  const salt = crypto.randomUUID().replace(/-/g, "");
+  const msg = date + salt;
+  const keyBytes = new TextEncoder().encode(apiSecret);
+  const dataBytes = new TextEncoder().encode(msg);
+  const cryptoKey = await crypto.subtle.importKey("raw", keyBytes, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  const sigBuf = await crypto.subtle.sign("HMAC", cryptoKey, dataBytes);
+  const sig = Array.from(new Uint8Array(sigBuf)).map((b) => b.toString(16).padStart(2, "0")).join("");
+  return `HMAC-SHA256 apiKey=${apiKey}, date=${date}, salt=${salt}, signature=${sig}`;
+}
+
+async function solapiSendManual(phones: string[], message: string) {
+  const apiKey = Deno.env.get("SOLAPI_API_KEY")!;
+  const apiSecret = Deno.env.get("SOLAPI_API_SECRET")!;
+  const pfId = Deno.env.get("SOLAPI_PFID")!;
+  const sender = Deno.env.get("SOLAPI_SENDER")!;
+  const siteUrl = Deno.env.get("SITE_URL") ?? "https://roysbriefing.vercel.app";
+
+  const auth = await solapiAuthHeader(apiKey, apiSecret);
+  const messages = phones.map((phone) => ({
+    to: phone,
+    from: sender,
+    text: message,
+    type: "CTA",
+    kakaoOptions: {
+      pfId,
+      disableSms: true,
+      bms: { targeting: "I" },
+      buttons: [{ buttonType: "WL", buttonName: "전체 뉴스 보기", linkMo: siteUrl, linkPc: siteUrl }],
+    },
+  }));
+
+  const res = await fetch("https://api.solapi.com/messages/v4/send-many", {
+    method: "POST",
+    headers: { "Authorization": auth, "Content-Type": "application/json" },
+    body: JSON.stringify({ messages }),
+  });
+  return { ok: res.ok, body: await res.json() };
+}
+
+// ───── Handler ─────
+
+Deno.serve(async (req) => {
+  const origin = req.headers.get("Origin") ?? "";
+  const cors = corsHeaders(origin);
+  if (req.method === "OPTIONS") return new Response(null, { headers: cors });
+  if (req.method !== "POST") return json({ ok: false, error: "method not allowed" }, { status: 405, cors });
+
+  try {
+    const body = await req.json().catch(() => ({}));
+    const action = String(body.action ?? "");
+    const password = Deno.env.get("ADMIN_PASSWORD") ?? "";
+    const sessionSecret = Deno.env.get("ADMIN_SESSION_SECRET") ?? "";
+    if (!password || !sessionSecret) {
+      return json({ ok: false, error: "server misconfigured" }, { status: 500, cors });
+    }
+
+    // login
+    if (action === "login") {
+      if (typeof body.password !== "string" || body.password !== password) {
+        return json({ ok: false, error: "invalid password" }, { status: 401, cors });
+      }
+      const token = await issueToken(sessionSecret);
+      return json({ ok: true, token, ttlMs: TOKEN_TTL_MS }, { cors });
+    }
+
+    // 이하 액션은 토큰 필수
+    const token = String(body.token ?? "");
+    if (!(await verifyToken(token, sessionSecret))) {
+      return json({ ok: false, error: "unauthorized" }, { status: 401, cors });
+    }
+
+    const supabase = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+    );
+
+    // ─── stats ───
+    if (action === "stats") {
+      const now = new Date();
+      const sevenDaysAgo = new Date(now.getTime() - 7 * 86400000).toISOString();
+      const fourteenDaysAgo = new Date(now.getTime() - 14 * 86400000).toISOString();
+
+      const [subs, dlv, sendRows, payRows] = await Promise.all([
+        supabase.from("subscribers").select("id", { count: "exact", head: true }).eq("status", "active"),
+        supabase.from("subscribers").select("delivery_state").eq("status", "active"),
+        supabase.from("send_logs").select("sent_at, status, message_type").gte("sent_at", fourteenDaysAgo),
+        supabase.from("payments").select("amount, status, paid_at").eq("status", "paid").gte("paid_at", sevenDaysAgo),
+      ]);
+
+      const deliveryStates: Record<string, number> = {};
+      for (const r of (dlv.data ?? [])) {
+        const s = (r as { delivery_state?: string }).delivery_state ?? "unknown";
+        deliveryStates[s] = (deliveryStates[s] ?? 0) + 1;
+      }
+
+      // 14일 일별 카운트 집계
+      const dailyCounts: Record<string, { success: number; fail: number }> = {};
+      for (const r of (sendRows.data ?? [])) {
+        const row = r as { sent_at: string; status: string };
+        const day = row.sent_at.slice(0, 10);
+        if (!dailyCounts[day]) dailyCounts[day] = { success: 0, fail: 0 };
+        if (row.status === "success") dailyCounts[day].success++;
+        else if (row.status === "fail") dailyCounts[day].fail++;
+      }
+
+      const revenue7d = (payRows.data ?? []).reduce((sum, r) => sum + ((r as { amount: number }).amount ?? 0), 0);
+      const payCount7d = payRows.data?.length ?? 0;
+
+      return json({
+        ok: true,
+        activeSubscribers: subs.count ?? 0,
+        deliveryStates,
+        daily14d: dailyCounts,
+        revenue7d,
+        payCount7d,
+      }, { cors });
+    }
+
+    // ─── logs ───
+    if (action === "logs") {
+      const f = (body.filters ?? {}) as Record<string, unknown>;
+      let q = supabase.from("send_logs").select(
+        "id, sent_at, phone, status, message_type, provider, provider_code, provider_message, char_count",
+        { count: "exact" },
+      );
+      if (typeof f.status === "string") q = q.eq("status", f.status);
+      if (typeof f.message_type === "string") q = q.eq("message_type", f.message_type);
+      if (typeof f.phone === "string" && f.phone) q = q.eq("phone", f.phone);
+      if (typeof f.from === "string" && f.from) q = q.gte("sent_at", f.from);
+      if (typeof f.to === "string" && f.to) q = q.lte("sent_at", f.to);
+      const limit = Math.min(200, Math.max(1, Number(f.limit ?? 50)));
+      const offset = Math.max(0, Number(f.offset ?? 0));
+      const { data, count, error } = await q.order("sent_at", { ascending: false }).range(offset, offset + limit - 1);
+      if (error) throw error;
+      return json({ ok: true, rows: data ?? [], total: count ?? 0, limit, offset }, { cors });
+    }
+
+    // ─── subscribers ───
+    if (action === "subscribers") {
+      const f = (body.filter ?? {}) as Record<string, unknown>;
+      let q = supabase.from("subscribers").select(
+        "id, phone, name, status, delivery_state, paid_until, subscribed_at, metadata",
+      );
+      if (typeof f.status === "string") q = q.eq("status", f.status);
+      if (typeof f.delivery_state === "string") q = q.eq("delivery_state", f.delivery_state);
+      const { data, error } = await q.order("subscribed_at", { ascending: false }).limit(500);
+      if (error) throw error;
+      return json({ ok: true, rows: data ?? [] }, { cors });
+    }
+
+    // ─── manual_send ───
+    if (action === "manual_send") {
+      const ids = Array.isArray(body.subscriberIds) ? body.subscriberIds as string[] : [];
+      const customMessage = typeof body.message === "string" ? body.message : "";
+      if (!ids.length) return json({ ok: false, error: "subscriberIds required" }, { status: 400, cors });
+
+      // 구독자 조회
+      const { data: targets, error: selErr } = await supabase
+        .from("subscribers").select("id, phone, name").in("id", ids);
+      if (selErr) throw selErr;
+      if (!targets?.length) return json({ ok: false, error: "no target" }, { status: 400, cors });
+
+      // 메시지 준비 (기본은 오늘의 헤더만)
+      const nowKst = new Date(Date.now() + 9 * 3600000 + new Date().getTimezoneOffset() * 60000);
+      const y = nowKst.getUTCFullYear();
+      const m = String(nowKst.getUTCMonth() + 1).padStart(2, "0");
+      const d = String(nowKst.getUTCDate()).padStart(2, "0");
+      const dow = ["일","월","화","수","목","금","토"][nowKst.getUTCDay()];
+      const dateLabel = `${y}-${m}-${d} (${dow})`;
+      const fallback = `📊 브리픽 · ${dateLabel}\n\n구독자님께 드리는 안내입니다.\n\n아래 버튼을 눌러 오늘의 경제 뉴스를 확인해주세요.`;
+      const text = customMessage.trim() || fallback;
+
+      const phones = targets.map((t) => (t as { phone: string }).phone);
+      const result = await solapiSendManual(phones, text);
+
+      // send_logs 기록
+      const batchId = crypto.randomUUID();
+      const ok = result.ok;
+      const rows = targets.map((t) => ({
+        subscriber_id: (t as { id: string }).id,
+        phone: (t as { phone: string }).phone,
+        message: text,
+        char_count: text.length,
+        status: ok ? "success" : "fail",
+        message_type: "friendtalk",
+        provider: "solapi",
+        provider_code: ok ? ((result.body as { groupId?: string })?.groupId ?? null) : null,
+        provider_message: ok ? "manual ok" : JSON.stringify(result.body).slice(0, 400),
+        provider_msg_id: ok ? ((result.body as { groupId?: string })?.groupId ?? null) : null,
+        batch_id: batchId,
+      }));
+      await supabase.from("send_logs").insert(rows);
+
+      return json({
+        ok,
+        sent: ok ? phones.length : 0,
+        failed: ok ? 0 : phones.length,
+        charCount: text.length,
+        batchId,
+        rawResponse: result.body,
+      }, { cors });
+    }
+
+    return json({ ok: false, error: `unknown action: ${action}` }, { status: 400, cors });
+  } catch (err) {
+    console.error("[admin-api]", err);
+    return json({ ok: false, error: err instanceof Error ? err.message : String(err) }, { status: 500, cors });
+  }
+});
