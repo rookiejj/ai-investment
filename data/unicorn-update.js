@@ -1,6 +1,16 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-24 13:45 KST",
+    summary: "Anthropic ARR $300억 OpenAI($250억) 공식 추월·연초 $90억 대비 4개월 만 3.3배 궤적으로 AI 유니콘 펀더 재평가·Claude Code Pro 2% A/B 테스트로 정리",
+    changes: [
+      { type: "밸류에이션", sector: "AI·ML",
+        detail: "Anthropic. 4/23 기준 연환산 매출(ARR) $300억 돌파 확정 보도로 OpenAI($250억) 공식 추월, 사상 처음 매출 규모에서도 단독 선두. 2025년 말 $90억에서 4개월 만에 3.3배 가속은 전례 없는 SaaS 성장 궤적으로, 엔터프라이즈 코딩 50%+ 점유·$1M+ 고객 1,000+·Claude Code Routines API 종량제가 동시에 리프팅. 세컨더리 $1조 밸류를 펀더로 뒷받침하며 10월 IPO 프라이싱 상향 압력 증대, 업계 전반 AI 유니콘 멀티플 재산정.", time: "2026-04-24 13:45 KST" },
+      { type: "거버넌스", sector: "AI·ML",
+        detail: "Anthropic. 4/23 PCWorld가 '$20 Pro 플랜에서 Claude Code 제외 검토' 보도로 사용자 반발 확산, Head of Growth Amol Avasare가 '신규 프로슈머의 약 2%에 한정된 소규모 A/B 테스트였고 기존 Pro·Max는 그대로'라고 공개 해명. Claude Code가 Pro 가입 페이지에 복원되며 단기 브랜드 리스크는 진화, 다만 $1조 세컨더리 밸류·ARR $300억 궤적에 비례해 공급 제약·티어 최적화 이슈가 IPO 전까지 주기적 부상할 가능성.", time: "2026-04-24 13:45 KST" },
+    ]
+  },
+  {
     date: "2026-04-24 07:30 KST",
     summary: "Anthropic 세컨더리 마켓 $1조 돌파 OpenAI 첫 공식 추월·4/23 OpenAI GPT-5.5 'Spud' 공식 출시로 에이전틱 코딩 리더십 탈환 시도·AI 유니콘 밸류 재설정",
     changes: [

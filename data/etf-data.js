@@ -71,8 +71,8 @@ const data = [
     title: "🇺🇸 미국 대형주",
     tag: "S&P500·나스닥·소형주",
     stocks: [
-      { tk:"SPY", nm:"SPDR S&P 500", rs:"4/23 S&P 500 7,108.40 -0.41% 기록고 조정·LMT Q1 미스 -6.3%·NOW -18% IBM -8% 소프트웨어 급락·유가 재점화·4/29 GOOGL 실적 대기", aum:"590", er:"0.09%", ytd:"+3%", y1:"+16%" },
-      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"4/23 Nasdaq 24,438.50 -0.89% 조정·OpenAI GPT-5.5 공식 출시·INTC AH +19%·TXN DC +90% YoY·Anthropic 세컨더리 $1조 돌파", aum:"400", er:"0.20%", ytd:"+9%", y1:"+24%" },
+      { tk:"SPY", nm:"SPDR S&P 500", rs:"4/23 S&P 500 7,108.40 -0.41% 기록고 조정·LMT Q1 미스 -6.3%·NOW -17.7% IBM -8% 소프트웨어 급락·GEV Q1 비트 2026 가이던스 상향·4/24 PG·SLB 실적·4/29 GOOGL 대기", aum:"590", er:"0.09%", ytd:"+3%", y1:"+16%" },
+      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"4/23 Nasdaq 24,438.50 -0.89% 조정·OpenAI GPT-5.5 'Spud' 공식 출시·INTC AH +20% 올타임 하이·TXN DC +90% YoY·Anthropic ARR $300억 OpenAI 추월·세컨더리 $1조", aum:"400", er:"0.20%", ytd:"+9%", y1:"+24%" },
       { tk:"VOO", nm:"Vanguard S&P 500", rs:"세계 최대 ETF·AUM $827B·최저 보수", aum:"827", er:"0.03%", ytd:"+2%", y1:"+15%" },
       { tk:"VTI", nm:"Vanguard Total Stock", rs:"미국 전체 시장·4월 신고가 랠리", aum:"420", er:"0.03%", ytd:"+2%", y1:"+14%" },
       { tk:"DIA", nm:"SPDR Dow Jones", rs:"다우 30 우량주·다우 부진", aum:"35", er:"0.16%", ytd:"-3%", y1:"+10%" },
@@ -103,7 +103,7 @@ const data = [
       { tk:"INDA", nm:"iShares MSCI India", rs:"인도 시장", aum:"12", er:"0.64%", ytd:"+10%", y1:"+18%" },
       { tk:"VEA", nm:"Vanguard FTSE Developed", rs:"선진국(미국 제외)", aum:"130", er:"0.05%", ytd:"+9%", y1:"+16%" },
       { tk:"FXI", nm:"iShares China Large-Cap", rs:"중국 대형주 50종·H주·관세 변동성", aum:"5.8", er:"0.74%", ytd:"-12%", y1:"+15%" },
-      { tk:"EWY", nm:"iShares MSCI South Korea", rs:"KOSPI 6,475.81 신고가 랠리 지속·SK하이닉스 Q1 영업이익률 72% 신기록·한화에어로 Northrop AReS MOA·4/24 기아 Q1 실적 대기", aum:"16", er:"0.59%", ytd:"+55%", y1:"+151%" },
+      { tk:"EWY", nm:"iShares MSCI South Korea", rs:"KOSPI 6,477 3일 연속 신고가 뒤 숨고르기·SK하이닉스 Q1 영업이익률 72% 사상 최고·현대차 Q1 OP -30.8% 관세 직격·4/24 기아 Q1 대기·외국인 3,003억 순매도", aum:"16", er:"0.59%", ytd:"+55%", y1:"+151%" },
     ]
   },
 ];

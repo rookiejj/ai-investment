@@ -6,6 +6,15 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-24 13:30 KST",
+    summary: "Anthropic ARR $300억 OpenAI($250억) 공식 추월·연초 $90억 대비 4개월 만 3.3배·Claude Code Pro 제외 실험은 2% A/B테스트로 종료·OpenAI PII Privacy Filter 오픈웨이트 배포 확인",
+    changes: [
+      { type: "밸류에이션", sector: "Anthropic", detail: "Anthropic. 연환산 매출(ARR)이 4월 기준 $300억을 돌파해 OpenAI($250억)를 사상 처음 공식 추월한 것으로 복수 집계 매체가 4/23 확정 보도. 2025년 말 $90억 수준에서 4개월 만에 3.3배 가속이라는 초유의 성장 궤적으로, 엔터프라이즈 코딩 50%+ 점유·$1M+ 대형 고객 1,000+·Claude Code Routines의 API 종량제 매출이 동시 작동한 결과. $1조 세컨더리 밸류·10월 IPO $400~500B 타겟·Amazon $25B 확정과 결합되며 밸류 기반을 펀더로 뒷받침.", time: "2026-04-24 13:30 KST" },
+      { type: "구조조정", sector: "Anthropic", detail: "Anthropic. 4/23 PCWorld가 '$20 Pro 플랜에서 Claude Code 제외 검토' 보도로 대규모 사용자 반발 촉발, 이후 Head of Growth Amol Avasare가 공개 해명 — '신규 프로슈머 가입자 중 약 2%에 한정된 소규모 A/B 테스트였고 기존 Pro·Max 사용자 혜택은 그대로 유지된다'며 Claude Code가 다시 Pro 가입 페이지에 복원됐음을 확인. GitHub가 같은 날 Copilot 정액제 신규 가입 중단·Claude Opus 접근을 제거한 조치와 맞물려 '엔터프라이즈 티어로의 컴퓨트 쏠림' 흐름이 선명해진 구간.", time: "2026-04-24 13:30 KST" },
+      { type: "제품 출시", sector: "OpenAI", detail: "OpenAI. 4/23 공개한 Privacy Filter가 오픈웨이트 PII(개인식별정보) 탐지·리댁션 전용 소형 모델로 확인됨. Anthropic·Google이 오픈소스 트랙을 사실상 포기한 가운데 '안전을 인프라로 제공한다'는 접근으로 EU AI Act·HIPAA 컴플라이언스 현장 채택을 겨냥, GPT-5.5 본체 출시에 이어 Trusted Access 제품군(사이버·바이오·PII)을 주간 단위로 공개하는 속도전.", time: "2026-04-24 13:30 KST" },
+    ]
+  },
+  {
     date: "2026-04-24 07:15 KST",
     summary: "OpenAI GPT-5.5 'Spud' 정식 출시·Terminal-Bench 2.0 82.7% SOTA로 Opus 4.7 반격·Anthropic 세컨더리 마켓 $1조 돌파해 OpenAI 추월",
     changes: [
