@@ -4,6 +4,7 @@
     { "source": "/renew",   "destination": "/views/renew.html" },
     { "source": "/terms",   "destination": "/views/terms.html" },
     { "source": "/privacy", "destination": "/views/privacy.html" },
-    { "source": "/refund",  "destination": "/views/refund.html" }
+    { "source": "/refund",  "destination": "/views/refund.html" },
+    { "source": "/help",    "destination": "/views/help.html" }
   ]
 }

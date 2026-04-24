@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>브리픽 · 뉴스가 도착하지 않나요?</title>
+<meta name="description" content="브리픽 구독자용 안내 — 뉴스가 도착하지 않을 때 확인할 것">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css">
+<style>
+:root{
+  --bg:#fafafa;--panel:#ffffff;--fg:#0d0d0d;--fg2:#333;--mut:#666;--sub:#999;
+  --border:rgba(0,0,0,0.06);--border-md:rgba(0,0,0,0.1);
+  --acc:#18E299;--acc-deep:#0fa76e;--acc-light:#d4fae8;
+  --kakao:#FEE500;--kakao-fg:#191600;--warn:#a35a00;--warn-bg:#fff4e5;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg2);font:15px/1.55 Pretendard,-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:none;background:none}
+
+.back-home{display:inline-flex;align-items:center;padding:14px 20px;color:var(--mut);font-size:14px}
+.back-home:hover{color:var(--acc-deep)}
+
+.wrap{min-height:calc(100vh - 48px);display:flex;align-items:flex-start;justify-content:center;padding:8px 20px 60px}
+.card{
+  background:var(--panel);border-radius:20px;padding:36px 32px 32px;width:100%;max-width:480px;
+  box-shadow:0 8px 28px rgba(0,0,0,0.06);position:relative;
+}
+
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:24px}
+.brand img{width:36px;height:36px;border-radius:50%;object-fit:cover}
+.brand span{font:700 18px/1 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.3px}
+
+.hero-icon{
+  width:56px;height:56px;border-radius:16px;background:var(--warn-bg);
+  display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:18px;
+}
+h1{font:700 24px/1.3 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.5px;margin-bottom:10px}
+.lead{color:var(--fg2);font-size:15px;line-height:1.6;margin-bottom:28px}
+.lead strong{color:var(--fg);font-weight:600}
+
+.reason{
+  background:var(--acc-light);border-radius:12px;padding:16px 18px;margin-bottom:28px;
+  display:flex;gap:12px;align-items:flex-start;
+}
+.reason .dot{
+  width:24px;height:24px;border-radius:50%;background:var(--acc-deep);color:#fff;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:700;
+}
+.reason .txt{font-size:14px;color:var(--fg);line-height:1.55}
+.reason .txt b{font-weight:600}
+
+.section-label{
+  font:600 12px/1.3 Pretendard,sans-serif;color:var(--sub);
+  letter-spacing:0.4px;text-transform:uppercase;margin:0 0 14px;
+}
+
+.steps{display:flex;flex-direction:column;gap:12px;margin-bottom:28px}
+.step{
+  display:flex;gap:14px;padding:14px 16px;border:1px solid var(--border);
+  border-radius:12px;background:#fff;align-items:flex-start;transition:border-color .15s;
+}
+.step:hover{border-color:var(--border-md)}
+.step .num{
+  width:28px;height:28px;border-radius:50%;background:var(--fg);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:700 13px/1 Pretendard,sans-serif;
+  flex-shrink:0;
+}
+.step .body{flex:1;min-width:0}
+.step .title{font:600 14px/1.4 Pretendard,sans-serif;color:var(--fg);margin-bottom:2px}
+.step .desc{font-size:13px;color:var(--mut);line-height:1.5}
+
+.cta-kakao{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;padding:16px 20px;background:var(--kakao);color:var(--kakao-fg);
+  border-radius:12px;font:700 16px/1 Pretendard,sans-serif;letter-spacing:-0.3px;
+  transition:transform .15s,box-shadow .15s;box-shadow:0 2px 8px rgba(254,229,0,0.35);
+}
+.cta-kakao:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(254,229,0,0.45)}
+.cta-kakao .kakao-icon{
+  width:22px;height:22px;background:var(--kakao-fg);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;color:var(--kakao);font-size:12px;font-weight:700;
+}
+
+.cta-note{
+  text-align:center;color:var(--sub);font-size:12px;margin-top:10px;line-height:1.5;
+}
+
+.divider{
+  height:1px;background:var(--border);margin:28px 0 20px;
+}
+
+.contact{text-align:center}
+.contact .label{font-size:13px;color:var(--mut);margin-bottom:8px}
+.contact a{
+  color:var(--fg);font-weight:500;border-bottom:1px solid var(--border-md);
+  padding-bottom:2px;transition:border-color .15s,color .15s;
+}
+.contact a:hover{color:var(--acc-deep);border-color:var(--acc-deep)}
+
+.footer-mini{
+  text-align:center;color:var(--sub);font-size:11px;line-height:1.6;
+  margin-top:32px;padding-top:20px;border-top:1px solid var(--border);
+}
+
+/* 이미 친구면 표시되는 배너 (선택) */
+.already-banner{
+  display:none;background:var(--acc-light);border-radius:10px;padding:12px 14px;
+  margin-bottom:20px;color:var(--acc-deep);font-size:13px;line-height:1.5;
+  border:1px solid rgba(15,167,110,0.2);
+}
+.already-banner.show{display:block}
+.already-banner b{font-weight:600}
+
+@media (max-width:480px){
+  .card{padding:28px 22px 24px;border-radius:18px}
+  h1{font-size:22px}
+  .lead{font-size:14.5px;margin-bottom:24px}
+  .reason{padding:14px 16px;margin-bottom:24px}
+  .step{padding:12px 14px}
+  .cta-kakao{padding:14px 18px;font-size:15px}
+}
+</style>
+</head>
+<body>
+
+<a href="/" class="back-home">← 브리픽 홈</a>
+
+<div class="wrap">
+  <div class="card">
+    <div class="brand">
+      <img src="/assets/briefick_profile_640.jpeg" alt="">
+      <span>브리픽</span>
+    </div>
+
+    <div class="hero-icon">📬</div>
+    <h1>뉴스가 도착하지 않으셨나요?</h1>
+    <p class="lead">
+      구독은 정상적으로 등록되어 있지만, <strong>카카오톡 채널 친구 추가</strong>가 되어 있지 않으면
+      매일 아침 뉴스를 받으실 수 없어요. 아래에서 1분 만에 해결됩니다.
+    </p>
+
+    <div class="reason">
+      <div class="dot">!</div>
+      <div class="txt">
+        <b>친구톡은 '카카오톡 채널 친구'에게만 전송됩니다.</b><br>
+        카카오톡 정책상, 채널 친구가 아닌 분께는 발송할 수 없어요.
+      </div>
+    </div>
+
+    <p class="section-label">1분 만에 해결하기</p>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div class="body">
+          <div class="title">아래 노란 버튼을 눌러 채널 친구 추가</div>
+          <div class="desc">카카오톡이 열리며 '친구 추가' 버튼이 표시됩니다.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <div class="body">
+          <div class="title">'채널 추가' 버튼 탭</div>
+          <div class="desc">추가하신 번호와 구독 번호가 동일한지 꼭 확인해주세요.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <div class="body">
+          <div class="title">내일 오전 8시부터 자동 수신</div>
+          <div class="desc">별도 설정 없이 매일 아침 뉴스가 도착합니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <a class="cta-kakao" href="https://pf.kakao.com/_lpxkCX/friend" target="_blank" rel="noopener">
+      <span class="kakao-icon">K</span>
+      <span>카카오톡 채널 친구 추가</span>
+    </a>
+    <p class="cta-note">이미 친구 상태라면 이 단계는 건너뛰셔도 됩니다.</p>
+
+    <div class="divider"></div>
+
+    <div class="contact">
+      <div class="label">해결되지 않으셨나요?</div>
+      <a href="mailto:rookiejj@gmail.com?subject=%5B%EB%B8%8C%EB%A6%AC%ED%94%BD%5D%20%EB%AC%B8%EC%9D%98">rookiejj@gmail.com 으로 문의</a>
+    </div>
+
+    <div class="footer-mini">
+      브리픽 · 매일 오전 8시 KST 발송<br>
+      © Roysoft
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
