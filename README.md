@@ -35,14 +35,14 @@ ai-investment/
 │   ├── send-friendtalk.js        ← 로컬 수동 발송 (디버깅)
 │   └── subscribers.example.json
 ├── supabase/
-│   ├── migrations/               ← 스키마 이력 (init / payment / message_type / delivery_state 등)
+│   ├── migrations/               ← 스키마 이력 (init / payment / message_type / delivery_state / admin_settings 등)
 │   ├── functions/
 │   │   ├── subscribe/            ← 웹 구독 요청 업서트
 │   │   ├── check-subscription/   ← 결제 전 기존 구독 확인
 │   │   ├── payment-confirm/      ← 포트원 결제 검증 + 구독 연장 + 결제완료 알림톡
 │   │   ├── daily-send/           ← 매일 친구톡 발송 (cron 트리거)
 │   │   ├── solapi-webhook/       ← 솔라피 발송 결과 수신 (실시간 상태 갱신)
-│   │   └── admin-api/            ← 운영 대시보드용 (인증·통계·로그·수동발송)
+│   │   └── admin-api/            ← 운영 대시보드용 (login / change_password / stats / logs / subscribers / manual_send)
 │   ├── schedule.sql              ← pg_cron 등록 SQL (Vault 기반)
 │   ├── queries.sql               ← 운영 조회·상태 변경 템플릿
 │   └── README.md                 ← Supabase 세팅 가이드
@@ -72,11 +72,13 @@ UI 노출 총 348개 항목, 6개 탭 (일본 70항목은 데이터 파일만 �
 - **친구톡**: 매일 08:00 KST, 탭별 최신 1건 요약 + "전체 뉴스 보기" 버튼 (네이티브 CTA)
 
 ### 운영 대시보드 `/admin`
-- 비밀번호 인증 (Edge Function `admin-api`)
-- **통계 카드**: 활성 구독자 수 · 7일 발송 성공/실패 · 결제 매출 요약
-- **차트**: 최근 14일 일별 발송량 · 상태별 분포
-- **발송 이력 테이블**: 필터(날짜·상태·메시지 타입·배송 상태)
-- **수동 발송**: 채널 미가입 등 실패 구독자에게 재발송 트리거 (관리자 액션)
+- 비밀번호 인증 (Edge Function `admin-api` · DB 해시 저장)
+- **사이드바 레이아웃** 4개 뷰 (해시 라우팅 · 모바일 드로어)
+  - **대시보드**: 통계 카드(활성 구독자·7일 결제·배송 상태) + 차트(14일 일별 발송량 · 배송 상태 도넛)
+  - **발송 이력**: 상태·타입·번호·기간 필터 + 페이지네이션
+  - **구독자**: 상태·배송 상태 필터로 전체 목록 조회
+  - **수동 발송**: `delivery_state` 필터로 실패 구독자 선택 → 친구톡 재발송 (커스텀 메시지 지원)
+- **비밀번호 변경** 모달 (헤더) — 현재 비번 확인 후 DB 해시 즉시 갱신 (최소 4자)
 
 ### 콘텐츠 자동 갱신
 - Claude Opus 4.7 원격 에이전트가 매일 오전·오후 주기로 6개 탭 데이터 갱신·커밋·푸시
@@ -152,6 +154,10 @@ send_logs
   status (success/fail/skipped), message_type (friendtalk/alimtalk/sms)
   provider, provider_code (groupId), provider_message, provider_msg_id
   batch_id, sent_at
+
+admin_settings (단일 행, id=1)
+  password_hash (SHA-256(password:session_secret))
+  updated_at
 ```
 
 ## 운영 메모
@@ -159,12 +165,12 @@ send_logs
 - **솔라피 잔액**: 친구톡 약 15원/건, 알림톡 약 8원/건. 잔액 고갈 시 `send_logs.status=fail` + `provider_message="NotEnoughBalance"`.
 - **포트원 라이브 전환**: 테스트 채널 키 → 라이브 키로 교체. `ITEM_CODE` 등 bypass 필드는 PG별로 재검토.
 - **카카오 채널 미가입자**: 솔라피가 `bms.targeting:"I"`로 필터링하며, webhook이 결과를 `delivery_state='not_friend'`로 자동 반영.
-- **관리자 비밀번호 로테이션**: Supabase secret `ADMIN_PASSWORD` 재설정 + 재배포 없이 즉시 적용.
+- **관리자 비밀번호 로테이션**: 대시보드 헤더 "비밀번호 변경"으로 바로 변경(최소 4자). env `ADMIN_PASSWORD`는 최초 초기화용이며, 이후 실 비교는 `admin_settings.password_hash` 기준.
 - **스케줄 변경**: `cron.schedule` 표현식은 UTC 기준 (KST = UTC+9).
 
 ## Changelog
 
-- **2026-04-24**: 솔라피 발송 결과 webhook 도입 (`solapi-webhook`) — 실제 전달 성공·실패가 실시간 `send_logs`·`subscribers.delivery_state`에 반영. 친구톡 `bms.targeting="I"` 명시로 채널 미가입자 사전 필터링. 탭 선정 기준 팝업. 법정 문서 3종(이용약관·개인정보처리방침·환불정책) 신설. 푸터 2단 레이아웃·사업자 정보. 구독 완료 전용 화면·카카오 채널 추가 강조 배너. 갤럭시아 테스트 PG 전환 (bypass ITEM_CODE + customerId).
+- **2026-04-24**: 운영 대시보드 `/admin` 개편 — 사이드바 레이아웃, 4개 뷰(대시보드·발송이력·구독자·수동발송), 해시 라우팅, 모바일 드로어. 비밀번호 변경 모달(`admin_settings` 해시 저장, 최소 4자). `admin-api` Edge Function 6개 액션(login/change_password/stats/logs/subscribers/manual_send). 솔라피 발송 결과 webhook 도입 (`solapi-webhook`) — 실제 전달 성공·실패가 실시간 `send_logs`·`subscribers.delivery_state`에 반영. 친구톡 `bms.targeting="I"` 명시로 채널 미가입자 사전 필터링. 탭 선정 기준 팝업. 법정 문서 3종(이용약관·개인정보처리방침·환불정책) 신설. 푸터 2단 레이아웃·사업자 정보. 구독 완료 전용 화면·카카오 채널 추가 강조 배너. 갤럭시아 테스트 PG 전환 (bypass ITEM_CODE + customerId). 친구톡 메시지 각 탭 1건으로 축소, 타이틀·푸터 구분선 제거, 탭 제목 아래 빈 줄 추가.
 - **2026-04-23**: `subscribers.delivery_state` 컬럼 도입 — 발송 후 구독자별 상태 스냅샷 자동 갱신. 푸터 사업자 정보·반응형 배치.
 - **2026-04-22**: 친구톡 메시지 포맷 단순화(탭당 1건, 구분선 제거, 네이티브 CTA 버튼). 모바일 결제창 REDIRECTION + 복귀 처리. DB 타임존 KST 전환.
 - **2026-04-21**: 친구톡 구독 서비스 · 포트원 결제 · Supabase 백엔드 도입. 매일 08:00 KST 자동 발송. 구독 모달·결제 완료 알림톡. Supabase 신형 API 키(`sb_*`) 대응 — Edge Function `--no-verify-jwt` + 자체 webhook secret. 결제 완료 시 솔라피 알림톡 템플릿 발송.
