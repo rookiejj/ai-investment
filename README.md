@@ -12,13 +12,13 @@
 ```
 ai-investment/
 ├── index.html                    ← 통합 대시보드 UI + 구독 결제 모달 (루트)
-├── pages/
+├── views/
 │   ├── admin.html                ← 운영 대시보드 (통계·발송 이력·구독자·수동 발송)
 │   ├── renew.html                ← 재구독 전용 페이지
 │   ├── terms.html                ← 이용약관
 │   ├── privacy.html              ← 개인정보처리방침
 │   └── refund.html               ← 환불정책
-├── vercel.json                   ← /admin · /renew · /terms ... → pages/ 리라이트
+├── vercel.json                   ← /admin · /renew · /terms ... → views/ 리라이트
 ├── CLAUDE.md                     ← 데이터 유지보수·자동화 지침
 ├── assets/
 │   ├── briefick_profile_640.jpeg ← 헤더 로고
