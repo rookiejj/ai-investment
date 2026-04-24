@@ -1115,7 +1115,10 @@ function switchTab(id,dir){
     const phoneEl = document.getElementById('subPhone');
     const consent = document.getElementById('subConsent');
     const cancel = document.getElementById('subCancel');
-    // 복귀 시점에 즉시 입력·액션 잠금 (결제창 거쳐온 상태이므로 편집 불가)
+    // 결제창 거쳐온 값 복원 (placeholder만 보이는 어색함 방지)
+    phoneEl.value = pending.phone || '';
+    consent.checked = true;
+    // 복귀 시점에 즉시 입력·액션 잠금
     phoneEl.disabled = true;
     consent.disabled = true;
     sub.disabled = true;

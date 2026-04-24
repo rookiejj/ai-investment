@@ -224,6 +224,9 @@ input,textarea{font:inherit;outline:none}
     if(!pending || pending.paymentId !== paymentId) return false;
     sessionStorage.removeItem(PENDING_KEY);
 
+    // 결제창 거쳐온 값 복원 (placeholder만 보이는 어색함 방지)
+    phoneEl.value = pending.phone || '';
+    consent.checked = true;
     // 복귀 시점에 즉시 입력·액션 잠금
     phoneEl.disabled = true;
     consent.disabled = true;
