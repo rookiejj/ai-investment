@@ -277,7 +277,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
           <div class="chart-wrap"><canvas id="overviewDailyChart"></canvas></div>
         </div>
         <div class="section">
-          <div class="section-title">배송 상태 분포 <span class="count">활성 구독자 기준</span></div>
+          <div class="section-title">구독 상태 분포 <span class="count">활성 구독자 기준</span></div>
           <div class="chart-wrap"><canvas id="overviewStateChart"></canvas></div>
         </div>
       </div>
@@ -308,7 +308,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
     <section class="view hidden" data-view="subscribers">
       <div class="stats-grid" id="subsStatsGrid"></div>
       <div class="section">
-        <div class="section-title">배송 상태 분포 <span class="count">활성 구독자 기준</span></div>
+        <div class="section-title">구독 상태 분포 <span class="count">활성 구독자 기준</span></div>
         <div class="chart-wrap"><canvas id="stateChart"></canvas></div>
       </div>
       <div class="section">
@@ -322,7 +322,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
             <option value="">상태 전체</option>
           </select>
           <select id="sDelivery">
-            <option value="">배송 상태 전체</option>
+            <option value="">구독 상태 전체</option>
             <option value="ok">ok (정상 수신)</option>
             <option value="not_friend">not_friend (채널 미가입)</option>
             <option value="blocked">blocked (차단)</option>
@@ -333,7 +333,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
         </div>
         <div class="tbl-scroll">
           <table class="tbl">
-            <thead><tr><th>가입일</th><th>전화번호</th><th>이름</th><th>상태</th><th>배송</th><th>만료일</th></tr></thead>
+            <thead><tr><th>가입일</th><th>전화번호</th><th>이름</th><th>상태</th><th>구독</th><th>만료일</th></tr></thead>
             <tbody id="subsBody"><tr><td colspan="6" class="loading">로딩 중…</td></tr></tbody>
           </table>
         </div>
@@ -348,7 +348,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
         <div class="section-subtitle">만료일 하루 전쯤 재구독 안내를 수동 발송하세요.</div>
         <div class="tbl-scroll">
           <table class="tbl">
-            <thead><tr><th>만료일</th><th>남은 일수</th><th>전화번호</th><th>이름</th><th>배송</th></tr></thead>
+            <thead><tr><th>만료일</th><th>남은 일수</th><th>전화번호</th><th>이름</th><th>구독</th></tr></thead>
             <tbody id="expiringBody"><tr><td colspan="5" class="loading">로딩 중…</td></tr></tbody>
           </table>
         </div>
@@ -641,7 +641,7 @@ async function loadOverview(){
         plugins:{ legend:{ position:'bottom' } } }
     });
 
-    // 배송 상태 도넛
+    // 구독 상태 도넛
     const stateLabels = Object.keys(dlv);
     const stateData = stateLabels.map(k => dlv[k]);
     const colorMap = { ok:'#18E299', not_friend:'#f59e0b', blocked:'#d45656', paused_ad:'#ff9f6b', unknown:'#999' };
