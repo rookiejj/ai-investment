@@ -1,6 +1,16 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-24 19:45 KST",
+    summary: "Business Insider — xAI·Mistral·Cursor 3자 파트너십 협의 보도·SpaceX의 4/22 $60B Cursor 인수 옵션과 결합·Mistral 공동창업자 Chaplot은 이미 xAI 합류·3사 모두 공식 부인",
+    changes: [
+      { type: "전략", sector: "엔터프라이즈 SW",
+        detail: "Cursor(Anysphere). 4/24 Business Insider 보도 — xAI가 최근 수주간 Mistral·Cursor와 3자 파트너십을 논의했다는 사실 공개. Mistral의 프론티어 모델 + Cursor의 IDE + xAI/SpaceX의 Colossus 슈퍼클러스터를 통합해 Anthropic·OpenAI를 정면 견제하는 구조. SpaceX의 4/22 $60B Cursor 인수 옵션 직후 부상한 시나리오로, Mistral 공동창업자 Devendra Chaplot은 이미 xAI에 합류해 프리트레이닝을 이끌고 있고 Cursor도 Colossus에서 모델을 학습 중. 3사 모두 공식 코멘트 거부, IPO·인수 클로징 직전 협상 카드로 활용될 가능성.", time: "2026-04-24 19:45 KST" },
+      { type: "전략", sector: "AI·ML",
+        detail: "OpenAI. 4/23 ChatGPT for Clinicians 정식 출시 — 미국 면허 의사·NP·PA·약사 대상 무료, NPI 검증 기반. GPT-5.4 본체 응답이 임상 태스크에서 인간 의사를 일제 상회, 7,000건 응답 중 99.6% safe&accurate 판정. 4/23 GPT-5.5·PII Privacy Filter·Cybersecurity Trusted Access·GPT-Rosalind에 이은 Trusted Access 의료 트랙 확대로, ARR $250억 유지 펀더 위에 헬스케어 SaaS 신성장축 확보. Anthropic Coefficient Bio($40억 인수)와의 바이오 AI 정면 경쟁 구도.", time: "2026-04-24 19:45 KST" },
+    ]
+  },
+  {
     date: "2026-04-24 13:45 KST",
     summary: "Anthropic ARR $300억 OpenAI($250억) 공식 추월·연초 $90억 대비 4개월 만 3.3배 궤적으로 AI 유니콘 펀더 재평가·Claude Code Pro 2% A/B 테스트로 정리",
     changes: [

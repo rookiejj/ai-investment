@@ -32,7 +32,7 @@ const data = [
     title: "⚡ 에너지·원자력",
     tag: "석유·가스·우라늄",
     stocks: [
-      { tk:"XLE", nm:"Energy Select SPDR", rs:"4/23 Brent $101+ 유지·호르무즈 기능적 봉쇄·4~5mb/d 수요 파괴 지속·OPEC+ 4/25 화상회의 대기", aum:"38", er:"0.09%", ytd:"+28%", y1:"+18%" },
+      { tk:"XLE", nm:"Energy Select SPDR", rs:"4/24 Brent $105.73 +0.63% 추가 상승·호르무즈 기능적 봉쇄 지속·물리 현물 $150 수렴·OPEC+ 4/25 화상회의 대기", aum:"38", er:"0.09%", ytd:"+28%", y1:"+18%" },
       { tk:"URA", nm:"Global X Uranium", rs:"우라늄·원전 생태계·연초 조정 국면", aum:"4", er:"0.69%", ytd:"+6%", y1:"+30%" },
       { tk:"NLR", nm:"VanEck Uranium+Nuclear", rs:"원자력 밸류체인", aum:"1.5", er:"0.60%", ytd:"+22%", y1:"+35%" },
       { tk:"AMLP", nm:"Alerian MLP", rs:"MLP 파이프라인·배당", aum:"10", er:"0.85%", ytd:"+12%", y1:"+20%" },
@@ -58,7 +58,7 @@ const data = [
     title: "₿ 크립토·블록체인",
     tag: "비트코인·이더리움·디파이",
     stocks: [
-      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"BTC $77.5K 되돌림·Fear&Greed 46 중립·Strategy 815,061 BTC로 IBIT 802,823 BTC 추월·ETF 순유입 유지", aum:"58", er:"0.25%", ytd:"+4%", y1:"-12%" },
+      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"BTC $77.7K 횡보 4/24·Fear&Greed 46 중립·Strategy 815,061 BTC로 IBIT 802,823 BTC 추월·글로벌 크립토 펀드 주간 $1.4B 유입", aum:"58", er:"0.25%", ytd:"+4%", y1:"-12%" },
       { tk:"FBTC", nm:"Fidelity Wise Origin BTC", rs:"비트코인 현물·피델리티·AUM $18B", aum:"18", er:"0.25%", ytd:"+2%", y1:"-14%" },
       { tk:"ETHA", nm:"iShares Ethereum Trust", rs:"이더리움 현물·4/14 +7%", aum:"10", er:"0.25%", ytd:"-12%", y1:"-8%" },
       { tk:"BITO", nm:"ProShares Bitcoin Strategy", rs:"비트코인 선물 최초", aum:"3", er:"0.95%", ytd:"-18%", y1:"-18%" },
@@ -103,7 +103,7 @@ const data = [
       { tk:"INDA", nm:"iShares MSCI India", rs:"인도 시장", aum:"12", er:"0.64%", ytd:"+10%", y1:"+18%" },
       { tk:"VEA", nm:"Vanguard FTSE Developed", rs:"선진국(미국 제외)", aum:"130", er:"0.05%", ytd:"+9%", y1:"+16%" },
       { tk:"FXI", nm:"iShares China Large-Cap", rs:"중국 대형주 50종·H주·관세 변동성", aum:"5.8", er:"0.74%", ytd:"-12%", y1:"+15%" },
-      { tk:"EWY", nm:"iShares MSCI South Korea", rs:"KOSPI 6,477 3일 연속 신고가 뒤 숨고르기·SK하이닉스 Q1 영업이익률 72% 사상 최고·현대차 Q1 OP -30.8% 관세 직격·4/24 기아 Q1 대기·외국인 3,003억 순매도", aum:"16", er:"0.59%", ytd:"+55%", y1:"+151%" },
+      { tk:"EWY", nm:"iShares MSCI South Korea", rs:"코스피 6,475.63 보합·코스닥 1,203.84 +2.51% 25년 8개월만 1200선 돌파·기아 Q1 OP 2.21조 -26.7% 관세 7,500억·바이오·이차전지 일제 강세", aum:"16", er:"0.59%", ytd:"+55%", y1:"+151%" },
     ]
   },
 ];

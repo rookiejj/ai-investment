@@ -37,7 +37,7 @@ const data = [
       { nm:"Notion", rs:"AI 워크스페이스·문서·위키", val:"$11B", round:"세컨더리 ($270M)", sector:"생산성", ipo:"미정" },
       { nm:"Discord", rs:"커뮤니티 플랫폼·1/6 S-1 비밀 제출·나스닥 로드쇼 준비", val:"$15B", round:"Series I", sector:"소셜", ipo:"2026 H1 목표(지연 가능)" },
       { nm:"Airtable", rs:"노코드 데이터베이스·자동화", val:"$4B", round:"세컨더리 (다운)", sector:"노코드", ipo:"미정" },
-      { nm:"Cursor", rs:"4/21~22 SpaceX와 하반기 내 $60B 인수 옵션 체결·불발 시 $10B 브레이크업·MSFT도 사전 인수 타진했으나 선점당함·예정 $2B 펀딩 대체·Colossus 2와 결합 목표", val:"$60B (SpaceX 옵션)", round:"SpaceX 옵션 계약 (2026-04)", sector:"AI 코딩", ipo:"SpaceX 인수 검토" },
+      { nm:"Cursor", rs:"SpaceX $60B 옵션·불발 시 $10B 브레이크업·4/24 Business Insider xAI·Mistral 3자 파트너십 협의 보도·Colossus에서 모델 학습 진행 중", val:"$60B (SpaceX 옵션)", round:"SpaceX 옵션 계약 (2026-04)", sector:"AI 코딩", ipo:"SpaceX 인수 검토" },
       { nm:"Hugging Face", rs:"Google·NVIDIA·AMD 공동 투자·오픈 AI 모델 허브 표준", val:"$4.5B", round:"Series D ($235M, 2023-08)", sector:"오픈소스 AI 허브", ipo:"미정" },
     ]
   },

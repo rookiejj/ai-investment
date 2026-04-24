@@ -6,6 +6,15 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-24 19:30 KST",
+    summary: "OpenAI ChatGPT for Clinicians 무료 출시·임상 안전성 99.6% 검증·Business Insider xAI·Mistral·Cursor 3자 파트너십 협의 보도·Google Cloud Next 폐막일 Virgo Network·Agentic Defense 공개",
+    changes: [
+      { type: "제품 출시", sector: "OpenAI", detail: "OpenAI. 4/23 ChatGPT for Clinicians 출시 — 미 면허 의사·NP·PA·약사·심리학자 대상 무료, NPI 검증 기반 임상 전용 워크스페이스. GPT-5.4 기반이지만 본 워크스페이스의 응답이 베이스 GPT-5.4·타사 모델·인간 의사를 임상 태스크에서 일제 상회, 약 7,000건 응답 중 99.6%가 'safe & accurate' 판정. 동료심사 실시간 인용 클리니컬 서치, CME 자동 추적, 사전승인·차트 워크플로우 스킬 커스터마이즈 지원. Better Evidence Network 협력으로 미국 외 확대 예정. GPT-5.5 본체 출시·PII Privacy Filter 오픈웨이트 배포에 이은 Trusted Access 라인업 의료 트랙 확대.", time: "2026-04-24 19:30 KST" },
+      { type: "전략", sector: "xAI", detail: "xAI. 4/24 Business Insider — xAI가 최근 수주간 Mistral·Cursor와 3자 파트너십을 논의했다는 보도. Mistral의 프론티어 모델 역량과 Cursor의 코딩 IDE를 xAI/SpaceX 인프라(Colossus 2)에 통합해 OpenAI·Anthropic을 정면 견제하는 구조. SpaceX의 4/22 Cursor $60B 인수 옵션 계약 직후 부상한 시나리오로, Mistral 공동창업자 Devendra Chaplot은 이미 xAI에 합류해 프리트레이닝을 이끌고 있고 Cursor도 Colossus에서 모델을 학습 중. 3사 모두 공식 확인 거부.", time: "2026-04-24 19:30 KST" },
+      { type: "인프라", sector: "Google DeepMind", detail: "Google DeepMind. 4/24 Cloud Next 2026 폐막일 추가 발표 — Virgo Network(AI Hypercomputer 백본 스케일아웃 데이터센터 패브릭) 공식 공개로 8세대 TPU 8t/8i 클러스터를 단일 광 인터커넥트 구조로 확장. 'Agentic Defense' 트랙은 Google Threat Intelligence·Security Operations와 Wiz의 클라우드·AI 시큐리티 플랫폼을 결합해 에이전트 자체가 위협 감지·대응·자동 패치까지 실행하는 통합 보안 스택을 제시. Workspace 측면에서 'Take Notes For Me' 누적 사용자 1.1억(YoY +8.5x)·자동 회의 요약·액션 아이템 캡처 확장이 함께 발표돼 엔터프라이즈 채택 모멘텀 재확인.", time: "2026-04-24 19:30 KST" },
+    ]
+  },
+  {
     date: "2026-04-24 13:30 KST",
     summary: "Anthropic ARR $300억 OpenAI($250억) 공식 추월·연초 $90억 대비 4개월 만 3.3배·Claude Code Pro 제외 실험은 2% A/B테스트로 종료·OpenAI PII Privacy Filter 오픈웨이트 배포 확인",
     changes: [
