@@ -6,6 +6,15 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-25 07:10 KST",
+    summary: "Alphabet Anthropic 최대 $40B 투자 공식화·$10B 현금+$30B 마일스톤·5년 5GW TPU 전담 공급·DeepSeek V4 Flash·Pro 프리뷰 공개 1M 토큰 하이브리드 어텐션·Tencent Hy3 공개 295B MoE·Xiaomi MiMo-V2.5 퍼블릭 테스팅",
+    changes: [
+      { type: "펀딩", sector: "Anthropic", detail: "Anthropic. 4/24 Bloomberg·CNBC·TechCrunch 등이 Alphabet의 최대 $40B 추가 투자를 동시 보도하며 블로그 공지로 공식화. $10B는 밸류 $350B 기준 현금·컴퓨트로 선집행되고, 나머지 $30B는 성과 타겟 달성 시 순차 집행되는 구조. Google Cloud가 향후 5년간 5GW TPU 컴퓨트를 전담 공급하기로 약속해 4/7 Broadcom 3.5GW 딜 위에 용량을 축적, Anthropic은 TPU·Trainium·GPU 3대 인프라 축을 모두 확보한 첫 프론티어 랩이 됐다. 4/20 Amazon의 최대 $25B(즉시 $5B·마일스톤 $20B) 투자, AWS 10년 $100B+ 지출 약정과 합산하면 24시간 누적 $65B+ 유입 구간. Anthropic은 연환산 매출 $300억을 4월 공식 돌파해 OpenAI($250억) 추월, 밸류는 세컨더리에서 이미 $1T — 10월 IPO $400~500B 타겟을 펀더로 뒷받침. OpenAI-Microsoft·Google-Anthropic 두 진영 구도가 확정되는 전환점.", time: "2026-04-25 07:10 KST" },
+      { type: "전략", sector: "Google DeepMind", detail: "Google DeepMind. 4/24 Alphabet의 $40B Anthropic 추가 투자 공식화로 'Gemini와 Claude를 동시 지원하는 이중 엔진' 포지션이 확정. Google Cloud는 5GW TPU를 5년간 Anthropic에 전담 공급하기로 약속했고, 추가 GW 옵션도 보유 — 이는 Cloud Next 2026에서 공개한 8세대 TPU(8t/8i)의 수요 기반을 조기에 잠근 의미. 비평가들은 '자사 Gemini와 정면 경쟁하는 Anthropic에 사상 최대 투자를 집행한다'는 구조에 의문 제기하지만, GCP 측은 TPU·인프라 매출·AI 플랫폼 점유 확대 3대 이익을 논리로 제시. GCP AI 매출은 이미 분기 $2B+ 구간.", time: "2026-04-25 07:10 KST" },
+      { type: "모델 출시", sector: "OpenAI", detail: "OpenAI. 4/24 DeepSeek이 V4 Flash·V4 Pro 프리뷰 공개, Tencent가 Hy3 Preview(295B MoE/21B 활성·256K 컨텍스트) 공개, Xiaomi가 MiMo-V2.5 시리즈(V2.5/Pro/TTS/ASR) 퍼블릭 테스팅 시작하며 중국 오픈 AI 진영이 하루 만에 3대 발표. DeepSeek는 'Hybrid Attention Architecture'로 1M 토큰 컨텍스트·롱컨텍스트 리콜을 오픈소스 최고 수준으로 끌어올렸다 주장. GPT-5.5(Spud) Terminal-Bench 2.0 82.7% SOTA를 4/23 출시한 OpenAI 입장에서는 중국발 오픈 가격 파괴 재점화 리스크, 반면 엔터프라이즈 규제·Trusted Access 라인업(GPT-Rosalind·Clinicians·Privacy Filter)로 차별화 가속.", time: "2026-04-25 07:10 KST" },
+    ]
+  },
+  {
     date: "2026-04-24 19:30 KST",
     summary: "OpenAI ChatGPT for Clinicians 무료 출시·임상 안전성 99.6% 검증·Business Insider xAI·Mistral·Cursor 3자 파트너십 협의 보도·Google Cloud Next 폐막일 Virgo Network·Agentic Defense 공개",
     changes: [

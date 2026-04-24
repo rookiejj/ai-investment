@@ -1,6 +1,22 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
+    date: "2026-04-25 07:10 KST",
+    summary: "SPY 7,165.08 +0.80%·QQQ Nasdaq 24,836.60 +1.63% 기록 신고가 마감·반도체 18일 연속 상승·INTC +23.6%·Alphabet Anthropic $40B·Brent $106 주간 +18%·BTC $79K 반등",
+    changes: [
+      { type: "수치 갱신", sector: "미국 대형주",
+        detail: "SPY·QQQ. 4/24 S&P 500 7,165.08 +0.80%·Nasdaq 24,836.60 +1.63%·다우 49,493.19 +0.37% 전 지수 기록 신고가 마감. Intel +23.6% $82.55 사상 최고와 반도체 18일 연속 상승(2000년 이후 최장)이 지수 주도, NVDA 시총 $5T 재탈환·AMD +12%(Stifel $320)·Alphabet $40B Anthropic 투자 공식화가 메가캡·AI 플랫폼 재평가 촉매. 4월 소비자심리 사상 최저·중동發 유가 쇼크 속에서도 실적·가이던스 상향이 상단 재확인. 4/29 GOOGL, 5월 초 AAPL·META·AMZN Big4 실적 대기.", time: "2026-04-25 07:10 KST" },
+      { type: "수치 갱신", sector: "AI·반도체",
+        detail: "SMH·SOXX·AIQ. 4/24 Intel Q1 AI 수혜 비트(DC +22%·EPS $0.29)가 정규장 +23.6%로 확정되며 반도체 섹터 18일 연속 상승. NVIDIA $5T·AMD +12% 동반 랠리에 Micron·ASML·Lam Research까지 대형주 전방위 강세, AIQ·BOTZ는 Alphabet $40B Anthropic 투자·TPU 5GW 전담 공급 공식화로 AI 인프라 수요 확실성 재확인. INTC는 본 데이터셋에 미포함이나 섹터 모멘텀 신호로 활용.", time: "2026-04-25 07:10 KST" },
+      { type: "수치 갱신", sector: "에너지·원자력",
+        detail: "XLE·VDE·XOP. Brent $106 돌파·WTI $97 돌파로 주간 +18% 급등, 트럼프가 Jones Act 90일 연장(8월 중순까지)에도 호르무즈 봉쇄는 해소되지 않아 글로벌 원유·제품 13Mbpd 디스럽션 구간 유지. 미 해군 기뢰선 사살 명령 등 지정학 긴장 재점화로 XOM·CVX·COP 마진 확대 분기 연장, LNG는 아시아 재라우팅 수혜 확대. SLB는 Q1 매출 $8.72B로 컨센 소폭 비트 — 다만 중동 디스럽션 영향 -346bp EBITDA 마진 축소 확인.", time: "2026-04-25 07:10 KST" },
+      { type: "수치 갱신", sector: "크립토·블록체인",
+        detail: "IBIT·FBTC. BTC 4/24 장중 $79K 부근까지 반등, 주간 기준 Strategy(MSTR) +25%대 상승으로 대형 디지털자산주 랠리 주도. 리스크온 재개(반도체 18일 랠리·Alphabet $40B·INTC 최고가)와 추가 매수 기대가 동시 작동, Fear&Greed 지수는 중립(46)→탐욕(54) 구간 진입해 $80K 재돌파 근접. Strategy 815,061 BTC 보유는 BlackRock IBIT 802,823 BTC 추월 지위 유지.", time: "2026-04-25 07:10 KST" },
+      { type: "수치 갱신", sector: "신흥국·글로벌",
+        detail: "EWY. 4/24 코스피는 보합(6,475.63)이지만 삼성전자 +3.22%·SK하이닉스 장중 126.7만원 사상 최고가 기록 후 +0.16% 마감으로 반도체 2강 반등. KB증권은 두산에너빌리티 목표가 13.5만→14.8만원으로 상향하며 SMR 모멘텀 점화, 미 차세대 원전 인·허가 Part 53이 4/29 시행 예정. 외국인은 코스피 1.95조원 순매도하며 선별적 태도를 유지했으나 개인·기관이 2조원대 순매수로 방어. EWY ETF 관점에서 AI 메모리+SMR+조선 3대 K-테마가 동시 재점화 구간.", time: "2026-04-25 07:10 KST" },
+    ]
+  },
+  {
     date: "2026-04-24 19:35 KST",
     summary: "Brent $105.73·WTI $96.17 4/24 추가 상승으로 호르무즈 봉쇄 가격 반영·물리 현물 $150 수렴·EWY 코스닥 1,203.84 +2.51% 25년 8개월만 1200선 돌파·BTC $77.7K 횡보·SLB 7:00 ET Q1 실적 발표 임박",
     changes: [

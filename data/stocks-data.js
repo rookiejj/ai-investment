@@ -7,7 +7,7 @@ const data = [
     tag: "모델·엔터프라이즈 SW",
     stocks: [
       { tk:"MSFT", nm:"Microsoft", rs:"Azure AI·Copilot·OpenAI", r1:"282", p1:"101", r2:"325", p2:"118" },
-      { tk:"GOOGL", nm:"Alphabet", rs:"4/22 Cloud Next 키노트·Vertex→Gemini Enterprise 통합·Workspace Studio 공개·Apple 파운데이션 모델 파트너십·TPU 8t/8i 공개·4/29 Q1 실적", r1:"403", p1:"132", r2:"455", p2:"148" },
+      { tk:"GOOGL", nm:"Alphabet", rs:"4/24 Anthropic 최대 $40B 투자 공식화·$10B 현물+컴퓨트 선집행 밸류 $350B·GCP 5GW TPU 5년 공급·4/29 Q1 실적", r1:"403", p1:"132", r2:"455", p2:"148" },
       { tk:"META", nm:"Meta", rs:"Llama·광고 AI", r1:"201", p1:"66", r2:"235", p2:"72" },
       { tk:"ORCL", nm:"Oracle", rs:"AWS 멀티클라우드 확장·OCI-AWS 인터커넥트·주간 +30% 역사적 랠리·OCI 44% YoY·RPO $553B", r1:"57", p1:"12", r2:"68", p2:"15" },
       { tk:"PLTR", nm:"Palantir", rs:"카프 CEO 테크놀로지컬 리퍼블릭 22개조 선언·AI 억지력 독트린 공개·비판 여론 촉발·주가 $146 YTD -12%", r1:"4.5", p1:"0.6", r2:"7.2", p2:"1.5" },
@@ -19,13 +19,13 @@ const data = [
     title: "🔩 반도체",
     tag: "AI칩·파운드리·장비·메모리",
     stocks: [
-      { tk:"NVDA", nm:"NVIDIA", rs:"5/20 Q1 FY27 실적 컨센 $78B·Ising 오픈소스 양자AI·Rubin 풀프로덕션·NAB Show AI 편집 업데이트", r1:"216", p1:"117", r2:"337", p2:"192" },
+      { tk:"NVDA", nm:"NVIDIA", rs:"4/24 정규장 말미 시총 $5T 재탈환·반도체 18일 연속 상승·5/20 Q1 FY27 컨센 $78B·Rubin 풀프로덕션", r1:"216", p1:"117", r2:"337", p2:"192" },
       { tk:"AVGO", nm:"Broadcom", rs:"커스텀 ASIC·AI 백로그 $73B", r1:"64", p1:"23", r2:"88", p2:"34" },
       { tk:"TSM", nm:"TSMC", rs:"Q1 $35.7B 확정·Q2 가이던스 $39~40.2B 상향·GM 65.5~67.5%·26년 USD +30%·CapEx 상단", r1:"117", p1:"55", r2:"153", p2:"70" },
       { tk:"ASML", nm:"ASML", rs:"Q1 €8.8B EPS €7.15 비트·수요>공급 지속·2026 €36~40B·EUV 독점", r1:"33", p1:"9", r2:"42", p2:"12" },
       { tk:"LRCX", nm:"Lam Research", rs:"HBM·NAND 장비", r1:"18", p1:"5", r2:"22", p2:"6.3" },
       { tk:"MU", nm:"Micron", rs:"Q1 FY26 $13.6B 사상 최대·HBM4 2Q 램프·26년 전량 완판", r1:"37", p1:"8", r2:"79", p2:"23" },
-      { tk:"AMD", nm:"AMD", rs:"프랑스 Alice Recoque 엑사스케일 파트너십·12일 연속 +41%·Bernstein·Erste 목표가 상향", r1:"26", p1:"3.5", r2:"34", p2:"5.5" },
+      { tk:"AMD", nm:"AMD", rs:"4/24 +12%·Stifel Buy 유지 목표가 $280→$320·INTC DC AI 수혜 동조·반도체 18일 연속 상승", r1:"26", p1:"3.5", r2:"34", p2:"5.5" },
     ]
   },
   {
@@ -110,11 +110,11 @@ const data = [
     title: "🛢️ 에너지",
     tag: "석유메이저·LNG·유전서비스",
     stocks: [
-      { tk:"XOM", nm:"ExxonMobil", rs:"Brent $105.73 +0.63% 4/24 추가 상승·호르무즈 통항 일평균 3척 기능적 봉쇄 지속·물리 현물 $150 수렴", r1:"332", p1:"29", r2:"345", p2:"32" },
-      { tk:"CVX", nm:"Chevron", rs:"WTI $96.17 +0.32% 4/24·이란 호르무즈 재봉쇄·미·이란 회담 진전 부재·공급 쇼크 장기화", r1:"189", p1:"12", r2:"195", p2:"14" },
+      { tk:"XOM", nm:"ExxonMobil", rs:"Brent $106 돌파 주간 +18%·Jones Act 90일 연장에도 호르무즈 기능적 봉쇄 지속·물리 현물 $150 수렴", r1:"332", p1:"29", r2:"345", p2:"32" },
+      { tk:"CVX", nm:"Chevron", rs:"WTI $97 돌파 4/24·트럼프 호르무즈 기뢰선 사살 명령·미·이란 협상 정체로 공급 쇼크 장기화", r1:"189", p1:"12", r2:"195", p2:"14" },
       { tk:"LNG", nm:"Cheniere", rs:"미 최대 LNG 수출·호르무즈 봉쇄 장기화 유럽 프리미엄 $19/MMBtu 지속·아시아 재라우팅 수혜 확대", r1:"16", p1:"3.5", r2:"18", p2:"4.2" },
-      { tk:"SLB", nm:"Schlumberger", rs:"4/24 7:00 ET Q1 실적 발표·컨센 EPS $0.51·매출 $8.65B·3월 유가 $91 급등에 후반 마진 회복 관전", r1:"37", p1:"4.5", r2:"39", p2:"5.0" },
-      { tk:"COP", nm:"ConocoPhillips", rs:"상류 E&P·Brent $105.73·WTI $96.17 4/24 추가 상승으로 마진 확대 연장", r1:"60", p1:"10", r2:"64", p2:"11" },
+      { tk:"SLB", nm:"Schlumberger", rs:"Q1 매출 $8.72B 컨센 $8.65B 비트·EPS $0.52 컨센 부합·EBITDA 마진 -346bp·중동 디스럽션 $200M 초과", r1:"37", p1:"4.5", r2:"39", p2:"5.0" },
+      { tk:"COP", nm:"ConocoPhillips", rs:"상류 E&P·Brent $106·WTI $97 돌파로 주간 +18% 마진 확대 연장", r1:"60", p1:"10", r2:"64", p2:"11" },
       { tk:"KMI", nm:"Kinder Morgan", rs:"가스 파이프라인", r1:"16", p1:"2.7", r2:"17", p2:"3.0" },
       { tk:"EOG", nm:"EOG Resources", rs:"셰일 E&P 고효율", r1:"23", p1:"5.5", r2:"24", p2:"5.8" },
     ]
@@ -136,7 +136,7 @@ const data = [
     title: "🚗 자동차·모빌리티",
     tag: "EV·레거시·자율주행",
     stocks: [
-      { tk:"TSLA", nm:"Tesla", rs:"4/23 $373.60 -3.59%·YTD -17%·CAPEX $20B→$25B 확대와 Musk FSD 하드웨어 부족 인정에 정규장 매도·거래량 9,310만주 3개월 평균 +47%·로보택시·테라팹 실행력 재평가", r1:"95", p1:"3.8", r2:"109", p2:"7.2" },
+      { tk:"TSLA", nm:"Tesla", rs:"4/24 $375~385 박스권 반등·CAPEX 쇼크 소화 국면·5일간 +13% 회복·로보택시 상용화 타임라인이 밸류 방어 조건", r1:"95", p1:"3.8", r2:"109", p2:"7.2" },
       { tk:"TM", nm:"Toyota", rs:"하이브리드 강자", r1:"305", p1:"28", r2:"315", p2:"30" },
       { tk:"GM", nm:"General Motors", rs:"레거시 EV 전환", r1:"185", p1:"10", r2:"190", p2:"11" },
       { tk:"RIVN", nm:"Rivian", rs:"R2 양산 개시·VW JV", r1:"4.5", p1:"-3.6", r2:"6.9", p2:"-1.9" },
@@ -166,7 +166,7 @@ const data = [
       { tk:"RGTI", nm:"Rigetti", rs:"초전도 양자", r1:"0.012", p1:"-0.08", r2:"0.025", p2:"-0.10" },
       { tk:"QBTS", nm:"D-Wave", rs:"어닐링 양자", r1:"0.015", p1:"-0.07", r2:"0.030", p2:"-0.08" },
       { tk:"COIN", nm:"Coinbase", rs:"미 최대 거래소", r1:"7.5", p1:"2.3", r2:"9.0", p2:"2.9" },
-      { tk:"MSTR", nm:"Strategy", rs:"BTC $77.7K 횡보 4/24·총 815,061 BTC 평단 $74,395 약 27억불 평가익·Fear&Greed 46 중립·$80K 재돌파 정체", r1:"0.5", p1:"-0.2", r2:"0.55", p2:"-0.15" },
+      { tk:"MSTR", nm:"Strategy", rs:"BTC $79K 부근 반등·5거래일 +25%·총 815,061 BTC 평단 $74,395 평가익 확대·INTC·Google發 리스크온 순풍", r1:"0.5", p1:"-0.2", r2:"0.55", p2:"-0.15" },
       { tk:"MARA", nm:"Marathon Digital", rs:"BTC 채굴", r1:"0.75", p1:"0.10", r2:"1.0", p2:"0.20" },
       { tk:"RIOT", nm:"Riot Platforms", rs:"BTC 채굴·인프라", r1:"0.35", p1:"0.05", r2:"0.50", p2:"0.10" },
     ]

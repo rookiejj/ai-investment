@@ -1,6 +1,18 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-25 07:10 KST",
+    summary: "Alphabet Anthropic 최대 $40B 투자 공식화·$10B 현금 선집행+$30B 성과 마일스톤·Google Cloud 5년 5GW TPU 전담·Amazon $25B·AWS $100B와 합쳐 24h $65B+ 유입·10월 IPO $400~500B 타겟 펀더 재확증",
+    changes: [
+      { type: "펀딩", sector: "AI·ML",
+        detail: "Anthropic. 4/24 Alphabet이 최대 $40B 추가 투자를 공식화 — $10B는 밸류 $350B 기준 현금·컴퓨트로 선집행되고, 나머지 $30B는 성과 타겟 달성 시 순차 집행되는 구조. Google Cloud는 향후 5년간 5GW TPU 컴퓨트를 전담 공급하기로 약속했고 추가 GW 옵션 보유. 4/20 Amazon의 최대 $25B(즉시 $5B·마일스톤 $20B)·AWS 10년 $100B+ 지출 약정과 합산하면 24시간 누적 $65B+ 자금·인프라 유입. Anthropic은 TPU(Google)·Trainium(AWS)·GPU 3대 인프라 축을 모두 확보한 첫 프론티어 랩이 됐고, 연환산 매출 $300억(OpenAI $250억 추월)·세컨더리 밸류 $1T가 이미 선반영된 상태에서 10월 프라이머리 IPO 타겟 $400~500B 구간의 펀더가 재확증. Goldman·JPM·Morgan Stanley 공동 주관 경쟁 심화, Thinking Machines·xAI·Safe Superintelligence 등 후발 유니콘의 밸류 리셋도 불가피.", time: "2026-04-25 07:10 KST" },
+      { type: "전략", sector: "AI·ML",
+        detail: "OpenAI. Alphabet의 $40B Anthropic 투자로 OpenAI-Microsoft·Google-Anthropic 두 진영 구도 확정, OpenAI는 Cerebras $20B·Amazon $100B 파트너십·Stargate $500B로 인프라 축 방어. 4/23 GPT-5.5 'Spud' Terminal-Bench 2.0 82.7% SOTA·ChatGPT for Clinicians·PII Privacy Filter·GPT-Rosalind 등 Trusted Access 라인업을 주간 단위로 공개하며 제품 속도 유지, 중국 DeepSeek V4·Tencent Hy3·Xiaomi MiMo-V2.5가 4/24 동시 공개한 오픈 모델 파상 공세도 리스크 요인.", time: "2026-04-25 07:10 KST" },
+      { type: "정보 갱신", sector: "우주·모빌리티·방산",
+        detail: "SpaceX. 4/22~23 Starbase·Tennessee 2일 애널리스트 투어를 마치고 6/8 로드쇼를 향해 21개 주관사가 $1.75T 밸류 방어 논거 정렬 중. Cursor $60B 인수 옵션(4/22 체결)과 Anthropic $40B(4/24)·Amazon $25B 유입 구조가 시장 스토리라인을 'AI·인프라 메가 M&A'로 이동시키면서 SpaceX의 $75B 조달도 같은 모멘텀 테마로 프라이싱될 가능성 부각. 리테일 30% 할당(UK·EU·호주·캐나다·일본·한국) 정책 유지.", time: "2026-04-25 07:10 KST" },
+    ]
+  },
+  {
     date: "2026-04-24 19:45 KST",
     summary: "Business Insider — xAI·Mistral·Cursor 3자 파트너십 협의 보도·SpaceX의 4/22 $60B Cursor 인수 옵션과 결합·Mistral 공동창업자 Chaplot은 이미 xAI 합류·3사 모두 공식 부인",
     changes: [

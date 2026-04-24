@@ -7,7 +7,7 @@ const data = [
     tag: "프론티어 모델·AI 인프라",
     stocks: [
       { nm:"OpenAI", rs:"4/23 GPT-5.5 'Spud' 출시·Terminal-Bench 2.0 82.7% SOTA·PII 탐지 오픈웨이트 공개·ARR $250억 유지·Cerebras $20B 컴퓨트 계약", val:"$852B", round:"$122B 펀딩", sector:"AGI", ipo:"2026 말 $1T+" },
-      { nm:"Anthropic", rs:"4/23 세컨더리 마켓 $1조 밸류 돌파 OpenAI 첫 공식 추월·ARR $300억·Amazon $25B 확정·10월 IPO $400~500B 타겟·Goldman·JPM 주관", val:"$1T (2차시장)", round:"Feb '26 Series G $30B @ $350B pre", sector:"프론티어 AI", ipo:"2026.10 $400~500B 타겟" },
+      { nm:"Anthropic", rs:"4/24 Alphabet 최대 $40B 투자 공식화·$10B 현금+5GW TPU 전담·4/20 Amazon $25B 합산 24h $65B+·ARR $300억 OpenAI 추월·10월 IPO $400~500B 타겟", val:"$1T (2차시장)", round:"Alphabet $10B @ $350B (2026-04)", sector:"프론티어 AI", ipo:"2026.10 $400~500B 타겟" },
       { nm:"Databricks", rs:"레이크하우스·AI 통합·ARR $5.4B", val:"$134B", round:"Series L ($11B)", sector:"데이터·AI", ipo:"2026 H2 S-1" },
       { nm:"Cerebras", rs:"4/17 S-1 공개 제출 확정·2025 매출 $510M 순익 $87.9M·G42·MBZUAI 86% 매출·Morgan Stanley 리드·OpenAI 3년 $20B", val:"$23B", round:"5월 중순 프라이싱·$2B 조달", sector:"AI 하드웨어", ipo:"2026.05 나스닥 CBRS·$22~25B" },
       { nm:"Safe Superintelligence", rs:"Sutskever 창업·제품 전무·Alphabet·NVIDIA 베팅 AGI 연구소", val:"$32B", round:"Series B ($2B, 2025-04)", sector:"AGI 안전", ipo:"미정" },
