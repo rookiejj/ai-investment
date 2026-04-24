@@ -22,7 +22,7 @@ end $$;
 
 select cron.schedule(
   'daily-expiry-notice',
-  '0 12 * * *',  -- UTC 12:00 = KST 21:00 (테스트 중, 운영 시 11:00 UTC = 20:00 KST로 복귀)
+  '0 11 * * *',  -- UTC 11:00 = KST 20:00
   $CRON$
     select net.http_post(
       url := 'https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/expiry-notice',
