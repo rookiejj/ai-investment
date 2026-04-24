@@ -174,9 +174,44 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
     width:240px;height:100vh;
   }
   .sidebar.open{transform:translateX(0)}
-  .main{padding:16px}
+  .main{padding:14px 12px 60px;gap:14px}
   .menu-toggle{display:inline-flex}
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
+
+  /* topbar 재배치: 버튼은 줄바꿈 */
+  .topbar{flex-wrap:wrap;row-gap:10px;column-gap:10px}
+  .topbar .page-title{font-size:18px;flex:1 1 auto;min-width:0}
+  .topbar .sub{display:none}
+  .topbar .header-actions{order:3;flex-basis:100%;justify-content:flex-end}
+  .header-btn,.logout{padding:7px 12px;font-size:12px}
+
+  /* 통계·섹션 */
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .stat-card{padding:14px}
+  .stat-card .value{font-size:20px}
+  .section{padding:16px;border-radius:10px}
+  .section-title{font-size:13px;margin-bottom:12px}
+
+  /* 차트 */
+  .chart-wrap{height:200px}
+  .two-col{gap:14px}
+
+  /* 필터·테이블 */
+  .filter-bar{gap:6px}
+  .filter-bar input,.filter-bar select{min-width:0;flex:1 1 140px;padding:6px 8px;font-size:12px}
+  .filter-bar .btn{padding:6px 12px;font-size:12px;flex-shrink:0}
+  .tbl-scroll{margin:0 -16px;padding:0 16px}
+  .tbl{font-size:12px;min-width:620px}
+  .tbl th,.tbl td{padding:8px 10px}
+  .tbl .c-msg{max-width:220px}
+  .badge{font-size:10px;padding:2px 6px}
+
+  /* 수동 발송 */
+  .manual-send textarea{min-height:80px;font-size:13px}
+  .manual-send .targets{max-height:240px}
+
+  /* 페이지네이션 */
+  .pager{gap:4px;flex-wrap:wrap}
+  .pager button{padding:5px 10px;font-size:12px}
 }
 </style>
 </head>
