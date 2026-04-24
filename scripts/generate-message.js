@@ -80,12 +80,12 @@ function buildTabBlock(tab) {
 }
 
 function buildMessage(tabs) {
-  const parts = [`📊 브리픽 · ${kstDateLabel()}\n━━━━━━━━━━━━`];
+  const parts = [`📊 브리픽 · ${kstDateLabel()}`];
   for (const tab of tabs) {
     if (!tab.entries.length) continue;
     parts.push(buildTabBlock(tab));
   }
-  parts.push(`━━━━━━━━━━━━\n▸ 전체 보기\n${SITE_URL}`);
+  parts.push(`▸ 전체 보기\n${SITE_URL}`);
   return parts.join('\n\n');
 }
 
