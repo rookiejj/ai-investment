@@ -24,8 +24,38 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
 .header h1{font:700 22px/1.3 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.4px}
 .header .sub{color:var(--sub);font-size:12px;margin-left:12px}
-.logout{padding:8px 16px;border:1px solid var(--border-md);border-radius:8px;color:var(--mut);font-size:13px}
+.header-actions{display:flex;gap:8px}
+.header-btn{padding:8px 16px;border:1px solid var(--border-md);border-radius:8px;color:var(--mut);font-size:13px;background:#fff;font-weight:500}
+.header-btn:hover{background:#eee;color:var(--fg)}
+.logout{padding:8px 16px;border:1px solid var(--border-md);border-radius:8px;color:var(--mut);font-size:13px;background:#fff;font-weight:500}
 .logout:hover{background:#eee;color:var(--fg)}
+
+/* 비밀번호 변경 모달 */
+.pw-modal-backdrop{
+  position:fixed;inset:0;background:rgba(13,13,13,0.45);backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;
+  z-index:100;padding:20px;
+}
+.pw-modal-backdrop.show{display:flex}
+.pw-modal{
+  background:var(--panel);border-radius:16px;padding:28px 28px 22px;width:100%;max-width:360px;
+  box-shadow:0 24px 60px rgba(0,0,0,0.2);
+}
+.pw-modal h2{font:600 18px/1.3 Pretendard,sans-serif;color:var(--fg);margin:0 0 18px;letter-spacing:-0.2px}
+.pw-modal label{display:block;font-size:12px;color:var(--fg2);margin:12px 0 4px;font-weight:500}
+.pw-modal input{width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--border-md);border-radius:8px;font-size:14px}
+.pw-modal input:focus{border-color:var(--acc);outline:none}
+.pw-status{min-height:18px;margin-top:14px;font-size:12px;line-height:1.5}
+.pw-status.error{color:var(--danger)}
+.pw-status.info{color:var(--mut)}
+.pw-status.success{color:var(--acc-deep)}
+.pw-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+.pw-actions button{padding:9px 20px;border-radius:9999px;font-size:13px;font-weight:600;border:none;cursor:pointer}
+.pw-actions .cancel{background:#fafafa;border:1px solid var(--border-md);color:var(--fg2)}
+.pw-actions .cancel:hover{background:#eee}
+.pw-actions .submit{background:var(--fg);color:#fff}
+.pw-actions .submit:hover{background:#000}
+.pw-actions .submit:disabled{background:var(--sub);cursor:not-allowed}
 
 /* 로그인 화면 */
 .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--bg)}
@@ -143,7 +173,28 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
     <div>
       <h1>운영 대시보드<span class="sub" id="lastRefresh"></span></h1>
     </div>
-    <button class="logout" id="logoutBtn">로그아웃</button>
+    <div class="header-actions">
+      <button class="header-btn" id="pwChangeBtn">비밀번호 변경</button>
+      <button class="logout" id="logoutBtn">로그아웃</button>
+    </div>
+  </div>
+
+  <!-- 비밀번호 변경 모달 -->
+  <div class="pw-modal-backdrop" id="pwModal" aria-hidden="true" role="dialog" aria-labelledby="pwModalTitle">
+    <div class="pw-modal">
+      <h2 id="pwModalTitle">비밀번호 변경</h2>
+      <label for="pwCurrent">현재 비밀번호</label>
+      <input type="password" id="pwCurrent" placeholder="현재 비밀번호" autocomplete="current-password">
+      <label for="pwNew">새 비밀번호</label>
+      <input type="password" id="pwNew" placeholder="새 비밀번호 (8자 이상)" autocomplete="new-password">
+      <label for="pwConfirm">새 비밀번호 확인</label>
+      <input type="password" id="pwConfirm" placeholder="다시 입력" autocomplete="new-password">
+      <div class="pw-status" id="pwStatus"></div>
+      <div class="pw-actions">
+        <button class="cancel" id="pwCancel" type="button">취소</button>
+        <button class="submit" id="pwSubmit" type="button">변경</button>
+      </div>
+    </div>
   </div>
 
   <!-- 통계 카드 -->
@@ -287,6 +338,57 @@ $('loginForm').addEventListener('submit', async e=>{
   }
 });
 $('logoutBtn').addEventListener('click', ()=>{ clearToken(); showLogin(); });
+
+// ─── 비밀번호 변경 ───
+const pwModal = $('pwModal');
+function openPwModal(){
+  pwModal.classList.add('show');
+  pwModal.setAttribute('aria-hidden','false');
+  $('pwCurrent').value=''; $('pwNew').value=''; $('pwConfirm').value='';
+  const st = $('pwStatus'); st.className='pw-status'; st.textContent='';
+  $('pwSubmit').disabled = false;
+  setTimeout(()=>$('pwCurrent').focus(),100);
+}
+function closePwModal(){
+  pwModal.classList.remove('show');
+  pwModal.setAttribute('aria-hidden','true');
+}
+$('pwChangeBtn').addEventListener('click', openPwModal);
+$('pwCancel').addEventListener('click', closePwModal);
+pwModal.addEventListener('click', e => { if (e.target === pwModal) closePwModal(); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && pwModal.classList.contains('show')) closePwModal();
+});
+$('pwSubmit').addEventListener('click', async ()=>{
+  const cur = $('pwCurrent').value;
+  const nw = $('pwNew').value;
+  const cf = $('pwConfirm').value;
+  const st = $('pwStatus');
+  if (!cur || !nw || !cf){
+    st.className='pw-status error'; st.textContent='모든 필드를 입력하세요.'; return;
+  }
+  if (nw.length < 8){
+    st.className='pw-status error'; st.textContent='새 비밀번호는 8자 이상이어야 합니다.'; return;
+  }
+  if (nw !== cf){
+    st.className='pw-status error'; st.textContent='새 비밀번호가 일치하지 않습니다.'; return;
+  }
+  if (nw === cur){
+    st.className='pw-status error'; st.textContent='새 비밀번호가 기존과 동일합니다.'; return;
+  }
+  st.className='pw-status info'; st.textContent='변경 중…';
+  $('pwSubmit').disabled = true;
+  try {
+    await api('change_password', { currentPassword: cur, newPassword: nw });
+    st.className='pw-status success';
+    st.textContent='변경되었습니다. 다음 로그인부터 새 비밀번호로 접속하세요.';
+    setTimeout(closePwModal, 1400);
+  } catch (err) {
+    st.className='pw-status error';
+    st.textContent = err.message || '변경 실패';
+    $('pwSubmit').disabled = false;
+  }
+});
 
 // ─── 통계 + 차트 ───
 let dailyChart, stateChart;

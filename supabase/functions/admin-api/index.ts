@@ -59,6 +59,21 @@ async function verifyToken(token: string, secret: string): Promise<boolean> {
   return expected === sig;
 }
 
+async function hashPassword(pw: string, salt: string): Promise<string> {
+  const data = new TextEncoder().encode(`${pw}:${salt}`);
+  const digest = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+// deno-lint-ignore no-explicit-any
+async function getStoredHash(supabase: any, salt: string, envPassword: string): Promise<string> {
+  const { data } = await supabase.from("admin_settings").select("password_hash").eq("id", 1).maybeSingle();
+  if (data?.password_hash) return data.password_hash;
+  const hash = await hashPassword(envPassword, salt);
+  await supabase.from("admin_settings").insert({ id: 1, password_hash: hash });
+  return hash;
+}
+
 // ───── Solapi 직접 호출 (수동 발송용) ─────
 
 async function solapiAuthHeader(apiKey: string, apiSecret: string): Promise<string> {
@@ -119,9 +134,20 @@ Deno.serve(async (req) => {
       return json({ ok: false, error: "server misconfigured" }, { status: 500, cors });
     }
 
+    // 초기 비번 검증을 위해 먼저 supabase client 준비
+    const supabase = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+    );
+
     // login
     if (action === "login") {
-      if (typeof body.password !== "string" || body.password !== password) {
+      if (typeof body.password !== "string") {
+        return json({ ok: false, error: "invalid password" }, { status: 401, cors });
+      }
+      const storedHash = await getStoredHash(supabase, sessionSecret, password);
+      const inputHash = await hashPassword(body.password, sessionSecret);
+      if (inputHash !== storedHash) {
         return json({ ok: false, error: "invalid password" }, { status: 401, cors });
       }
       const token = await issueToken(sessionSecret);
@@ -134,10 +160,25 @@ Deno.serve(async (req) => {
       return json({ ok: false, error: "unauthorized" }, { status: 401, cors });
     }
 
-    const supabase = createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
-    );
+    // change_password
+    if (action === "change_password") {
+      const curPw = String(body.currentPassword ?? "");
+      const newPw = String(body.newPassword ?? "");
+      if (newPw.length < 8) {
+        return json({ ok: false, error: "새 비밀번호는 8자 이상이어야 합니다." }, { status: 400, cors });
+      }
+      const storedHash = await getStoredHash(supabase, sessionSecret, password);
+      const curHash = await hashPassword(curPw, sessionSecret);
+      if (curHash !== storedHash) {
+        return json({ ok: false, error: "현재 비밀번호가 맞지 않습니다." }, { status: 401, cors });
+      }
+      const newHash = await hashPassword(newPw, sessionSecret);
+      const { error: updErr } = await supabase
+        .from("admin_settings")
+        .upsert({ id: 1, password_hash: newHash, updated_at: new Date().toISOString() });
+      if (updErr) throw updErr;
+      return json({ ok: true }, { cors });
+    }
 
     // ─── stats ───
     if (action === "stats") {
