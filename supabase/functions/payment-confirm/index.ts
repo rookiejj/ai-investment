@@ -88,6 +88,8 @@ async function sendPaymentAlimtalk(opts: {
           "#{상품명}": PRODUCT_NAME,
           "#{만료일}": opts.expiryDate,
         },
+        // 템플릿에 승인된 '채널 추가' 버튼 — 솔라피는 승인된 버튼이어도 요청에 명시해야 노출됨
+        buttons: [{ buttonType: "AC", buttonName: "채널 추가" }],
       },
     }],
   };
