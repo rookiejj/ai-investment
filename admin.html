@@ -11,6 +11,7 @@
   --bg:#fafafa;--panel:#ffffff;--fg:#0d0d0d;--fg2:#333;--mut:#666;--sub:#999;
   --border:rgba(0,0,0,0.06);--border-md:rgba(0,0,0,0.1);
   --acc:#18E299;--acc-deep:#0fa76e;--warn:#f59e0b;--danger:#d45656;
+  --sidebar-bg:#0d0d0d;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--fg2);font:14px/1.5 Pretendard,-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
@@ -19,45 +20,7 @@ button{font:inherit;cursor:pointer;border:none;background:none}
 input,select,textarea{font:inherit;border:1px solid var(--border-md);border-radius:8px;padding:8px 12px;background:#fff;color:var(--fg);outline:none;transition:border-color .15s}
 input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 
-/* 레이아웃 */
-.app{max-width:1280px;margin:0 auto;padding:24px 20px 64px}
-.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
-.header h1{font:700 22px/1.3 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.4px}
-.header .sub{color:var(--sub);font-size:12px;margin-left:12px}
-.header-actions{display:flex;gap:8px}
-.header-btn{padding:8px 16px;border:1px solid var(--border-md);border-radius:8px;color:var(--mut);font-size:13px;background:#fff;font-weight:500}
-.header-btn:hover{background:#eee;color:var(--fg)}
-.logout{padding:8px 16px;border:1px solid var(--border-md);border-radius:8px;color:var(--mut);font-size:13px;background:#fff;font-weight:500}
-.logout:hover{background:#eee;color:var(--fg)}
-
-/* 비밀번호 변경 모달 */
-.pw-modal-backdrop{
-  position:fixed;inset:0;background:rgba(13,13,13,0.45);backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;
-  z-index:100;padding:20px;
-}
-.pw-modal-backdrop.show{display:flex}
-.pw-modal{
-  background:var(--panel);border-radius:16px;padding:28px 28px 22px;width:100%;max-width:360px;
-  box-shadow:0 24px 60px rgba(0,0,0,0.2);
-}
-.pw-modal h2{font:600 18px/1.3 Pretendard,sans-serif;color:var(--fg);margin:0 0 18px;letter-spacing:-0.2px}
-.pw-modal label{display:block;font-size:12px;color:var(--fg2);margin:12px 0 4px;font-weight:500}
-.pw-modal input{width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--border-md);border-radius:8px;font-size:14px}
-.pw-modal input:focus{border-color:var(--acc);outline:none}
-.pw-status{min-height:18px;margin-top:14px;font-size:12px;line-height:1.5}
-.pw-status.error{color:var(--danger)}
-.pw-status.info{color:var(--mut)}
-.pw-status.success{color:var(--acc-deep)}
-.pw-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
-.pw-actions button{padding:9px 20px;border-radius:9999px;font-size:13px;font-weight:600;border:none;cursor:pointer}
-.pw-actions .cancel{background:#fafafa;border:1px solid var(--border-md);color:var(--fg2)}
-.pw-actions .cancel:hover{background:#eee}
-.pw-actions .submit{background:var(--fg);color:#fff}
-.pw-actions .submit:hover{background:#000}
-.pw-actions .submit:disabled{background:var(--sub);cursor:not-allowed}
-
-/* 로그인 화면 */
+/* ─────── 로그인 ─────── */
 .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--bg)}
 .login-card{background:var(--panel);padding:40px;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,0.05);width:100%;max-width:380px}
 .login-card h1{font:700 24px/1.3 Pretendard,sans-serif;color:var(--fg);margin-bottom:8px}
@@ -67,27 +30,69 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 .login-card button:hover{background:#000}
 .login-card .err{color:var(--danger);font-size:12px;margin-top:8px;min-height:16px}
 
-/* 카드·섹션 */
-.section{background:var(--panel);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,0.03)}
+/* ─────── 레이아웃 ─────── */
+.layout{display:flex;min-height:100vh}
+.sidebar{
+  width:220px;flex-shrink:0;background:var(--sidebar-bg);color:#fff;
+  display:flex;flex-direction:column;padding:20px 0;position:sticky;top:0;height:100vh;
+}
+.sidebar-brand{
+  font:700 20px/1 Pretendard,sans-serif;padding:4px 24px 18px;letter-spacing:-0.3px;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+.sidebar-brand .sub{font:500 11px/1 Pretendard,sans-serif;color:rgba(255,255,255,0.5);margin-top:6px;letter-spacing:0.3px}
+.nav{display:flex;flex-direction:column;gap:2px;padding:12px;flex:1;overflow-y:auto}
+.nav-item{
+  padding:10px 14px;background:transparent;color:rgba(255,255,255,0.7);
+  border-radius:8px;text-align:left;font:500 14px/1.3 Pretendard,sans-serif;
+  letter-spacing:-0.1px;display:flex;align-items:center;gap:10px;transition:all .15s;
+}
+.nav-item:hover{background:rgba(255,255,255,0.08);color:#fff}
+.nav-item.active{background:var(--acc);color:var(--fg);font-weight:600}
+.nav-item .icon{font-size:14px;opacity:0.9;width:18px;text-align:center}
+.sidebar-footer{padding:12px;border-top:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);font-size:11px}
+.sidebar-footer a{color:rgba(255,255,255,0.6)}
+.sidebar-footer a:hover{color:#fff}
+
+/* 메인 */
+.main{flex:1;min-width:0;padding:22px 28px 64px;display:flex;flex-direction:column;gap:20px}
+.topbar{display:flex;align-items:center;gap:12px;padding-bottom:4px}
+.topbar .page-title{font:700 22px/1.2 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.4px;flex:1}
+.topbar .sub{font:400 12px/1 Pretendard,sans-serif;color:var(--sub);margin-left:10px}
+.header-actions{display:flex;gap:8px}
+.header-btn,.logout{
+  padding:8px 16px;border:1px solid var(--border-md);border-radius:8px;color:var(--mut);
+  font-size:13px;background:#fff;font-weight:500;cursor:pointer;
+}
+.header-btn:hover,.logout:hover{background:#eee;color:var(--fg)}
+.menu-toggle{
+  display:none;width:36px;height:36px;border:1px solid var(--border-md);border-radius:8px;
+  background:#fff;color:var(--fg);align-items:center;justify-content:center;font-size:18px;flex-shrink:0;
+}
+.menu-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:49}
+.menu-backdrop.show{display:block}
+
+/* 뷰 토글 */
+.view{display:flex;flex-direction:column;gap:20px}
+.view.hidden{display:none}
+
+/* ─────── 카드·섹션 ─────── */
+.section{background:var(--panel);border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.03)}
 .section-title{font:600 14px/1.3 Pretendard,sans-serif;color:var(--fg);margin-bottom:16px;letter-spacing:-0.2px;display:flex;align-items:center;gap:8px}
 .section-title .count{font-size:12px;color:var(--mut);font-weight:400}
 
-/* 통계 카드 그리드 */
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
 .stat-card{background:var(--panel);padding:18px;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.03)}
-.stat-card .label{font-size:12px;color:var(--sub);margin-bottom:6px;letter-spacing:0.2px;text-transform:uppercase}
+.stat-card .label{font-size:11px;color:var(--sub);margin-bottom:6px;letter-spacing:0.3px;text-transform:uppercase;font-weight:600}
 .stat-card .value{font:700 24px/1.1 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.5px}
 .stat-card .unit{font-size:13px;color:var(--mut);margin-left:3px;font-weight:400}
 .stat-card .hint{font-size:11px;color:var(--sub);margin-top:4px}
 
-/* 2컬럼 */
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 @media (max-width:900px){.two-col{grid-template-columns:1fr}}
-
-/* 차트 */
 .chart-wrap{position:relative;height:240px}
 
-/* 필터 바 */
+/* ─────── 필터/테이블 ─────── */
 .filter-bar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
 .filter-bar input,.filter-bar select{min-width:120px;padding:6px 10px;font-size:13px}
 .filter-bar .btn{padding:6px 14px;border-radius:8px;background:var(--fg);color:#fff;font-size:13px;font-weight:500}
@@ -95,7 +100,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 .filter-bar .btn.ghost{background:transparent;color:var(--mut);border:1px solid var(--border-md)}
 .filter-bar .btn.ghost:hover{background:#eee}
 
-/* 테이블 */
 .tbl-scroll{overflow-x:auto;margin:0 -20px;padding:0 20px}
 .tbl{width:100%;border-collapse:collapse;font-size:13px;min-width:700px}
 .tbl th,.tbl td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border)}
@@ -107,22 +111,17 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 
 /* 배지 */
 .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.2px;text-transform:uppercase}
-.badge.success{background:#d4fae8;color:#0a7a50}
-.badge.fail{background:#fde8e8;color:var(--danger)}
-.badge.skipped{background:#f2f2f2;color:var(--mut)}
-.badge.ok{background:#d4fae8;color:#0a7a50}
-.badge.not_friend{background:#fff4e5;color:#a35a00}
-.badge.blocked{background:#fde8e8;color:var(--danger)}
-.badge.paused_ad{background:#fff4e5;color:#a35a00}
-.badge.unknown{background:#f2f2f2;color:var(--mut)}
+.badge.success,.badge.active,.badge.ok{background:#d4fae8;color:#0a7a50}
+.badge.fail,.badge.cancelled,.badge.blocked{background:#fde8e8;color:var(--danger)}
+.badge.skipped,.badge.expired,.badge.unknown{background:#f2f2f2;color:var(--mut)}
+.badge.paused,.badge.not_friend,.badge.paused_ad{background:#fff4e5;color:#a35a00}
 .badge.friendtalk{background:#e8f4ff;color:#0a6abf}
 .badge.alimtalk{background:#f3e8ff;color:#6a0dad}
 .badge.sms{background:#f2f2f2;color:var(--mut)}
 
 /* 수동 발송 */
-.manual-send{margin-top:6px}
 .manual-send textarea{width:100%;min-height:100px;margin-bottom:10px;resize:vertical;font-family:Pretendard,sans-serif;line-height:1.5}
-.manual-send .targets{display:flex;flex-direction:column;gap:4px;max-height:260px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;padding:10px;background:#fcfcfc;margin-bottom:12px}
+.manual-send .targets{display:flex;flex-direction:column;gap:4px;max-height:300px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;padding:10px;background:#fcfcfc;margin-bottom:12px}
 .manual-send .target-row{display:flex;align-items:center;gap:10px;padding:6px 4px;border-bottom:1px dashed var(--border)}
 .manual-send .target-row:last-child{border-bottom:none}
 .manual-send .target-row input[type="checkbox"]{margin:0;accent-color:var(--acc-deep)}
@@ -139,16 +138,43 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 
 .loading{color:var(--sub);padding:20px;text-align:center;font-size:13px}
 .empty{color:var(--sub);padding:30px 20px;text-align:center;font-size:13px;font-style:italic}
-
-/* 페이지네이션 */
-.pager{display:flex;gap:6px;justify-content:center;margin-top:14px}
+.pager{display:flex;gap:6px;justify-content:center;margin-top:14px;align-items:center}
 .pager button{padding:6px 12px;border:1px solid var(--border-md);border-radius:6px;background:#fff;color:var(--fg2);font-size:13px}
 .pager button:hover:not(:disabled){background:#eee}
 .pager button:disabled{color:var(--sub);cursor:not-allowed}
 
-/* 홈 링크 */
-.back-home{display:inline-block;margin-bottom:12px;color:var(--mut);font-size:13px}
-.back-home:hover{color:var(--acc-deep)}
+/* 비밀번호 모달 */
+.pw-modal-backdrop{position:fixed;inset:0;background:rgba(13,13,13,0.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.pw-modal-backdrop.show{display:flex}
+.pw-modal{background:var(--panel);border-radius:16px;padding:28px 28px 22px;width:100%;max-width:360px;box-shadow:0 24px 60px rgba(0,0,0,0.2)}
+.pw-modal h2{font:600 18px/1.3 Pretendard,sans-serif;color:var(--fg);margin:0 0 18px;letter-spacing:-0.2px}
+.pw-modal label{display:block;font-size:12px;color:var(--fg2);margin:12px 0 4px;font-weight:500}
+.pw-modal input{width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--border-md);border-radius:8px;font-size:14px}
+.pw-modal input:focus{border-color:var(--acc);outline:none}
+.pw-status{min-height:18px;margin-top:14px;font-size:12px;line-height:1.5}
+.pw-status.error{color:var(--danger)}
+.pw-status.info{color:var(--mut)}
+.pw-status.success{color:var(--acc-deep)}
+.pw-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+.pw-actions button{padding:9px 20px;border-radius:9999px;font-size:13px;font-weight:600;border:none;cursor:pointer}
+.pw-actions .cancel{background:#fafafa;border:1px solid var(--border-md);color:var(--fg2)}
+.pw-actions .cancel:hover{background:#eee}
+.pw-actions .submit{background:var(--fg);color:#fff}
+.pw-actions .submit:hover{background:#000}
+.pw-actions .submit:disabled{background:var(--sub);cursor:not-allowed}
+
+/* ─────── 모바일 ─────── */
+@media (max-width:900px){
+  .sidebar{
+    position:fixed;top:0;left:0;bottom:0;z-index:50;
+    transform:translateX(-100%);transition:transform .2s ease-out;
+    width:240px;height:100vh;
+  }
+  .sidebar.open{transform:translateX(0)}
+  .main{padding:16px}
+  .menu-toggle{display:inline-flex}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+}
 </style>
 </head>
 <body>
@@ -167,107 +193,156 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 </div>
 
 <!-- 메인 -->
-<div id="appView" class="app" style="display:none">
-  <a href="./" class="back-home">← 브리픽 홈</a>
-  <div class="header">
-    <div>
-      <h1>운영 대시보드<span class="sub" id="lastRefresh"></span></h1>
+<div id="appView" class="layout" style="display:none">
+  <!-- 사이드바 -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      브리픽<br>
+      <span class="sub">OPS CONSOLE</span>
     </div>
-    <div class="header-actions">
-      <button class="header-btn" id="pwChangeBtn">비밀번호 변경</button>
-      <button class="logout" id="logoutBtn">로그아웃</button>
+    <nav class="nav">
+      <button class="nav-item active" data-view="dashboard"><span class="icon">📊</span>대시보드</button>
+      <button class="nav-item" data-view="logs"><span class="icon">📬</span>발송 이력</button>
+      <button class="nav-item" data-view="subscribers"><span class="icon">👤</span>구독자</button>
+      <button class="nav-item" data-view="manual"><span class="icon">✉️</span>수동 발송</button>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="./" target="_blank">← 브리픽 홈</a>
     </div>
-  </div>
+  </aside>
+  <div class="menu-backdrop" id="menuBackdrop"></div>
 
-  <!-- 비밀번호 변경 모달 -->
-  <div class="pw-modal-backdrop" id="pwModal" aria-hidden="true" role="dialog" aria-labelledby="pwModalTitle">
-    <div class="pw-modal">
-      <h2 id="pwModalTitle">비밀번호 변경</h2>
-      <label for="pwCurrent">현재 비밀번호</label>
-      <input type="password" id="pwCurrent" placeholder="현재 비밀번호" autocomplete="current-password">
-      <label for="pwNew">새 비밀번호</label>
-      <input type="password" id="pwNew" placeholder="새 비밀번호 (4자 이상)" autocomplete="new-password">
-      <label for="pwConfirm">새 비밀번호 확인</label>
-      <input type="password" id="pwConfirm" placeholder="다시 입력" autocomplete="new-password">
-      <div class="pw-status" id="pwStatus"></div>
-      <div class="pw-actions">
-        <button class="cancel" id="pwCancel" type="button">취소</button>
-        <button class="submit" id="pwSubmit" type="button">변경</button>
+  <!-- 메인 영역 -->
+  <main class="main">
+    <div class="topbar">
+      <button class="menu-toggle" id="menuToggle" aria-label="메뉴">☰</button>
+      <h1 class="page-title" id="pageTitle">대시보드</h1>
+      <span class="sub" id="lastRefresh"></span>
+      <div class="header-actions">
+        <button class="header-btn" id="pwChangeBtn">비밀번호 변경</button>
+        <button class="logout" id="logoutBtn">로그아웃</button>
       </div>
     </div>
-  </div>
 
-  <!-- 통계 카드 -->
-  <div class="stats-grid" id="statsGrid"></div>
-
-  <!-- 차트 영역 -->
-  <div class="two-col">
-    <div class="section">
-      <div class="section-title">최근 14일 일별 발송량</div>
-      <div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
-    </div>
-    <div class="section">
-      <div class="section-title">배송 상태 분포 (활성 구독자)</div>
-      <div class="chart-wrap"><canvas id="stateChart"></canvas></div>
-    </div>
-  </div>
-
-  <!-- 발송 이력 -->
-  <div class="section">
-    <div class="section-title">발송 이력 <span class="count" id="logsCount"></span></div>
-    <div class="filter-bar">
-      <select id="fStatus">
-        <option value="">상태 전체</option>
-        <option value="success">성공</option>
-        <option value="fail">실패</option>
-      </select>
-      <select id="fType">
-        <option value="">타입 전체</option>
-        <option value="friendtalk">친구톡</option>
-        <option value="alimtalk">알림톡</option>
-        <option value="sms">SMS</option>
-      </select>
-      <input type="text" id="fPhone" placeholder="전화번호 (선택)" maxlength="11">
-      <input type="date" id="fFrom">
-      <input type="date" id="fTo">
-      <button class="btn" id="fApply">조회</button>
-      <button class="btn ghost" id="fReset">초기화</button>
-    </div>
-    <div class="tbl-scroll">
-      <table class="tbl">
-        <thead>
-          <tr>
-            <th>시각(KST)</th><th>전화번호</th><th>타입</th><th>상태</th><th>결과 메시지</th><th>groupId</th>
-          </tr>
-        </thead>
-        <tbody id="logsBody"><tr><td colspan="6" class="loading">데이터 로딩 중…</td></tr></tbody>
-      </table>
-    </div>
-    <div class="pager" id="logsPager"></div>
-  </div>
-
-  <!-- 수동 발송 (채널 미가입 등 문제 구독자 대상) -->
-  <div class="section">
-    <div class="section-title">채널 미가입 / 배송 실패 구독자에게 수동 발송</div>
-    <div class="manual-send">
-      <div class="filter-bar">
-        <select id="mFilter">
-          <option value="not_friend">not_friend (채널 미가입)</option>
-          <option value="blocked">blocked (차단)</option>
-          <option value="paused_ad">paused_ad (광고 수신 거부)</option>
-          <option value="unknown">unknown (기타 실패)</option>
-          <option value="all">전체 활성 구독자</option>
-        </select>
-        <button class="btn" id="mReload">목록 새로고침</button>
-        <button class="btn ghost select-all" id="mSelectAll">모두 선택/해제</button>
+    <!-- 대시보드 -->
+    <section class="view" data-view="dashboard">
+      <div class="stats-grid" id="statsGrid"></div>
+      <div class="two-col">
+        <div class="section">
+          <div class="section-title">최근 14일 일별 발송량</div>
+          <div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
+        </div>
+        <div class="section">
+          <div class="section-title">배송 상태 분포 (활성 구독자)</div>
+          <div class="chart-wrap"><canvas id="stateChart"></canvas></div>
+        </div>
       </div>
-      <div class="targets" id="mTargets"><div class="loading">목록 로딩 중…</div></div>
-      <textarea id="mMessage" placeholder="메시지 본문 (비우면 기본 안내 메시지 발송)"></textarea>
-      <div class="actions">
-        <button class="primary" id="mSendBtn" disabled>선택한 구독자에게 발송</button>
-        <span id="mSelectedCount" style="color:var(--mut);font-size:13px"></span>
+    </section>
+
+    <!-- 발송 이력 -->
+    <section class="view hidden" data-view="logs">
+      <div class="section">
+        <div class="section-title">발송 이력 <span class="count" id="logsCount"></span></div>
+        <div class="filter-bar">
+          <select id="fStatus">
+            <option value="">상태 전체</option>
+            <option value="success">성공</option>
+            <option value="fail">실패</option>
+          </select>
+          <select id="fType">
+            <option value="">타입 전체</option>
+            <option value="friendtalk">친구톡</option>
+            <option value="alimtalk">알림톡</option>
+            <option value="sms">SMS</option>
+          </select>
+          <input type="text" id="fPhone" placeholder="전화번호 (선택)" maxlength="11">
+          <input type="date" id="fFrom">
+          <input type="date" id="fTo">
+          <button class="btn" id="fApply">조회</button>
+          <button class="btn ghost" id="fReset">초기화</button>
+        </div>
+        <div class="tbl-scroll">
+          <table class="tbl">
+            <thead><tr><th>시각(KST)</th><th>전화번호</th><th>타입</th><th>상태</th><th>결과 메시지</th><th>groupId</th></tr></thead>
+            <tbody id="logsBody"><tr><td colspan="6" class="loading">로딩 중…</td></tr></tbody>
+          </table>
+        </div>
+        <div class="pager" id="logsPager"></div>
       </div>
-      <div class="status" id="mStatus"></div>
+    </section>
+
+    <!-- 구독자 -->
+    <section class="view hidden" data-view="subscribers">
+      <div class="section">
+        <div class="section-title">구독자 목록 <span class="count" id="subsCount"></span></div>
+        <div class="filter-bar">
+          <select id="sStatus">
+            <option value="active">active</option>
+            <option value="paused">paused</option>
+            <option value="expired">expired</option>
+            <option value="cancelled">cancelled</option>
+            <option value="">상태 전체</option>
+          </select>
+          <select id="sDelivery">
+            <option value="">배송 상태 전체</option>
+            <option value="ok">ok</option>
+            <option value="not_friend">not_friend</option>
+            <option value="blocked">blocked</option>
+            <option value="paused_ad">paused_ad</option>
+            <option value="unknown">unknown</option>
+          </select>
+          <button class="btn" id="sApply">조회</button>
+        </div>
+        <div class="tbl-scroll">
+          <table class="tbl">
+            <thead><tr><th>가입일</th><th>전화번호</th><th>이름</th><th>상태</th><th>배송</th><th>만료일</th></tr></thead>
+            <tbody id="subsBody"><tr><td colspan="6" class="loading">로딩 중…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 수동 발송 -->
+    <section class="view hidden" data-view="manual">
+      <div class="section manual-send">
+        <div class="section-title">채널 미가입 / 배송 실패 구독자에게 수동 발송</div>
+        <div class="filter-bar">
+          <select id="mFilter">
+            <option value="not_friend">not_friend (채널 미가입)</option>
+            <option value="blocked">blocked (차단)</option>
+            <option value="paused_ad">paused_ad (광고 수신 거부)</option>
+            <option value="unknown">unknown (기타 실패)</option>
+            <option value="all">전체 활성 구독자</option>
+          </select>
+          <button class="btn" id="mReload">목록 새로고침</button>
+          <button class="btn ghost select-all" id="mSelectAll">모두 선택/해제</button>
+        </div>
+        <div class="targets" id="mTargets"><div class="loading">목록 로딩 중…</div></div>
+        <textarea id="mMessage" placeholder="메시지 본문 (비우면 기본 안내 메시지 발송)"></textarea>
+        <div class="actions">
+          <button class="primary" id="mSendBtn" disabled>선택한 구독자에게 발송</button>
+          <span id="mSelectedCount" style="color:var(--mut);font-size:13px"></span>
+        </div>
+        <div class="status" id="mStatus"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- 비밀번호 변경 모달 -->
+<div class="pw-modal-backdrop" id="pwModal" aria-hidden="true" role="dialog" aria-labelledby="pwModalTitle">
+  <div class="pw-modal">
+    <h2 id="pwModalTitle">비밀번호 변경</h2>
+    <label for="pwCurrent">현재 비밀번호</label>
+    <input type="password" id="pwCurrent" placeholder="현재 비밀번호" autocomplete="current-password">
+    <label for="pwNew">새 비밀번호</label>
+    <input type="password" id="pwNew" placeholder="새 비밀번호 (4자 이상)" autocomplete="new-password">
+    <label for="pwConfirm">새 비밀번호 확인</label>
+    <input type="password" id="pwConfirm" placeholder="다시 입력" autocomplete="new-password">
+    <div class="pw-status" id="pwStatus"></div>
+    <div class="pw-actions">
+      <button class="cancel" id="pwCancel" type="button">취소</button>
+      <button class="submit" id="pwSubmit" type="button">변경</button>
     </div>
   </div>
 </div>
@@ -277,6 +352,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 const API = 'https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/admin-api';
 const KEY_TOKEN = 'briefick_admin_token';
 const KEY_EXPIRES = 'briefick_admin_expires';
+const VIEWS = ['dashboard','logs','subscribers','manual'];
+const TITLES = { dashboard:'대시보드', logs:'발송 이력', subscribers:'구독자', manual:'수동 발송' };
 
 const $ = (id)=>document.getElementById(id);
 const loginView = $('loginView');
@@ -313,7 +390,7 @@ async function api(action, payload={}){
   return j;
 }
 
-// ─── 로그인 ───
+// ─── 로그인 뷰 ───
 function showLogin(){
   loginView.style.display='flex';
   appView.style.display='none';
@@ -321,130 +398,112 @@ function showLogin(){
 }
 function showApp(){
   loginView.style.display='none';
-  appView.style.display='block';
-  loadAll();
+  appView.style.display='flex';
+  const h = (location.hash||'#dashboard').slice(1);
+  switchView(VIEWS.includes(h) ? h : 'dashboard');
 }
 $('loginForm').addEventListener('submit', async e=>{
   e.preventDefault();
-  const pw = $('pwInput').value;
   $('loginErr').textContent = '';
   try{
-    const r = await api('login', { password: pw });
+    const r = await api('login', { password: $('pwInput').value });
     saveToken(r.token, r.ttlMs);
     $('pwInput').value='';
     showApp();
-  }catch(err){
+  }catch(_err){
     $('loginErr').textContent = '비밀번호가 틀렸거나 로그인에 실패했습니다.';
   }
 });
 $('logoutBtn').addEventListener('click', ()=>{ clearToken(); showLogin(); });
 
-// ─── 비밀번호 변경 ───
-const pwModal = $('pwModal');
-function openPwModal(){
-  pwModal.classList.add('show');
-  pwModal.setAttribute('aria-hidden','false');
-  $('pwCurrent').value=''; $('pwNew').value=''; $('pwConfirm').value='';
-  const st = $('pwStatus'); st.className='pw-status'; st.textContent='';
-  $('pwSubmit').disabled = false;
-  setTimeout(()=>$('pwCurrent').focus(),100);
+// ─── 뷰 전환 ───
+const loadedViews = new Set();
+function switchView(name){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active', n.dataset.view===name));
+  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('hidden', v.dataset.view!==name));
+  $('pageTitle').textContent = TITLES[name] || '';
+  if(location.hash.slice(1) !== name) location.hash = name;
+  closeSidebar();
+  // 최초 진입 시 로딩
+  if(!loadedViews.has(name)){
+    loadedViews.add(name);
+    if(name === 'dashboard') loadStats();
+    else if(name === 'logs') loadLogs();
+    else if(name === 'subscribers') loadSubscribers();
+    else if(name === 'manual') loadManualTargets();
+  }
 }
-function closePwModal(){
-  pwModal.classList.remove('show');
-  pwModal.setAttribute('aria-hidden','true');
-}
-$('pwChangeBtn').addEventListener('click', openPwModal);
-$('pwCancel').addEventListener('click', closePwModal);
-pwModal.addEventListener('click', e => { if (e.target === pwModal) closePwModal(); });
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && pwModal.classList.contains('show')) closePwModal();
+document.querySelectorAll('.nav-item').forEach(n=>{
+  n.addEventListener('click', ()=>switchView(n.dataset.view));
 });
-$('pwSubmit').addEventListener('click', async ()=>{
-  const cur = $('pwCurrent').value;
-  const nw = $('pwNew').value;
-  const cf = $('pwConfirm').value;
-  const st = $('pwStatus');
-  if (!cur || !nw || !cf){
-    st.className='pw-status error'; st.textContent='모든 필드를 입력하세요.'; return;
-  }
-  if (nw.length < 4){
-    st.className='pw-status error'; st.textContent='새 비밀번호는 4자 이상이어야 합니다.'; return;
-  }
-  if (nw !== cf){
-    st.className='pw-status error'; st.textContent='새 비밀번호가 일치하지 않습니다.'; return;
-  }
-  if (nw === cur){
-    st.className='pw-status error'; st.textContent='새 비밀번호가 기존과 동일합니다.'; return;
-  }
-  st.className='pw-status info'; st.textContent='변경 중…';
-  $('pwSubmit').disabled = true;
-  try {
-    await api('change_password', { currentPassword: cur, newPassword: nw });
-    st.className='pw-status success';
-    st.textContent='변경되었습니다. 다음 로그인부터 새 비밀번호로 접속하세요.';
-    setTimeout(closePwModal, 1400);
-  } catch (err) {
-    st.className='pw-status error';
-    st.textContent = err.message || '변경 실패';
-    $('pwSubmit').disabled = false;
-  }
+window.addEventListener('hashchange', ()=>{
+  const h = location.hash.slice(1);
+  if(VIEWS.includes(h)) switchView(h);
 });
 
-// ─── 통계 + 차트 ───
+// ─── 모바일 사이드바 ───
+const sidebar = $('sidebar');
+const backdrop = $('menuBackdrop');
+function openSidebar(){ sidebar.classList.add('open'); backdrop.classList.add('show'); }
+function closeSidebar(){ sidebar.classList.remove('open'); backdrop.classList.remove('show'); }
+$('menuToggle').addEventListener('click', openSidebar);
+backdrop.addEventListener('click', closeSidebar);
+
+// ─── 통계·차트 ───
 let dailyChart, stateChart;
 async function loadStats(){
-  const s = await api('stats');
-  const stats = [
-    { label:'활성 구독자', value:s.activeSubscribers, unit:'명' },
-    { label:'7일 결제', value:s.payCount7d, unit:'건', hint:(s.revenue7d||0).toLocaleString()+'원' },
-    { label:'ok 배송', value:(s.deliveryStates?.ok ?? 0), unit:'명' },
-    { label:'not_friend', value:(s.deliveryStates?.not_friend ?? 0), unit:'명', hint:'채널 미가입' },
-    { label:'blocked', value:(s.deliveryStates?.blocked ?? 0), unit:'명' },
-    { label:'unknown', value:(s.deliveryStates?.unknown ?? 0), unit:'명' },
-  ];
-  $('statsGrid').innerHTML = stats.map(c=>(
-    `<div class="stat-card"><div class="label">${c.label}</div>`
-    +`<div class="value">${c.value}<span class="unit">${c.unit||''}</span></div>`
-    +(c.hint?`<div class="hint">${c.hint}</div>`:'')
-    +`</div>`
-  )).join('');
+  try{
+    const s = await api('stats');
+    const stats = [
+      { label:'활성 구독자', value:s.activeSubscribers, unit:'명' },
+      { label:'7일 결제', value:s.payCount7d, unit:'건', hint:(s.revenue7d||0).toLocaleString()+'원' },
+      { label:'ok 배송', value:(s.deliveryStates?.ok ?? 0), unit:'명' },
+      { label:'not_friend', value:(s.deliveryStates?.not_friend ?? 0), unit:'명', hint:'채널 미가입' },
+      { label:'blocked', value:(s.deliveryStates?.blocked ?? 0), unit:'명' },
+      { label:'unknown', value:(s.deliveryStates?.unknown ?? 0), unit:'명' },
+    ];
+    $('statsGrid').innerHTML = stats.map(c=>(
+      `<div class="stat-card"><div class="label">${c.label}</div>`
+      +`<div class="value">${c.value}<span class="unit">${c.unit||''}</span></div>`
+      +(c.hint?`<div class="hint">${c.hint}</div>`:'')
+      +`</div>`
+    )).join('');
 
-  // 14일 차트
-  const days = [];
-  for(let i=13;i>=0;i--){
-    const d = new Date(Date.now() - i*86400000);
-    days.push(d.toISOString().slice(0,10));
-  }
-  const success = days.map(d => (s.daily14d?.[d]?.success)||0);
-  const fail = days.map(d => (s.daily14d?.[d]?.fail)||0);
-  const labels = days.map(d => d.slice(5));
-  if(dailyChart) dailyChart.destroy();
-  dailyChart = new Chart($('dailyChart'), {
-    type:'bar',
-    data:{ labels, datasets:[
-      { label:'성공', data:success, backgroundColor:'#18E299' },
-      { label:'실패', data:fail, backgroundColor:'#d45656' },
-    ]},
-    options:{ responsive:true, maintainAspectRatio:false,
-      scales:{ x:{ stacked:true, grid:{ display:false } },
-               y:{ stacked:true, beginAtZero:true, ticks:{ stepSize:1 } }},
-      plugins:{ legend:{ position:'bottom' } } }
-  });
+    const days = [];
+    for(let i=13;i>=0;i--){
+      const d = new Date(Date.now() - i*86400000);
+      days.push(d.toISOString().slice(0,10));
+    }
+    const success = days.map(d => (s.daily14d?.[d]?.success)||0);
+    const fail = days.map(d => (s.daily14d?.[d]?.fail)||0);
+    const labels = days.map(d => d.slice(5));
+    if(dailyChart) dailyChart.destroy();
+    dailyChart = new Chart($('dailyChart'), {
+      type:'bar',
+      data:{ labels, datasets:[
+        { label:'성공', data:success, backgroundColor:'#18E299' },
+        { label:'실패', data:fail, backgroundColor:'#d45656' },
+      ]},
+      options:{ responsive:true, maintainAspectRatio:false,
+        scales:{ x:{ stacked:true, grid:{ display:false } },
+                 y:{ stacked:true, beginAtZero:true, ticks:{ stepSize:1 } }},
+        plugins:{ legend:{ position:'bottom' } } }
+    });
 
-  // 배송 상태 파이
-  const stateLabels = Object.keys(s.deliveryStates||{});
-  const stateData = stateLabels.map(k => s.deliveryStates[k]);
-  const colorMap = { ok:'#18E299', not_friend:'#f59e0b', blocked:'#d45656', paused_ad:'#ff9f6b', unknown:'#999' };
-  const stateColors = stateLabels.map(k => colorMap[k] || '#666');
-  if(stateChart) stateChart.destroy();
-  stateChart = new Chart($('stateChart'), {
-    type:'doughnut',
-    data:{ labels:stateLabels, datasets:[{ data:stateData, backgroundColor:stateColors, borderWidth:0 }]},
-    options:{ responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{ position:'right' } } }
-  });
+    const stateLabels = Object.keys(s.deliveryStates||{});
+    const stateData = stateLabels.map(k => s.deliveryStates[k]);
+    const colorMap = { ok:'#18E299', not_friend:'#f59e0b', blocked:'#d45656', paused_ad:'#ff9f6b', unknown:'#999' };
+    const stateColors = stateLabels.map(k => colorMap[k] || '#666');
+    if(stateChart) stateChart.destroy();
+    stateChart = new Chart($('stateChart'), {
+      type:'doughnut',
+      data:{ labels:stateLabels, datasets:[{ data:stateData, backgroundColor:stateColors, borderWidth:0 }]},
+      options:{ responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ position:'right' } } }
+    });
 
-  $('lastRefresh').textContent = ' · 갱신: ' + new Date().toLocaleTimeString('ko-KR',{hour12:false});
+    $('lastRefresh').textContent = '갱신: ' + new Date().toLocaleTimeString('ko-KR',{hour12:false});
+  }catch(err){ console.error(err); }
 }
 
 // ─── 발송 이력 ───
@@ -509,6 +568,38 @@ $('fReset').addEventListener('click', ()=>{
   $('fStatus').value=''; $('fType').value=''; $('fPhone').value=''; $('fFrom').value=''; $('fTo').value='';
   logsOffset=0; loadLogs();
 });
+
+// ─── 구독자 목록 ───
+async function loadSubscribers(){
+  const filter = {
+    status: $('sStatus').value || undefined,
+    delivery_state: $('sDelivery').value || undefined,
+  };
+  $('subsBody').innerHTML = `<tr><td colspan="6" class="loading">로딩 중…</td></tr>`;
+  try{
+    const r = await api('subscribers', { filter });
+    $('subsCount').textContent = `총 ${r.rows.length}명`;
+    if(!r.rows.length){
+      $('subsBody').innerHTML = `<tr><td colspan="6" class="empty">해당 조건의 구독자가 없습니다</td></tr>`;
+    }else{
+      $('subsBody').innerHTML = r.rows.map(row=>{
+        const dt = row.subscribed_at ? row.subscribed_at.slice(0,10) : '-';
+        const exp = row.paid_until ? row.paid_until.slice(0,10) : '-';
+        return `<tr>
+          <td>${dt}</td>
+          <td class="c-phone">${row.phone}</td>
+          <td>${row.name||'-'}</td>
+          <td><span class="badge ${row.status}">${row.status}</span></td>
+          <td><span class="badge ${row.delivery_state||'unknown'}">${row.delivery_state||'unknown'}</span></td>
+          <td>${exp}</td>
+        </tr>`;
+      }).join('');
+    }
+  }catch(err){
+    $('subsBody').innerHTML = `<tr><td colspan="6" class="empty">오류: ${err.message}</td></tr>`;
+  }
+}
+$('sApply').addEventListener('click', loadSubscribers);
 
 // ─── 수동 발송 ───
 let manualRows = [];
@@ -575,7 +666,7 @@ $('mSendBtn').addEventListener('click', async ()=>{
       s.textContent = `발송 실패: ${JSON.stringify(r.rawResponse||{}).slice(0,200)}`;
     }
     loadManualTargets();
-    logsOffset=0; loadLogs(); loadStats();
+    loadedViews.delete('logs'); loadedViews.delete('dashboard'); // 다음 진입 시 재로딩
   }catch(err){
     s.className='status show error';
     s.textContent = '오류: ' + err.message;
@@ -584,12 +675,50 @@ $('mSendBtn').addEventListener('click', async ()=>{
   }
 });
 
-// ─── 최초 로드 ───
-async function loadAll(){
-  await Promise.all([loadStats(), loadLogs(), loadManualTargets()]);
+// ─── 비밀번호 변경 모달 ───
+const pwModal = $('pwModal');
+function openPwModal(){
+  pwModal.classList.add('show');
+  pwModal.setAttribute('aria-hidden','false');
+  $('pwCurrent').value=''; $('pwNew').value=''; $('pwConfirm').value='';
+  const st = $('pwStatus'); st.className='pw-status'; st.textContent='';
+  $('pwSubmit').disabled = false;
+  setTimeout(()=>$('pwCurrent').focus(),100);
 }
+function closePwModal(){
+  pwModal.classList.remove('show');
+  pwModal.setAttribute('aria-hidden','true');
+}
+$('pwChangeBtn').addEventListener('click', openPwModal);
+$('pwCancel').addEventListener('click', closePwModal);
+pwModal.addEventListener('click', e => { if (e.target === pwModal) closePwModal(); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && pwModal.classList.contains('show')) closePwModal();
+});
+$('pwSubmit').addEventListener('click', async ()=>{
+  const cur = $('pwCurrent').value;
+  const nw = $('pwNew').value;
+  const cf = $('pwConfirm').value;
+  const st = $('pwStatus');
+  if (!cur || !nw || !cf){ st.className='pw-status error'; st.textContent='모든 필드를 입력하세요.'; return; }
+  if (nw.length < 4){ st.className='pw-status error'; st.textContent='새 비밀번호는 4자 이상이어야 합니다.'; return; }
+  if (nw !== cf){ st.className='pw-status error'; st.textContent='새 비밀번호가 일치하지 않습니다.'; return; }
+  if (nw === cur){ st.className='pw-status error'; st.textContent='새 비밀번호가 기존과 동일합니다.'; return; }
+  st.className='pw-status info'; st.textContent='변경 중…';
+  $('pwSubmit').disabled = true;
+  try {
+    await api('change_password', { currentPassword: cur, newPassword: nw });
+    st.className='pw-status success';
+    st.textContent='변경되었습니다. 다음 로그인부터 새 비밀번호로 접속하세요.';
+    setTimeout(closePwModal, 1400);
+  } catch (err) {
+    st.className='pw-status error';
+    st.textContent = err.message || '변경 실패';
+    $('pwSubmit').disabled = false;
+  }
+});
 
-// 부트
+// ─── 부트 ───
 if(getToken()) showApp();
 else showLogin();
 })();
