@@ -3,6 +3,16 @@
 
 const updates = [
   {
+    date: "2026-04-25 19:05 KST",
+    summary: "Witkoff·Kushner 4/25 파키스탄 도착 美·이란 직접 회담 추진·이란 외무장관 Araghchi 이슬라마바드 입국·트럼프 '봉쇄 미해제' 입장 고수·BTC $77.6K·다음 주 4/29 MSFT·META·AMZN·GOOGL Q1 동시 발표 대기",
+    changes: [
+      { type: "정보 갱신", sector: "에너지",
+        detail: "에너지 섹터(XOM·CVX·COP). 4/25 미국 특사 Steve Witkoff·Jared Kushner가 트럼프 지시로 파키스탄 이슬라마바드에 도착, 이란 외무장관 Abbas Araghchi와 직접 회담을 추진 중. 백악관은 '이란이 먼저 대면 대화를 요청했다·진전 신호 있다'며 신중 낙관, 트럼프는 Reuters 인터뷰에서 '이란 항만 봉쇄는 합의 전까지 해제하지 않는다'고 못박았다. 이란 측은 호르무즈 재개방 거부 입장을 유지하며 '미국과의 만남은 예정에 없다'고 모호한 신호. WTI 4/24 종가 $94.40(-1%)·Brent $105.33(보합)이 주간 각각 +14%·+17%에서 멈춘 것은 회담 재개 기대가 일부 선반영된 결과로 해석. 협상 결렬 시 월요일 갭업, 부분 합의 시 갭다운 시나리오가 양방향으로 열려 있는 구간.", time: "2026-04-25 19:05 KST" },
+      { type: "실적 예정", sector: "AI 플랫폼",
+        detail: "메가캡 Q1 슈퍼위크 임박. 4/29 장후 MSFT·META·AMZN·GOOGL 4사가 동시 실적 발표, 4/30 AAPL이 마무리. MSFT는 Azure +37~38%·Copilot 수익화·연 $375억대 AI CapEx 회수 속도가 핵심, META는 $115~135B 풀해 CapEx 가이던스의 광고 매출 환원 진척, GOOGL은 Anthropic $40B 베팅을 정당화할 GCP·Search AI 매출 톤, AMZN은 AWS Trainium 점유와 Anthropic $25B의 인프라 흡수력이 관전 포인트. S&P 500 200+곳·Mag7 5곳 동시 보고 주간으로 4/24 기록 신고가(7,165) 직후 변동성 재진입 가능 구간.", time: "2026-04-25 19:05 KST" },
+    ]
+  },
+  {
     date: "2026-04-25 07:10 KST",
     summary: "S&P 500 7,165.08 +0.80%·Nasdaq 24,836.60 +1.63% 기록 신고가 마감·INTC +23.6% $82.55 사상 최고·Alphabet Anthropic 최대 $40B 투자 공식화·AMD +12% Stifel $320·NVDA 시총 $5T 재탈환·SLB Q1 매출 소폭 비트",
     changes: [
