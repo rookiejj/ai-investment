@@ -6,6 +6,13 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-25 13:24 KST",
+    summary: "Anthropic Memory for Claude Managed Agents 4/24 퍼블릭 베타 — 매니지드 에이전트 세션 간 학습 영구화 + Netflix·Rakuten 등 조기 도입",
+    changes: [
+      { type: "제품 출시", sector: "Anthropic", detail: "Anthropic(Memory for Claude Managed Agents). 4/24 퍼블릭 베타. 매니지드 에이전트가 세션 간 학습 내용을 파일시스템에 영구 저장하고 다른 에이전트와 공유. Bash·코드 실행 권한 활용해 장기 작업을 누적, 모든 메모리 변경은 감사 로그로 추적·롤백·삭제 가능. Netflix·Rakuten·Wisedocs·Ando 등이 워크플로우 자동화에 조기 도입. Alphabet $40B 투자·세컨더리 $1T 밸류와 결합되며 엔터프라이즈 에이전트 운영의 핵심 미싱 피스가 채워졌다는 평가.", time: "2026-04-25 13:24 KST" },
+    ]
+  },
+  {
     date: "2026-04-25 07:10 KST",
     summary: "Alphabet Anthropic 최대 $40B 투자 공식화·$10B 현금+$30B 마일스톤·5년 5GW TPU 전담 공급·DeepSeek V4 Flash·Pro 프리뷰 공개 1M 토큰 하이브리드 어텐션·Tencent Hy3 공개 295B MoE·Xiaomi MiMo-V2.5 퍼블릭 테스팅",
     changes: [
