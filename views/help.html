@@ -32,16 +32,50 @@ button{font:inherit;cursor:pointer;border:none;background:none}
 .brand img{width:36px;height:36px;border-radius:50%;object-fit:cover}
 .brand span{font:700 18px/1 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.3px}
 
+/* 뷰 토글 */
+.view{display:none}
+.view.active{display:block}
+
+/* 헤더(질문 + 부제) */
+h1{font:700 24px/1.3 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.5px;margin-bottom:8px}
+.lead{color:var(--mut);font-size:14px;line-height:1.55;margin-bottom:24px}
+.lead strong{color:var(--fg2);font-weight:600}
+
+/* 첫 화면: 선택 카드 */
 .hero-icon{
   width:56px;height:56px;border-radius:16px;background:var(--warn-bg);
   display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:18px;
 }
-h1{font:700 24px/1.3 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.5px;margin-bottom:10px}
-.lead{color:var(--fg2);font-size:15px;line-height:1.6;margin-bottom:28px}
-.lead strong{color:var(--fg);font-weight:600}
+.choice-grid{display:flex;flex-direction:column;gap:10px;margin:0 0 12px}
+.choice-card{
+  display:flex;gap:14px;padding:18px;border:1px solid var(--border);
+  border-radius:14px;background:#fff;text-align:left;width:100%;
+  align-items:flex-start;transition:border-color .15s,transform .1s,box-shadow .15s;
+}
+.choice-card:hover{border-color:var(--acc-deep);transform:translateY(-1px);box-shadow:0 4px 16px rgba(15,167,110,0.08)}
+.choice-card .ico{
+  width:44px;height:44px;border-radius:12px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:22px;
+}
+.choice-card .ico.warm{background:var(--warn-bg)}
+.choice-card .ico.cool{background:var(--acc-light)}
+.choice-card .body{flex:1;min-width:0}
+.choice-card .title{font:600 15px/1.4 Pretendard,sans-serif;color:var(--fg);margin-bottom:4px;letter-spacing:-0.2px}
+.choice-card .desc{font-size:13px;color:var(--mut);line-height:1.5}
+.choice-card .arrow{color:var(--sub);font-size:20px;line-height:1;margin-top:10px;transition:color .15s,transform .15s}
+.choice-card:hover .arrow{color:var(--acc-deep);transform:translateX(2px)}
 
+/* 상세 뷰 - 뒤로 가기 */
+.back-link{
+  display:inline-flex;align-items:center;gap:4px;color:var(--mut);font-size:13px;
+  margin-bottom:18px;padding:6px 10px;border-radius:8px;
+  background:transparent;border:1px solid var(--border);transition:all .15s;
+}
+.back-link:hover{color:var(--fg);border-color:var(--border-md);background:#fff}
+
+/* 상세 뷰 공통: 사유 박스 */
 .reason{
-  background:var(--acc-light);border-radius:12px;padding:16px 18px;margin-bottom:28px;
+  background:var(--acc-light);border-radius:12px;padding:16px 18px;margin-bottom:24px;
   display:flex;gap:12px;align-items:flex-start;
 }
 .reason .dot{
@@ -53,15 +87,15 @@ h1{font:700 24px/1.3 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.5px
 
 .section-label{
   font:600 12px/1.3 Pretendard,sans-serif;color:var(--sub);
-  letter-spacing:0.4px;text-transform:uppercase;margin:0 0 14px;
+  letter-spacing:0.4px;text-transform:uppercase;margin:0 0 12px;
 }
 
-.steps{display:flex;flex-direction:column;gap:12px;margin-bottom:28px}
+/* 상세 뷰 - 단계 */
+.steps{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
 .step{
   display:flex;gap:14px;padding:14px 16px;border:1px solid var(--border);
-  border-radius:12px;background:#fff;align-items:flex-start;transition:border-color .15s;
+  border-radius:12px;background:#fff;align-items:flex-start;
 }
-.step:hover{border-color:var(--border-md)}
 .step .num{
   width:28px;height:28px;border-radius:50%;background:var(--fg);color:#fff;
   display:flex;align-items:center;justify-content:center;font:700 13px/1 Pretendard,sans-serif;
@@ -71,6 +105,7 @@ h1{font:700 24px/1.3 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.5px
 .step .title{font:600 14px/1.4 Pretendard,sans-serif;color:var(--fg);margin-bottom:2px}
 .step .desc{font-size:13px;color:var(--mut);line-height:1.5}
 
+/* 상세 뷰 - CTA 버튼(카카오) */
 .cta-kakao{
   display:flex;align-items:center;justify-content:center;gap:10px;
   width:100%;padding:16px 20px;background:var(--kakao);color:var(--kakao-fg);
@@ -82,15 +117,37 @@ h1{font:700 24px/1.3 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.5px
   width:22px;height:22px;background:var(--kakao-fg);border-radius:50%;
   display:flex;align-items:center;justify-content:center;color:var(--kakao);font-size:12px;font-weight:700;
 }
-
 .cta-note{
   text-align:center;color:var(--sub);font-size:12px;margin-top:10px;line-height:1.5;
 }
 
-.divider{
-  height:1px;background:var(--border);margin:28px 0 20px;
+/* 상세 뷰(ad) - 방법 카드 */
+.method{
+  display:flex;gap:12px;padding:16px;background:var(--bg);border-radius:12px;
+  margin-bottom:10px;align-items:flex-start;border:1px solid var(--border);
 }
+.method:last-child{margin-bottom:0}
+.method .tag{
+  width:28px;height:28px;border-radius:8px;background:var(--fg);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:700 13px/1 Pretendard,sans-serif;
+  flex-shrink:0;margin-top:1px;
+}
+.method .body{flex:1;min-width:0}
+.method .head{
+  font:600 14px/1.4 Pretendard,sans-serif;color:var(--fg);margin-bottom:8px;letter-spacing:-0.1px;
+}
+.method .recommended{
+  display:inline-block;font-size:10.5px;color:var(--acc-deep);margin-left:6px;
+  background:var(--acc-light);padding:1px 7px;border-radius:99px;font-weight:600;letter-spacing:0.2px;
+  vertical-align:1px;
+}
+.method-list{list-style:none;padding:0;margin:0;font-size:13px;color:var(--mut);line-height:1.65}
+.method-list li{padding-left:14px;position:relative}
+.method-list li::before{content:'·';position:absolute;left:5px;color:var(--sub);font-weight:bold}
+.method-list b{color:var(--fg);font-weight:500}
 
+/* 푸터 공통 */
+.divider{height:1px;background:var(--border);margin:28px 0 20px}
 .contact{text-align:center}
 .contact .label{font-size:13px;color:var(--mut);margin-bottom:8px}
 .contact a{
@@ -98,69 +155,20 @@ h1{font:700 24px/1.3 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.5px
   padding-bottom:2px;transition:border-color .15s,color .15s;
 }
 .contact a:hover{color:var(--acc-deep);border-color:var(--acc-deep)}
-
 .footer-mini{
   text-align:center;color:var(--sub);font-size:11px;line-height:1.6;
   margin-top:32px;padding-top:20px;border-top:1px solid var(--border);
 }
 
-/* 이미 친구면 표시되는 배너 (선택) */
-.already-banner{
-  display:none;background:var(--acc-light);border-radius:10px;padding:12px 14px;
-  margin-bottom:20px;color:var(--acc-deep);font-size:13px;line-height:1.5;
-  border:1px solid rgba(15,167,110,0.2);
-}
-.already-banner.show{display:block}
-.already-banner b{font-weight:600}
-
-/* 보조 이슈: 광고 수신 거부 */
-.alt-issue{
-  background:#fff;border:1px solid var(--border);border-radius:14px;
-  padding:20px;margin-top:28px;
-}
-.alt-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}
-.alt-head-icon{
-  width:38px;height:38px;border-radius:11px;background:var(--warn-bg);
-  display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;
-}
-.alt-head-text .alt-title{
-  font:600 15px/1.4 Pretendard,sans-serif;color:var(--fg);margin-bottom:2px;letter-spacing:-0.2px;
-}
-.alt-head-text .alt-sub{font-size:13px;color:var(--mut);line-height:1.45}
-.alt-explain{
-  font-size:13.5px;color:var(--fg2);line-height:1.6;margin-bottom:14px;
-}
-.alt-method{
-  display:flex;gap:12px;padding:14px;background:var(--bg);border-radius:10px;
-  margin-bottom:8px;align-items:flex-start;
-}
-.alt-method:last-child{margin-bottom:0}
-.alt-method .tag{
-  width:24px;height:24px;border-radius:6px;background:var(--fg);color:#fff;
-  display:flex;align-items:center;justify-content:center;font:700 11px/1 Pretendard,sans-serif;
-  flex-shrink:0;margin-top:1px;letter-spacing:0;
-}
-.alt-method .body{flex:1;min-width:0}
-.alt-method .title{
-  font:600 13.5px/1.4 Pretendard,sans-serif;color:var(--fg);margin-bottom:6px;letter-spacing:-0.1px;
-}
-.alt-method .recommended{
-  display:inline-block;font-size:10.5px;color:var(--acc-deep);margin-left:6px;
-  background:var(--acc-light);padding:1px 7px;border-radius:99px;font-weight:600;letter-spacing:0.2px;
-  vertical-align:1px;
-}
-.alt-list{list-style:none;padding:0;margin:0;font-size:13px;color:var(--mut);line-height:1.65}
-.alt-list li{padding-left:14px;position:relative}
-.alt-list li::before{content:'·';position:absolute;left:5px;color:var(--sub);font-weight:bold}
-.alt-list b{color:var(--fg);font-weight:500}
-
 @media (max-width:480px){
   .card{padding:28px 22px 24px;border-radius:18px}
-  h1{font-size:22px}
-  .lead{font-size:14.5px;margin-bottom:24px}
-  .reason{padding:14px 16px;margin-bottom:24px}
+  h1{font-size:21px}
+  .lead{font-size:14px;margin-bottom:22px}
+  .choice-card{padding:16px}
+  .reason{padding:14px 16px;margin-bottom:22px}
   .step{padding:12px 14px}
   .cta-kakao{padding:14px 18px;font-size:15px}
+  .method{padding:14px}
 }
 </style>
 </head>
@@ -175,70 +183,116 @@ h1{font:700 24px/1.3 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.5px
       <span>브리픽</span>
     </div>
 
-    <div class="hero-icon">📬</div>
-    <h1>뉴스가 도착하지 않으셨나요?</h1>
-    <p class="lead">
-      구독은 정상적으로 등록되어 있지만, <strong>카카오톡 채널 친구 추가</strong>가 되어 있지 않으면
-      매일 아침 뉴스를 받으실 수 없어요. 아래에서 1분 만에 해결됩니다.
-    </p>
-
-    <div class="reason">
-      <div class="dot">!</div>
-      <div class="txt">
-        <b>친구톡은 '카카오톡 채널 친구'에게만 전송됩니다.</b><br>
-        카카오톡 정책상, 채널 친구가 아닌 분께는 발송할 수 없어요.
-      </div>
-    </div>
-
-    <p class="section-label">1분 만에 해결하기</p>
-    <div class="steps">
-      <div class="step">
-        <div class="num">1</div>
-        <div class="body">
-          <div class="title">아래 노란 버튼을 눌러 채널 친구 추가</div>
-          <div class="desc">카카오톡이 열리며 '친구 추가' 버튼이 표시됩니다.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="num">2</div>
-        <div class="body">
-          <div class="title">'채널 추가' 버튼 탭</div>
-          <div class="desc">추가하신 번호와 구독 번호가 동일한지 꼭 확인해주세요.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="num">3</div>
-        <div class="body">
-          <div class="title">내일 오전 8시부터 자동 수신</div>
-          <div class="desc">별도 설정 없이 매일 아침 뉴스가 도착합니다.</div>
-        </div>
-      </div>
-    </div>
-
-    <a class="cta-kakao" href="https://pf.kakao.com/_lpxkCX/friend" target="_blank" rel="noopener">
-      <span class="kakao-icon">K</span>
-      <span>카카오톡 채널 친구 추가</span>
-    </a>
-    <p class="cta-note">이미 친구 상태라면 이 단계는 건너뛰셔도 됩니다.</p>
-
-    <div class="alt-issue">
-      <div class="alt-head">
-        <div class="alt-head-icon">⚙️</div>
-        <div class="alt-head-text">
-          <div class="alt-title">친구 추가도 했는데 안 오시나요?</div>
-          <div class="alt-sub">카카오톡의 광고/마케팅 메시지 수신이 꺼져 있을 수 있어요.</div>
-        </div>
-      </div>
-      <p class="alt-explain">
-        매일 발송되는 뉴스 친구톡은 카카오 정책상 <b>광고성 메시지</b>로 분류됩니다.
-        카카오톡에서 마케팅 메시지를 차단해두셨다면 받을 수 없어요. 아래 두 방법 중 하나로 켜주세요.
+    <!-- ═══ 진입(목록) ═══ -->
+    <section class="view" data-view="list">
+      <div class="hero-icon">📬</div>
+      <h1>뉴스가 도착하지 않나요?</h1>
+      <p class="lead">
+        가장 흔한 두 가지 원인 중 <strong>해당하는 항목을 선택</strong>해주세요.
+        해결 방법으로 안내해드립니다.
       </p>
 
-      <div class="alt-method">
+      <div class="choice-grid">
+        <button class="choice-card" data-go="friend">
+          <div class="ico cool">👋</div>
+          <div class="body">
+            <div class="title">한 번도 받아본 적이 없어요</div>
+            <div class="desc">카카오톡 채널 친구 추가가 안 된 경우 · 가장 흔함</div>
+          </div>
+          <div class="arrow">›</div>
+        </button>
+
+        <button class="choice-card" data-go="ad">
+          <div class="ico warm">⚙️</div>
+          <div class="body">
+            <div class="title">친구 추가했는데도 안 와요</div>
+            <div class="desc">카카오톡의 광고/마케팅 메시지 수신이 꺼진 경우</div>
+          </div>
+          <div class="arrow">›</div>
+        </button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="contact">
+        <div class="label">위 두 가지 모두 해당되지 않으시나요?</div>
+        <a href="mailto:rookiejj@gmail.com?subject=%5B%EB%B8%8C%EB%A6%AC%ED%94%BD%5D%20%EB%AC%B8%EC%9D%98">rookiejj@gmail.com 으로 문의</a>
+      </div>
+    </section>
+
+    <!-- ═══ 상세 1: 채널 친구 추가 ═══ -->
+    <section class="view" data-view="friend">
+      <button class="back-link" data-go="list">← 다른 항목 보기</button>
+
+      <h1>카카오톡 채널 친구 추가</h1>
+      <p class="lead">
+        구독은 정상 등록됐지만, 카카오톡 <strong>채널 친구 추가</strong>가 되어 있지 않으면
+        매일 아침 뉴스를 받으실 수 없어요. 1분 만에 해결됩니다.
+      </p>
+
+      <div class="reason">
+        <div class="dot">!</div>
+        <div class="txt">
+          <b>친구톡은 '카카오톡 채널 친구'에게만 전송됩니다.</b><br>
+          카카오톡 정책상, 채널 친구가 아닌 분께는 발송할 수 없어요.
+        </div>
+      </div>
+
+      <p class="section-label">1분 해결</p>
+      <div class="steps">
+        <div class="step">
+          <div class="num">1</div>
+          <div class="body">
+            <div class="title">아래 노란 버튼을 눌러 채널 페이지로 이동</div>
+            <div class="desc">카카오톡이 열리며 '친구 추가' 버튼이 표시됩니다.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <div class="body">
+            <div class="title">'채널 추가' 탭</div>
+            <div class="desc">추가하신 카카오톡 번호와 구독 번호가 같은지 확인해주세요.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <div class="body">
+            <div class="title">다음 평일 오전 8시부터 자동 수신</div>
+            <div class="desc">별도 설정 없이 매일 아침 뉴스가 도착합니다.</div>
+          </div>
+        </div>
+      </div>
+
+      <a class="cta-kakao" href="https://pf.kakao.com/_lpxkCX/friend" target="_blank" rel="noopener">
+        <span class="kakao-icon">K</span>
+        <span>카카오톡 채널 친구 추가</span>
+      </a>
+      <p class="cta-note">이미 친구 상태라면 이 단계는 건너뛰셔도 됩니다.</p>
+
+      <div class="divider"></div>
+      <div class="contact">
+        <div class="label">해결되지 않으셨나요?</div>
+        <a href="mailto:rookiejj@gmail.com?subject=%5B%EB%B8%8C%EB%A6%AC%ED%94%BD%5D%20%EB%AC%B8%EC%9D%98">rookiejj@gmail.com 으로 문의</a>
+      </div>
+    </section>
+
+    <!-- ═══ 상세 2: 광고 수신 거부 해제 ═══ -->
+    <section class="view" data-view="ad">
+      <button class="back-link" data-go="list">← 다른 항목 보기</button>
+
+      <h1>광고/마케팅 메시지 수신 켜기</h1>
+      <p class="lead">
+        뉴스 친구톡은 카카오 정책상 <strong>광고성 메시지</strong>로 분류됩니다.
+        카카오톡에서 마케팅 메시지를 차단해두셨다면 받을 수 없어요. 두 가지 방법 중 하나로 해제하실 수 있습니다.
+      </p>
+
+      <p class="section-label">두 가지 해결 방법</p>
+
+      <div class="method">
         <div class="tag">A</div>
         <div class="body">
-          <div class="title">브리픽 채널만 따로 켜기 <span class="recommended">권장</span></div>
-          <ul class="alt-list">
+          <div class="head">브리픽 채널만 따로 켜기 <span class="recommended">권장</span></div>
+          <ul class="method-list">
             <li>카카오톡 친구·채팅 탭에서 <b>브리픽 채널</b> 진입</li>
             <li>채널 상단 <b>점 3개(⋯)</b> 또는 톱니 아이콘 탭</li>
             <li><b>"광고/마케팅 메시지 수신"</b> 항목 켜기</li>
@@ -246,32 +300,56 @@ h1{font:700 24px/1.3 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.5px
         </div>
       </div>
 
-      <div class="alt-method">
+      <div class="method">
         <div class="tag">B</div>
         <div class="body">
-          <div class="title">카카오톡 전체 설정으로 켜기</div>
-          <ul class="alt-list">
+          <div class="head">카카오톡 전체 설정으로 켜기</div>
+          <ul class="method-list">
             <li>카카오톡 더보기(⋯) → <b>설정(톱니)</b></li>
             <li><b>개인/보안 → 광고성 정보 수신</b></li>
             <li>카카오톡 채팅 수신 <b>동의</b></li>
           </ul>
         </div>
       </div>
-    </div>
 
-    <div class="divider"></div>
+      <p class="cta-note" style="margin-top:18px">설정 변경 후 다음 평일 오전 8시 발송분부터 정상 수신됩니다.</p>
 
-    <div class="contact">
-      <div class="label">해결되지 않으셨나요?</div>
-      <a href="mailto:rookiejj@gmail.com?subject=%5B%EB%B8%8C%EB%A6%AC%ED%94%BD%5D%20%EB%AC%B8%EC%9D%98">rookiejj@gmail.com 으로 문의</a>
-    </div>
+      <div class="divider"></div>
+      <div class="contact">
+        <div class="label">해결되지 않으셨나요?</div>
+        <a href="mailto:rookiejj@gmail.com?subject=%5B%EB%B8%8C%EB%A6%AC%ED%94%BD%5D%20%EB%AC%B8%EC%9D%98">rookiejj@gmail.com 으로 문의</a>
+      </div>
+    </section>
 
     <div class="footer-mini">
-      브리픽 · 매일 오전 8시 KST 발송<br>
+      브리픽 · 평일 오전 8시 KST 발송<br>
       © Roysoft
     </div>
   </div>
 </div>
+
+<script>
+(function(){
+  const VIEWS = ['list','friend','ad'];
+  function showView(name){
+    if(!VIEWS.includes(name)) name = 'list';
+    document.querySelectorAll('.view').forEach(v => {
+      v.classList.toggle('active', v.dataset.view === name);
+    });
+    window.scrollTo(0, 0);
+    const target = name === 'list' ? location.pathname : '#' + name;
+    if(location.hash !== '#' + name && !(name === 'list' && !location.hash)){
+      history.replaceState(null, '', target);
+    }
+  }
+  function pickFromHash(){ return (location.hash || '').slice(1); }
+  showView(pickFromHash() || 'list');
+  document.querySelectorAll('[data-go]').forEach(el => {
+    el.addEventListener('click', () => showView(el.dataset.go));
+  });
+  window.addEventListener('hashchange', () => showView(pickFromHash() || 'list'));
+})();
+</script>
 
 </body>
 </html>
