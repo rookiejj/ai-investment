@@ -6,8 +6,8 @@ const data = [
     title: "🤖 AI·ML",
     tag: "프론티어 모델·AI 인프라",
     stocks: [
-      { nm:"OpenAI", rs:"4/23 GPT-5.5 'Spud' 출시·Terminal-Bench 2.0 82.7% SOTA·PII 탐지 오픈웨이트 공개·ARR $250억 유지·Cerebras $20B 컴퓨트 계약", val:"$852B", round:"$122B 펀딩", sector:"AGI", ipo:"2026 말 $1T+" },
-      { nm:"Anthropic", rs:"4/24 Alphabet 최대 $40B 투자 공식화·$10B 현금+5GW TPU 전담·4/20 Amazon $25B 합산 24h $65B+·ARR $300억 OpenAI 추월·10월 IPO $400~500B 타겟", val:"$1T (2차시장)", round:"Alphabet $10B @ $350B (2026-04)", sector:"프론티어 AI", ipo:"2026.10 $400~500B 타겟" },
+      { nm:"OpenAI", rs:"4/23 GPT-5.5 'Spud' 출시·Terminal-Bench 2.0 82.7% SOTA·ChatGPT for Clinicians 99.6% safe & accurate 검증·Privacy Filter 오픈웨이트·ARR $250억 유지·Cerebras $20B 컴퓨트 계약", val:"$852B", round:"$122B 펀딩", sector:"AGI", ipo:"2026 말 $1T+" },
+      { nm:"Anthropic", rs:"4/24 Alphabet 최대 $40B 공식화 $10B 선집행·5GW TPU 전담·4/20 Amazon $25B 합산 24h $65B+·ARR $300억 OpenAI 추월·$1M+ 엔터 1,000+·Claude Code 단독 ARR $25억·10월 IPO 목표", val:"$1T (2차시장)", round:"Alphabet $10B @ $350B (2026-04)", sector:"프론티어 AI", ipo:"2026.10 $400~500B 타겟" },
       { nm:"Databricks", rs:"레이크하우스·AI 통합·ARR $5.4B", val:"$134B", round:"Series L ($11B)", sector:"데이터·AI", ipo:"2026 H2 S-1" },
       { nm:"Cerebras", rs:"4/17 S-1 공개 제출 확정·2025 매출 $510M 순익 $87.9M·G42·MBZUAI 86% 매출·Morgan Stanley 리드·OpenAI 3년 $20B", val:"$23B", round:"5월 중순 프라이싱·$2B 조달", sector:"AI 하드웨어", ipo:"2026.05 나스닥 CBRS·$22~25B" },
       { nm:"Safe Superintelligence", rs:"Sutskever 창업·제품 전무·Alphabet·NVIDIA 베팅 AGI 연구소", val:"$32B", round:"Series B ($2B, 2025-04)", sector:"AGI 안전", ipo:"미정" },
@@ -50,7 +50,7 @@ const data = [
       { nm:"Vast", rs:"민간 우주정거장·NASA 후보·$500M 조달", val:"$20B", round:"Series B ($500M, 2026-03)", sector:"우주 인프라", ipo:"미정" },
       { nm:"Relativity Space", rs:"Eric Schmidt CEO·Terran R 2026년 말 첫 발사 목표", val:"$4.2B", round:"Angel (Schmidt, 2025-01)", sector:"3D 프린트 로켓", ipo:"미정" },
       { nm:"Waymo", rs:"연 1,500만 트립·11개 도시 확장·자율주행 최대 유니콘", val:"$126B", round:"Series D ($16B, 2026-02)", sector:"자율주행 로보택시", ipo:"미정 (2027 흑자 목표)" },
-      { nm:"Anduril", rs:"방산 AI·Lattice OS·Series H 최대 $8B 협상·2차시장 $73B+", val:"$60B", round:"Series G (2024-08)", sector:"방산 AI", ipo:"단기 아님(Luckey)" },
+      { nm:"Anduril", rs:"4/24 美 우주군 Golden Dome 우주기반 요격체 프로토타입 $3.2B 12개사 수주에 SpaceX·Lockheed·RTX·Northrop·General Dynamics와 함께 포함·2028 실증 목표·Series H 최대 $8B 협상", val:"$60B", round:"Series G (2024-08)", sector:"방산 AI", ipo:"단기 아님(Luckey)" },
       { nm:"Figure AI", rs:"휴머노이드 로봇·BMW 공장 90K+ 파트 로딩·피지컬 AI", val:"$39B", round:"Series C ($1B)", sector:"휴머노이드 로봇", ipo:"미정" },
     ]
   },

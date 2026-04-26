@@ -6,6 +6,14 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-27 07:40 KST",
+    summary: "Microsoft 4/23 사상 첫 자발적 바이아웃 약 8,750명·美 인력 7%·연령+근속 70 자격·Meta 4/23 8,000명 10% 정리 5/20 시행·6,000개 공석 폐쇄·CapEx $110~135B AI 인프라 집중 'payroll → AI capex' 전환",
+    changes: [
+      { type: "구조조정", sector: "Microsoft", detail: "Microsoft. 4/23 51년 사상 처음 자발적 바이아웃 프로그램 도입을 CNBC가 단독 보도하고 사내 메모로 확정 — 美 인력 약 7%(약 8,750명) 대상으로 연령과 근속 연수의 합이 70 이상인 시니어디렉터 이하 직원에게 5월 신청 옵션 제공. 영업 인센티브 플랜 제외. 작년부터 다회 정리해고에 이은 추가 조치로 Bing·Xbox·Azure·Devices 등 전사 부서가 대상이며 베네핏으로 위장한 인력 축소라는 평가. 배경은 FY26 CapEx $110~120B(연환산 $150B 페이스)을 AI 인프라에 집중 투입하는 동안 마진 방어가 절실해진 것 — M365 Copilot 유료 시트가 1월 1,500만(YoY +160%)에 도달했으나 美 시장 점유율은 18.8%(7월)→11.5%(1월)로 후퇴해 인당 매출 압박 가중. Meta 8,000명 정리와 같은 날 발표돼 빅테크 'payroll → AI capex' 전환의 분기점으로 평가.", time: "2026-04-27 07:40 KST" },
+      { type: "구조조정", sector: "Meta AI", detail: "Meta AI. 4/23 인사책임자 Janelle Gale의 전사 메모로 약 8,000명(전체 인력 10%) 정리 통보·5월 20일 시행 발표, 별도로 6,000개 공석을 영구 폐쇄. Gale은 '환영받지 못할 소식이지만 이것이 최선의 길'이라고 메모에 적시. CapEx 가이던스 $115~135B(2025년 $72B의 약 2배)를 데이터센터·NVIDIA GPU·커스텀 실리콘·Llama 생태계·Meta Superintelligence Labs에 거의 전액 투입하는 전략과 직결. Alexandr Wang 주도 MSL과 Muse Spark 출시 모멘텀을 컴퓨트·연구 인력에 집중하기 위한 재배치 성격으로, 안정 운영 부서가 가장 큰 영향. 4/29 장후 Q1 컨센 EPS $6.65·매출 $55.5B 발표가 즉각적 가이던스 검증대.", time: "2026-04-27 07:40 KST" },
+    ]
+  },
+  {
     date: "2026-04-25 13:24 KST",
     summary: "Anthropic Memory for Claude Managed Agents 4/24 퍼블릭 베타 — 매니지드 에이전트 세션 간 학습 영구화 + Netflix·Rakuten 등 조기 도입",
     changes: [

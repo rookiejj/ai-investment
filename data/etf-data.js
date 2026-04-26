@@ -32,7 +32,7 @@ const data = [
     title: "⚡ 에너지·원자력",
     tag: "석유·가스·우라늄",
     stocks: [
-      { tk:"XLE", nm:"Energy Select SPDR", rs:"Brent $105·WTI $94 4/24 종가 주간 +17%/+14%·4/25 美·이란 파키스탄 직접 회담 무산·트럼프 막판 취소·전화 협상 전환·호르무즈 봉쇄 해제 거부·XOM·CVX·COP 마진 확대 연장", aum:"38", er:"0.09%", ytd:"+28%", y1:"+18%" },
+      { tk:"XLE", nm:"Energy Select SPDR", rs:"Brent $105·WTI $94 4/24 종가 주간 +17%/+14%·Pezeshkian '협박·봉쇄 하 강요된 협상 거부' 4/26 공식화·호르무즈 통항 일평균 0척 두 달째 임박·1H 2026 회복 시나리오 폐기 단계", aum:"38", er:"0.09%", ytd:"+28%", y1:"+18%" },
       { tk:"URA", nm:"Global X Uranium", rs:"우라늄·원전 생태계·연초 조정 국면", aum:"4", er:"0.69%", ytd:"+6%", y1:"+30%" },
       { tk:"NLR", nm:"VanEck Uranium+Nuclear", rs:"원자력 밸류체인", aum:"1.5", er:"0.60%", ytd:"+22%", y1:"+35%" },
       { tk:"AMLP", nm:"Alerian MLP", rs:"MLP 파이프라인·배당", aum:"10", er:"0.85%", ytd:"+12%", y1:"+20%" },
@@ -58,7 +58,7 @@ const data = [
     title: "₿ 크립토·블록체인",
     tag: "비트코인·이더리움·디파이",
     stocks: [
-      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"주말 BTC $77.5K 횡보·미·이란 회담 무산에도 매도 제한적·달러 인덱스와 4년 최강 음의 상관·글로벌 크립토 펀드 주간 $1.4B 유입·$80K 재돌파 미완", aum:"58", er:"0.25%", ytd:"+4%", y1:"-12%" },
+      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"주말 BTC $77.9~78.1K 박스 견고·美 현물 BTC ETF 8거래일 연속 순유입 누적 $21억·총 자산 $1,020억 사상 첫 돌파·트럼프 만찬 총격에도 매수 흡수 우위", aum:"58", er:"0.25%", ytd:"+4%", y1:"-12%" },
       { tk:"FBTC", nm:"Fidelity Wise Origin BTC", rs:"비트코인 현물·피델리티·AUM $18B", aum:"18", er:"0.25%", ytd:"+2%", y1:"-14%" },
       { tk:"ETHA", nm:"iShares Ethereum Trust", rs:"이더리움 현물·4/14 +7%", aum:"10", er:"0.25%", ytd:"-12%", y1:"-8%" },
       { tk:"BITO", nm:"ProShares Bitcoin Strategy", rs:"비트코인 선물 최초", aum:"3", er:"0.95%", ytd:"-18%", y1:"-18%" },
@@ -71,8 +71,8 @@ const data = [
     title: "🇺🇸 미국 대형주",
     tag: "S&P500·나스닥·소형주",
     stocks: [
-      { tk:"SPY", nm:"SPDR S&P 500", rs:"4/24 S&P 500 7,165.08 +0.80% 기록 신고가·INTC +23.6% 사상 최고·반도체 18일 연속 상승·SLB Q1 매출 비트·4/29 GOOGL 대기", aum:"590", er:"0.09%", ytd:"+3%", y1:"+16%" },
-      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"4/24 Nasdaq 24,836.60 +1.63% 기록 신고가·NVDA 시총 $5T 재탈환·AMD +12% Stifel $320·Alphabet Anthropic $40B 투자 공식화", aum:"400", er:"0.20%", ytd:"+9%", y1:"+24%" },
+      { tk:"SPY", nm:"SPDR S&P 500", rs:"4/24 S&P 500 7,165.08 +0.80% 기록 신고가·트럼프 만찬 총격 무사·Pezeshkian 협상 거부 공식화·4/29 메가캡 4사 슈퍼위크·4/30 FOMC 변동성 4중 트리거", aum:"590", er:"0.09%", ytd:"+3%", y1:"+16%" },
+      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"4/24 Nasdaq 24,836.60 +1.63% 기록 신고가·Meta 8,000명·MSFT 사상 첫 바이아웃 8,750명 동시 구조조정·CapEx $115~135B AI 인프라 집중·4/29 동시 실적", aum:"400", er:"0.20%", ytd:"+9%", y1:"+24%" },
       { tk:"VOO", nm:"Vanguard S&P 500", rs:"세계 최대 ETF·AUM $827B·최저 보수", aum:"827", er:"0.03%", ytd:"+2%", y1:"+15%" },
       { tk:"VTI", nm:"Vanguard Total Stock", rs:"미국 전체 시장·4월 신고가 랠리", aum:"420", er:"0.03%", ytd:"+2%", y1:"+14%" },
       { tk:"DIA", nm:"SPDR Dow Jones", rs:"다우 30 우량주·다우 부진", aum:"35", er:"0.16%", ytd:"-3%", y1:"+10%" },

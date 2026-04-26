@@ -1,6 +1,16 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-27 08:00 KST",
+    summary: "Anduril 4/24 美 우주군 Golden Dome 우주기반 요격체 프로토타입 12개사 $3.2B 수주 SpaceX·Lockheed·RTX·Northrop·General Dynamics와 동시 선정·2028 실증 목표·Anthropic Claude Code 단독 ARR $25억 확인·OpenAI ChatGPT for Clinicians 99.6% safe & accurate 검증",
+    changes: [
+      { type: "정보 갱신", sector: "우주·모빌리티·방산",
+        detail: "Anduril. 4/24 美 우주군이 트럼프의 Golden Dome 미사일 방어 계획에 따라 우주기반 요격체(space-based interceptor) 프로토타입을 개발할 12개 기업에 최대 $3.2B 규모 'Other Transaction Authority' 계약을 수여하며 Anduril을 정식 선정. 동시 선정 기업은 SpaceX·Lockheed Martin·Northrop Grumman·RTX(Raytheon)·General Dynamics·Booz Allen Hamilton·GITAI USA·Quindar·Sci-Tec·True Anomaly로, 다수 디자인을 병렬 개발하는 구조에서 Anduril은 Lattice OS 기반 자율 위성·드론·요격 통합 노드를 강점으로 부각. 2028년 실증 목표로 단계적 마일스톤 자금 집행. 차세대 방산 AI 유니콘이 전통 프라임과 동등 입찰권을 확보한 첫 대형 케이스로, Series H $8B 협상 가속 및 2차시장 $73B+ 밸류의 펀더 강화.", time: "2026-04-27 08:00 KST" },
+      { type: "정보 갱신", sector: "AI·ML",
+        detail: "Anthropic. 4/26 후속 보도 — Claude Code 단독 연환산 매출이 $25억(annualized)을 돌파한 것으로 확인되며 전체 ARR $300억의 약 8.3%가 단일 코딩 제품에서 나오는 구조 정형화. $1M+ 엔터프라이즈 고객이 1,000+로 두 달 만에 두 배 늘었고 매출의 80%가 B2B에서 발생, OpenAI($250억 ARR·소비자 비중 큰 편)와의 매출 믹스 차별화가 IPO 밸류 방어 핵심 논거. 10월 IPO $400~500B 타겟 + 세컨더리 $1T라는 '2가지 가격표' 구도가 다음 주 4/29 메가캡 슈퍼위크 직후 추가 세컨더리 거래에서 검증대 통과 예상.", time: "2026-04-27 08:00 KST" },
+    ]
+  },
+  {
     date: "2026-04-25 07:10 KST",
     summary: "Alphabet Anthropic 최대 $40B 투자 공식화·$10B 현금 선집행+$30B 성과 마일스톤·Google Cloud 5년 5GW TPU 전담·Amazon $25B·AWS $100B와 합쳐 24h $65B+ 유입·10월 IPO $400~500B 타겟 펀더 재확증",
     changes: [
