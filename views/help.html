@@ -113,6 +113,47 @@ h1{font:700 24px/1.3 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.5px
 .already-banner.show{display:block}
 .already-banner b{font-weight:600}
 
+/* 보조 이슈: 광고 수신 거부 */
+.alt-issue{
+  background:#fff;border:1px solid var(--border);border-radius:14px;
+  padding:20px;margin-top:28px;
+}
+.alt-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}
+.alt-head-icon{
+  width:38px;height:38px;border-radius:11px;background:var(--warn-bg);
+  display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;
+}
+.alt-head-text .alt-title{
+  font:600 15px/1.4 Pretendard,sans-serif;color:var(--fg);margin-bottom:2px;letter-spacing:-0.2px;
+}
+.alt-head-text .alt-sub{font-size:13px;color:var(--mut);line-height:1.45}
+.alt-explain{
+  font-size:13.5px;color:var(--fg2);line-height:1.6;margin-bottom:14px;
+}
+.alt-method{
+  display:flex;gap:12px;padding:14px;background:var(--bg);border-radius:10px;
+  margin-bottom:8px;align-items:flex-start;
+}
+.alt-method:last-child{margin-bottom:0}
+.alt-method .tag{
+  width:24px;height:24px;border-radius:6px;background:var(--fg);color:#fff;
+  display:flex;align-items:center;justify-content:center;font:700 11px/1 Pretendard,sans-serif;
+  flex-shrink:0;margin-top:1px;letter-spacing:0;
+}
+.alt-method .body{flex:1;min-width:0}
+.alt-method .title{
+  font:600 13.5px/1.4 Pretendard,sans-serif;color:var(--fg);margin-bottom:6px;letter-spacing:-0.1px;
+}
+.alt-method .recommended{
+  display:inline-block;font-size:10.5px;color:var(--acc-deep);margin-left:6px;
+  background:var(--acc-light);padding:1px 7px;border-radius:99px;font-weight:600;letter-spacing:0.2px;
+  vertical-align:1px;
+}
+.alt-list{list-style:none;padding:0;margin:0;font-size:13px;color:var(--mut);line-height:1.65}
+.alt-list li{padding-left:14px;position:relative}
+.alt-list li::before{content:'·';position:absolute;left:5px;color:var(--sub);font-weight:bold}
+.alt-list b{color:var(--fg);font-weight:500}
+
 @media (max-width:480px){
   .card{padding:28px 22px 24px;border-radius:18px}
   h1{font-size:22px}
@@ -179,6 +220,44 @@ h1{font:700 24px/1.3 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.5px
       <span>카카오톡 채널 친구 추가</span>
     </a>
     <p class="cta-note">이미 친구 상태라면 이 단계는 건너뛰셔도 됩니다.</p>
+
+    <div class="alt-issue">
+      <div class="alt-head">
+        <div class="alt-head-icon">⚙️</div>
+        <div class="alt-head-text">
+          <div class="alt-title">친구 추가도 했는데 안 오시나요?</div>
+          <div class="alt-sub">카카오톡의 광고/마케팅 메시지 수신이 꺼져 있을 수 있어요.</div>
+        </div>
+      </div>
+      <p class="alt-explain">
+        매일 발송되는 뉴스 친구톡은 카카오 정책상 <b>광고성 메시지</b>로 분류됩니다.
+        카카오톡에서 마케팅 메시지를 차단해두셨다면 받을 수 없어요. 아래 두 방법 중 하나로 켜주세요.
+      </p>
+
+      <div class="alt-method">
+        <div class="tag">A</div>
+        <div class="body">
+          <div class="title">브리픽 채널만 따로 켜기 <span class="recommended">권장</span></div>
+          <ul class="alt-list">
+            <li>카카오톡 친구·채팅 탭에서 <b>브리픽 채널</b> 진입</li>
+            <li>채널 상단 <b>점 3개(⋯)</b> 또는 톱니 아이콘 탭</li>
+            <li><b>"광고/마케팅 메시지 수신"</b> 항목 켜기</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="alt-method">
+        <div class="tag">B</div>
+        <div class="body">
+          <div class="title">카카오톡 전체 설정으로 켜기</div>
+          <ul class="alt-list">
+            <li>카카오톡 더보기(⋯) → <b>설정(톱니)</b></li>
+            <li><b>개인/보안 → 광고성 정보 수신</b></li>
+            <li>카카오톡 채팅 수신 <b>동의</b></li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
     <div class="divider"></div>
 
