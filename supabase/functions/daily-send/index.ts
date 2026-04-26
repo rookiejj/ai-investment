@@ -118,13 +118,19 @@ function buildMessage(tabs: TabWithEntries[]): string {
   return parts.join("\n\n");
 }
 
-// 솔라피 실패 메시지를 구독자 배송 상태로 정규화
+// 솔라피 실패 메시지를 구독자 수신 상태로 정규화
+// SOLAPI/카카오 결과 코드 우선 매칭, 그 외는 텍스트 키워드로 폴백
 function deriveDeliveryState(msg: string | null | undefined): string {
   if (!msg) return "unknown";
   const m = msg.toLowerCase();
+  // 결과 코드 우선
+  if (/\b3050\b/.test(m)) return "not_friend";              // 친구가 아님
+  if (/\b3120\b/.test(m)) return "paused_ad";               // 광고성 메시지 수신 거부
+  if (/\b(3130|3140|3160)\b/.test(m)) return "blocked";     // 차단
+  // 텍스트 폴백
   if (m.includes("friend") || m.includes("친구") || m.includes("수신거부 친구")) return "not_friend";
   if (m.includes("block") || m.includes("차단")) return "blocked";
-  if (m.includes("광고") || m.includes("ad ") || m.includes("ad_") || m.includes("marketing")) return "paused_ad";
+  if (m.includes("광고") || m.includes("수신거부") || m.includes("ad ") || m.includes("ad_") || m.includes("marketing")) return "paused_ad";
   return "unknown";
 }
 

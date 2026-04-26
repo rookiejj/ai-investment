@@ -14,7 +14,11 @@ import { createClient } from "jsr:@supabase/supabase-js@2";
 function deriveDeliveryState(msg: string | null | undefined, code?: string): string {
   const combined = `${code ?? ""} ${msg ?? ""}`.toLowerCase();
   if (!combined.trim()) return "unknown";
-  if (combined.includes("3050") || combined.includes("72시간") || combined.includes("미사용")) return "not_friend";
+  // SOLAPI/카카오 결과 코드 우선 매칭
+  if (/\b3050\b/.test(combined) || combined.includes("72시간") || combined.includes("미사용")) return "not_friend";
+  if (/\b3120\b/.test(combined)) return "paused_ad";          // 광고성 메시지 수신 거부
+  if (/\b(3130|3140|3160)\b/.test(combined)) return "blocked";
+  // 텍스트 폴백
   if (combined.includes("friend") || combined.includes("친구")) return "not_friend";
   if (combined.includes("block") || combined.includes("차단")) return "blocked";
   if (combined.includes("광고") || combined.includes("수신거부") || combined.includes("ad_") || combined.includes("marketing")) return "paused_ad";
