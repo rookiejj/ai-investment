@@ -106,38 +106,39 @@ function smartCut(s: string, max: number): string {
   if (sp >= minKeep) return raw.slice(0, sp).trimEnd() + "…";
   return raw.slice(0, max - 1) + "…";
 }
-// 탭당 summary 본문 최대 길이 — 6탭 × ~150자 + 헤더/구분자 ≈ 960자로 1000 한도 마진 확보
-const TAB_SUMMARY_BUDGET = 150;
-function buildTabBlock(tab: TabWithEntries): string {
+function buildTabBlock(tab: TabWithEntries, summaryBudget?: number): string {
   const lines = [`${tab.emoji} ${tab.label}`, ""];
   const [first] = tab.entries;
   if (first) {
     const text = first.summary;
-    const cut = text.length > TAB_SUMMARY_BUDGET ? smartCut(text, TAB_SUMMARY_BUDGET) : text;
+    const cut = summaryBudget && text.length > summaryBudget ? smartCut(text, summaryBudget) : text;
     lines.push(`• ${cut}`);
   }
   return lines.join("\n");
 }
-function buildMessage(tabs: TabWithEntries[]): string {
+function buildMessage(tabs: TabWithEntries[], summaryBudget?: number): string {
   const parts = [`📊 브리픽 · ${kstDateLabel()}`];
-  for (const t of tabs) if (t.entries.length) parts.push(buildTabBlock(t));
+  for (const t of tabs) if (t.entries.length) parts.push(buildTabBlock(t, summaryBudget));
   return parts.join("\n\n");
 }
 
-// 한도 초과 시 (1) 마지막 탭 블록부터 제거 → (2) 마지막 탭의 끝 줄부터 제거 → (3) 그래도 넘으면 단순 절단
-function truncateForLimit(message: string, max: number): string {
-  if (message.length <= max) return message;
-  const blocks = message.split("\n\n");
+// 합산 한도 초과 시: 모든 탭 보존을 위해 탭당 균등 budget 적용 후 재조립.
+// 그래도 초과면 마지막 탭 블록부터 제거.
+function fitToLimit(tabs: TabWithEntries[], max: number): string {
+  const full = buildMessage(tabs);
+  if (full.length <= max) return full;
+  // 1차: 탭별 균등 budget으로 자동 cut
+  const validTabs = tabs.filter((t) => t.entries.length > 0);
+  if (validTabs.length > 0) {
+    const overhead = full.length - validTabs.reduce((s, t) => s + (t.entries[0]?.summary.length ?? 0), 0);
+    const budget = Math.max(60, Math.floor((max - overhead) / validTabs.length));
+    const cut = buildMessage(tabs, budget);
+    if (cut.length <= max) return cut;
+  }
+  // 2차: 마지막 탭 블록부터 제거
+  const blocks = full.split("\n\n");
   while (blocks.length > 1 && blocks.join("\n\n").length > max) blocks.pop();
   let out = blocks.join("\n\n");
-  if (out.length > max && blocks.length > 0) {
-    const lines = blocks[blocks.length - 1].split("\n");
-    while (lines.length > 1 && (blocks.slice(0, -1).concat([lines.join("\n")]).join("\n\n")).length > max) {
-      lines.pop();
-    }
-    blocks[blocks.length - 1] = lines.join("\n");
-    out = blocks.join("\n\n");
-  }
   if (out.length > max) out = out.slice(0, max - 1) + "…";
   return out;
 }
@@ -273,7 +274,7 @@ Deno.serve(async (req) => {
       if (entries.length) tabs.push({ ...t, entries });
     }
     const rawMessage = buildMessage(tabs);
-    const message = truncateForLimit(rawMessage, LIMIT);
+    const message = fitToLimit(tabs, LIMIT);
     const truncated = message.length < rawMessage.length;
     if (truncated) {
       console.warn(`[warn] message truncated: ${rawMessage.length}→${message.length} chars`);
