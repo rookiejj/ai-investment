@@ -106,19 +106,10 @@ function smartCut(s: string, max: number): string {
   if (sp >= minKeep) return raw.slice(0, sp).trimEnd() + "…";
   return raw.slice(0, max - 1) + "…";
 }
-// summary를 '·' 기준으로 분할 — 항목별 줄바꿈 표시용
-function splitSummaryItems(summary: string): string[] {
-  return summary
-    .split("·")
-    .map((s) => s.trim())
-    .filter((s) => s.length > 0);
-}
 function buildTabBlock(tab: TabWithEntries): string {
   const lines = [`${tab.emoji} ${tab.label}`, ""];
   const [first] = tab.entries;
-  if (first) {
-    for (const it of splitSummaryItems(first.summary)) lines.push(`• ${it}`);
-  }
+  if (first) lines.push(`• ${first.summary}`);
   return lines.join("\n");
 }
 function buildMessage(tabs: TabWithEntries[]): string {

@@ -72,19 +72,10 @@ function smartCut(s, max) {
   return raw.slice(0, max - 1) + '…';
 }
 
-// summary를 '·' 기준으로 분할 — 항목별 줄바꿈 표시용 (daily-send과 동일 규칙)
-function splitSummaryItems(summary) {
-  return summary
-    .split('·')
-    .map(s => s.trim())
-    .filter(s => s.length > 0);
-}
 function buildTabBlock(tab) {
   const lines = [`${tab.emoji} ${tab.label}`, ''];
   const [first] = tab.entries;
-  if (first) {
-    for (const it of splitSummaryItems(first.summary)) lines.push(`• ${it}`);
-  }
+  if (first) lines.push(`• ${first.summary}`);
   return lines.join('\n');
 }
 

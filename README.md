@@ -81,7 +81,7 @@ UI 노출 총 348개 항목, 6개 탭 (일본 70항목은 데이터 파일만 �
 | 종류 | 트리거 | 함수 | 카카오 타입 | 템플릿 / 본문 | 버튼 |
 |---|---|---|---|---|---|
 | **결제 완료 알림톡** (자동) | 결제 검증 직후 | `payment-confirm` | ATA | `KA01TP260424050234328BFWH2f2vfrN` (#{상점명}/#{상품명}/#{만료일}) | AC "채널 추가" |
-| **매일 뉴스 친구톡** (자동·수동) | 평일 KST 08:00 (cron) · 운영 대시보드 즉시 발송 | `daily-send` | CTA | 6개 탭 최신 1건씩, summary `·` 항목별 줄바꿈, 1000자 한도 초과 시 자동 트림 | WL "전체 뉴스 보기" → `/` |
+| **매일 뉴스 친구톡** (자동·수동) | 평일 KST 08:00 (cron) · 운영 대시보드 즉시 발송 | `daily-send` | CTA | 6개 탭 최신 1건씩 summary, 1000자 한도 초과 시 마지막 탭부터 자동 트림 | WL "전체 뉴스 보기" → `/` |
 | **재구독 안내 친구톡** (자동) | 매일 KST 20:00 (cron, D-1) | `expiry-notice` | CTA | 자유 텍스트 + 만료일 자동 삽입 | WL "재구독 신청하기" → `/renew` |
 | **미수신자 안내 알림톡** (수동) | 운영 대시보드 발송 | `admin-api` `manual_send` | ATA | `KA01TP260424060446377powJn1n8RGU` (#{상점명}) | WL "문제 해결하기" → `/help` |
 
@@ -128,7 +128,7 @@ UI 노출 총 348개 항목, 6개 탭 (일본 70항목은 데이터 파일만 �
 ```
 pg_cron(또는 admin-api 프록시) → Vault X-Cron-Secret → daily-send
     ├ GitHub Contents API로 data/*-update.js fetch
-    ├ summary를 '·' 기준 split → 항목별 글머리표 줄바꿈
+    ├ 한 탭 summary = 한 글머리표 줄(자유 문체 그대로)
     ├ 1000자 한도 초과 시 truncateForLimit (마지막 탭 블록부터 제거)
     ├ 만료 구독자 expired 전환 (paid_until 과거)
     ├ 활성 구독자 조회 (body.subscriberIds 있으면 그 ID만)
