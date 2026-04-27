@@ -47,7 +47,7 @@ ai-investment/
 │   │   ├── daily-send/           ← 매일 뉴스 친구톡 발송 (평일 cron 트리거)
 │   │   ├── expiry-notice/        ← D-1 만료 임박 재구독 안내 친구톡 (매일 20:00 cron)
 │   │   ├── solapi-webhook/       ← 솔라피 발송 결과 수신 (실시간 상태 갱신)
-│   │   └── admin-api/            ← 운영 대시보드용 (login / change_password / stats / logs / subscribers / payments / expiring_soon / manual_send[알림톡])
+│   │   └── admin-api/            ← 운영 대시보드용 (login / change_password / stats / logs / subscribers / payments / expiring_soon / manual_send[알림톡] / daily_send_preview / daily_send_now)
 │   ├── schedule.sql              ← 매일 뉴스 cron (평일 08:00 KST)
 │   ├── schedule-expiry.sql       ← 만료 임박 cron (매일 20:00 KST)
 │   ├── queries.sql               ← 운영 조회·상태 변경 템플릿
@@ -81,7 +81,7 @@ UI 노출 총 348개 항목, 6개 탭 (일본 70항목은 데이터 파일만 �
 | 종류 | 트리거 | 함수 | 카카오 타입 | 템플릿 / 본문 | 버튼 |
 |---|---|---|---|---|---|
 | **결제 완료 알림톡** (자동) | 결제 검증 직후 | `payment-confirm` | ATA | `KA01TP260424050234328BFWH2f2vfrN` (#{상점명}/#{상품명}/#{만료일}) | AC "채널 추가" |
-| **매일 뉴스 친구톡** (자동) | 평일 KST 08:00 (cron) | `daily-send` | CTA | 6개 탭 최신 1건씩 자유 텍스트 | WL "전체 뉴스 보기" → `/` |
+| **매일 뉴스 친구톡** (자동·수동) | 평일 KST 08:00 (cron) · 운영 대시보드 즉시 발송 | `daily-send` | CTA | 6개 탭 최신 1건씩, summary `·` 항목별 줄바꿈, 1000자 한도 초과 시 자동 트림 | WL "전체 뉴스 보기" → `/` |
 | **재구독 안내 친구톡** (자동) | 매일 KST 20:00 (cron, D-1) | `expiry-notice` | CTA | 자유 텍스트 + 만료일 자동 삽입 | WL "재구독 신청하기" → `/renew` |
 | **미수신자 안내 알림톡** (수동) | 운영 대시보드 발송 | `admin-api` `manual_send` | ATA | `KA01TP260424060446377powJn1n8RGU` (#{상점명}) | WL "문제 해결하기" → `/help` |
 
@@ -93,7 +93,7 @@ UI 노출 총 348개 항목, 6개 탭 (일본 70항목은 데이터 파일만 �
   - **📊 대시보드**: 3개 도메인 통합 카드(활성·7일 매출·14일 성공률·만료 임박·채널 미가입·결제 실패) + 14일 발송 차트 + 구독 상태 도넛 + 최근 결제 5건 + 만료 임박 5건
   - **👤 구독자**: 상태별 카운트 카드 + 구독 상태 분포 도넛 + 전체 목록(상태·구독 상태 필터)
   - **💳 결제**: 7일/30일 매출 카드 + 만료 임박(D-7) 리스트 + 결제 이력(상태·기간 필터 + 페이지네이션)
-  - **📬 발송**: 14일 성공률 카드 + 일별 발송량 차트 + 수동 발송(실패 구독자 재전송) + 발송 이력(상태·타입·**용도**·번호·기간 필터)
+  - **📬 발송**: 14일 성공률 카드 + 일별 발송량 차트 + **매일 뉴스 즉시 발송**(미리보기→대상 선택→발송, 2x2 그리드 UI) + 미수신자 안내 알림톡 수동 발송 + 발송 이력(상태·타입·**용도**·번호·기간 필터)
 - **발송 이력 용도 분류** — `template_code` 컬럼 기반 색상 뱃지: 매일 뉴스 / 수동 발송 / 결제 완료 / 재구독 안내 / (만료 안내 예약)
 - **수동 발송**: 친구톡 미도달 구독자(채널 미친구·광고 차단 등)에게 알림톡으로 안내 — 검수 승인 본문 고정, 미리보기 표시
 - **시각 표기**: 모두 브라우저 시스템 시간 기준
@@ -124,15 +124,19 @@ UI 노출 총 348개 항목, 6개 탭 (일본 70항목은 데이터 파일만 �
 
 > KST 08:00 = UTC 23:00(전날). UTC 기준 dow 0~4가 한국 평일에 해당.
 
-### 매일 뉴스 친구톡 (08:00 KST 평일)
+### 매일 뉴스 친구톡 (08:00 KST 평일 · 또는 관리자 수동 트리거)
 ```
-pg_cron → Vault X-Cron-Secret → daily-send
+pg_cron(또는 admin-api 프록시) → Vault X-Cron-Secret → daily-send
     ├ GitHub Contents API로 data/*-update.js fetch
+    ├ summary를 '·' 기준 split → 항목별 글머리표 줄바꿈
+    ├ 1000자 한도 초과 시 truncateForLimit (마지막 탭 블록부터 제거)
     ├ 만료 구독자 expired 전환 (paid_until 과거)
-    ├ 활성 구독자 조회 (status='active')
+    ├ 활성 구독자 조회 (body.subscriberIds 있으면 그 ID만)
     ├ 솔라피 친구톡 발송 (bms.targeting='I', disableSms=Y, 배치 500)
     └ send_logs INSERT (template_code='daily_news')
 ```
+
+운영 대시보드 발송 뷰의 **매일 뉴스 즉시 발송**은 admin-api `daily_send_preview` / `daily_send_now`가 동일 함수를 X-Cron-Secret으로 프록시 호출. 발송 누락·재발송 등 예외 상황 대응용.
 
 ### 재구독 안내 친구톡 (20:00 KST D-1)
 ```
@@ -155,6 +159,8 @@ pg_cron → Vault X-Cron-Secret → expiry-notice
 - `3120` → `paused_ad` (광고 수신 거부)
 - `3130 / 3140 / 3160` → `blocked` (차단)
 - 그 외 → 텍스트 키워드 폴백 (friend/차단/광고 등)
+
+> **`unknown` 분류 처리**: 시간대 제약(`3108`)·메시지 길이 초과(`MessagesNotFound`) 같은 시스템·운영 이슈로 실패하면 unknown으로 분류되는데, 이 경우엔 `subscribers.delivery_state`를 영속 갱신하지 **않음** (수신자 본인 책임이 아니므로 기존 상태 유지). `send_logs`엔 fail로 그대로 기록.
 
 ## 업데이트 워크플로우
 
@@ -233,7 +239,7 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
-- **2026-04-27**: 메시징 시스템 4종 정비 완료. 매일 뉴스 친구톡 발송을 평일(월~금) 한정 (`'0 23 * * 0-4'` UTC). 만료 임박 재구독 안내를 알림톡(검수 거절) → 친구톡(CTA) 자유 텍스트로 전환, 본문에 만료일 자동 삽입, "재구독 신청하기" WL 버튼으로 `/renew` 연결. 수동 발송을 친구톡 → 알림톡(ATA)으로 전환 — 검수 승인 템플릿 `KA01TP260424060446377powJn1n8RGU` (#{상점명}) + WL "문제 해결하기" → `/help`. 광고 수신 거부 대상에게도 도달 가능. SOLAPI 결과 코드 매핑 강화 — 3050→not_friend, **3120→paused_ad**, 3130/3140/3160→blocked. 기존 `unknown` 잘못 분류된 구독자 일괄 보정. `/help` 페이지 신설 후 마스터-디테일 구조로 재편 (`#friend` 채널 친구 추가 / `#ad` 광고 수신 켜기). 결제 복귀 시 입력값 복원 + 즉시 잠금. 관리자 시각 표기를 브라우저 시스템 시간 기준으로. 만료 임박 D-N 계산을 KST 캘린더 일수 차이로 (시각 ms ceil 오프바이원 수정). pg_cron `daily-expiry-notice` 추가 (UTC 11:00 = KST 20:00).
+- **2026-04-27**: 메시징 시스템 4종 정비 완료. 매일 뉴스 친구톡 발송을 평일(월~금) 한정 (`'0 23 * * 0-4'` UTC). 만료 임박 재구독 안내를 알림톡(검수 거절) → 친구톡(CTA) 자유 텍스트로 전환, 본문에 만료일 자동 삽입, "재구독 신청하기" WL 버튼으로 `/renew` 연결. 수동 발송을 친구톡 → 알림톡(ATA)으로 전환 — 검수 승인 템플릿 `KA01TP260424060446377powJn1n8RGU` (#{상점명}) + WL "문제 해결하기" → `/help`. 광고 수신 거부 대상에게도 도달 가능. SOLAPI 결과 코드 매핑 강화 — 3050→not_friend, **3120→paused_ad**, 3130/3140/3160→blocked. `unknown` 분류 시 `subscribers.delivery_state` 영속 갱신 skip — 시간대 제약·길이 초과 등 시스템 이슈로 정상 수신자가 잘못 분류되는 문제 차단. 기존 `unknown` 잘못 분류된 구독자 일괄 보정. **매일 뉴스 친구톡 가독성 개선** — summary를 `·` 기준 split해 항목별 글머리표 줄바꿈, 1000자 한도 초과 시 `truncateForLimit`으로 마지막 탭 블록부터 자동 제거. CLAUDE.md에 summary 작성 규칙 신설(`·`은 항목 구분자로만, 비교/병렬은 `,`/`vs`, 항목 자립성). **운영 대시보드 매일 뉴스 즉시 발송 추가** — 발송 뷰 2x2 그리드(좌:툴바·구독자 리스트 / 우:경고·미리보기), 미리보기는 선택 무관 동작, 발송은 미리보기 로드+1명 이상 선택 조건. admin-api `daily_send_preview` / `daily_send_now` 액션, daily-send에 `body.subscriberIds` 필터 수용. `/help` 페이지 신설 후 마스터-디테일 구조 (`#friend` / `#ad`). 결제 복귀 시 입력값 복원 + 즉시 잠금. 관리자 시각 표기를 브라우저 시스템 시간 기준으로. 만료 임박 D-N 계산을 KST 캘린더 일수 차이로 (시각 ms ceil 오프바이원 수정). pg_cron `daily-expiry-notice` 추가 (UTC 11:00 = KST 20:00). 오늘 아침 발송 누락 사고 — Vault `cron_secret` 갱신 후 함수 env `CRON_SECRET` 미동기화로 401 발생, 양쪽 동기화 + README 인증 섹션에 주의 메모 추가.
 - **2026-04-24**: 정적 HTML 5개를 `views/`로 이관, `vercel.json` rewrite로 URL 유지(`/admin` 등). 재구독 전용 페이지 `/renew` 신설. 운영 대시보드 `/admin` 2차 개편 — 사이드바를 **3개 도메인(구독자·결제·발송) + 상단 오버뷰 대시보드**로 재편(총 4개 뷰). 대시보드 뷰에 3도메인 통합 카드·차트·최근 결제 5건·만료 임박 5건. 결제 뷰 신설 — 7일/30일 매출, D-7 만료 임박 리스트, 결제 이력 페이지네이션. 발송 뷰 — 수동 발송을 이력 위로 이동(액션은 리스트 위가 관행). `send_logs.template_code` 컬럼 추가 → 발송 이력에 용도 뱃지·필터(매일 뉴스/수동 발송/결제 완료/재구독 안내/만료 안내). `admin-api`에 `payments`·`expiring_soon` 액션 추가, `stats` 확장(상태별 구독·30일 결제·만료 임박). UI 용어 정리 — "배송" → "구독"으로 치환(delivery_state 라벨). 비밀번호 변경 모달(`admin_settings` 해시 저장, 최소 4자). 솔라피 발송 결과 webhook 도입 (`solapi-webhook`) — 실제 전달 성공·실패가 실시간 `send_logs`·`subscribers.delivery_state`에 반영. 친구톡 `bms.targeting="I"` 명시로 채널 미가입자 사전 필터링. 탭 선정 기준 팝업. 법정 문서 3종(이용약관·개인정보처리방침·환불정책) 신설. 푸터 2단 레이아웃·사업자 정보. 구독 완료 전용 화면·카카오 채널 추가 강조 배너. 갤럭시아 테스트 PG 전환 (bypass ITEM_CODE + customerId). 친구톡 메시지 각 탭 1건으로 축소, 타이틀·푸터 구분선 제거, 탭 제목 아래 빈 줄 추가.
 - **2026-04-23**: `subscribers.delivery_state` 컬럼 도입 — 발송 후 구독자별 상태 스냅샷 자동 갱신. 푸터 사업자 정보·반응형 배치.
 - **2026-04-22**: 친구톡 메시지 포맷 단순화(탭당 1건, 구분선 제거, 네이티브 CTA 버튼). 모바일 결제창 REDIRECTION + 복귀 처리. DB 타임존 KST 전환.
