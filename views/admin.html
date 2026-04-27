@@ -294,7 +294,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
           <div class="section-subtitle">재구독 안내 수동 발송 대상입니다.</div>
           <div class="tbl-scroll">
             <table class="tbl">
-              <thead><tr><th>만료일</th><th>남은</th><th>전화번호</th><th>이름</th></tr></thead>
+              <thead><tr><th>만료일</th><th>남은 일수</th><th>전화번호</th><th>이름</th></tr></thead>
               <tbody id="overviewExpiringBody"><tr><td colspan="4" class="loading">로딩 중…</td></tr></tbody>
             </table>
           </div>
@@ -546,8 +546,10 @@ function fmtWon(n){
 }
 function daysUntil(iso){
   if(!iso) return null;
-  const diff = new Date(iso).getTime() - Date.now();
-  return Math.ceil(diff / 86400000);
+  // KST 기준 캘린더 날짜 차이 (시각 ms 차이 기반 ceil은 D+1 한 칸씩 밀리는 문제)
+  const targetKstDay = Math.floor((new Date(iso).getTime() + 9*3600000) / 86400000);
+  const nowKstDay    = Math.floor((Date.now() + 9*3600000) / 86400000);
+  return targetKstDay - nowKstDay;
 }
 
 // ─── 로그인 뷰 ───
