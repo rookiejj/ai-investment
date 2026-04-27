@@ -425,7 +425,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
         <div class="section-subtitle">평일 KST 08:00 자동 발송이 표준입니다. 발송 누락·재발송 등 예외 상황에서만 사용하세요. 대상 구독자를 선택하고 미리보기로 본문 확인 후 발송하세요.</div>
         <div class="ds-grid">
           <div class="filter-bar ds-toolbar">
-            <button class="btn" id="dsPreviewBtn" disabled>미리보기</button>
+            <button class="btn" id="dsPreviewBtn">미리보기</button>
             <button class="btn ghost" id="dsReload">대상 새로고침</button>
             <button class="btn ghost select-all" id="dsSelectAll">모두 선택/해제</button>
           </div>
@@ -973,8 +973,8 @@ function dsUpdateButtons(){
   const sel = n ? `선택 ${n}명` : '선택된 구독자 없음';
   const body = dsPreviewLoaded ? ` · 본문 ${dsPreviewCharCount}자` : '';
   $('dsCount').textContent = sel + body;
-  $('dsPreviewBtn').disabled = n === 0;
-  // 보낼 수 있는 조건: 미리보기 로드됨 + 선택 1명 이상
+  // 미리보기는 선택 무관하게 항상 가능 (본문 확인용)
+  // 발송은 미리보기 로드됨 + 선택 1명 이상 필요
   $('dsSendBtn').disabled = !dsPreviewLoaded || n === 0;
 }
 async function dsLoadTargets(){
@@ -1012,7 +1012,6 @@ $('dsSelectAll').addEventListener('click', ()=>{
 });
 $('dsPreviewBtn').addEventListener('click', async ()=>{
   const ids = dsSelectedIds();
-  if(!ids.length) return;
   $('dsPreviewBtn').disabled = true;
   $('dsPreviewBtn').textContent = '미리보기 로딩…';
   dsSetStatus('', '');
@@ -1048,7 +1047,7 @@ $('dsPreviewBtn').addEventListener('click', async ()=>{
     dsSetStatus('error', '미리보기 실패: ' + err.message);
   }finally{
     $('dsPreviewBtn').textContent = '미리보기';
-    $('dsPreviewBtn').disabled = dsSelectedIds().length === 0;
+    $('dsPreviewBtn').disabled = false;
   }
 });
 $('dsSendBtn').addEventListener('click', async ()=>{
@@ -1076,6 +1075,7 @@ $('dsSendBtn').addEventListener('click', async ()=>{
   }finally{
     // 발송 후 미리보기 잠금 해제(다음 시도 위해 다시 미리보기 필요)
     dsPreviewLoaded = false;
+    $('dsPreviewBtn').disabled = false;
     $('dsSendBtn').classList.add('ghost');
     dsUpdateButtons();
   }
