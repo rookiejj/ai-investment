@@ -2,14 +2,16 @@
  * 관리자 API Edge Function
  *
  * 엔드포인트(모두 POST, body.action으로 라우팅):
- *   action='login'            → { password }           → { ok, token }
- *   action='change_password'  → { currentPassword, newPassword }
- *   action='stats'            → { token }              → 도메인별 통합 집계
- *   action='logs'             → { token, filters }     → { rows, total }
- *   action='subscribers'      → { token, filter? }     → { rows }
- *   action='payments'         → { token, filters? }    → { rows, total }
- *   action='expiring_soon'    → { token, days? }       → { rows } — 만료 임박
- *   action='manual_send'      → { token, subscriberIds, message? } → { ok, sent, failed }
+ *   action='login'              → { password }           → { ok, token }
+ *   action='change_password'    → { currentPassword, newPassword }
+ *   action='stats'              → { token }              → 도메인별 통합 집계
+ *   action='logs'               → { token, filters }     → { rows, total }
+ *   action='subscribers'        → { token, filter? }     → { rows }
+ *   action='payments'           → { token, filters? }    → { rows, total }
+ *   action='expiring_soon'      → { token, days? }       → { rows } — 만료 임박
+ *   action='manual_send'        → { token, subscriberIds } → { ok, sent, failed } — 알림톡
+ *   action='daily_send_preview' → { token } → { preview, alreadySent } — 매일 뉴스 친구톡 드라이런
+ *   action='daily_send_now'     → { token } → { response } — 매일 뉴스 친구톡 즉시 발송
  *
  * 인증: login 외 모든 액션은 token(세션) 필요.
  *       token = HMAC(timestamp:version, ADMIN_SESSION_SECRET) + 만료 확인.
@@ -353,6 +355,53 @@ Deno.serve(async (req) => {
       const { data, error } = await q.order("subscribed_at", { ascending: false }).limit(500);
       if (error) throw error;
       return json({ ok: true, rows: data ?? [] }, { cors });
+    }
+
+    // ─── daily_send_preview / daily_send_now ─── 매일 뉴스 친구톡 수동 트리거
+    if (action === "daily_send_preview" || action === "daily_send_now") {
+      const cronSecret = Deno.env.get("CRON_SECRET");
+      const supabaseUrl = Deno.env.get("SUPABASE_URL");
+      if (!cronSecret || !supabaseUrl) {
+        return json({ ok: false, error: "CRON_SECRET or SUPABASE_URL missing" }, { status: 500, cors });
+      }
+      const dryRun = action === "daily_send_preview";
+      const url = `${supabaseUrl}/functions/v1/daily-send${dryRun ? "?dry=1" : ""}`;
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-Cron-Secret": cronSecret },
+        body: "{}",
+      });
+      const respBody = await res.json().catch(() => ({}));
+
+      // 프리뷰 시 오늘 이미 발송된 daily_news 로그 카운트도 함께 반환
+      if (dryRun) {
+        const nowMs = Date.now();
+        const kstNowMs = nowMs + 9 * 3600000;
+        const kstDay = Math.floor(kstNowMs / 86400000);
+        const kstDayStartUtcIso = new Date(kstDay * 86400000 - 9 * 3600000).toISOString();
+        const { data: already } = await supabase
+          .from("send_logs")
+          .select("sent_at")
+          .eq("template_code", "daily_news")
+          .gte("sent_at", kstDayStartUtcIso)
+          .order("sent_at", { ascending: false })
+          .limit(1);
+        const earliestKstHour = new Date(kstNowMs).getUTCHours();
+        return json({
+          ok: true,
+          status: res.status,
+          preview: respBody,
+          alreadySentToday: (already?.length ?? 0) > 0,
+          alreadySentAt: already?.[0]?.sent_at ?? null,
+          isAdRestrictedHour: earliestKstHour < 8 || earliestKstHour >= 21,
+        }, { cors });
+      }
+
+      return json({
+        ok: res.ok && (respBody as { ok?: boolean })?.ok !== false,
+        status: res.status,
+        response: respBody,
+      }, { cors });
     }
 
     // ─── manual_send ─── (알림톡 ATA, 본문은 검수 승인 템플릿 고정)
