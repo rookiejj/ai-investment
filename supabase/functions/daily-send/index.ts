@@ -107,7 +107,6 @@ function smartCut(s: string, max: number): string {
   return raw.slice(0, max - 1) + "…";
 }
 // summary를 '·' 기준으로 분할 — 항목별 줄바꿈 표시용
-const MAX_ITEMS_PER_TAB = 4;
 function splitSummaryItems(summary: string): string[] {
   return summary
     .split("·")
@@ -118,11 +117,7 @@ function buildTabBlock(tab: TabWithEntries): string {
   const lines = [`${tab.emoji} ${tab.label}`, ""];
   const [first] = tab.entries;
   if (first) {
-    const items = splitSummaryItems(first.summary);
-    const shown = items.slice(0, MAX_ITEMS_PER_TAB);
-    for (const it of shown) lines.push(`• ${it}`);
-    const rest = items.length - shown.length;
-    if (rest > 0) lines.push(`• 외 ${rest}건`);
+    for (const it of splitSummaryItems(first.summary)) lines.push(`• ${it}`);
   }
   return lines.join("\n");
 }
@@ -244,6 +239,13 @@ Deno.serve(async (req) => {
     const dryRun = url.searchParams.get("dry") === "1"
       || url.searchParams.get("dryRun") === "1";
 
+    // body.subscriberIds 가 있으면 해당 active 구독자만 발송 (운영 대시보드 선택 발송용)
+    const reqBody = await req.json().catch(() => ({} as Record<string, unknown>));
+    const rawIds = (reqBody as { subscriberIds?: unknown }).subscriberIds;
+    const subscriberIds: string[] | null = Array.isArray(rawIds)
+      ? rawIds.filter((x): x is string => typeof x === "string" && x.length > 0)
+      : null;
+
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
@@ -274,12 +276,15 @@ Deno.serve(async (req) => {
       console.log(`[info] expired ${expiredCount} subscriber(s)`);
     }
 
-    // 3) 활성 구독자 조회 (유료 유효 + 무료 NULL 모두 포함)
-    const { data: subs, error: subErr } = await supabase
+    // 3) 활성 구독자 조회 (subscriberIds 필터 있으면 해당 ID만)
+    let subQ = supabase
       .from("subscribers")
       .select("id, phone, name")
-      .eq("status", "active")
-      .returns<Subscriber[]>();
+      .eq("status", "active");
+    if (subscriberIds && subscriberIds.length > 0) {
+      subQ = subQ.in("id", subscriberIds);
+    }
+    const { data: subs, error: subErr } = await subQ.returns<Subscriber[]>();
     if (subErr) throw subErr;
 
     if (dryRun) {

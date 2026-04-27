@@ -391,11 +391,16 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
         <div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
       </div>
 
-      <div class="section daily-send-box">
+      <div class="section daily-send-box manual-send">
         <div class="section-title">매일 뉴스 친구톡 즉시 발송</div>
-        <div class="section-subtitle">평일 KST 08:00 자동 발송이 표준입니다. 발송 누락·재발송 등 예외 상황에서만 사용하세요.</div>
-        <div class="ds-actions" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
-          <button class="btn" id="dsPreviewBtn">미리보기</button>
+        <div class="section-subtitle">평일 KST 08:00 자동 발송이 표준입니다. 발송 누락·재발송 등 예외 상황에서만 사용하세요. 대상 구독자를 선택하고 미리보기로 본문 확인 후 발송하세요.</div>
+        <div class="filter-bar">
+          <button class="btn" id="dsReload">대상 새로고침</button>
+          <button class="btn ghost select-all" id="dsSelectAll">모두 선택/해제</button>
+        </div>
+        <div class="targets" id="dsTargets"><div class="loading">활성 구독자 로딩 중…</div></div>
+        <div class="filter-bar">
+          <button class="btn" id="dsPreviewBtn" disabled>미리보기</button>
           <button class="btn ghost" id="dsSendBtn" disabled>지금 발송</button>
           <span id="dsCount" style="color:var(--mut);font-size:13px;align-self:center"></span>
         </div>
@@ -608,7 +613,7 @@ function loadView(name){
   if(name === 'overview'){ loadOverview(); }
   else if(name === 'subscribers'){ loadSubsStats(); loadSubscribers(); }
   else if(name === 'payments'){ loadPaysStats(); loadExpiring(); loadPayments(); }
-  else if(name === 'sends'){ loadSendsStats(); loadLogs(); loadManualTargets(); }
+  else if(name === 'sends'){ loadSendsStats(); loadLogs(); loadManualTargets(); dsLoadTargets(); }
 }
 function reloadCurrentView(){
   loadedViews.delete(currentView);
@@ -917,7 +922,8 @@ $('pReset').addEventListener('click', ()=>{
 // ═══ 발송 뷰 ═══
 let dailyChart;
 
-// 매일 뉴스 즉시 발송
+// 매일 뉴스 즉시 발송 (대상 선택 + 미리보기 + 발송)
+let dsRows = [];
 let dsPreviewLoaded = false;
 function dsSetStatus(type, text){
   const s = $('dsStatus');
@@ -927,12 +933,63 @@ function dsSetStatus(type, text){
   s.style.background = type==='success' ? '#d4fae8' : type==='error' ? '#fde8e8' : '#fff4e5';
   s.style.color = type==='success' ? '#0a7a50' : type==='error' ? 'var(--danger)' : 'var(--warn)';
 }
+function dsSelectedIds(){
+  return [...$('dsTargets').querySelectorAll('input[type=checkbox]:checked')].map(c=>c.dataset.id);
+}
+function dsUpdateButtons(){
+  const n = dsSelectedIds().length;
+  $('dsCount').textContent = n ? `선택 ${n}명` : '선택된 구독자 없음';
+  $('dsPreviewBtn').disabled = n === 0;
+  // 선택 변경 시 이전 미리보기 무효화
+  if(dsPreviewLoaded){
+    dsPreviewLoaded = false;
+    $('dsSendBtn').disabled = true;
+    $('dsSendBtn').classList.add('ghost');
+    $('dsPreview').style.display = 'none';
+    $('dsWarn').style.display = 'none';
+  }
+}
+async function dsLoadTargets(){
+  $('dsTargets').innerHTML = '<div class="loading">활성 구독자 로딩 중…</div>';
+  try{
+    const r = await api('subscribers', { filter: { status: 'active' } });
+    dsRows = r.rows || [];
+    if(!dsRows.length){
+      $('dsTargets').innerHTML = '<div class="empty">활성 구독자가 없습니다</div>';
+      dsUpdateButtons();
+      return;
+    }
+    $('dsTargets').innerHTML = dsRows.map(r=>(
+      `<div class="target-row">`
+      +`<input type="checkbox" data-id="${r.id}" checked>`
+      +`<span class="phone">${r.phone}</span>`
+      +`<span style="color:var(--mut);font-size:12px">${r.name||''}</span>`
+      +`<span class="badge ${r.delivery_state||'unknown'}" style="margin-left:auto">${r.delivery_state||'unknown'}</span>`
+      +`</div>`
+    )).join('');
+    $('dsTargets').querySelectorAll('input[type=checkbox]').forEach(c=>{
+      c.addEventListener('change', dsUpdateButtons);
+    });
+    dsUpdateButtons();
+  }catch(err){
+    $('dsTargets').innerHTML = `<div class="empty">오류: ${err.message}</div>`;
+  }
+}
+$('dsReload').addEventListener('click', dsLoadTargets);
+$('dsSelectAll').addEventListener('click', ()=>{
+  const boxes = $('dsTargets').querySelectorAll('input[type=checkbox]');
+  const allChecked = [...boxes].every(c=>c.checked);
+  boxes.forEach(c=>{ c.checked = !allChecked; });
+  dsUpdateButtons();
+});
 $('dsPreviewBtn').addEventListener('click', async ()=>{
+  const ids = dsSelectedIds();
+  if(!ids.length) return;
   $('dsPreviewBtn').disabled = true;
   $('dsPreviewBtn').textContent = '미리보기 로딩…';
   dsSetStatus('', '');
   try{
-    const r = await api('daily_send_preview');
+    const r = await api('daily_send_preview', { subscriberIds: ids });
     const p = r.preview || {};
     $('dsPreview').style.display = 'block';
     $('dsPreview').textContent = p.message || '(메시지 없음)';
@@ -957,22 +1014,23 @@ $('dsPreviewBtn').addEventListener('click', async ()=>{
     dsPreviewLoaded = true;
     $('dsSendBtn').disabled = false;
     $('dsSendBtn').classList.remove('ghost');
-    $('dsSendBtn').classList.add('btn');
   }catch(err){
     dsSetStatus('error', '미리보기 실패: ' + err.message);
   }finally{
-    $('dsPreviewBtn').disabled = false;
+    $('dsPreviewBtn').disabled = dsSelectedIds().length === 0;
     $('dsPreviewBtn').textContent = '미리보기';
   }
 });
 $('dsSendBtn').addEventListener('click', async ()=>{
   if(!dsPreviewLoaded) return;
-  if(!confirm('미리보기 본문대로 활성 구독자에게 매일 뉴스 친구톡을 발송할까요? 카카오 발송 비용이 발생합니다.')) return;
+  const ids = dsSelectedIds();
+  if(!ids.length) return;
+  if(!confirm(`선택한 ${ids.length}명에게 미리보기 본문 그대로 매일 뉴스 친구톡을 발송할까요? 카카오 발송 비용이 발생합니다.`)) return;
   $('dsSendBtn').disabled = true;
   $('dsPreviewBtn').disabled = true;
   dsSetStatus('info', '발송 요청 중…');
   try{
-    const r = await api('daily_send_now');
+    const r = await api('daily_send_now', { subscriberIds: ids });
     const resp = r.response || {};
     if(r.ok){
       dsSetStatus('success', `발송 요청 성공 — ${resp.charCount ?? 0}자, 결과는 발송 이력에서 확인하세요.`);
@@ -986,9 +1044,10 @@ $('dsSendBtn').addEventListener('click', async ()=>{
   }catch(err){
     dsSetStatus('error', '오류: ' + err.message);
   }finally{
-    $('dsPreviewBtn').disabled = false;
     dsPreviewLoaded = false;
+    $('dsPreviewBtn').disabled = dsSelectedIds().length === 0;
     $('dsSendBtn').disabled = true;
+    $('dsSendBtn').classList.add('ghost');
   }
 });
 

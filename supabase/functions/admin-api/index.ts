@@ -365,11 +365,16 @@ Deno.serve(async (req) => {
         return json({ ok: false, error: "CRON_SECRET or SUPABASE_URL missing" }, { status: 500, cors });
       }
       const dryRun = action === "daily_send_preview";
+      const rawIds = (body as { subscriberIds?: unknown }).subscriberIds;
+      const subscriberIds = Array.isArray(rawIds)
+        ? (rawIds as unknown[]).filter((x): x is string => typeof x === "string" && x.length > 0)
+        : null;
+      const proxyBody = JSON.stringify(subscriberIds && subscriberIds.length > 0 ? { subscriberIds } : {});
       const url = `${supabaseUrl}/functions/v1/daily-send${dryRun ? "?dry=1" : ""}`;
       const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json", "X-Cron-Secret": cronSecret },
-        body: "{}",
+        body: proxyBody,
       });
       const respBody = await res.json().catch(() => ({}));
 

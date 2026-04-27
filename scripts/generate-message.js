@@ -73,7 +73,6 @@ function smartCut(s, max) {
 }
 
 // summary를 '·' 기준으로 분할 — 항목별 줄바꿈 표시용 (daily-send과 동일 규칙)
-const MAX_ITEMS_PER_TAB = 4;
 function splitSummaryItems(summary) {
   return summary
     .split('·')
@@ -84,11 +83,7 @@ function buildTabBlock(tab) {
   const lines = [`${tab.emoji} ${tab.label}`, ''];
   const [first] = tab.entries;
   if (first) {
-    const items = splitSummaryItems(first.summary);
-    const shown = items.slice(0, MAX_ITEMS_PER_TAB);
-    for (const it of shown) lines.push(`• ${it}`);
-    const rest = items.length - shown.length;
-    if (rest > 0) lines.push(`• 외 ${rest}건`);
+    for (const it of splitSummaryItems(first.summary)) lines.push(`• ${it}`);
   }
   return lines.join('\n');
 }
