@@ -137,12 +137,22 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 .badge.tpl-daily_news{background:#e8f4ff;color:#0a6abf;border:none}
 .badge.tpl-manual{background:#f2f2f2;color:var(--mut);border:none}
 
-/* 매일 뉴스 즉시 발송: 2-컬럼 레이아웃 */
-.ds-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px;align-items:stretch}
-.ds-grid .targets{margin-bottom:0;max-height:320px;height:320px}
-.ds-grid .ds-preview-col{display:flex;flex-direction:column;min-width:0}
+/* 매일 뉴스 즉시 발송: 2x2 그리드 (좌:툴바·리스트 / 우:경고·미리보기) */
+.ds-grid{
+  display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto 320px;
+  gap:8px 16px;margin-bottom:8px;align-items:stretch;
+}
+.ds-grid > * { min-width: 0; }
+.ds-grid .ds-toolbar{margin-bottom:0;align-self:start}
+.ds-grid .targets{margin-bottom:0;height:320px;max-height:320px}
+.ds-warn-area{
+  background:#fff4e5;color:var(--warn);border-radius:8px;padding:8px 12px;
+  font-size:12.5px;line-height:1.5;display:flex;flex-direction:column;justify-content:center;
+  gap:2px;align-self:start;
+}
+.ds-warn-area.info{background:#f7f7f7;color:var(--sub)}
 .ds-preview-area{
-  flex:1;background:#fafafa;border:1px solid var(--border);border-radius:8px;
+  background:#fafafa;border:1px solid var(--border);border-radius:8px;
   padding:12px 14px;font:12.5px/1.55 'Geist Mono','SF Mono',monospace;color:var(--fg2);
   white-space:pre-wrap;word-break:break-word;height:320px;max-height:320px;overflow:auto;
 }
@@ -151,7 +161,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
   display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;
 }
 @media (max-width:900px){
-  .ds-grid{grid-template-columns:1fr}
+  .ds-grid{grid-template-columns:1fr;grid-template-rows:auto auto auto auto}
   .ds-grid .targets{height:240px;max-height:240px}
   .ds-preview-area{height:240px;max-height:240px}
 }
@@ -413,17 +423,15 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
       <div class="section daily-send-box manual-send">
         <div class="section-title">매일 뉴스 친구톡 즉시 발송</div>
         <div class="section-subtitle">평일 KST 08:00 자동 발송이 표준입니다. 발송 누락·재발송 등 예외 상황에서만 사용하세요. 대상 구독자를 선택하고 미리보기로 본문 확인 후 발송하세요.</div>
-        <div class="filter-bar">
-          <button class="btn" id="dsPreviewBtn" disabled>미리보기</button>
-          <button class="btn ghost" id="dsReload">대상 새로고침</button>
-          <button class="btn ghost select-all" id="dsSelectAll">모두 선택/해제</button>
-        </div>
         <div class="ds-grid">
-          <div class="targets" id="dsTargets"><div class="loading">활성 구독자 로딩 중…</div></div>
-          <div class="ds-preview-col">
-            <div id="dsWarn" style="display:none;background:#fff4e5;color:var(--warn);border-radius:8px;padding:10px 12px;font-size:13px;line-height:1.5;margin-bottom:8px"></div>
-            <pre id="dsPreview" class="ds-preview-area placeholder">미리보기 버튼을 눌러 본문을 확인하세요</pre>
+          <div class="filter-bar ds-toolbar">
+            <button class="btn" id="dsPreviewBtn" disabled>미리보기</button>
+            <button class="btn ghost" id="dsReload">대상 새로고침</button>
+            <button class="btn ghost select-all" id="dsSelectAll">모두 선택/해제</button>
           </div>
+          <div class="ds-warn-area info" id="dsWarn">미리보기 후 발송 전 주의 사항이 여기에 표시됩니다.</div>
+          <div class="targets" id="dsTargets"><div class="loading">활성 구독자 로딩 중…</div></div>
+          <pre id="dsPreview" class="ds-preview-area placeholder">미리보기 버튼을 눌러 본문을 확인하세요</pre>
         </div>
         <div class="filter-bar" style="margin-top:4px">
           <button class="btn ghost" id="dsSendBtn" disabled>지금 발송</button>
@@ -1026,10 +1034,12 @@ $('dsPreviewBtn').addEventListener('click', async ()=>{
       warns.push(`⚠ 메시지 ${p.charCount}자가 한도 ${p.limit}자를 초과 — 일부 잘릴 수 있음.`);
     }
     if(warns.length){
-      $('dsWarn').style.display = 'block';
+      $('dsWarn').classList.remove('info');
       $('dsWarn').innerHTML = warns.map(w=>`<div>${w}</div>`).join('');
     } else {
-      $('dsWarn').style.display = 'none';
+      $('dsWarn').classList.remove('info');
+      $('dsWarn').classList.add('info');
+      $('dsWarn').textContent = '✓ 발송 가능 — 주의 사항 없음.';
     }
     dsPreviewLoaded = true;
     $('dsSendBtn').classList.remove('ghost');
