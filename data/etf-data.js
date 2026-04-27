@@ -58,7 +58,7 @@ const data = [
     title: "₿ 크립토·블록체인",
     tag: "비트코인·이더리움·디파이",
     stocks: [
-      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"주말 BTC $77.9~78.1K 박스·이란 호르무즈 재개방 신제안에 $78K 상단 시도·美 현물 BTC ETF 8거래일 연속 순유입 누적 $21억·총 자산 $1,020억 사상 첫 돌파·달러와 4년 최강 음의 상관", aum:"58", er:"0.25%", ytd:"+4%", y1:"-12%" },
+      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"4/27 BTC $79,032 $80K 저항 근접·美 현물 BTC ETF 8거래일 연속 순유입 누적 $21억·총 자산 $1,020억 사상 첫 돌파·달러와 4년 최강 음의 상관·FOMC 동결 시그널 USD 약세 macro 헤지 재정의", aum:"58", er:"0.25%", ytd:"+5%", y1:"-11%" },
       { tk:"FBTC", nm:"Fidelity Wise Origin BTC", rs:"비트코인 현물·피델리티·AUM $18B", aum:"18", er:"0.25%", ytd:"+2%", y1:"-14%" },
       { tk:"ETHA", nm:"iShares Ethereum Trust", rs:"이더리움 현물·4/14 +7%", aum:"10", er:"0.25%", ytd:"-12%", y1:"-8%" },
       { tk:"BITO", nm:"ProShares Bitcoin Strategy", rs:"비트코인 선물 최초", aum:"3", er:"0.95%", ytd:"-18%", y1:"-18%" },
@@ -103,7 +103,7 @@ const data = [
       { tk:"INDA", nm:"iShares MSCI India", rs:"인도 시장", aum:"12", er:"0.64%", ytd:"+10%", y1:"+18%" },
       { tk:"VEA", nm:"Vanguard FTSE Developed", rs:"선진국(미국 제외)", aum:"130", er:"0.05%", ytd:"+9%", y1:"+16%" },
       { tk:"FXI", nm:"iShares China Large-Cap", rs:"중국 대형주 50종·H주·관세 변동성", aum:"5.8", er:"0.74%", ytd:"-12%", y1:"+15%" },
-      { tk:"EWY", nm:"iShares MSCI South Korea", rs:"SK하이닉스 Q1 매출 52.6조·OP 37.61조·순익 40.35조 사상 최대·OPM 72%·韓 4월 첫 10일 수출 +36.7% 반도체 +152.5%·삼성·현대 노조 동반 임금 인상 압력", aum:"16", er:"0.59%", ytd:"+55%", y1:"+151%" },
+      { tk:"EWY", nm:"iShares MSCI South Korea", rs:"4/27 KOSPI 6,615 +2.15% 사상 최고·시총 6,000조원 첫 돌파·SK하이닉스 +5.56% ATH 시총 글로벌 17위·외국인·기관 1.99조원 순매수·韓 4월 첫 10일 수출 +36.7% 반도체 +152.5%", aum:"16", er:"0.59%", ytd:"+58%", y1:"+154%" },
     ]
   },
 ];
