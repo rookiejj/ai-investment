@@ -127,6 +127,24 @@ function buildMessage(tabs: TabWithEntries[]): string {
   return parts.join("\n\n");
 }
 
+// 한도 초과 시 (1) 마지막 탭 블록부터 제거 → (2) 마지막 탭의 끝 줄부터 제거 → (3) 그래도 넘으면 단순 절단
+function truncateForLimit(message: string, max: number): string {
+  if (message.length <= max) return message;
+  const blocks = message.split("\n\n");
+  while (blocks.length > 1 && blocks.join("\n\n").length > max) blocks.pop();
+  let out = blocks.join("\n\n");
+  if (out.length > max && blocks.length > 0) {
+    const lines = blocks[blocks.length - 1].split("\n");
+    while (lines.length > 1 && (blocks.slice(0, -1).concat([lines.join("\n")]).join("\n\n")).length > max) {
+      lines.pop();
+    }
+    blocks[blocks.length - 1] = lines.join("\n");
+    out = blocks.join("\n\n");
+  }
+  if (out.length > max) out = out.slice(0, max - 1) + "…";
+  return out;
+}
+
 // 솔라피 실패 메시지를 구독자 수신 상태로 정규화
 // SOLAPI/카카오 결과 코드 우선 매칭, 그 외는 텍스트 키워드로 폴백
 function deriveDeliveryState(msg: string | null | undefined): string {
@@ -251,15 +269,17 @@ Deno.serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
     );
 
-    // 1) 메시지 조립
+    // 1) 메시지 조립 (한도 초과 시 탭/줄 단위 자동 트림)
     const tabs: TabWithEntries[] = [];
     for (const t of TABS) {
       const entries = await fetchTabEntries(t);
       if (entries.length) tabs.push({ ...t, entries });
     }
-    const message = buildMessage(tabs);
-    if (message.length > LIMIT) {
-      console.warn(`[warn] message exceeds limit: ${message.length}/${LIMIT}`);
+    const rawMessage = buildMessage(tabs);
+    const message = truncateForLimit(rawMessage, LIMIT);
+    const truncated = message.length < rawMessage.length;
+    if (truncated) {
+      console.warn(`[warn] message truncated: ${rawMessage.length}→${message.length} chars`);
     }
 
     // 2) 만료된 구독자 상태 최신화 (paid_until이 과거인 active → expired)
@@ -290,7 +310,8 @@ Deno.serve(async (req) => {
     if (dryRun) {
       return Response.json({
         ok: true, dryRun: true,
-        charCount: message.length, limit: LIMIT,
+        charCount: message.length, rawCharCount: rawMessage.length, limit: LIMIT,
+        truncated,
         overflow: message.length > LIMIT,
         activeSubscribers: subs?.length ?? 0,
         tabCount: tabs.length,

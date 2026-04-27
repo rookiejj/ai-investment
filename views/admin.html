@@ -144,7 +144,16 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 }
 .ds-grid > * { min-width: 0; }
 .ds-grid .ds-toolbar{margin-bottom:0;align-self:start}
-.ds-grid .targets{margin-bottom:0;height:320px;max-height:320px}
+.daily-send-box .targets{
+  display:flex;flex-direction:column;gap:4px;
+  height:320px;max-height:320px;overflow-y:auto;
+  border:1px solid var(--border);border-radius:8px;padding:10px;
+  background:#fcfcfc;margin:0;
+}
+.daily-send-box .target-row{display:flex;align-items:center;gap:10px;padding:6px 4px;border-bottom:1px dashed var(--border)}
+.daily-send-box .target-row:last-child{border-bottom:none}
+.daily-send-box .target-row input[type="checkbox"]{margin:0;accent-color:var(--acc-deep)}
+.daily-send-box .target-row .phone{font-family:'Geist Mono','SF Mono',monospace;font-size:12px;color:var(--fg2)}
 .ds-warn-area{
   background:#fff4e5;color:var(--warn);border-radius:8px;padding:8px 12px;
   font-size:12.5px;line-height:1.5;display:flex;flex-direction:column;justify-content:center;
@@ -162,7 +171,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 }
 @media (max-width:900px){
   .ds-grid{grid-template-columns:1fr;grid-template-rows:auto auto auto auto}
-  .ds-grid .targets{height:240px;max-height:240px}
+  .daily-send-box .targets{height:240px;max-height:240px}
   .ds-preview-area{height:240px;max-height:240px}
 }
 
@@ -420,7 +429,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
         <div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
       </div>
 
-      <div class="section daily-send-box manual-send">
+      <div class="section daily-send-box">
         <div class="section-title">매일 뉴스 친구톡 즉시 발송</div>
         <div class="section-subtitle">평일 KST 08:00 자동 발송이 표준입니다. 발송 누락·재발송 등 예외 상황에서만 사용하세요. 대상 구독자를 선택하고 미리보기로 본문 확인 후 발송하세요.</div>
         <div class="ds-grid">
@@ -1029,8 +1038,8 @@ $('dsPreviewBtn').addEventListener('click', async ()=>{
     if(r.isAdRestrictedHour){
       warns.push('⚠ 야간(KST 21:00~08:00)은 카카오 광고성 친구톡 발송 금지 시간 — SOLAPI가 차단할 수 있음.');
     }
-    if(p.overflow){
-      warns.push(`⚠ 메시지 ${p.charCount}자가 한도 ${p.limit}자를 초과 — 일부 잘릴 수 있음.`);
+    if(p.truncated){
+      warns.push(`⚠ 원본 ${p.rawCharCount}자가 한도 ${p.limit}자를 초과해 ${p.charCount}자로 자동 잘림. 마지막 일부 항목이 누락될 수 있음.`);
     }
     if(warns.length){
       $('dsWarn').classList.remove('info');
