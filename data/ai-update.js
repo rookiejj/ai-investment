@@ -6,6 +6,14 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-27 13:30 KST",
+    summary: "Anthropic Claude Mythos Preview 무단 접근 사건 공식 조사 — 외부 그룹이 명명 규칙 추론으로 API URL 맞춰 출시 당일부터 상시 접속·Anthropic 4/24 NEC와 글로벌 파트너십 체결로 30,000명 Claude 전사 배포·일본 첫 글로벌 파트너 지정 NEC 주가 +5.2%",
+    changes: [
+      { type: "거버넌스", sector: "Anthropic", detail: "Anthropic(Claude Mythos Preview). 4/21~23 Bloomberg·TechCrunch·Fortune·Tom's Hardware 동시 보도 — 너무 위험해 공개 배포를 보류한 사이버보안 프론티어 모델 Mythos Preview에 외부 그룹이 무단 접근 중인 사실이 드러났다. 침해 그룹은 데이터 라벨링 스타트업 Mercor 유출 사건에서 입수한 Anthropic 명명 규칙 정보를 기반으로 Mythos의 API 엔드포인트 URL을 추론·맞췄고, 모델 출시 당일부터 상시 접근을 유지해 왔다. 그룹 멤버 중 한 명은 Anthropic의 제3자 컨트랙터로 확인. Anthropic 측은 'Mythos Preview에 대한 무단 접근 보고를 조사 중'이라고 공식 인정, 사용 패턴은 실제 공격이 아닌 탐색 수준이라고 발표. Mythos는 Apple·AWS·Cisco·JPMorgan·NSA 등 52개 검증 조직에만 제한 배포되며 Project Glasswing으로 방어자에게 $1억 크레딧을 제공해 왔던 모델 — '비공개'를 전제로 설계된 프론티어 모델의 첫 외부 노출 사례로 AI 거버넌스·서드파티 벤더 보안·시크릿 라우팅 표준 전반에 시정 압박.", time: "2026-04-27 13:30 KST" },
+      { type: "생태계", sector: "Anthropic", detail: "Anthropic·NEC. 4/24 Anthropic이 일본 NEC Corporation과 글로벌 전략 파트너십을 체결, NEC가 Anthropic의 일본 첫 글로벌 파트너로 지정. 약 30,000명 NEC 그룹 직원이 Claude·Claude Code·Claude Cowork를 전사 배포 받으며 NEC는 자체 'AI-Native Engineering Center of Excellence'를 신설해 Anthropic으로부터 직접 기술 지원·교육을 받는다. 양사는 금융·제조·지방정부를 시작으로 일본 시장 산업별 보안 AI 제품을 공동 개발, NEC의 'Client Zero' 전략(자사를 첫 고객으로 배포 후 외부 고객 제공) 위에 Cowork를 사내 운영 자동화에 확대. 발표 직후 NEC 주가 +5.2% 점프, 일본 빅테크 AI 자체 개발 노선에서 Claude 라이선스+생태계 파트너 모델로 전환되는 구조적 변곡점.", time: "2026-04-27 13:30 KST" },
+    ]
+  },
+  {
     date: "2026-04-27 07:40 KST",
     summary: "Microsoft 4/23 사상 첫 자발적 바이아웃 약 8,750명·美 인력 7%·연령+근속 70 자격·Meta 4/23 8,000명 10% 정리 5/20 시행·6,000개 공석 폐쇄·CapEx $110~135B AI 인프라 집중 'payroll → AI capex' 전환",
     changes: [

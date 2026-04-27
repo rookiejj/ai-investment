@@ -32,7 +32,7 @@ const data = [
     title: "⚡ 에너지·원자력",
     tag: "석유·가스·우라늄",
     stocks: [
-      { tk:"XLE", nm:"Energy Select SPDR", rs:"Brent $105·WTI $94 4/24 종가 주간 +17%/+14%·Pezeshkian '협박·봉쇄 하 강요된 협상 거부' 4/26 공식화·호르무즈 통항 일평균 0척 두 달째 임박·1H 2026 회복 시나리오 폐기 단계", aum:"38", er:"0.09%", ytd:"+28%", y1:"+18%" },
+      { tk:"XLE", nm:"Energy Select SPDR", rs:"Brent $105.7 5거래일 연속 상승 주간 +17%·이란 4/27 호르무즈 재개방+종전 신제안 핵협상 분리·트럼프 월요일 Situation Room 안보팀 소집·핵 양보 없는 합의 우려로 백악관 미온", aum:"38", er:"0.09%", ytd:"+28%", y1:"+18%" },
       { tk:"URA", nm:"Global X Uranium", rs:"우라늄·원전 생태계·연초 조정 국면", aum:"4", er:"0.69%", ytd:"+6%", y1:"+30%" },
       { tk:"NLR", nm:"VanEck Uranium+Nuclear", rs:"원자력 밸류체인", aum:"1.5", er:"0.60%", ytd:"+22%", y1:"+35%" },
       { tk:"AMLP", nm:"Alerian MLP", rs:"MLP 파이프라인·배당", aum:"10", er:"0.85%", ytd:"+12%", y1:"+20%" },
@@ -58,7 +58,7 @@ const data = [
     title: "₿ 크립토·블록체인",
     tag: "비트코인·이더리움·디파이",
     stocks: [
-      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"주말 BTC $77.9~78.1K 박스 견고·美 현물 BTC ETF 8거래일 연속 순유입 누적 $21억·총 자산 $1,020억 사상 첫 돌파·트럼프 만찬 총격에도 매수 흡수 우위", aum:"58", er:"0.25%", ytd:"+4%", y1:"-12%" },
+      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"주말 BTC $77.9~78.1K 박스·이란 호르무즈 재개방 신제안에 $78K 상단 시도·美 현물 BTC ETF 8거래일 연속 순유입 누적 $21억·총 자산 $1,020억 사상 첫 돌파·달러와 4년 최강 음의 상관", aum:"58", er:"0.25%", ytd:"+4%", y1:"-12%" },
       { tk:"FBTC", nm:"Fidelity Wise Origin BTC", rs:"비트코인 현물·피델리티·AUM $18B", aum:"18", er:"0.25%", ytd:"+2%", y1:"-14%" },
       { tk:"ETHA", nm:"iShares Ethereum Trust", rs:"이더리움 현물·4/14 +7%", aum:"10", er:"0.25%", ytd:"-12%", y1:"-8%" },
       { tk:"BITO", nm:"ProShares Bitcoin Strategy", rs:"비트코인 선물 최초", aum:"3", er:"0.95%", ytd:"-18%", y1:"-18%" },
@@ -71,8 +71,8 @@ const data = [
     title: "🇺🇸 미국 대형주",
     tag: "S&P500·나스닥·소형주",
     stocks: [
-      { tk:"SPY", nm:"SPDR S&P 500", rs:"4/24 S&P 500 7,165.08 +0.80% 기록 신고가·트럼프 만찬 총격 무사·Pezeshkian 협상 거부 공식화·4/29 메가캡 4사 슈퍼위크·4/30 FOMC 변동성 4중 트리거", aum:"590", er:"0.09%", ytd:"+3%", y1:"+16%" },
-      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"4/24 Nasdaq 24,836.60 +1.63% 기록 신고가·Meta 8,000명·MSFT 사상 첫 바이아웃 8,750명 동시 구조조정·CapEx $115~135B AI 인프라 집중·4/29 동시 실적", aum:"400", er:"0.20%", ytd:"+9%", y1:"+24%" },
+      { tk:"SPY", nm:"SPDR S&P 500", rs:"4/24 S&P 500 7,165 신고가·이란 호르무즈 재개방+종전 신제안 핵분리 시나리오·4/29 GOOGL·MSFT·META·AMZN 동시 실적·4/30 FOMC 동결 100% priced in·4중 변동성 트리거", aum:"590", er:"0.09%", ytd:"+3%", y1:"+16%" },
+      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"4/24 Nasdaq 24,836 신고가·NVDA YTD +7%로 MU +69%·AMD +43%·TSM +26% 대비 부진 섹터 로테이션·Meta 8,000명·MSFT 사상 첫 바이아웃 8,750명 동시 구조조정·4/29 동시 실적", aum:"400", er:"0.20%", ytd:"+9%", y1:"+24%" },
       { tk:"VOO", nm:"Vanguard S&P 500", rs:"세계 최대 ETF·AUM $827B·최저 보수", aum:"827", er:"0.03%", ytd:"+2%", y1:"+15%" },
       { tk:"VTI", nm:"Vanguard Total Stock", rs:"미국 전체 시장·4월 신고가 랠리", aum:"420", er:"0.03%", ytd:"+2%", y1:"+14%" },
       { tk:"DIA", nm:"SPDR Dow Jones", rs:"다우 30 우량주·다우 부진", aum:"35", er:"0.16%", ytd:"-3%", y1:"+10%" },
@@ -103,7 +103,7 @@ const data = [
       { tk:"INDA", nm:"iShares MSCI India", rs:"인도 시장", aum:"12", er:"0.64%", ytd:"+10%", y1:"+18%" },
       { tk:"VEA", nm:"Vanguard FTSE Developed", rs:"선진국(미국 제외)", aum:"130", er:"0.05%", ytd:"+9%", y1:"+16%" },
       { tk:"FXI", nm:"iShares China Large-Cap", rs:"중국 대형주 50종·H주·관세 변동성", aum:"5.8", er:"0.74%", ytd:"-12%", y1:"+15%" },
-      { tk:"EWY", nm:"iShares MSCI South Korea", rs:"삼성전자 +3.22% 반등·SK하이닉스 장중 126.7만 사상 최고·KB증권 두산에너빌리티 목표가 14.8만 상향·Part 53 SMR 4/29 시행 기대", aum:"16", er:"0.59%", ytd:"+55%", y1:"+151%" },
+      { tk:"EWY", nm:"iShares MSCI South Korea", rs:"SK하이닉스 Q1 매출 52.6조·OP 37.61조·순익 40.35조 사상 최대·OPM 72%·韓 4월 첫 10일 수출 +36.7% 반도체 +152.5%·삼성·현대 노조 동반 임금 인상 압력", aum:"16", er:"0.59%", ytd:"+55%", y1:"+151%" },
     ]
   },
 ];

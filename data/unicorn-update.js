@@ -1,6 +1,16 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-27 13:30 KST",
+    summary: "Anthropic NEC 일본 30,000명 전사 Claude 배포·Anthropic 첫 일본 글로벌 파트너 지정 NEC 주가 +5.2%·Mythos Preview 무단 접근 사건 외부 그룹 출시 당일부터 상시 접속 공식 조사·SpaceX 4/22~23 Starbase·Tennessee 애널리스트 투어 21개 주관사",
+    changes: [
+      { type: "생태계", sector: "AI·ML",
+        detail: "Anthropic·NEC. 4/24 Anthropic이 일본 NEC Corporation과 글로벌 전략 파트너십을 체결, NEC가 Anthropic의 일본 첫 글로벌 파트너로 지정. 약 30,000명 NEC 그룹 직원이 Claude·Claude Code·Claude Cowork를 전사 배포 받으며 NEC는 자체 'AI-Native Engineering Center of Excellence'를 신설해 Anthropic으로부터 직접 기술 지원·교육을 받는다. 양사는 금융·제조·지방정부를 시작으로 일본 산업별 보안 AI 제품 공동 개발, NEC의 'Client Zero' 전략(자사를 첫 고객으로 배포 후 외부 고객 제공) 위에 Cowork를 사내 운영 자동화에 확대. 발표 직후 NEC 주가 +5.2% 점프, 일본 빅테크 자체 AI 개발 노선에서 Claude 라이선스+생태계 파트너 모델로 전환되는 구조적 변곡점. Alphabet $40B·Amazon $25B 컴퓨트와 별도로 일본 시장 진입 인프라까지 확보하면서 10월 IPO $400~500B 펀더 추가 보강.", time: "2026-04-27 13:30 KST" },
+      { type: "거버넌스", sector: "AI·ML",
+        detail: "Anthropic(Claude Mythos Preview). 4/21~23 Bloomberg·TechCrunch·Fortune·Tom's Hardware 동시 보도 — 너무 위험해 공개 배포를 보류한 사이버보안 프론티어 모델 Mythos Preview에 외부 그룹이 무단 접근 중인 사실이 드러났다. 침해 그룹은 데이터 라벨링 스타트업 Mercor 유출 사건에서 입수한 Anthropic 명명 규칙 정보를 기반으로 Mythos의 API 엔드포인트 URL을 추론·맞췄고, 모델 출시 당일부터 상시 접근을 유지해 왔다. 그룹 멤버 중 한 명은 Anthropic의 제3자 컨트랙터로 확인. Anthropic 측은 'Mythos Preview에 대한 무단 접근 보고를 조사 중'이라고 공식 인정. Mythos는 Apple·AWS·Cisco·JPMorgan·NSA 등 52개 검증 조직에만 제한 배포되며 Project Glasswing으로 방어자에게 $1억 크레딧을 제공해 온 모델. 비공개 전제로 설계된 프론티어 모델의 첫 외부 노출 사례로 IPO 앞 거버넌스 리스크가 증폭, OpenAI는 동일 시점에 'Trusted Access for Cyber' 파일럿(GPT-5.3-Codex 기반)을 소수 파트너에만 제한 배포하며 차별화 신호.", time: "2026-04-27 13:30 KST" },
+    ]
+  },
+  {
     date: "2026-04-27 08:00 KST",
     summary: "Anduril 4/24 美 우주군 Golden Dome 우주기반 요격체 프로토타입 12개사 $3.2B 수주 SpaceX·Lockheed·RTX·Northrop·General Dynamics와 동시 선정·2028 실증 목표·Anthropic Claude Code 단독 ARR $25억 확인·OpenAI ChatGPT for Clinicians 99.6% safe & accurate 검증",
     changes: [
