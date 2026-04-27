@@ -91,24 +91,31 @@ async function solapiAuthHeader(apiKey: string, apiSecret: string): Promise<stri
   return `HMAC-SHA256 apiKey=${apiKey}, date=${date}, salt=${salt}, signature=${sig}`;
 }
 
-async function solapiSendManual(phones: string[], message: string) {
-  const apiKey = Deno.env.get("SOLAPI_API_KEY")!;
+// 수동 발송: 알림톡(ATA). 친구톡 미도달 구독자(채널 미친구·광고 차단)도 도달
+// 템플릿: KA01TP260424060446377powJn1n8RGU — 변수 #{상점명}, WL 버튼 '문제 해결하기'(/help)
+const MANUAL_TEMPLATE_ID = "KA01TP260424060446377powJn1n8RGU";
+
+async function solapiSendManualAlimtalk(phones: string[]) {
+  const apiKey    = Deno.env.get("SOLAPI_API_KEY")!;
   const apiSecret = Deno.env.get("SOLAPI_API_SECRET")!;
-  const pfId = Deno.env.get("SOLAPI_PFID")!;
-  const sender = Deno.env.get("SOLAPI_SENDER")!;
-  const siteUrl = Deno.env.get("SITE_URL") ?? "https://roysbriefing.vercel.app";
+  const pfId      = Deno.env.get("SOLAPI_PFID")!;
+  const sender    = Deno.env.get("SOLAPI_SENDER")!;
+  const siteUrl   = Deno.env.get("SITE_URL") ?? "https://roysbriefing.vercel.app";
+  const shopName  = Deno.env.get("SHOP_NAME") ?? "브리픽";
+  const templateId = Deno.env.get("ALIMTALK_MANUAL_TEMPLATE_ID") ?? MANUAL_TEMPLATE_ID;
+  const helpUrl = `${siteUrl.replace(/\/$/, "")}/help`;
 
   const auth = await solapiAuthHeader(apiKey, apiSecret);
   const messages = phones.map((phone) => ({
     to: phone,
     from: sender,
-    text: message,
-    type: "CTA",
+    type: "ATA",
     kakaoOptions: {
       pfId,
+      templateId,
       disableSms: true,
-      bms: { targeting: "I" },
-      buttons: [{ buttonType: "WL", buttonName: "전체 뉴스 보기", linkMo: siteUrl, linkPc: siteUrl }],
+      variables: { "#{상점명}": shopName },
+      buttons: [{ buttonType: "WL", buttonName: "문제 해결하기", linkMo: helpUrl, linkPc: helpUrl }],
     },
   }));
 
@@ -348,10 +355,9 @@ Deno.serve(async (req) => {
       return json({ ok: true, rows: data ?? [] }, { cors });
     }
 
-    // ─── manual_send ───
+    // ─── manual_send ─── (알림톡 ATA, 본문은 검수 승인 템플릿 고정)
     if (action === "manual_send") {
       const ids = Array.isArray(body.subscriberIds) ? body.subscriberIds as string[] : [];
-      const customMessage = typeof body.message === "string" ? body.message : "";
       if (!ids.length) return json({ ok: false, error: "subscriberIds required" }, { status: 400, cors });
 
       // 구독자 조회
@@ -360,33 +366,24 @@ Deno.serve(async (req) => {
       if (selErr) throw selErr;
       if (!targets?.length) return json({ ok: false, error: "no target" }, { status: 400, cors });
 
-      // 메시지 준비 (기본은 오늘의 헤더만)
-      const nowKst = new Date(Date.now() + 9 * 3600000 + new Date().getTimezoneOffset() * 60000);
-      const y = nowKst.getUTCFullYear();
-      const m = String(nowKst.getUTCMonth() + 1).padStart(2, "0");
-      const d = String(nowKst.getUTCDate()).padStart(2, "0");
-      const dow = ["일","월","화","수","목","금","토"][nowKst.getUTCDay()];
-      const dateLabel = `${y}-${m}-${d} (${dow})`;
-      const fallback = `📊 브리픽 · ${dateLabel}\n\n구독자님께 드리는 안내입니다.\n\n아래 버튼을 눌러 오늘의 경제 뉴스를 확인해주세요.`;
-      const text = customMessage.trim() || fallback;
-
       const phones = targets.map((t) => (t as { phone: string }).phone);
-      const result = await solapiSendManual(phones, text);
+      const result = await solapiSendManualAlimtalk(phones);
 
-      // send_logs 기록
+      // send_logs 기록 (알림톡 본문은 템플릿 고정이라 메시지 텍스트는 식별용)
       const batchId = crypto.randomUUID();
       const ok = result.ok;
+      const logMessage = "수동 발송 알림톡 (문제 해결 안내)";
       const rows = targets.map((t) => ({
         subscriber_id: (t as { id: string }).id,
         phone: (t as { phone: string }).phone,
-        message: text,
-        char_count: text.length,
+        message: logMessage,
+        char_count: 0,
         status: ok ? "success" : "fail",
-        message_type: "friendtalk",
+        message_type: "alimtalk",
         template_code: "manual",
         provider: "solapi",
         provider_code: ok ? ((result.body as { groupId?: string })?.groupId ?? null) : null,
-        provider_message: ok ? "manual ok" : JSON.stringify(result.body).slice(0, 400),
+        provider_message: ok ? "ok" : JSON.stringify(result.body).slice(0, 400),
         provider_msg_id: ok ? ((result.body as { groupId?: string })?.groupId ?? null) : null,
         batch_id: batchId,
       }));
@@ -396,7 +393,6 @@ Deno.serve(async (req) => {
         ok,
         sent: ok ? phones.length : 0,
         failed: ok ? 0 : phones.length,
-        charCount: text.length,
         batchId,
         rawResponse: result.body,
       }, { cors });
