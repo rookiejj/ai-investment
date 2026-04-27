@@ -1038,8 +1038,8 @@ $('dsPreviewBtn').addEventListener('click', async ()=>{
     if(r.isAdRestrictedHour){
       warns.push('⚠ 야간(KST 21:00~08:00)은 카카오 광고성 친구톡 발송 금지 시간 — SOLAPI가 차단할 수 있음.');
     }
-    if(p.truncated){
-      warns.push(`⚠ 원본 ${p.rawCharCount}자가 한도 ${p.limit}자를 초과해 ${p.charCount}자로 자동 잘림. 마지막 일부 항목이 누락될 수 있음.`);
+    if(p.overflow){
+      warns.push(`⚠ 메시지 ${p.charCount}자가 한도 ${p.limit}자를 초과 — SOLAPI가 거부할 수 있음.`);
     }
     if(warns.length){
       $('dsWarn').classList.remove('info');

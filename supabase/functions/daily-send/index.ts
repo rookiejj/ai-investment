@@ -106,41 +106,16 @@ function smartCut(s: string, max: number): string {
   if (sp >= minKeep) return raw.slice(0, sp).trimEnd() + "…";
   return raw.slice(0, max - 1) + "…";
 }
-function buildTabBlock(tab: TabWithEntries, summaryBudget?: number): string {
+function buildTabBlock(tab: TabWithEntries): string {
   const lines = [`${tab.emoji} ${tab.label}`, ""];
   const [first] = tab.entries;
-  if (first) {
-    const text = first.summary;
-    const cut = summaryBudget && text.length > summaryBudget ? smartCut(text, summaryBudget) : text;
-    lines.push(`• ${cut}`);
-  }
+  if (first) lines.push(`• ${first.summary}`);
   return lines.join("\n");
 }
-function buildMessage(tabs: TabWithEntries[], summaryBudget?: number): string {
+function buildMessage(tabs: TabWithEntries[]): string {
   const parts = [`📊 브리픽 · ${kstDateLabel()}`];
-  for (const t of tabs) if (t.entries.length) parts.push(buildTabBlock(t, summaryBudget));
+  for (const t of tabs) if (t.entries.length) parts.push(buildTabBlock(t));
   return parts.join("\n\n");
-}
-
-// 합산 한도 초과 시: 모든 탭 보존을 위해 탭당 균등 budget 적용 후 재조립.
-// 그래도 초과면 마지막 탭 블록부터 제거.
-function fitToLimit(tabs: TabWithEntries[], max: number): string {
-  const full = buildMessage(tabs);
-  if (full.length <= max) return full;
-  // 1차: 탭별 균등 budget으로 자동 cut
-  const validTabs = tabs.filter((t) => t.entries.length > 0);
-  if (validTabs.length > 0) {
-    const overhead = full.length - validTabs.reduce((s, t) => s + (t.entries[0]?.summary.length ?? 0), 0);
-    const budget = Math.max(60, Math.floor((max - overhead) / validTabs.length));
-    const cut = buildMessage(tabs, budget);
-    if (cut.length <= max) return cut;
-  }
-  // 2차: 마지막 탭 블록부터 제거
-  const blocks = full.split("\n\n");
-  while (blocks.length > 1 && blocks.join("\n\n").length > max) blocks.pop();
-  let out = blocks.join("\n\n");
-  if (out.length > max) out = out.slice(0, max - 1) + "…";
-  return out;
 }
 
 // 솔라피 실패 메시지를 구독자 수신 상태로 정규화
@@ -267,17 +242,15 @@ Deno.serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
     );
 
-    // 1) 메시지 조립 (한도 초과 시 탭/줄 단위 자동 트림)
+    // 1) 메시지 조립
     const tabs: TabWithEntries[] = [];
     for (const t of TABS) {
       const entries = await fetchTabEntries(t);
       if (entries.length) tabs.push({ ...t, entries });
     }
-    const rawMessage = buildMessage(tabs);
-    const message = fitToLimit(tabs, LIMIT);
-    const truncated = message.length < rawMessage.length;
-    if (truncated) {
-      console.warn(`[warn] message truncated: ${rawMessage.length}→${message.length} chars`);
+    const message = buildMessage(tabs);
+    if (message.length > LIMIT) {
+      console.warn(`[warn] message exceeds limit: ${message.length}/${LIMIT}`);
     }
 
     // 2) 만료된 구독자 상태 최신화 (paid_until이 과거인 active → expired)
@@ -308,8 +281,7 @@ Deno.serve(async (req) => {
     if (dryRun) {
       return Response.json({
         ok: true, dryRun: true,
-        charCount: message.length, rawCharCount: rawMessage.length, limit: LIMIT,
-        truncated,
+        charCount: message.length, limit: LIMIT,
         overflow: message.length > LIMIT,
         activeSubscribers: subs?.length ?? 0,
         tabCount: tabs.length,

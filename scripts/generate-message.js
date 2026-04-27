@@ -72,14 +72,10 @@ function smartCut(s, max) {
   return raw.slice(0, max - 1) + '…';
 }
 
-function buildTabBlock(tab, summaryBudget) {
+function buildTabBlock(tab) {
   const lines = [`${tab.emoji} ${tab.label}`, ''];
   const [first] = tab.entries;
-  if (first) {
-    const text = first.summary;
-    const cut = summaryBudget && text.length > summaryBudget ? smartCut(text, summaryBudget) : text;
-    lines.push(`• ${cut}`);
-  }
+  if (first) lines.push(`• ${first.summary}`);
   return lines.join('\n');
 }
 
