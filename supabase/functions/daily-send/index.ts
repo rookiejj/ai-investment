@@ -106,10 +106,16 @@ function smartCut(s: string, max: number): string {
   if (sp >= minKeep) return raw.slice(0, sp).trimEnd() + "…";
   return raw.slice(0, max - 1) + "…";
 }
+// 탭당 summary 본문 최대 길이 — 6탭 × ~150자 + 헤더/구분자 ≈ 960자로 1000 한도 마진 확보
+const TAB_SUMMARY_BUDGET = 150;
 function buildTabBlock(tab: TabWithEntries): string {
   const lines = [`${tab.emoji} ${tab.label}`, ""];
   const [first] = tab.entries;
-  if (first) lines.push(`• ${first.summary}`);
+  if (first) {
+    const text = first.summary;
+    const cut = text.length > TAB_SUMMARY_BUDGET ? smartCut(text, TAB_SUMMARY_BUDGET) : text;
+    lines.push(`• ${cut}`);
+  }
   return lines.join("\n");
 }
 function buildMessage(tabs: TabWithEntries[]): string {

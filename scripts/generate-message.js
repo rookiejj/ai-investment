@@ -72,10 +72,16 @@ function smartCut(s, max) {
   return raw.slice(0, max - 1) + '…';
 }
 
+// 탭당 summary 본문 최대 길이 (daily-send와 동일)
+const TAB_SUMMARY_BUDGET = 150;
 function buildTabBlock(tab) {
   const lines = [`${tab.emoji} ${tab.label}`, ''];
   const [first] = tab.entries;
-  if (first) lines.push(`• ${first.summary}`);
+  if (first) {
+    const text = first.summary;
+    const cut = text.length > TAB_SUMMARY_BUDGET ? smartCut(text, TAB_SUMMARY_BUDGET) : text;
+    lines.push(`• ${cut}`);
+  }
   return lines.join('\n');
 }
 
