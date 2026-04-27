@@ -6,7 +6,7 @@ const data = [
     title: "🤖 AI·반도체",
     tag: "인공지능·칩·데이터센터",
     stocks: [
-      { tk:"SMH", nm:"VanEck Semiconductor", rs:"반도체 25종·MVIS·AUM $52B·AI 최대 수혜", aum:"52", er:"0.35%", ytd:"+25%", y1:"+120%" },
+      { tk:"SMH", nm:"VanEck Semiconductor", rs:"반도체 25종·MVIS·AUM $52B·NVDA 시총 $5.3T·QCOM +11~12% OpenAI 협력 보도·AI 인프라 + 온디바이스 듀얼 모멘텀", aum:"52", er:"0.35%", ytd:"+25%", y1:"+120%" },
       { tk:"SOXX", nm:"iShares Semiconductor", rs:"반도체 30종·ICE 지수", aum:"20.6", er:"0.34%", ytd:"+33%", y1:"+100%" },
       { tk:"BOTZ", nm:"Global X Robotics & AI", rs:"로봇·AI 자동화", aum:"3.56", er:"0.68%", ytd:"+15%", y1:"+32%" },
       { tk:"AIQ", nm:"Global X AI & Tech", rs:"AI·빅데이터·클라우드·AUM $7.9B 확대", aum:"7.86", er:"0.68%", ytd:"+15%", y1:"+30%" },
@@ -32,7 +32,7 @@ const data = [
     title: "⚡ 에너지·원자력",
     tag: "석유·가스·우라늄",
     stocks: [
-      { tk:"XLE", nm:"Energy Select SPDR", rs:"Brent $105.7 5거래일 연속 상승 주간 +17%·이란 4/27 호르무즈 재개방+종전 신제안 핵협상 분리·트럼프 월요일 Situation Room 안보팀 소집·핵 양보 없는 합의 우려로 백악관 미온", aum:"38", er:"0.09%", ytd:"+28%", y1:"+18%" },
+      { tk:"XLE", nm:"Energy Select SPDR", rs:"Brent $107·WTI $95대 박스 상단 유지·트럼프 4/27 안보팀 회의에서 이란 호르무즈 재개방 제안 검토하되 핵협상 분리 양보엔 회의적·휴전 추가 연장·정유 마진 확장 분기 추가 연장 가정", aum:"38", er:"0.09%", ytd:"+28%", y1:"+18%" },
       { tk:"URA", nm:"Global X Uranium", rs:"우라늄·원전 생태계·연초 조정 국면", aum:"4", er:"0.69%", ytd:"+6%", y1:"+30%" },
       { tk:"NLR", nm:"VanEck Uranium+Nuclear", rs:"원자력 밸류체인", aum:"1.5", er:"0.60%", ytd:"+22%", y1:"+35%" },
       { tk:"AMLP", nm:"Alerian MLP", rs:"MLP 파이프라인·배당", aum:"10", er:"0.85%", ytd:"+12%", y1:"+20%" },
@@ -58,7 +58,7 @@ const data = [
     title: "₿ 크립토·블록체인",
     tag: "비트코인·이더리움·디파이",
     stocks: [
-      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"4/27 BTC $79,032 $80K 저항 근접·美 현물 BTC ETF 8거래일 연속 순유입 누적 $21억·총 자산 $1,020억 사상 첫 돌파·달러와 4년 최강 음의 상관·FOMC 동결 시그널 USD 약세 macro 헤지 재정의", aum:"58", er:"0.25%", ytd:"+5%", y1:"-11%" },
+      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"BTC 4/27 $80K 저항 8일째 무산 $77~79K 박스·美 현물 BTC ETF 8거래일 연속 순유입 누적 $21억·총 자산 $1,020억 사상 첫 돌파·USD-DXY -0.91 4년 최강 음의 상관·4/30 FOMC 동결 시그널 시 USD 약세 헤지 재점화", aum:"58", er:"0.25%", ytd:"+5%", y1:"-11%" },
       { tk:"FBTC", nm:"Fidelity Wise Origin BTC", rs:"비트코인 현물·피델리티·AUM $18B", aum:"18", er:"0.25%", ytd:"+2%", y1:"-14%" },
       { tk:"ETHA", nm:"iShares Ethereum Trust", rs:"이더리움 현물·4/14 +7%", aum:"10", er:"0.25%", ytd:"-12%", y1:"-8%" },
       { tk:"BITO", nm:"ProShares Bitcoin Strategy", rs:"비트코인 선물 최초", aum:"3", er:"0.95%", ytd:"-18%", y1:"-18%" },
@@ -71,8 +71,8 @@ const data = [
     title: "🇺🇸 미국 대형주",
     tag: "S&P500·나스닥·소형주",
     stocks: [
-      { tk:"SPY", nm:"SPDR S&P 500", rs:"4/24 S&P 500 7,165 신고가·이란 호르무즈 재개방+종전 신제안 핵분리 시나리오·4/29 GOOGL·MSFT·META·AMZN 동시 실적·4/30 FOMC 동결 100% priced in·4중 변동성 트리거", aum:"590", er:"0.09%", ytd:"+3%", y1:"+16%" },
-      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"4/24 Nasdaq 24,836 신고가·NVDA YTD +7%로 MU +69%·AMD +43%·TSM +26% 대비 부진 섹터 로테이션·Meta 8,000명·MSFT 사상 첫 바이아웃 8,750명 동시 구조조정·4/29 동시 실적", aum:"400", er:"0.20%", ytd:"+9%", y1:"+24%" },
+      { tk:"SPY", nm:"SPDR S&P 500", rs:"4/27 S&P 500 7,173.91 +0.12% 신고가 갱신·VZ Q1 비트 가이던스 상향·DPZ -10.5%·4/29 GOOGL·MSFT·META·AMZN 동시 실적·4/30 FOMC 동결 100% priced in·5/1 AAPL·5/2 PCE", aum:"590", er:"0.09%", ytd:"+3%", y1:"+16%" },
+      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"4/27 Nasdaq 24,887.10 +0.20% 신고가·NVDA $216.57 +4.0% 시총 $5.3T·QCOM·OpenAI·MediaTek 2028 AI 스마트폰 칩 협력 보도로 온디바이스 AI 확장·OpenAI·MS 독점 종료 합의로 Bedrock·GCP·Oracle 진출 가능", aum:"400", er:"0.20%", ytd:"+9%", y1:"+24%" },
       { tk:"VOO", nm:"Vanguard S&P 500", rs:"세계 최대 ETF·AUM $827B·최저 보수", aum:"827", er:"0.03%", ytd:"+2%", y1:"+15%" },
       { tk:"VTI", nm:"Vanguard Total Stock", rs:"미국 전체 시장·4월 신고가 랠리", aum:"420", er:"0.03%", ytd:"+2%", y1:"+14%" },
       { tk:"DIA", nm:"SPDR Dow Jones", rs:"다우 30 우량주·다우 부진", aum:"35", er:"0.16%", ytd:"-3%", y1:"+10%" },

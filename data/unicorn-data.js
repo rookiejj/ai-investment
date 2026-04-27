@@ -6,7 +6,7 @@ const data = [
     title: "🤖 AI·ML",
     tag: "프론티어 모델·AI 인프라",
     stocks: [
-      { nm:"OpenAI", rs:"4/23 GPT-5.5 'Spud' Terminal-Bench 2.0 82.7% SOTA·ChatGPT for Clinicians 99.6% safe & accurate·Privacy Filter 오픈웨이트·Trusted Access for Cyber 파일럿 Mythos 대응·ARR $250억·Cerebras $20B", val:"$852B", round:"$122B 펀딩", sector:"AGI", ipo:"2026 말 $1T+" },
+      { nm:"OpenAI", rs:"4/27 MS 독점 라이선스 종료·AGI 판정 조항 폐기·AWS·GCP·Oracle 직접 호스팅 가능 — IPO 최대 법적 장애물 해소·Musk 비영리 환원 소송 오클랜드 개시·QCOM·MediaTek 2028 AI 스마트폰 칩 협력 보도", val:"$852B", round:"$122B 펀딩", sector:"AGI", ipo:"2026 말 $1T+" },
       { nm:"Anthropic", rs:"4/24 Alphabet $40B 공식화·NEC 일본 30,000명 전사 배포 첫 글로벌 파트너 NEC +5.2%·Mythos Preview 무단 접근 사건 공식 조사·ARR $300억·$1M+ 엔터 1,000+·Claude Code 단독 ARR $25억·10월 IPO", val:"$1T (2차시장)", round:"Alphabet $10B @ $350B (2026-04)", sector:"프론티어 AI", ipo:"2026.10 $400~500B 타겟" },
       { nm:"Databricks", rs:"레이크하우스·AI 통합·ARR $5.4B", val:"$134B", round:"Series L ($11B)", sector:"데이터·AI", ipo:"2026 H2 S-1" },
       { nm:"Cerebras", rs:"4/17 S-1 공개 제출 확정·2025 매출 $510M 순익 $87.9M·G42·MBZUAI 86% 매출·Morgan Stanley 리드·OpenAI 3년 $20B", val:"$23B", round:"5월 중순 프라이싱·$2B 조달", sector:"AI 하드웨어", ipo:"2026.05 나스닥 CBRS·$22~25B" },

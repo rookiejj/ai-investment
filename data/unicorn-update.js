@@ -1,6 +1,16 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-28 07:24 KST",
+    summary: "OpenAI·Microsoft 7년 파트너십 전면 개편 4/27 발표·MS 독점 라이선스 종료·AGI 판정 조항 폐기·OpenAI는 AWS·GCP·Oracle 직접 호스팅 가능·IPO 최대 법적 장애물 해소·Musk vs OpenAI 비영리 환원 소송 오클랜드 개시·OpenAI·QCOM·MediaTek·Luxshare 4사 2028 AI 스마트폰 칩 보도",
+    changes: [
+      { type: "전략", sector: "AI·ML",
+        detail: "OpenAI·Microsoft. 4/27 양사가 7년 파트너십을 전면 재구성한 'Next Phase' 합의를 발표 — Microsoft 독점 라이선스가 종료되고 비독점 형태로 2032년까지 연장, OpenAI는 모든 제품을 모든 클라우드에서 직접 제공 가능. 'AGI 도달 여부를 MS가 판정' 조항이 완전 삭제돼 비영리 → for-profit 재구조화·IPO의 가장 큰 법적 걸림돌이 해소. 매출 셰어 구조도 한도(cap) 적용 후 2030년까지 단계 종료. AWS Andy Jassy는 같은 날 '곧 Bedrock에 OpenAI 모델 도입'을 명시 — AWS·GCP·Oracle도 직접 호스팅 가능. IPO 검토 중인 OpenAI에는 컴퓨트 다변화·B2B 확장·Anthropic 추격 가속의 가장 큰 트리거가 동시 작동. 4/27 Musk vs OpenAI 비영리 환원 소송도 같은 날 오클랜드 연방법원에서 본안 시작, OpenAI는 2017년 Musk가 보낸 'AGI 만들면 SpaceX·Tesla로 이전' 합의서 초안을 증거로 제출하며 방어 라인 공식화.", time: "2026-04-28 07:24 KST" },
+      { type: "생태계", sector: "AI·ML",
+        detail: "OpenAI·Qualcomm·MediaTek·Luxshare. 4/27 Ming-Chi Kuo가 X에 4사 AI 스마트폰 칩 공동개발 사실을 공개 — QCOM이 SoC 코디자인, MediaTek가 모뎀·BB, Luxshare가 시스템 코디자인·EMS 전담, 2028 mass-market AI-native 디바이스 양산 목표. Jony Ive 디자인 디바이스 팀 전략의 가장 구체적인 칩셋 라인업으로 평가. 같은 날 QCOM 주가 +11~12% 동반 점프, NVIDIA는 시총 $5.3T 사상 최고 갱신해 AI 컴퓨트 무대가 데이터센터에서 모바일 엣지로 확장되는 첫 메인스트림 시그널. OpenAI는 컴퓨트 자립(Stargate $400B + Cerebras $20B + Broadcom)에 이어 디바이스 생태계까지 수직 통합하는 단계 진입.", time: "2026-04-28 07:24 KST" },
+    ]
+  },
+  {
     date: "2026-04-27 13:30 KST",
     summary: "Anthropic NEC 일본 30,000명 전사 Claude 배포·Anthropic 첫 일본 글로벌 파트너 지정 NEC 주가 +5.2%·Mythos Preview 무단 접근 사건 외부 그룹 출시 당일부터 상시 접속 공식 조사·SpaceX 4/22~23 Starbase·Tennessee 애널리스트 투어 21개 주관사",
     changes: [
