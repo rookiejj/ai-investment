@@ -387,8 +387,10 @@ Deno.serve(async (req) => {
     const { error: logErr } = await supabase.from("send_logs").insert(logs);
 
     // subscribers.delivery_state 배치 갱신
+    // unknown(시스템 이슈·시간대 제약·길이 초과 등 수신자 본인 책임 아닌 실패)은 갱신 skip — 기존 상태 유지
     for (const [state, ids] of Object.entries(stateGroups)) {
       if (ids.length === 0) continue;
+      if (state === "unknown") continue;
       const { error: updErr } = await supabase
         .from("subscribers")
         .update({ delivery_state: state })

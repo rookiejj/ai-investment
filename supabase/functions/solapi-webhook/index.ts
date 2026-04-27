@@ -87,9 +87,11 @@ Deno.serve(async (req) => {
         }).eq("id", logRow.id);
       }
 
-      // subscribers.delivery_state 갱신
-      await supabase.from("subscribers").update({ delivery_state: deliveryState })
-        .eq("phone", phone);
+      // subscribers.delivery_state 갱신 — unknown은 분류 모호 시 기존 상태 유지
+      if (deliveryState !== "unknown") {
+        await supabase.from("subscribers").update({ delivery_state: deliveryState })
+          .eq("phone", phone);
+      }
 
       processed++;
     }
