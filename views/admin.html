@@ -137,6 +137,25 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 .badge.tpl-daily_news{background:#e8f4ff;color:#0a6abf;border:none}
 .badge.tpl-manual{background:#f2f2f2;color:var(--mut);border:none}
 
+/* 매일 뉴스 즉시 발송: 2-컬럼 레이아웃 */
+.ds-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px;align-items:stretch}
+.ds-grid .targets{margin-bottom:0;max-height:320px;height:320px}
+.ds-grid .ds-preview-col{display:flex;flex-direction:column;min-width:0}
+.ds-preview-area{
+  flex:1;background:#fafafa;border:1px solid var(--border);border-radius:8px;
+  padding:12px 14px;font:12.5px/1.55 'Geist Mono','SF Mono',monospace;color:var(--fg2);
+  white-space:pre-wrap;word-break:break-word;height:320px;max-height:320px;overflow:auto;
+}
+.ds-preview-area.placeholder{
+  color:var(--sub);font-family:Pretendard,sans-serif;font-size:13px;
+  display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;
+}
+@media (max-width:900px){
+  .ds-grid{grid-template-columns:1fr}
+  .ds-grid .targets{height:240px;max-height:240px}
+  .ds-preview-area{height:240px;max-height:240px}
+}
+
 /* 수동 발송 */
 .manual-send textarea{width:100%;min-height:100px;margin-bottom:10px;resize:vertical;font-family:Pretendard,sans-serif;line-height:1.5}
 .manual-send .targets{display:flex;flex-direction:column;gap:4px;max-height:300px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;padding:10px;background:#fcfcfc;margin-bottom:12px}
@@ -395,17 +414,21 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
         <div class="section-title">매일 뉴스 친구톡 즉시 발송</div>
         <div class="section-subtitle">평일 KST 08:00 자동 발송이 표준입니다. 발송 누락·재발송 등 예외 상황에서만 사용하세요. 대상 구독자를 선택하고 미리보기로 본문 확인 후 발송하세요.</div>
         <div class="filter-bar">
-          <button class="btn" id="dsReload">대상 새로고침</button>
+          <button class="btn" id="dsPreviewBtn" disabled>미리보기</button>
+          <button class="btn ghost" id="dsReload">대상 새로고침</button>
           <button class="btn ghost select-all" id="dsSelectAll">모두 선택/해제</button>
         </div>
-        <div class="targets" id="dsTargets"><div class="loading">활성 구독자 로딩 중…</div></div>
-        <div class="filter-bar">
-          <button class="btn" id="dsPreviewBtn" disabled>미리보기</button>
-          <button class="btn ghost" id="dsSendBtn" disabled>지금 발송</button>
-          <span id="dsCount" style="color:var(--mut);font-size:13px;align-self:center"></span>
+        <div class="ds-grid">
+          <div class="targets" id="dsTargets"><div class="loading">활성 구독자 로딩 중…</div></div>
+          <div class="ds-preview-col">
+            <div id="dsWarn" style="display:none;background:#fff4e5;color:var(--warn);border-radius:8px;padding:10px 12px;font-size:13px;line-height:1.5;margin-bottom:8px"></div>
+            <pre id="dsPreview" class="ds-preview-area placeholder">미리보기 버튼을 눌러 본문을 확인하세요</pre>
+          </div>
         </div>
-        <div id="dsWarn" style="display:none;background:#fff4e5;color:var(--warn);border-radius:8px;padding:10px 12px;font-size:13px;line-height:1.5;margin-bottom:10px"></div>
-        <pre id="dsPreview" style="display:none;background:#fafafa;border:1px solid var(--border);border-radius:10px;padding:14px 16px;font:12.5px/1.55 'Geist Mono','SF Mono',monospace;color:var(--fg2);white-space:pre-wrap;word-break:break-word;max-height:360px;overflow:auto;margin-bottom:10px"></pre>
+        <div class="filter-bar" style="margin-top:4px">
+          <button class="btn ghost" id="dsSendBtn" disabled>지금 발송</button>
+          <span id="dsCount" style="color:var(--mut);font-size:13px;align-self:center">선택된 구독자 없음</span>
+        </div>
         <div id="dsStatus" style="display:none;padding:10px 12px;border-radius:8px;font-size:13px"></div>
       </div>
 
@@ -936,18 +959,15 @@ function dsSetStatus(type, text){
 function dsSelectedIds(){
   return [...$('dsTargets').querySelectorAll('input[type=checkbox]:checked')].map(c=>c.dataset.id);
 }
+let dsPreviewCharCount = 0;
 function dsUpdateButtons(){
   const n = dsSelectedIds().length;
-  $('dsCount').textContent = n ? `선택 ${n}명` : '선택된 구독자 없음';
+  const sel = n ? `선택 ${n}명` : '선택된 구독자 없음';
+  const body = dsPreviewLoaded ? ` · 본문 ${dsPreviewCharCount}자` : '';
+  $('dsCount').textContent = sel + body;
   $('dsPreviewBtn').disabled = n === 0;
-  // 선택 변경 시 이전 미리보기 무효화
-  if(dsPreviewLoaded){
-    dsPreviewLoaded = false;
-    $('dsSendBtn').disabled = true;
-    $('dsSendBtn').classList.add('ghost');
-    $('dsPreview').style.display = 'none';
-    $('dsWarn').style.display = 'none';
-  }
+  // 보낼 수 있는 조건: 미리보기 로드됨 + 선택 1명 이상
+  $('dsSendBtn').disabled = !dsPreviewLoaded || n === 0;
 }
 async function dsLoadTargets(){
   $('dsTargets').innerHTML = '<div class="loading">활성 구독자 로딩 중…</div>';
@@ -961,7 +981,7 @@ async function dsLoadTargets(){
     }
     $('dsTargets').innerHTML = dsRows.map(r=>(
       `<div class="target-row">`
-      +`<input type="checkbox" data-id="${r.id}" checked>`
+      +`<input type="checkbox" data-id="${r.id}">`
       +`<span class="phone">${r.phone}</span>`
       +`<span style="color:var(--mut);font-size:12px">${r.name||''}</span>`
       +`<span class="badge ${r.delivery_state||'unknown'}" style="margin-left:auto">${r.delivery_state||'unknown'}</span>`
@@ -991,9 +1011,9 @@ $('dsPreviewBtn').addEventListener('click', async ()=>{
   try{
     const r = await api('daily_send_preview', { subscriberIds: ids });
     const p = r.preview || {};
-    $('dsPreview').style.display = 'block';
+    $('dsPreview').classList.remove('placeholder');
     $('dsPreview').textContent = p.message || '(메시지 없음)';
-    $('dsCount').textContent = `대상 ${p.activeSubscribers ?? 0}명 · ${p.charCount ?? 0}자${p.overflow ? ' · 길이 초과' : ''}`;
+    dsPreviewCharCount = p.charCount ?? 0;
     const warns = [];
     if(r.alreadySentToday){
       const t = r.alreadySentAt ? ` (${fmtDateTime(r.alreadySentAt)})` : '';
@@ -1012,13 +1032,13 @@ $('dsPreviewBtn').addEventListener('click', async ()=>{
       $('dsWarn').style.display = 'none';
     }
     dsPreviewLoaded = true;
-    $('dsSendBtn').disabled = false;
     $('dsSendBtn').classList.remove('ghost');
+    dsUpdateButtons();
   }catch(err){
     dsSetStatus('error', '미리보기 실패: ' + err.message);
   }finally{
-    $('dsPreviewBtn').disabled = dsSelectedIds().length === 0;
     $('dsPreviewBtn').textContent = '미리보기';
+    $('dsPreviewBtn').disabled = dsSelectedIds().length === 0;
   }
 });
 $('dsSendBtn').addEventListener('click', async ()=>{
@@ -1044,10 +1064,10 @@ $('dsSendBtn').addEventListener('click', async ()=>{
   }catch(err){
     dsSetStatus('error', '오류: ' + err.message);
   }finally{
+    // 발송 후 미리보기 잠금 해제(다음 시도 위해 다시 미리보기 필요)
     dsPreviewLoaded = false;
-    $('dsPreviewBtn').disabled = dsSelectedIds().length === 0;
-    $('dsSendBtn').disabled = true;
     $('dsSendBtn').classList.add('ghost');
+    dsUpdateButtons();
   }
 });
 
