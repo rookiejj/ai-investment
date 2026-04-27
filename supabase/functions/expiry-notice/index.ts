@@ -1,14 +1,18 @@
 /**
- * 만료 임박 알림톡 발송 Edge Function (D-1, KST 20:00 크론)
+ * 만료 임박 안내 발송 Edge Function (D-1, KST 20:00 크론)
  *
  * 1) 내일(KST 기준) 안에 만료되는 active 구독자 조회
- * 2) 솔라피 알림톡(ATA) 발송 — 재구독 페이지(/renew) 링크 버튼 동봉
- * 3) send_logs INSERT (template_code='expiry_notice')
+ * 2) 솔라피 친구톡(CTA) 발송 — 본문에 만료일 자동 삽입 + /renew 링크 버튼
+ * 3) send_logs INSERT (template_code='expiry_notice', message_type='friendtalk')
+ *
+ * ⚠ 친구톡 사용 이유:
+ *   - 알림톡 검수에서 '재구매 유도' 표현이 거절됨
+ *   - 친구톡은 자유 텍스트 + 버튼 가능, 검수 없음
+ *   - 단점: 채널 미친구·광고 수신 거부자에겐 미도달 (해결: /help 안내)
  *
  * 필수 ENV:
  *   SOLAPI_API_KEY · SOLAPI_API_SECRET · SOLAPI_PFID · SOLAPI_SENDER
  *   CRON_SECRET
- *   ALIMTALK_EXPIRY_TEMPLATE_ID  (카카오 승인 후 설정. 미설정 시 발송 스킵)
  * 선택:
  *   SITE_URL (기본: https://roysbriefing.vercel.app)
  *   SHOP_NAME (기본: 브리픽)
@@ -39,14 +43,12 @@ async function solapiAuthHeader(apiKey: string, apiSecret: string): Promise<stri
 }
 
 // ═══ KST 기준 내일 날짜 범위 ═══
-// 실행 시점(KST) 기준 "내일"의 00:00 ~ 23:59:59.999 을 UTC ISO로 반환
 function tomorrowKstBounds(now: Date): { startIso: string; endIso: string; dateLabel: string } {
   const kstNowMs = now.getTime() + 9 * 3600000;
   const tomorrowKst = new Date(kstNowMs + 86400000);
   const y = tomorrowKst.getUTCFullYear();
   const m = tomorrowKst.getUTCMonth();
   const d = tomorrowKst.getUTCDate();
-  // 내일 00:00 KST == UTC(y,m,d,0,0,0) - 9h
   const startMs = Date.UTC(y, m, d, 0, 0, 0) - 9 * 3600000;
   const endMs   = Date.UTC(y, m, d, 23, 59, 59, 999) - 9 * 3600000;
   const mm = String(m + 1).padStart(2, "0");
@@ -58,36 +60,43 @@ function tomorrowKstBounds(now: Date): { startIso: string; endIso: string; dateL
   };
 }
 
-// ═══ 솔라피 알림톡 발송 ═══
-async function solapiSendExpiryAlimtalk(opts: {
+// ═══ 본문 ═══
+function buildExpiryMessage(expiryDate: string): string {
+  return `안녕하세요! ${SHOP_NAME}입니다.
+
+구독 중이신 서비스가 내일(${expiryDate}) 종료될 예정입니다.
+
+${SHOP_NAME}은 자동 결제가 없는 상품으로, 만료 전 재결제하셔야 끊김 없이 뉴스를 받으실 수 있습니다.
+
+아래 버튼을 눌러 재구독을 진행해주세요.`;
+}
+
+// ═══ 솔라피 친구톡 발송 ═══
+async function solapiSendExpiryFriendtalk(opts: {
   apiKey: string;
   apiSecret: string;
   pfId: string;
   sender: string;
-  templateId: string;
   targets: Target[];
-  expiryDate: string;          // YYYY-MM-DD
+  message: string;
   renewUrl: string;
-}): Promise<{ ok: boolean; groupId?: string; raw: unknown; error?: string }> {
-  const { apiKey, apiSecret, pfId, sender, templateId, targets, expiryDate, renewUrl } = opts;
-  // ⚠ 임시: 만료안내 템플릿 승인 전까지 결제완료 템플릿으로 대체 발송 (테스트용)
-  //   - variables 3개(상점명/상품명/만료일), AC(채널 추가) 버튼
-  //   - 승인 후엔 variables 2개(상점명/만료일) + WL('재구독하기', linkMo=/renew)로 원복
-  const useRenewWl = (Deno.env.get("ALIMTALK_EXPIRY_USE_RENEW_WL") ?? "") === "Y";
+}): Promise<{ ok: boolean; groupId?: string; raw: unknown; error?: string; failedMessageList: Array<{ to: string; statusMessage: string }> }> {
+  const { apiKey, apiSecret, pfId, sender, targets, message, renewUrl } = opts;
   const messages = targets.map((t) => ({
     to: t.phone,
     from: sender,
-    type: "ATA",
+    text: message,
+    type: "CTA",
     kakaoOptions: {
       pfId,
-      templateId,
       disableSms: true,
-      variables: useRenewWl
-        ? { "#{상점명}": SHOP_NAME, "#{만료일}": expiryDate }
-        : { "#{상점명}": SHOP_NAME, "#{상품명}": "월간 구독", "#{만료일}": expiryDate },
-      buttons: useRenewWl
-        ? [{ buttonType: "WL", buttonName: "재구독하기", linkMo: renewUrl, linkPc: renewUrl }]
-        : [{ buttonType: "AC", buttonName: "채널 추가" }],
+      bms: { targeting: "I" },  // I = 채널 친구만
+      buttons: [{
+        buttonType: "WL",
+        buttonName: "재구독 신청하기",
+        linkMo: renewUrl,
+        linkPc: renewUrl,
+      }],
     },
   }));
   const auth = await solapiAuthHeader(apiKey, apiSecret);
@@ -99,11 +108,22 @@ async function solapiSendExpiryAlimtalk(opts: {
     });
     const j = await res.json();
     if (!res.ok) {
-      return { ok: false, raw: j, error: `solapi ${res.status}: ${JSON.stringify(j).slice(0, 400)}` };
+      return {
+        ok: false, raw: j, failedMessageList: [],
+        error: `solapi ${res.status}: ${JSON.stringify(j).slice(0, 400)}`,
+      };
     }
-    return { ok: true, groupId: j.groupId, raw: j };
+    return {
+      ok: true,
+      groupId: j.groupId,
+      raw: j,
+      failedMessageList: j.failedMessageList ?? [],
+    };
   } catch (e) {
-    return { ok: false, raw: null, error: e instanceof Error ? e.message : String(e) };
+    return {
+      ok: false, raw: null, failedMessageList: [],
+      error: e instanceof Error ? e.message : String(e),
+    };
   }
 }
 
@@ -120,11 +140,10 @@ Deno.serve(async (req) => {
       });
     }
 
-    const apiKey     = Deno.env.get("SOLAPI_API_KEY");
-    const apiSecret  = Deno.env.get("SOLAPI_API_SECRET");
-    const pfId       = Deno.env.get("SOLAPI_PFID");
-    const sender     = Deno.env.get("SOLAPI_SENDER");
-    const templateId = Deno.env.get("ALIMTALK_EXPIRY_TEMPLATE_ID");
+    const apiKey    = Deno.env.get("SOLAPI_API_KEY");
+    const apiSecret = Deno.env.get("SOLAPI_API_SECRET");
+    const pfId      = Deno.env.get("SOLAPI_PFID");
+    const sender    = Deno.env.get("SOLAPI_SENDER");
 
     if (!apiKey || !apiSecret || !pfId || !sender) {
       return new Response(JSON.stringify({ ok: false, error: "solapi env missing" }), {
@@ -154,10 +173,13 @@ Deno.serve(async (req) => {
     if (selErr) throw selErr;
     const list = (targets ?? []) as Target[];
 
+    const message = buildExpiryMessage(dateLabel);
+
     if (dryRun) {
       return new Response(JSON.stringify({
-        ok: true, dryRun: true, dateLabel, startIso, endIso, count: list.length,
-        phones: list.map((t) => t.phone),
+        ok: true, dryRun: true, dateLabel, startIso, endIso,
+        count: list.length, phones: list.map((t) => t.phone),
+        charCount: message.length, message,
       }), { headers: { "Content-Type": "application/json" } });
     }
 
@@ -167,46 +189,50 @@ Deno.serve(async (req) => {
       });
     }
 
-    // 템플릿 미승인 시 발송 스킵 (로그만 남김)
-    if (!templateId) {
-      console.warn("[expiry-notice] ALIMTALK_EXPIRY_TEMPLATE_ID not set — skipping send");
-      return new Response(JSON.stringify({
-        ok: true, dateLabel, count: list.length, sent: 0,
-        skipped: "ALIMTALK_EXPIRY_TEMPLATE_ID not set",
-      }), { headers: { "Content-Type": "application/json" } });
-    }
-
     const renewUrl = `${SITE_URL.replace(/\/$/, "")}/renew`;
-    const result = await solapiSendExpiryAlimtalk({
-      apiKey, apiSecret, pfId, sender, templateId,
-      targets: list, expiryDate: dateLabel, renewUrl,
+    const result = await solapiSendExpiryFriendtalk({
+      apiKey, apiSecret, pfId, sender,
+      targets: list, message, renewUrl,
     });
 
+    // 부분 실패 처리
+    const failedMap = new Map<string, string>();
+    for (const f of result.failedMessageList) failedMap.set(f.to, f.statusMessage ?? "");
+
     const batchId = crypto.randomUUID();
-    const ok = result.ok;
-    const rows = list.map((t) => ({
-      subscriber_id: t.id,
-      phone: t.phone,
-      message: `구독 만료 안내 (만료일 ${dateLabel})`,
-      char_count: 0,
-      status: ok ? "success" : "fail",
-      message_type: "alimtalk",
-      template_code: "expiry_notice",
-      provider: "solapi",
-      provider_code: ok ? (result.groupId ?? null) : null,
-      provider_message: ok ? "ok" : (result.error ?? JSON.stringify(result.raw).slice(0, 400)),
-      provider_msg_id: ok ? (result.groupId ?? null) : null,
-      batch_id: batchId,
-    }));
+    const apiOk = result.ok;
+    const rows = list.map((t) => {
+      const partialFail = failedMap.get(t.phone);
+      const failed = !apiOk || partialFail !== undefined;
+      return {
+        subscriber_id: t.id,
+        phone: t.phone,
+        message,
+        char_count: message.length,
+        status: failed ? "fail" : "success",
+        message_type: "friendtalk",
+        template_code: "expiry_notice",
+        provider: "solapi",
+        provider_code: apiOk ? (result.groupId ?? null) : null,
+        provider_message: failed
+          ? (partialFail ?? result.error ?? "send failed")
+          : "ok",
+        provider_msg_id: apiOk ? (result.groupId ?? null) : null,
+        batch_id: batchId,
+      };
+    });
     const { error: logErr } = await supabase.from("send_logs").insert(rows);
     if (logErr) console.error("[expiry-notice] send_logs insert failed", logErr);
 
+    const sent = rows.filter((r) => r.status === "success").length;
+    const failedCount = rows.length - sent;
+
     return new Response(JSON.stringify({
-      ok,
+      ok: apiOk,
       dateLabel,
       count: list.length,
-      sent: ok ? list.length : 0,
-      failed: ok ? 0 : list.length,
+      sent,
+      failed: failedCount,
       batchId,
       groupId: result.groupId ?? null,
     }), { headers: { "Content-Type": "application/json" } });
