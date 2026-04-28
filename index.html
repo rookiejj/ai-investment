@@ -537,6 +537,8 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
   font-size:14px;font-weight:600;color:var(--fg);margin-bottom:12px;
   letter-spacing:-0.14px;
 }
+.update-summary-line{display:block;line-height:1.55;margin-bottom:2px}
+.update-summary-line:last-child{margin-bottom:0}
 .update-list{list-style:none;display:flex;flex-direction:column;gap:8px}
 .update-item{
   font-size:13px;color:var(--fg2);line-height:1.6;
@@ -808,6 +810,12 @@ function _renderItems(entry){
   return [];
 }
 const _updateExpand={stocks:false,kr:false,ai:false,etf:false,commodity:false,unicorn:false};
+function _renderSummaryHtml(summary){
+  if(!summary) return '';
+  const lines=summary.split('\n').map(s=>s.trim()).filter(Boolean);
+  if(!lines.length) return '';
+  return lines.map(l=>`<span class="update-summary-line">• ${l}</span>`).join('');
+}
 function renderUpdateBox(tab){
   const updMap={stocks:STATE.stUpd,kr:STATE.krUpd,ai:STATE.aiUpd,etf:STATE.etfUpd,commodity:STATE.commodityUpd,unicorn:STATE.unicornUpd};
   const upd=updMap[tab];
@@ -817,7 +825,7 @@ function renderUpdateBox(tab){
   const dateStr=latest.date;
   const latestHm=_hm(dateStr);
   const latestTimeStr=latestHm?`<span class="update-item-time">${latestHm}</span>`:'';
-  const summaryStr=latest.summary?`<div class="update-summary">${latest.summary}${latestTimeStr}</div>`:'';
+  const summaryStr=latest.summary?`<div class="update-summary">${_renderSummaryHtml(latest.summary)}${latestTimeStr}</div>`:'';
   const expanded=!!_updateExpand[tab];
   const extras=upd.slice(1,3);
   const hasAnyDetails=items.length>0 || extras.some(e=>_renderItems(e).length>0);
@@ -834,7 +842,7 @@ function renderUpdateBox(tab){
     extras.forEach(e=>{
       const dt=typeof e.date==='string'?e.date.slice(5,16):'';
       const subItems=_renderItems(e);
-      const sumStr=e.summary?`<div class="update-summary">${e.summary}${dt?`<span class="update-item-time">${dt}</span>`:''}</div>`:'';
+      const sumStr=e.summary?`<div class="update-summary">${_renderSummaryHtml(e.summary)}${dt?`<span class="update-item-time">${dt}</span>`:''}</div>`:'';
       html+=`<div class="update-individual">${sumStr}`;
       if(subItems.length){
         html+=`<div class="update-details"><ul class="update-list update-list-sub">`;
