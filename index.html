@@ -530,6 +530,47 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
 }
 .update-summary-line{display:block;line-height:1.55;margin-bottom:2px}
 .update-summary-line:last-child{margin-bottom:0}
+.update-toggle{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:22px;height:22px;border-radius:6px;
+  color:var(--acc-deep);cursor:pointer;
+  transition:background .2s,transform .25s ease;
+}
+.update-toggle:hover{background:rgba(24,226,153,0.1)}
+.update-toggle svg{width:14px;height:14px;display:block}
+.update-box.expanded .update-toggle{transform:rotate(180deg)}
+.update-details{margin-top:12px}
+.update-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.update-item{
+  font-size:13px;color:var(--fg2);line-height:1.6;
+  padding:8px 12px;background:var(--panel);
+  border:1px solid var(--border);border-radius:10px;
+  transition:all .2s;
+}
+.update-item:hover{border-color:rgba(24,226,153,0.25)}
+.update-item-type{
+  font:600 10px/1.5 'Inter',sans-serif;
+  padding:2px 7px;border-radius:9999px;margin-right:6px;
+  background:var(--acc-light);color:var(--acc-deep);
+  letter-spacing:0.3px;display:inline-block;vertical-align:middle;
+  transform:translateY(-1px);
+}
+.update-item-sector{
+  font:600 10px/1.5 'Inter',sans-serif;
+  padding:2px 7px;border-radius:9999px;margin-right:6px;
+  background:rgba(99,102,241,0.12);color:#818cf8;
+  letter-spacing:0.3px;display:inline-block;vertical-align:middle;
+  transform:translateY(-1px);
+}
+.update-more{
+  margin-top:10px;font-size:13px;font-weight:500;
+  color:var(--acc-deep);cursor:pointer;
+  transition:opacity .2s;display:inline-block;
+}
+.update-more:hover{opacity:0.7}
+.update-box:not(.expanded) .update-details,
+.update-box:not(.expanded) .update-more.collapse{display:none}
+.update-box.expanded .update-more.expand{display:none}
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:768px){
@@ -734,11 +775,25 @@ async function loadUpdJS(url,varName,v){
   return new Function(t+`;return typeof ${varName}!=="undefined"?${varName}:[];`)();
 }
 
+const _updateExpand={stocks:false,kr:false,ai:false,etf:false,commodity:false,unicorn:false};
 function _renderSummaryHtml(summary){
   if(!summary) return '';
   const lines=summary.split('\n').map(s=>s.trim()).filter(Boolean);
   if(!lines.length) return '';
   return lines.map(l=>`<span class="update-summary-line">• ${l}</span>`).join('');
+}
+function _renderItems(entry){
+  if(entry.changes){
+    return entry.changes.map(c=>{
+      const sec=c.sector?`<span class="update-item-sector">${c.sector}</span>`:'';
+      return `<span class="update-item-type">${c.type}</span>${sec}${c.detail}`;
+    });
+  }
+  // 레거시 AI entries[] fallback
+  if(entry.entries){
+    return entry.entries.map(e=>typeof e==='string'?e:e.text);
+  }
+  return [];
 }
 function renderUpdateBox(tab){
   const updMap={stocks:STATE.stUpd,kr:STATE.krUpd,ai:STATE.aiUpd,etf:STATE.etfUpd,commodity:STATE.commodityUpd,unicorn:STATE.unicornUpd};
@@ -746,8 +801,32 @@ function renderUpdateBox(tab){
   if(!upd||!upd.length)return '';
   const latest=upd[0];
   const dateStr=latest.date;
+  const items=_renderItems(latest);
+  const expanded=!!_updateExpand[tab];
   const summaryStr=latest.summary?`<div class="update-summary">${_renderSummaryHtml(latest.summary)}</div>`:'';
-  return `<div class="update-box" data-tab="${tab}"><div class="update-header"><span class="update-tag">업데이트</span><span class="update-date">${dateStr}</span></div>${summaryStr}</div>`;
+  const hasDetails=items.length>0;
+  const toggleIcon=hasDetails?`<span class="update-toggle" onclick="toggleUpdateMore(this)" aria-label="펼쳐보기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>`:'';
+  let html=`<div class="update-box${expanded?' expanded':''}" data-tab="${tab}"><div class="update-header"><span class="update-tag">업데이트</span><span class="update-date">${dateStr}</span>${toggleIcon}</div>${summaryStr}`;
+  if(hasDetails){
+    html+=`<div class="update-details"><ul class="update-list">`;
+    items.forEach(it=>html+=`<li class="update-item">${it}</li>`);
+    html+=`</ul></div>`;
+    html+=`<span class="update-more expand" onclick="toggleUpdateMore(this)">펼쳐보기</span>`;
+    html+=`<span class="update-more collapse" onclick="toggleUpdateMore(this)">간단히 보기</span>`;
+  }
+  html+=`</div>`;
+  return html;
+}
+function toggleUpdateMore(el){
+  const box=el.closest('.update-box');
+  const tab=box.dataset.tab;
+  if(box.classList.contains('expanded')){
+    box.classList.remove('expanded');
+    if(tab) _updateExpand[tab]=false;
+  }else{
+    box.classList.add('expanded');
+    if(tab) _updateExpand[tab]=true;
+  }
 }
 function norm(raw,kind){
   if(['stocks','kr'].includes(kind))return raw.data.map(g=>({group:g.title,tag:g.tag,items:g.stocks.map(s=>({
