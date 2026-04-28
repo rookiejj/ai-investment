@@ -75,7 +75,12 @@ function smartCut(s, max) {
 function buildTabBlock(tab) {
   const lines = [`${tab.emoji} ${tab.label}`, ''];
   const [first] = tab.entries;
-  if (first) lines.push(`• ${first.summary}`);
+  if (first) {
+    for (const raw of first.summary.split('\n')) {
+      const line = raw.trim();
+      if (line) lines.push(`• ${line}`);
+    }
+  }
   return lines.join('\n');
 }
 

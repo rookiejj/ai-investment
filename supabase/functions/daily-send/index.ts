@@ -109,7 +109,12 @@ function smartCut(s: string, max: number): string {
 function buildTabBlock(tab: TabWithEntries): string {
   const lines = [`${tab.emoji} ${tab.label}`, ""];
   const [first] = tab.entries;
-  if (first) lines.push(`• ${first.summary}`);
+  if (first) {
+    for (const raw of first.summary.split("\n")) {
+      const line = raw.trim();
+      if (line) lines.push(`• ${line}`);
+    }
+  }
   return lines.join("\n");
 }
 function buildMessage(tabs: TabWithEntries[]): string {
