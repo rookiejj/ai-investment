@@ -530,13 +530,6 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
 }
 .update-summary-line{display:block;line-height:1.55;margin-bottom:2px}
 .update-summary-line:last-child{margin-bottom:0}
-.update-item-time{
-  font:600 10px/1 'Geist Mono','SF Mono',monospace;
-  padding:2px 6px;border-radius:9999px;margin-left:6px;
-  background:rgba(24,226,153,0.08);color:var(--acc-deep);
-  letter-spacing:0.3px;display:inline-block;vertical-align:middle;
-  transform:translateY(-1px);
-}
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:768px){
@@ -741,11 +734,6 @@ async function loadUpdJS(url,varName,v){
   return new Function(t+`;return typeof ${varName}!=="undefined"?${varName}:[];`)();
 }
 
-function _hm(t){ // extract HH:MM from "YYYY-MM-DD HH:MM KST" or similar
-  if(!t)return '';
-  const m=String(t).match(/(\d{2}:\d{2})/);
-  return m?m[1]:'';
-}
 function _renderSummaryHtml(summary){
   if(!summary) return '';
   const lines=summary.split('\n').map(s=>s.trim()).filter(Boolean);
@@ -758,9 +746,7 @@ function renderUpdateBox(tab){
   if(!upd||!upd.length)return '';
   const latest=upd[0];
   const dateStr=latest.date;
-  const latestHm=_hm(dateStr);
-  const latestTimeStr=latestHm?`<span class="update-item-time">${latestHm}</span>`:'';
-  const summaryStr=latest.summary?`<div class="update-summary">${_renderSummaryHtml(latest.summary)}${latestTimeStr}</div>`:'';
+  const summaryStr=latest.summary?`<div class="update-summary">${_renderSummaryHtml(latest.summary)}</div>`:'';
   return `<div class="update-box" data-tab="${tab}"><div class="update-header"><span class="update-tag">업데이트</span><span class="update-date">${dateStr}</span></div>${summaryStr}</div>`;
 }
 function norm(raw,kind){
