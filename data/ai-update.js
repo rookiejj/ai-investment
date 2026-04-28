@@ -6,6 +6,19 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-28 13:00 KST",
+    summary: `Anthropic 4/27 'Claude 광고 영구 배제' 공식화 — 엔터프라이즈 신뢰 우위 차별화
+NVIDIA 시총 $5.3T 사상 최고 — QCOM·OpenAI·MediaTek 2028 AI 폰 칩 협력
+4/29 GOOGL·MSFT·META·AMZN 동시 실적 슈퍼위크 본격
+Apple·Google Foundation Models 트레이닝 수요 8세대 TPU 8t/8i 가동`,
+    changes: [
+      { type: "전략", sector: "Anthropic",
+        detail: "Anthropic. 4/27 자사 블로그에 'Claude는 광고 없이 운영된다'는 입장을 공식화. 광고 인센티브 구조가 '진정으로 도움이 되는 AI 어시스턴트'와 양립할 수 없다는 논리 — 광고주 클릭률·체류시간을 극대화하기 위한 다크 패턴이 사용자에게 진짜 좋은 답변을 흐릴 가능성을 차단. 구독·B2B API·엔터프라이즈 시트만으로 매출을 확장하는 모델을 IPO를 앞두고 명문화한 의미 — 4/24 NEC 30,000명 전사 배포·4/20 Amazon $25B 추가 투자·세컨더리 밸류 $1T·연환산 매출 $300억 돌파와 결합되며 '광고 없이도 OpenAI를 추월한 첫 프론티어 랩'으로 차별화 포지션 굳히기. ChatGPT의 광고 도입 가능성 보도가 반복되는 상황에서 신뢰성·프라이버시를 IPO 내러티브의 핵심 자산으로 명문화하는 분기점.", time: "2026-04-28 13:00 KST" },
+      { type: "마일스톤", sector: "NVIDIA",
+        detail: "NVIDIA. 4/27 종가 $216.57 +4.0% 사상 최고 갱신, 시총 $5.3T로 글로벌 1위 격차를 다시 벌렸다. 트리거는 Ming-Chi Kuo가 X에 게시한 OpenAI·Qualcomm·MediaTek·Luxshare 4사 2028 AI 스마트폰 칩 공동개발 보도 — QCOM이 SoC 코디자인, MediaTek가 모뎀·BB, Luxshare가 EMS 전담하는 구조가 노출되며 AI 컴퓨트가 데이터센터 단일 서사에서 모바일 엣지 + 데이터센터 듀얼 서사로 확장. NVIDIA는 Cosmos·NIM·온디바이스 라이센싱 + Blackwell Ultra·Vera Rubin 풀프로덕션·Rubin CPX massive-context inference로 양 서사 모두를 동시에 점유. QCOM 주가 +11~12% 동반 점프해 4월 두 번째 두 자릿수 랠리. 5/20 Q1 FY27 컨센 매출 $78B(+57% YoY)가 차기 모멘텀의 분기점.", time: "2026-04-28 13:00 KST" },
+    ]
+  },
+  {
     date: "2026-04-28 07:24 KST",
     summary: "OpenAI·Microsoft 파트너십 7년만에 전면 개편·MS 독점 라이선스 종료·AGI 판정 조항 폐기·OpenAI는 AWS·GCP·Oracle 직접 진입 가능·QCOM·OpenAI·MediaTek 2028 AI 스마트폰 칩 협력 보도·NVDA $5.3T·Musk vs OpenAI 비영리 환원 소송 오클랜드 개시",
     changes: [

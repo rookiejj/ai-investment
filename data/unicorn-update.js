@@ -1,6 +1,19 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-28 13:00 KST",
+    summary: `Anthropic 4/27 'Claude 광고 영구 배제' 공식화 — IPO 신뢰성 차별화 명문화
+SpaceX 6월 로드쇼 프라이싱 $1.75T 타겟 — 사상 최대 IPO 페이스
+Cerebras CBRS 5월 중순 프라이싱·세컨더리 $26~28B 임플라이드
+SpaceX·OpenAI·Anthropic 3대 IPO 합산 $240B+ 시장 흡수 부담`,
+    changes: [
+      { type: "전략", sector: "AI·ML",
+        detail: "Anthropic. 4/27 자사 블로그에 'Claude는 광고 없이 운영된다'는 입장을 공식화 — 광고 인센티브가 '진정으로 도움이 되는 AI 어시스턴트'와 양립할 수 없다는 논리를 IPO를 앞두고 명문화. 구독·B2B API·엔터프라이즈 시트만으로 매출을 확장하는 모델로 OpenAI(소비자 비중 큰 ChatGPT 광고 도입 가능성 보도 반복)와의 차별화 포지션 강화. 4/24 Alphabet $40B + 4/20 Amazon $25B + NEC 30,000명 + 세컨더리 $1T + ARR $300억 돌파에 이어 'IPO 내러티브의 핵심 자산'으로 신뢰성·프라이버시를 추가, 10월 IPO $400~500B 타겟의 펀더멘털 보강.", time: "2026-04-28 13:00 KST" },
+      { type: "마일스톤", sector: "우주·모빌리티·방산",
+        detail: "SpaceX. 4/22~23 Starbase 1일차 125명 애널리스트·Tennessee 2일차 21개 주관사 투어 완료 후 6월 로드쇼 프라이싱 페이스 진입 확정. 타겟 밸류 $1.75T·조달 규모 $75B로 사상 최대 IPO 기록(2019 사우디 아람코 $29B의 약 2.6배)을 노린다. Starlink 가입자 9백만 명 돌파·2026 매출 $160억 가까이 도달이 펀더멘털을 받친다. 같은 6개월 윈도우 내 OpenAI($1T 타겟·Q4) + Anthropic($400~500B·10월) IPO와 합산 $240B+ 자본 조달이 단일 IPO 사이클에 집중되며 시장 흡수 부담이 가시화 — Bitcoin·소형주 유동성 흡수 우려 동반.", time: "2026-04-28 13:00 KST" },
+    ]
+  },
+  {
     date: "2026-04-28 07:24 KST",
     summary: "OpenAI·Microsoft 7년 파트너십 전면 개편 4/27 발표·MS 독점 라이선스 종료·AGI 판정 조항 폐기·OpenAI는 AWS·GCP·Oracle 직접 호스팅 가능·IPO 최대 법적 장애물 해소·Musk vs OpenAI 비영리 환원 소송 오클랜드 개시·OpenAI·QCOM·MediaTek·Luxshare 4사 2028 AI 스마트폰 칩 보도",
     changes: [

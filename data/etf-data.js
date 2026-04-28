@@ -103,7 +103,7 @@ const data = [
       { tk:"INDA", nm:"iShares MSCI India", rs:"인도 시장", aum:"12", er:"0.64%", ytd:"+10%", y1:"+18%" },
       { tk:"VEA", nm:"Vanguard FTSE Developed", rs:"선진국(미국 제외)", aum:"130", er:"0.05%", ytd:"+9%", y1:"+16%" },
       { tk:"FXI", nm:"iShares China Large-Cap", rs:"중국 대형주 50종·H주·관세 변동성", aum:"5.8", er:"0.74%", ytd:"-12%", y1:"+15%" },
-      { tk:"EWY", nm:"iShares MSCI South Korea", rs:"4/27 KOSPI 6,615 +2.15% 사상 최고·시총 6,000조원 첫 돌파·SK하이닉스 +5.56% ATH 시총 글로벌 17위·외국인·기관 1.99조원 순매수·韓 4월 첫 10일 수출 +36.7% 반도체 +152.5%", aum:"16", er:"0.59%", ytd:"+58%", y1:"+154%" },
+      { tk:"EWY", nm:"iShares MSCI South Korea", rs:"4/28 화 KOSPI 6,643 +0.44% 6,700 도전·SK하이닉스 +2.5% 1,320,000원 신고가 갱신·삼성전자 +0.9% 224,000원·韓 시총 6,100조원 진입 시도·EWY YTD +58% 모멘텀 연장", aum:"16", er:"0.59%", ytd:"+58%", y1:"+154%" },
     ]
   },
 ];
