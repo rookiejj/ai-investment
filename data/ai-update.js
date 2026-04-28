@@ -6,6 +6,22 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-29 07:30 KST",
+    summary: `OpenAI WSJ 매출 미스 보도 — 월별 목표 연속 미달·주간활성 10억 미달·Anthropic에 코딩 영역 점유 양도
+CFO Sarah Friar 사내 우려 — 매출 가속 없으면 향후 컴퓨트 계약 자금조달 어려워질 수 있음
+Oracle -4%·AVGO -4%·AMD -3%·SoftBank ADR -10%·NVDA -2.9% AI 인프라 매도 동조
+OpenAI: '말도 안 됨·총력 컴퓨트 매입' 반박·Oracle '신규 5.5 모델 모멘텀' 적극 방어
+Anthropic — IPO 직전 OpenAI 약점 노출이 코딩 우위 내러티브에 반사 이익`,
+    changes: [
+      { type: "마일스톤", sector: "OpenAI",
+        detail: "OpenAI(IPO 직전 매출 미스 노출). 4/28 Wall Street Journal이 OpenAI가 자체 월별 매출 목표를 연초부터 연속 미달했고 ChatGPT 주간 활성 10억 도달 목표도 미달, 코딩·엔터프라이즈 영역에서 Anthropic에 시장을 내준 정황을 보도. CFO Sarah Friar가 사내 회의에서 '매출 가속이 없으면 향후 컴퓨트 계약 자금조달이 어려워질 수 있다'는 우려를 직원들에게 전달한 사실까지 함께 공개. Altman·Friar는 Reuters 성명에서 'This is ridiculous·총력으로 컴퓨트 매입 작업을 함께 하고 있다'고 반박. AI 인프라 펀딩 신뢰가 흔들리며 4/28 Oracle -4%(5년 $300B 컴퓨트 공급계약 직격), Broadcom -4%(자체 ASIC 협력 의구심), AMD -3%, SoftBank ADR -10% 동시 약세. NVDA도 사상 최고 후 첫 조정 -2.9%. Oracle은 'OpenAI 신규 5.5 모델 모멘텀과 채택 가속을 직접 목격 중'이라며 적극 방어 성명을 발표. IPO 2026년 말 검토를 앞둔 시점에 컴퓨트 자금조달 능력을 둘러싼 펀더멘털 의구심이 가장 큰 리스크 요인으로 부상.",
+        time: "2026-04-29 07:30 KST" },
+      { type: "마일스톤", sector: "Anthropic",
+        detail: "Anthropic(반사이익). 4/28 WSJ이 OpenAI가 코딩·엔터프라이즈 시장에서 Anthropic에 점유율을 내주고 있다고 명시 보도. Claude Code의 엔터프라이즈 AI 코딩 50%+ 점유, 4/16 Opus 4.7 SWE-bench Pro 64.3%(GPT-5.4 57.7% 상회) 우위, 4/24 NEC 30,000명 전사 배포·Alphabet 최대 $40B 추가 투자·5GW TPU 5년 전담 공급, 4/20 Amazon $25B 추가 + AWS 10년 $100B+ 약정, 세컨더리 밸류 $1T·연환산 매출 $300억(OpenAI 추월) 마일스톤이 외부 일관성 확보. 4/27 'Claude 광고 영구 배제' 공식화로 신뢰·프라이버시 차별화까지 명문화돼 OpenAI 매출 미스 보도가 코딩 우위 내러티브의 외부 검증으로 작동, IPO 10월 $400~500B 타겟의 펀더멘털 강화 시그널.",
+        time: "2026-04-29 07:30 KST" },
+    ]
+  },
+  {
     date: "2026-04-28 13:00 KST",
     summary: `Anthropic 4/27 'Claude 광고 영구 배제' 공식화 — 엔터프라이즈 신뢰 우위 차별화
 NVIDIA 시총 $5.3T 사상 최고 — QCOM·OpenAI·MediaTek 2028 AI 폰 칩 협력

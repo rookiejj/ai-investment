@@ -6,7 +6,7 @@ const data = [
     title: "🤖 AI·반도체",
     tag: "인공지능·칩·데이터센터",
     stocks: [
-      { tk:"SMH", nm:"VanEck Semiconductor", rs:"반도체 25종·MVIS·AUM $52B·NVDA 시총 $5.3T·QCOM +11~12% OpenAI 협력 보도·AI 인프라 + 온디바이스 듀얼 모멘텀", aum:"52", er:"0.35%", ytd:"+25%", y1:"+120%" },
+      { tk:"SMH", nm:"VanEck Semiconductor", rs:"반도체 25종·4/28 OpenAI 매출 미스 WSJ 보도로 AI 인프라 매도세·NVDA -2.9%·AVGO -4%·AMD -3% 동조 약세·반도체 18일 연속 상승 종료", aum:"52", er:"0.35%", ytd:"+25%", y1:"+120%" },
       { tk:"SOXX", nm:"iShares Semiconductor", rs:"반도체 30종·ICE 지수", aum:"20.6", er:"0.34%", ytd:"+33%", y1:"+100%" },
       { tk:"BOTZ", nm:"Global X Robotics & AI", rs:"로봇·AI 자동화", aum:"3.56", er:"0.68%", ytd:"+15%", y1:"+32%" },
       { tk:"AIQ", nm:"Global X AI & Tech", rs:"AI·빅데이터·클라우드·AUM $7.9B 확대", aum:"7.86", er:"0.68%", ytd:"+15%", y1:"+30%" },
@@ -32,7 +32,7 @@ const data = [
     title: "⚡ 에너지·원자력",
     tag: "석유·가스·우라늄",
     stocks: [
-      { tk:"XLE", nm:"Energy Select SPDR", rs:"Brent $107·WTI $95대 박스 상단 유지·트럼프 4/27 안보팀 회의에서 이란 호르무즈 재개방 제안 검토하되 핵협상 분리 양보엔 회의적·휴전 추가 연장·정유 마진 확장 분기 추가 연장 가정", aum:"38", er:"0.09%", ytd:"+28%", y1:"+18%" },
+      { tk:"XLE", nm:"Energy Select SPDR", rs:"4/28 Brent $110.55 +2.1%·WTI $98.17 +1.9% 7거래일 연속 갭업·테헤란 봉쇄해제 조건부 시그널·미국 회의적·Hormuz 사실상 봉쇄 지속·정유 마진 확장 분기 한 분기 추가 보존", aum:"38", er:"0.09%", ytd:"+28%", y1:"+18%" },
       { tk:"URA", nm:"Global X Uranium", rs:"우라늄·원전 생태계·연초 조정 국면", aum:"4", er:"0.69%", ytd:"+6%", y1:"+30%" },
       { tk:"NLR", nm:"VanEck Uranium+Nuclear", rs:"원자력 밸류체인", aum:"1.5", er:"0.60%", ytd:"+22%", y1:"+35%" },
       { tk:"AMLP", nm:"Alerian MLP", rs:"MLP 파이프라인·배당", aum:"10", er:"0.85%", ytd:"+12%", y1:"+20%" },
@@ -58,7 +58,7 @@ const data = [
     title: "₿ 크립토·블록체인",
     tag: "비트코인·이더리움·디파이",
     stocks: [
-      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"BTC 4/27 $80K 저항 8일째 무산 $77~79K 박스·美 현물 BTC ETF 8거래일 연속 순유입 누적 $21억·총 자산 $1,020억 사상 첫 돌파·USD-DXY -0.91 4년 최강 음의 상관·4/30 FOMC 동결 시그널 시 USD 약세 헤지 재점화", aum:"58", er:"0.25%", ytd:"+5%", y1:"-11%" },
+      { tk:"IBIT", nm:"iShares Bitcoin Trust", rs:"BTC 4/28 $76,342 -3% OpenAI 매출 미스 위험자산 동반 약세·$80K 저항 무산 후 9일째 박스 하단 시도·美 현물 BTC ETF 누적 +$21억 견조·4/30 FOMC 도브 시그널 약하면 -0.91 음의 상관 단기 풀릴 위험", aum:"58", er:"0.25%", ytd:"+5%", y1:"-11%" },
       { tk:"FBTC", nm:"Fidelity Wise Origin BTC", rs:"비트코인 현물·피델리티·AUM $18B", aum:"18", er:"0.25%", ytd:"+2%", y1:"-14%" },
       { tk:"ETHA", nm:"iShares Ethereum Trust", rs:"이더리움 현물·4/14 +7%", aum:"10", er:"0.25%", ytd:"-12%", y1:"-8%" },
       { tk:"BITO", nm:"ProShares Bitcoin Strategy", rs:"비트코인 선물 최초", aum:"3", er:"0.95%", ytd:"-18%", y1:"-18%" },
@@ -71,8 +71,8 @@ const data = [
     title: "🇺🇸 미국 대형주",
     tag: "S&P500·나스닥·소형주",
     stocks: [
-      { tk:"SPY", nm:"SPDR S&P 500", rs:"4/27 S&P 500 7,173.91 +0.12% 신고가 갱신·VZ Q1 비트 가이던스 상향·DPZ -10.5%·4/29 GOOGL·MSFT·META·AMZN 동시 실적·4/30 FOMC 동결 100% priced in·5/1 AAPL·5/2 PCE", aum:"590", er:"0.09%", ytd:"+3%", y1:"+16%" },
-      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"4/27 Nasdaq 24,887.10 +0.20% 신고가·NVDA $216.57 +4.0% 시총 $5.3T·QCOM·OpenAI·MediaTek 2028 AI 스마트폰 칩 협력 보도로 온디바이스 AI 확장·OpenAI·MS 독점 종료 합의로 Bedrock·GCP·Oracle 진출 가능", aum:"400", er:"0.20%", ytd:"+9%", y1:"+24%" },
+      { tk:"SPY", nm:"SPDR S&P 500", rs:"4/28 S&P 500 -0.46% 신고가 후 차익실현·OpenAI 매출 미스 보도로 AI 인프라 매도·다우 +0.24% 엇갈림·V·SBUX·BKNG 비트·4/29 GOOGL·MSFT·META·AMZN·4/30 FOMC·5/1 AAPL", aum:"590", er:"0.09%", ytd:"+3%", y1:"+16%" },
+      { tk:"QQQ", nm:"Invesco QQQ Trust", rs:"4/28 Nasdaq -1.0% 24,663.80 OpenAI 매출 미스 보도 직격·Oracle -4%·AVGO -4%·AMD -3%·NVDA -2.9% 사상 최고 후 첫 조정·SoftBank ADR -10%·4/29 메가캡 4사 실적 슈퍼위크", aum:"400", er:"0.20%", ytd:"+9%", y1:"+24%" },
       { tk:"VOO", nm:"Vanguard S&P 500", rs:"세계 최대 ETF·AUM $827B·최저 보수", aum:"827", er:"0.03%", ytd:"+2%", y1:"+15%" },
       { tk:"VTI", nm:"Vanguard Total Stock", rs:"미국 전체 시장·4월 신고가 랠리", aum:"420", er:"0.03%", ytd:"+2%", y1:"+14%" },
       { tk:"DIA", nm:"SPDR Dow Jones", rs:"다우 30 우량주·다우 부진", aum:"35", er:"0.16%", ytd:"-3%", y1:"+10%" },
@@ -103,7 +103,7 @@ const data = [
       { tk:"INDA", nm:"iShares MSCI India", rs:"인도 시장", aum:"12", er:"0.64%", ytd:"+10%", y1:"+18%" },
       { tk:"VEA", nm:"Vanguard FTSE Developed", rs:"선진국(미국 제외)", aum:"130", er:"0.05%", ytd:"+9%", y1:"+16%" },
       { tk:"FXI", nm:"iShares China Large-Cap", rs:"중국 대형주 50종·H주·관세 변동성", aum:"5.8", er:"0.74%", ytd:"-12%", y1:"+15%" },
-      { tk:"EWY", nm:"iShares MSCI South Korea", rs:"4/28 화 KOSPI 6,643 +0.44% 6,700 도전·SK하이닉스 +2.5% 1,320,000원 신고가 갱신·삼성전자 +0.9% 224,000원·韓 시총 6,100조원 진입 시도·EWY YTD +58% 모멘텀 연장", aum:"16", er:"0.59%", ytd:"+58%", y1:"+154%" },
+      { tk:"EWY", nm:"iShares MSCI South Korea", rs:"4/28 KOSPI 종가 6,683.76 +0.39% 이틀 연속 신고가·장중 6,710선 첫 돌파·韓 시총 4.04조 달러 영국 추월 세계 8위·SK하이닉스 Q1 OPM 72% TSMC 압도·EWY YTD +58% 모멘텀 연장", aum:"16", er:"0.59%", ytd:"+58%", y1:"+154%" },
     ]
   },
 ];

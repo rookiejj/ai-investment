@@ -6,8 +6,8 @@ const data = [
     title: "🤖 AI·ML",
     tag: "프론티어 모델·AI 인프라",
     stocks: [
-      { nm:"OpenAI", rs:"4/27 MS 독점 라이선스 종료·AGI 판정 조항 폐기·AWS·GCP·Oracle 직접 호스팅 가능 — IPO 최대 법적 장애물 해소·Musk 비영리 환원 소송 오클랜드 개시·QCOM·MediaTek 2028 AI 스마트폰 칩 협력 보도", val:"$852B", round:"$122B 펀딩", sector:"AGI", ipo:"2026 말 $1T+" },
-      { nm:"Anthropic", rs:"4/24 Alphabet $40B 공식화·NEC 일본 30,000명 전사 배포 첫 글로벌 파트너 NEC +5.2%·Mythos Preview 무단 접근 사건 공식 조사·ARR $300억·$1M+ 엔터 1,000+·Claude Code 단독 ARR $25억·10월 IPO", val:"$1T (2차시장)", round:"Alphabet $10B @ $350B (2026-04)", sector:"프론티어 AI", ipo:"2026.10 $400~500B 타겟" },
+      { nm:"OpenAI", rs:"4/28 WSJ 매출 미스 보도 — 월별 목표 연속 미달·주간활성 10억 미달·Anthropic에 코딩·엔터프라이즈 점유 양도·CFO Friar 컴퓨트 자금조달 우려·Oracle -4%·AVGO -4%·AMD -3% 인프라 매도세·Altman 'ridiculous' 반박", val:"$840B", round:"$122B 펀딩", sector:"AGI", ipo:"2026 말 $1T+ 검토" },
+      { nm:"Anthropic", rs:"4/28 WSJ이 OpenAI 코딩·엔터프라이즈 점유 양도 명시 보도 — IPO 직전 외부 검증·4/24 Alphabet $40B·NEC 30,000명 전사 배포·Mythos 외부 접근 조사·ARR $300억·Claude Code ARR $25억·10월 IPO", val:"$1T (2차시장)", round:"Alphabet $10B @ $350B (2026-04)", sector:"프론티어 AI", ipo:"2026.10 $400~500B 타겟" },
       { nm:"Databricks", rs:"레이크하우스·AI 통합·ARR $5.4B", val:"$134B", round:"Series L ($11B)", sector:"데이터·AI", ipo:"2026 H2 S-1" },
       { nm:"Cerebras", rs:"4/17 S-1 공개 제출 확정·2025 매출 $510M 순익 $87.9M·G42·MBZUAI 86% 매출·Morgan Stanley 리드·OpenAI 3년 $20B", val:"$23B", round:"5월 중순 프라이싱·$2B 조달", sector:"AI 하드웨어", ipo:"2026.05 나스닥 CBRS·$22~25B" },
       { nm:"Safe Superintelligence", rs:"Sutskever 창업·제품 전무·Alphabet·NVIDIA 베팅 AGI 연구소", val:"$32B", round:"Series B ($2B, 2025-04)", sector:"AGI 안전", ipo:"미정" },

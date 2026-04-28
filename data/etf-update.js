@@ -1,6 +1,25 @@
 // Global ETF Atlas - Update Log
 const updates = [
   {
+    date: "2026-04-29 07:30 KST",
+    summary: `Nasdaq -1.0%·S&P -0.46% 신고가 후 첫 조정 — OpenAI 매출 미스 WSJ 보도 직격
+Oracle -4%·AVGO -4%·AMD -3%·NVDA -2.9% AI 인프라 매도세 — SMH·QQQ 직접 영향
+Brent $110·WTI $98 7거래일 연속 갭업 — XLE 박스 상단 유지
+BTC $76,342 -3% IBIT 위험자산 동반 약세
+EWY YTD +58% 유지·KOSPI 6,683.76 이틀 연속 신고가·시총 세계 8위`,
+    changes: [
+      { type: "정보 갱신", sector: "AI·반도체",
+        detail: "SMH·QQQ. 4/28 Wall Street Journal이 OpenAI 매출 미스·주간 활성 10억 미달·CFO Sarah Friar의 컴퓨트 자금조달 우려 사내 발언을 보도하면서 AI 인프라 매도세 촉발. Oracle -4%·Broadcom -4%·AMD -3%·NVDA -2.9%(사상 최고 후 첫 조정)·SoftBank ADR -10% 일제 약세, 반도체 18일 연속 상승 종료. SMH는 NVDA 약 23%·AVGO·AMD·MU 가중치가 절반 이상으로 직접 영향, QQQ도 메가캡 빅테크와 OpenAI 인프라 동조 매도로 -1%대 약세. 4/29 장후 GOOGL·MSFT·META·AMZN 동시 실적과 4/30 FOMC가 단기 회복 또는 추가 조정 분기점.",
+        time: "2026-04-29 07:30 KST" },
+      { type: "정보 갱신", sector: "에너지·원자력",
+        detail: "XLE·VDE·XOP. 4/28 Brent $110.55 +2.1%·WTI $98.17 +1.9%로 7거래일 연속 갭업, WTI 장중 $100선 돌파해 4월 초 이후 최고치. 테헤란이 파키스탄을 통해 봉쇄 해제·Hormuz 통항 프레임워크 개정·향후 군사행동 자제 보증 조건부 시그널을 미국에 전달했지만 미국은 회의적 톤 유지. Hormuz 해협(글로벌 에너지 소비 약 20%)은 사실상 봉쇄 상태 지속, IEA·Bloomberg 모두 봉쇄 해제 합의 없이는 가격 박스 상단 유지 평가. XOM·CVX 5/2 Q1 실적 직전 정유 마진 확장 분기 한 분기 추가 보존이 컨센서스로 굳어지는 흐름.",
+        time: "2026-04-29 07:30 KST" },
+      { type: "정보 갱신", sector: "크립토·블록체인",
+        detail: "IBIT·FBTC. 4/28 BTC가 $76,342 -3%로 OpenAI 매출 미스 보도와 위험자산 동반 약세에 반응, $80K 저항 무산 후 9일 연속 박스 하단 시도. 4/30 FOMC가 동결 100% priced in이지만 도브적 톤이 약하면 BTC-USD 음의 상관 -0.91이 단기 풀릴 위험. ETH도 동반 -2~3% 약세, ETHA 추가 약세 노출. 美 현물 ETF 누적 +$21억 견조하나 단기 둔화 가능. IBIT 총 자산 $1,020억 사상 첫 돌파 후 차익실현 압력 부각.",
+        time: "2026-04-29 07:30 KST" },
+    ]
+  },
+  {
     date: "2026-04-28 13:00 KST",
     summary: `4/28 화 KOSPI 6,643 +0.44% 6,700 도전 EWY YTD +58% 연장
 SK하이닉스 +2.5% 1,320,000원·삼성전자 +0.9% 224,000원 신고가 갱신
