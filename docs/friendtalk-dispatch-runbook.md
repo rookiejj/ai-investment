@@ -59,7 +59,7 @@
 ### 3.1 콘텐츠 준비 (전일)
 - **주체**: Claude Opus 4.7 원격 에이전트 (`/schedule` cron)
 - **도구**: Claude API · Bash · Git
-- **산출물**: `data/stocks-update.js`, `data/kr-stocks-update.js`, `data/ai-update.js`, `data/etf-update.js`, `data/unicorn-update.js`, `data/commodity-update.js`의 최신 엔트리 prepend
+- **산출물**: `data/stocks-update.js`, `data/kr-stocks-update.js`, `data/ai-update.js`, `data/unicorn-update.js`, `data/commodity-update.js`의 최신 엔트리 prepend
 - **저장 위치**: GitHub `rookiejj/ai-investment` main 브랜치
 - **가시성**: Private 리포 (PAT 필수)
 
