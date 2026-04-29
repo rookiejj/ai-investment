@@ -288,6 +288,94 @@ h1 span{
 .chip:hover{color:var(--fg2);border-color:var(--fg2);transform:translateY(-1px)}
 .chip.on{color:var(--acc-deep);background:var(--acc-light);border-color:var(--acc)}
 
+/* 모바일 필터 시트 트리거 (데스크톱에선 숨김) */
+#filterSheetOpen{
+  display:none;align-items:center;gap:6px;
+  padding:8px 16px;background:var(--bg);border:1.5px solid var(--border-md);
+  border-radius:9999px;color:var(--fg2);cursor:pointer;
+  font:500 13px/1.4 Pretendard,sans-serif;white-space:nowrap;
+  transition:all .2s;
+}
+#filterSheetOpen:hover{border-color:var(--fg2)}
+#filterSheetOpen.has-selection{color:var(--acc-deep);border-color:var(--acc);background:var(--acc-light)}
+#filterSheetOpen .count{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:18px;height:18px;padding:0 6px;background:var(--acc-deep);
+  color:#fff;border-radius:9999px;font:700 11px/1 'Inter',sans-serif;
+}
+#filterSheetOpen .arrow{font-size:10px;color:var(--sub);margin-left:2px}
+
+/* 하단 시트 */
+.fs-backdrop{
+  position:fixed;inset:0;background:rgba(13,13,13,0.5);
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  opacity:0;pointer-events:none;transition:opacity .25s;z-index:90;
+}
+.fs-backdrop.show{opacity:1;pointer-events:auto}
+.fs-sheet{
+  position:fixed;left:0;right:0;bottom:0;
+  background:#fff;border-radius:18px 18px 0 0;
+  box-shadow:0 -8px 32px rgba(0,0,0,0.15);
+  transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+  z-index:91;max-height:85vh;display:flex;flex-direction:column;
+  font-family:Pretendard,sans-serif;
+}
+.fs-sheet.show{transform:translateY(0)}
+.fs-handle{
+  width:36px;height:4px;background:rgba(0,0,0,0.15);
+  border-radius:2px;margin:10px auto 0;flex-shrink:0;
+}
+.fs-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px 10px;flex-shrink:0;
+}
+.fs-title{font:700 16px/1.4 Pretendard;color:#0d0d0d;letter-spacing:-0.2px}
+.fs-close{
+  background:none;border:none;font-size:18px;color:#666;cursor:pointer;
+  width:32px;height:32px;border-radius:8px;display:flex;
+  align-items:center;justify-content:center;
+}
+.fs-close:hover{background:rgba(0,0,0,0.05)}
+.fs-list{
+  flex:1;overflow-y:auto;padding:4px 8px 8px;
+  -webkit-overflow-scrolling:touch;
+}
+.fs-item{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 12px;border-radius:10px;
+  cursor:pointer;font:400 14px/1.4 Pretendard;color:#333;
+  transition:background .15s;
+}
+.fs-item:hover{background:rgba(0,0,0,0.03)}
+.fs-item.checked{color:#0d0d0d;font-weight:500;background:var(--acc-light)}
+.fs-item input[type=checkbox]{
+  width:20px;height:20px;accent-color:var(--acc-deep);
+  margin:0;flex-shrink:0;cursor:pointer;
+}
+.fs-actions{
+  display:flex;gap:8px;padding:14px 20px 22px;
+  border-top:1px solid var(--border);flex-shrink:0;
+  padding-bottom:max(22px, env(safe-area-inset-bottom));
+}
+.fs-btn-clear{
+  flex:1;padding:14px;border-radius:12px;
+  background:transparent;border:1px solid var(--border-md);
+  color:var(--mut);font:500 14px Pretendard;cursor:pointer;
+}
+.fs-btn-clear:hover{background:rgba(0,0,0,0.03)}
+.fs-btn-apply{
+  flex:2;padding:14px;border-radius:12px;
+  background:var(--fg);color:#fff;border:none;
+  font:600 14px Pretendard;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.fs-btn-apply:hover{background:#000}
+.fs-btn-apply .badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:20px;height:20px;padding:0 6px;background:var(--acc);
+  color:var(--fg);border-radius:9999px;font:700 11px/1 'Inter',sans-serif;
+}
+
 /* ═══ MAIN CONTENT ═══ */
 main{padding:40px 32px 80px;position:relative;z-index:1;overflow:hidden}
 
@@ -582,10 +670,9 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
   .subtitle{font-size:13px}
   .tabs{gap:6px}
   .tab{padding:6px 14px;font-size:13px;flex-shrink:0}
-  /* 필터 칩: 가로 스크롤 1줄 */
-  #chips{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px}
-  #chips::-webkit-scrollbar{display:none}
-  .chip{flex-shrink:0}
+  /* 모바일: 칩·기존 토글 숨기고 필터 버튼 → 하단 시트 */
+  #chips, #toggle{display:none !important}
+  #filterSheetOpen{display:inline-flex !important}
   main{padding:20px 16px 60px}
   .group{margin-bottom:36px}
   .grid{grid-template-columns:1fr;gap:12px}
@@ -634,9 +721,31 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
   </div>
   <div class="filterbar">
     <button id="toggle">필터<span id="count"></span></button>
+    <button id="filterSheetOpen" type="button" aria-label="필터 열기">
+      <span>필터</span>
+      <span class="count" id="filterSheetOpenCount" style="display:none">0</span>
+      <span class="arrow">▾</span>
+    </button>
     <div id="chips"></div>
   </div>
 </header>
+
+<div class="fs-backdrop" id="fsBackdrop" aria-hidden="true"></div>
+<aside class="fs-sheet" id="fsSheet" role="dialog" aria-modal="true" aria-labelledby="fsTitle" aria-hidden="true">
+  <div class="fs-handle" aria-hidden="true"></div>
+  <div class="fs-head">
+    <span class="fs-title" id="fsTitle">필터</span>
+    <button class="fs-close" id="fsClose" aria-label="닫기">✕</button>
+  </div>
+  <div class="fs-list" id="fsList"></div>
+  <div class="fs-actions">
+    <button class="fs-btn-clear" id="fsClear" type="button">모두 해제</button>
+    <button class="fs-btn-apply" id="fsApply" type="button">
+      <span>적용</span>
+      <span class="badge" id="fsApplyBadge" style="display:none">0</span>
+    </button>
+  </div>
+</aside>
 
 <main id="out">
   <div class="loading">
@@ -895,7 +1004,77 @@ function renderChips(){
   const box=document.getElementById('chips');
   const opts=STATE.tab==='ai'?Object.keys(BL_MAP):(STATE[TAB_SRC[STATE.tab]]||[]).map(g=>g.group);
   box.innerHTML=opts.map(o=>`<span class="chip${STATE.filter.has(o)?' on':''}" data-f="${o}">${BL_MAP[o]||o}</span>`).join('');
+  updateFilterSheetTrigger();
 }
+function updateFilterSheetTrigger(){
+  const btn=document.getElementById('filterSheetOpen');
+  if(!btn) return;
+  const cnt=STATE.filter.size;
+  const cntEl=document.getElementById('filterSheetOpenCount');
+  if(cnt>0){ btn.classList.add('has-selection'); cntEl.textContent=cnt; cntEl.style.display=''; }
+  else{ btn.classList.remove('has-selection'); cntEl.style.display='none'; }
+}
+
+// ═══ 필터 시트 (모바일) ═══
+const _fs={
+  el:document.getElementById('fsSheet'),
+  back:document.getElementById('fsBackdrop'),
+  list:document.getElementById('fsList'),
+  applyBadge:document.getElementById('fsApplyBadge'),
+  temp:new Set(),
+};
+function _fsRender(){
+  const opts=STATE.tab==='ai'?Object.keys(BL_MAP):(STATE[TAB_SRC[STATE.tab]]||[]).map(g=>g.group);
+  _fs.list.innerHTML=opts.map(o=>{
+    const checked=_fs.temp.has(o);
+    const label=BL_MAP[o]||o;
+    return `<label class="fs-item${checked?' checked':''}" data-f="${o}"><input type="checkbox" ${checked?'checked':''}><span>${label}</span></label>`;
+  }).join('');
+}
+function _fsUpdateApply(){
+  const n=_fs.temp.size;
+  if(n>0){ _fs.applyBadge.textContent=n; _fs.applyBadge.style.display=''; }
+  else{ _fs.applyBadge.style.display='none'; }
+}
+function fsOpen(){
+  _fs.temp=new Set(STATE.filter);
+  _fsRender();
+  _fsUpdateApply();
+  _fs.back.classList.add('show');
+  _fs.el.classList.add('show');
+  _fs.el.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+}
+function fsClose(){
+  _fs.back.classList.remove('show');
+  _fs.el.classList.remove('show');
+  _fs.el.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+}
+document.getElementById('filterSheetOpen').addEventListener('click',fsOpen);
+document.getElementById('fsClose').addEventListener('click',fsClose);
+document.getElementById('fsBackdrop').addEventListener('click',fsClose);
+_fs.list.addEventListener('change',e=>{
+  const item=e.target.closest('.fs-item');if(!item)return;
+  const f=item.dataset.f;
+  if(e.target.checked){ _fs.temp.add(f); item.classList.add('checked'); }
+  else{ _fs.temp.delete(f); item.classList.remove('checked'); }
+  _fsUpdateApply();
+});
+document.getElementById('fsClear').addEventListener('click',()=>{
+  _fs.temp.clear();
+  _fsRender();
+  _fsUpdateApply();
+});
+document.getElementById('fsApply').addEventListener('click',()=>{
+  STATE.filter=new Set(_fs.temp);
+  TAB_FILTERS[STATE.tab]=new Set(STATE.filter);
+  fsClose();
+  renderChips();updateCount();render();saveState();
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&_fs.el.classList.contains('show'))fsClose();
+});
 
 document.addEventListener('click',e=>{
   const t=e.target.closest('.tab');if(t){switchTab(t.dataset.t);return}
