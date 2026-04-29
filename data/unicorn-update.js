@@ -1,6 +1,18 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-30 07:20 KST",
+    summary: `SpaceX S-1 5/15~5/22 정식 제출 윈도우·6/8 로드쇼·6/18~6/30 IPO 프라이싱 윈도우 확정
+목표 밸류 $1.75~2.0T·$75B 조달 — ARK 분석 보고서로 가격 정당화 모멘텀 확장
+6/11 1,500명 리테일 투자자 투어 추가 — 6개국 30% 할당 트랙 본격화
+Anthropic $1T 외부 검증 + Cursor SpaceX $60B 옵션 + Anduril Golden Dome 수주 동반`,
+    changes: [
+      { type: "정보 갱신", sector: "우주·모빌리티·방산",
+        detail: "SpaceX. The Motley Fool·TechStackIPO 등 주요 매체가 SpaceX IPO 일정을 더 구체화 — S-1 정식 제출이 5/15~5/22, 6/8 로드쇼 시작, 6/11 1,500명 리테일 투자자 투어가 추가, 6/18~6/30 IPO 프라이싱 윈도우. 목표 밸류 $1.75~2.0T·$75B 조달이 유지되며 ARK가 발간한 SpaceX IPO 가이드가 가격 정당화 논거로 활용. 4/22 Starbase·4/23 Tennessee 애널리스트 투어 후 6개국(영국·EU·호주·캐나다·일본·한국) 리테일 30% 할당 트랙이 그대로 진행. 동시에 4/15 SpaceX IPO 신뢰성에 회의적인 보도(SEC 비밀 제출 미확인)가 잔존하나, 다수 매체가 4/1 비밀 제출 시점을 보도해 시장 컨센서스는 6월 데뷔 쪽으로 정렬.",
+        time: "2026-04-30 07:20 KST" },
+    ]
+  },
+  {
     date: "2026-04-29 19:00 KST",
     summary: `Discord IPO 6/30 확률 20%로 후퇴·세컨더리 밸류 $7~10B로 2021 피크 절반 재평가
 Figure AI Amazon 20K 창고 휴머노이드 배포 진행·생산 월 1,200대→Q4 5,000대 가속
