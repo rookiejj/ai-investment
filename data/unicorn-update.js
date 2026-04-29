@@ -2,14 +2,26 @@
 const updates = [
   {
     date: "2026-04-29 11:00 KST",
-    summary: `🤖 AI·ML 카테고리 통째 제거 — AI 기업 탭과 정보 중복 해소
-유니콘 구조: 6 카테고리 × 7 → 5 카테고리 × 7 = 35 기업
-제외: OpenAI·Anthropic·Databricks·Cerebras·SSI·Thinking Machines·Cohere
-잔존 5 카테고리: 핀테크·엔터프라이즈 SW·우주·모빌리티·방산·바이오·헬스·크립토·Web3
-중복 줄여 친구톡·사이트 양쪽 가독성 개선 목적`,
+    summary: `SpaceX 6/8 로드쇼·$1.75T 타겟·리테일 30% 6개국 할당
+Anduril Golden Dome $3.2B 12개사 수주 SpaceX·Lockheed 동반
+Discord S-1 비밀 제출·Kraken IPO 2026 Q3 목표 진행
+Stripe Tempo L1 메인넷 가동·Revolut IPO 2028+ 공식 연기
+Ripple 한국 교보생명 토큰화 국채 결제 파트너십`,
     changes: [
-      { type: "구조 변경", sector: "탭 구성",
-        detail: "유니콘 탭에서 '🤖 AI·ML' 카테고리 통째 제거. 해당 카테고리에 수록됐던 OpenAI·Anthropic·Databricks·Cerebras·Safe Superintelligence·Thinking Machines Lab·Cohere 7개 기업은 모두 'AI 기업' 탭과 정보가 직접 중복돼 친구톡·사이트 양쪽에서 같은 회사 뉴스가 두 번 노출되는 비효율이 누적. 카테고리 신설 없이 5 카테고리(핀테크·엔터프라이즈 SW·우주·모빌리티·방산·바이오·헬스·크립토·Web3) × 7 = 35 기업 구조로 축소. 엔터프라이즈 SW의 Perplexity·Cursor·Hugging Face는 카테고리 본질이 SW이므로 유지.",
+      { type: "정보 갱신", sector: "우주·모빌리티·방산",
+        detail: "SpaceX. 4/22 Starbase 1일차 125명 애널리스트 투어 + 4/23 Tennessee 2일차 진행, 21개 주관사가 $1.75T 밸류 방어 논거를 공유했고 $75B 조달 페이스 유지. S-1 비밀 제출 완료, 리테일 30% 할당이 영국·EU·호주·캐나다·일본·한국 6개국에 배분. 6/8 로드쇼·프라이싱 일정으로 사상 최대 IPO 카운트다운 본격 진입. Anduril은 4/24 美 우주군 Golden Dome 우주기반 요격체 프로토타입 $3.2B 12개사 수주 명단에 SpaceX·Lockheed·RTX·Northrop·General Dynamics와 함께 포함, 2028 실증 목표·Series H 최대 $8B 협상 진행으로 단기 IPO보다 펀딩 라운드 우선.",
+        time: "2026-04-29 11:00 KST" },
+      { type: "정보 갱신", sector: "엔터프라이즈 SW",
+        detail: "Discord·Cursor. Discord는 1/6 S-1 비밀 제출 후 나스닥 로드쇼 준비 단계, 2026 H1 IPO 목표지만 시장 변동성에 따라 지연 가능. Cursor는 SpaceX $60B 옵션 계약 유효, 옵션 불발 시 $10B 브레이크업 조건. 4/24 Business Insider는 xAI·Mistral 3자 파트너십 협의 보도로 Colossus에서 모델 학습 진행 중이라고 전해 — SpaceX 인수 vs 독립 계열로 갈림길. Canva는 12월 $134B 업라운드 후 ARR $3.3B+ 견조, Blackbird 지지 하 2026 H2 IPO 후보로 거론.",
+        time: "2026-04-29 11:00 KST" },
+      { type: "정보 갱신", sector: "크립토·Web3",
+        detail: "Kraken·Ripple. Kraken은 4/14 IPO 비밀 신청 완료, co-CEO Sethi가 공개 확인했고 Deutsche Börse $200M 전략 투자 받아 2026 Q3 상장 목표 진행. Ripple은 4/15 한국 교보생명과 토큰화 국채 결제 파트너십 체결 — 한국 최초 대형 보험사와의 직접 협업, Citadel·Fortress $500M 투자 동반으로 기관 채택 가속. ConsenSys는 GS·JPM 주관사 협의 단계로 2026 H2 IPO 목표, Fireblocks는 1/7 TRES $130M 인수로 기관 보안 확장.",
+        time: "2026-04-29 11:00 KST" },
+      { type: "정보 갱신", sector: "핀테크",
+        detail: "Stripe·Revolut. Stripe는 Tempo L1 메인넷 가동에 Visa·Zodia가 첫 외부 밸리데이터로 합류, TPV $1.9T·결제 인프라 1위 자리 유지하며 2/26 텐더오퍼로 $159B 평가. IPO는 비우선. Revolut는 4/20 CEO Storonsky가 IPO 시기를 2028+로 공식 연기 발표, 2026 매출 $9B·순익 $3.5B 목표는 유지하며 세컨더리 $100B 추진. Ramp는 ARR $1B+ 달성하며 Series F $300M 마무리, Plaid는 텐더오퍼 업라운드 후 2026 H2 IPO 후보.",
+        time: "2026-04-29 11:00 KST" },
+      { type: "정보 갱신", sector: "바이오·헬스",
+        detail: "Neuralink·Devoted Health. Neuralink는 12명 이식 완료 후 양산 단계 진입, Blindsight 시각 복원 임상도 착수. 2025-06 Series E $650M 후 $9B 평가 유지, IPO 일정은 미정이나 BCI 카테고리 단일 리더 자리 굳힘. Devoted Health는 메디케어 어드밴티지 가입자 46.6만으로 전년 +121% 폭증, 29개주 확장하며 AI 진단 통합 가속. 2026-01 Series F-Prime $317M 마무리해 $13B 평가, 메디케어 AI 디지털 보험사 카테고리 1위 유지.",
         time: "2026-04-29 11:00 KST" },
     ]
   },
