@@ -357,12 +357,13 @@ h1 span{
   border-top:1px solid var(--border);flex-shrink:0;
   padding-bottom:max(22px, env(safe-area-inset-bottom));
 }
-.fs-btn-clear{
-  flex:1;padding:14px;border-radius:12px;
+.fs-btn-toggle{
+  flex:1;padding:14px 8px;border-radius:12px;
   background:transparent;border:1px solid var(--border-md);
-  color:var(--mut);font:500 14px Pretendard;cursor:pointer;
+  color:var(--mut);font:500 13px Pretendard;cursor:pointer;
+  white-space:nowrap;
 }
-.fs-btn-clear:hover{background:rgba(0,0,0,0.03)}
+.fs-btn-toggle:hover{background:rgba(0,0,0,0.03);color:var(--fg2)}
 .fs-btn-apply{
   flex:2;padding:14px;border-radius:12px;
   background:var(--fg);color:#fff;border:none;
@@ -739,7 +740,8 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
   </div>
   <div class="fs-list" id="fsList"></div>
   <div class="fs-actions">
-    <button class="fs-btn-clear" id="fsClear" type="button">모두 해제</button>
+    <button class="fs-btn-toggle" id="fsSelectAll" type="button">모두 선택</button>
+    <button class="fs-btn-toggle" id="fsClear" type="button">모두 해제</button>
     <button class="fs-btn-apply" id="fsApply" type="button">
       <span>적용</span>
       <span class="badge" id="fsApplyBadge" style="display:none">0</span>
@@ -1063,6 +1065,12 @@ _fs.list.addEventListener('change',e=>{
 });
 document.getElementById('fsClear').addEventListener('click',()=>{
   _fs.temp.clear();
+  _fsRender();
+  _fsUpdateApply();
+});
+document.getElementById('fsSelectAll').addEventListener('click',()=>{
+  const opts=STATE.tab==='ai'?Object.keys(BL_MAP):(STATE[TAB_SRC[STATE.tab]]||[]).map(g=>g.group);
+  _fs.temp=new Set(opts);
   _fsRender();
   _fsUpdateApply();
 });
