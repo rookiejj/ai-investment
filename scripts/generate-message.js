@@ -90,8 +90,61 @@ function buildMessage(tabs) {
     if (!tab.entries.length) continue;
     parts.push(buildTabBlock(tab));
   }
-  parts.push(`▸ 전체 보기\n${SITE_URL}`);
   return parts.join('\n\n');
+}
+
+// 한도 초과 시 모든 탭 보존 + 줄 단위 균등 cut (daily-send와 동일 규칙)
+function fitToLimit(tabs, max) {
+  const full = buildMessage(tabs);
+  if (full.length <= max) return full;
+  const valid = tabs.filter(t => t.entries.length > 0);
+  if (!valid.length) return full;
+
+  const headerLen = `📊 브리픽 · ${kstDateLabel()}`.length;
+  const sepLen = 2;
+  const tabHeaderLen = valid.map(t => `${t.emoji} ${t.label}\n\n`.length);
+  const tabHeaderTotal = tabHeaderLen.reduce((a, b) => a + b, 0);
+  const remaining = max - headerLen - sepLen * valid.length - tabHeaderTotal;
+  if (remaining <= 0) return full.slice(0, max);
+
+  const perTab = Math.floor(remaining / valid.length);
+  const taken = [];
+  const usedChars = [];
+  for (const t of valid) {
+    const lines = (t.entries[0]?.summary ?? '')
+      .split('\n').map(s => s.trim()).filter(Boolean);
+    const kept = [];
+    let used = 0;
+    for (const line of lines) {
+      const cost = 2 + line.length + 1;
+      if (used + cost > perTab) break;
+      kept.push(line);
+      used += cost;
+    }
+    taken.push(kept);
+    usedChars.push(used);
+  }
+  let leftover = remaining - usedChars.reduce((a, b) => a + b, 0);
+  if (leftover > 0) {
+    for (let i = 0; i < valid.length && leftover > 0; i++) {
+      const allLines = (valid[i].entries[0]?.summary ?? '')
+        .split('\n').map(s => s.trim()).filter(Boolean);
+      let used = usedChars[i];
+      for (let j = taken[i].length; j < allLines.length; j++) {
+        const cost = 2 + allLines[j].length + 1;
+        if (cost > leftover) break;
+        taken[i].push(allLines[j]);
+        used += cost;
+        leftover -= cost;
+      }
+      usedChars[i] = used;
+    }
+  }
+  const trimmedTabs = valid.map((t, i) => ({
+    ...t,
+    entries: [{ ...t.entries[0], summary: taken[i].join('\n') }],
+  }));
+  return buildMessage(trimmedTabs);
 }
 
 function main() {
@@ -107,13 +160,17 @@ function main() {
     tabs.push({ ...t, entries });
   }
 
-  const msg = buildMessage(tabs);
+  const rawMsg = buildMessage(tabs);
+  const msg = fitToLimit(tabs, LIMIT);
+  const truncated = msg.length < rawMsg.length;
   const overflow = msg.length > LIMIT;
 
   if (asJson) {
     process.stdout.write(JSON.stringify({
       generatedAt: new Date().toISOString(),
       charCount: msg.length,
+      rawCharCount: rawMsg.length,
+      truncated,
       limit: LIMIT,
       overflow,
       message: msg,
@@ -122,7 +179,8 @@ function main() {
     process.stdout.write(msg + '\n');
   }
 
-  process.stderr.write(`\n[글자수 ${msg.length} / ${LIMIT}${overflow ? ' · 초과' : ''}]\n`);
+  const note = truncated ? ` · 원본 ${rawMsg.length}자 트림` : '';
+  process.stderr.write(`\n[글자수 ${msg.length} / ${LIMIT}${overflow ? ' · 초과' : ''}${note}]\n`);
 }
 
 main();
