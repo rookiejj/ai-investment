@@ -123,6 +123,14 @@ function buildMessage(tabs: TabWithEntries[]): string {
   return parts.join("\n\n");
 }
 
+// 합산이 한도를 넘으면 마지막 탭 블록부터 통째로 제거 (탭 내부 자르기·"…" 없음)
+function truncateForLimit(message: string, max: number): string {
+  if (message.length <= max) return message;
+  const blocks = message.split("\n\n");
+  while (blocks.length > 1 && blocks.join("\n\n").length > max) blocks.pop();
+  return blocks.join("\n\n");
+}
+
 // 솔라피 실패 메시지를 구독자 수신 상태로 정규화
 // SOLAPI/카카오 결과 코드 우선 매칭, 그 외는 텍스트 키워드로 폴백
 function deriveDeliveryState(msg: string | null | undefined): string {
@@ -253,9 +261,11 @@ Deno.serve(async (req) => {
       const entries = await fetchTabEntries(t);
       if (entries.length) tabs.push({ ...t, entries });
     }
-    const message = buildMessage(tabs);
-    if (message.length > LIMIT) {
-      console.warn(`[warn] message exceeds limit: ${message.length}/${LIMIT}`);
+    const rawMessage = buildMessage(tabs);
+    const message = truncateForLimit(rawMessage, LIMIT);
+    const truncated = message.length < rawMessage.length;
+    if (truncated) {
+      console.warn(`[warn] message truncated tab-level: ${rawMessage.length}→${message.length}`);
     }
 
     // 2) 만료된 구독자 상태 최신화 (paid_until이 과거인 active → expired)
@@ -286,7 +296,8 @@ Deno.serve(async (req) => {
     if (dryRun) {
       return Response.json({
         ok: true, dryRun: true,
-        charCount: message.length, limit: LIMIT,
+        charCount: message.length, rawCharCount: rawMessage.length, limit: LIMIT,
+        truncated,
         overflow: message.length > LIMIT,
         activeSubscribers: subs?.length ?? 0,
         tabCount: tabs.length,
