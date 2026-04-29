@@ -1,6 +1,6 @@
 # 브리픽(Briefick) — 유지보수 컨텍스트
 
-미국·한국 주식 + AI 기업 + 글로벌 ETF + 시장·원자재 + 유니콘을 6개 탭으로 보여주는 통합 투자 대시보드. (일본 주식은 UI에서 제외, 데이터 파일만 보존)
+미국·한국 주식 + AI 기업 + 유니콘 + 원자재·크립토를 5개 탭으로 보여주는 통합 투자 대시보드. (일본 주식·글로벌 ETF는 UI에서 제외, 데이터 파일만 보존)
 
 - 파일: `index.html`(렌더링 UI) / `data/`(데이터 14개 파일 + version.js) / `README.md`
 - 데이터 파일은 로컬 상대경로로 fetch (`./data/*.js`)
@@ -20,15 +20,15 @@
 
 ```
 ai-investment/
-├── index.html                  ← 통합 UI (6개 탭, jp 제외)
+├── index.html                  ← 통합 UI (5개 탭, jp·etf 제외)
 ├── CLAUDE.md                   ← 이 파일
 ├── data/
 │   ├── version.js              ← 데이터 버전 (탭 전환 시 자동 체크)
 │   ├── stocks-data.js          / stocks-update.js
 │   ├── kr-stocks-data.js       / kr-stocks-update.js
-│   ├── jp-stocks-data.js       / jp-stocks-update.js   (UI 제외)
+│   ├── jp-stocks-data.js       / jp-stocks-update.js   (UI·자동 갱신 제외)
 │   ├── ai-data.js              / ai-update.js
-│   ├── etf-data.js             / etf-update.js
+│   ├── etf-data.js             / etf-update.js          (UI·자동 갱신 제외)
 │   ├── commodity-data.js       / commodity-update.js
 │   └── unicorn-data.js         / unicorn-update.js
 └── README.md
@@ -238,21 +238,13 @@ QCOM, OpenAI, MediaTek 2028 AI 스마트폰 칩 협력
   - update.js의 `sector` = **기업명** (다른 탭의 섹터 대신). type 범주:
     - `모델 출시` / `모델 출시 예정` · `제품 출시` · `펀딩` / `인수` / `마일스톤` / `가격` · `리더십` / `거버넌스` / `구조조정` / `전략` · `인프라` / `생태계` / `플랫폼` · `최근성 관리` (isNew:false 처리) · `수록 변경` (수록 기업 교체)
 
-### 글로벌 ETF (etf)
-
-- 파일: `data/etf-data.js`, `data/etf-update.js`
-- 구성: **8 카테고리 × 정확히 7 ETF = 56 ETF**
-- 필드: 운용규모($B), 보수(%), YTD 수익률, 1Y 수익률
-- 카테고리 (8): AI·반도체 · 방산·보안 · 에너지·원자력 · 클린에너지 · 크립토·블록체인 · 미국 대형주 · 배당·인컴 · 신흥국·글로벌
-- 스키마: `{ tk, nm, rs, aum, er, ytd, y1 }`
-- 고유 제외: 상장폐지·합병된 ETF는 즉시 교체.
-
-### 시장·원자재 (commodity)
+### 원자재·크립토 (commodity)
 
 - 파일: `data/commodity-data.js`, `data/commodity-update.js`
 - 구성: **6 카테고리 × 4 항목 = 24 항목**
 - 필드: 현재가, YTD 변동, 1Y 변동, 52주 범위
-- 카테고리 순서 (6, 렌더링 순서 고정): 시장 지표 · 귀금속 · 에너지 · 산업금속 · 배터리 소재 · 농산물
+- 카테고리 순서 (6, 렌더링 순서 고정): 크립토 · 귀금속 · 에너지 · 산업금속 · 배터리 소재 · 농산물
+- 크립토 카테고리(BTC·ETH·SOL·XRP)는 미국·한국 마켓 탭과 정보 중복을 피하면서 디지털 자산 단독 관점 제공
 - 스키마: `{ tk, nm, rs, price, ytd, y1, range }`
 
 ### 유니콘·프리IPO (unicorn)
@@ -274,3 +266,14 @@ QCOM, OpenAI, MediaTek 2028 AI 스마트폰 칩 협력
 - 도쿄증권거래소 프라임 상장 종목만
 - 카테고리 (10): 반도체 장비 · 자동차 · 전자·IT · 금융 · 로봇·자동화 · 방산·중공업 · 소비·리테일 · 게임·엔터 · 제약·헬스케어 · 소재·화학
 - 스키마: `{ tk(4자리), nm, rs, r1, p1, r2, p2 }`
+
+### 글로벌 ETF (etf) — ⚠️ UI·자동 갱신 제외
+
+> `index.html` 탭에서 제거. 자동 갱신 대상 아님. 데이터 파일은 보존, 수동 요청(`/update-etf`) 시에만 갱신. 시장 전반 정보가 결국 미국·한국 마켓 탭에 흡수되어 중복 제거 차원에서 UI에서 빠짐.
+
+- 파일: `data/etf-data.js`, `data/etf-update.js`
+- 구성: **8 카테고리 × 정확히 7 ETF = 56 ETF**
+- 필드: 운용규모($B), 보수(%), YTD 수익률, 1Y 수익률
+- 카테고리 (8): AI·반도체 · 방산·보안 · 에너지·원자력 · 클린에너지 · 크립토·블록체인 · 미국 대형주 · 배당·인컴 · 신흥국·글로벌
+- 스키마: `{ tk, nm, rs, aum, er, ytd, y1 }`
+- 고유 제외: 상장폐지·합병된 ETF는 즉시 교체.
