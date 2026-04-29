@@ -1,6 +1,22 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-29 19:00 KST",
+    summary: `Discord IPO 6/30 확률 20%로 후퇴·세컨더리 밸류 $7~10B로 2021 피크 절반 재평가
+Figure AI Amazon 20K 창고 휴머노이드 배포 진행·생산 월 1,200대→Q4 5,000대 가속
+Anthropic 4/28 Jupiter 프리IPO서 시초 $1T 외부 검증·Forge·Hiive와 정렬
+Cursor SpaceX $60B 인수 옵션 vs xAI·Mistral 협의 갈림길 유지
+SpaceX 6/8 로드쇼 카운트다운·Anduril Golden Dome $3.2B 수주명단 진입`,
+    changes: [
+      { type: "정보 갱신", sector: "엔터프라이즈 SW",
+        detail: "Discord·Anthropic. Discord는 4/28 Polymarket 6/30까지 IPO 확률이 20%로 후퇴 — 1/6 S-1 비밀 제출 후 Q1 데뷔를 노렸지만 2026 IPO 시장 변동성에 막혀 일정이 후방으로 밀렸고, 세컨더리 시장 밸류는 2021년 피크 $15B의 절반 수준인 $7~10B로 재평가됐다. ARR $7억+·MAU 2억+ 펀더멘털은 견조하지만 시장이 카테고리 멀티플을 한 단계 낮춰 적용 중. Anthropic은 4/28 Jupiter 프리IPO 플랫폼에서 시초 $1T 밸류에 도달, Forge·Hiive($851B)와 정렬되며 외부 가격검증 일관성 확보 — 10월 IPO $400~500B 타겟의 외부 신뢰 시그널 한 단계 강화.",
+        time: "2026-04-29 19:00 KST" },
+      { type: "정보 갱신", sector: "우주·모빌리티·방산",
+        detail: "Figure AI. Amazon 20,000대 창고 휴머노이드 배포 진행 중으로 생산 페이스가 월 1,200대에서 Q4 2026 월 5,000대로 가속될 가이던스 — 2025-09 Series C $1B+ 후 $39B 밸류 유지하면서도 매출 가시성 +수년치 구축. Series D를 $48B 밸류에 협상 중인 정황이 4월 트래커 업데이트로 확인. Amazon이 별도로 Agility Robotics(Digit)에도 자본 투입을 유지하며 Optimus·Apptronik과 함께 휴머노이드 4파전 구도가 굳어지는 가운데 Figure는 OEM 단일 파트너 채널의 우위 유지. SpaceX는 6/8 로드쇼 + Anduril Golden Dome $3.2B 수주명단 동반 노출이 우주·방산 연계 시그널.",
+        time: "2026-04-29 19:00 KST" },
+    ]
+  },
+  {
     date: "2026-04-29 11:00 KST",
     summary: `SpaceX 6/8 로드쇼·$1.75T 타겟·리테일 30% 6개국 할당
 Anduril Golden Dome $3.2B 12개사 수주 SpaceX·Lockheed 동반

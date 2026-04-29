@@ -22,7 +22,7 @@ const data = [
       { nm:"Canva", rs:"ARR $3.3B+·AI 생성 디자인·12월 $134B 업라운드", val:"$134B", round:"2025-12 Insight·Fidelity·JPM", sector:"디자인", ipo:"2026 H2 Blackbird 지지" },
       { nm:"Perplexity AI", rs:"AI 검색·Computer 에이전트·ARR $500M +335% YoY", val:"$22.6B", round:"Series E-6", sector:"AI 검색", ipo:"2027" },
       { nm:"Notion", rs:"AI 워크스페이스·문서·위키", val:"$11B", round:"세컨더리 ($270M)", sector:"생산성", ipo:"미정" },
-      { nm:"Discord", rs:"커뮤니티 플랫폼·1/6 S-1 비밀 제출·나스닥 로드쇼 준비", val:"$15B", round:"Series I", sector:"소셜", ipo:"2026 H1 목표(지연 가능)" },
+      { nm:"Discord", rs:"4/28 Polymarket 6/30까지 IPO 확률 20%로 후퇴·세컨더리 밸류 $7~10B로 2021 피크 $15B에서 재평가·ARR $7억+·MAU 2억+ 펀더멘털 견조하나 시장 변동성에 일정 지연", val:"$10B", round:"Series I (세컨더리 다운라운드)", sector:"소셜", ipo:"2026 H2로 후퇴" },
       { nm:"Airtable", rs:"노코드 데이터베이스·자동화", val:"$4B", round:"세컨더리 (다운)", sector:"노코드", ipo:"미정" },
       { nm:"Cursor", rs:"SpaceX $60B 옵션·불발 시 $10B 브레이크업·4/24 Business Insider xAI·Mistral 3자 파트너십 협의 보도·Colossus에서 모델 학습 진행 중", val:"$60B (SpaceX 옵션)", round:"SpaceX 옵션 계약 (2026-04)", sector:"AI 코딩", ipo:"SpaceX 인수 검토" },
       { nm:"Hugging Face", rs:"Google·NVIDIA·AMD 공동 투자·오픈 AI 모델 허브 표준", val:"$4.5B", round:"Series D ($235M, 2023-08)", sector:"오픈소스 AI 허브", ipo:"미정" },
@@ -38,7 +38,7 @@ const data = [
       { nm:"Relativity Space", rs:"Eric Schmidt CEO·Terran R 2026년 말 첫 발사 목표", val:"$4.2B", round:"Angel (Schmidt, 2025-01)", sector:"3D 프린트 로켓", ipo:"미정" },
       { nm:"Waymo", rs:"연 1,500만 트립·11개 도시 확장·자율주행 최대 유니콘", val:"$126B", round:"Series D ($16B, 2026-02)", sector:"자율주행 로보택시", ipo:"미정 (2027 흑자 목표)" },
       { nm:"Anduril", rs:"4/24 美 우주군 Golden Dome 우주기반 요격체 프로토타입 $3.2B 12개사 수주에 SpaceX·Lockheed·RTX·Northrop·General Dynamics와 함께 포함·2028 실증 목표·Series H 최대 $8B 협상", val:"$60B", round:"Series G (2024-08)", sector:"방산 AI", ipo:"단기 아님(Luckey)" },
-      { nm:"Figure AI", rs:"휴머노이드 로봇·BMW 공장 90K+ 파트 로딩·피지컬 AI", val:"$39B", round:"Series C ($1B)", sector:"휴머노이드 로봇", ipo:"미정" },
+      { nm:"Figure AI", rs:"휴머노이드 로봇·Amazon 20K 창고 배포 진행 중·생산 월 1,200대→Q4 5,000대 목표·BMW 공장 90K+ 파트 로딩·Series D $48B 협상", val:"$39B", round:"Series C ($1B, 2025-09)", sector:"휴머노이드 로봇", ipo:"미정" },
     ]
   },
   {
