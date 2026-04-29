@@ -240,7 +240,8 @@ h1 span{
 }
 
 /* ═══ SEARCH ═══ */
-.search-wrap{position:relative}
+.search-row{position:relative}
+.search-wrap{position:relative;flex:1;min-width:0}
 .search-wrap::before{
   content:'';position:absolute;left:14px;top:50%;transform:translateY(-50%);
   width:15px;height:15px;
@@ -671,8 +672,9 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
   .subtitle{font-size:13px}
   .tabs{gap:6px}
   .tab{padding:6px 14px;font-size:13px;flex-shrink:0}
-  /* 모바일: 칩·기존 토글 숨기고 필터 버튼 → 하단 시트 */
-  #chips, #toggle{display:none !important}
+  /* 모바일: 검색란 좌측에 필터 버튼 / 기존 칩·토글 영역은 통째 숨김 */
+  .search-row{display:flex;gap:8px;align-items:center;margin-top:6px}
+  .filterbar{display:none}
   #filterSheetOpen{display:inline-flex !important}
   main{padding:20px 16px 60px}
   .group{margin-bottom:36px}
@@ -716,17 +718,19 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
     </button>
   </div>
   <div class="tab-criteria" id="tabCriteria"></div>
-  <div class="search-wrap">
-    <input id="q" placeholder="티커, 기업명, 제품, 설명으로 검색...">
-    <button class="search-clear" id="qClear" aria-label="검색 초기화">✕</button>
-  </div>
-  <div class="filterbar">
-    <button id="toggle">필터<span id="count"></span></button>
+  <div class="search-row">
     <button id="filterSheetOpen" type="button" aria-label="필터 열기">
       <span>필터</span>
       <span class="count" id="filterSheetOpenCount" style="display:none">0</span>
       <span class="arrow">▾</span>
     </button>
+    <div class="search-wrap">
+      <input id="q" placeholder="티커, 기업명, 제품, 설명으로 검색...">
+      <button class="search-clear" id="qClear" aria-label="검색 초기화">✕</button>
+    </div>
+  </div>
+  <div class="filterbar">
+    <button id="toggle">필터<span id="count"></span></button>
     <div id="chips"></div>
   </div>
 </header>
