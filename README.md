@@ -32,7 +32,7 @@ ai-investment/
 │   ├── jp-stocks-{data,update}.js← 일본 주식 (UI·자동 갱신 제외, 데이터 보존)
 │   ├── ai-{data,update}.js       ← AI 기업 10사
 │   ├── commodity-{data,update}.js← 원자재·크립토 (6 × 4 = 24)
-│   └── unicorn-{data,update}.js  ← 유니콘 (6 × 7 = 42)
+│   └── unicorn-{data,update}.js  ← 유니콘 (5 × 7 = 35, AI 전업 기업 제외)
 ├── scripts/
 │   ├── generate-message.js       ← 로컬 친구톡 메시지 미리보기
 │   ├── send-friendtalk.js        ← 로컬 수동 발송 (디버깅)

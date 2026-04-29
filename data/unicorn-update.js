@@ -1,6 +1,19 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-04-29 11:00 KST",
+    summary: `🤖 AI·ML 카테고리 통째 제거 — AI 기업 탭과 정보 중복 해소
+유니콘 구조: 6 카테고리 × 7 → 5 카테고리 × 7 = 35 기업
+제외: OpenAI·Anthropic·Databricks·Cerebras·SSI·Thinking Machines·Cohere
+잔존 5 카테고리: 핀테크·엔터프라이즈 SW·우주·모빌리티·방산·바이오·헬스·크립토·Web3
+중복 줄여 친구톡·사이트 양쪽 가독성 개선 목적`,
+    changes: [
+      { type: "구조 변경", sector: "탭 구성",
+        detail: "유니콘 탭에서 '🤖 AI·ML' 카테고리 통째 제거. 해당 카테고리에 수록됐던 OpenAI·Anthropic·Databricks·Cerebras·Safe Superintelligence·Thinking Machines Lab·Cohere 7개 기업은 모두 'AI 기업' 탭과 정보가 직접 중복돼 친구톡·사이트 양쪽에서 같은 회사 뉴스가 두 번 노출되는 비효율이 누적. 카테고리 신설 없이 5 카테고리(핀테크·엔터프라이즈 SW·우주·모빌리티·방산·바이오·헬스·크립토·Web3) × 7 = 35 기업 구조로 축소. 엔터프라이즈 SW의 Perplexity·Cursor·Hugging Face는 카테고리 본질이 SW이므로 유지.",
+        time: "2026-04-29 11:00 KST" },
+    ]
+  },
+  {
     date: "2026-04-29 07:30 KST",
     summary: `OpenAI WSJ 매출 미스 보도 — IPO 직전 펀더멘털 의구심 부각
 월별 매출 목표 연속 미달·주간활성 10억 미달·코딩·엔터프라이즈 시장 Anthropic에 양도
