@@ -190,7 +190,6 @@ body.modal-open{overflow:hidden}
 .modal.completed .kakao-link{
   padding:18px 16px;font-size:16px;font-weight:700;
 }
-.last-updated{font-size:12px;font-weight:400;color:#10b981;-webkit-text-fill-color:#10b981;background:none;white-space:nowrap;margin-left:12px;align-self:flex-end;padding-bottom:3px}
 h1{font-size:28px;font-weight:700;letter-spacing:-0.56px;line-height:1.2;color:var(--fg);position:relative;font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;display:flex;align-items:center;flex-wrap:wrap}
 h1 .logo{width:34px;height:34px;border-radius:50%;object-fit:cover;margin-right:10px;flex-shrink:0}
 h1 span{
@@ -668,7 +667,6 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
   header{padding:12px 16px}
   h1{font-size:22px;letter-spacing:-0.44px}
   h1 .logo{width:28px;height:28px;margin-right:8px}
-  .last-updated{font-size:10px;margin-left:8px;letter-spacing:-0.1px}
   .subtitle{font-size:13px}
   .tabs{gap:6px}
   .tab{padding:6px 14px;font-size:13px;flex-shrink:0}
@@ -699,7 +697,7 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
 <header id="header">
   <div class="header-top">
     <div>
-      <h1><img class="logo" src="./assets/briefick_profile_640.jpeg" alt="브리픽"><span>브리픽</span> <span class="last-updated" id="lastUpdated"></span></h1>
+      <h1><img class="logo" src="./assets/briefick_profile_640.jpeg" alt="브리픽"><span>브리픽</span></h1>
     </div>
     <button class="subscribe-btn" id="subscribeBtn" type="button">구독하기</button>
   </div>
@@ -962,15 +960,7 @@ const META_CFG={
   unicorn:{labels:['밸류에이션','최근 라운드','섹터','IPO 전망'],keys:['val','round','sector','ipo'],pre:'',suf:'',col:true},
 };
 const TAB_SRC={stocks:'st',kr:'kr',ai:'ai',commodity:'commodity',unicorn:'unicorn'};
-function updateLastUpdated(){
-  const el=document.getElementById('lastUpdated');
-  if(!el||!_dataVersion)return;
-  const v=_dataVersion;
-  const y=v.slice(0,4),mo=v.slice(4,6),d=v.slice(6,8),h=v.slice(9,11),mi=v.slice(11,13);
-  el.textContent='최종 '+y+'.'+mo+'.'+d+' '+h+':'+mi+' KST';
-}
 function render(){
-  updateLastUpdated();
   const mc=META_CFG[STATE.tab];
   const src=STATE[TAB_SRC[STATE.tab]];
   if(!src){out.innerHTML='<div class="loading"><div class="loader"></div><div style="font-size:14px;font-weight:500">데이터 불러오는 중...</div></div>';return}
