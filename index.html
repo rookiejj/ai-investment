@@ -740,8 +740,7 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
   </div>
   <div class="fs-list" id="fsList"></div>
   <div class="fs-actions">
-    <button class="fs-btn-toggle" id="fsSelectAll" type="button">모두 선택</button>
-    <button class="fs-btn-toggle" id="fsClear" type="button">모두 해제</button>
+    <button class="fs-btn-toggle" id="fsToggleAll" type="button">모두 선택</button>
     <button class="fs-btn-apply" id="fsApply" type="button">
       <span>적용</span>
       <span class="badge" id="fsApplyBadge" style="display:none">0</span>
@@ -1033,10 +1032,17 @@ function _fsRender(){
     return `<label class="fs-item${checked?' checked':''}" data-f="${o}"><input type="checkbox" ${checked?'checked':''}><span>${label}</span></label>`;
   }).join('');
 }
+function _fsCurrentOpts(){
+  return STATE.tab==='ai'?Object.keys(BL_MAP):(STATE[TAB_SRC[STATE.tab]]||[]).map(g=>g.group);
+}
 function _fsUpdateApply(){
   const n=_fs.temp.size;
   if(n>0){ _fs.applyBadge.textContent=n; _fs.applyBadge.style.display=''; }
   else{ _fs.applyBadge.style.display='none'; }
+  // 토글 버튼 라벨: 모두 선택돼있으면 '모두 해제', 아니면 '모두 선택'
+  const opts=_fsCurrentOpts();
+  const allOn=opts.length>0 && opts.every(o=>_fs.temp.has(o));
+  document.getElementById('fsToggleAll').textContent=allOn?'모두 해제':'모두 선택';
 }
 function fsOpen(){
   _fs.temp=new Set(STATE.filter);
@@ -1063,14 +1069,11 @@ _fs.list.addEventListener('change',e=>{
   else{ _fs.temp.delete(f); item.classList.remove('checked'); }
   _fsUpdateApply();
 });
-document.getElementById('fsClear').addEventListener('click',()=>{
-  _fs.temp.clear();
-  _fsRender();
-  _fsUpdateApply();
-});
-document.getElementById('fsSelectAll').addEventListener('click',()=>{
-  const opts=STATE.tab==='ai'?Object.keys(BL_MAP):(STATE[TAB_SRC[STATE.tab]]||[]).map(g=>g.group);
-  _fs.temp=new Set(opts);
+document.getElementById('fsToggleAll').addEventListener('click',()=>{
+  const opts=_fsCurrentOpts();
+  const allOn=opts.length>0 && opts.every(o=>_fs.temp.has(o));
+  if(allOn) _fs.temp.clear();
+  else _fs.temp=new Set(opts);
   _fsRender();
   _fsUpdateApply();
 });
