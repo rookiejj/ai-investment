@@ -97,7 +97,7 @@ const data = [
     title: "🧬 바이오·헬스케어",
     tag: "GLP-1·종양·로봇수술",
     stocks: [
-      { tk:"LLY", nm:"Eli Lilly", rs:"Foundayo 출시 2주차 주간 1,390처방 완만한 램프업·Wegovy 경구제 선두 지속·retatrutide Ph3 데이터 대기", r1:"65", p1:"22", r2:"81", p2:"28" },
+      { tk:"LLY", nm:"Eli Lilly", rs:"Foundayo 1주 1,390 처방·2주 3,707 처방 완만 램프 IQVIA 공개·Wegovy 경구제 2주차 18,410 처방 대비 큰 폭 후위·Lilly 식이 제한 없는 복용 편의 마케팅 강화·5/1 Q1 실적 컨센 EPS $5.39", r1:"65", p1:"22", r2:"81", p2:"28" },
       { tk:"NVO", nm:"Novo Nordisk", rs:"OpenAI 전사 AI 파트너십·Wegovy 경구제·2026 매출 -5~-13% 가이던스", r1:"47", p1:"15", r2:"43", p2:"13" },
       { tk:"ISRG", nm:"Intuitive Surgical", rs:"da Vinci 로봇수술", r1:"8.8", p1:"2.6", r2:"10", p2:"3.0" },
       { tk:"VRTX", nm:"Vertex Pharma", rs:"낭포성섬유증·통증", r1:"11", p1:"4.0", r2:"12.5", p2:"4.6" },
@@ -166,7 +166,7 @@ const data = [
       { tk:"RGTI", nm:"Rigetti", rs:"초전도 양자", r1:"0.012", p1:"-0.08", r2:"0.025", p2:"-0.10" },
       { tk:"QBTS", nm:"D-Wave", rs:"어닐링 양자", r1:"0.015", p1:"-0.07", r2:"0.030", p2:"-0.08" },
       { tk:"COIN", nm:"Coinbase", rs:"미 최대 거래소", r1:"7.5", p1:"2.3", r2:"9.0", p2:"2.9" },
-      { tk:"MSTR", nm:"Strategy", rs:"4/28 BTC $76,342 -3% 조정·OpenAI 매출 미스로 위험자산 동반 약세·4/30 FOMC 직전 조정·총 815,061 BTC 평단 $74,395 평가익 잔존·현물 ETF 누적 유입 $21억", r1:"0.5", p1:"-0.2", r2:"0.55", p2:"-0.15" },
+      { tk:"MSTR", nm:"Strategy", rs:"4/27 3,273 BTC $255M 평단 $77,906 추가 매수 공시 — 총 818,334 BTC 평단 $75,537 평가익 잔존·BTC Yield YTD 9.6%·4/30 FOMC 직전 BTC $76,500 박스 하단·세일러 1M BTC 목표 진척", r1:"0.5", p1:"-0.2", r2:"0.55", p2:"-0.15" },
       { tk:"MARA", nm:"Marathon Digital", rs:"BTC 채굴", r1:"0.75", p1:"0.10", r2:"1.0", p2:"0.20" },
       { tk:"RIOT", nm:"Riot Platforms", rs:"BTC 채굴·인프라", r1:"0.35", p1:"0.05", r2:"0.50", p2:"0.10" },
     ]

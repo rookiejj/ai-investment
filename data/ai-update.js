@@ -6,6 +6,21 @@
  */
 const UPDATES = [
   {
+    date: "2026-04-29 13:05 KST",
+    summary: `OpenAI 'firing on all cylinders' 공식 반박·Altman·Friar 공동 성명 'totally aligned'
+WSJ 후속 보도: Friar IPO 2026년 연기 주장, Altman $600B 약속 강행 의견 충돌 부각
+Anthropic 4/28 Jupiter 프리IPO 플랫폼서 밸류 $1T 도달·Forge·Hiive와 정렬
+GPT-5.5 + 엔터·바이오 라인업 vs OpenAI CFO 컴퓨트 자금조달 우려 충돌 구도 본격화`,
+    changes: [
+      { type: "마일스톤", sector: "OpenAI",
+        detail: "OpenAI(공식 반박·내부 균열 노출). 4/28 후속 보도에서 OpenAI는 'prime clickbait'·'firing on all cylinders'로 WSJ 보도를 강하게 부인했고 Altman·Friar는 공동 성명으로 'totally aligned'를 강조. 그러나 Fortune·Humai 후속 추적에 따르면 Friar CFO는 이사회에 'OpenAI가 수천억 달러 데이터센터·컴퓨트 계약을 매출 가속 없이는 이행하기 어렵다'는 우려를 직접 제기했고 IPO를 2026년 너머로 연기해야 한다는 입장을 내비쳤다. Altman은 $600B 컴퓨트 약속을 그대로 가져가는 그림을 고수, 두 주장 사이의 간극이 IPO 펀더멘털 신뢰 변수의 핵심 변수로 부상. 1월 내부 목표였던 ChatGPT 주간 활성 10억 명은 2월 9억 명에서 멈춘 상태로 다시 확인. 4/28 SoftBank ADR -10%·CoreWeave -6%·Oracle -4%·NVDA -2.9%로 AI 인프라 매도가 누적된 흐름이 4/29 시간외에서 일부 회복되며 메가캡 슈퍼위크 실적 톤이 다음 분기점.",
+        time: "2026-04-29 13:05 KST" },
+      { type: "마일스톤", sector: "Anthropic",
+        detail: "Anthropic($1T 마일스톤 공식 확인). 4/28 The Currency·NAI500이 Jupiter 프리IPO 플랫폼에서 Anthropic이 시초 $1T 밸류에 도달했다고 동시 보도 — Forge에서도 비슷한 가격·Hiive는 약 $851B로 매겨져 지표 간 일관성 확보. 2월 시리즈G $380B → 4/24 Alphabet $40B 합의 $380B 시점에서 두 달 만에 약 2.6배 추가 상향. 동일자 Sacra 추산 연환산 매출 3월 기준 $300억(YoY +1,400%)이 OpenAI($250억)를 추월한 가운데, OpenAI WSJ 매출 미스 보도가 'Anthropic이 코딩·엔터프라이즈에서 점유율을 빼앗아갔다'는 명시적 진술과 결합되며 IPO 10월 $400~500B 타겟의 외부 검증 시그널을 한 단계 더 강화. 4/24 Alphabet $40B + AWS $25B + 5GW TPU·$100B 컴퓨트 약정의 24시간 누적 $65B+ 유입과 같은 라인에 정렬.",
+        time: "2026-04-29 13:05 KST" },
+    ]
+  },
+  {
     date: "2026-04-29 07:30 KST",
     summary: `OpenAI WSJ 매출 미스 보도 — 월별 목표 연속 미달·주간활성 10억 미달·Anthropic에 코딩 영역 점유 양도
 CFO Sarah Friar 사내 우려 — 매출 가속 없으면 향후 컴퓨트 계약 자금조달 어려워질 수 있음
