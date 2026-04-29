@@ -43,9 +43,8 @@ const TABS: Tab[] = [
   { file: "stocks-update.js",    var: "updates", emoji: "🇺🇸", label: "미국 마켓" },
   { file: "kr-stocks-update.js", var: "updates", emoji: "🇰🇷", label: "한국 마켓" },
   { file: "ai-update.js",        var: "UPDATES", emoji: "🤖", label: "AI 기업" },
-  { file: "etf-update.js",       var: "updates", emoji: "🌍", label: "글로벌 ETF" },
   { file: "unicorn-update.js",   var: "updates", emoji: "🦄", label: "유니콘" },
-  { file: "commodity-update.js", var: "updates", emoji: "📉", label: "시장·원자재" },
+  { file: "commodity-update.js", var: "updates", emoji: "🛢️", label: "원자재·크립토" },
 ];
 
 // ═══ GitHub fetch ═══════════════════════════════════════

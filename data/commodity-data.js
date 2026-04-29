@@ -1,15 +1,15 @@
-// Commodity & Macro Atlas - data source
-// 시장 지표·원자재. index.html 자동 렌더링.
+// Commodity & Crypto Atlas - data source
+// 원자재·크립토. index.html 자동 렌더링.
 
 const data = [
   {
-    title: "📊 시장 지표",
-    tag: "금리·달러·변동성",
+    title: "🪙 크립토",
+    tag: "디지털 자산·코인",
     stocks: [
-      { tk:"FFRATE", nm:"미 기준금리", rs:"4/29~30 FOMC 동결 100% priced in·연말까지 동결 시나리오 92%·점도표·파월 톤이 USD 약세 시나리오 강화 핵심·OpenAI 매출 미스 보도로 위험자산 약세 동조 변수", price:"3.50–3.75%", ytd:"-50bp", y1:"-150bp", range:"3.50–5.25%" },
-      { tk:"US10Y", nm:"미 10년물 금리", rs:"4/28 Nasdaq -1.0%·S&P -0.46% OpenAI 매출 미스 보도 직격·VIX 19대 유지·4/29 메가캡 4사 + 4/30 FOMC + 5/1 AAPL + 5/2 PCE 4중 트리거 진입", price:"4.22%", ytd:"-8bp", y1:"-38bp", range:"3.60–4.80%" },
-      { tk:"BTC", nm:"비트코인", rs:"4/28 $76,342 -3% OpenAI 매출 미스 위험자산 동반 약세·$80K 저항 9일째 무산·박스 하단 시도·美 현물 ETF 누적 $21억 견조·USD-DXY 음의 상관 -0.91 단기 풀릴 위험", price:"$76,342", ytd:"-14%", y1:"-16%", range:"$60,187–126,186" },
-      { tk:"VIX", nm:"VIX 공포지수", rs:"4/28 19.8 부근 정체·OpenAI 매출 미스로 AI 인프라 매도세에도 VIX 상승은 제한·이란 봉쇄 지속·실적 슈퍼위크·FOMC·PCE 4중 트리거 누적", price:"19.8", ytd:"+2pt", y1:"+4pt", range:"12–52" },
+      { tk:"BTC", nm:"비트코인", rs:"4/28 $76,342 -3% OpenAI 매출 미스 위험자산 동반 약세·$80K 저항 9일째 무산·美 현물 ETF 누적 $21억 견조·USD-DXY 음의 상관 -0.91", price:"$76,342", ytd:"-14%", y1:"-16%", range:"$60,187–126,186" },
+      { tk:"ETH", nm:"이더리움", rs:"L2 생태계 성숙·스테이킹 수익 누적·ETH 현물 ETF 자금 유입 지속·EIP 업그레이드 모멘텀", price:"$4,200", ytd:"+12%", y1:"+22%", range:"$2,800–5,400" },
+      { tk:"SOL", nm:"솔라나", rs:"DEX·NFT 거래량 회복·Firedancer 클라이언트 출시·기관 채택 가속", price:"$280", ytd:"+18%", y1:"+45%", range:"$140–360" },
+      { tk:"XRP", nm:"리플", rs:"미국 ETF 승인 모멘텀·국제 결제 파트너십 확장", price:"$2.85", ytd:"+8%", y1:"+15%", range:"$1.80–3.60" },
     ]
   },
   {
