@@ -123,12 +123,65 @@ function buildMessage(tabs: TabWithEntries[]): string {
   return parts.join("\n\n");
 }
 
-// 합산이 한도를 넘으면 마지막 탭 블록부터 통째로 제거 (탭 내부 자르기·"…" 없음)
-function truncateForLimit(message: string, max: number): string {
-  if (message.length <= max) return message;
-  const blocks = message.split("\n\n");
-  while (blocks.length > 1 && blocks.join("\n\n").length > max) blocks.pop();
-  return blocks.join("\n\n");
+// 합산이 한도 초과 시 모든 탭 보존하며 줄 단위로 균등 cut.
+// 각 탭에 동일 budget 분배 → 한도 초과한 탭은 끝 줄부터 제거 (중간 자르기·"…" 없음)
+function fitToLimit(tabs: TabWithEntries[], max: number): string {
+  const full = buildMessage(tabs);
+  if (full.length <= max) return full;
+  const valid = tabs.filter((t) => t.entries.length > 0);
+  if (!valid.length) return full;
+
+  const header = `📊 브리픽 · ${kstDateLabel()}`;
+  const headerLen = header.length;
+  const sepLen = 2; // "\n\n"
+  const tabHeaderLen = valid.map((t) => `${t.emoji} ${t.label}\n\n`.length);
+  const tabHeaderTotal = tabHeaderLen.reduce((a, b) => a + b, 0);
+  const remaining = max - headerLen - sepLen * valid.length - tabHeaderTotal;
+  if (remaining <= 0) return full.slice(0, max);
+
+  // 1차 패스: 탭별 평균 budget 적용
+  const perTab = Math.floor(remaining / valid.length);
+  const taken: string[][] = [];
+  const usedChars: number[] = [];
+  for (const t of valid) {
+    const lines = (t.entries[0]?.summary ?? "")
+      .split("\n").map((s) => s.trim()).filter(Boolean);
+    const kept: string[] = [];
+    let used = 0;
+    for (const line of lines) {
+      const cost = 2 + line.length + 1; // "• " + line + "\n"
+      if (used + cost > perTab) break;
+      kept.push(line);
+      used += cost;
+    }
+    taken.push(kept);
+    usedChars.push(used);
+  }
+
+  // 2차 패스: 사용 안 한 budget을 다른 탭에 재분배
+  let leftover = remaining - usedChars.reduce((a, b) => a + b, 0);
+  if (leftover > 0) {
+    for (let i = 0; i < valid.length && leftover > 0; i++) {
+      const allLines = (valid[i].entries[0]?.summary ?? "")
+        .split("\n").map((s) => s.trim()).filter(Boolean);
+      let used = usedChars[i];
+      for (let j = taken[i].length; j < allLines.length; j++) {
+        const cost = 2 + allLines[j].length + 1;
+        if (cost > leftover) break;
+        taken[i].push(allLines[j]);
+        used += cost;
+        leftover -= cost;
+      }
+      usedChars[i] = used;
+    }
+  }
+
+  // 재조립
+  const trimmedTabs = valid.map((t, i) => ({
+    ...t,
+    entries: [{ ...t.entries[0], summary: taken[i].join("\n") }],
+  }));
+  return buildMessage(trimmedTabs);
 }
 
 // 솔라피 실패 메시지를 구독자 수신 상태로 정규화
@@ -262,10 +315,10 @@ Deno.serve(async (req) => {
       if (entries.length) tabs.push({ ...t, entries });
     }
     const rawMessage = buildMessage(tabs);
-    const message = truncateForLimit(rawMessage, LIMIT);
+    const message = fitToLimit(tabs, LIMIT);
     const truncated = message.length < rawMessage.length;
     if (truncated) {
-      console.warn(`[warn] message truncated tab-level: ${rawMessage.length}→${message.length}`);
+      console.warn(`[warn] message truncated even-share: ${rawMessage.length}→${message.length}`);
     }
 
     // 2) 만료된 구독자 상태 최신화 (paid_until이 과거인 active → expired)
