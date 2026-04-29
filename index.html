@@ -1120,7 +1120,9 @@ function ensureActiveTabVisible(){
   else if(r>vr) bar.scrollTo({left:r-bar.clientWidth+8,behavior:'smooth'});
 }
 function switchTab(id,dir){
-  if(_sliding||id===STATE.tab)return;
+  if(_sliding)return;
+  // 같은 탭 다시 탭 시: 부분 스크롤된 탭바를 활성 탭이 다 보이도록 보정만 하고 종료
+  if(id===STATE.tab){ ensureActiveTabVisible(); return; }
   const _refreshP=refreshIfNeeded();
   const m=document.getElementById('out');
   if(dir==null) dir=TAB_ORDER.indexOf(id)>TAB_ORDER.indexOf(STATE.tab)?1:-1;
