@@ -147,8 +147,37 @@ async function waitContainerReady(igUserId, containerId, token, label) {
   console.warn(`경고: ${label} 컨테이너 status 폴링 90초 타임아웃, publish 강행`);
 }
 
+// IG Graph API의 흔한 transient 에러 패턴.
+// - 9007/2207027: media_publish "Media ID is not available" (FINISHED 후 내부 마무리 지연)
+// - code 1 / error_subcode 99: generic "An unknown error" (IG fetcher의 일시 장애)
+// - 4 / 17 / 32: 일시 throttling 또는 일시 서버 오류
+function isTransientGraphError(err) {
+  const m = err?.message || '';
+  return /9007|2207027|"code":1|"error_subcode":99|"code":4|"code":17|"code":32|unknown error|준비/.test(m);
+}
+
+// children 컨테이너 생성 재시도 — IG fetcher가 Supabase Storage 첫 fetch 실패 시 자주 발생
+async function createChildWithRetry(igUserId, imageUrl, token) {
+  const MAX_TRIES = 4;       // 4회 × 6초 = 최대 24초 추가
+  const INTERVAL_MS = 6000;
+  let lastErr;
+  for (let i = 0; i < MAX_TRIES; i++) {
+    try {
+      return await igPost(`${igUserId}/media`, {
+        image_url: imageUrl,
+        is_carousel_item: 'true',
+      }, token);
+    } catch (e) {
+      lastErr = e;
+      if (!isTransientGraphError(e)) throw e;
+      console.warn(`  ↻ child 재시도 ${i+1}/${MAX_TRIES}: ${e.message.slice(0, 120)}`);
+      await new Promise(r => setTimeout(r, INTERVAL_MS));
+    }
+  }
+  throw lastErr;
+}
+
 // media_publish 일시 실패(9007/2207027 "준비 안 됨") 재시도
-// IG는 status가 FINISHED여도 내부 마무리에 추가 시간이 필요한 경우가 흔함.
 async function publishWithRetry(igUserId, creationId, token) {
   const MAX_TRIES = 6;        // 6회 × 7초 = 최대 42초 추가 대기
   const INTERVAL_MS = 7000;
@@ -158,8 +187,7 @@ async function publishWithRetry(igUserId, creationId, token) {
       return await igPost(`${igUserId}/media_publish`, { creation_id: creationId }, token);
     } catch (e) {
       lastErr = e;
-      const transient = /9007|2207027|Media ID is not available|준비/.test(e.message);
-      if (!transient) throw e;
+      if (!isTransientGraphError(e)) throw e;
       console.warn(`  ↻ publish 재시도 ${i+1}/${MAX_TRIES}: ${e.message.slice(0, 120)}`);
       await new Promise(r => setTimeout(r, INTERVAL_MS));
     }
@@ -220,14 +248,16 @@ async function main() {
     publicUrls.push(url);
   }
 
-  // 2) children 컨테이너 7개
+  // Storage 업로드 직후 IG fetcher가 Cloudflare 캐시 워밍 전 fetch 시도 시
+  // "unknown error"가 자주 발생 — 5초 버퍼.
+  console.log('  · Storage→IG 안정화 5초 대기');
+  await new Promise(r => setTimeout(r, 5000));
+
+  // 2) children 컨테이너 7개 (transient 에러 시 자동 재시도)
   console.log('[2/3] IG children 컨테이너 생성');
   const childrenIds = [];
   for (let i = 0; i < publicUrls.length; i++) {
-    const j = await igPost(`${IG_USER}/media`, {
-      image_url: publicUrls[i],
-      is_carousel_item: 'true',
-    }, TOKEN);
+    const j = await createChildWithRetry(IG_USER, publicUrls[i], TOKEN);
     console.log(`  ✓ child ${i+1}/7 id=${j.id}`);
     childrenIds.push(j.id);
   }
