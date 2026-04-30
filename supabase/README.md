@@ -77,7 +77,7 @@ supabase functions deploy daily-send
 
 ### 6. cron 등록
 대시보드 SQL Editor에서 `supabase/schedule.sql` 내용을 복사,
-`<EDGE_FUNCTION_URL>` 과 `<SERVICE_ROLE_KEY>` 자리를 채워 실행.
+`<EDGE_FUNCTION_URL>` 과 `<SECRET_KEY>` (Supabase secret 키, `sb_secret_...`) 자리를 채워 실행.
 
 ## 운영
 
@@ -107,7 +107,7 @@ MVP 단계는 **수동 등록**으로 운영합니다. 정식 자동화 전까�
 ### 수동 테스트 발송
 ```bash
 curl -X POST https://<PROJECT-REF>.supabase.co/functions/v1/daily-send \
-  -H "Authorization: Bearer <SERVICE_ROLE_KEY>" \
+  -H "Authorization: Bearer <SECRET_KEY>" \
   -H "Content-Type: application/json"
 ```
 

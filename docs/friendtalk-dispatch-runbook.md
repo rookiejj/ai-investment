@@ -44,7 +44,7 @@
 | 08:00:01~03 | Edge Function `daily-send` (Deno) | env `CRON_SECRET` | `X-Cron-Secret` 헤더 검증 |
 | 08:00:01 | Edge Function | GitHub Contents API + `GITHUB_TOKEN` | `data/*-update.js` 6개 파일 fetch |
 | 08:00:01 | Edge Function | 내부 로직 (`buildMessage`) | 탭별 최신 2건 요약 → 친구톡 메시지 조립 |
-| 08:00:01 | Edge Function | Supabase JS client + `SUPABASE_SERVICE_ROLE_KEY` | 만료 구독자 `expired` 전환 |
+| 08:00:01 | Edge Function | Supabase JS client + `SUPABASE_SECRET_KEY` | 만료 구독자 `expired` 전환 |
 | 08:00:01 | Edge Function | 동일 | `subscribers WHERE status='active'` 조회 |
 | 08:00:02 | Edge Function | 솔라피 REST API | HMAC-SHA256 인증 → `POST /messages/v4/send-many` |
 | 08:00:02 | 솔라피 | 카카오 비즈메시지 (`_lpxkCX` · `KA01PF...`) | 친구톡 발송 |
@@ -107,7 +107,7 @@
 
 ### 3.8 만료 구독자 정리
 - **주체**: Edge Function → Supabase JS client
-- **인증**: `SUPABASE_SERVICE_ROLE_KEY` (Edge Function env 자동 주입)
+- **인증**: `SUPABASE_SECRET_KEY` (`supabase secrets set`로 주입한 secret 키, RLS 우회)
 - **쿼리**: `UPDATE subscribers SET status='expired' WHERE status='active' AND paid_until IS NOT NULL AND paid_until <= now()`
 
 ### 3.9 활성 구독자 조회
@@ -186,8 +186,8 @@
 | `cron_secret` | Supabase Vault (`vault.secrets`) | pg_cron이 Authorization 헤더 구성 |
 | `SOLAPI_API_KEY` · `SOLAPI_API_SECRET` · `SOLAPI_PFID` · `SOLAPI_SENDER` | Supabase Edge Function env | daily-send → 솔라피 API HMAC |
 | `PORTONE_API_SECRET` | Supabase Edge Function env | payment-confirm → 포트원 결제 검증 |
-| `SUPABASE_SERVICE_ROLE_KEY` | Edge Function 자동 주입 | DB 쿼리 (RLS 우회) |
-| `SUPABASE_ANON_KEY` (`sb_publishable_...`) | `index.html` 평문 | 브라우저 → subscribe / check-subscription |
+| `SUPABASE_SECRET_KEY` (`sb_secret_...`) | Supabase Edge Function env (`supabase secrets set`) | DB 쿼리 (RLS 우회). Storage 업로드(인스타 자동화) 공용 |
+| `SUPABASE_PUBLISHABLE_KEY` (`sb_publishable_...`) | `index.html`·`views/renew.html` 평문 | 브라우저 → subscribe / check-subscription |
 
 ---
 
@@ -240,6 +240,7 @@
 
 - **Supabase API 키 체계 전환 (2025 말)**: 구 `eyJ...` JWT(anon·service_role) → 신 `sb_publishable_...` / `sb_secret_...`. Edge Function 게이트웨이가 JWT만 검증하는 기본 동작과 충돌.
   - **해결**: Edge Function 전부 `--no-verify-jwt`로 재배포, `daily-send`는 자체 `X-Cron-Secret` 검증.
+- **변수 네이밍 통일 (2026-04)**: Edge Function·프론트·자동화 전 코드베이스를 신네이밍에 맞춰 정리 — `SUPABASE_SERVICE_ROLE_KEY` → `SUPABASE_SECRET_KEY`, `SUPABASE_ANON_KEY` → `SUPABASE_PUBLISHABLE_KEY`. Edge Function은 자동 주입에 의존하지 않고 `supabase secrets set SUPABASE_SECRET_KEY=...` 로 수동 등록한다.
 - **pg_cron과 DB timezone**: `alter database set timezone='Asia/Seoul'` 후 pg_cron schedule도 KST 기준으로 해석됨. UTC 기준 표현식 사용 필수.
   - 테스트 모드: `'0 23,0-11 * * *'` (UTC) = KST 08~20시 매시
   - 운영 모드: `'0 23 * * *'` (UTC) = KST 08:00

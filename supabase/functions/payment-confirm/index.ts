@@ -164,7 +164,7 @@ Deno.serve(async (req) => {
     // 3) 구독 등록/연장
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+      Deno.env.get("SUPABASE_SECRET_KEY")!,
     );
 
     const nowMs = Date.now();

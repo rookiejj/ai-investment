@@ -149,7 +149,7 @@ Deno.serve(async (req) => {
     // 초기 비번 검증을 위해 먼저 supabase client 준비
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+      Deno.env.get("SUPABASE_SECRET_KEY")!,
     );
 
     // login

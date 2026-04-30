@@ -1227,7 +1227,7 @@ function switchTab(id,dir){
 <script>
 (function(){
   const SUPABASE_URL = 'https://ytvcgoldauysvnqckzze.supabase.co';
-  const SUPABASE_ANON_KEY = 'sb_publishable_BRlDRwvdanR1sLX2b_Iagg_AtLA8Wyf';
+  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_BRlDRwvdanR1sLX2b_Iagg_AtLA8Wyf';
   const PORTONE_STORE_ID = 'store-94ded677-c4c2-45a7-adc2-eb735d601a52';
   const PORTONE_CHANNEL_KEY = 'channel-key-e32b9dbf-38c1-43a0-a080-1e208f22ab40';
   const SUBSCRIPTION_PRICE = 100;
@@ -1275,7 +1275,7 @@ function switchTab(id,dir){
     try{
       const res = await fetch(SUPABASE_URL+'/functions/v1/payment-confirm',{
         method:'POST',
-        headers:{'Content-Type':'application/json','Authorization':'Bearer '+SUPABASE_ANON_KEY,'apikey':SUPABASE_ANON_KEY},
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+SUPABASE_PUBLISHABLE_KEY,'apikey':SUPABASE_PUBLISHABLE_KEY},
         body:JSON.stringify({paymentId,phone:pending.phone,ad_consent:true,expected_amount:SUBSCRIPTION_PRICE}),
       });
       const j = await res.json();
@@ -1429,7 +1429,7 @@ function switchTab(id,dir){
       try{
         const checkRes = await fetch(SUPABASE_URL+'/functions/v1/check-subscription',{
           method:'POST',
-          headers:{'Content-Type':'application/json','Authorization':'Bearer '+SUPABASE_ANON_KEY,'apikey':SUPABASE_ANON_KEY},
+          headers:{'Content-Type':'application/json','Authorization':'Bearer '+SUPABASE_PUBLISHABLE_KEY,'apikey':SUPABASE_PUBLISHABLE_KEY},
           body:JSON.stringify({phone}),
         });
         const chk = await checkRes.json();
@@ -1490,7 +1490,7 @@ function switchTab(id,dir){
       submit.textContent='결제 확인 중...';
       const res = await fetch(SUPABASE_URL+'/functions/v1/payment-confirm',{
         method:'POST',
-        headers:{'Content-Type':'application/json','Authorization':'Bearer '+SUPABASE_ANON_KEY,'apikey':SUPABASE_ANON_KEY},
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+SUPABASE_PUBLISHABLE_KEY,'apikey':SUPABASE_PUBLISHABLE_KEY},
         body:JSON.stringify({paymentId,phone,ad_consent:true,expected_amount:SUBSCRIPTION_PRICE}),
       });
       const j = await res.json();
