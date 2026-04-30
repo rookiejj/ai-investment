@@ -72,6 +72,8 @@ jobs:
 
       - name: 슬라이드 렌더
         if: steps.filter.outputs.skip != 'true'
+        env:
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
         run: node scripts/instagram/render-slides.js
 
       - name: 슬라이드 아티팩트 업로드 (디버깅용, 7일 보관)

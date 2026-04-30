@@ -38,7 +38,25 @@ on conflict (id) do update set public = true;
 | `IG_BUSINESS_USER_ID` | 인스타 비즈니스 계정 ID(숫자) | Graph API에서 페이지 → IG 계정 ID 조회로 확보 |
 | `SUPABASE_URL` | `https://xxx.supabase.co` | Supabase 프로젝트 URL |
 | `SUPABASE_SECRET_KEY` | Supabase secret 키 (`sb_secret_...`) | Storage 업로드용. publishable 키 아님 |
+| `UNSPLASH_ACCESS_KEY` | Unsplash API 액세스 키 | 슬라이드 BG 사진 검색·다운로드용. 미설정 시 다크 단색으로 폴백 |
 | `IG_CAROUSEL_BUCKET` | `instagram-carousel` | (선택) 버킷 이름 다르면 등록 |
+
+### Unsplash 키 발급 (5분)
+
+1. https://unsplash.com/developers → **Register as a developer** (계정 가입)
+2. **New Application** → 이용약관 동의 → 앱 정보 입력 (이름·설명만)
+3. 생성된 앱 페이지 → **Access Key** 복사 → GitHub Secret `UNSPLASH_ACCESS_KEY`에 등록
+4. **Demo 모드**: 50 req/hr, 5,000 req/month — 일 1회 발송엔 충분 (포스트당 12 호출 사용)
+5. 트래픽 늘면 [Production approval](https://unsplash.com/documentation#production) 신청 → 5,000 req/hr로 상향
+
+### 사진 매칭 동작
+
+1. 각 탭의 첫 불릿에서 키워드 추출 (영문 티커·고유명사·한글 토큰)
+2. 내장 키워드 매핑(`scripts/instagram/image-source.js`의 `KEYWORD_TO_QUERY`)으로 **사물·장소 쿼리**로 변환
+3. Unsplash 검색 → `tags`에 person/people/face 등 들어간 결과 제거
+4. 첫 통과 사진 다운로드 → 1080×1350 cover 크롭 → 슬라이드 BG로 인젝션
+5. 매칭 실패 시 카테고리 디폴트(예: stocks → "wall street new york night")로 재시도
+6. 모두 실패 시 다크 단색 폴백
 
 ## 3. Meta 앱 권한 체크리스트
 

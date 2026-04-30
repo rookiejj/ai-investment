@@ -91,13 +91,21 @@ function buildHashtagBlock(meta) {
   return out.join(' ');
 }
 
+function hasAnyPhoto(meta) {
+  const p = meta?.photos;
+  if (!p) return false;
+  if (p.cover) return true;
+  return Object.values(p.tabs || {}).some(Boolean);
+}
+
 function buildCaption(meta) {
   const headline  = buildHeadline(meta);
   const tabBlock  = buildTabBlock(meta);
   const cta       = `매일 아침 ${SITE_URL}\n인스타 @${HANDLE}`;
+  const credit    = hasAnyPhoto(meta) ? '\n\n📸 이미지: Unsplash' : '';
   const tagBlock  = buildHashtagBlock(meta);
 
-  return `${headline}\n\n${tabBlock}\n\n${cta}\n\n${tagBlock}`;
+  return `${headline}\n\n${tabBlock}\n\n${cta}${credit}\n\n${tagBlock}`;
 }
 
 module.exports = { buildCaption };

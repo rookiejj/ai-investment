@@ -5,29 +5,25 @@
 <title>Briefick Slide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --black: #0d0d0d;
     --white: #ffffff;
     --green: #18E299;
-    --green-light: #d4fae8;
     --green-deep: #0fa76e;
-    --gray-700: #333333;
-    --gray-500: #666666;
-    --gray-400: #888888;
-    --gray-200: #e5e5e5;
-    --gray-100: #f5f5f5;
-    --gray-50: #fafafa;
-    --border-subtle: rgba(0,0,0,0.05);
-    --border-medium: rgba(0,0,0,0.08);
+    --text: #ffffff;
+    --text-mid: rgba(255,255,255,0.78);
+    --text-mute: rgba(255,255,255,0.55);
+    --line: rgba(255,255,255,0.12);
+    --line-strong: rgba(255,255,255,0.20);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body {
     width: 1080px; height: 1350px;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    color: var(--black);
-    background: var(--white);
+    color: var(--text);
+    background: var(--black);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -38,129 +34,161 @@
     padding: 80px 72px;
     display: flex;
     flex-direction: column;
+    color: var(--text);
+  }
+  /* 사진 BG가 있는 슬라이드 공통 */
+  .slide.has-photo {
+    background-color: var(--black);
+    background-image:
+      linear-gradient(180deg, rgba(13,13,13,0.35) 0%, rgba(13,13,13,0.55) 35%, rgba(13,13,13,0.85) 70%, rgba(13,13,13,0.95) 100%),
+      var(--bg-image, none);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+  /* 사진 없을 때 다크 단색 폴백 (그래도 분위기 유지) */
+  .slide.no-photo {
+    background:
+      radial-gradient(ellipse at top, rgba(24,226,153,0.10) 0%, rgba(13,13,13,0) 55%),
+      var(--black);
+  }
+  /* 텍스트 가독성 보조 — 약한 글로우/섀도 */
+  .text-on-photo {
+    text-shadow: 0 2px 16px rgba(0,0,0,0.6);
   }
 
   /* === Cover (slide 1) === */
   .cover {
-    background: radial-gradient(ellipse at top left, rgba(24,226,153,0.18) 0%, rgba(255,255,255,0) 55%),
-                radial-gradient(ellipse at bottom right, rgba(24,226,153,0.10) 0%, rgba(255,255,255,0) 50%),
-                var(--white);
     justify-content: space-between;
   }
   .cover-top { display: flex; justify-content: space-between; align-items: center; }
   .brand-mark {
     font-size: 28px; font-weight: 600; letter-spacing: -0.4px;
-    color: var(--black);
+    color: var(--white);
   }
-  .brand-mark .dot { color: var(--green-deep); }
+  .brand-mark .dot { color: var(--green); }
   .pill-label {
     font-family: 'Geist Mono', ui-monospace, monospace;
     font-size: 13px; font-weight: 600;
     text-transform: uppercase; letter-spacing: 0.8px;
-    color: var(--green-deep);
-    background: var(--green-light);
+    color: var(--black);
+    background: var(--green);
     padding: 8px 18px;
     border-radius: 9999px;
   }
-  .cover-mid { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 24px; }
+  .cover-mid { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: 24px; }
   .cover-date {
     font-family: 'Geist Mono', ui-monospace, monospace;
     font-size: 18px; font-weight: 500;
-    color: var(--gray-500);
+    color: var(--green);
     text-transform: uppercase; letter-spacing: 1.2px;
   }
   .cover-headline {
-    font-size: 110px; font-weight: 600; line-height: 1.05;
+    font-size: 110px; font-weight: 700; line-height: 1.05;
     letter-spacing: -2.5px;
-    color: var(--black);
+    color: var(--white);
   }
-  .cover-headline .accent { color: var(--green-deep); }
+  .cover-headline .accent { color: var(--green); }
   .cover-subhead {
     font-size: 26px; font-weight: 400; line-height: 1.45;
-    color: var(--gray-500);
+    color: var(--text-mid);
     max-width: 820px;
   }
   .cover-bottom {
     display: flex; justify-content: space-between; align-items: flex-end;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
   }
   .cover-domain {
     font-family: 'Geist Mono', ui-monospace, monospace;
     font-size: 16px; font-weight: 500;
-    color: var(--gray-400);
+    color: var(--text-mute);
     text-transform: lowercase;
   }
   .cover-tabs {
-    display: flex; gap: 12px; flex-wrap: wrap; max-width: 540px; justify-content: flex-end;
+    display: flex; gap: 10px; flex-wrap: wrap; max-width: 540px; justify-content: flex-end;
   }
   .cover-tab-pill {
-    font-size: 18px; font-weight: 500;
-    padding: 10px 18px;
-    border: 1px solid var(--border-medium);
+    font-size: 16px; font-weight: 500;
+    padding: 8px 16px;
+    border: 1px solid var(--line-strong);
     border-radius: 9999px;
-    color: var(--gray-700);
-    background: var(--white);
+    color: var(--text-mid);
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(4px);
   }
 
   /* === Tab slide (2-6) === */
-  .tab { background: var(--white); }
   .tab-header {
     display: flex; justify-content: space-between; align-items: center;
-    padding-bottom: 32px;
-    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
   }
-  .tab-title-row { display: flex; align-items: center; gap: 18px; }
-  .tab-emoji { font-size: 56px; line-height: 1; }
+  .tab-title-row { display: flex; align-items: center; gap: 16px; }
+  .tab-emoji {
+    font-size: 48px; line-height: 1;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+  }
   .tab-title {
-    font-size: 48px; font-weight: 600; letter-spacing: -1.0px;
-    color: var(--black);
+    font-size: 44px; font-weight: 700; letter-spacing: -1.0px;
+    color: var(--white);
   }
   .tab-page-num {
     font-family: 'Geist Mono', ui-monospace, monospace;
     font-size: 14px; font-weight: 500;
     text-transform: uppercase; letter-spacing: 0.8px;
-    color: var(--gray-400);
+    color: var(--text-mute);
+    padding: 8px 14px;
+    border: 1px solid var(--line);
+    border-radius: 9999px;
+    background: rgba(255,255,255,0.04);
   }
   .tab-body {
-    flex: 1; padding-top: 48px;
-    display: flex; flex-direction: column; gap: 28px;
+    flex: 1; padding-top: 36px;
+    display: flex; flex-direction: column; gap: 24px;
+    justify-content: center;
   }
   .bullet-row {
-    display: flex; align-items: flex-start; gap: 22px;
+    display: flex; align-items: flex-start; gap: 20px;
   }
   .bullet-mark {
     flex-shrink: 0;
-    margin-top: 14px;
-    width: 12px; height: 12px;
+    margin-top: 12px;
+    width: 10px; height: 10px;
     border-radius: 9999px;
     background: var(--green);
+    box-shadow: 0 0 12px rgba(24,226,153,0.6);
   }
   .bullet-text {
     flex: 1;
-    font-size: 32px; font-weight: 500; line-height: 1.42;
+    font-size: 30px; font-weight: 500; line-height: 1.40;
     letter-spacing: -0.4px;
-    color: var(--black);
+    color: var(--white);
   }
-  .bullet-text .num { color: var(--green-deep); font-weight: 600; }
+  .bullet-text .num { color: var(--green); font-weight: 700; }
   .tab-footer {
     display: flex; justify-content: space-between; align-items: center;
-    padding-top: 32px;
-    border-top: 1px solid var(--border-subtle);
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
   }
   .tab-footer-left {
     font-family: 'Geist Mono', ui-monospace, monospace;
     font-size: 14px; font-weight: 500;
-    color: var(--gray-400);
+    color: var(--text-mute);
     text-transform: uppercase; letter-spacing: 0.8px;
   }
   .tab-footer-right {
-    font-size: 16px; font-weight: 500;
-    color: var(--gray-500);
+    font-size: 16px; font-weight: 600;
+    color: var(--text-mute);
+    letter-spacing: -0.2px;
   }
-  .tab-footer-right .handle { color: var(--green-deep); }
+  .tab-footer-right .handle { color: var(--green); }
 
   /* === CTA (slide 7) === */
   .cta {
-    background: var(--black);
+    background:
+      radial-gradient(ellipse at bottom right, rgba(24,226,153,0.18) 0%, rgba(13,13,13,0) 55%),
+      var(--black);
     color: var(--white);
     justify-content: space-between;
   }
@@ -178,7 +206,7 @@
   }
   .cta-mid { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 32px; }
   .cta-headline {
-    font-size: 92px; font-weight: 600; line-height: 1.08;
+    font-size: 92px; font-weight: 700; line-height: 1.08;
     letter-spacing: -2.0px;
     color: var(--white);
   }
@@ -189,7 +217,7 @@
     max-width: 820px;
   }
   .cta-actions {
-    display: flex; flex-direction: column; gap: 20px;
+    display: flex; flex-direction: column; gap: 18px;
     margin-top: 16px;
   }
   .cta-action-row {
@@ -204,9 +232,16 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 22px;
   }
-  .cta-action-row .label { font-family: 'Geist Mono', ui-monospace, monospace; font-size: 18px; color: var(--green); text-transform: uppercase; letter-spacing: 0.6px; min-width: 100px; }
+  .cta-action-row .label {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 18px; color: var(--green);
+    text-transform: uppercase; letter-spacing: 0.6px;
+    min-width: 100px;
+  }
   .cta-bottom {
     display: flex; justify-content: space-between; align-items: flex-end;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
   }
   .cta-domain {
     font-family: 'Geist Mono', ui-monospace, monospace;
@@ -224,12 +259,12 @@
 <body>
 
 <!-- ========== SLIDE 1: COVER ========== -->
-<div class="slide cover" data-slide="cover">
+<div class="slide cover no-photo" data-slide="cover">
   <div class="cover-top">
     <div class="brand-mark">briefick<span class="dot">.</span></div>
     <div class="pill-label">Daily Briefing</div>
   </div>
-  <div class="cover-mid">
+  <div class="cover-mid text-on-photo">
     <div class="cover-date" data-bind="cover.dateLabel">2026.04.30 · WED</div>
     <div class="cover-headline" data-bind="cover.headline">오늘의<br/><span class="accent">시장 요약</span></div>
     <div class="cover-subhead" data-bind="cover.subhead">미국·한국·AI·원자재·유니콘 5개 시장 한 번에.</div>
@@ -247,15 +282,15 @@
 </div>
 
 <!-- ========== SLIDE 2-6: TAB ========== -->
-<div class="slide tab" data-slide="tab">
-  <div class="tab-header">
+<div class="slide tab no-photo" data-slide="tab">
+  <div class="tab-header text-on-photo">
     <div class="tab-title-row">
       <div class="tab-emoji" data-bind="tab.emoji">🇺🇸</div>
       <div class="tab-title" data-bind="tab.label">미국 마켓</div>
     </div>
     <div class="tab-page-num" data-bind="tab.pageNum">02 / 07</div>
   </div>
-  <div class="tab-body" data-bind="tab.bullets">
+  <div class="tab-body text-on-photo" data-bind="tab.bullets">
     <div class="bullet-row"><div class="bullet-mark"></div><div class="bullet-text">샘플 불릿 1</div></div>
     <div class="bullet-row"><div class="bullet-mark"></div><div class="bullet-text">샘플 불릿 2</div></div>
   </div>
