@@ -119,9 +119,9 @@
     background: var(--line);
     margin-top: 26px;
   }
-  /* 5불릿 영역 — 하단 정렬 + footer와 떨어뜨리는 여백 */
+  /* 5불릿 영역 — 하단 정렬 + footer와 확실히 분리 */
   .tab-body {
-    flex: 1; padding-top: 36px; padding-bottom: 56px;
+    flex: 1; padding-top: 36px; padding-bottom: 96px;
     display: flex; flex-direction: column; gap: 26px;
     justify-content: flex-end;
   }
@@ -145,6 +145,7 @@
   .bullet-text .num { color: var(--green); font-weight: 700; }
   .tab-footer {
     display: flex; justify-content: space-between; align-items: center;
+    margin-top: 24px;
     padding-top: 28px;
     border-top: 1px solid var(--line);
   }
