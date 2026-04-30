@@ -45,33 +45,67 @@ function kstNowIsoDate() {
   return `${y}-${m}-${d}`;
 }
 
-async function uploadToStorage(supabase, bucket, datePath, file) {
+// 1차: supabase-js 사용. 실패 시 2차: raw fetch로 재시도해서 supabase-js 레이어 문제와 서버 레이어 문제를 구분.
+async function uploadToStorage(supabase, bucket, datePath, file, ctx) {
   const local = path.join(OUT_DIR, file);
   const buf = fs.readFileSync(local);
   const remote = `posts/${datePath}/${file}`;
-  let result;
+
+  // 1차 시도 — supabase-js
   try {
-    result = await supabase.storage
+    const { error } = await supabase.storage
       .from(bucket)
       .upload(remote, buf, { contentType: 'image/png', upsert: true });
+    if (error) {
+      console.warn(`  ⚠ supabase-js 업로드 실패: ${error.message} (status=${error.statusCode || 'n/a'})`);
+      // 2차로 진행
+    } else {
+      const { data } = supabase.storage.from(bucket).getPublicUrl(remote);
+      if (!data?.publicUrl) throw new Error(`publicUrl 조회 실패: ${remote}`);
+      return data.publicUrl;
+    }
   } catch (e) {
-    // 네트워크 단절·DNS 실패·TLS 오류 등 저수준 에러
+    console.warn(`  ⚠ supabase-js 예외: ${e.name}: ${e.message}`);
+    if (e.cause) console.warn(`     cause: ${e.cause.code || ''} ${e.cause.message || e.cause}`);
+  }
+
+  // 2차 시도 — raw fetch (Uint8Array 사용, Buffer 호환성 문제 회피)
+  console.log(`  ↻ raw fetch 폴백 시도 (${file})`);
+  const url = `${ctx.url}/storage/v1/object/${bucket}/${remote}`;
+  const body = new Uint8Array(buf.byteLength);
+  body.set(buf);
+  let res, text;
+  try {
+    res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${ctx.key}`,
+        'apikey': ctx.key,
+        'Content-Type': 'image/png',
+        'x-upsert': 'true',
+        'cache-control': 'max-age=3600',
+      },
+      body,
+    });
+    text = await res.text();
+  } catch (e) {
     throw new Error(
-      `Storage 업로드 실패(${file}): ${e.message}\n` +
-      `  → 점검: SUPABASE_URL이 'https://xxx.supabase.co' 형식인지, 프로젝트가 일시정지(paused) 상태가 아닌지`
+      `raw fetch 업로드 실패(${file}): ${e.name}: ${e.message}\n` +
+      `  cause: ${e.cause?.code || ''} ${e.cause?.message || e.cause || ''}\n` +
+      `  → URL: ${url}\n` +
+      `  → 가능 원인: GitHub Actions ↔ Supabase 네트워크 차단·DNS·TLS 문제`
     );
   }
-  const { error } = result;
-  if (error) {
-    // supabase-js 응답 객체에 담긴 에러 (인증·권한·버킷 누락 등)
+  if (!res.ok) {
     throw new Error(
-      `Storage 업로드 실패(${file}): ${error.message}\n` +
-      `  → 점검: 버킷 '${bucket}'이 존재하고 public인지, SUPABASE_SECRET_KEY가 새 포맷(sb_secret_...)인지`
+      `raw fetch 업로드 실패(${file}): HTTP ${res.status}\n` +
+      `  서버 응답: ${text.slice(0, 500)}\n` +
+      `  → URL: ${url}\n` +
+      `  → 가능 원인: 버킷 정책(MIME 제한·파일 사이즈 제한)·키 권한·storage.objects RLS`
     );
   }
-  const { data } = supabase.storage.from(bucket).getPublicUrl(remote);
-  if (!data?.publicUrl) throw new Error(`publicUrl 조회 실패: ${remote}`);
-  return data.publicUrl;
+  // 성공 → publicUrl 직접 구성
+  return `${ctx.url}/storage/v1/object/public/${bucket}/${remote}`;
 }
 
 async function igPost(endpoint, params, token) {
@@ -153,9 +187,13 @@ async function main() {
   const supabase = createClient(SB_URL, SB_KEY, { auth: { persistSession: false } });
   const datePath = kstNowIsoDate();
   console.log(`[1/3] Storage 업로드 → ${BUCKET}/posts/${datePath}/`);
+  const ctx = { url: SB_URL.replace(/\/$/, ''), key: SB_KEY };
+  // 키 형식 진단 (값 노출 X — 접두사·길이만)
+  const prefix = SB_KEY.slice(0, 10);
+  console.log(`  · 키 진단: 접두사='${prefix}...' 길이=${SB_KEY.length}`);
   const publicUrls = [];
   for (const f of SLIDE_FILES) {
-    const url = await uploadToStorage(supabase, BUCKET, datePath, f);
+    const url = await uploadToStorage(supabase, BUCKET, datePath, f, ctx);
     console.log(`  ✓ ${f} → ${url}`);
     publicUrls.push(url);
   }
