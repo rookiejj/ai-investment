@@ -15,11 +15,18 @@
 const HANDLE = 'briefick';
 const SITE_URL = 'https://roysbriefing.vercel.app';
 
+// 절대 빠지지 않아야 하는 브랜드 해시태그. 가변 태그가 30개 제한에 걸려도
+// 이 두 개는 결과 맨 앞에서 무조건 보존된다.
+const REQUIRED_TAGS = ['브리픽', 'briefick'];
+
 const STATIC_TAGS = [
-  '브리픽', 'briefick', '주식', '투자', '경제', 'AI',
+  '주식', '투자', '경제', 'AI',
   '미국주식', '한국주식', '코스피', '나스닥',
   '매일브리핑', '시황', '재테크',
 ];
+
+// 인스타그램 1포스트 해시태그 제한
+const MAX_TAGS = 30;
 
 // summary 안의 영문 티커(2~5자 대문자) 추출
 function extractTickers(text) {
@@ -70,7 +77,9 @@ function buildHashtagBlock(meta) {
   const topTickers = uniqByCount(tickers).slice(0, 8);
   const topKo = uniqByCount(koWords).slice(0, 6);
 
-  const all = [...STATIC_TAGS, ...topTickers, ...topKo];
+  // 우선순위: REQUIRED → STATIC → 가변 티커 → 가변 한글 키워드.
+  // 30개 제한에 걸리면 뒤에서부터 잘려나가므로 REQUIRED는 항상 보존된다.
+  const all = [...REQUIRED_TAGS, ...STATIC_TAGS, ...topTickers, ...topKo];
   const seen = new Set();
   const out = [];
   for (const t of all) {
@@ -78,6 +87,7 @@ function buildHashtagBlock(meta) {
     if (seen.has(key)) continue;
     seen.add(key);
     out.push(`#${t}`);
+    if (out.length >= MAX_TAGS) break;
   }
   return out.join(' ');
 }
