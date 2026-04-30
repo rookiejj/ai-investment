@@ -9,24 +9,24 @@ const UPDATES = [
     date: "2026-04-30 07:20 KST",
     summary: `Microsoft Q1 FY26 매출 $77.7B +18%·Azure $21.5B +38%·OpenAI 지분손실 -$0.41 EPS 정량화
 Alphabet Q1 매출 $109.9B +22%·Cloud $20.03B +63%·백로그 $460B QoQ 두 배·CapEx $180~190B
-Meta Q1 매출 $56.31B +33%·CapEx $125~145B 상향·DAP 미스로 AH -6%
+Meta Q1 매출 $56.31B +33%·CapEx $125~145B 상향·DAP 컨센 하회로 AH -6%
 Amazon Q1 매출 $181.5B +17%·AWS $37.59B +28% 3년 만 최고 성장률·CapEx $200B 유지
-4사 일제 비트로 AI 인프라 수요·CapEx 가속 재확인 — OpenAI 매출 미스發 의구심 부분 상쇄`,
+4사 일제 컨센 상회로 AI 인프라 수요·CapEx 가속 재확인 — OpenAI 매출 부진發 의구심 부분 상쇄`,
     changes: [
       { type: "마일스톤", sector: "Microsoft",
-        detail: "Microsoft(Q1 FY26 결과). 4/29 장후 매출 $77.7B +18%·EPS $4.13 비트, Azure $21.5B +38% CC. Hood CFO가 컨콜에서 '용량 한계로 +40%까지 잠재'라고 명시하며 OpenAI 매출 미스 우려를 자체 펀더멘털로 정면 반박. 다만 OpenAI 지분손실이 EPS -$0.41로 처음 정량화 반영돼 GAAP $3.72(+13%)로 둔화 — Microsoft 자체는 견조하나 OpenAI 손실 확대 트렌드가 공식 자료로 노출. FY26 CapEx 증가율 FY25 초과 가이던스로 '가속 수요'를 명시. 4/27 OpenAI 파트너십 전면 개편 후 Anthropic·자체 모델 자립 동시 추구 노선 유지.",
+        detail: "Microsoft(Q1 FY26 결과). 4/29 장후 매출 $77.7B +18%·EPS $4.13 컨센 상회, Azure $21.5B +38% CC. Hood CFO가 컨콜에서 '용량 한계로 +40%까지 잠재'라고 명시하며 OpenAI 매출 부진 우려를 자체 펀더멘털로 정면 반박. 다만 OpenAI 지분손실이 EPS -$0.41로 처음 정량화 반영돼 GAAP $3.72(+13%)로 둔화 — Microsoft 자체는 견조하나 OpenAI 손실 확대 트렌드가 공식 자료로 노출. FY26 CapEx 증가율 FY25 초과 가이던스로 '가속 수요'를 명시. 4/27 OpenAI 파트너십 전면 개편 후 Anthropic·자체 모델 자립 동시 추구 노선 유지.",
         time: "2026-04-30 07:20 KST" },
       { type: "마일스톤", sector: "Google DeepMind",
-        detail: "Alphabet(Q1 결과·Cloud 폭증). 4/29 장후 매출 $109.9B +22% 컨센 $107.1B 비트, EPS $5.11이 컨센 $2.62를 압도. Google Cloud $20.03B +63% 컨센 $18.4B 비트, 백로그 $460B QoQ 두 배 폭증. Pichai 컨콜 첫 마디로 '단기 컴퓨트 제약'을 직접 시인 — 수요가 공급을 초과해 Cloud 매출이 더 클 수 있었음을 명시. CapEx $180~190B로 상향($175~185B에서). Gemini Enterprise 유료 MAU QoQ +40%, 자사 모델 분당 160억 토큰 처리 +60% QoQ. Apple Foundation Models 차세대 Gemini 기반 + Anthropic 최대 $40B 투자·5GW TPU 전담 공급의 이중 베팅이 실적으로 외부 검증.",
+        detail: "Alphabet(Q1 결과·Cloud 폭증). 4/29 장후 매출 $109.9B +22% 컨센 $107.1B 상회, EPS $5.11이 컨센 $2.62를 압도. Google Cloud $20.03B +63% 컨센 $18.4B 상회, 백로그 $460B QoQ 두 배 폭증. Pichai 컨콜 첫 마디로 '단기 컴퓨트 제약'을 직접 시인 — 수요가 공급을 초과해 Cloud 매출이 더 클 수 있었음을 명시. CapEx $180~190B로 상향($175~185B에서). Gemini Enterprise 유료 MAU QoQ +40%, 자사 모델 분당 160억 토큰 처리 +60% QoQ. Apple Foundation Models 차세대 Gemini 기반 + Anthropic 최대 $40B 투자·5GW TPU 전담 공급의 이중 베팅이 실적으로 외부 검증.",
         time: "2026-04-30 07:20 KST" },
       { type: "마일스톤", sector: "Meta AI",
-        detail: "Meta(Q1 결과·CapEx 상향). 4/29 장후 매출 $56.31B +33% 컨센 $55.45B 비트, EPS $10.44(세제혜택 $8B 포함, 조정 $7.31), 영업이익률 41% 유지. CapEx 가이던스 $125~145B로 상향($115~135B에서) → 시간외 -6%. Susan Li CFO '슈퍼인텔리전스 베팅·자체 칩·NVIDIA GPU 동시 가속' 명시, 4/23 8,000명 감원과 결합된 'payroll → AI capex' 구조 전환 본격화. DAP 3.56B 컨센 3.62B 미스, Q2 가이던스 $58~61B. AI 광고 추천엔진은 +33% 광고 성장으로 가속 입증, Muse Spark 엔진 교체 + MTIA 자체 칩 4세대 로드맵 가시화 흐름과 직결.",
+        detail: "Meta(Q1 결과·CapEx 상향). 4/29 장후 매출 $56.31B +33% 컨센 $55.45B 상회, EPS $10.44(세제혜택 $8B 포함, 조정 $7.31), 영업이익률 41% 유지. CapEx 가이던스 $125~145B로 상향($115~135B에서) → 시간외 -6%. Susan Li CFO '슈퍼인텔리전스 베팅·자체 칩·NVIDIA GPU 동시 가속' 명시, 4/23 8,000명 감원과 결합된 'payroll → AI capex' 구조 전환 본격화. DAP 3.56B 컨센 3.62B 하회, Q2 가이던스 $58~61B. AI 광고 추천엔진은 +33% 광고 성장으로 가속 입증, Muse Spark 엔진 교체 + MTIA 자체 칩 4세대 로드맵 가시화 흐름과 직결.",
         time: "2026-04-30 07:20 KST" },
       { type: "마일스톤", sector: "Amazon AWS",
-        detail: "Amazon(Q1 결과·AWS 가속). 4/29 장후 매출 $181.5B +17%, AWS $37.59B +28%로 3년 만 최고 성장률, 컨센 +26%를 비트. AWS 영업익 $14.2B 사상 최대. EPS $2.78. Q2 가이던스 매출 $194~199B(+16~19%)·영업익 $20~24B. 연간 CapEx $200B 가이던스 유지하며 회수율 우려를 Q1 실적으로 일축. 4/27 Microsoft 독점 종료로 OpenAI 모델 Bedrock 직접 호스팅이 가능해진 상황과 결합돼 Bedrock의 멀티 모델 허브 입지가 추가 강화. Trainium3 / Trn3 UltraServer 거의 완판 + 서드파티 랙 직접 판매 검토 흐름이 NVIDIA 직접 경쟁 시그널.",
+        detail: "Amazon(Q1 결과·AWS 가속). 4/29 장후 매출 $181.5B +17%, AWS $37.59B +28%로 3년 만 최고 성장률, 컨센 +26% 상회. AWS 영업익 $14.2B 사상 최대. EPS $2.78. Q2 가이던스 매출 $194~199B(+16~19%)·영업익 $20~24B. 연간 CapEx $200B 가이던스 유지하며 회수율 우려를 Q1 실적으로 일축. 4/27 Microsoft 독점 종료로 OpenAI 모델 Bedrock 직접 호스팅이 가능해진 상황과 결합돼 Bedrock의 멀티 모델 허브 입지가 추가 강화. Trainium3 / Trn3 UltraServer 거의 완판 + 서드파티 랙 직접 판매 검토 흐름이 NVIDIA 직접 경쟁 시그널.",
         time: "2026-04-30 07:20 KST" },
       { type: "마일스톤", sector: "OpenAI",
-        detail: "OpenAI(Microsoft 자료로 손실 노출). Microsoft Q1 FY26에서 OpenAI 지분 손실이 EPS -$0.41로 처음 정량화 반영돼 GAAP $3.72(+13%)로 둔화. Microsoft 자체 펀더멘털은 견조하나 OpenAI 손실 확대 트렌드가 공식 회계 자료로 노출되며 4/28 WSJ 매출 미스·CFO Friar 우려와 결합돼 IPO 일정·매출 가속 압박이 외부적으로 가중. Altman·Friar는 'totally aligned'를 재확인하나 컴퓨트 자금조달 능력 의구심은 5월 5.5 추가 배포·OpenAI Trusted Access for Cyber 파일럿 진척 등 후속 수익화 트리거가 구체화되기 전까지 잔존.",
+        detail: "OpenAI(Microsoft 자료로 손실 노출). Microsoft Q1 FY26에서 OpenAI 지분 손실이 EPS -$0.41로 처음 정량화 반영돼 GAAP $3.72(+13%)로 둔화. Microsoft 자체 펀더멘털은 견조하나 OpenAI 손실 확대 트렌드가 공식 회계 자료로 노출되며 4/28 WSJ 매출 부진·CFO Friar 우려와 결합돼 IPO 일정·매출 가속 압박이 외부적으로 가중. Altman·Friar는 'totally aligned'를 재확인하나 컴퓨트 자금조달 능력 의구심은 5월 5.5 추가 배포·OpenAI Trusted Access for Cyber 파일럿 진척 등 후속 수익화 트리거가 구체화되기 전까지 잔존.",
         time: "2026-04-30 07:20 KST" },
       { type: "제품 출시", sector: "Apple",
         detail: "Apple(Q2 FY26 발표 임박). 4/30 장후 Q2 결과 발표 — 컨센 매출 $109.7B(+15%)·EPS $1.95(+18%), iPhone 컨센 $56.5B·서비스 컨센 $30B(GM 70%+). Cook의 마지막 분기 발표·9/1 Ternus 승계 직전 가이던스 톤이 시장 반응 핵심. iPhone 17 슈퍼사이클 + 신 Siri Gemini 기반 일정(iOS 26.5→27 연기) + WKA AI 검색 확장이 차기 분기 점검대.",
