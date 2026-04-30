@@ -121,16 +121,14 @@
   /* === Tab slide (2-6) === */
   .tab-header {
     display: flex; justify-content: space-between; align-items: center;
-    padding-bottom: 24px;
-    border-bottom: 1px solid var(--line);
   }
   .tab-title-row { display: flex; align-items: center; gap: 16px; }
   .tab-emoji {
-    font-size: 48px; line-height: 1;
+    font-size: 44px; line-height: 1;
     filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
   }
   .tab-title {
-    font-size: 44px; font-weight: 700; letter-spacing: -1.0px;
+    font-size: 36px; font-weight: 700; letter-spacing: -0.8px;
     color: var(--white);
   }
   .tab-page-num {
@@ -143,32 +141,63 @@
     border-radius: 9999px;
     background: rgba(255,255,255,0.04);
   }
-  .tab-body {
-    flex: 1; padding-top: 36px;
-    display: flex; flex-direction: column; gap: 24px;
-    justify-content: center;
+  /* 사진이 보이는 빈 공간 */
+  .tab-spacer { flex: 1; min-height: 280px; }
+  /* 헤드라인 + 디테일 영역 */
+  .tab-content {
+    display: flex; flex-direction: column;
+    gap: 18px;
+    padding-top: 32px;
   }
-  .bullet-row {
-    display: flex; align-items: flex-start; gap: 20px;
+  .tab-eyebrow {
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 13px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 1.4px;
+    color: var(--green);
+    display: inline-flex; align-items: center; gap: 8px;
   }
-  .bullet-mark {
-    flex-shrink: 0;
-    margin-top: 12px;
-    width: 10px; height: 10px;
-    border-radius: 9999px;
+  .tab-eyebrow::before {
+    content: ''; display: inline-block;
+    width: 24px; height: 2px;
     background: var(--green);
-    box-shadow: 0 0 12px rgba(24,226,153,0.6);
   }
-  .bullet-text {
-    flex: 1;
-    font-size: 30px; font-weight: 500; line-height: 1.40;
-    letter-spacing: -0.4px;
+  .tab-headline {
+    font-size: 72px; font-weight: 700; line-height: 1.10;
+    letter-spacing: -1.6px;
     color: var(--white);
+    margin-top: 4px;
   }
-  .bullet-text .num { color: var(--green); font-weight: 700; }
+  .tab-headline.medium {
+    font-size: 58px; line-height: 1.14; letter-spacing: -1.2px;
+  }
+  .tab-headline.long {
+    font-size: 46px; line-height: 1.20; letter-spacing: -0.8px;
+  }
+  .tab-headline .num { color: var(--green); }
+  .tab-detail {
+    display: flex; flex-direction: column;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .detail-item {
+    font-size: 24px; font-weight: 500;
+    line-height: 1.42;
+    color: var(--text-mid);
+    letter-spacing: -0.2px;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .detail-item::before {
+    content: ''; flex-shrink: 0;
+    margin-top: 16px;
+    width: 6px; height: 6px;
+    border-radius: 9999px;
+    background: rgba(24,226,153,0.6);
+  }
+  .detail-item .num { color: var(--green); font-weight: 700; }
   .tab-footer {
     display: flex; justify-content: space-between; align-items: center;
     padding-top: 24px;
+    margin-top: 28px;
     border-top: 1px solid var(--line);
   }
   .tab-footer-left {
@@ -290,9 +319,13 @@
     </div>
     <div class="tab-page-num" data-bind="tab.pageNum">02 / 07</div>
   </div>
-  <div class="tab-body text-on-photo" data-bind="tab.bullets">
-    <div class="bullet-row"><div class="bullet-mark"></div><div class="bullet-text">샘플 불릿 1</div></div>
-    <div class="bullet-row"><div class="bullet-mark"></div><div class="bullet-text">샘플 불릿 2</div></div>
+  <div class="tab-spacer"></div>
+  <div class="tab-content text-on-photo" data-bind="tab.content">
+    <div class="tab-eyebrow">TODAY'S HIGHLIGHT</div>
+    <div class="tab-headline">샘플 헤드라인</div>
+    <div class="tab-detail">
+      <div class="detail-item">샘플 디테일 1</div>
+    </div>
   </div>
   <div class="tab-footer">
     <div class="tab-footer-left" data-bind="tab.dateLabel">2026.04.30 KST</div>
