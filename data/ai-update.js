@@ -6,6 +6,28 @@
  */
 const UPDATES = [
   {
+    date: "2026-05-01 07:30 KST",
+    summary: `Apple Q2 FY26 매출 $111.18B +17%·EPS $2.01·iPhone +22%·중국 +28%
+Apple 자사주 매입 +$100B 추가·배당 27¢ +4%·Cook 마지막 콜에서 Ternus 직접 소개
+Anthropic $50B 신규 펀딩·$850~900B 밸류 검토 — OpenAI 추월 사정권
+OpenAI GPT-5.5 Cyber 'critical defenders' 한정 단계 배포 — Anthropic 모델 모방 선회
+QCOM 12월 대형 하이퍼스케일러向 데이터센터 칩 첫 출하 가이던스 공식·시간외 +16%`,
+    changes: [
+      { type: "마일스톤", sector: "Apple",
+        detail: "Apple(Q2 FY26 결과). 4/30 장후 매출 $111.18B 컨센 $108.92B 상회(+17% YoY)·EPS $2.01 컨센 $1.93 상회. iPhone $56.99B(+21.7%)로 두 분기 연속 +20% 성장 — iPhone 17 슈퍼사이클이 정량 데이터로 입증. 그레이터 차이나 매출 $20.5B(+28%)로 큰 폭 회복, 서비스 $30.98B(+1.9%), 총마진 49.3% 컨센 48.4% 상회. Q3 가이던스 매출 +14~17%로 슈퍼사이클 톤 유지. 자사주 매입 추가 $1,000억 승인 + 배당 주당 27¢로 +4% 인상. Cook이 4/20 발표한 9/1 Ternus 승계의 마지막 분기 실적 콜에서 Ternus를 직접 소개 — Apple Foundation Models on Gemini·신 Siri·WKA 검색·AI 웨어러블 3종 일정 가속이 취임 전후 최대 시험대로 명확화. Tim Cook 시대 마무리·Ternus 시대 카운트다운 본격화.",
+        time: "2026-05-01 07:30 KST" },
+      { type: "펀딩", sector: "Anthropic",
+        detail: "Anthropic($50B / $900B 검토). 4/29 Bloomberg·CNBC·TechCrunch가 동시 보도 — Anthropic이 신규 $50B 펀딩 라운드를 $850~900B 밸류 사전 제안 형태로 검토 중, 5월 이사회 미팅에서 최종 결정 예정. 성사 시 OpenAI($852B, 3월 $1,220억 라운드 기준)를 가치 기준 추월하며 사상 가장 비싼 AI 스타트업으로 등극. 2월 시리즈G $380B → 두 달 만에 약 2.4배 상향 트랙. 펀더멘털 근거는 연환산 매출 3월 $300억(2025년 말 $9B 대비 4개월 만에 3배), Sacra YoY +1,400%로 OpenAI($250억)을 단독 추월. 누적 자금·고객 베이스 — 4/24 Alphabet 최대 $40B 투자 + 4/20 Amazon $25B + AWS 10년 $100B+ 약정 + 4/24 일본 NEC 30,000명 전사 배포 — 가 두텁다. 10월 IPO $400~500B 타겟에서 사실상 마지막 사적 펀딩 라운드 가능성. Goldman·JPM 주관 그대로.",
+        time: "2026-05-01 07:30 KST" },
+      { type: "거버넌스", sector: "OpenAI",
+        detail: "OpenAI(GPT-5.5 Cyber 단계 배포). 4/30 OpenAI는 GPT-5.5 Cyber를 'critical cyber defenders' 한정으로만 배포한다고 공식 발표. Altman이 4/7 Anthropic Project Glasswing의 Mythos 비공개 정책을 '공포 기반 마케팅(fear-based marketing)'으로 비판한 지 약 3주 만에 동일한 차단형 접근법으로 선회 — TechCrunch는 'After dissing Anthropic for limiting Mythos, OpenAI restricts access to Cyber, too'로 정리. 같은 날 OpenAI는 'Our commitment to community safety' 별도 성명을 추가 게시하며 Cyber·Bio·Chemical·Persuasion 카테고리 전반에 사전 통제 프레임워크 적용 의사 시사. AI 보안 거버넌스 산업 표준이 '오픈 → 사전 통제'로 수렴하는 구조 변화로 정리되며 OpenAI·Anthropic 양사 모두 IPO 직전 책임성 시그널을 적극 발신하는 흐름.",
+        time: "2026-05-01 07:30 KST" },
+      { type: "인프라", sector: "NVIDIA",
+        detail: "NVIDIA(QCOM 데이터센터 진입 시그널). 4/29 장후 Qualcomm Q2 2026 컨콜에서 Cristiano Amon CEO가 '12월 대형 하이퍼스케일러向 데이터센터 칩 첫 출하' 가이던스를 공식화하며 시간외 +16% 폭등 — 4/30 정규장에서도 강세 유지. AI200(2026)·AI250(2027) 추론 가속기 라인업이 Broadcom MTIA·Google TPU 8t/8i와 결합돼 NVIDIA 데이터센터 단일 공급 구조에서 멀티 ASIC 경쟁 구도로 본격 분기. 4/29 Alphabet Cloud +63% 백로그 $460B + 4/29 Meta CapEx $125~145B 상향과 같은 라인에서 GPU·TPU·MTIA·QCOM AI200까지 다중 칩 동시 가속 — NVIDIA의 절대 점유율은 한동안 유지되나 추론 영역에서 비중 침식 압력은 분기 단위로 가시화.",
+        time: "2026-05-01 07:30 KST" },
+    ]
+  },
+  {
     date: "2026-04-30 07:20 KST",
     summary: `Microsoft Q1 FY26 매출 $77.7B +18%·Azure $21.5B +38%·OpenAI 지분손실 -$0.41 EPS 정량화
 Alphabet Q1 매출 $109.9B +22%·Cloud $20.03B +63%·백로그 $460B QoQ 두 배·CapEx $180~190B

@@ -1,6 +1,24 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-05-01 07:40 KST",
+    summary: `Anthropic 신규 $50B 펀딩 $850~900B 밸류 사전 제안 검토 — OpenAI $852B 추월 사정권
+Anduril 美 우주군 $1.8B Space Force 컨트랙트 추가 진입 — Golden Dome 합산 $5B+ 수주
+SpaceX S-1 5/15~5/22 정식 제출 윈도우·6/8 로드쇼·6/18~6/30 프라이싱 카운트다운 유지
+4월 글로벌 VC 투자 $300B Q1 사상 최대 — AI 4사(OpenAI·Anthropic·xAI·Waymo) 압도적 점유`,
+    changes: [
+      { type: "정보 갱신", sector: "엔터프라이즈 SW",
+        detail: "Anthropic. 4/29~30 Bloomberg·CNBC·TechCrunch 동시 보도 — $50B 신규 펀딩 라운드를 $850~900B 밸류 사전 제안으로 검토 중, 5월 이사회 미팅에서 최종 결정 예정. 성사 시 OpenAI($852B, 3월 $1,220억 라운드 기준)를 가치 기준 단독 추월하며 사상 가장 비싼 AI 스타트업으로 등극. 2월 시리즈G $380B → 두 달 만에 약 2.4배 추가 상향 트랙. 펀더멘털 근거는 연환산 매출 3월 $300억(연말 2025 $9B 대비 4개월 만에 3배) Sacra YoY +1,400%로 OpenAI($250억) 단독 추월 + 4/24 Alphabet $40B + 4/20 Amazon $25B + AWS 10년 $100B+ + 4/24 NEC 30,000명 전사 배포 누적. 10월 IPO $400~500B 타겟에서 사실상 마지막 사적 펀딩 라운드 가능성. Goldman·JPM 주관 그대로.",
+        time: "2026-05-01 07:40 KST" },
+      { type: "정보 갱신", sector: "우주·모빌리티·방산",
+        detail: "Anduril. 4/29 美 우주군 $1.8B 별도 컨트랙트 명단 진입(Motley Fool 4/29 보도) — 4/24 Golden Dome 12개사 $3.2B 우주기반 요격체 + 신규 $1.8B 누적 수주 $5B+로 단기 매출 가시성 추가 확장. 동시에 Series H 최대 $8B 펀딩 라운드를 Thrive Capital·Andreessen Horowitz 공동 주도로 협상 중, 2025년 6월 Series G $30.5B 대비 9개월 만 밸류 더블 $60B 트랙. Founders Fund·Lux Capital 후속 참여. Luckey '단기 IPO 아님' 입장 변함없이 펀딩 라운드 우선 — IPO는 2027 이후로 후방 배치되는 구도. 美 우주군·육군·해군 동시 컨트랙트 누적이 펀딩 협상 레버리지로 작용.",
+        time: "2026-05-01 07:40 KST" },
+      { type: "정보 갱신", sector: "우주·모빌리티·방산",
+        detail: "SpaceX. 4/27 Motley Fool·4/30 TechStackIPO·basenor 등 동시 정리 — S-1 정식 제출이 5/15~5/22, 6/8 로드쇼 시작, 6/11 1,500명 리테일 투자자 투어, 6/18~6/30 IPO 프라이싱 윈도우 카운트다운 유지. 목표 밸류 $1.75~2.0T·$75B 조달, ARK SpaceX IPO Guide가 가격 정당화 공식 분석 보고서로 채택. 6개국(영국·EU·호주·캐나다·일본·한국) 리테일 30% 할당 트랙 변함없이 진행. CoinDesk는 SpaceX $75B IPO 조달이 BTC·크립토 유동성을 흡수해 디지털자산 가격 압박이 6월 분기점이 될 수 있다는 분석을 제시 — 사상 최대 IPO 흡수력의 매크로 영향까지 가격에 반영되기 시작.",
+        time: "2026-05-01 07:40 KST" },
+    ]
+  },
+  {
     date: "2026-04-30 07:20 KST",
     summary: `SpaceX S-1 5/15~5/22 정식 제출 윈도우·6/8 로드쇼·6/18~6/30 IPO 프라이싱 윈도우 확정
 목표 밸류 $1.75~2.0T·$75B 조달 — ARK 분석 보고서로 가격 정당화 모멘텀 확장

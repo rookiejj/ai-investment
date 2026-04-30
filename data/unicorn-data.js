@@ -37,7 +37,7 @@ const data = [
       { nm:"Vast", rs:"민간 우주정거장·NASA 후보·$500M 조달", val:"$20B", round:"Series B ($500M, 2026-03)", sector:"우주 인프라", ipo:"미정" },
       { nm:"Relativity Space", rs:"Eric Schmidt CEO·Terran R 2026년 말 첫 발사 목표", val:"$4.2B", round:"Angel (Schmidt, 2025-01)", sector:"3D 프린트 로켓", ipo:"미정" },
       { nm:"Waymo", rs:"연 1,500만 트립·11개 도시 확장·자율주행 최대 유니콘", val:"$126B", round:"Series D ($16B, 2026-02)", sector:"자율주행 로보택시", ipo:"미정 (2027 흑자 목표)" },
-      { nm:"Anduril", rs:"4/24 美 우주군 Golden Dome 우주기반 요격체 프로토타입 $3.2B 12개사 수주에 SpaceX·Lockheed·RTX·Northrop·General Dynamics와 함께 포함·2028 실증 목표·Series H 최대 $8B 협상", val:"$60B", round:"Series G (2024-08)", sector:"방산 AI", ipo:"단기 아님(Luckey)" },
+      { nm:"Anduril", rs:"4/29 美 우주군 $1.8B 별도 우주 배치 컨트랙트 추가 진입 — Golden Dome $3.2B + 신규 $1.8B 누적 수주·Series H 최대 $8B 협상 $60B 밸류 Thrive·a16z 공동 주도·9개월 만 밸류 더블 트랙", val:"$60B", round:"Series H 협상 ($8B)", sector:"방산 AI", ipo:"단기 아님(Luckey)" },
       { nm:"Figure AI", rs:"휴머노이드 로봇·Amazon 20K 창고 배포 진행 중·생산 월 1,200대→Q4 5,000대 목표·BMW 공장 90K+ 파트 로딩·Series D $48B 협상", val:"$39B", round:"Series C ($1B, 2025-09)", sector:"휴머노이드 로봇", ipo:"미정" },
     ]
   },
