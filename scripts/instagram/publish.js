@@ -36,13 +36,17 @@ function reqEnv(name) {
   return v;
 }
 
-function kstNowIsoDate() {
+// KST 날짜 + 시·분·초 — 같은 날 여러 번 실행 시 경로 충돌·CDN 캐시 회피
+function kstNowDatePath() {
   const now = new Date();
   const kst = new Date(now.getTime() + 9 * 3600 * 1000 + now.getTimezoneOffset() * 60 * 1000);
   const y = kst.getUTCFullYear();
   const m = String(kst.getUTCMonth() + 1).padStart(2, '0');
   const d = String(kst.getUTCDate()).padStart(2, '0');
-  return `${y}-${m}-${d}`;
+  const hh = String(kst.getUTCHours()).padStart(2, '0');
+  const mm = String(kst.getUTCMinutes()).padStart(2, '0');
+  const ss = String(kst.getUTCSeconds()).padStart(2, '0');
+  return `${y}-${m}-${d}/${hh}${mm}${ss}`;
 }
 
 // 1차: supabase-js 사용. 실패 시 2차: raw fetch로 재시도해서 supabase-js 레이어 문제와 서버 레이어 문제를 구분.
@@ -235,7 +239,7 @@ async function main() {
 
   // 1) Storage 업로드
   const supabase = createClient(SB_URL, SB_KEY, { auth: { persistSession: false } });
-  const datePath = kstNowIsoDate();
+  const datePath = kstNowDatePath();
   console.log(`[1/3] Storage 업로드 → ${BUCKET}/posts/${datePath}/`);
   const ctx = { url: SB_URL.replace(/\/$/, ''), key: SB_KEY };
   // 키 형식 진단 (값 노출 X — 접두사·길이만)
