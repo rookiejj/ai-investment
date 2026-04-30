@@ -131,18 +131,40 @@ async function igGet(endpoint, params, token) {
   return json;
 }
 
-// children 컨테이너의 status_code가 FINISHED 될 때까지 폴링 (최대 30초)
+// 컨테이너 status_code가 FINISHED 될 때까지 폴링 (최대 90초)
+// CAROUSEL parent는 children 7장 묶음 처리라 더 길게 잡는다.
 async function waitContainerReady(igUserId, containerId, token, label) {
-  for (let i = 0; i < 15; i++) {
+  const MAX_TRIES = 30;       // 30회 × 3초 = 최대 90초
+  const INTERVAL_MS = 3000;
+  for (let i = 0; i < MAX_TRIES; i++) {
     const j = await igGet(containerId, { fields: 'status_code,status' }, token);
     if (j.status_code === 'FINISHED') return;
     if (j.status_code === 'ERROR' || j.status_code === 'EXPIRED') {
       throw new Error(`${label} 컨테이너 실패: ${JSON.stringify(j)}`);
     }
-    await new Promise(r => setTimeout(r, 2000));
+    await new Promise(r => setTimeout(r, INTERVAL_MS));
   }
-  // 타임아웃이라도 일단 publish 시도 — 작은 이미지는 빠르게 끝남
-  console.warn(`경고: ${label} 컨테이너 status 폴링 타임아웃, publish 강행`);
+  console.warn(`경고: ${label} 컨테이너 status 폴링 90초 타임아웃, publish 강행`);
+}
+
+// media_publish 일시 실패(9007/2207027 "준비 안 됨") 재시도
+// IG는 status가 FINISHED여도 내부 마무리에 추가 시간이 필요한 경우가 흔함.
+async function publishWithRetry(igUserId, creationId, token) {
+  const MAX_TRIES = 6;        // 6회 × 7초 = 최대 42초 추가 대기
+  const INTERVAL_MS = 7000;
+  let lastErr;
+  for (let i = 0; i < MAX_TRIES; i++) {
+    try {
+      return await igPost(`${igUserId}/media_publish`, { creation_id: creationId }, token);
+    } catch (e) {
+      lastErr = e;
+      const transient = /9007|2207027|Media ID is not available|준비/.test(e.message);
+      if (!transient) throw e;
+      console.warn(`  ↻ publish 재시도 ${i+1}/${MAX_TRIES}: ${e.message.slice(0, 120)}`);
+      await new Promise(r => setTimeout(r, INTERVAL_MS));
+    }
+  }
+  throw lastErr;
 }
 
 async function main() {
@@ -225,10 +247,10 @@ async function main() {
   console.log(`  ✓ parent id=${parent.id}`);
 
   await waitContainerReady(IG_USER, parent.id, TOKEN, 'parent');
+  // FINISHED 직후에도 IG 내부 큐가 마무리 안 된 경우가 흔해 5초 버퍼 후 publish 시도.
+  await new Promise(r => setTimeout(r, 5000));
 
-  const published = await igPost(`${IG_USER}/media_publish`, {
-    creation_id: parent.id,
-  }, TOKEN);
+  const published = await publishWithRetry(IG_USER, parent.id, TOKEN);
   console.log(`✓ 게시 완료: media_id=${published.id}`);
 }
 
