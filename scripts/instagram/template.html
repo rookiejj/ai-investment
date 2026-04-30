@@ -67,15 +67,6 @@
     color: var(--white);
   }
   .brand-mark .dot { color: var(--green); }
-  .pill-label {
-    font-family: 'Geist Mono', ui-monospace, monospace;
-    font-size: 13px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.8px;
-    color: var(--black);
-    background: var(--green);
-    padding: 8px 18px;
-    border-radius: 9999px;
-  }
   .cover-mid { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: 24px; }
   .cover-date {
     font-family: 'Geist Mono', ui-monospace, monospace;
@@ -130,16 +121,6 @@
   .tab-title {
     font-size: 36px; font-weight: 700; letter-spacing: -0.8px;
     color: var(--white);
-  }
-  .tab-page-num {
-    font-family: 'Geist Mono', ui-monospace, monospace;
-    font-size: 14px; font-weight: 500;
-    text-transform: uppercase; letter-spacing: 0.8px;
-    color: var(--text-mute);
-    padding: 8px 14px;
-    border: 1px solid var(--line);
-    border-radius: 9999px;
-    background: rgba(255,255,255,0.04);
   }
   /* 헤더 아래 가는 구분선 */
   .tab-divider {
@@ -200,15 +181,6 @@
   .cta-top { display: flex; justify-content: space-between; align-items: center; }
   .cta-brand { font-size: 28px; font-weight: 600; letter-spacing: -0.4px; color: var(--white); }
   .cta-brand .dot { color: var(--green); }
-  .cta-pill {
-    font-family: 'Geist Mono', ui-monospace, monospace;
-    font-size: 13px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.8px;
-    color: var(--black);
-    background: var(--green);
-    padding: 8px 18px;
-    border-radius: 9999px;
-  }
   .cta-mid { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 32px; }
   .cta-headline {
     font-size: 92px; font-weight: 700; line-height: 1.08;
@@ -267,7 +239,6 @@
 <div class="slide cover no-photo" data-slide="cover">
   <div class="cover-top">
     <div class="brand-mark">briefick<span class="dot">.</span></div>
-    <div class="pill-label">Daily Briefing</div>
   </div>
   <div class="cover-mid text-on-photo">
     <div class="cover-date" data-bind="cover.dateLabel">2026.04.30 · WED</div>
@@ -293,7 +264,6 @@
       <div class="tab-emoji" data-bind="tab.emoji">🇺🇸</div>
       <div class="tab-title" data-bind="tab.label">미국 마켓</div>
     </div>
-    <div class="tab-page-num" data-bind="tab.pageNum">02 / 07</div>
   </div>
   <div class="tab-divider"></div>
   <div class="tab-body text-on-photo" data-bind="tab.bullets">
@@ -310,10 +280,9 @@
 <div class="slide cta" data-slide="cta">
   <div class="cta-top">
     <div class="cta-brand">briefick<span class="dot">.</span></div>
-    <div class="cta-pill">Subscribe</div>
   </div>
   <div class="cta-mid">
-    <div class="cta-headline">매일 아침<br/><span class="accent">친구톡으로</span><br/>받아보기</div>
+    <div class="cta-headline">매일 아침<br/><span class="accent">카톡으로</span><br/>받아보기</div>
     <div class="cta-sub">5개 시장의 핵심 변화만 압축해서.<br/>매일 아침 첫 커피와 함께.</div>
     <div class="cta-actions">
       <div class="cta-action-row">

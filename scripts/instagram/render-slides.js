@@ -105,7 +105,6 @@ function buildTabSlideHtml(template, ctx) {
   let html = template;
   html = html.replace(/<div class="tab-emoji"[^>]*>[\s\S]*?<\/div>/, `<div class="tab-emoji" data-bind="tab.emoji">${ctx.emoji}</div>`);
   html = html.replace(/<div class="tab-title"[^>]*>[\s\S]*?<\/div>/, `<div class="tab-title" data-bind="tab.label">${escapeHtml(ctx.label)}</div>`);
-  html = html.replace(/<div class="tab-page-num"[^>]*>[\s\S]*?<\/div>/, `<div class="tab-page-num" data-bind="tab.pageNum">${ctx.pageNum}</div>`);
   html = html.replace(/<div class="tab-body[^"]*"[^>]*>[\s\S]*?<\/div>\s*<div class="tab-footer">/, `<div class="tab-body text-on-photo" data-bind="tab.bullets">\n${ctx.bulletsHtml}\n    </div>\n  <div class="tab-footer">`);
   html = html.replace(/<div class="tab-footer-left"[^>]*>[\s\S]*?<\/div>/, `<div class="tab-footer-left" data-bind="tab.dateLabel">${escapeHtml(ctx.dateLabel)}</div>`);
   return html;
@@ -197,10 +196,9 @@ async function main() {
     // SLIDE 2~6 — 탭별 (5불릿 그대로, 사진 BG)
     for (let i = 0; i < tabPayloads.length; i++) {
       const t = tabPayloads[i];
-      const pageNum = `${String(i+2).padStart(2,'0')} / 07`;
       const bulletsHtml = buildBulletsHtml(t.bullets);
       let html = buildTabSlideHtml(baseTemplate, {
-        emoji: t.emoji, label: t.label, pageNum, bulletsHtml, dateLabel,
+        emoji: t.emoji, label: t.label, bulletsHtml, dateLabel,
       }).replace('</head>', `${singleSlideCss('tab')}</head>`);
       html = applyBg(html, 'tab', imgByTab[t.key]?.dataUri || null);
 
