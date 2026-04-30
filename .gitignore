@@ -3,6 +3,9 @@ tmp/
 .env
 .env.*
 scripts/subscribers.json
+node_modules/
+package-lock.json
+scripts/instagram/out/
 
 # Supabase CLI
 supabase/.branches

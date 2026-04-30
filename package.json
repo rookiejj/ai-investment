@@ -1,0 +1,18 @@
+{
+  "name": "briefick",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Briefick — 통합 투자 대시보드 (자동화 스크립트)",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "ig:render": "node scripts/instagram/render-slides.js",
+    "ig:publish": "node scripts/instagram/publish.js",
+    "ig:run": "node scripts/instagram/render-slides.js && node scripts/instagram/publish.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "playwright": "^1.48.0"
+  }
+}

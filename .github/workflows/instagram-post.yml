@@ -1,0 +1,90 @@
+name: Instagram Carousel Post
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/*-update.js'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'IG_DRY_RUN=1 (캡션·URL만 출력)'
+        required: false
+        default: 'false'
+
+concurrency:
+  group: instagram-post
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: 변경된 파일 확인 (jp만 수정 시 스킵)
+        id: filter
+        run: |
+          # push 이벤트일 때만 jp-only 변경을 걸러낸다. workflow_dispatch는 통과.
+          if [ "${{ github.event_name }}" != "push" ]; then
+            echo "skip=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          changed=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- 'data/*-update.js' | tr '\n' ' ')
+          echo "changed: $changed"
+          # data/*-update.js 변경분 중 비-jp이 하나라도 있는지
+          non_jp=$(echo "$changed" | tr ' ' '\n' | grep -v 'jp-stocks-update.js' | grep -E 'data/.*-update.js' || true)
+          if [ -z "$non_jp" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+            echo "JP만 변경된 푸시 — 게시 스킵."
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Setup Node
+        if: steps.filter.outputs.skip != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 한글·이모지 폰트 설치
+        if: steps.filter.outputs.skip != 'true'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-color-emoji
+          fc-cache -fv
+
+      - name: npm 의존성 설치
+        if: steps.filter.outputs.skip != 'true'
+        run: npm install --no-audit --no-fund
+
+      - name: Playwright Chromium 설치
+        if: steps.filter.outputs.skip != 'true'
+        run: npx playwright install --with-deps chromium
+
+      - name: 슬라이드 렌더
+        if: steps.filter.outputs.skip != 'true'
+        run: node scripts/instagram/render-slides.js
+
+      - name: 슬라이드 아티팩트 업로드 (디버깅용, 7일 보관)
+        if: steps.filter.outputs.skip != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: instagram-slides
+          path: scripts/instagram/out/
+          retention-days: 7
+
+      - name: 인스타그램 게시
+        if: steps.filter.outputs.skip != 'true'
+        env:
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+          IG_BUSINESS_USER_ID: ${{ secrets.IG_BUSINESS_USER_ID }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          IG_CAROUSEL_BUCKET: ${{ secrets.IG_CAROUSEL_BUCKET }}
+          IG_DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '' }}
+        run: node scripts/instagram/publish.js
