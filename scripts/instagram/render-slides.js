@@ -182,8 +182,7 @@ async function main() {
     {
       let html = baseTemplate
         .replace('</head>', `${singleSlideCss('cover')}</head>`)
-        .replace(/data-bind="cover\.dateLabel">[^<]*</, `data-bind="cover.dateLabel">${escapeHtml(coverDateLabel(d))}<`)
-        .replace(/data-bind="cover\.domain">[^<]*</, `data-bind="cover.domain">${escapeHtml(SITE_URL.replace(/^https?:\/\//, ''))}<`);
+        .replace(/data-bind="cover\.dateLabel">[^<]*</, `data-bind="cover.dateLabel">${escapeHtml(coverDateLabel(d))}<`);
       html = applyBg(html, 'cover', coverImg?.dataUri || null);
       await renderSlide(browser, html, path.join(OUT_DIR, '01.png'));
       console.log('✓ 01.png (cover)');
@@ -207,9 +206,7 @@ async function main() {
     {
       const html = baseTemplate.replace('</head>', `${singleSlideCss('cta')}</head>`)
         .replace(/data-bind="cta\.domain">[^<]*</, `data-bind="cta.domain">${escapeHtml(SITE_URL.replace(/^https?:\/\//, ''))}<`)
-        .replace(/data-bind="cta\.handle">[^<]*</, `data-bind="cta.handle">@${HANDLE}<`)
-        .replace(/data-bind="cta\.domainBottom">[^<]*</, `data-bind="cta.domainBottom">${escapeHtml(SITE_URL.replace(/^https?:\/\//, ''))}<`)
-        .replace(/data-bind="cta\.handleBottom">[^<]*</, `data-bind="cta.handleBottom">${HANDLE}<`);
+        .replace(/data-bind="cta\.handle">[^<]*</, `data-bind="cta.handle">@${HANDLE}<`);
       await renderSlide(browser, html, path.join(OUT_DIR, '07.png'));
       console.log('✓ 07.png (cta)');
     }
