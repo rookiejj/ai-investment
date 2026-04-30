@@ -4,7 +4,7 @@
   "private": true,
   "description": "Briefick — 통합 투자 대시보드 (자동화 스크립트)",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "scripts": {
     "ig:render": "node scripts/instagram/render-slides.js",
