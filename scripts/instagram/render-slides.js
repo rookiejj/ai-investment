@@ -90,43 +90,15 @@ function highlightNumbers(text) {
     .replace(/(₩?[\d,]+\.?\d*\s*조원?|[\d,]+\s*천억원?)/g, '<span class="num">$1</span>');
 }
 
-// 첫 불릿을 헤드라인 + 디테일로 분할
-//   - ' — ' 또는 ' – ' 또는 ' - ' 기준 앞=헤드라인, 뒤=디테일(· 로 재분할)
-//   - 분리자가 없으면 전체를 헤드라인으로 (디테일 없음)
-function parseHeadlineDetail(bullet) {
-  if (!bullet) return { headline: '오늘 새 갱신 없음.', detail: [] };
-  const dashRe = /\s+[—–-]\s+/;
-  const m = bullet.match(dashRe);
-  if (m && m.index > 0) {
-    const headline = bullet.slice(0, m.index).trim();
-    const detailRaw = bullet.slice(m.index + m[0].length).trim();
-    const items = detailRaw.split(/\s*·\s*/).map(s => s.trim()).filter(Boolean);
-    return { headline, detail: items.slice(0, 4) };
+function buildBulletsHtml(bullets) {
+  if (!bullets.length) {
+    return '<div class="bullet-row"><div class="bullet-mark"></div><div class="bullet-text">오늘 새 갱신 없음.</div></div>';
   }
-  return { headline: bullet.trim(), detail: [] };
-}
-
-// 헤드라인 길이별 사이즈 클래스
-function headlineSizeClass(text) {
-  const n = text.length;
-  if (n <= 24) return '';
-  if (n <= 44) return ' medium';
-  return ' long';
-}
-
-function buildTabContentHtml(headline, detail) {
-  const sizeCls = headlineSizeClass(headline);
-  const safeH = highlightNumbers(escapeHtml(headline));
-  const detailHtml = detail.length
-    ? `<div class="tab-detail">\n${detail.map(d =>
-        `      <div class="detail-item">${highlightNumbers(escapeHtml(d))}</div>`
-      ).join('\n')}\n    </div>`
-    : '';
-  return `<div class="tab-content text-on-photo" data-bind="tab.content">
-    <div class="tab-eyebrow">TODAY'S HIGHLIGHT</div>
-    <div class="tab-headline${sizeCls}">${safeH}</div>
-    ${detailHtml}
-  </div>`;
+  return bullets.map(b => {
+    const safe = escapeHtml(b);
+    const html = highlightNumbers(safe);
+    return `      <div class="bullet-row"><div class="bullet-mark"></div><div class="bullet-text">${html}</div></div>`;
+  }).join('\n');
 }
 
 function buildTabSlideHtml(template, ctx) {
@@ -134,7 +106,7 @@ function buildTabSlideHtml(template, ctx) {
   html = html.replace(/<div class="tab-emoji"[^>]*>[\s\S]*?<\/div>/, `<div class="tab-emoji" data-bind="tab.emoji">${ctx.emoji}</div>`);
   html = html.replace(/<div class="tab-title"[^>]*>[\s\S]*?<\/div>/, `<div class="tab-title" data-bind="tab.label">${escapeHtml(ctx.label)}</div>`);
   html = html.replace(/<div class="tab-page-num"[^>]*>[\s\S]*?<\/div>/, `<div class="tab-page-num" data-bind="tab.pageNum">${ctx.pageNum}</div>`);
-  html = html.replace(/<div class="tab-content[^"]*"[^>]*>[\s\S]*?<\/div>\s*<div class="tab-footer">/, `${ctx.contentHtml}\n  <div class="tab-footer">`);
+  html = html.replace(/<div class="tab-body[^"]*"[^>]*>[\s\S]*?<\/div>\s*<div class="tab-footer">/, `<div class="tab-body text-on-photo" data-bind="tab.bullets">\n${ctx.bulletsHtml}\n    </div>\n  <div class="tab-footer">`);
   html = html.replace(/<div class="tab-footer-left"[^>]*>[\s\S]*?<\/div>/, `<div class="tab-footer-left" data-bind="tab.dateLabel">${escapeHtml(ctx.dateLabel)}</div>`);
   return html;
 }
@@ -170,7 +142,12 @@ async function main() {
   const accessKey = process.env.UNSPLASH_ACCESS_KEY || '';
 
   if (!accessKey) {
-    console.warn('⚠ UNSPLASH_ACCESS_KEY 미설정 — 사진 BG 생략, 다크 단색으로 렌더.');
+    console.warn('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.warn('⚠⚠⚠  UNSPLASH_ACCESS_KEY 미설정  ⚠⚠⚠');
+    console.warn('   → 사진 BG 없이 다크 단색으로 렌더됩니다 (모든 슬라이드 까만 배경).');
+    console.warn('   → GitHub Settings → Secrets에 UNSPLASH_ACCESS_KEY 등록 후 다시 실행.');
+    console.warn('   → 키 발급: https://unsplash.com/developers (무료 가입)');
+    console.warn('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
   }
 
   // 1) 데이터 로드
@@ -217,20 +194,19 @@ async function main() {
       console.log('✓ 01.png (cover)');
     }
 
-    // SLIDE 2~6 — 탭별 (1대표 헤드라인 구조)
+    // SLIDE 2~6 — 탭별 (5불릿 그대로, 사진 BG)
     for (let i = 0; i < tabPayloads.length; i++) {
       const t = tabPayloads[i];
       const pageNum = `${String(i+2).padStart(2,'0')} / 07`;
-      const { headline, detail } = parseHeadlineDetail(t.bullets[0]);
-      const contentHtml = buildTabContentHtml(headline, detail);
+      const bulletsHtml = buildBulletsHtml(t.bullets);
       let html = buildTabSlideHtml(baseTemplate, {
-        emoji: t.emoji, label: t.label, pageNum, contentHtml, dateLabel,
+        emoji: t.emoji, label: t.label, pageNum, bulletsHtml, dateLabel,
       }).replace('</head>', `${singleSlideCss('tab')}</head>`);
       html = applyBg(html, 'tab', imgByTab[t.key]?.dataUri || null);
 
       const outName = `0${i+2}.png`;
       await renderSlide(browser, html, path.join(OUT_DIR, outName));
-      console.log(`✓ ${outName} (${t.label}: "${headline.slice(0, 30)}${headline.length>30?'…':''}", detail=${detail.length})`);
+      console.log(`✓ ${outName} (${t.label}, bullets=${t.bullets.length})`);
     }
 
     // SLIDE 7 — CTA (사진 없음)

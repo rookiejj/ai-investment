@@ -8,9 +8,13 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: 'IG_DRY_RUN=1 (캡션·URL만 출력)'
+        description: '연습 모드 (true=게시 안 함, 슬라이드만 만들고 캡션 출력)'
         required: false
-        default: 'false'
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
 
 concurrency:
   group: instagram-post

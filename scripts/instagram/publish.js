@@ -49,10 +49,26 @@ async function uploadToStorage(supabase, bucket, datePath, file) {
   const local = path.join(OUT_DIR, file);
   const buf = fs.readFileSync(local);
   const remote = `posts/${datePath}/${file}`;
-  const { error } = await supabase.storage
-    .from(bucket)
-    .upload(remote, buf, { contentType: 'image/png', upsert: true });
-  if (error) throw new Error(`Storage 업로드 실패(${file}): ${error.message}`);
+  let result;
+  try {
+    result = await supabase.storage
+      .from(bucket)
+      .upload(remote, buf, { contentType: 'image/png', upsert: true });
+  } catch (e) {
+    // 네트워크 단절·DNS 실패·TLS 오류 등 저수준 에러
+    throw new Error(
+      `Storage 업로드 실패(${file}): ${e.message}\n` +
+      `  → 점검: SUPABASE_URL이 'https://xxx.supabase.co' 형식인지, 프로젝트가 일시정지(paused) 상태가 아닌지`
+    );
+  }
+  const { error } = result;
+  if (error) {
+    // supabase-js 응답 객체에 담긴 에러 (인증·권한·버킷 누락 등)
+    throw new Error(
+      `Storage 업로드 실패(${file}): ${error.message}\n` +
+      `  → 점검: 버킷 '${bucket}'이 존재하고 public인지, SUPABASE_SECRET_KEY가 새 포맷(sb_secret_...)인지`
+    );
+  }
   const { data } = supabase.storage.from(bucket).getPublicUrl(remote);
   if (!data?.publicUrl) throw new Error(`publicUrl 조회 실패: ${remote}`);
   return data.publicUrl;
@@ -121,6 +137,17 @@ async function main() {
   const SB_URL    = reqEnv('SUPABASE_URL');
   const SB_KEY    = reqEnv('SUPABASE_SECRET_KEY');
   const BUCKET    = process.env.IG_CAROUSEL_BUCKET || 'instagram-carousel';
+
+  // 환경 점검 — 흔한 실수 (https:// 누락·legacy 키) 즉시 표면화
+  if (!/^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/i.test(SB_URL)) {
+    console.warn(`⚠ SUPABASE_URL 포맷 의심: '${SB_URL}'`);
+    console.warn(`  → 정상 예시: 'https://xxxxxxx.supabase.co'`);
+  }
+  if (!SB_KEY.startsWith('sb_secret_') && !SB_KEY.startsWith('eyJ')) {
+    console.warn(`⚠ SUPABASE_SECRET_KEY 포맷 의심 — sb_secret_... 또는 eyJ...(legacy) 시작이어야 함`);
+  }
+  console.log(`Supabase: ${SB_URL.replace(/\/$/, '')} · 버킷: ${BUCKET}`);
+  console.log(`IG User: ${IG_USER}`);
 
   // 1) Storage 업로드
   const supabase = createClient(SB_URL, SB_KEY, { auth: { persistSession: false } });
