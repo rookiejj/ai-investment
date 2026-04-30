@@ -2,11 +2,10 @@
 /**
  * 인스타그램 캐러셀 캡션·해시태그 생성기
  *
- * meta.json(렌더러가 만든 5탭 bullet 데이터)을 받아
- *  - 표지 헤드라인
- *  - 5탭 1줄 압축
- *  - 가변 해시태그 (티커·키워드 추출) + 고정 해시태그
- * 를 생성한다.
+ * 정책:
+ *  - 캡션 본문에 마켓별 뉴스 정보를 넣지 않는다 (슬라이드에서 다 보여줌).
+ *  - 헤더(브랜드·날짜) → 프로필 링크 강조 CTA → 해시태그 구조.
+ *  - 가변 해시태그는 슬라이드 콘텐츠(meta.tabs.bullets)에서 티커·키워드 자동 추출.
  *
  * 사용:
  *   const { buildCaption } = require('./caption');
@@ -25,12 +24,10 @@ const STATIC_TAGS = [
 // summary 안의 영문 티커(2~5자 대문자) 추출
 function extractTickers(text) {
   const matches = text.match(/\b[A-Z]{2,5}\b/g) || [];
-  // 너무 흔한 일반어 제거
   const stop = new Set(['AI','EPS','CEO','CFO','CPI','GDP','OPEC','FOMC','ETF','IPO','API','SEC','LLM','SUV','EV','EU','US','UK','KST','AH','CC','QoQ','YoY','YTD','GAAP','NM','NA','MAU','DAU','SaaS','GPU','TPU','TSV','SMR','DRAM','HBM','LNG','WTI','M&A']);
   return matches.filter(t => !stop.has(t));
 }
 
-// 한글 키워드(섹터·테마): bullet 내 ・·, 공백, 숫자·기호로 구분되지 않는 한글 토큰 중 길이 2~6
 function extractKoreanKeywords(text) {
   const matches = text.match(/[가-힣]{2,6}/g) || [];
   const stop = new Set([
@@ -50,24 +47,19 @@ function uniqByCount(arr) {
   return [...c.entries()].sort((a,b) => b[1] - a[1]).map(([k]) => k);
 }
 
-function buildHeadline(meta) {
-  const dateLine = `${meta.date} (${meta.dow}) 브리픽 데일리`;
-  const totalBullets = meta.tabs.reduce((n,t) => n + (t.bullets?.length || 0), 0);
-  const tabsLine = `5개 시장 · 핵심 변화 ${totalBullets}건`;
-  return `${dateLine}\n${tabsLine}`;
+function buildHeader(meta) {
+  return `${meta.date} (${meta.dow}) 브리픽 데일리`;
 }
 
-// 각 탭의 1줄 압축: bullets[0]을 그대로 가져오되 너무 길면 한 자리에서 끊는다(가독성).
-function compressTab(t) {
-  const first = (t.bullets?.[0] || '').trim();
-  if (!first) return `${t.emoji} ${t.label} — 새 갱신 없음`;
-  // 60자 컷
-  let line = first.length > 60 ? first.slice(0, 58).replace(/[ ·,]+$/, '') + '…' : first;
-  return `${t.emoji} ${t.label} — ${line}`;
-}
-
-function buildTabBlock(meta) {
-  return meta.tabs.map(compressTab).join('\n');
+function buildCTA() {
+  // 인스타 피드 캡션의 URL은 클릭 안 됨 → Bio 링크로 유도
+  return [
+    '매일 아침 5개 시장의 핵심만 정리.',
+    '',
+    '👉 전체 보기 — 프로필 링크 클릭',
+    `📷 @${HANDLE}`,
+    `🔗 ${SITE_URL.replace(/^https?:\/\//, '')}`,
+  ].join('\n');
 }
 
 function buildHashtagBlock(meta) {
@@ -79,7 +71,6 @@ function buildHashtagBlock(meta) {
   const topKo = uniqByCount(koWords).slice(0, 6);
 
   const all = [...STATIC_TAGS, ...topTickers, ...topKo];
-  // 중복 제거 (대소문자 통일)
   const seen = new Set();
   const out = [];
   for (const t of all) {
@@ -99,18 +90,17 @@ function hasAnyPhoto(meta) {
 }
 
 function buildCaption(meta) {
-  const headline  = buildHeadline(meta);
-  const tabBlock  = buildTabBlock(meta);
-  const cta       = `매일 아침 ${SITE_URL}\n인스타 @${HANDLE}`;
-  const credit    = hasAnyPhoto(meta) ? '\n\n📸 이미지: Unsplash' : '';
-  const tagBlock  = buildHashtagBlock(meta);
+  const header   = buildHeader(meta);
+  const cta      = buildCTA();
+  const credit   = hasAnyPhoto(meta) ? '\n\n📸 이미지: Unsplash' : '';
+  const tagBlock = buildHashtagBlock(meta);
 
-  return `${headline}\n\n${tabBlock}\n\n${cta}${credit}\n\n${tagBlock}`;
+  return `${header}\n\n${cta}${credit}\n\n${tagBlock}`;
 }
 
 module.exports = { buildCaption };
 
-// CLI 실행 (node scripts/instagram/caption.js)
+// CLI 실행
 if (require.main === module) {
   const fs = require('fs');
   const path = require('path');

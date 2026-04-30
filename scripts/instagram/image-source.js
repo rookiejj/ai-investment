@@ -244,16 +244,20 @@ async function pingDownloadEndpoint(photoId, accessKey) {
 
 /**
  * 메인: 탭에 맞는 BG 이미지 데이터 URI 반환.
+ * @param {Set<string>} [usedIds] — 이미 사용한 photo.id 집합. 같은 게시물 내 중복 회피.
  * @returns {Promise<{ dataUri: string, query: string, matched: string|null, photo: object } | null>}
  */
-async function fetchImageDataUri({ tabKey, bullets, accessKey }) {
+async function fetchImageDataUri({ tabKey, bullets, accessKey, usedIds }) {
   if (!accessKey) return null;
+  const used = usedIds instanceof Set ? usedIds : new Set();
   const { query, matched } = pickQuery(tabKey, bullets);
 
   const tryQueries = [query];
   if (CATEGORY_DEFAULTS[tabKey] && CATEGORY_DEFAULTS[tabKey] !== query) {
     tryQueries.push(CATEGORY_DEFAULTS[tabKey]); // 1차 결과 부족 시 폴백
   }
+  // 모든 쿼리 결과가 used와 충돌하는 극단 상황 대비: 중립 쿼리 추가
+  tryQueries.push('abstract dark texture', 'minimalist gradient dark');
 
   for (const q of tryQueries) {
     let results = [];
@@ -261,8 +265,9 @@ async function fetchImageDataUri({ tabKey, bullets, accessKey }) {
     catch (e) { console.warn(`  ⚠ Unsplash 검색 실패 (${q}):`, e.message); continue; }
     if (!results.length) continue;
 
-    const safe = results.filter(p => !hasPersonTag(p));
-    const picked = safe[0] || results[0]; // 인물 통과 못 하면 마지막에 첫 결과로
+    // 인물 차단 + 이미 쓴 ID 차단
+    const candidates = results.filter(p => !hasPersonTag(p) && !used.has(p.id));
+    const picked = candidates[0];
     if (!picked) continue;
 
     const imgUrl = picked.urls?.raw
@@ -273,6 +278,7 @@ async function fetchImageDataUri({ tabKey, bullets, accessKey }) {
     try {
       const dataUri = await downloadAsBase64(imgUrl);
       pingDownloadEndpoint(picked.id, accessKey); // fire-and-forget
+      used.add(picked.id);
       return { dataUri, query: q, matched, photo: picked };
     } catch (e) {
       console.warn(`  ⚠ 이미지 다운로드 실패:`, e.message);

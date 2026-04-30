@@ -156,26 +156,22 @@ async function main() {
     return { ...t, bullets };
   });
 
-  // 2) 이미지 사전 페치 — 표지 + 5탭 = 6장 병렬
-  console.log('이미지 페치 시작 (Unsplash) …');
+  // 2) 이미지 사전 페치 — 같은 게시물 내 중복 방지를 위해 순차 호출 + usedIds 공유
+  console.log('이미지 페치 시작 (Unsplash, 중복 방지 모드) …');
   const allFirstBullets = tabPayloads.map(t => t.bullets[0]).filter(Boolean);
   const coverBullets = [allFirstBullets[0] || '', allFirstBullets[1] || ''];
+  const usedIds = new Set();
 
-  const fetchTasks = [
-    fetchImageDataUri({ tabKey: 'cover', bullets: coverBullets, accessKey }).then(r => ({ kind: 'cover', r })),
-    ...tabPayloads.map(t =>
-      fetchImageDataUri({ tabKey: t.key, bullets: t.bullets, accessKey })
-        .then(r => ({ kind: 'tab', tabKey: t.key, r }))
-    ),
-  ];
-  const fetched = await Promise.all(fetchTasks);
-  const coverImg = fetched.find(x => x.kind === 'cover')?.r || null;
+  const coverImg = await fetchImageDataUri({ tabKey: 'cover', bullets: coverBullets, accessKey, usedIds });
+  if (coverImg) console.log(`  ✓ cover: query="${coverImg.query}" id=${coverImg.photo?.id}`);
+  else          console.log(`  · cover: 이미지 없음 (다크 폴백)`);
+
   const imgByTab = {};
-  for (const f of fetched) if (f.kind === 'tab') imgByTab[f.tabKey] = f.r || null;
-
-  for (const f of fetched) {
-    if (f.r) console.log(`  ✓ ${f.kind === 'cover' ? 'cover' : f.tabKey}: query="${f.r.query}" matched=${f.r.matched || '(default)'}`);
-    else     console.log(`  · ${f.kind === 'cover' ? 'cover' : f.tabKey}: 이미지 없음 (다크 폴백)`);
+  for (const t of tabPayloads) {
+    const r = await fetchImageDataUri({ tabKey: t.key, bullets: t.bullets, accessKey, usedIds });
+    imgByTab[t.key] = r || null;
+    if (r) console.log(`  ✓ ${t.key}: query="${r.query}" matched=${r.matched || '(default)'} id=${r.photo?.id}`);
+    else   console.log(`  · ${t.key}: 이미지 없음 (다크 폴백)`);
   }
 
   // 3) Playwright 시작
