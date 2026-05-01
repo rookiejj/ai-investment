@@ -36,20 +36,21 @@
     flex-direction: column;
     color: var(--text);
   }
-  /* 사진 BG가 있는 슬라이드 공통 */
+  /* 사진 BG가 있는 슬라이드 공통 — 사진을 더 밝게 보이도록 오버레이 강도 완화.
+     상단·중단은 사진 본연의 컬러가 살게, 하단은 footer 텍스트 가독성을 위해 일부 유지. */
   .slide.has-photo {
     background-color: var(--black);
     background-image:
-      linear-gradient(180deg, rgba(13,13,13,0.18) 0%, rgba(13,13,13,0.32) 35%, rgba(13,13,13,0.62) 70%, rgba(13,13,13,0.78) 100%),
+      linear-gradient(180deg, rgba(13,13,13,0.08) 0%, rgba(13,13,13,0.18) 35%, rgba(13,13,13,0.42) 70%, rgba(13,13,13,0.62) 100%),
       var(--bg-image, none);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
   }
-  /* 사진 없을 때 다크 단색 폴백 (그래도 분위기 유지) */
+  /* 사진 없을 때 다크 단색 폴백 — 녹색 글로우 살짝 강화로 분위기 유지 */
   .slide.no-photo {
     background:
-      radial-gradient(ellipse at top, rgba(24,226,153,0.10) 0%, rgba(13,13,13,0) 55%),
+      radial-gradient(ellipse at top, rgba(24,226,153,0.14) 0%, rgba(13,13,13,0) 55%),
       var(--black);
   }
   /* 텍스트 가독성 보조 — 약한 글로우/섀도 */
