@@ -27,7 +27,8 @@ env:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # publish.js retry 강화로 worst-case ~30분 대기 가능 → 50분으로 여유.
+    timeout-minutes: 50
     steps:
       - name: Checkout
         uses: actions/checkout@v4

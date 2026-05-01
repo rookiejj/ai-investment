@@ -151,19 +151,60 @@ async function waitContainerReady(igUserId, containerId, token, label) {
   console.warn(`경고: ${label} 컨테이너 status 폴링 90초 타임아웃, publish 강행`);
 }
 
-// IG Graph API의 흔한 transient 에러 패턴.
-// - 9007/2207027: media_publish "Media ID is not available" (FINISHED 후 내부 마무리 지연)
-// - code 1 / error_subcode 99: generic "An unknown error" (IG fetcher의 일시 장애)
-// - 4 / 17 / 32: 일시 throttling 또는 일시 서버 오류
+// IG Graph API transient 에러 분류.
+// 누적 사례:
+//   - 9007 / error_subcode 2207027: media_publish "Media ID is not available" (FINISHED 후 내부 마무리 지연)
+//   - error_subcode 2207085: "일반 내부 오류" (Meta 측 일시 내부 장애, 보통 1~5분 내 자동 회복)
+//   - code 1 / error_subcode 99: generic "An unknown error" (IG fetcher 일시 장애)
+//   - code -1: 내부 서버 오류 (subcode 2207085 등과 동반 출현)
+//   - code 4 / 17 / 32: throttling·일시 서버 오류
+//   - "Application request limit reached": app-level rate limit (보통 5~15분 윈도우)
+// Meta가 직접 `is_transient: true` 플래그를 줄 때도 있으므로 그것도 함께 검증.
+const TRANSIENT_PATTERNS = [
+  /"is_transient"\s*:\s*true/,
+  /"error_subcode"\s*:\s*(99|2207027|2207085)\b/,
+  /"code"\s*:\s*9007\b/,
+  /"code"\s*:\s*-1(?!\d)/,
+  /"code"\s*:\s*1(?!\d)/,
+  /"code"\s*:\s*4(?!\d)/,
+  /"code"\s*:\s*17(?!\d)/,
+  /"code"\s*:\s*32(?!\d)/,
+  /Application request limit reached/i,
+  /unknown error/i,
+  /내부 서버 오류|내부 오류|준비/,
+];
+
 function isTransientGraphError(err) {
   const m = err?.message || '';
-  return /9007|2207027|"code":1|"error_subcode":99|"code":4|"code":17|"code":32|unknown error|준비/.test(m);
+  return TRANSIENT_PATTERNS.some(p => p.test(m));
 }
 
-// children 컨테이너 생성 재시도 — IG fetcher가 Supabase Storage 첫 fetch 실패 시 자주 발생
+// rate limit은 transient 중에서도 회복 시간이 길다 → 별도 baseline으로 분리.
+function isRateLimitError(err) {
+  const m = err?.message || '';
+  return (
+    /Application request limit reached/i.test(m) ||
+    /"code"\s*:\s*(4|17|32)(?!\d)/.test(m) ||
+    /rate limit/i.test(m)
+  );
+}
+
+// 지수 백오프 + ±15% jitter. rate limit이면 baseline 길게(60s).
+// cap 5분에 도달하면 그대로 유지되므로 오래 걸려도 결국 통과 가능.
+function computeBackoffMs(err, attempt) {
+  const isRate = isRateLimitError(err);
+  const base = isRate ? 60_000 : 7_000;
+  const multiplier = isRate ? 1.5 : 1.6;
+  const cap = 300_000; // 5 min
+  const exp = Math.min(base * Math.pow(multiplier, attempt), cap);
+  const jitter = (Math.random() * 0.3 - 0.15) * exp; // ±15%
+  return Math.max(1000, Math.floor(exp + jitter));
+}
+
+// children 컨테이너 생성 재시도 — IG fetcher가 Supabase Storage 첫 fetch 실패 시 자주 발생.
+// 8회 + 백오프로 최대 ~15분 커버 (Meta 일시 장애 자체 회복 시간을 충분히 흡수).
 async function createChildWithRetry(igUserId, imageUrl, token) {
-  const MAX_TRIES = 4;       // 4회 × 6초 = 최대 24초 추가
-  const INTERVAL_MS = 6000;
+  const MAX_TRIES = 8;
   let lastErr;
   for (let i = 0; i < MAX_TRIES; i++) {
     try {
@@ -174,17 +215,18 @@ async function createChildWithRetry(igUserId, imageUrl, token) {
     } catch (e) {
       lastErr = e;
       if (!isTransientGraphError(e)) throw e;
-      console.warn(`  ↻ child 재시도 ${i+1}/${MAX_TRIES}: ${e.message.slice(0, 120)}`);
-      await new Promise(r => setTimeout(r, INTERVAL_MS));
+      const wait = computeBackoffMs(e, i);
+      console.warn(`  ↻ child 재시도 ${i+1}/${MAX_TRIES} (${Math.round(wait/1000)}s 후): ${e.message.slice(0, 120)}`);
+      await new Promise(r => setTimeout(r, wait));
     }
   }
   throw lastErr;
 }
 
-// media_publish 일시 실패(9007/2207027 "준비 안 됨") 재시도
+// media_publish 재시도 — 발행 단계는 가장 크리티컬하므로 12회 + 백오프로 ~30분 커버.
+// rate limit 윈도우(보통 5~15분)와 Meta 측 일시 장애를 모두 통과시키는 게 목표.
 async function publishWithRetry(igUserId, creationId, token) {
-  const MAX_TRIES = 6;        // 6회 × 7초 = 최대 42초 추가 대기
-  const INTERVAL_MS = 7000;
+  const MAX_TRIES = 12;
   let lastErr;
   for (let i = 0; i < MAX_TRIES; i++) {
     try {
@@ -192,8 +234,9 @@ async function publishWithRetry(igUserId, creationId, token) {
     } catch (e) {
       lastErr = e;
       if (!isTransientGraphError(e)) throw e;
-      console.warn(`  ↻ publish 재시도 ${i+1}/${MAX_TRIES}: ${e.message.slice(0, 120)}`);
-      await new Promise(r => setTimeout(r, INTERVAL_MS));
+      const wait = computeBackoffMs(e, i);
+      console.warn(`  ↻ publish 재시도 ${i+1}/${MAX_TRIES} (${Math.round(wait/1000)}s 후): ${e.message.slice(0, 120)}`);
+      await new Promise(r => setTimeout(r, wait));
     }
   }
   throw lastErr;
