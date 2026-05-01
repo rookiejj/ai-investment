@@ -5,6 +5,7 @@
  * 날짜별로 기록한다.
  */
 const UPDATES = [
+  {
     date: "2026-05-01 19:45 KST",
     summary: `Apple Cook→Ternus 9/1 승계 마지막 분기 콜에서 Ternus 소개·AI 로드맵 시험대 명확화
 Anthropic $40~50B 라운드 48시간 내 allocation 제출 요청·2주 내 마감 가능 — $850~900B 밸류
