@@ -198,7 +198,7 @@ h1 span{
   background-clip:text;
 }
 
-.tabs{display:flex;gap:8px;margin-bottom:14px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px}
+.tabs{display:flex;gap:8px;margin-bottom:14px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px;position:relative}
 .tabs::-webkit-scrollbar{display:none}
 .tab{
   padding:8px 22px;background:transparent;border:1px solid var(--border-md);
@@ -1125,9 +1125,13 @@ const _scrollPos={stocks:0,kr:0,ai:0};
 function ensureActiveTabVisible(){
   const t=document.querySelector('.tab.on');if(!t)return;
   const bar=t.parentElement;
-  const l=t.offsetLeft,r=l+t.offsetWidth,sl=bar.scrollLeft,vr=sl+bar.clientWidth;
-  if(l<sl) bar.scrollTo({left:Math.max(0,l-8),behavior:'smooth'});
-  else if(r>vr) bar.scrollTo({left:r-bar.clientWidth+8,behavior:'smooth'});
+  // getBoundingClientRect 기반으로 bar 내부 좌표를 정확히 산출 — offsetParent 의존성 제거.
+  const tRect=t.getBoundingClientRect(), bRect=bar.getBoundingClientRect();
+  const tLeftInBar=tRect.left-bRect.left+bar.scrollLeft;
+  const tRightInBar=tLeftInBar+tRect.width;
+  const sl=bar.scrollLeft, vw=bar.clientWidth;
+  if(tLeftInBar<sl) bar.scrollTo({left:Math.max(0,tLeftInBar-8),behavior:'smooth'});
+  else if(tRightInBar>sl+vw) bar.scrollTo({left:tRightInBar-vw+8,behavior:'smooth'});
 }
 function switchTab(id,dir){
   if(_sliding)return;
