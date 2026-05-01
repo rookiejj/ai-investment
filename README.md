@@ -36,7 +36,16 @@ ai-investment/
 ├── scripts/
 │   ├── generate-message.js       ← 로컬 친구톡 메시지 미리보기
 │   ├── send-friendtalk.js        ← 로컬 수동 발송 (디버깅)
-│   └── subscribers.example.json
+│   ├── subscribers.example.json
+│   └── instagram/                ← 인스타그램 캐러셀 자동 게시
+│       ├── template.html         ← 1080×1350 슬라이드 HTML 템플릿 (다크 + 사진 BG)
+│       ├── render-slides.js      ← Playwright로 5탭 최신 summary → PNG 7장 렌더
+│       ├── image-source.js       ← Unsplash 키워드 매칭·인물 필터·중복 방지
+│       ├── caption.js            ← 캡션·해시태그 (브랜드 태그 보존·30개 한도)
+│       ├── publish.js            ← Supabase Storage 업로드 + IG Graph API 게시
+│       └── SETUP.md              ← 시크릿·버킷 셋업 가이드
+├── .github/workflows/
+│   └── instagram-post.yml        ← data/*-update.js 푸시 시 자동 게시 (jp 변경 제외)
 ├── supabase/
 │   ├── migrations/               ← 스키마 이력 (init / payment / message_type / delivery_state / admin_settings / template_code)
 │   ├── functions/
@@ -110,7 +119,18 @@ UI 노출 5개 탭 (일본 주식 70항목은 데이터 파일만 보존).
 - 미수신자 안내 알림톡 버튼 도착지
 
 ### 콘텐츠 자동 갱신
-- Claude Opus 4.7 원격 에이전트가 매일 오전·오후 주기로 5개 탭 데이터 갱신·커밋·푸시
+- Claude Opus 4.7 원격 에이전트가 매일 3회 주기(KST 07:30 / 13:30 / 19:30 부근)로 5개 탭 데이터 갱신·커밋·푸시
+
+### 인스타그램 캐러셀 자동 게시 (`@briefick`)
+- **트리거**: `main` 브랜치에 `data/*-update.js` 푸시 (단, `jp-stocks-update.js` 단독 변경 시 스킵)
+- **흐름**: GitHub Actions 워크플로 1회 실행 (~3~5분)
+  1. 5탭 최신 `summary` 줄 단위 파싱 → 첫 불릿 키워드로 Unsplash 검색
+  2. 인물 사진 필터(태그에 person/face/man 등) + 중복 방지(같은 게시물 내 photo.id 공유)
+  3. Playwright로 1080×1350 PNG 7장 렌더 (표지 1 + 5탭 + CTA, 다크 + 사진 BG)
+  4. Supabase Storage(`instagram-carousel/posts/YYYY-MM-DD/HHMMSS/`)에 업로드 — CDN 캐시 회피용 시각 경로
+  5. Instagram Graph API 3-step (children 컨테이너 → CAROUSEL parent → media_publish), transient 에러 시 자동 재시도
+- **캡션**: 헤더(날짜·브랜드) + 프로필 링크 유도 CTA + 가변 해시태그(티커·키워드 자동 추출, `#브리픽 #briefick` 항상 보존, 30개 한도)
+- **수동 점검**: Actions → Run workflow → `dry_run=true`로 PNG·캡션만 검수 (게시 X)
 
 ## 발송·상태 동기화 파이프라인
 
@@ -191,13 +211,18 @@ pg_cron → Vault X-Cron-Secret → expiry-notice
 | 자동 콘텐츠 갱신 | Claude Opus 4.7 원격 에이전트 |
 
 ### 인증 구조
-- 브라우저 ↔ 공개 Edge Function: Supabase publishable key (`sb_publishable_...`)
+- 브라우저 ↔ 공개 Edge Function: Supabase publishable key (`sb_publishable_...`, JS 변수명 `BRIEFICK_SUPABASE_PUBLISHABLE_KEY`)
+- Edge Function ↔ DB / GitHub Actions ↔ Supabase Storage: secret key (`sb_secret_...`)
+  - **변수명 `BRIEFICK_SUPABASE_SECRET_KEY`** — Supabase 예약 namespace(`SUPABASE_*`) 충돌 회피용 프로젝트 prefix
+  - Supabase Edge Function Secrets와 GitHub Secrets 양쪽에 동일 이름·값 등록
 - pg_cron ↔ daily-send / expiry-notice: 자체 `X-Cron-Secret` (Vault 저장 · 함수 env와 동기화 필수)
 - 솔라피 ↔ solapi-webhook: `?s=<SOLAPI_WEBHOOK_SECRET>` 쿼리 파라미터 인증
 - 관리자 ↔ admin-api: 비밀번호 해시 기반 세션 토큰
 - 모든 Edge Function은 `--no-verify-jwt`로 배포 (자체 인증 사용)
 
 > Vault `cron_secret`을 갱신할 때는 `supabase secrets set CRON_SECRET=...`으로 함수 env도 동시에 갱신해야 401이 발생하지 않음.
+
+> `BRIEFICK_SUPABASE_SECRET_KEY` 갱신 시: ① Supabase 대시보드 Edge Function Secrets 갱신 + ② GitHub Secrets 동기화 + ③ Edge Function 7개 재배포 (`supabase functions deploy <name> --no-verify-jwt`)
 
 ## 데이터 스키마 요약
 
@@ -238,6 +263,8 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-01**: Supabase 키 namespace 통일 — `SUPABASE_SECRET_KEY` → **`BRIEFICK_SUPABASE_SECRET_KEY`**, `SUPABASE_PUBLISHABLE_KEY` → **`BRIEFICK_SUPABASE_PUBLISHABLE_KEY`**. 원인: Supabase가 사용자 정의 secret 이름의 `SUPABASE_` 접두사를 거부(`Name must not start with the SUPABASE_ prefix`)하며 `SUPABASE_SECRET_KEYS`(복수 JSON) 등 자동 주입 변수와 namespace 충돌. 프로젝트 prefix `BRIEFICK_` 부여로 일괄 정리. Edge Function 7개·`publish.js`·workflow yml·프론트 JS 변수명·문서 동기화. `.claude/settings.local.json`을 git 추적 해제(머신별 권한 설정).
+- **2026-04-30**: **인스타그램 캐러셀 자동 게시** 추가 (`@briefick`). `data/*-update.js` 푸시 시 GitHub Actions가 발동 → Playwright로 1080×1350 PNG 7장 렌더 → Supabase Storage 업로드 → Graph API 캐러셀 게시. 다크 테마 + Unsplash 콘텐츠 매칭 사진 BG(인물 필터·게시물 내 중복 방지·CDN 캐시 회피용 시각 경로). 캡션은 마켓 정보 없이 프로필 링크 유도 CTA + 가변 해시태그(`#브리픽 #briefick` 보존·30개 한도). transient Graph API 에러 자동 재시도(9007/2207027/code:1·subcode:99 등). Supabase 키 신포맷(`sb_secret_...`/`sb_publishable_...`) 1차 정리 + 변수 네이밍 일관 정리(이후 `BRIEFICK_` 접두사로 5/1 추가 정리).
 - **2026-04-29 (2)**: 글로벌 ETF 흔적 완전 제거. `data/etf-data.js`·`data/etf-update.js`·`.claude/commands/update-etf.md` 파일 삭제. `index.html`의 `STATE.etf`·`ETF_URL`·`norm(kind==='etf')`·`TAB_DESC.etf`·`TAB_SRC.etf`·`TAB_FILTERS.etf`·`META_CFG.etf`·`_updateExpand.etf` 모두 정리. `update.md` 대상 탭 표기·"ETF/레버리지" 표현·`docs/friendtalk-dispatch-runbook.md`·`docs/kakao-subscription-plan.md` 모두 정합 정리.
 - **2026-04-29**: 탭 재편 — '시장·원자재' → '원자재·크립토'로 변경 (📊 시장 지표 카테고리 제거 후 🪙 크립토 신설: BTC·ETH·SOL·XRP). 글로벌 ETF 탭은 일본 마켓처럼 UI·자동 갱신 제외(데이터 파일 보존). 친구톡 메시지 가독성 개선 — summary를 multi-line(줄바꿈으로 뉴스 구분) 형식으로 작성하도록 CLAUDE.md 가이드 변경, daily-send이 줄바꿈 split 후 글머리표 출력. 안전망 교체 — 기존 `truncateForLimit`(마지막 탭 통째 제거)에서 `fitToLimit`(모든 탭 보존+균등 줄 단위 cut + 사용 안 한 budget 재분배)으로 변경. 사이트 업데이트 박스 단순화(최신 1건만 표시·시간 버블 제거·펼쳐보기는 변경 항목용으로 유지). `scripts/generate-message.js` 동일 규칙 동기화. 푸터 사업자 정보 정정(주소 '3-1' 추가, 통신판매 신고번호 라인 제거). 카드사 심사용 PPTX 자동 생성 스크립트 + 산출물 추가.
 - **2026-04-27**: 메시징 시스템 4종 정비 완료. 매일 뉴스 친구톡 발송을 평일(월~금) 한정 (`'0 23 * * 0-4'` UTC). 만료 임박 재구독 안내를 알림톡(검수 거절) → 친구톡(CTA) 자유 텍스트로 전환, 본문에 만료일 자동 삽입, "재구독 신청하기" WL 버튼으로 `/renew` 연결. 수동 발송을 친구톡 → 알림톡(ATA)으로 전환 — 검수 승인 템플릿 `KA01TP260424060446377powJn1n8RGU` (#{상점명}) + WL "문제 해결하기" → `/help`. 광고 수신 거부 대상에게도 도달 가능. SOLAPI 결과 코드 매핑 강화 — 3050→not_friend, **3120→paused_ad**, 3130/3140/3160→blocked. `unknown` 분류 시 `subscribers.delivery_state` 영속 갱신 skip — 시간대 제약·길이 초과 등 시스템 이슈로 정상 수신자가 잘못 분류되는 문제 차단. 기존 `unknown` 잘못 분류된 구독자 일괄 보정. **매일 뉴스 친구톡 가독성 개선** — summary를 `·` 기준 split해 항목별 글머리표 줄바꿈, 1000자 한도 초과 시 `truncateForLimit`으로 마지막 탭 블록부터 자동 제거. CLAUDE.md에 summary 작성 규칙 신설(`·`은 항목 구분자로만, 비교/병렬은 `,`/`vs`, 항목 자립성). **운영 대시보드 매일 뉴스 즉시 발송 추가** — 발송 뷰 2x2 그리드(좌:툴바·구독자 리스트 / 우:경고·미리보기), 미리보기는 선택 무관 동작, 발송은 미리보기 로드+1명 이상 선택 조건. admin-api `daily_send_preview` / `daily_send_now` 액션, daily-send에 `body.subscriberIds` 필터 수용. `/help` 페이지 신설 후 마스터-디테일 구조 (`#friend` / `#ad`). 결제 복귀 시 입력값 복원 + 즉시 잠금. 관리자 시각 표기를 브라우저 시스템 시간 기준으로. 만료 임박 D-N 계산을 KST 캘린더 일수 차이로 (시각 ms ceil 오프바이원 수정). pg_cron `daily-expiry-notice` 추가 (UTC 11:00 = KST 20:00). 오늘 아침 발송 누락 사고 — Vault `cron_secret` 갱신 후 함수 env `CRON_SECRET` 미동기화로 401 발생, 양쪽 동기화 + README 인증 섹션에 주의 메모 추가.
