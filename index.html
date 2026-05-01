@@ -303,7 +303,7 @@ h1 span{
   min-width:18px;height:18px;padding:0 6px;background:var(--acc-deep);
   color:#fff;border-radius:9999px;font:700 11px/1 'Inter',sans-serif;
 }
-#filterSheetOpen .arrow{font-size:14px;line-height:1;color:var(--fg2);margin-left:4px;display:inline-flex;align-items:center}
+#filterSheetOpen .arrow{font-size:18px;line-height:1;color:var(--fg);margin-left:6px;display:inline-flex;align-items:center;transform:translateY(-1px)}
 
 /* 하단 시트 */
 .fs-backdrop{
@@ -720,7 +720,7 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
     <button id="filterSheetOpen" type="button" aria-label="필터 열기">
       <span>필터</span>
       <span class="count" id="filterSheetOpenCount" style="display:none">0</span>
-      <span class="arrow">▾</span>
+      <span class="arrow">▼</span>
     </button>
     <div class="search-wrap">
       <input id="q" placeholder="티커, 기업명, 제품, 설명으로 검색...">
