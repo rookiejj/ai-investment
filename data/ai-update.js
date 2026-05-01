@@ -5,11 +5,10 @@
  * 날짜별로 기록한다.
  */
 const UPDATES = [
-  {
-    date: "2026-05-01 15:25 KST",
+    date: "2026-05-01 19:45 KST",
     summary: `Apple Cook→Ternus 9/1 승계 마지막 분기 콜에서 Ternus 소개·AI 로드맵 시험대 명확화
-Apple Foundation Models on Gemini·신 Siri 27 연기 후 재설계·AI 웨어러블 3종 가속
-Anthropic $50B 신규 펀딩·$850~900B 밸류 검토·ARR $40B 근접 — OpenAI 추월 사정권
+Anthropic $40~50B 라운드 48시간 내 allocation 제출 요청·2주 내 마감 가능 — $850~900B 밸류
+xAI·SpaceX 이해관계 결합 2026 초 효과적 합병 — SpaceX IPO가 xAI 모델 공개 노출 주요 통로
 OpenAI GPT-5.5 Cyber 'critical defenders' 한정 단계 배포 — Anthropic 모델 모방 선회
 QCOM 12월 데이터센터 추론 칩 첫 출하 가이던스 공식 — 멀티 ASIC 경쟁 본격화`,
     changes: [
@@ -17,8 +16,11 @@ QCOM 12월 데이터센터 추론 칩 첫 출하 가이던스 공식 — 멀티 
         detail: "Apple(Ternus 승계 직전 AI 로드맵 가시화). 4/30 Q2 FY26 콜에서 Tim Cook이 9/1 후임 SVP Hardware Engineering John Ternus를 직접 소개 — Cook 시대 마무리·Ternus 시대 카운트다운 본격화. 콜에서 Apple Foundation Models 차세대가 Google Gemini 기반으로 트레이닝되고 있음이 재확인되며, 신 Siri의 iOS 26.5→27 일정 연기 후 Gemini 기반 재설계 진척, WKA AI 검색 확장, AI 웨어러블 3종(스마트홈 디바이스·visionOS hub·AI 안경) 일정이 취임 전후 최대 시험대로 명확화. 4/24 Anthropic Alphabet $40B 투자 + 5GW TPU 약정 라인과 동일 스택을 Apple도 공유하는 구도가 굳어지며, 자체 LLM 자립이 아닌 'Gemini·Anthropic 인프라 활용 + Foundation Models 오케스트레이션' 노선이 차기 Ternus 체제의 핵심 축으로 정렬. 별도로 Cook이 콜에서 '메모리 비용 큰 폭 상승'을 6월 분기 GM 압박 변수로 명시 — DRAM·NAND 단가 인상이 디바이스용 LLM 추론·온디바이스 AI 칩 BOM에도 직접 부담으로 전이되는 구조.",
         time: "2026-05-01 07:30 KST" },
       { type: "펀딩", sector: "Anthropic",
-        detail: "Anthropic($50B / $900B 검토·ARR $40B 근접). 4/29 Bloomberg·CNBC·TechCrunch가 동시 보도 — Anthropic이 신규 $50B 펀딩 라운드를 $850~900B 밸류 사전 제안 형태로 검토 중, 5월 이사회 미팅에서 최종 결정 예정. 성사 시 OpenAI($852B, 3월 $1,220억 라운드 기준)를 가치 기준 추월하며 사상 가장 비싼 AI 스타트업으로 등극. 2월 시리즈G $380B → 두 달 만에 약 2.4배 상향 트랙. 펀더멘털 근거는 연환산 매출(ARR)이 3월 $30B 돌파 후 현재 $40B에 근접하는 가이던스(2025년 말 $9B 대비 4개월 만에 3~4배), Sacra YoY +1,400%로 OpenAI($25B)를 단독 추월. 누적 자금·고객 베이스 — 4/24 Alphabet 최대 $40B 투자 + 4/20 Amazon $25B + AWS 10년 $100B+ 약정 + 4/24 일본 NEC 30,000명 전사 배포 — 가 두텁다. 10월 IPO $400~500B 타겟에서 사실상 마지막 사적 펀딩 라운드 가능성. Goldman·JPM 주관 그대로.",
+        detail: "Anthropic($40~50B / $900B 검토·48h allocation deadline). 4/29~30 Bloomberg·CNBC·TechCrunch가 동시 보도 — Anthropic이 신규 $40~50B 펀딩 라운드를 $850~900B 밸류 사전 제안 형태로 검토 중, **48시간 안에 투자자 측 allocation 제출 요청**·**최대 2주 내 라운드 마감 가능 페이스**(TechCrunch 4/30). 성사 시 OpenAI($852B, 3월 $1,220억 라운드 기준)를 가치 기준 추월하며 사상 가장 비싼 AI 스타트업으로 등극. 2월 시리즈G $380B → 두 달 만에 약 2.4배 상향 트랙. 펀더멘털 근거는 연환산 매출(ARR)이 3월 $30B 돌파 후 현재 $40B에 근접(2025년 말 $9B 대비 4개월 만에 3~4배), Sacra YoY +1,400%로 OpenAI($25B)를 단독 추월. 누적 자금·고객 베이스 — 4/24 Alphabet 최대 $40B 투자 + 4/20 Amazon $25B + AWS 10년 $100B+ 약정 + 4/24 일본 NEC 30,000명 전사 배포 — 가 두텁다. 10월 IPO $400~500B 타겟에서 사실상 마지막 사적 펀딩 라운드 가능성. Goldman·JPM 주관 그대로.",
         time: "2026-05-01 07:30 KST" },
+      { type: "전략", sector: "xAI",
+        detail: "xAI·SpaceX 이해관계 결합. 2026 초 xAI가 SpaceX와 사실상 합병 구조로 진입한 것이 5/1 시점 다수 매체 정리에서 재확인 — 별도 IPO 트랙을 포기하고 SpaceX IPO(5/15~5/22 S-1 제출·6/8 로드쇼·6/18~6/30 프라이싱)가 xAI 모델·인프라 노출의 주요 공개 시장 통로로 굳어짐. xAI 단독 펀딩에서 Anthropic·OpenAI와 동일 트랙으로 경쟁하기보다 SpaceX 인프라(Colossus 클러스터·전력·위성) + xAI 모델(Grok·Colossus 코드)을 단일 공개 자산으로 묶는 구조. SpaceX $1.75~2.0T 밸류·$75B 조달 타겟에서 xAI 부분 가치는 분리 공시되지 않으나, 4/15 Cursor의 SpaceX $60B 인수 옵션 + xAI·Mistral 3자 파트너십 협의가 같은 라인 정렬. 빅3 AI 라인업(OpenAI·Anthropic·xAI)에서 xAI는 단독 IPO 트리거 대신 SpaceX IPO 흡수의 변수로 재정의.",
+        time: "2026-05-01 19:45 KST" },
       { type: "거버넌스", sector: "OpenAI",
         detail: "OpenAI(GPT-5.5 Cyber 단계 배포). 4/30 OpenAI는 GPT-5.5 Cyber를 'critical cyber defenders' 한정으로만 배포한다고 공식 발표. Altman이 4/7 Anthropic Project Glasswing의 Mythos 비공개 정책을 '공포 기반 마케팅(fear-based marketing)'으로 비판한 지 약 3주 만에 동일한 차단형 접근법으로 선회 — TechCrunch는 'After dissing Anthropic for limiting Mythos, OpenAI restricts access to Cyber, too'로 정리. 같은 날 OpenAI는 'Our commitment to community safety' 별도 성명을 추가 게시하며 Cyber·Bio·Chemical·Persuasion 카테고리 전반에 사전 통제 프레임워크 적용 의사 시사. AI 보안 거버넌스 산업 표준이 '오픈 → 사전 통제'로 수렴하는 구조 변화로 정리되며 OpenAI·Anthropic 양사 모두 IPO 직전 책임성 시그널을 적극 발신하는 흐름.",
         time: "2026-05-01 07:30 KST" },

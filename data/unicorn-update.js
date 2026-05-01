@@ -1,16 +1,19 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
-    date: "2026-05-01 15:25 KST",
-    summary: `Anthropic 신규 $50B 펀딩 $850~900B 밸류 사전 제안 검토·ARR $40B 근접 — OpenAI 추월 사정권
+    date: "2026-05-01 19:45 KST",
+    summary: `Anthropic $40~50B 라운드 48h 안에 allocation 제출 요청·최대 2주 내 마감 가능 — $850~900B 밸류
+xAI·SpaceX 이해관계 결합 재확인 — 별도 IPO 트랙 포기·SpaceX IPO 흡수 구조 굳히기
 Anduril 美 우주군 $1.8B Space Force 컨트랙트 추가 진입 — Golden Dome 합산 $5B+ 수주
 SpaceX S-1 5/15~5/22 정식 제출 윈도우·6/8 로드쇼·6/18~6/30 프라이싱 카운트다운 유지
-137 Ventures $700M 2개 그로스 펀드 신규 클로즈 — SpaceX·Anduril 공동 백커 추가 화력
-4월 글로벌 VC 투자 $300B Q1 사상 최대 — AI 4사(OpenAI·Anthropic·xAI·Waymo) 압도적 점유`,
+137 Ventures $700M 2개 그로스 펀드 신규 클로즈 — SpaceX·Anduril 공동 백커 추가 화력`,
     changes: [
       { type: "정보 갱신", sector: "엔터프라이즈 SW",
-        detail: "Anthropic. 4/29~30 Bloomberg·CNBC·TechCrunch 동시 보도 — $50B 신규 펀딩 라운드를 $850~900B 밸류 사전 제안으로 검토 중, 5월 이사회 미팅에서 최종 결정 예정. 성사 시 OpenAI($852B, 3월 $1,220억 라운드 기준)를 가치 기준 단독 추월하며 사상 가장 비싼 AI 스타트업으로 등극. 2월 시리즈G $380B → 두 달 만에 약 2.4배 추가 상향 트랙. 펀더멘털 근거는 연환산 매출(ARR)이 3월 $30B 돌파 후 현재 $40B에 근접하는 가이던스(2025년 말 $9B 대비 4개월 만에 3~4배), Sacra YoY +1,400%로 OpenAI($25B) 단독 추월. 누적 자금·고객 베이스 — 4/24 Alphabet $40B + 4/20 Amazon $25B + AWS 10년 $100B+ + 4/24 NEC 30,000명 전사 배포 — 누적. 10월 IPO $400~500B 타겟에서 사실상 마지막 사적 펀딩 라운드 가능성. Goldman·JPM 주관 그대로.",
+        detail: "Anthropic. 4/29~30 Bloomberg·CNBC·TechCrunch 동시 보도 — $40~50B 신규 펀딩 라운드를 $850~900B 밸류 사전 제안으로 검토 중. **TechCrunch 4/30 추가 보도: 투자자 측에 48시간 안에 allocation 제출을 요청, 최대 2주 안에 라운드 마감 가능 페이스**로 가속. 성사 시 OpenAI($852B, 3월 $1,220억 라운드 기준)를 가치 기준 단독 추월하며 사상 가장 비싼 AI 스타트업으로 등극. 2월 시리즈G $380B → 두 달 만에 약 2.4배 추가 상향 트랙. 펀더멘털 근거는 ARR이 3월 $30B 돌파 후 현재 $40B에 근접(2025년 말 $9B 대비 4개월 만에 3~4배), Sacra YoY +1,400%로 OpenAI($25B) 단독 추월. 누적 자금·고객 베이스 — 4/24 Alphabet $40B + 4/20 Amazon $25B + AWS 10년 $100B+ + 4/24 NEC 30,000명 전사 배포 — 누적. 10월 IPO $400~500B 타겟에서 사실상 마지막 사적 펀딩 라운드 가능성. Goldman·JPM 주관 그대로.",
         time: "2026-05-01 07:40 KST" },
+      { type: "정보 갱신", sector: "우주·모빌리티·방산",
+        detail: "xAI·SpaceX. 2026 초 xAI가 SpaceX와 이해관계 결합 구조로 진입한 것이 5/1 시점 다수 매체 정리에서 재확인 — 별도 IPO 트랙을 포기하고 SpaceX IPO(5/15~5/22 S-1 제출·6/8 로드쇼·6/18~6/30 프라이싱)가 xAI 모델·인프라 노출의 주요 공개 시장 통로로 굳어졌다. xAI 단독 펀딩에서 Anthropic·OpenAI와 동일 트랙으로 경쟁하기보다 SpaceX 인프라(Colossus 클러스터·전력·위성) + xAI 모델·코드를 단일 공개 자산으로 묶는 구조. 이로써 빅3 AI 펀딩 트랙(OpenAI·Anthropic·xAI) 중 xAI는 단독 펀딩 라운드 카운트다운에서 빠지고, 6월 SpaceX $1.75~2.0T·$75B 조달의 일부 가치 분리 공시 변수로 재정의. 4/15 Cursor의 SpaceX $60B 인수 옵션 + xAI·Mistral 3자 파트너십 협의가 같은 라인 정렬.",
+        time: "2026-05-01 19:45 KST" },
       { type: "정보 갱신", sector: "우주·모빌리티·방산",
         detail: "Anduril. 4/29 美 우주군 $1.8B 별도 컨트랙트 명단 진입(Motley Fool 4/29 보도) — 4/24 Golden Dome 12개사 $3.2B 우주기반 요격체 + 신규 $1.8B 누적 수주 $5B+로 단기 매출 가시성 추가 확장. 동시에 Series H 최대 $8B 펀딩 라운드를 Thrive Capital·Andreessen Horowitz 공동 주도로 협상 중, 2025년 6월 Series G $30.5B 대비 9개월 만 밸류 더블 $60B 트랙. Founders Fund·Lux Capital 후속 참여. Luckey '단기 IPO 아님' 입장 변함없이 펀딩 라운드 우선 — IPO는 2027 이후로 후방 배치되는 구도. 美 우주군·육군·해군 동시 컨트랙트 누적이 펀딩 협상 레버리지로 작용.",
         time: "2026-05-01 07:40 KST" },
