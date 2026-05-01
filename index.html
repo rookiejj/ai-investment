@@ -723,7 +723,7 @@ main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
       <span class="arrow">▼</span>
     </button>
     <div class="search-wrap">
-      <input id="q" placeholder="티커, 기업명, 제품, 설명으로 검색...">
+      <input id="q" placeholder="티커, 기업명, 제품, 설명으로 검색..." data-ph-mobile="티커, 기업명, 제품으로 검색">
       <button class="search-clear" id="qClear" aria-label="검색 초기화">✕</button>
     </div>
   </div>
@@ -842,6 +842,16 @@ async function loadJS(url,v){
   const t=new TextDecoder('utf-8').decode(buf);
   return new Function(t+';return {data:typeof data!=="undefined"?data:null,META:typeof META!=="undefined"?META:null,BL:typeof BL!=="undefined"?BL:null};')();
 }
+
+// 모바일에서 검색 placeholder 잘림 방지 — 768px 이하에서 짧은 버전으로 스왑
+(function(){
+  const q=document.getElementById('q');if(!q)return;
+  const full=q.placeholder, mob=q.dataset.phMobile||full;
+  const mq=window.matchMedia('(max-width:768px)');
+  const sync=()=>{q.placeholder=mq.matches?mob:full};
+  sync();
+  mq.addEventListener ? mq.addEventListener('change',sync) : mq.addListener(sync);
+})();
 
 const _saved=JSON.parse(sessionStorage.getItem('briefState')||'null');
 let STATE={tab:_saved?.tab||'stocks',q:'',filter:new Set(_saved?.filters?.[_saved?.tab]||[]),ai:null,st:null,kr:null,commodity:null,unicorn:null,stUpd:null,aiUpd:null,krUpd:null,commodityUpd:null,unicornUpd:null};
