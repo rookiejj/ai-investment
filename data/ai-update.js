@@ -6,6 +6,25 @@
  */
 const UPDATES = [
   {
+    date: "2026-05-02 07:40 KST",
+    summary: `Pentagon 7개 빅테크와 기밀 네트워크 AI 도입 — SpaceX·OpenAI·Google·MSFT·NVIDIA·AWS·Reflection
+Anthropic 펜타곤 딜에서 제외 — 안전 가드레일 요구로 트럼프 행정부와 갈등 재부각
+Anthropic Q1 글로벌 LLM 매출 점유율 31.4% — OpenAI 29% 추월 첫 기록
+Alphabet Q1 GAAP 순익 $62.6B 중 약 $28.7B가 Anthropic 등 사적 지분 평가익 — '실제 사업 외'
+Anthropic $900B 라운드 2주 내 마감 가능 — TechCrunch·Bloomberg·CNBC 동시 보도 확정`,
+    changes: [
+      { type: "거버넌스", sector: "Anthropic",
+        detail: "Anthropic(펜타곤 딜 배제 + LLM 매출 1위). 5/1 美 국방부가 SpaceX·OpenAI·Google·Microsoft·NVIDIA·AWS·Reflection 7사와 기밀 네트워크 AI 도입 계약을 동시 발표했으나 Anthropic은 공식 명단에서 제외. Anthropic이 트럼프 행정부에 '국방·전쟁 영역 활용 시 안전 가드레일 적용' 조건을 견지한 결과로 블랙리스트 상태가 잔존, 백악관이 최근 주요 기술 마일스톤 이후 재논의를 시작했으나 최종 합류는 미확정. 동시에 The Register·복수 매체가 Counterpoint Research 인용으로 Anthropic Q1 글로벌 LLM 매출 점유율 31.4%로 OpenAI 29%를 추월했음을 공식 정량화 — IPO 직전 매출 시장 1위 시그널과 정부 영역 배제 시그널이 동시에 가중되는 비대칭 구도. 4/30 TechCrunch는 '$900B 밸류 라운드가 최대 2주 내 마감 가능'을 추가 보도해 5월 보드 미팅 결정 일정과 정렬.",
+        time: "2026-05-02 07:40 KST" },
+      { type: "마일스톤", sector: "Google DeepMind",
+        detail: "Alphabet(Anthropic 지분 평가익 정량화). 5/1 Fortune·복수 매체가 Alphabet Q1 GAAP 순이익 $62.6B 중 약 $28.7B가 사적 지분 평가익(주로 Anthropic 지분)에서 발생했음을 외부 정량화. 회사는 Q1 콜에서 '사적 투자 자산 시가평가 변경'을 언급했으나 회계 항목별 노출은 외부 분석으로 처음 정량화 — 검색·Cloud·YouTube의 운영이익에 못지않은 비중을 Anthropic 지분 가치 상승이 차지하는 구조. Amazon도 동일한 회계 효과로 분기 GAAP 순익이 부풀려진 정황. AI 슈퍼사이클이 지분 평가 채널을 통해 빅테크 GAAP 실적에 직접 전이되는 구조가 외부에 처음 명확화 — Anthropic이 OpenAI를 LLM 매출 점유율에서 추월(31.4% vs 29%)한 5/1 데이터까지 결합되며 Alphabet·Amazon의 Anthropic 베팅이 펀더멘털 채널과 회계 채널 양쪽에서 동시 검증.",
+        time: "2026-05-02 07:40 KST" },
+      { type: "전략", sector: "Microsoft",
+        detail: "Microsoft·OpenAI·Google·NVIDIA·AWS·xAI(SpaceX)(펜타곤 7사 동시 합류). 5/1 美 국방부가 7개 기술 기업과 기밀 네트워크 AI 도입 계약을 발표 — SpaceX·OpenAI·Google·Microsoft·NVIDIA·AWS·Reflection이 모두 포함. SpaceX는 xAI 모델·Colossus 인프라를 통합 자산으로 펜타곤 진입, OpenAI는 5/14 'Trusted Access for Cyber' 프레임워크와 GPT-5.5 Cyber 단계 배포가 정부 영역 게이트웨이로 작동, Microsoft·AWS·Google은 각자 클라우드 + 자체·파트너 모델로 다중 입찰 구도. 동시에 Anthropic은 안전 가드레일 견지로 단독 배제 — 빅테크 AI 5사가 정부·방산 영역에서는 단일 라인업으로 정렬, 안전 거버넌스 노선이 시장 분기점 역할로 굳어지는 흐름. NVIDIA는 H100·B200·Vera Rubin 직접 공급 + Reflection 신규 등장으로 정부 인프라 칩 베이스 확장.",
+        time: "2026-05-02 07:40 KST" },
+    ]
+  },
+  {
     date: "2026-05-01 19:45 KST",
     summary: `Apple Cook→Ternus 9/1 승계 마지막 분기 콜에서 Ternus 소개·AI 로드맵 시험대 명확화
 Anthropic $40~50B 라운드 48시간 내 allocation 제출 요청·2주 내 마감 가능 — $850~900B 밸류
