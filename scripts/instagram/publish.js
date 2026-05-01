@@ -223,8 +223,24 @@ async function createChildWithRetry(igUserId, imageUrl, token) {
   throw lastErr;
 }
 
+// false-failure 감지: Meta API가 publish에서 fatal/2207085 등을 반환해도
+// 서버 측에서는 publish가 실제 커밋된 케이스가 있다(관측 사례: 2026-05-01 17:43 발행).
+// 컨테이너 status_code === 'PUBLISHED'면 실제 게시 성공으로 단정.
+async function isContainerPublished(containerId, token) {
+  try {
+    const j = await igGet(containerId, { fields: 'status_code,status' }, token);
+    return j.status_code === 'PUBLISHED';
+  } catch (e) {
+    // status 조회 자체가 실패하면 단정 못함 → false 반환해 정상 retry 흐름 유지
+    console.warn(`  ⚠ 컨테이너 status 조회 실패 (false-failure 감지 우회): ${e.message.slice(0, 100)}`);
+    return false;
+  }
+}
+
 // media_publish 재시도 — 발행 단계는 가장 크리티컬하므로 12회 + 백오프로 ~30분 커버.
 // rate limit 윈도우(보통 5~15분)와 Meta 측 일시 장애를 모두 통과시키는 게 목표.
+// 추가로 매 실패 후 컨테이너 status_code를 확인해 false-failure(API는 실패라 답하지만
+// 실제 게시는 성공한 케이스)를 자체 회복.
 async function publishWithRetry(igUserId, creationId, token) {
   const MAX_TRIES = 12;
   let lastErr;
@@ -233,12 +249,26 @@ async function publishWithRetry(igUserId, creationId, token) {
       return await igPost(`${igUserId}/media_publish`, { creation_id: creationId }, token);
     } catch (e) {
       lastErr = e;
+
+      // false-failure 감지 — API 실패 반환 직후 컨테이너 status가 PUBLISHED면 실제는 성공.
+      if (await isContainerPublished(creationId, token)) {
+        console.log(`  ✓ 컨테이너 status PUBLISHED 확인 — Meta API는 ${e.message.slice(0, 60)}을 반환했으나 실제 게시는 완료됨 (false-failure 자체 회복)`);
+        return { id: creationId, false_failure_recovered: true };
+      }
+
       if (!isTransientGraphError(e)) throw e;
       const wait = computeBackoffMs(e, i);
       console.warn(`  ↻ publish 재시도 ${i+1}/${MAX_TRIES} (${Math.round(wait/1000)}s 후): ${e.message.slice(0, 120)}`);
       await new Promise(r => setTimeout(r, wait));
     }
   }
+
+  // 모든 재시도 실패 — status 업데이트가 retry 루프보다 늦게 도달했을 수 있어 최종 한 번 더 확인.
+  if (await isContainerPublished(creationId, token)) {
+    console.log(`  ✓ 컨테이너 status PUBLISHED 확인 (전체 재시도 종료 후) — 실제 게시는 완료됨 (false-failure 자체 회복)`);
+    return { id: creationId, false_failure_recovered: true };
+  }
+
   throw lastErr;
 }
 
@@ -328,7 +358,11 @@ async function main() {
   await new Promise(r => setTimeout(r, 5000));
 
   const published = await publishWithRetry(IG_USER, parent.id, TOKEN);
-  console.log(`✓ 게시 완료: media_id=${published.id}`);
+  if (published.false_failure_recovered) {
+    console.log(`✓ 게시 완료 (false-failure 자체 회복): container_id=${parent.id}`);
+  } else {
+    console.log(`✓ 게시 완료: media_id=${published.id}`);
+  }
 }
 
 main().catch(err => {
