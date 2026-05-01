@@ -14,7 +14,7 @@
  *   META_ACCESS_TOKEN          IG Graph API 장기 토큰
  *   IG_BUSINESS_USER_ID        IG 비즈니스 계정 ID (숫자)
  *   SUPABASE_URL               https://xxx.supabase.co
- *   SUPABASE_SECRET_KEY        Supabase secret 키 (Storage 업로드용, RLS 우회)
+ *   BRIEFICK_SUPABASE_SECRET_KEY        Supabase secret 키 (Storage 업로드용, RLS 우회)
  *
  * 선택 ENV:
  *   IG_CAROUSEL_BUCKET   기본값 'instagram-carousel'
@@ -223,7 +223,7 @@ async function main() {
   const TOKEN     = reqEnv('META_ACCESS_TOKEN');
   const IG_USER   = reqEnv('IG_BUSINESS_USER_ID');
   const SB_URL    = reqEnv('SUPABASE_URL');
-  const SB_KEY    = reqEnv('SUPABASE_SECRET_KEY');
+  const SB_KEY    = reqEnv('BRIEFICK_SUPABASE_SECRET_KEY');
   const BUCKET    = process.env.IG_CAROUSEL_BUCKET || 'instagram-carousel';
 
   // 환경 점검 — 흔한 실수 (https:// 누락·legacy 키) 즉시 표면화
@@ -232,7 +232,7 @@ async function main() {
     console.warn(`  → 정상 예시: 'https://xxxxxxx.supabase.co'`);
   }
   if (!SB_KEY.startsWith('sb_secret_') && !SB_KEY.startsWith('eyJ')) {
-    console.warn(`⚠ SUPABASE_SECRET_KEY 포맷 의심 — sb_secret_... 또는 eyJ...(legacy) 시작이어야 함`);
+    console.warn(`⚠ BRIEFICK_SUPABASE_SECRET_KEY 포맷 의심 — sb_secret_... 또는 eyJ...(legacy) 시작이어야 함`);
   }
   console.log(`Supabase: ${SB_URL.replace(/\/$/, '')} · 버킷: ${BUCKET}`);
   console.log(`IG User: ${IG_USER}`);

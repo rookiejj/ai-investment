@@ -37,7 +37,7 @@ on conflict (id) do update set public = true;
 | `META_ACCESS_TOKEN` | Meta 앱 장기 액세스 토큰(60일) | 만료 전 갱신 필수 (아래 4번) |
 | `IG_BUSINESS_USER_ID` | 인스타 비즈니스 계정 ID(숫자) | Graph API에서 페이지 → IG 계정 ID 조회로 확보 |
 | `SUPABASE_URL` | `https://xxx.supabase.co` | Supabase 프로젝트 URL |
-| `SUPABASE_SECRET_KEY` | Supabase secret 키 (`sb_secret_...`) | Storage 업로드용. publishable 키 아님 |
+| `BRIEFICK_SUPABASE_SECRET_KEY` | Supabase secret 키 (`sb_secret_...`) | Storage 업로드용. publishable 키 아님. `SUPABASE_` 접두사는 예약어라 사용 불가, 프로젝트 namespace 부여 |
 | `UNSPLASH_ACCESS_KEY` | Unsplash API 액세스 키 | 슬라이드 BG 사진 검색·다운로드용. 미설정 시 다크 단색으로 폴백 |
 | `IG_CAROUSEL_BUCKET` | `instagram-carousel` | (선택) 버킷 이름 다르면 등록 |
 
