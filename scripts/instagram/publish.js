@@ -223,25 +223,57 @@ async function createChildWithRetry(igUserId, imageUrl, token) {
   throw lastErr;
 }
 
-// false-failure 감지: Meta API가 publish에서 fatal/2207085 등을 반환해도
-// 서버 측에서는 publish가 실제 커밋된 케이스가 있다(관측 사례: 2026-05-01 17:43 발행).
-// 컨테이너 status_code === 'PUBLISHED'면 실제 게시 성공으로 단정.
-async function isContainerPublished(containerId, token) {
+// 게시 성공 검증 — 두 단계 교차 확인.
+// Meta API가 publish 호출에 fatal/2207085 등을 반환해도 실제 게시는 커밋된 케이스가 있다.
+// 컨테이너 status_code 단일 검증은 신뢰도가 낮아(케이스 따라 PUBLISHED로 안 transition됨)
+// IG 사용자 최근 미디어 목록을 백업으로 사용해 실제 포스팅 존재 여부를 직접 확인한다.
+//
+//   - 1차: 컨테이너 status_code === 'PUBLISHED' (싸고 빠름, 일부 케이스만 잡힘)
+//   - 2차: IG /me/media에서 캡션 prefix 매칭 + 30분 이내 timestamp (가장 신뢰 가능)
+async function verifyPublished(igUserId, containerId, captionPrefix, token) {
+  // 1) 컨테이너 status_code — 가장 빠른 길
   try {
     const j = await igGet(containerId, { fields: 'status_code,status' }, token);
-    return j.status_code === 'PUBLISHED';
+    if (j.status_code === 'PUBLISHED') {
+      return { method: 'status_code', mediaId: containerId, detail: 'status_code=PUBLISHED' };
+    }
+    // 진단 로그: status_code가 PUBLISHED 아니면 어떤 값인지 노출
+    console.log(`  🔍 container status_code=${j.status_code || 'n/a'}`);
   } catch (e) {
-    // status 조회 자체가 실패하면 단정 못함 → false 반환해 정상 retry 흐름 유지
-    console.warn(`  ⚠ 컨테이너 status 조회 실패 (false-failure 감지 우회): ${e.message.slice(0, 100)}`);
-    return false;
+    console.warn(`  ⚠ status_code 조회 실패: ${e.message.slice(0, 80)}`);
   }
+
+  // 2) IG 최근 미디어 목록 — 캡션 prefix 매칭 + 최근 30분 이내 timestamp
+  // 캡션 첫 줄("2026-05-01 (금) 브리픽 데일리" 등)로 우리 게시물 식별.
+  if (captionPrefix) {
+    try {
+      const j = await igGet(`${igUserId}/media`, {
+        fields: 'id,caption,timestamp',
+        limit: 5,
+      }, token);
+      const items = j.data || [];
+      const cutoffMs = Date.now() - 30 * 60 * 1000;
+      for (const item of items) {
+        if (!item.timestamp || !item.caption) continue;
+        const ts = new Date(item.timestamp).getTime();
+        if (ts >= cutoffMs && item.caption.startsWith(captionPrefix)) {
+          return { method: 'recent_media', mediaId: item.id, detail: `media_id=${item.id} ts=${item.timestamp}` };
+        }
+      }
+      console.log(`  🔍 최근 미디어 ${items.length}개 중 매칭 없음 (prefix='${captionPrefix.slice(0, 40)}')`);
+    } catch (e) {
+      console.warn(`  ⚠ 최근 미디어 조회 실패: ${e.message.slice(0, 80)}`);
+    }
+  }
+
+  return null;
 }
 
 // media_publish 재시도 — 발행 단계는 가장 크리티컬하므로 12회 + 백오프로 ~30분 커버.
 // rate limit 윈도우(보통 5~15분)와 Meta 측 일시 장애를 모두 통과시키는 게 목표.
-// 추가로 매 실패 후 컨테이너 status_code를 확인해 false-failure(API는 실패라 답하지만
-// 실제 게시는 성공한 케이스)를 자체 회복.
-async function publishWithRetry(igUserId, creationId, token) {
+// 추가로 매 실패 직후 verifyPublished()로 false-failure(API는 실패라 답하지만
+// 실제 게시는 성공한 케이스)를 자체 회복 — verification 성공 시 retry 즉시 종료.
+async function publishWithRetry(igUserId, creationId, token, captionPrefix) {
   const MAX_TRIES = 12;
   let lastErr;
   for (let i = 0; i < MAX_TRIES; i++) {
@@ -250,10 +282,11 @@ async function publishWithRetry(igUserId, creationId, token) {
     } catch (e) {
       lastErr = e;
 
-      // false-failure 감지 — API 실패 반환 직후 컨테이너 status가 PUBLISHED면 실제는 성공.
-      if (await isContainerPublished(creationId, token)) {
-        console.log(`  ✓ 컨테이너 status PUBLISHED 확인 — Meta API는 ${e.message.slice(0, 60)}을 반환했으나 실제 게시는 완료됨 (false-failure 자체 회복)`);
-        return { id: creationId, false_failure_recovered: true };
+      // 매 실패 직후 게시 검증 — 실제 게시 성공이면 retry 즉시 종료 (대기 시간 절약)
+      const verify = await verifyPublished(igUserId, creationId, captionPrefix, token);
+      if (verify) {
+        console.log(`  ✓ 게시 검증 완료 (${verify.method}) — ${verify.detail} — Meta API는 실패 응답했으나 실제 게시 완료 (false-failure 자체 회복)`);
+        return { id: verify.mediaId, false_failure_recovered: true, verify };
       }
 
       if (!isTransientGraphError(e)) throw e;
@@ -263,10 +296,11 @@ async function publishWithRetry(igUserId, creationId, token) {
     }
   }
 
-  // 모든 재시도 실패 — status 업데이트가 retry 루프보다 늦게 도달했을 수 있어 최종 한 번 더 확인.
-  if (await isContainerPublished(creationId, token)) {
-    console.log(`  ✓ 컨테이너 status PUBLISHED 확인 (전체 재시도 종료 후) — 실제 게시는 완료됨 (false-failure 자체 회복)`);
-    return { id: creationId, false_failure_recovered: true };
+  // 모든 재시도 실패 — verification이 retry 루프보다 늦게 도달했을 가능성에 대비해 최종 한 번 더.
+  const finalVerify = await verifyPublished(igUserId, creationId, captionPrefix, token);
+  if (finalVerify) {
+    console.log(`  ✓ 게시 검증 완료 (${finalVerify.method}, retry 종료 후) — ${finalVerify.detail}`);
+    return { id: finalVerify.mediaId, false_failure_recovered: true, verify: finalVerify };
   }
 
   throw lastErr;
@@ -357,9 +391,11 @@ async function main() {
   // FINISHED 직후에도 IG 내부 큐가 마무리 안 된 경우가 흔해 5초 버퍼 후 publish 시도.
   await new Promise(r => setTimeout(r, 5000));
 
-  const published = await publishWithRetry(IG_USER, parent.id, TOKEN);
+  // verifyPublished()용 캡션 prefix — 첫 줄(날짜+브리픽 데일리 헤더)이 매일 고유해 매칭 키로 사용.
+  const captionPrefix = caption.split('\n')[0].trim();
+  const published = await publishWithRetry(IG_USER, parent.id, TOKEN, captionPrefix);
   if (published.false_failure_recovered) {
-    console.log(`✓ 게시 완료 (false-failure 자체 회복): container_id=${parent.id}`);
+    console.log(`✓ 게시 완료 (false-failure 자체 회복, ${published.verify?.method || 'unknown'}): ${published.verify?.detail || `container_id=${parent.id}`}`);
   } else {
     console.log(`✓ 게시 완료: media_id=${published.id}`);
   }
