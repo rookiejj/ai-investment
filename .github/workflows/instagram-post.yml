@@ -27,6 +27,12 @@ env:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    # push 트리거는 자동 갱신 커밋(`데이터 자동 갱신 …` 또는 `데이터 정합성 강제 갱신 …`)에만 발행한다.
+    # 사람이 수동으로 데이터·코드 수정한 커밋이 의도하지 않은 시간대 발행으로 이어지지 않게 게이팅.
+    # 수동 발행이 필요하면 workflow_dispatch (Actions UI 또는 `gh workflow run`)으로 호출.
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'push' && (startsWith(github.event.head_commit.message, '데이터 자동 갱신') || startsWith(github.event.head_commit.message, '데이터 정합성 강제 갱신')))
     # publish.js retry 강화로 worst-case ~30분 대기 가능 → 50분으로 여유.
     timeout-minutes: 50
     steps:
