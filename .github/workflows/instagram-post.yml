@@ -7,6 +7,15 @@ on:
       - 'data/*-update.js'
   workflow_dispatch:
     inputs:
+      mode:
+        description: '발행 모드 (all=캐러셀+Reels / carousel=캐러셀만 / reels=Reels만)'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - 'all'
+          - 'carousel'
+          - 'reels'
       dry_run:
         description: '연습 모드 (true=게시 안 함, 슬라이드만 만들고 캡션 출력)'
         required: false
@@ -87,10 +96,9 @@ jobs:
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
         run: node scripts/instagram/render-slides.js
 
-      - name: Reels 렌더 (Phase 1 dry-run, 발행 안 함)
+      - name: Reels 렌더
         if: steps.filter.outputs.skip != 'true'
         run: node scripts/instagram/render-reels.js
-        continue-on-error: true
 
       - name: 슬라이드·Reels 아티팩트 업로드 (디버깅용, 7일 보관)
         if: steps.filter.outputs.skip != 'true'
@@ -109,4 +117,6 @@ jobs:
           BRIEFICK_SUPABASE_SECRET_KEY: ${{ secrets.BRIEFICK_SUPABASE_SECRET_KEY }}
           IG_CAROUSEL_BUCKET: ${{ secrets.IG_CAROUSEL_BUCKET }}
           IG_DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '' }}
+          # workflow_dispatch에서만 mode 인자 받음, push 트리거는 'all' 기본값 적용.
+          IG_MODE: ${{ github.event.inputs.mode || 'all' }}
         run: node scripts/instagram/publish.js

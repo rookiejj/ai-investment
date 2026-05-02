@@ -50,7 +50,7 @@ function kstNowDatePath() {
 }
 
 // 1차: supabase-js 사용. 실패 시 2차: raw fetch로 재시도해서 supabase-js 레이어 문제와 서버 레이어 문제를 구분.
-async function uploadToStorage(supabase, bucket, datePath, file, ctx) {
+async function uploadToStorage(supabase, bucket, datePath, file, ctx, contentType = 'image/png') {
   const local = path.join(OUT_DIR, file);
   const buf = fs.readFileSync(local);
   const remote = `posts/${datePath}/${file}`;
@@ -59,7 +59,7 @@ async function uploadToStorage(supabase, bucket, datePath, file, ctx) {
   try {
     const { error } = await supabase.storage
       .from(bucket)
-      .upload(remote, buf, { contentType: 'image/png', upsert: true });
+      .upload(remote, buf, { contentType, upsert: true });
     if (error) {
       console.warn(`  ⚠ supabase-js 업로드 실패: ${error.message} (status=${error.statusCode || 'n/a'})`);
       // 2차로 진행
@@ -85,7 +85,7 @@ async function uploadToStorage(supabase, bucket, datePath, file, ctx) {
       headers: {
         'Authorization': `Bearer ${ctx.key}`,
         'apikey': ctx.key,
-        'Content-Type': 'image/png',
+        'Content-Type': contentType,
         'x-upsert': 'true',
         'cache-control': 'max-age=3600',
       },
@@ -135,12 +135,13 @@ async function igGet(endpoint, params, token) {
   return json;
 }
 
-// 컨테이너 status_code가 FINISHED 될 때까지 폴링 (최대 90초)
-// CAROUSEL parent는 children 7장 묶음 처리라 더 길게 잡는다.
-async function waitContainerReady(igUserId, containerId, token, label) {
-  const MAX_TRIES = 30;       // 30회 × 3초 = 최대 90초
+// 컨테이너 status_code가 FINISHED 될 때까지 폴링.
+// 캐러셀 children: 90초로 충분. CAROUSEL parent: 같은 90초.
+// REELS: 비디오 처리에 시간이 더 걸려 default 5분(300초)으로 잡는다.
+async function waitContainerReady(igUserId, containerId, token, label, maxSec = 90) {
   const INTERVAL_MS = 3000;
-  for (let i = 0; i < MAX_TRIES; i++) {
+  const maxTries = Math.ceil((maxSec * 1000) / INTERVAL_MS);
+  for (let i = 0; i < maxTries; i++) {
     const j = await igGet(containerId, { fields: 'status_code,status' }, token);
     if (j.status_code === 'FINISHED') return;
     if (j.status_code === 'ERROR' || j.status_code === 'EXPIRED') {
@@ -148,7 +149,7 @@ async function waitContainerReady(igUserId, containerId, token, label) {
     }
     await new Promise(r => setTimeout(r, INTERVAL_MS));
   }
-  console.warn(`경고: ${label} 컨테이너 status 폴링 90초 타임아웃, publish 강행`);
+  console.warn(`경고: ${label} 컨테이너 status 폴링 ${maxSec}초 타임아웃, publish 강행`);
 }
 
 // IG Graph API transient 에러 분류.
@@ -217,6 +218,31 @@ async function createChildWithRetry(igUserId, imageUrl, token) {
       if (!isTransientGraphError(e)) throw e;
       const wait = computeBackoffMs(e, i);
       console.warn(`  ↻ child 재시도 ${i+1}/${MAX_TRIES} (${Math.round(wait/1000)}s 후): ${e.message.slice(0, 120)}`);
+      await new Promise(r => setTimeout(r, wait));
+    }
+  }
+  throw lastErr;
+}
+
+// Reels 컨테이너 생성 재시도 — children과 동일 패턴, REELS media_type 사용.
+// Reels는 children과 달리 caption도 컨테이너 단계에서 함께 전달.
+// share_to_feed=true로 피드에도 표시 (기본 false면 Reels 탭에만 노출).
+async function createReelsContainerWithRetry(igUserId, videoUrl, caption, token) {
+  const MAX_TRIES = 8;
+  let lastErr;
+  for (let i = 0; i < MAX_TRIES; i++) {
+    try {
+      return await igPost(`${igUserId}/media`, {
+        media_type: 'REELS',
+        video_url: videoUrl,
+        caption,
+        share_to_feed: 'true',
+      }, token);
+    } catch (e) {
+      lastErr = e;
+      if (!isTransientGraphError(e)) throw e;
+      const wait = computeBackoffMs(e, i);
+      console.warn(`  ↻ Reels 컨테이너 재시도 ${i+1}/${MAX_TRIES} (${Math.round(wait/1000)}s 후): ${e.message.slice(0, 120)}`);
       await new Promise(r => setTimeout(r, wait));
     }
   }
@@ -306,14 +332,105 @@ async function publishWithRetry(igUserId, creationId, token, captionPrefix) {
   throw lastErr;
 }
 
+async function publishCarousel({ supabase, ctx, BUCKET, datePath, IG_USER, TOKEN, caption }) {
+  console.log(`[캐러셀 1/3] Storage 업로드 → ${BUCKET}/posts/${datePath}/`);
+  const publicUrls = [];
+  for (const f of SLIDE_FILES) {
+    const url = await uploadToStorage(supabase, BUCKET, datePath, f, ctx, 'image/png');
+    console.log(`  ✓ ${f} → ${url}`);
+    publicUrls.push(url);
+  }
+  console.log('  · Storage→IG 안정화 5초 대기');
+  await new Promise(r => setTimeout(r, 5000));
+
+  console.log('[캐러셀 2/3] IG children 컨테이너 생성');
+  const childrenIds = [];
+  for (let i = 0; i < publicUrls.length; i++) {
+    const j = await createChildWithRetry(IG_USER, publicUrls[i], TOKEN);
+    console.log(`  ✓ child ${i+1}/7 id=${j.id}`);
+    childrenIds.push(j.id);
+  }
+  for (let i = 0; i < childrenIds.length; i++) {
+    await waitContainerReady(IG_USER, childrenIds[i], TOKEN, `child ${i+1}`);
+  }
+
+  console.log('[캐러셀 3/3] CAROUSEL 부모 컨테이너 생성 + publish');
+  const parent = await igPost(`${IG_USER}/media`, {
+    media_type: 'CAROUSEL',
+    children: childrenIds.join(','),
+    caption,
+  }, TOKEN);
+  console.log(`  ✓ parent id=${parent.id}`);
+  await waitContainerReady(IG_USER, parent.id, TOKEN, 'parent');
+  await new Promise(r => setTimeout(r, 5000));
+
+  const captionPrefix = caption.split('\n')[0].trim();
+  const published = await publishWithRetry(IG_USER, parent.id, TOKEN, captionPrefix);
+  if (published.false_failure_recovered) {
+    console.log(`✓ 캐러셀 게시 완료 (false-failure 자체 회복, ${published.verify?.method || 'unknown'}): ${published.verify?.detail || `container_id=${parent.id}`}`);
+  } else {
+    console.log(`✓ 캐러셀 게시 완료: media_id=${published.id}`);
+  }
+}
+
+async function publishReels({ supabase, ctx, BUCKET, datePath, IG_USER, TOKEN, caption }) {
+  const reelsFile = 'reels.mp4';
+  const reelsLocal = path.join(OUT_DIR, reelsFile);
+  if (!fs.existsSync(reelsLocal)) {
+    throw new Error(`Reels mp4 없음: ${reelsLocal}. render-reels.js 먼저 실행해야 함.`);
+  }
+  const stat = fs.statSync(reelsLocal);
+  console.log(`Reels 파일: ${reelsFile} (${(stat.size / 1024 / 1024).toFixed(2)} MB)`);
+
+  console.log(`[Reels 1/3] Storage 업로드 → ${BUCKET}/posts/${datePath}/`);
+  const reelsUrl = await uploadToStorage(supabase, BUCKET, datePath, reelsFile, ctx, 'video/mp4');
+  console.log(`  ✓ ${reelsFile} → ${reelsUrl}`);
+  console.log('  · Storage→IG 안정화 5초 대기');
+  await new Promise(r => setTimeout(r, 5000));
+
+  console.log('[Reels 2/3] REELS 컨테이너 생성');
+  const container = await createReelsContainerWithRetry(IG_USER, reelsUrl, caption, TOKEN);
+  console.log(`  ✓ container id=${container.id}`);
+
+  // Reels는 비디오 인코딩에 시간이 걸려 5분까지 대기.
+  console.log('[Reels 3/3] FINISHED 대기 후 publish');
+  await waitContainerReady(IG_USER, container.id, TOKEN, 'reels', 300);
+  await new Promise(r => setTimeout(r, 5000));
+
+  const captionPrefix = caption.split('\n')[0].trim();
+  const published = await publishWithRetry(IG_USER, container.id, TOKEN, captionPrefix);
+  if (published.false_failure_recovered) {
+    console.log(`✓ Reels 게시 완료 (false-failure 자체 회복, ${published.verify?.method || 'unknown'}): ${published.verify?.detail || `container_id=${container.id}`}`);
+  } else {
+    console.log(`✓ Reels 게시 완료: media_id=${published.id}`);
+  }
+}
+
 async function main() {
-  // 0) 입력 검증
+  // 0) 모드·입력 검증
+  // IG_MODE: 'all' (default) · 'carousel' · 'reels'
+  const mode = (process.env.IG_MODE || 'all').toLowerCase();
+  if (!['all', 'carousel', 'reels'].includes(mode)) {
+    throw new Error(`IG_MODE 잘못됨: '${mode}'. all·carousel·reels 중 하나.`);
+  }
+  console.log(`발행 모드: ${mode}`);
+
   if (!fs.existsSync(path.join(OUT_DIR, 'meta.json'))) {
     throw new Error('meta.json 없음. 먼저 render-slides.js를 실행해.');
   }
-  for (const f of SLIDE_FILES) {
-    if (!fs.existsSync(path.join(OUT_DIR, f))) throw new Error(`슬라이드 누락: ${f}`);
+
+  // 모드별 입력 사전 검증
+  if (mode === 'all' || mode === 'carousel') {
+    for (const f of SLIDE_FILES) {
+      if (!fs.existsSync(path.join(OUT_DIR, f))) throw new Error(`슬라이드 누락: ${f}`);
+    }
   }
+  if (mode === 'all' || mode === 'reels') {
+    if (!fs.existsSync(path.join(OUT_DIR, 'reels.mp4'))) {
+      throw new Error('reels.mp4 없음. render-reels.js 먼저 실행해야 함.');
+    }
+  }
+
   const meta = JSON.parse(fs.readFileSync(path.join(OUT_DIR, 'meta.json'), 'utf8'));
   const caption = buildCaption(meta);
   const dryRun = process.env.IG_DRY_RUN === '1';
@@ -344,60 +461,19 @@ async function main() {
   console.log(`Supabase: ${SB_URL.replace(/\/$/, '')} · 버킷: ${BUCKET}`);
   console.log(`IG User: ${IG_USER}`);
 
-  // 1) Storage 업로드
   const supabase = createClient(SB_URL, SB_KEY, { auth: { persistSession: false } });
   const datePath = kstNowDatePath();
-  console.log(`[1/3] Storage 업로드 → ${BUCKET}/posts/${datePath}/`);
   const ctx = { url: SB_URL.replace(/\/$/, ''), key: SB_KEY };
-  // 키 형식 진단 (값 노출 X — 접두사·길이만)
   const prefix = SB_KEY.slice(0, 10);
   console.log(`  · 키 진단: 접두사='${prefix}...' 길이=${SB_KEY.length}`);
-  const publicUrls = [];
-  for (const f of SLIDE_FILES) {
-    const url = await uploadToStorage(supabase, BUCKET, datePath, f, ctx);
-    console.log(`  ✓ ${f} → ${url}`);
-    publicUrls.push(url);
+
+  const ctxArg = { supabase, ctx, BUCKET, datePath, IG_USER, TOKEN, caption };
+
+  if (mode === 'carousel' || mode === 'all') {
+    await publishCarousel(ctxArg);
   }
-
-  // Storage 업로드 직후 IG fetcher가 Cloudflare 캐시 워밍 전 fetch 시도 시
-  // "unknown error"가 자주 발생 — 5초 버퍼.
-  console.log('  · Storage→IG 안정화 5초 대기');
-  await new Promise(r => setTimeout(r, 5000));
-
-  // 2) children 컨테이너 7개 (transient 에러 시 자동 재시도)
-  console.log('[2/3] IG children 컨테이너 생성');
-  const childrenIds = [];
-  for (let i = 0; i < publicUrls.length; i++) {
-    const j = await createChildWithRetry(IG_USER, publicUrls[i], TOKEN);
-    console.log(`  ✓ child ${i+1}/7 id=${j.id}`);
-    childrenIds.push(j.id);
-  }
-
-  // children FINISHED 대기
-  for (let i = 0; i < childrenIds.length; i++) {
-    await waitContainerReady(IG_USER, childrenIds[i], TOKEN, `child ${i+1}`);
-  }
-
-  // 3) CAROUSEL 부모
-  console.log('[3/3] CAROUSEL 부모 컨테이너 생성 + publish');
-  const parent = await igPost(`${IG_USER}/media`, {
-    media_type: 'CAROUSEL',
-    children: childrenIds.join(','),
-    caption,
-  }, TOKEN);
-  console.log(`  ✓ parent id=${parent.id}`);
-
-  await waitContainerReady(IG_USER, parent.id, TOKEN, 'parent');
-  // FINISHED 직후에도 IG 내부 큐가 마무리 안 된 경우가 흔해 5초 버퍼 후 publish 시도.
-  await new Promise(r => setTimeout(r, 5000));
-
-  // verifyPublished()용 캡션 prefix — 첫 줄(날짜+브리픽 데일리 헤더)이 매일 고유해 매칭 키로 사용.
-  const captionPrefix = caption.split('\n')[0].trim();
-  const published = await publishWithRetry(IG_USER, parent.id, TOKEN, captionPrefix);
-  if (published.false_failure_recovered) {
-    console.log(`✓ 게시 완료 (false-failure 자체 회복, ${published.verify?.method || 'unknown'}): ${published.verify?.detail || `container_id=${parent.id}`}`);
-  } else {
-    console.log(`✓ 게시 완료: media_id=${published.id}`);
+  if (mode === 'reels' || mode === 'all') {
+    await publishReels(ctxArg);
   }
 }
 
