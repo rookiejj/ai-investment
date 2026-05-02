@@ -6,6 +6,25 @@
  */
 const UPDATES = [
   {
+    date: "2026-05-03 07:30 KST",
+    summary: `OpenAI·Anthropic 5/2 美 의회 사이버 AI 합동 브리핑 - 상하원·백악관 동시 청취
+백악관 Anthropic '공급망 위험' 지정 우회 가이던스 작성 중 - 펜타곤 배제 후 5일 만 복원 시도
+GLM-4.7 Zhipu AI 출시 - 환각률 1.2%·Huawei Ascend 전량 학습·입력 $0.11/M 토큰
+Anthropic $900B 라운드 보드 미팅 임박 + 의회·백악관 양면 복원 시그널 동시 가속
+5/4 美 시장 재개 - PLTR 5/4·AMD 5/5 실적 위크 + AI 거버넌스 재편 동시 진행`,
+    changes: [
+      { type: "거버넌스", sector: "OpenAI",
+        detail: "OpenAI·Anthropic(美 의회 사이버 AI 합동 브리핑). 5/2 OpenAI·Anthropic이 상원·하원 위원회와 백악관에 사이버 역량 보유 AI 모델 공동 브리핑 실시. House Homeland Security 위원장 Andrew Garbarino는 '의회가 올바른 질문을 던지도록 보장하는 것이 목적'이라고 명시. 4/30 OpenAI GPT-5.5 Cyber 'critical defenders' 한정 단계 배포·4/7 Anthropic Project Glasswing 비공개 라인이 입법부 차원의 사전 검토 단계로 격상되는 흐름 - 5/1 펜타곤 7사 계약 + Anthropic 단독 배제 직후 양사가 동일 무대에서 정부 신뢰 구축으로 동조 전환. AI 보안 거버넌스가 행정부 단독에서 입법부·행정부 양면 통제로 확장되는 분기점, OpenAI·Anthropic 모두 IPO 직전 의회·정부 책임성 시그널 적극 발신.",
+        time: "2026-05-03 07:30 KST" },
+      { type: "거버넌스", sector: "Anthropic",
+        detail: "Anthropic(백악관 공급망 우회 가이던스 작성). 5/2 The Cyber Wire 보도 - 백악관이 정부 기관들이 Anthropic의 '공급망 위험' 지정을 우회해 Mythos 포함 고급 AI 모델을 사용할 수 있도록 별도 가이던스를 작성 중. 5/1 펜타곤 7사 계약에서 단독 배제된 지 5일 만에 트럼프 행정부가 사실상 복원 절차에 착수하며 '체면 유지하면서 다시 들이는' 우회 경로를 모색하는 흐름. 동시에 5/2 의회 합동 브리핑에 OpenAI와 동일 무대에 등장하며 입법부 차원에서도 정부 신뢰 회복 단계로 정렬. 4/30 TechCrunch '$900B 라운드 2주 내 마감 가능' 보도 + 5월 보드 미팅 임박과 결합돼 펀딩·정부 영역 양면에서 상승 신호가 동시 가속 - LLM 매출 점유율 31.4% 1위 + 의회·백악관 복원 + IPO 직전 펀딩 마무리의 트리플 트리거 정렬 가능성.",
+        time: "2026-05-03 07:30 KST" },
+      { type: "모델 출시", sector: "Mistral AI",
+        detail: "Zhipu AI GLM-4.7(중국 발 프론티어 효율 베팅, 본 수록 라인 외 외부 동향). 5월 초 Zhipu AI가 GLM-4.7을 공개 - Huawei Ascend 실리콘 전량 학습 + 환각률 1.2%로 프론티어 라보 중 최저 보고치, 입력 토큰 $0.11/M으로 Claude Opus 4.7($15) 대비 약 1/130 수준의 가격 우위. 미국 칩 의존도 0% + 환각 정량화 우위가 결합돼 EU·아시아·신흥국 데이터 주권 시장에서 Mistral·Anthropic·OpenAI에 가격·국적 양면 압박. 본 수록 10사에 미포함이지만 Mistral의 EU 주권 + 효율 라인업과 직접 경쟁 구도, 'NVIDIA 의존 없는 프론티어 모델' 가능성을 외부 정량으로 처음 검증한 시그널. NVIDIA·Anthropic·OpenAI의 수직 통합 라인 vs Huawei·Zhipu 라인의 본격 분기점.",
+        time: "2026-05-03 07:30 KST" },
+    ]
+  },
+  {
     date: "2026-05-02 07:40 KST",
     summary: `Pentagon 7개 빅테크와 기밀 네트워크 AI 도입 - SpaceX·OpenAI·Google·MSFT·NVIDIA·AWS·Reflection
 Anthropic 펜타곤 딜에서 제외 - 안전 가드레일 요구로 트럼프 행정부와 갈등 재부각
