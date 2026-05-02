@@ -61,9 +61,10 @@ function buildHeader(meta) {
 function buildCTA() {
   // 인스타 피드 캡션의 URL은 클릭 안 됨 → Bio 링크로 유도
   return [
-    '매일 아침 5개 시장의 핵심만 정리.',
+    '매일 아침 카톡으로 5개 시장의 핵심만 받아보기.',
     '',
     '👉 전체 보기 — 프로필 링크 클릭',
+    '',
     `📷 @${HANDLE}`,
     `🔗 ${SITE_URL.replace(/^https?:\/\//, '')}`,
   ].join('\n');
@@ -102,10 +103,11 @@ function hasAnyPhoto(meta) {
 function buildCaption(meta) {
   const header   = buildHeader(meta);
   const cta      = buildCTA();
-  const credit   = hasAnyPhoto(meta) ? '\n\n📸 이미지: Unsplash' : '';
+  // 사진 출처 표기 — 아이콘 없이 절제된 한 줄, 태그 블록 뒤 빈 줄 한 칸 두고 배치
+  const credit   = hasAnyPhoto(meta) ? '\n\n이미지: Unsplash' : '';
   const tagBlock = buildHashtagBlock(meta);
 
-  return `${header}\n\n${cta}${credit}\n\n${tagBlock}`;
+  return `${header}\n\n${cta}\n\n${tagBlock}${credit}`;
 }
 
 module.exports = { buildCaption };
