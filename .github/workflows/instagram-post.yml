@@ -66,11 +66,11 @@ jobs:
         with:
           node-version: '22'
 
-      - name: 한글·이모지 폰트 설치
+      - name: 한글·이모지 폰트 + ffmpeg 설치
         if: steps.filter.outputs.skip != 'true'
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-color-emoji
+          sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-color-emoji ffmpeg
           fc-cache -fv
 
       - name: npm 의존성 설치
@@ -87,7 +87,12 @@ jobs:
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
         run: node scripts/instagram/render-slides.js
 
-      - name: 슬라이드 아티팩트 업로드 (디버깅용, 7일 보관)
+      - name: Reels 렌더 (Phase 1 dry-run, 발행 안 함)
+        if: steps.filter.outputs.skip != 'true'
+        run: node scripts/instagram/render-reels.js
+        continue-on-error: true
+
+      - name: 슬라이드·Reels 아티팩트 업로드 (디버깅용, 7일 보관)
         if: steps.filter.outputs.skip != 'true'
         uses: actions/upload-artifact@v4
         with:
