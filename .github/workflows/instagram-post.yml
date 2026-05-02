@@ -69,6 +69,31 @@ jobs:
             echo "skip=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: 발행 모드 결정 (KST 시간대 기반)
+        id: mode
+        if: steps.filter.outputs.skip != 'true'
+        run: |
+          # workflow_dispatch는 사용자가 지정한 mode를 그대로 사용.
+          # push (자동 갱신 커밋)는 KST 시간대로 분기:
+          #   - 오전 시간(05~12시) → carousel만 (정적 게시물)
+          #   - 오후 시간(13~23시) → reels만 (영상)
+          #   - 새벽(00~04시) → all (운영자 수동 push 등 예외 케이스 대비)
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            MODE="${{ github.event.inputs.mode || 'all' }}"
+            echo "workflow_dispatch — 사용자 지정 mode=$MODE"
+          else
+            HOUR=$(TZ=Asia/Seoul date '+%H')
+            if [ "$HOUR" -ge 5 ] && [ "$HOUR" -le 12 ]; then
+              MODE="carousel"
+            elif [ "$HOUR" -ge 13 ] && [ "$HOUR" -le 23 ]; then
+              MODE="reels"
+            else
+              MODE="all"
+            fi
+            echo "push 트리거 — KST ${HOUR}시 → mode=$MODE"
+          fi
+          echo "mode=$MODE" >> $GITHUB_OUTPUT
+
       - name: Setup Node
         if: steps.filter.outputs.skip != 'true'
         uses: actions/setup-node@v4
@@ -97,7 +122,7 @@ jobs:
         run: node scripts/instagram/render-slides.js
 
       - name: Reels 렌더
-        if: steps.filter.outputs.skip != 'true'
+        if: steps.filter.outputs.skip != 'true' && steps.mode.outputs.mode != 'carousel'
         run: node scripts/instagram/render-reels.js
 
       - name: 슬라이드·Reels 아티팩트 업로드 (디버깅용, 7일 보관)
@@ -117,6 +142,6 @@ jobs:
           BRIEFICK_SUPABASE_SECRET_KEY: ${{ secrets.BRIEFICK_SUPABASE_SECRET_KEY }}
           IG_CAROUSEL_BUCKET: ${{ secrets.IG_CAROUSEL_BUCKET }}
           IG_DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '' }}
-          # workflow_dispatch에서만 mode 인자 받음, push 트리거는 'all' 기본값 적용.
-          IG_MODE: ${{ github.event.inputs.mode || 'all' }}
+          # 발행 모드 결정 step에서 산출된 값 사용.
+          IG_MODE: ${{ steps.mode.outputs.mode }}
         run: node scripts/instagram/publish.js
