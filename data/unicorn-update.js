@@ -3,16 +3,10 @@ const updates = [
   {
     date: "2026-05-02 07:50 KST",
     summary: `Figure AI Series D $48B 클로징 확정 - Amazon 20K + Mercedes 50K 누적 70K+ 유닛 수주
-Anthropic 펜타곤 7사 AI 딜 단독 배제 - 안전 가드레일 견지로 트럼프 행정부 갈등 잔존
-Anthropic Q1 글로벌 LLM 매출 점유율 31.4% - OpenAI 29% 단독 추월 첫 기록
-Cursor SpaceX $60B 옵션 + 별도 $50B 라운드 ($2B 조달) Andreessen·Thrive·NVIDIA 동시 진행
-Alphabet Q1 GAAP 순익 $62.6B 중 $28.7B가 Anthropic 등 사적 지분 평가익에서 발생`,
+Cursor SpaceX $60B 옵션 + 별도 $50B 라운드 ($2B 조달) Andreessen·Thrive·NVIDIA 동시 진행`,
     changes: [
       { type: "펀딩", sector: "우주·모빌리티·방산",
         detail: "Figure AI(Series D $48B 클로징). 4월 말 Series D 클로징 확정으로 밸류가 직전 Series C $39B 대비 +23% 업라운드, $48B로 진입. Amazon 20,000대 + Mercedes 50,000대 = 누적 70,000+ 유닛 주문 파이프라인이 펀딩 근거로 명시 - 2029년까지 $14B+ 매출 가시성. 생산 캐파는 월 1,200대에서 Q4 5,000대 목표로 4배 확장 트랙, BMW 공장에서 누적 90,000+ 부품 로딩 진척. 휴머노이드 로봇 카테고리의 단일 톱 펀딩 시그널이며 Tesla Optimus·Apptronik·1X·Agility 동반 카테고리에 밸류·캐파 베이스라인 상향. SpaceX·Anduril 트랙과 결합해 우주·모빌리티·방산 카테고리에서 펀딩 흐름 우호 환경 유지.",
-        time: "2026-05-02 07:50 KST" },
-      { type: "정보 갱신", sector: "엔터프라이즈 SW",
-        detail: "Anthropic(매출 1위 + 펜타곤 배제 + 회계 채널 노출). 5/1 The Register·복수 매체가 Counterpoint Research 인용으로 Anthropic Q1 글로벌 LLM 매출 점유율 31.4%·OpenAI 29% 단독 추월 첫 기록을 공식 정량화. 동시에 美 국방부 7사 AI 계약(SpaceX·OpenAI·Google·MSFT·NVIDIA·AWS·Reflection) 명단에서 Anthropic은 단독 배제 - 안전 가드레일 견지로 트럼프 행정부 블랙리스트 잔존, 백악관 재논의는 진행. Fortune 5/1 보도로 Alphabet Q1 GAAP 순익 $62.6B 중 약 $28.7B가 Anthropic 등 사적 지분 평가익에서 발생함이 외부 정량화돼 빅테크 GAAP 회계 채널을 통한 Anthropic 가치 전이가 가시화. TechCrunch 4/30 추가 보도로 $40~50B / $850~900B 라운드가 최대 2주 내 마감 가능 페이스 - 5월 보드 미팅 결정과 정렬. 매출 1위 + 회계 채널 외부 검증 + 펀딩 가속의 트리플 펀더멘털 입증.",
         time: "2026-05-02 07:50 KST" },
       { type: "펀딩", sector: "엔터프라이즈 SW",
         detail: "Cursor(이중 자본 트랙). 4/21 SpaceX가 Cursor 모회사 Anysphere에 대한 $60B 인수 옵션 계약 체결로 단일 인수자 락업을 선제 확보, 동시에 Cursor 별도 자체 라운드도 $2B 조달 / $50B+ 밸류로 협상 진행 중 - Andreessen Horowitz가 공동 리드, NVIDIA·Thrive Capital 동반 참여 트랙. Cursor는 ARR이 1년 만에 $2.5B → $9B → $29.3B → $50B+로 6배 가속, 4/24 Business Insider가 보도한 xAI·Mistral 3자 파트너십 협의는 SpaceX 옵션 클로징 전제하의 Colossus 학습 협력으로 정렬. SpaceX는 6월 IPO 클로징 후로 Cursor 인수 결정을 미뤄 confidential S-1 추가 업데이트 부담을 회피하는 구조 - IPO 직후 Q3 결정이 가장 유력한 시나리오로 굳어지는 흐름.",
