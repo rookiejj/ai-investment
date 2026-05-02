@@ -37,12 +37,14 @@ ai-investment/
 │   ├── generate-message.js       ← 로컬 친구톡 메시지 미리보기
 │   ├── send-friendtalk.js        ← 로컬 수동 발송 (디버깅)
 │   ├── subscribers.example.json
-│   └── instagram/                ← 인스타그램 캐러셀 자동 게시
+│   └── instagram/                ← 인스타그램 캐러셀·Reels 자동 게시
 │       ├── template.html         ← 1080×1350 슬라이드 HTML 템플릿 (다크 + 사진 BG)
 │       ├── render-slides.js      ← Playwright로 5탭 최신 summary → PNG 7장 렌더
+│       ├── render-reels.js      ← ffmpeg slideshow + crossfade로 1080×1920 Reels mp4 생성
 │       ├── image-source.js       ← Unsplash 키워드 매칭·인물 필터·중복 방지
 │       ├── caption.js            ← 캡션·해시태그 (브랜드 태그 보존·30개 한도)
-│       ├── publish.js            ← Supabase Storage 업로드 + IG Graph API 게시
+│       ├── publish.js            ← Supabase Storage 업로드 + IG Graph API 게시 (캐러셀·Reels)
+│       ├── music/                ← Reels 배경음악 (royalty-free mp3)
 │       └── SETUP.md              ← 시크릿·버킷 셋업 가이드
 ├── .github/workflows/
 │   └── instagram-post.yml        ← data/*-update.js 푸시 시 자동 게시 (jp 변경 제외)
@@ -119,18 +121,31 @@ UI 노출 5개 탭 (일본 주식 70항목은 데이터 파일만 보존).
 - 미수신자 안내 알림톡 버튼 도착지
 
 ### 콘텐츠 자동 갱신
-- Claude Opus 4.7 원격 에이전트가 매일 3회 주기(KST 07:30 / 13:30 / 19:30 부근)로 5개 탭 데이터 갱신·커밋·푸시
+- Claude Opus 4.7 원격 에이전트(`trig_016nvC9rVppRnQ9nFZeDjnP8`)가 매일 2회(KST 07:00 / 19:00)로 5개 탭 데이터 갱신·커밋·푸시 — 13시 슬롯은 2026-05-02부터 비활성화
 
-### 인스타그램 캐러셀 자동 게시 (`@briefick`)
-- **트리거**: `main` 브랜치에 `data/*-update.js` 푸시 (단, `jp-stocks-update.js` 단독 변경 시 스킵)
-- **흐름**: GitHub Actions 워크플로 1회 실행 (~3~5분)
+### 인스타그램 자동 게시 (`@briefick`)
+- **시간대별 포맷 분기** (push 트리거 한정, 자동 갱신 커밋에만 발행):
+  - **오전 자동 갱신(07시)** → 캐러셀(정적 게시물)만
+  - **오후 자동 갱신(19시)** → Reels(영상)만
+  - 알고리즘 최적 cadence(하루 1~2개)에 맞춰 4개/일 → 2개/일로 분리
+- **트리거 게이팅**: 커밋 메시지가 `데이터 자동 갱신 …` 또는 `데이터 정합성 강제 갱신 …`으로 시작할 때만 발행. 사람이 수동 편집한 커밋은 발행 안 됨 (의도하지 않은 시간대 발행 방지). `jp-stocks-update.js` 단독 변경도 스킵.
+- **수동 발행**: `/publish [mode] [dry]` 슬래시 명령 또는 Actions UI → Run workflow.
+  - mode: `all`(default) / `carousel` / `reels`
+  - 예: `/publish reels`, `/publish carousel dry`, `/publish dry`
+- **캐러셀 흐름** (~3~5분):
   1. 5탭 최신 `summary` 줄 단위 파싱 → 첫 불릿 키워드로 Unsplash 검색
   2. 인물 사진 필터(태그에 person/face/man 등) + 중복 방지(같은 게시물 내 photo.id 공유)
   3. Playwright로 1080×1350 PNG 7장 렌더 (표지 1 + 5탭 + CTA, 다크 + 사진 BG)
   4. Supabase Storage(`instagram-carousel/posts/YYYY-MM-DD/HHMMSS/`)에 업로드 — CDN 캐시 회피용 시각 경로
   5. Instagram Graph API 3-step (children 컨테이너 → CAROUSEL parent → media_publish), transient 에러 시 자동 재시도
-- **캡션**: 헤더(날짜·브랜드) + 프로필 링크 유도 CTA + 가변 해시태그(티커·키워드 자동 추출, `#브리픽 #briefick` 항상 보존, 30개 한도)
-- **수동 점검**: Actions → Run workflow → `dry_run=true`로 PNG·캡션만 검수 (게시 X)
+- **Reels 흐름** (~5~8분):
+  1. 캐러셀과 동일하게 PNG 7장 먼저 렌더 (소스로 재사용)
+  2. ffmpeg `xfade` 필터로 슬라이드당 6초 + 0.5초 crossfade로 1080×1920 mp4 생성. 9:16 캔버스의 위·아래 빈 공간은 같은 이미지를 블러 처리한 BG로 채워 letterbox 회피. 총 길이 ~39초.
+  3. `scripts/instagram/music/` 하위 mp3 자동 픽업해 페이드인/아웃 합성 (없으면 무음 트랙 부착)
+  4. Supabase Storage 업로드 (`Content-Type: video/mp4`)
+  5. Graph API REELS 컨테이너 생성(`media_type=REELS`, `share_to_feed=true`) → FINISHED 대기(최대 5분) → publish
+- **캡션**: 캐러셀·Reels 동일. 헤더(날짜·브랜드) + 프로필 링크 유도 CTA + 가변 해시태그(티커·키워드 자동 추출, `#브리픽 #briefick` 항상 보존, 30개 한도)
+- **수동 점검**: `/publish dry` 또는 Actions UI에서 `dry_run=true`로 아티팩트(PNG·mp4·캡션)만 검수, 게시는 X
 
 ## 발송·상태 동기화 파이프라인
 
@@ -263,6 +278,7 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-03**: **인스타그램 Reels 자동 게시 추가**. `scripts/instagram/render-reels.js` — 기존 1080×1350 PNG를 ffmpeg `xfade` 필터로 1080×1920 9:16 mp4로 변환(슬라이드당 6초 + 0.5초 crossfade, 위·아래 같은 이미지의 블러 BG로 letterbox 회피, 총 ~39초). `scripts/instagram/music/` 디렉토리에 royalty-free mp3 드롭하면 자동 페이드인/아웃 합성. `publish.js`에 `publishReels()` 추가 (REELS media_type · `share_to_feed=true` · 비디오 처리 대기 5분). `IG_MODE` 환경변수(all/carousel/reels)로 발행 분기. **시간대별 포맷 분기** — push 트리거의 자동 갱신 커밋에 KST 시간대 기반 mode 결정 step 추가: 05~12시→carousel, 13~23시→reels, 그 외→all. 결과 하루 4개 → **하루 2개 포스트(오전 캐러셀 + 오후 Reels)**로 알고리즘 sweet spot 정렬. **`/publish` 슬래시 명령** 신설 — `mode`·`dry` 인자 자유 순서 파싱(`/publish reels`, `/publish carousel dry` 등). **발행 트리거 게이팅** — push로 발행하려면 커밋 메시지가 `데이터 자동 갱신` 또는 `데이터 정합성 강제 갱신`으로 시작해야 함, 사람이 수동 편집한 커밋이 의도하지 않은 시간대 발행으로 이어지지 않게 차단. workflow_dispatch는 게이팅 미적용. workflow에 `ffmpeg` apt 설치 step 추가. **자동 갱신 13시 슬롯 비활성화** — RemoteTrigger cron `0 22,4,10` UTC → `0 22,10` UTC, 매일 07/19시 KST 2회로 축소. **CLAUDE.md 정책 보강** — (a) 탭 콘텐츠 독립성 원칙(cross-tab 인용 금지), (b) 탭 간 사건 중복 방지(stocks→kr→ai→unicorn→commodity 선점 우선), (c) summary·detail 문체 — em-dash(`—`) → hyphen(`-`)·"톤(tone)" 트레이더 은어 → 자연어 기조/흐름·"비트/미스" → 컨센 상회/하회. 5개 update.js 일괄 sweep으로 기존 데이터 정정.
 - **2026-05-01**: Supabase 키 namespace 통일 — `SUPABASE_SECRET_KEY` → **`BRIEFICK_SUPABASE_SECRET_KEY`**, `SUPABASE_PUBLISHABLE_KEY` → **`BRIEFICK_SUPABASE_PUBLISHABLE_KEY`**. 원인: Supabase가 사용자 정의 secret 이름의 `SUPABASE_` 접두사를 거부(`Name must not start with the SUPABASE_ prefix`)하며 `SUPABASE_SECRET_KEYS`(복수 JSON) 등 자동 주입 변수와 namespace 충돌. 프로젝트 prefix `BRIEFICK_` 부여로 일괄 정리. Edge Function 7개·`publish.js`·workflow yml·프론트 JS 변수명·문서 동기화. `.claude/settings.local.json`을 git 추적 해제(머신별 권한 설정).
 - **2026-04-30**: **인스타그램 캐러셀 자동 게시** 추가 (`@briefick`). `data/*-update.js` 푸시 시 GitHub Actions가 발동 → Playwright로 1080×1350 PNG 7장 렌더 → Supabase Storage 업로드 → Graph API 캐러셀 게시. 다크 테마 + Unsplash 콘텐츠 매칭 사진 BG(인물 필터·게시물 내 중복 방지·CDN 캐시 회피용 시각 경로). 캡션은 마켓 정보 없이 프로필 링크 유도 CTA + 가변 해시태그(`#브리픽 #briefick` 보존·30개 한도). transient Graph API 에러 자동 재시도(9007/2207027/code:1·subcode:99 등). Supabase 키 신포맷(`sb_secret_...`/`sb_publishable_...`) 1차 정리 + 변수 네이밍 일관 정리(이후 `BRIEFICK_` 접두사로 5/1 추가 정리).
 - **2026-04-29 (2)**: 글로벌 ETF 흔적 완전 제거. `data/etf-data.js`·`data/etf-update.js`·`.claude/commands/update-etf.md` 파일 삭제. `index.html`의 `STATE.etf`·`ETF_URL`·`norm(kind==='etf')`·`TAB_DESC.etf`·`TAB_SRC.etf`·`TAB_FILTERS.etf`·`META_CFG.etf`·`_updateExpand.etf` 모두 정리. `update.md` 대상 탭 표기·"ETF/레버리지" 표현·`docs/friendtalk-dispatch-runbook.md`·`docs/kakao-subscription-plan.md` 모두 정합 정리.
