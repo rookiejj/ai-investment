@@ -1,6 +1,22 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-05-03 19:20 KST",
+    summary: `Helix Digital Infrastructure $10B 출범 - KKR 사모 자본의 AI 인프라 직접 진입
+前 AWS CEO 애덤 셀립스키 CEO·이사회 의장 - 하이퍼스케일러 풀스택 인프라 운영 모델
+Legora $5.6B 밸류 Series D 익스텐션 마감 - NVIDIA NVentures 첫 법률 AI 베팅
+Legora ARR $100M 돌파·Harvey($11B) 추격 구도 - 유럽발 법률 AI vs 미국 Harvey 양강 경쟁
+빅테크 + 사모 자본 동시 AI 인프라 진입으로 SpaceX·Anthropic·OpenAI IPO 직전 자본 환경 우호`,
+    changes: [
+      { type: "펀딩", sector: "엔터프라이즈 SW",
+        detail: "Helix Digital Infrastructure(KKR $10B 출범 - AI 인프라 신규 풀스택 사업체). 4/30 KKR이 신규 자체 회사 Helix Digital Infrastructure 출범을 공식 발표하며 $10B+ 자금 확보 명시(Bloomberg·Bisnow). 前 AWS CEO 애덤 셀립스키가 CEO 겸 이사회 의장으로 합류 - AWS 최대 확장기를 이끌었던 운영 노하우가 신규 기업으로 전이. 사업 모델은 하이퍼스케일러를 단일 고객으로 토지·전력 발전·송전·네트워킹·냉각까지 풀스택 인프라를 설계·소유·운영 - DLR·EQIX·CRWV 등 상장 데이터센터 카테고리와 일부 중복되나 사모 자본이 메가캡 4사 CapEx $700B(2026E) 흡수에 직접 참전하는 첫 대형 사례. 본 5개 카테고리에 미수록이나 SpaceX·Anthropic·OpenAI IPO 직전 자본 환경 우호 시그널 - 후기 단계 프리IPO 자본 시장이 막히지 않고 AI 인프라 영역까지 확장 중임을 입증. 데이터센터 + 전력·그리드 + 냉각 시스템 카테고리에 우호 베이스라인 추가.",
+        time: "2026-05-03 19:20 KST" },
+      { type: "펀딩", sector: "엔터프라이즈 SW",
+        detail: "Legora(Series D 익스텐션 $5.6B - 법률 AI 양강 구도 본격화). 4/30 스웨덴발 법률 AI 스타트업 Legora가 Series D $550M + 익스텐션 $50M = 합산 $600M 라운드를 $5.6B 밸류로 마감(TechCrunch·CNBC·Crunchbase). 익스텐션은 NVIDIA NVentures가 리드 - NVentures의 첫 법률 AI 베팅으로 보고됨, Atlassian이 동반 참여. 펀더멘털 - ARR $100M 돌파, 출시 18개월 만에 50개 시장·1,000+ 로펌·인하우스 법무팀 도입. 직접 경쟁자 Harvey($11B 밸류, 4월 Sequoia 트리플다운)와 양강 구도 형성 - Harvey는 유럽 진출, Legora는 미국 확장으로 교차 침투. 본 카테고리 미수록이나 법률 SaaS의 AI 변형이 단일 카테고리 양강 구도로 정렬되며 LLM 매출 외부 카테고리에서도 AI 매출 빠른 증가 시그널.",
+        time: "2026-05-03 19:20 KST" },
+    ]
+  },
+  {
     date: "2026-05-02 07:50 KST",
     summary: `Figure AI Series D $48B 클로징 확정 - Amazon 20K + Mercedes 50K 누적 70K+ 유닛 수주
 Cursor SpaceX $60B 옵션 + 별도 $50B 라운드 ($2B 조달) Andreessen·Thrive·NVIDIA 동시 진행`,
