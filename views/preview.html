@@ -875,7 +875,12 @@ function renderHealth(){
   `).join('');
 
   list.querySelectorAll('.phase-row').forEach(row=>{
-    row.addEventListener('click',()=>row.parentElement.classList.toggle('open'));
+    row.addEventListener('click',()=>{
+      const item=row.parentElement;
+      const wasOpen=item.classList.contains('open');
+      list.querySelectorAll('.phase-item.open').forEach(x=>x.classList.remove('open'));
+      if(!wasOpen)item.classList.add('open');
+    });
   });
   list.querySelectorAll('.exp-card').forEach(card=>{
     card.addEventListener('click',e=>{
