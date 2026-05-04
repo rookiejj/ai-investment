@@ -96,17 +96,19 @@ section:first-of-type{padding-top:48px;border-top:0}
 .narrative-body{font:400 16px/1.7 'Inter',sans-serif;color:var(--fg2);white-space:pre-line}
 
 /* Event Calendar */
-.cal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
-.cal-day{
-  padding:16px 14px;background:var(--panel);border:1px solid var(--border);border-radius:14px;
-  display:flex;flex-direction:column;gap:8px;min-height:110px;transition:all .15s;
+.cal-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);border-radius:14px;overflow:hidden;
 }
-.cal-day:hover{border-color:var(--border-md);box-shadow:var(--shadow-card)}
-.cal-day.today{border-color:var(--acc);background:var(--acc-soft)}
-.cal-day.has-events{background:#fff}
-.cal-day.has-high{border-color:var(--border-md);box-shadow:0 0 0 1px rgba(212,86,86,0.1)}
-.cal-day.has-high.today{border-color:var(--acc)}
-.cal-day.empty{opacity:0.55}
+.cal-day{
+  padding:14px 12px;background:#fff;
+  display:flex;flex-direction:column;gap:8px;min-height:120px;transition:background .15s;
+}
+.cal-day.today{background:var(--acc-soft);box-shadow:inset 3px 0 0 var(--acc-deep)}
+.cal-day.has-high{background:#fffaf3}
+.cal-day.has-high.today{background:var(--acc-soft)}
+.cal-day.empty{background:var(--panel-tint);color:var(--mut)}
 .cal-count{
   margin-left:auto;display:inline-flex;align-items:center;justify-content:center;
   min-width:18px;height:18px;padding:0 5px;border-radius:9999px;
@@ -307,8 +309,9 @@ section:first-of-type{padding-top:48px;border-top:0}
 
 /* Cal day — clickable hint */
 .cal-day.clickable{cursor:pointer}
-.cal-day.clickable:hover{transform:translateY(-1px);box-shadow:var(--shadow-card);border-color:var(--border-md)}
-.cal-day.clickable.today:hover{border-color:var(--acc-deep)}
+.cal-day.clickable:hover{background:var(--panel-tint)}
+.cal-day.clickable.today:hover{background:var(--acc-soft)}
+.cal-day.clickable.has-high:hover{background:#fff5e6}
 .cal-more-hint{color:var(--mut2)}
 
 /* Peers grid in modal */
