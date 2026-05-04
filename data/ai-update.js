@@ -6,6 +6,18 @@
  */
 const UPDATES = [
   {
+    date: "2026-05-04 19:20 KST",
+    summary: `Anthropic·Blackstone·Goldman·H&F·General Atlantic $1.5B 합작벤처 마무리 단계
+사모펀드 보유 기업에 Claude·Mythos 도입하는 컨설팅 합작사 - 엔터프라이즈 AI 채널 본격 확장
+$900B 펀딩 라운드 + LLM 매출 1위 + Wall Street 대형 합작이 5월 트리플 전선 동시 가속
+5/4 美 정규장 재개 - PLTR Q1 시간외 + AMD 5/5 + AI 거버넌스 입법 검토 동시 진행`,
+    changes: [
+      { type: "펀딩", sector: "Anthropic",
+        detail: "Anthropic·Blackstone·Goldman Sachs·Hellman&Friedman·General Atlantic 합산 약 $1.5B 합작벤처(JV) 마무리 단계 - 5/4 WSJ·Reuters 첫 보도. 출자 구조는 Anthropic·Blackstone·H&F가 각 약 $300M, Goldman Sachs가 창립 투자자로 약 $150M 참여, 잔여분에 General Atlantic 포함 타 기관이 합류. 사업 모델은 사모펀드(PE) 보유 포트폴리오 기업에 Anthropic의 Claude·Mythos·Sonnet 라인을 도입하는 전용 컨설팅 합작사 - 금융·운영·고객서비스·분석·엔터프라이즈 SW 5개 영역에서 PE 자본의 가치창출 사이클에 직접 통합. Counterpoint 5/1 LLM 매출 점유 31.4% 1위 + $850~900B 펀딩 라운드 임박 + 5/1 펜타곤 단독 배제 후 백악관 우회 가이던스 작성 + 5/2 의회 합동 브리핑 무대 정렬에 이어 Wall Street 대형 합작까지 5월 트리플 전선 동시 가속 - IPO 직전 매출·정부·자본 양면 회복 시그널. Blackstone $1T+ AUM·Goldman·H&F·General Atlantic 보유 포트폴리오 기업 누적 수만 개로 'B2B 신규 채널 단일 최대'로 부상.",
+        time: "2026-05-04 19:20 KST" },
+    ]
+  },
+  {
     date: "2026-05-03 07:30 KST",
     summary: `OpenAI·Anthropic 5/2 美 의회 사이버 AI 합동 브리핑 - 상하원·백악관 동시 청취
 백악관 Anthropic '공급망 위험' 지정 우회 가이던스 작성 중 - 펜타곤 배제 후 5일 만 복원 시도
