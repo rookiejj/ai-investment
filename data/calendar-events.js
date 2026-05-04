@@ -64,8 +64,10 @@ const fixed = [
   { cat:'macro', impact:3, title:'미국 5월 CPI', date:'2026-06-11' },
 
   // === 5월 어닝 ===
-  { cat:'earnings', impact:3, title:'AMD Q1 2026 실적', date:'2026-05-06', desc:'장후 발표·MI450 캐파·OpenAI 수주', tickers:['AMD'] },
-  { cat:'earnings', impact:2, title:'PLTR Q1 2026 실적', date:'2026-05-04', desc:'미 상업 +94% 컨센', tickers:['PLTR'] },
+  { cat:'earnings', impact:3, title:'AMD Q1 2026 실적', date:'2026-05-05', desc:'장후 발표·MI450 캐파·OpenAI 6GW + Meta 6GW 주문', tickers:['AMD'] },
+  { cat:'earnings', impact:2, title:'PLTR Q1 2026 실적', date:'2026-05-04', desc:'매출 +85%·미 상업 +133%·FY26 +71% 가이던스', tickers:['PLTR'] },
+  { cat:'earnings', impact:2, title:'MSTR Q1 2026 실적', date:'2026-05-05', desc:'장후 발표·세일러 BTC 주간 매수 일시 중단 후 결과', tickers:['MSTR'] },
+  { cat:'earnings', impact:2, title:'DIS Q2 FY26 실적', date:'2026-05-06', desc:'장전 발표·신임 D\'Amaro 첫 콜·매출 $24.8B·EPS $1.49 컨센', tickers:['DIS'] },
   { cat:'earnings', impact:2, title:'WMT Q1 FY27 실적', date:'2026-05-15', desc:'관세 영향·소비 건전성 점검대', tickers:['WMT'] },
   { cat:'earnings', impact:2, title:'HD Q1 2026 실적', date:'2026-05-19', tickers:['HD'] },
   { cat:'earnings', impact:1, title:'TGT Q1 2026 실적', date:'2026-05-21', tickers:['TGT'] },

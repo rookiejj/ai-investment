@@ -6,6 +6,20 @@
  */
 const UPDATES = [
   {
+    date: "2026-05-05 07:35 KST",
+    summary: `OpenAI 'Deployment Company' $10B PE 합작벤처 5/4 마감
+TPG·Brookfield·Bain·SoftBank 19개사, OpenAI 과반 지배
+Anthropic $1.5B Blackstone 합작과 동일 날 발표 - PE 채널 양강`,
+    changes: [
+      { type: "전략", sector: "OpenAI",
+        detail: "OpenAI(The Deployment Company $10B PE 합작벤처). 5/4 Bloomberg·TechCrunch·Axios 동시 보도 - OpenAI가 사모펀드 컨소시엄과 함께 'The Deployment Company' 합작벤처를 $10B 밸류로 공식 마감. 출자 구조는 외부 투자자가 $4B+, OpenAI가 약 $1.5B 출자해 과반 지배 유지. 컨소시엄은 TPG·Brookfield Asset Management·Bain Capital·Advent International·Dragoneer·SoftBank 등 19개 사모펀드 - 보유 포트폴리오 기업 수만 개에 GPT-5.5·Codex·Privacy Filter·GPT-Rosalind 라인업을 임베드하는 풀스택 배치 채널. 사업 모델은 OpenAI 엔지니어 팀을 클라이언트 조직 운영 레이어에 직접 배치하는 forward-deployed engineer 패턴 - Palantir가 미국 정부·상업 시장에서 검증한 모델을 PE 포트폴리오 기업으로 그대로 이식. 우선 섹터는 헬스케어·물류·제조·금융 4개. 동일 5/4 Anthropic·Blackstone·Goldman·H&F $1.5B 합작벤처와 같은 날 발표돼 빅2 라보가 PE 채널을 동시 선점하는 구도 - IPO 직전 매출 가속과 high-margin 엔터프라이즈 트랙션 두 트리거 동시 가속. 챗봇·API 회사에서 풀스택 배치 엔진으로 포지셔닝 전환 본격화.",
+        time: "2026-05-05 07:35 KST" },
+      { type: "전략", sector: "Anthropic",
+        detail: "Anthropic($1.5B PE 합작벤처 5/4 공식 마감 + OpenAI 동조 발표). 5/4 Anthropic·Blackstone·Hellman&Friedman·Goldman Sachs $1.5B 합작벤처가 공식 발표로 확정 - 출자 구조는 Anthropic·Blackstone·H&F가 각 $300M, Goldman Sachs가 창립 투자자로 $150M 참여, General Atlantic 등 합류로 합산 $1.5B. 같은 날 OpenAI도 사모펀드 19개사와 'The Deployment Company' $10B 합작벤처를 발표하며 빅2 라보가 PE 채널을 동시 선점 - $850~900B Anthropic 펀딩 라운드 마감 임박 + Counterpoint Q1 LLM 매출 점유 31.4% 1위 + IPO 직전 매출·정부·자본 트리플 회복 모멘텀과 함께 5월 첫 주 메가 시그널 4중 정렬. 특히 OpenAI가 동일 발표 시점을 맞춘 것은 PE 채널을 단독 선점하지 못하게 한 시그널이지만, 양사 모두 챗봇·API 회사 정체성을 풀스택 배치 엔진으로 전환하는 동일 노선 확정 - 엔터프라이즈 AI 시장 구조 단일 분기점.",
+        time: "2026-05-05 07:35 KST" },
+    ]
+  },
+  {
     date: "2026-05-04 19:20 KST",
     summary: `Anthropic·Blackstone·Goldman·H&F·General Atlantic $1.5B 합작벤처 마무리 단계
 사모펀드 보유 기업에 Claude·Mythos 도입하는 컨설팅 합작사 - 엔터프라이즈 AI 채널 본격 확장
