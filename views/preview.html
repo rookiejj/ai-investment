@@ -767,10 +767,12 @@ function fitCalendarOverflow(){
     if(!all.length)return;
     if(getComputedStyle(container).display==='none')return;
 
-    const max=container.clientHeight;
+    const cRect=container.getBoundingClientRect();
+    const containerBottom=cRect.top+container.clientHeight;
     let cut=-1;
     for(let i=0;i<all.length;i++){
-      if(all[i].offsetTop+all[i].offsetHeight>max){cut=i;break}
+      const r=all[i].getBoundingClientRect();
+      if(r.bottom>containerBottom){cut=i;break}
     }
     if(cut===-1)return; // 다 들어감
 
@@ -780,7 +782,9 @@ function fitCalendarOverflow(){
     more.textContent=`+${all.length-cut}건 →`;
     container.appendChild(more);
 
-    while(cut>0 && more.offsetTop+more.offsetHeight>max){
+    while(cut>0){
+      const mRect=more.getBoundingClientRect();
+      if(mRect.bottom<=containerBottom)break;
       cut--;
       all[cut].style.display='none';
       more.textContent=`+${all.length-cut}건 →`;
