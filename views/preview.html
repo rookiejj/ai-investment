@@ -211,7 +211,14 @@ section:first-of-type{padding-top:48px;border-top:0}
 .exp-search::placeholder{color:var(--mut2)}
 .exp-tab{padding:7px 14px;background:#fff;border:1px solid var(--border-md);border-radius:9999px;font:500 13px/1 'Inter',sans-serif;color:var(--fg2)}
 .exp-tab.on{background:var(--fg);color:#fff;border-color:var(--fg)}
-.exp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.exp-list{display:flex;flex-direction:column;gap:24px}
+.exp-cat-section{}
+.exp-cat-head{
+  font:600 14px/1.2 'Inter',sans-serif;color:var(--fg);
+  margin-bottom:10px;display:flex;align-items:baseline;gap:8px;letter-spacing:-0.2px;
+}
+.exp-cat-head .count{font:500 11px/1 'Geist Mono',monospace;color:var(--mut);letter-spacing:0.4px}
+.exp-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
 .exp-card{
   padding:14px;background:var(--panel);border:1px solid var(--border);border-radius:12px;
   display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:all .15s;
@@ -364,7 +371,7 @@ footer a{color:var(--acc-deep)}
   .modal-head{padding:24px 0 12px}
   .modal-nm{font-size:22px}
   .sec-title{font-size:22px}
-  .health-grid,.exp-grid,.cal-grid{gap:10px}
+  .exp-cards,.cal-grid{gap:10px}
 }
 </style>
 </head>
@@ -449,11 +456,11 @@ footer a{color:var(--acc-deep)}
     </div>
   </div>
   <div class="exp-controls">
-    <input class="exp-search" id="expSearch" placeholder="티커·기업명·키워드로 검색" />
     <button class="exp-tab on" data-market="stocks">미국</button>
     <button class="exp-tab" data-market="kr">한국</button>
+    <input class="exp-search" id="expSearch" placeholder="티커·기업명·키워드로 검색" />
   </div>
-  <div class="exp-grid" id="expGrid"></div>
+  <div class="exp-list" id="expGrid"></div>
 </section>
 
 <div class="disclaimer" style="margin:0 24px 24px">
@@ -919,31 +926,46 @@ function getAllStocksOf(market){
 
 function renderExplorer(){
   const market=STATE.market;
-  let all=getAllStocksOf(market);
+  const data=STATE.data[market];
+  if(!data)return;
   const q=STATE.expQuery.trim().toLowerCase();
-  if(q){
-    all=all.filter(s=>{
-      const hay=(s.tk+' '+s.nm+' '+displayName(s.nm)+' '+(s.rs||'')+' '+(s.catTitle||'')).toLowerCase();
-      return hay.includes(q);
-    });
-  }
-  const grid=document.getElementById('expGrid');
-  if(!all.length){grid.innerHTML='<div class="exp-empty">조건에 맞는 종목 없음</div>';return}
-  grid.innerHTML=all.map(s=>{
-    const r1=parseFloat(s.r1),r2=parseFloat(s.r2);
-    const g=(r1>0&&r2>0)?(r2-r1)/r1:null;
-    const gCls=g===null?'flat':(g>0.05?'up':(g<-0.05?'down':'flat'));
-    return `
-      <div class="exp-card" data-tk="${escapeHtml(s.tk)}" data-market="${market}">
-        <span class="exp-tk">${escapeHtml(s.tk)}</span>
-        <div class="exp-nm">${escapeHtml(displayName(s.nm))}</div>
-        <div class="exp-rs">${escapeHtml(s.rs||'')}</div>
-        ${g!==null?`<span class="exp-growth ${gCls}">FY26E ${fmtPct(g)}</span>`:''}
-      </div>
-    `;
-  }).join('');
+  const list=document.getElementById('expGrid');
 
-  grid.querySelectorAll('.exp-card').forEach(card=>{
+  const sections=data.map(cat=>{
+    let stocks=cat.stocks||[];
+    if(q){
+      stocks=stocks.filter(s=>{
+        const hay=(s.tk+' '+s.nm+' '+displayName(s.nm)+' '+(s.rs||'')+' '+(cat.title||'')).toLowerCase();
+        return hay.includes(q);
+      });
+    }
+    return {cat,stocks};
+  }).filter(sec=>sec.stocks.length);
+
+  if(!sections.length){list.innerHTML='<div class="exp-empty">조건에 맞는 종목 없음</div>';return}
+
+  list.innerHTML=sections.map(sec=>`
+    <div class="exp-cat-section">
+      <div class="exp-cat-head">${escapeHtml(sec.cat.title||'')} <span class="count">${sec.stocks.length}종목</span></div>
+      <div class="exp-cards">
+        ${sec.stocks.map(s=>{
+          const r1=parseFloat(s.r1),r2=parseFloat(s.r2);
+          const g=(r1>0&&r2>0)?(r2-r1)/r1:null;
+          const gCls=g===null?'flat':(g>0.05?'up':(g<-0.05?'down':'flat'));
+          return `
+            <div class="exp-card" data-tk="${escapeHtml(s.tk)}" data-market="${market}">
+              <span class="exp-tk">${escapeHtml(s.tk)}</span>
+              <div class="exp-nm">${escapeHtml(displayName(s.nm))}</div>
+              <div class="exp-rs">${escapeHtml(s.rs||'')}</div>
+              ${g!==null?`<span class="exp-growth ${gCls}">FY26E ${fmtPct(g)}</span>`:''}
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
+  `).join('');
+
+  list.querySelectorAll('.exp-card').forEach(card=>{
     card.addEventListener('click',()=>openModal(card.dataset.tk,card.dataset.market));
   });
 }
