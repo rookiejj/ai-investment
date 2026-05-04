@@ -244,7 +244,7 @@ section:first-of-type{padding-top:48px;border-top:0}
   .modal{border-radius:24px;max-height:88vh}
 }
 @keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
-.modal-pad{padding:32px}
+.modal-pad{padding:48px 32px 32px}
 .modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:20px}
 .modal-tk{font:600 12px/1 'Geist Mono',monospace;color:var(--mut);text-transform:uppercase;letter-spacing:0.4px}
 .modal-nm{font:600 28px/1.2 'Inter',sans-serif;letter-spacing:-0.5px;color:var(--fg);margin-top:6px}
@@ -356,7 +356,7 @@ footer a{color:var(--acc-deep)}
   .narrative-card{padding:24px}
   .narrative-headline{font-size:20px}
   .narrative-body{font-size:15px}
-  .modal-pad{padding:24px}
+  .modal-pad{padding:36px 24px 24px}
   .modal-nm{font-size:22px}
   .sec-title{font-size:22px}
   .health-grid,.exp-grid,.cal-grid{gap:10px}
@@ -1058,7 +1058,7 @@ function openModal(tk,market){
 
     ${peers.length?`
     <div class="modal-section">
-      <div class="modal-sec-label">동일 카테고리 동료</div>
+      <div class="modal-sec-label">같은 카테고리 다른 종목</div>
       <div class="peers-grid">
         ${peers.map(p=>`<div class="peer-card" data-tk="${escapeHtml(p.tk)}" data-market="${escapeHtml(p.market)}"><div class="peer-tk">${escapeHtml(p.tk)}</div><div class="peer-nm">${escapeHtml(displayName(p.nm))}</div></div>`).join('')}
       </div>
