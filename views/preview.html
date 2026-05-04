@@ -97,22 +97,22 @@ section:first-of-type{padding-top:48px;border-top:0}
 
 /* Event Calendar */
 .cal-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  display:grid;grid-template-columns:repeat(7,1fr);
   gap:1px;background:var(--border);
   border:1px solid var(--border);border-radius:14px;overflow:hidden;
 }
 .cal-day{
   padding:14px 12px;background:#fff;
-  display:flex;flex-direction:column;gap:8px;min-height:120px;transition:background .15s;
+  display:flex;flex-direction:column;gap:8px;min-height:140px;transition:background .15s;
 }
 .cal-day.today{background:var(--acc-soft);box-shadow:inset 3px 0 0 var(--acc-deep)}
-.cal-day.empty{background:var(--panel-tint);color:var(--mut)}
 .cal-count{
   margin-left:auto;display:inline-flex;align-items:center;justify-content:center;
-  min-width:18px;height:18px;padding:0 5px;border-radius:9999px;
-  background:var(--fg);color:#fff;font:600 10px/1 'Geist Mono',monospace;letter-spacing:0;
+  min-width:18px;height:18px;padding:0 6px;border-radius:9999px;
+  background:var(--panel-tint);color:var(--fg2);
+  font:600 10px/1 'Geist Mono',monospace;letter-spacing:0;
 }
-.cal-day.today .cal-count{background:var(--acc-deep)}
+.cal-day.today .cal-count{background:var(--acc-deep);color:#fff}
 .cal-date{display:flex;align-items:baseline;gap:6px}
 .cal-date .num{font:700 22px/1 'Inter',sans-serif;letter-spacing:-0.4px;color:var(--fg)}
 .cal-date .dow{font:500 11px/1 'Geist Mono',monospace;text-transform:uppercase;color:var(--mut);letter-spacing:0.4px}
@@ -346,7 +346,21 @@ footer a{color:var(--acc-deep)}
   .modal-head{padding:24px 0 12px}
   .modal-nm{font-size:22px}
   .sec-title{font-size:22px}
-  .exp-cards,.cal-grid{gap:10px}
+  .exp-cards{gap:10px}
+  .cal-day{min-height:96px;padding:8px 6px;gap:4px}
+  .cal-date .num{font-size:16px}
+  .cal-date .dow{font-size:9px}
+  .cal-count{min-width:16px;height:16px;font-size:9px;padding:0 4px}
+  .cal-events{display:none}
+  .cal-empty-msg{display:none}
+}
+@media(max-width:480px){
+  .cal-day{min-height:72px;padding:6px 4px;gap:2px}
+  .cal-date{flex-direction:column;align-items:flex-start;gap:0}
+  .cal-date .num{font-size:14px}
+  .cal-date .dow{font-size:8px}
+  .cal-count{position:absolute;top:6px;right:6px;min-width:14px;height:14px;font-size:8px}
+  .cal-day{position:relative}
 }
 </style>
 </head>
