@@ -266,6 +266,8 @@ section:first-of-type{padding-top:48px;border-top:0}
 .rev-bar .bar-track{width:100%;height:80px;display:flex;align-items:flex-end}
 .rev-bar .bar-track .bar{width:100%;border-radius:6px 6px 0 0;background:var(--fg);transition:height .4s}
 .rev-bar.profit .bar-track .bar{background:var(--acc-deep)}
+.rev-bar.neg .bar-track .bar{background:var(--err)}
+.rev-bar.neg .bar-num{color:var(--err)}
 .rev-bar .bar-num{font:700 14px/1 'Geist Mono',monospace;color:var(--fg);letter-spacing:-0.2px}
 .rev-bar .bar-lbl{font:500 10px/1 'Geist Mono',monospace;text-transform:uppercase;color:var(--mut);letter-spacing:0.4px}
 .rev-growth-row{display:flex;justify-content:space-between;font:500 12px/1.4 'Inter',sans-serif;color:var(--fg2);padding-top:12px;border-top:1px solid var(--border)}
@@ -994,8 +996,9 @@ function openModal(tk,market){
   const pg=(p1>0&&p2>0)?(p2-p1)/p1:null;
   const unit=market==='kr'?'천억원':'$B';
 
-  const maxRev=Math.max(r1||0,r2||0)||1;
-  const maxProf=Math.max(p1||0,p2||0)||1;
+  const maxRev=Math.max(Math.abs(r1)||0,Math.abs(r2)||0)||1;
+  const maxProf=Math.max(Math.abs(p1)||0,Math.abs(p2)||0)||1;
+  const barH=(v,max)=>Math.max(12,Math.min(100,(Math.abs(v)/max)*100));
 
   document.getElementById('modalPad').innerHTML=`
     <div class="modal-head">
@@ -1021,16 +1024,16 @@ function openModal(tk,market){
         <div class="rev-bar-wrap">
           <div class="rev-year">매출 (Revenue)</div>
           <div class="rev-bars">
-            <div class="rev-bar"><span class="bar-num">${r1||'—'}</span><div class="bar-track"><div class="bar" style="height:${Math.max(12,(r1/maxRev)*100)}%"></div></div><span class="bar-lbl">FY25</span></div>
-            <div class="rev-bar"><span class="bar-num">${r2||'—'}</span><div class="bar-track"><div class="bar" style="height:${Math.max(12,(r2/maxRev)*100)}%"></div></div><span class="bar-lbl">FY26E</span></div>
+            <div class="rev-bar"><span class="bar-num">${r1||'—'}</span><div class="bar-track"><div class="bar" style="height:${barH(r1,maxRev)}%"></div></div><span class="bar-lbl">FY25</span></div>
+            <div class="rev-bar"><span class="bar-num">${r2||'—'}</span><div class="bar-track"><div class="bar" style="height:${barH(r2,maxRev)}%"></div></div><span class="bar-lbl">FY26E</span></div>
           </div>
           <div class="rev-growth-row"><span>YoY 성장률</span><span class="pct ${rg>0?'up':(rg<0?'down':'')}">${rg===null?'—':fmtPct(rg)}</span></div>
         </div>
         <div class="rev-bar-wrap">
           <div class="rev-year">영업이익 (Operating Profit)</div>
           <div class="rev-bars">
-            <div class="rev-bar profit"><span class="bar-num">${p1||'—'}</span><div class="bar-track"><div class="bar" style="height:${Math.max(12,(p1/maxProf)*100)}%"></div></div><span class="bar-lbl">FY25</span></div>
-            <div class="rev-bar profit"><span class="bar-num">${p2||'—'}</span><div class="bar-track"><div class="bar" style="height:${Math.max(12,(p2/maxProf)*100)}%"></div></div><span class="bar-lbl">FY26E</span></div>
+            <div class="rev-bar profit ${p1<0?'neg':''}"><span class="bar-num">${p1||'—'}</span><div class="bar-track"><div class="bar" style="height:${barH(p1,maxProf)}%"></div></div><span class="bar-lbl">FY25</span></div>
+            <div class="rev-bar profit ${p2<0?'neg':''}"><span class="bar-num">${p2||'—'}</span><div class="bar-track"><div class="bar" style="height:${barH(p2,maxProf)}%"></div></div><span class="bar-lbl">FY26E</span></div>
           </div>
           <div class="rev-growth-row"><span>YoY 성장률</span><span class="pct ${pg>0?'up':(pg<0?'down':'')}">${pg===null?'—':fmtPct(pg)}</span></div>
         </div>
