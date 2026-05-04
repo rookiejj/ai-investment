@@ -690,16 +690,6 @@ function buildNarrative(){
 // ═══════════════════════════════════════════════════════════
 // Event Calendar
 // ═══════════════════════════════════════════════════════════
-function categorizeEvent(text){
-  const t=text.toLowerCase();
-  if(/실적|earnings|q[1-4]|발표|컨센|어닝|epsil|매출/.test(t))return 'earnings';
-  if(/ipo|로드쇼|상장|s-1|프라이싱|펀딩|라운드/.test(t))return 'ipo';
-  if(/fomc|cpi|ppi|pce|gdp|nfp|nonfarm|실업수당|소매판매|산업생산|소비자심리|소비자신뢰|컨퍼런스 보드|isuance|pmi/i.test(t))return 'macro';
-  if(/opec|war\s*power|관세|tariff|연준|기준금리|정상회담|핵협상|wwdc|i\/o|build|컴퓨텍스|computex|dev day/i.test(t))return 'policy';
-  if(/출시|런칭|release|launch|공개|모델|신제품|blackwell|gemini|gpt/i.test(t))return 'product';
-  return 'other';
-}
-
 // 정기 이벤트 패턴을 다음 60일 윈도우로 expansion
 function expandRecurring(recurring, fromDate, days){
   const out=[];
@@ -754,62 +744,24 @@ function expandDateRanges(ranges, fromDate, toDate){
   return out;
 }
 
-function extractEventsFromUpdates(today){
-  const events=[];
-  const seen=new Set();
-  for(const tab of Object.keys(UPD_URLS)){
-    const list=STATE.upd[tab];
-    if(!list)continue;
-    for(const entry of list.slice(0,8)){
-      const text=[entry.summary||'',(entry.changes||[]).map(c=>c.detail).join(' '),(entry.entries||[]).map(e=>e.text||'').join(' ')].join(' ');
-      const re=/(\b[01]?\d)\/([0-3]?\d)\b\s*([^,·\n.]{4,80})/g;
-      let m;
-      while((m=re.exec(text))){
-        const month=parseInt(m[1],10),day=parseInt(m[2],10);
-        if(month<1||month>12||day<1||day>31)continue;
-        const ctx=m[3].trim().replace(/\s+/g,' ').slice(0,60);
-        if(!/실적|발표|컨센|q[1-4]|ipo|로드쇼|fomc|opec|상장|출시|런칭|프라이싱|결정|만료|클로징|개시|협상|회의|콘퍼런스|콘콜|확정|예정|d-|day|디데이|gpt|모델|gen|버전/i.test(ctx)
-           && !/[A-Z]{2,5}/.test(ctx))continue;
-        const y=today.getUTCFullYear();
-        let d=new Date(Date.UTC(y,month-1,day));
-        const diffDays=Math.floor((d-today)/(86400*1000));
-        if(diffDays<-30){d=new Date(Date.UTC(y+1,month-1,day));}
-        const key=`${tab}|${month}/${day}|${ctx.slice(0,30)}`;
-        if(seen.has(key))continue;
-        seen.add(key);
-        // 추출된 ctx에서 영문 티커도 끌어옴 — 모달에서 종목 deep-dive 링크로 활용
-        const tickers=extractTickers(ctx);
-        events.push({date:fmtKSTDate(d),title:ctx,desc:'',tickers,cat:categorizeEvent(ctx),impact:2,source:'update',sourceTab:tab});
-      }
-    }
-  }
-  return events;
-}
-
 function extractEvents(){
   const today=todayKST();
   const startKey=fmtKSTDate(today);
   const endDate=new Date(today.getTime()+14*86400*1000);
   const endKey=fmtKSTDate(endDate);
 
-  // 1) update.js 자동 추출
-  const fromUpd=extractEventsFromUpdates(today);
-
-  // 2) calendar-events.js fixed 이벤트 — title·desc·tickers 분리 보존
+  // calendar-events.js만 사용 — fixed·recurring·dateRanges 모두 큐레이션 데이터
   const cal=STATE.calendar||{};
   const fromFixed=(cal.fixed||[]).map(ev=>({
     date:ev.date,title:ev.title,desc:ev.desc||'',tickers:ev.tickers||[],
     cat:ev.cat,impact:ev.impact||2,source:'fixed'
   }));
 
-  // 3) 정기 패턴 expansion
   const fromRecurring=expandRecurring(cal.recurring||[],today,15).map(ev=>({...ev,desc:'',tickers:[]}));
 
-  // 4) dateRanges expansion
   const fromRanges=expandDateRanges(cal.dateRanges||[],today,endDate).map(ev=>({...ev,desc:'',tickers:[]}));
 
-  // 5) merge + dedup (date+title prefix)
-  const all=[...fromFixed,...fromRecurring,...fromRanges,...fromUpd];
+  const all=[...fromFixed,...fromRecurring,...fromRanges];
   const dedup=new Map();
   for(const ev of all){
     const k=`${ev.date}|${ev.title.slice(0,40)}`;
@@ -936,7 +888,6 @@ function openDayModal(dateKey, events){
                     ${ev.desc?`<div class="day-event-desc">${escapeHtml(ev.desc)}</div>`:''}
                     ${ev.source==='range'?'<div class="day-event-meta">윈도우 진행 중</div>':''}
                     ${ev.source==='recurring'?'<div class="day-event-meta">정기 일정</div>':''}
-                    ${ev.source==='update'?`<div class="day-event-meta">${TAB_LABEL[ev.sourceTab]||ev.sourceTab} 탭 자동 추출</div>`:''}
                   </div>
                 </div>
                 ${tickers.length?`<div class="day-event-tickers">${tickers.map(t=>`<button class="day-ticker-btn" data-tk="${escapeHtml(t)}">${escapeHtml(t)} →</button>`).join('')}</div>`:''}
