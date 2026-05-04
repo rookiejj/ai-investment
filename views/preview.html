@@ -212,12 +212,18 @@ section:first-of-type{padding-top:48px;border-top:0}
 .exp-tab{padding:7px 14px;background:#fff;border:1px solid var(--border-md);border-radius:9999px;font:500 13px/1 'Inter',sans-serif;color:var(--fg2)}
 .exp-tab.on{background:var(--fg);color:#fff;border-color:var(--fg)}
 .exp-list{display:flex;flex-direction:column;gap:24px}
-.exp-cat-section{}
 .exp-cat-head{
-  font:600 14px/1.2 'Inter',sans-serif;color:var(--fg);
-  margin-bottom:10px;display:flex;align-items:baseline;gap:8px;letter-spacing:-0.2px;
+  margin-bottom:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
 }
+.exp-cat-head .dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex-shrink:0}
+.exp-cat-head[data-phase="expansion"],.exp-cat-head[data-phase="growth"]{color:var(--acc-deep)}
+.exp-cat-head[data-phase="mature"]{color:var(--info)}
+.exp-cat-head[data-phase="plateau"]{color:var(--warn)}
+.exp-cat-head[data-phase="contraction"]{color:var(--err)}
+.exp-cat-head[data-phase="unknown"]{color:var(--mut)}
+.exp-cat-head .name{font:600 14px/1.2 'Inter',sans-serif;color:var(--fg);letter-spacing:-0.2px}
 .exp-cat-head .count{font:500 11px/1 'Geist Mono',monospace;color:var(--mut);letter-spacing:0.4px}
+.exp-cat-head .phase{font:600 11px/1 'Geist Mono',monospace;letter-spacing:0.4px;color:currentColor;margin-left:auto}
 .exp-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
 .exp-card{
   padding:14px;background:var(--panel);border:1px solid var(--border);border-radius:12px;
@@ -452,7 +458,7 @@ footer a{color:var(--acc-deep)}
   <div class="sec-head">
     <div>
       <div class="sec-label">Deep-dive</div>
-      <h2 class="sec-title">종목 탐색</h2>
+      <h2 class="sec-title">섹터별 대표 종목</h2>
     </div>
   </div>
   <div class="exp-controls">
@@ -931,22 +937,40 @@ function renderExplorer(){
   const q=STATE.expQuery.trim().toLowerCase();
   const list=document.getElementById('expGrid');
 
+  // 카테고리별 phase 계산 (섹터 성장 단계와 동일)
   const sections=data.map(cat=>{
-    let stocks=cat.stocks||[];
+    const allStocks=cat.stocks||[];
+    const growths=allStocks.map(s=>{
+      const r1=parseFloat(s.r1),r2=parseFloat(s.r2);
+      return (r1>0&&r2>0)?(r2-r1)/r1:null;
+    }).filter(g=>g!==null);
+    const med=median(growths);
+    const ph=classifyPhase(med);
+    let stocks=allStocks;
     if(q){
       stocks=stocks.filter(s=>{
         const hay=(s.tk+' '+s.nm+' '+displayName(s.nm)+' '+(s.rs||'')+' '+(cat.title||'')).toLowerCase();
         return hay.includes(q);
       });
     }
-    return {cat,stocks};
-  }).filter(sec=>sec.stocks.length);
+    return {cat,stocks,med,ph};
+  }).filter(sec=>sec.stocks.length).sort((a,b)=>{
+    // 섹터 성장 단계와 같은 순서 — 성장률 내림차순
+    if(a.med===null)return 1;
+    if(b.med===null)return -1;
+    return b.med-a.med;
+  });
 
   if(!sections.length){list.innerHTML='<div class="exp-empty">조건에 맞는 종목 없음</div>';return}
 
   list.innerHTML=sections.map(sec=>`
     <div class="exp-cat-section">
-      <div class="exp-cat-head">${escapeHtml(sec.cat.title||'')} <span class="count">${sec.stocks.length}종목</span></div>
+      <div class="exp-cat-head" data-phase="${sec.ph.phase}">
+        <span class="dot"></span>
+        <span class="name">${escapeHtml(sec.cat.title||'')}</span>
+        <span class="count">${sec.stocks.length}종목</span>
+        <span class="phase">${sec.ph.label}</span>
+      </div>
       <div class="exp-cards">
         ${sec.stocks.map(s=>{
           const r1=parseFloat(s.r1),r2=parseFloat(s.r2);
