@@ -29,7 +29,8 @@ ai-investment/
 │   ├── jp-stocks-data.js       / jp-stocks-update.js   (UI·자동 갱신 제외)
 │   ├── ai-data.js              / ai-update.js
 │   ├── commodity-data.js       / commodity-update.js
-│   └── unicorn-data.js         / unicorn-update.js
+│   ├── unicorn-data.js         / unicorn-update.js
+│   └── calendar-events.js      ← 차세대 대시보드(/preview) 전용 캘린더 데이터
 └── README.md
 ```
 
@@ -43,8 +44,9 @@ ai-investment/
 2. **조사**: 아래 [변경 감지 방법론] 대로 1~2일 윈도우 내에서 조사 (진행 중 이벤트는 예외).
 3. **데이터 수정**: `data/<탭>-data.js`를 최소 diff로 Edit. 회계·거버넌스 이슈 기업은 즉시 제외하고 동일 섹터 대체주로 교체.
 4. **이력 prepend**: `data/<탭>-update.js` 맨 앞에 새 엔트리 추가 (아래 [update.js 누적 원칙] 참조).
-5. **버전 갱신**: `data/version.js`의 `DATA_VERSION`을 VERSION 값으로 갱신.
-6. **커밋·푸시**: `데이터 자동 갱신 YYYY-MM-DD` 메시지로 `git add data/` + commit + `git push origin main`.
+5. **캘린더 이벤트 점검**: 조사 중 발견한 향후 60일 안 알려진 일정(어닝·매크로·IPO·컨퍼런스)을 `data/calendar-events.js`의 `fixed` 배열에 append. 자세한 정책은 [캘린더 이벤트 운영] 참조.
+6. **버전 갱신**: `data/version.js`의 `DATA_VERSION`을 VERSION 값으로 갱신.
+7. **커밋·푸시**: `데이터 자동 갱신 YYYY-MM-DD` 메시지로 `git add data/` + commit + `git push origin main`.
 
 ### 편집 규칙
 
@@ -244,6 +246,43 @@ QCOM, OpenAI, MediaTek 2028 AI 스마트폰 칩 협력
 
 - HTML/CSS 수정 시 반드시 `.claude/DESIGN.md`를 먼저 읽고 디자인 시스템(색상·타이포·간격·컴포넌트) 준수.
 - 대규모 디자인 변경·새 컴포넌트 추가 시 `/designer` 커맨드 활용.
+
+### 캘린더 이벤트 운영 (data/calendar-events.js)
+
+차세대 대시보드(`/preview`)의 이벤트 캘린더 전용 데이터. update.js와 별개 파일로 운영하되, 자동 갱신 흐름에 함께 포함된다.
+
+**구조**:
+- `recurring`: 반복 패턴 (매주 목 실업수당, 매월 첫 금 NFP 등). 자동 갱신 시 **수정 금지** — 패턴 변경은 사람이 직접.
+- `fixed`: 구체 날짜 1회성 이벤트 (어닝·IPO·매크로 발표·컨퍼런스). 자동 갱신 시 추가 가능.
+- `dateRanges`: 시작·끝 윈도우 이벤트 (S-1 제출 윈도우·다일 컨퍼런스 등).
+
+**카테고리(cat)**: `earnings`(실적) · `ipo`(상장·펀딩) · `macro`(지표) · `policy`(정책·휴장) · `conf`(컨퍼런스) · `product`(신제품) · `other`.
+
+**중요도(impact)**: `1`(low, 일상 지표) · `2`(medium, 주요 지표·실적) · `3`(high, FOMC·NFP·CPI·PCE·메가캡 어닝·IPO 분기점). 캘린더에서 high만 강조 처리.
+
+**자동 갱신 시 추가 정책** — 매 실행마다 다음 두 가지를 자연스럽게 함께 점검:
+
+1. **새 fixed 이벤트 발견 시 추가**: 조사 단계에서 향후 60일 안에 발생할 알려진 일정(예: "5/14 NVDA Q1 발표", "6/9 WWDC")을 발견하면 `fixed` 배열 끝에 prepend가 아닌 **append**로 추가. 같은 `date+title` 키 중복 시 덮어쓰지 말고 무시.
+2. **지난 이벤트 정리는 선택**: preview.html에서 자동으로 오늘 이후만 표시하므로 굳이 삭제 안 해도 무방. 다만 60일 이상 지난 이벤트가 누적돼 파일이 커지면 자유롭게 정리.
+
+**무엇이 fixed에 들어가야 하나** (좋은 후보):
+- 알려진 어닝 발표일 (메가캡·주요 종목)
+- 발표 일정 확정된 매크로 지표 (CPI·PPI·PCE·GDP·NFP·실업수당·소매판매·산업생산·소비자심리·FOMC)
+- IPO·로드쇼·프라이싱 윈도우
+- 메이저 컨퍼런스 (WWDC·Google I/O·Microsoft Build·NVIDIA GTC·OpenAI Dev Day·Computex)
+- 알려진 신제품 출시일·모델 릴리스
+- 휴장일·정책 결정일 (메모리얼 데이·OPEC+ 회의 등)
+
+**무엇이 들어가면 안 되나**:
+- 추측·소문 (재무 가이던스에 명시되지 않은 일정은 제외)
+- update.js 자동 추출로 잡히는 짧은 사건 (preview.html이 update.js에서 이미 추출하므로 중복)
+- 같은 사건의 변형(예: "NVDA Q1 발표"와 "NVDA Q1 컨센 매출 $78B"는 같은 사건, 하나만 등록)
+
+**커밋 정책**: `data/calendar-events.js` 변경은 다른 데이터 갱신과 같은 커밋에 포함 — 별도 커밋 만들지 말 것. 커밋 메시지는 그대로 `데이터 자동 갱신 YYYY-MM-DD` 사용.
+
+**Why:** preview.html 캘린더가 update.js 자동 추출만으로는 빈 날이 많아 가치가 약함. recurring 패턴으로 매크로 정기 일정을 자동 채우고, fixed로 알려진 핵심 이벤트를 박아두면 14일 윈도우가 거의 매일 채워진다.
+
+**How to apply:** 자동 갱신 에이전트가 조사 단계에서 향후 일정을 다룰 때, 종목 카드 `rs`에만 적지 말고 `data/calendar-events.js`의 `fixed` 배열에도 한 줄 추가. 한 사건이 여러 곳에 노출돼야 사용자가 만나는 채널(친구톡·캐러셀·미리보기 캘린더) 모두에 일관되게 보인다.
 
 ---
 
