@@ -93,20 +93,7 @@ section:first-of-type{padding-top:48px;border-top:0}
 .narrative-eyebrow{font:600 12px/1.5 'Geist Mono',monospace;text-transform:uppercase;letter-spacing:0.6px;color:var(--acc-deep)}
 .narrative-date{font:500 13px/1.5 'Geist Mono',monospace;color:var(--mut);text-transform:uppercase;letter-spacing:0.4px}
 .narrative-headline{font:600 24px/1.35 'Inter',sans-serif;letter-spacing:-0.3px;color:var(--fg);margin-bottom:14px}
-.narrative-body{font:400 16px/1.7 'Inter',sans-serif;color:var(--fg2);margin-bottom:24px;white-space:pre-line}
-.narrative-themes{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
-.theme-pill{
-  display:inline-flex;align-items:center;gap:6px;padding:6px 12px;
-  background:var(--acc-light);color:var(--acc-deep);border-radius:9999px;
-  font:600 12px/1 'Geist Mono',monospace;text-transform:uppercase;letter-spacing:0.4px;
-}
-.theme-pill .count{padding:2px 6px;background:var(--acc-deep);color:#fff;border-radius:9999px;font-size:10px}
-.narrative-undercurrents{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
-.undercurrent{
-  padding:16px;background:var(--panel-tint);border:1px solid var(--border);border-radius:14px;
-}
-.undercurrent .uc-tab{font:600 11px/1.2 'Geist Mono',monospace;text-transform:uppercase;letter-spacing:0.6px;color:var(--mut);margin-bottom:8px}
-.undercurrent .uc-text{font:400 14px/1.55 'Inter',sans-serif;color:var(--fg2)}
+.narrative-body{font:400 16px/1.7 'Inter',sans-serif;color:var(--fg2);white-space:pre-line}
 
 /* Event Calendar */
 .cal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
@@ -409,20 +396,18 @@ footer a{color:var(--acc-deep)}
 
 <!-- Hero + Today's Narrative -->
 <section class="hero">
-  <div class="hero-eyebrow">Daily Market Synthesis</div>
-  <h1 class="hero-title">시장의 흐름을<br><span class="accent">한 단락으로</span> 따라잡기</h1>
-  <p class="hero-sub">5개 시장의 오늘 사건을 종합해 큰 줄거리를 한 단락으로. 종목 나열이 아닌 시장이 지금 어디로 가고 있는지를 보여줍니다.</p>
+  <div class="hero-eyebrow">Daily Market Headlines</div>
+  <h1 class="hero-title">5개 시장의<br>오늘 <span class="accent">핵심 헤드라인</span></h1>
+  <p class="hero-sub">미국·한국·AI·원자재·유니콘 — 매일 갱신되는 5개 시장의 가장 큰 사건을 한 카드에 정리합니다.</p>
   <div class="hero-meta"><span class="dot"></span><span id="lastUpdated">데이터 로드 중…</span></div>
 
   <div class="narrative-card" id="narrativeCard">
     <div class="narrative-head">
-      <span class="narrative-eyebrow">오늘의 시장 서사</span>
+      <span class="narrative-eyebrow">오늘의 톱 헤드라인</span>
       <span class="narrative-date" id="narrativeDate">—</span>
     </div>
     <div class="narrative-headline" id="narrativeHeadline">데이터를 불러오고 있습니다…</div>
     <div class="narrative-body" id="narrativeBody"></div>
-    <div class="narrative-themes" id="narrativeThemes"></div>
-    <div class="narrative-undercurrents" id="narrativeUndercurrents"></div>
   </div>
 </section>
 
@@ -607,86 +592,44 @@ function buildNarrative(){
   document.getElementById('narrativeDate').textContent=fmtKSTDate(today)+' KST';
   document.getElementById('lastUpdated').textContent='최신 데이터 · '+fmtKSTHuman(today);
 
-  // 모든 탭의 최신 엔트리 수집
-  const allEntries=[];
-  for(const tab of Object.keys(UPD_URLS)){
-    const list=STATE.upd[tab];
-    if(!list||!list.length)continue;
-    for(const entry of list.slice(0,3)){
-      allEntries.push({tab,entry});
-    }
-  }
-  if(!allEntries.length){
-    document.getElementById('narrativeHeadline').textContent='아직 수집된 데이터가 없습니다';
-    return;
-  }
-
-  // 티커 빈도 계산 — 여러 탭에 걸친 티커가 오늘의 중심 테마
-  const tickerTabs={};
-  for(const {tab,entry} of allEntries){
-    const summary=entry.summary||'';
-    const tickers=new Set(extractTickers(summary));
-    for(const t of tickers){
-      if(!tickerTabs[t])tickerTabs[t]=new Set();
-      tickerTabs[t].add(tab);
-    }
-  }
-  const crossTab=Object.entries(tickerTabs)
-    .map(([tk,tabs])=>({tk,count:tabs.size,tabs:[...tabs]}))
-    .filter(x=>x.count>=2)
-    .sort((a,b)=>b.count-a.count)
-    .slice(0,6);
-
-  // headline — 가장 광범위 영향 티커가 있으면 그 중심으로
-  let headline;
-  if(crossTab.length>=2){
-    const top=crossTab.slice(0,3).map(x=>x.tk).join('·');
-    headline=`${top} 동반 헤드라인 — ${crossTab[0].count}개 시장 동시 영향`;
-  } else if(crossTab.length===1){
-    headline=`${crossTab[0].tk} 단일 헤드라인이 ${crossTab[0].count}개 시장 동시 견인`;
-  } else {
-    headline=`각 시장이 독립적인 흐름 — 5개 도메인이 분리되어 움직이는 날`;
-  }
-  document.getElementById('narrativeHeadline').textContent=headline;
-
-  // body — 탭별 가장 큰 사건 한 줄씩 자연스럽게 연결
+  // 탭별 첫 줄 수집 (각 탭 가장 최신 엔트리의 summary 첫 줄)
   const lead={};
   for(const tab of Object.keys(UPD_URLS)){
     const list=STATE.upd[tab];
     if(!list||!list[0])continue;
-    const first=list[0];
-    const lines=(first.summary||'').split('\n').map(s=>s.trim()).filter(Boolean);
+    const lines=(list[0].summary||'').split('\n').map(s=>s.trim()).filter(Boolean);
     if(lines[0])lead[tab]=lines[0];
   }
-  const parts=[];
-  if(lead.stocks)parts.push(`🇺🇸 ${lead.stocks}`);
-  if(lead.kr)parts.push(`🇰🇷 ${lead.kr}`);
-  if(lead.ai)parts.push(`🤖 ${lead.ai}`);
-  if(lead.commodity)parts.push(`🛢️ ${lead.commodity}`);
-  if(lead.unicorn)parts.push(`🦄 ${lead.unicorn}`);
-  document.getElementById('narrativeBody').textContent=parts.join('\n');
 
-  // 테마 pills (cross-tab tickers)
-  const themesEl=document.getElementById('narrativeThemes');
-  themesEl.innerHTML=crossTab.length
-    ? crossTab.slice(0,8).map(x=>`<span class="theme-pill">${escapeHtml(x.tk)} <span class="count">${x.count}</span></span>`).join('')
-    : '<span style="font-size:12px;color:var(--mut)">광역 테마 없음</span>';
-
-  // undercurrents — 각 탭 두 번째 줄들 (덜 두드러지지만 흐름)
-  const ucEl=document.getElementById('narrativeUndercurrents');
-  const ucs=[];
-  for(const tab of Object.keys(UPD_URLS)){
-    const list=STATE.upd[tab];
-    if(!list||!list[0])continue;
-    const lines=(list[0].summary||'').split('\n').map(s=>s.trim()).filter(Boolean);
-    if(lines[1])ucs.push({tab,text:lines[1]});
+  if(!Object.keys(lead).length){
+    document.getElementById('narrativeHeadline').textContent='아직 수집된 데이터가 없습니다';
+    return;
   }
-  ucEl.innerHTML=ucs.slice(0,5).map(u=>`
-    <div class="undercurrent">
-      <div class="uc-tab">${TAB_LABEL[u.tab]||u.tab}</div>
-      <div class="uc-text">${escapeHtml(u.text)}</div>
-    </div>
-  `).join('');
+
+  // headline — 미국 → AI → 한국 → 원자재 → 유니콘 순으로 첫 줄 가져옴
+  // (탭 처리 우선순위와 동일 — stocks가 가장 광역 영향이라는 휴리스틱)
+  const order=['stocks','ai','kr','commodity','unicorn'];
+  let headline=null;
+  for(const tab of order){
+    if(lead[tab]){headline=lead[tab];break;}
+  }
+  document.getElementById('narrativeHeadline').textContent=headline||'데이터 없음';
+
+  // body — 5개 시장 깃발 + 첫 줄 (헤드라인으로 쓴 탭은 두 번째 줄로 대체)
+  const headlineTab=order.find(tab=>lead[tab]===headline);
+  const parts=[];
+  const flag={stocks:'🇺🇸',kr:'🇰🇷',ai:'🤖',commodity:'🛢️',unicorn:'🦄'};
+  for(const tab of ['stocks','kr','ai','commodity','unicorn']){
+    let line=lead[tab];
+    if(!line)continue;
+    if(tab===headlineTab){
+      // 헤드라인 중복 방지 — 같은 탭의 두 번째 줄로 대체
+      const lines=(STATE.upd[tab][0].summary||'').split('\n').map(s=>s.trim()).filter(Boolean);
+      line=lines[1]||null;
+    }
+    if(line)parts.push(`${flag[tab]} ${line}`);
+  }
+  document.getElementById('narrativeBody').textContent=parts.join('\n');
 }
 
 // ═══════════════════════════════════════════════════════════
