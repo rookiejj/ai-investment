@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <title>브리픽 프리뷰 — 다음 세대 대시보드</title>
-<meta name="description" content="브리픽이 다음 단계로 가는 모습. 오늘의 시장 서사, 이벤트 캘린더, 산업 사이클, 종목 deep-dive, 관심 종목." />
+<meta name="description" content="브리픽이 다음 단계로 가는 모습. 오늘의 시장 서사, 이벤트 캘린더, 산업 사이클, 종목 deep-dive." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -140,28 +140,6 @@ section:first-of-type{padding-top:48px;border-top:0}
 .cal-legend-item{display:inline-flex;align-items:center;gap:6px}
 .cal-legend-item .dot{width:8px;height:8px;border-radius:50%}
 
-/* Watchlist */
-.wl-empty{
-  padding:32px;background:var(--panel-tint);border:1px dashed var(--border-md);border-radius:16px;
-  text-align:center;color:var(--mut);
-}
-.wl-empty .star{display:inline-block;color:var(--acc);font-size:24px;margin-bottom:10px}
-.wl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
-.wl-card{
-  padding:18px;background:var(--panel);border:1px solid var(--border);border-radius:14px;
-  display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:all .15s;
-}
-.wl-card:hover{border-color:var(--border-strong);box-shadow:var(--shadow-card)}
-.wl-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.wl-tk{font:600 13px/1 'Geist Mono',monospace;color:var(--fg);letter-spacing:0.4px}
-.wl-nm{font:600 16px/1.25 'Inter',sans-serif;letter-spacing:-0.2px;color:var(--fg)}
-.wl-cat{font:500 11px/1.2 'Geist Mono',monospace;text-transform:uppercase;color:var(--mut);letter-spacing:0.4px}
-.wl-rs{font:400 13px/1.5 'Inter',sans-serif;color:var(--fg2);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.wl-mentions{display:flex;align-items:center;gap:6px;font:500 11px/1 'Geist Mono',monospace;color:var(--acc-deep);text-transform:uppercase;letter-spacing:0.4px;padding-top:8px;border-top:1px solid var(--border)}
-.wl-mentions .badge{padding:2px 6px;background:var(--acc-light);border-radius:9999px;font-size:10px}
-.btn-wl-clear{font:500 12px/1 'Inter',sans-serif;color:var(--mut);padding:6px 10px;border:1px solid var(--border);border-radius:9999px;background:#fff}
-.btn-wl-clear:hover{border-color:var(--err);color:var(--err)}
-
 /* Industry Health Grid */
 .health-controls{display:flex;align-items:center;gap:8px;margin-bottom:18px;flex-wrap:wrap}
 .health-tab{
@@ -225,13 +203,6 @@ section:first-of-type{padding-top:48px;border-top:0}
   position:relative;
 }
 .exp-card:hover{border-color:var(--border-strong);box-shadow:var(--shadow-card);transform:translateY(-1px)}
-.exp-card .star-btn{
-  position:absolute;top:10px;right:10px;width:28px;height:28px;
-  display:flex;align-items:center;justify-content:center;
-  border-radius:50%;color:var(--mut2);font-size:18px;line-height:1;transition:all .15s;
-}
-.exp-card .star-btn:hover{background:var(--acc-light);color:var(--acc-deep)}
-.exp-card .star-btn.on{color:var(--acc-deep)}
 .exp-tk{font:600 12px/1 'Geist Mono',monospace;color:var(--mut);letter-spacing:0.4px}
 .exp-nm{font:600 15px/1.25 'Inter',sans-serif;letter-spacing:-0.2px;color:var(--fg)}
 .exp-rs{font:400 12px/1.5 'Inter',sans-serif;color:var(--mut);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -370,7 +341,7 @@ footer a{color:var(--acc-deep)}
   .modal-pad{padding:24px}
   .modal-nm{font-size:22px}
   .sec-title{font-size:22px}
-  .health-grid,.exp-grid,.wl-grid,.cal-grid{gap:10px}
+  .health-grid,.exp-grid,.cal-grid{gap:10px}
 }
 </style>
 </head>
@@ -430,40 +401,17 @@ footer a{color:var(--acc-deep)}
   </div>
 </section>
 
-<!-- Watchlist -->
-<section>
-  <div class="sec-head">
-    <div>
-      <div class="sec-label">Your watchlist</div>
-      <h2 class="sec-title">관심 종목</h2>
-      <p class="sec-desc">사이트 어디서든 ★를 누르면 여기에 모입니다. 최근 7일 사건 자동 집계.</p>
-    </div>
-    <div class="sec-aside">
-      <span id="wlCount" style="color:var(--fg)">0</span>개 · <button id="wlClear" class="btn-wl-clear" type="button">전체 해제</button>
-    </div>
-  </div>
-  <div id="watchlistContent">
-    <div class="wl-empty" id="wlEmpty">
-      <div class="star">★</div>
-      <div>아직 관심 종목이 없습니다.</div>
-      <div style="margin-top:6px;font-size:13px">아래 종목 카드 우상단의 ★를 눌러 추가하세요.</div>
-    </div>
-    <div class="wl-grid" id="wlGrid" style="display:none"></div>
-  </div>
-</section>
-
 <!-- Industry Health -->
 <section>
   <div class="sec-head">
     <div>
       <div class="sec-label">Industry cycle position</div>
       <h2 class="sec-title">산업 헬스</h2>
-      <p class="sec-desc">FY26E 컨센서스 기준 카테고리별 매출 성장률 중앙값으로 추정한 산업 사이클 위치. 확장·성장·성숙·정체·둔화 5단계.</p>
     </div>
-    <div class="health-controls">
-      <button class="health-tab on" data-market="stocks">미국</button>
-      <button class="health-tab" data-market="kr">한국</button>
-    </div>
+  </div>
+  <div class="health-controls">
+    <button class="health-tab on" data-market="stocks">미국</button>
+    <button class="health-tab" data-market="kr">한국</button>
   </div>
   <div class="health-grid" id="healthGrid"></div>
 </section>
@@ -474,7 +422,6 @@ footer a{color:var(--acc-deep)}
     <div>
       <div class="sec-label">Deep-dive</div>
       <h2 class="sec-title">종목 탐색</h2>
-      <p class="sec-desc">클릭하면 최근 30일 사건·매출 추이·동일 카테고리 동료를 한눈에. ★ 버튼으로 관심 종목 등록.</p>
     </div>
   </div>
   <div class="exp-controls">
@@ -535,21 +482,7 @@ async function loadUpd(url, varName){
   return new Function(t+`;return typeof ${varName}!=="undefined"?${varName}:[];`)();
 }
 
-const STATE={data:{},upd:{},market:'stocks',healthMarket:'stocks',expQuery:'',watchlist:[]};
-
-// ═══════════════════════════════════════════════════════════
-// Watchlist (localStorage)
-// ═══════════════════════════════════════════════════════════
-const WL_KEY='briefick_watchlist_v1';
-function loadWL(){try{return JSON.parse(localStorage.getItem(WL_KEY)||'[]')}catch(e){return[]}}
-function saveWL(){localStorage.setItem(WL_KEY,JSON.stringify(STATE.watchlist))}
-function toggleWL(tk){
-  const i=STATE.watchlist.indexOf(tk);
-  if(i>=0)STATE.watchlist.splice(i,1);
-  else STATE.watchlist.push(tk);
-  saveWL();renderWatchlist();renderExplorer();
-}
-function clearWL(){if(!confirm('모든 관심 종목을 해제할까요?'))return;STATE.watchlist=[];saveWL();renderWatchlist();renderExplorer();}
+const STATE={data:{},upd:{},market:'stocks',healthMarket:'stocks',expQuery:''};
 
 // ═══════════════════════════════════════════════════════════
 // Helpers
@@ -572,6 +505,47 @@ function fmtKSTHuman(d){
   return `${m}/${day} ${dow}`;
 }
 const TAB_LABEL={stocks:'미국',kr:'한국',ai:'AI',commodity:'원자재',unicorn:'유니콘'};
+
+// 영문 종목명 → 한글 표기 매핑 (한국 매체 통용 표기 기준)
+const NAME_KO={
+  'Microsoft':'마이크로소프트','Alphabet':'알파벳','Meta':'메타','Oracle':'오라클',
+  'Palantir':'팔란티어','Salesforce':'세일즈포스','ServiceNow':'서비스나우',
+  'NVIDIA':'엔비디아','Broadcom':'브로드컴','TSMC':'TSMC','ASML':'ASML',
+  'Lam Research':'램리서치','Micron':'마이크론','AMD':'AMD',
+  'Digital Realty':'디지털 리얼티','Equinix':'에퀴닉스','Arista':'아리스타',
+  'Dell Tech':'델 테크','CoreWeave':'코어위브','Cisco':'시스코','HP Enterprise':'HPE',
+  'Vertiv':'버티브','Modine':'모다인','Trane Tech':'트레인','Johnson Controls':'존슨 컨트롤스',
+  'Carrier':'캐리어','Lennox Intl':'레녹스','Generac':'제네락',
+  'Xylem':'자일럼','American Water':'아메리칸 워터','Ecolab':'에코랩','Watts Water':'와츠 워터',
+  'Roper Tech':'로퍼 테크','Pentair':'펜테어','Essential Utilities':'에센셜 유틸리티스',
+  'GE Vernova':'GE 버노바','Eaton':'이튼','Quanta Svcs':'콴타 서비스','Hubbell':'허블',
+  'NextEra':'넥스트에라','Parker Hannifin':'파커 해니핀','AMETEK':'아메텍',
+  'Constellation':'컨스텔레이션','Vistra':'비스트라','BWX Tech':'BWX 테크','Centrus':'센트러스',
+  'Oklo':'오클로','Cameco':'카메코','Talen Energy':'탤런 에너지',
+  'Eli Lilly':'일라이 릴리','Novo Nordisk':'노보 노디스크','Intuitive Surgical':'인튜이티브 서지컬',
+  'Vertex Pharma':'버텍스 파마','Regeneron':'리제네론','Merck':'머크','AbbVie':'애브비',
+  'ExxonMobil':'엑손모빌','Chevron':'셰브런','Cheniere':'셰니어','Schlumberger':'슐럼버거',
+  'ConocoPhillips':'코노코필립스','Kinder Morgan':'킨더 모건','EOG Resources':'EOG 리소시스',
+  'First Solar':'퍼스트 솔라','Enphase':'엔페이즈','Albemarle':'앨버말','Bloom Energy':'블룸 에너지',
+  'Linde':'린데','Air Products':'에어 프로덕츠','Sunrun':'선런',
+  'Tesla':'테슬라','Toyota':'토요타','General Motors':'GM','Rivian':'리비안',
+  'Mobileye':'모빌아이','Uber':'우버','Ford':'포드',
+  'Lockheed Martin':'록히드 마틴','RTX Corp':'RTX','Northrop Grumman':'노스럽 그러먼',
+  'General Dynamics':'제너럴 다이내믹스','Boeing':'보잉','Rocket Lab':'로켓 랩','L3Harris':'L3해리스',
+  'IonQ':'아이온큐','Rigetti':'리게티','D-Wave':'D-웨이브',
+  'Coinbase':'코인베이스','Strategy':'스트래티지(MSTR)','Marathon Digital':'마라톤 디지털','Riot Platforms':'라이엇 플랫폼스',
+  'CrowdStrike':'크라우드스트라이크','Palo Alto':'팔로알토','Zscaler':'지스케일러','Fortinet':'포티넷',
+  'Cloudflare':'클라우드플레어','SentinelOne':'센티널원','Okta':'옥타',
+  'Visa':'비자','Mastercard':'마스터카드','American Express':'아메리칸 익스프레스','PayPal':'페이팔',
+  'Block':'블록','Fiserv':'파이서브','Global Payments':'글로벌 페이먼츠',
+  'JPMorgan':'JP모건','Goldman Sachs':'골드만삭스','Morgan Stanley':'모건스탠리',
+  'Bank of America':'뱅크오브아메리카','Charles Schwab':'찰스 슈왑','BlackRock':'블랙록','Wells Fargo':'웰스파고',
+  'ABB Ltd':'ABB','Rockwell Auto':'록웰 오토메이션','Emerson Elec':'에머슨','Cognex':'코그넥스',
+  'Teradyne':'테라다인','Zebra Tech':'지브라 테크','UiPath':'유아이패스',
+  'Amazon':'아마존','Walmart':'월마트','Costco':'코스트코','Home Depot':'홈디포',
+  'Chipotle':'치폴레','Lululemon':'룰루레몬','Starbucks':'스타벅스',
+};
+function displayName(nm){return (nm&&NAME_KO[nm])||nm||''}
 
 // 영문 티커 추출 stop list
 const TICKER_STOP=new Set(['AI','EPS','CEO','CFO','CPI','GDP','OPEC','FOMC','ETF','IPO','API','SEC','LLM','SUV','EV','EU','US','UK','KST','AH','CC','QoQ','YoY','YTD','GAAP','NM','NA','MAU','DAU','SaaS','GPU','TPU','TSV','SMR','DRAM','HBM','LNG','WTI','M&A','PMI','UTC','D','PT','ET','CT','PR','GAAP','IT','TV','UI','UX','PC','OS','RPO','ARR','LTM','FY','GM','OPM','PER','PBR','ESG','OECD','NATO','APAC','EMEA','LATAM','PG','VC','CDP','PE','VR','AR','BCG','IPO','ROE','ROI','PG','PT','ST','RD']);
@@ -919,8 +893,8 @@ function renderHealth(){
       </div>
       ${topMover?`
         <div class="health-mover">
-          <span class="mov-lbl">Top mover (FY26E)</span>
-          <span class="mov-tk">${escapeHtml(topMover.tk)}</span> · ${escapeHtml(topMover.nm)} · ${fmtPct(topMover.g)}
+          <span class="mov-lbl">FY26E 성장 1위</span>
+          <span class="mov-tk">${escapeHtml(topMover.tk)}</span> · ${escapeHtml(displayName(topMover.nm))} · ${fmtPct(topMover.g)}
         </div>
       `:''}
     `;
@@ -949,7 +923,7 @@ function renderExplorer(){
   const q=STATE.expQuery.trim().toLowerCase();
   if(q){
     all=all.filter(s=>{
-      const hay=(s.tk+' '+s.nm+' '+(s.rs||'')+' '+(s.catTitle||'')).toLowerCase();
+      const hay=(s.tk+' '+s.nm+' '+displayName(s.nm)+' '+(s.rs||'')+' '+(s.catTitle||'')).toLowerCase();
       return hay.includes(q);
     });
   }
@@ -959,22 +933,16 @@ function renderExplorer(){
     const r1=parseFloat(s.r1),r2=parseFloat(s.r2);
     const g=(r1>0&&r2>0)?(r2-r1)/r1:null;
     const gCls=g===null?'flat':(g>0.05?'up':(g<-0.05?'down':'flat'));
-    const isWL=STATE.watchlist.includes(s.tk);
     return `
       <div class="exp-card" data-tk="${escapeHtml(s.tk)}" data-market="${market}">
-        <button class="star-btn ${isWL?'on':''}" data-wl="${escapeHtml(s.tk)}" aria-label="관심 종목 토글">${isWL?'★':'☆'}</button>
         <span class="exp-tk">${escapeHtml(s.tk)}</span>
-        <div class="exp-nm">${escapeHtml(s.nm||'')}</div>
+        <div class="exp-nm">${escapeHtml(displayName(s.nm))}</div>
         <div class="exp-rs">${escapeHtml(s.rs||'')}</div>
         ${g!==null?`<span class="exp-growth ${gCls}">FY26E ${fmtPct(g)}</span>`:''}
       </div>
     `;
   }).join('');
 
-  // 이벤트 바인딩
-  grid.querySelectorAll('.star-btn').forEach(btn=>{
-    btn.addEventListener('click',e=>{e.stopPropagation();toggleWL(btn.dataset.wl)});
-  });
   grid.querySelectorAll('.exp-card').forEach(card=>{
     card.addEventListener('click',()=>openModal(card.dataset.tk,card.dataset.market));
   });
@@ -992,59 +960,6 @@ function findStock(tk){
   return null;
 }
 
-function countMentions(tk){
-  let count=0;
-  for(const tab of Object.keys(UPD_URLS)){
-    const list=STATE.upd[tab];
-    if(!list)continue;
-    // 최근 7일
-    const now=todayKST();
-    const cutoff=fmtKSTDate(new Date(now.getTime()-7*86400*1000));
-    for(const entry of list){
-      const dateStr=(entry.date||'').slice(0,10);
-      if(dateStr<cutoff)break;
-      const text=[entry.summary||'',(entry.changes||[]).map(c=>c.detail).join(' '),(entry.entries||[]).map(e=>e.text||'').join(' ')].join(' ');
-      const re=new RegExp(`\\b${tk}\\b`,'g');
-      const m=text.match(re);
-      if(m)count+=m.length;
-    }
-  }
-  return count;
-}
-
-function renderWatchlist(){
-  document.getElementById('wlCount').textContent=STATE.watchlist.length;
-  const empty=document.getElementById('wlEmpty');
-  const grid=document.getElementById('wlGrid');
-  if(!STATE.watchlist.length){empty.style.display='';grid.style.display='none';return}
-  empty.style.display='none';grid.style.display='';
-  grid.innerHTML=STATE.watchlist.map(tk=>{
-    const s=findStock(tk);
-    if(!s)return `<div class="wl-card"><div class="wl-tk">${escapeHtml(tk)}</div><div class="wl-rs">데이터에 없음</div></div>`;
-    const mentions=countMentions(tk);
-    return `
-      <div class="wl-card" data-tk="${escapeHtml(tk)}" data-market="${escapeHtml(s.market)}">
-        <div class="wl-head">
-          <div>
-            <div class="wl-tk">${escapeHtml(tk)}</div>
-            <div class="wl-nm">${escapeHtml(s.nm||'')}</div>
-          </div>
-          <button class="star-btn on" data-wl="${escapeHtml(tk)}" style="font-size:20px;color:var(--acc-deep)" aria-label="관심 해제">★</button>
-        </div>
-        <div class="wl-cat">${escapeHtml(s.catTitle||'')}</div>
-        <div class="wl-rs">${escapeHtml(s.rs||'')}</div>
-        <div class="wl-mentions">최근 7일 사건 <span class="badge">${mentions}건</span></div>
-      </div>
-    `;
-  }).join('');
-
-  grid.querySelectorAll('.star-btn').forEach(btn=>{
-    btn.addEventListener('click',e=>{e.stopPropagation();toggleWL(btn.dataset.wl)});
-  });
-  grid.querySelectorAll('.wl-card').forEach(card=>{
-    card.addEventListener('click',()=>openModal(card.dataset.tk,card.dataset.market));
-  });
-}
 
 // ═══════════════════════════════════════════════════════════
 // Modal — deep dive
@@ -1086,7 +1001,6 @@ function openModal(tk,market){
   const pg=(p1>0&&p2>0)?(p2-p1)/p1:null;
   const unit=market==='kr'?'천억원':'$B';
 
-  const isWL=STATE.watchlist.includes(tk);
   const maxRev=Math.max(r1||0,r2||0)||1;
   const maxProf=Math.max(p1||0,p2||0)||1;
 
@@ -1094,11 +1008,10 @@ function openModal(tk,market){
     <div class="modal-head">
       <div>
         <div class="modal-tk">${escapeHtml(tk)} · ${escapeHtml(market==='stocks'?'미국':'한국')}</div>
-        <h2 class="modal-nm">${escapeHtml(s.nm||'')}</h2>
+        <h2 class="modal-nm">${escapeHtml(displayName(s.nm))}</h2>
         <div class="modal-cat">${escapeHtml(s.catTitle||'')}${s.catTag?' · '+escapeHtml(s.catTag):''}</div>
       </div>
       <div class="modal-actions">
-        <button class="btn-ghost" id="modalWLBtn">${isWL?'★ 관심 해제':'☆ 관심 추가'}</button>
         <button class="modal-close" id="modalCloseBtn" aria-label="닫기">✕</button>
       </div>
     </div>
@@ -1151,14 +1064,13 @@ function openModal(tk,market){
     <div class="modal-section">
       <div class="modal-sec-label">동일 카테고리 동료</div>
       <div class="peers-grid">
-        ${peers.map(p=>`<div class="peer-card" data-tk="${escapeHtml(p.tk)}" data-market="${escapeHtml(p.market)}"><div class="peer-tk">${escapeHtml(p.tk)}</div><div class="peer-nm">${escapeHtml(p.nm)}</div></div>`).join('')}
+        ${peers.map(p=>`<div class="peer-card" data-tk="${escapeHtml(p.tk)}" data-market="${escapeHtml(p.market)}"><div class="peer-tk">${escapeHtml(p.tk)}</div><div class="peer-nm">${escapeHtml(displayName(p.nm))}</div></div>`).join('')}
       </div>
     </div>
     `:''}
   `;
 
   document.getElementById('modalCloseBtn').addEventListener('click',closeModal);
-  document.getElementById('modalWLBtn').addEventListener('click',()=>{toggleWL(tk);openModal(tk,market)});
   document.querySelectorAll('.peer-card').forEach(p=>{
     p.addEventListener('click',()=>openModal(p.dataset.tk,p.dataset.market));
   });
@@ -1202,7 +1114,6 @@ document.getElementById('expSearch').addEventListener('input',e=>{
   STATE.expQuery=e.target.value;
   renderExplorer();
 });
-document.getElementById('wlClear').addEventListener('click',clearWL);
 
 // ═══════════════════════════════════════════════════════════
 // Boot
@@ -1219,8 +1130,6 @@ async function loadCalendar(){
 }
 
 async function boot(){
-  STATE.watchlist=loadWL();
-
   try{
     const [stocks,kr,ai,commodity,unicorn,calendar]=await Promise.all([
       loadJS(URLS.stocks),loadJS(URLS.kr),loadJS(URLS.ai),loadJS(URLS.commodity),loadJS(URLS.unicorn),
@@ -1240,7 +1149,6 @@ async function boot(){
 
     buildNarrative();
     renderCalendar();
-    renderWatchlist();
     renderHealth();
     renderExplorer();
   }catch(e){
