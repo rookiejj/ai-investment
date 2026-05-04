@@ -261,12 +261,13 @@ section:first-of-type{padding-top:48px;border-top:0}
 .rev-chart{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
 .rev-bar-wrap{padding:18px;background:var(--panel-tint);border:1px solid var(--border);border-radius:14px}
 .rev-year{font:500 11px/1 'Geist Mono',monospace;text-transform:uppercase;color:var(--mut);letter-spacing:0.4px;margin-bottom:14px}
-.rev-bars{display:flex;align-items:flex-end;gap:14px;height:90px;margin-bottom:14px}
+.rev-bars{display:flex;gap:14px;margin-bottom:14px}
 .rev-bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px}
-.rev-bar .bar{width:100%;border-radius:6px 6px 0 0;background:var(--fg);transition:height .4s}
-.rev-bar.profit .bar{background:var(--acc-deep)}
+.rev-bar .bar-track{width:100%;height:80px;display:flex;align-items:flex-end}
+.rev-bar .bar-track .bar{width:100%;border-radius:6px 6px 0 0;background:var(--fg);transition:height .4s}
+.rev-bar.profit .bar-track .bar{background:var(--acc-deep)}
 .rev-bar .bar-num{font:700 14px/1 'Geist Mono',monospace;color:var(--fg);letter-spacing:-0.2px}
-.rev-bar .bar-lbl{font:500 10px/1 'Geist Mono',monospace;text-transform:uppercase;color:var(--mut);letter-spacing:0.4px;margin-top:auto}
+.rev-bar .bar-lbl{font:500 10px/1 'Geist Mono',monospace;text-transform:uppercase;color:var(--mut);letter-spacing:0.4px}
 .rev-growth-row{display:flex;justify-content:space-between;font:500 12px/1.4 'Inter',sans-serif;color:var(--fg2);padding-top:12px;border-top:1px solid var(--border)}
 .rev-growth-row .pct{font:700 13px/1 'Geist Mono',monospace}
 .rev-growth-row .pct.up{color:var(--acc-deep)}
@@ -1020,16 +1021,16 @@ function openModal(tk,market){
         <div class="rev-bar-wrap">
           <div class="rev-year">매출 (Revenue)</div>
           <div class="rev-bars">
-            <div class="rev-bar"><span class="bar-num">${r1||'—'}</span><div class="bar" style="height:${(r1/maxRev)*70+10}px"></div><span class="bar-lbl">FY25</span></div>
-            <div class="rev-bar"><span class="bar-num">${r2||'—'}</span><div class="bar" style="height:${(r2/maxRev)*70+10}px"></div><span class="bar-lbl">FY26E</span></div>
+            <div class="rev-bar"><span class="bar-num">${r1||'—'}</span><div class="bar-track"><div class="bar" style="height:${Math.max(12,(r1/maxRev)*100)}%"></div></div><span class="bar-lbl">FY25</span></div>
+            <div class="rev-bar"><span class="bar-num">${r2||'—'}</span><div class="bar-track"><div class="bar" style="height:${Math.max(12,(r2/maxRev)*100)}%"></div></div><span class="bar-lbl">FY26E</span></div>
           </div>
           <div class="rev-growth-row"><span>YoY 성장률</span><span class="pct ${rg>0?'up':(rg<0?'down':'')}">${rg===null?'—':fmtPct(rg)}</span></div>
         </div>
         <div class="rev-bar-wrap">
           <div class="rev-year">영업이익 (Operating Profit)</div>
           <div class="rev-bars">
-            <div class="rev-bar profit"><span class="bar-num">${p1||'—'}</span><div class="bar" style="height:${(p1/maxProf)*70+10}px"></div><span class="bar-lbl">FY25</span></div>
-            <div class="rev-bar profit"><span class="bar-num">${p2||'—'}</span><div class="bar" style="height:${(p2/maxProf)*70+10}px"></div><span class="bar-lbl">FY26E</span></div>
+            <div class="rev-bar profit"><span class="bar-num">${p1||'—'}</span><div class="bar-track"><div class="bar" style="height:${Math.max(12,(p1/maxProf)*100)}%"></div></div><span class="bar-lbl">FY25</span></div>
+            <div class="rev-bar profit"><span class="bar-num">${p2||'—'}</span><div class="bar-track"><div class="bar" style="height:${Math.max(12,(p2/maxProf)*100)}%"></div></div><span class="bar-lbl">FY26E</span></div>
           </div>
           <div class="rev-growth-row"><span>YoY 성장률</span><span class="pct ${pg>0?'up':(pg<0?'down':'')}">${pg===null?'—':fmtPct(pg)}</span></div>
         </div>
