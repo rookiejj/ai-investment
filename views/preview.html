@@ -175,55 +175,24 @@ section:first-of-type{padding-top:48px;border-top:0}
 .phase-label .lbl{color:#fff}
 .phase-chev{font:500 12px/1 'Geist Mono',monospace;color:var(--mut);transition:transform .2s;text-align:right}
 .phase-item.open .phase-chev{transform:rotate(90deg)}
-.phase-stocks{
-  display:none;padding:6px 18px 14px;background:var(--panel-tint);
-  flex-direction:column;gap:2px;
-}
-.phase-item.open .phase-stocks{display:flex}
-.phase-stock{
-  display:grid;grid-template-columns:60px 1fr auto;gap:12px;align-items:center;
-  width:100%;padding:8px 12px;border-radius:8px;background:transparent;
-  text-align:left;border:0;cursor:pointer;
-}
-.phase-stock:hover{background:#fff}
-.phase-stock-tk{font:600 12px/1 'Geist Mono',monospace;color:var(--mut);letter-spacing:0.4px}
-.phase-stock-nm{font:500 13px/1.3 'Inter',sans-serif;color:var(--fg)}
-.phase-stock-g{font:600 12px/1 'Geist Mono',monospace;color:var(--mut)}
-.phase-stock-g.up{color:var(--acc-deep)}
-.phase-stock-g.down{color:var(--err)}
+.phase-stocks{display:none;padding:8px 14px 14px;background:var(--panel-tint)}
+.phase-item.open .phase-stocks{display:block}
 @media(max-width:640px){
   .phase-row{grid-template-columns:8px 1fr 64px 78px 12px;gap:10px;padding:12px 14px;font-size:13px}
   .phase-cat-name{font-size:13px}
   .phase-num{font-size:13px}
   .phase-label{font-size:10px}
-  .phase-stock{grid-template-columns:50px 1fr auto;gap:10px;padding:6px 10px}
-  .phase-stock-nm{font-size:12px}
+  .phase-stocks{padding:8px 10px 12px}
 }
 
-/* Stock Explorer */
-.exp-controls{display:flex;align-items:center;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+/* Search input + cards (used inside phase expansion) */
 .exp-search{
-  flex:1;min-width:240px;padding:10px 16px;
+  flex:1;min-width:200px;padding:10px 16px;
   background:#fff;border:1px solid var(--border-md);border-radius:9999px;
   font:400 14px/1.4 'Inter',sans-serif;color:var(--fg);
 }
 .exp-search:focus{outline:1px solid var(--acc);border-color:var(--acc)}
 .exp-search::placeholder{color:var(--mut2)}
-.exp-tab{padding:7px 14px;background:#fff;border:1px solid var(--border-md);border-radius:9999px;font:500 13px/1 'Inter',sans-serif;color:var(--fg2)}
-.exp-tab.on{background:var(--fg);color:#fff;border-color:var(--fg)}
-.exp-list{display:flex;flex-direction:column;gap:24px}
-.exp-cat-head{
-  margin-bottom:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-}
-.exp-cat-head .dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex-shrink:0}
-.exp-cat-head[data-phase="expansion"],.exp-cat-head[data-phase="growth"]{color:var(--acc-deep)}
-.exp-cat-head[data-phase="mature"]{color:var(--info)}
-.exp-cat-head[data-phase="plateau"]{color:var(--warn)}
-.exp-cat-head[data-phase="contraction"]{color:var(--err)}
-.exp-cat-head[data-phase="unknown"]{color:var(--mut)}
-.exp-cat-head .name{font:600 14px/1.2 'Inter',sans-serif;color:var(--fg);letter-spacing:-0.2px}
-.exp-cat-head .count{font:500 11px/1 'Geist Mono',monospace;color:var(--mut);letter-spacing:0.4px}
-.exp-cat-head .phase{font:600 11px/1 'Geist Mono',monospace;letter-spacing:0.4px;color:currentColor;margin-left:auto}
 .exp-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
 .exp-card{
   padding:14px;background:var(--panel);border:1px solid var(--border);border-radius:12px;
@@ -437,36 +406,21 @@ footer a{color:var(--acc-deep)}
   </div>
 </section>
 
-<!-- Sector Phase List -->
+<!-- Sector Phase List + Stocks (merged) -->
 <section>
   <div class="sec-head">
     <div>
       <div class="sec-label">Sector growth phases</div>
       <h2 class="sec-title">섹터 성장 단계</h2>
-      <p class="sec-desc">% = FY26E 매출의 전년(FY25) 대비 성장률 - 섹터값은 7종목 중앙값.</p>
+      <p class="sec-desc">% = FY26E 매출의 전년(FY25) 대비 성장률 - 섹터값은 7종목 중앙값. 행 클릭 시 7종목 카드 펼침.</p>
     </div>
   </div>
   <div class="health-controls">
     <button class="health-tab on" data-market="stocks">미국</button>
     <button class="health-tab" data-market="kr">한국</button>
-  </div>
-  <div class="phase-list" id="healthList"></div>
-</section>
-
-<!-- Stock Explorer -->
-<section>
-  <div class="sec-head">
-    <div>
-      <div class="sec-label">Deep-dive</div>
-      <h2 class="sec-title">섹터별 대표 종목</h2>
-    </div>
-  </div>
-  <div class="exp-controls">
-    <button class="exp-tab on" data-market="stocks">미국</button>
-    <button class="exp-tab" data-market="kr">한국</button>
     <input class="exp-search" id="expSearch" placeholder="티커·기업명·키워드로 검색" />
   </div>
-  <div class="exp-list" id="expGrid"></div>
+  <div class="phase-list" id="healthList"></div>
 </section>
 
 <div class="disclaimer" style="margin:0 24px 24px">
@@ -864,27 +818,37 @@ function renderHealth(){
   const data=STATE.data[market];
   if(!data)return;
   const list=document.getElementById('healthList');
+  const q=(STATE.expQuery||'').trim().toLowerCase();
 
   const rows=data.map(cat=>{
-    const stocks=(cat.stocks||[]).map(s=>{
+    const allStocks=(cat.stocks||[]).map(s=>{
       const r1=parseFloat(s.r1),r2=parseFloat(s.r2);
-      return {tk:s.tk,nm:s.nm,g:(r1>0&&r2>0)?(r2-r1)/r1:null};
+      return {...s,g:(r1>0&&r2>0)?(r2-r1)/r1:null};
     }).sort((a,b)=>{
       if(a.g===null)return 1;
       if(b.g===null)return -1;
       return b.g-a.g;
     });
-    const growths=stocks.map(s=>s.g).filter(g=>g!==null);
+    const growths=allStocks.map(s=>s.g).filter(g=>g!==null);
     const med=median(growths);
-    return {title:cat.title,med,ph:classifyPhase(med),stocks};
-  }).sort((a,b)=>{
+    let stocks=allStocks;
+    if(q){
+      stocks=stocks.filter(s=>{
+        const hay=(s.tk+' '+s.nm+' '+displayName(s.nm)+' '+(s.rs||'')+' '+(cat.title||'')).toLowerCase();
+        return hay.includes(q);
+      });
+    }
+    return {title:cat.title,med,ph:classifyPhase(med),stocks,allCount:allStocks.length};
+  }).filter(r=>!q||r.stocks.length).sort((a,b)=>{
     if(a.med===null)return 1;
     if(b.med===null)return -1;
     return b.med-a.med;
   });
 
+  if(!rows.length){list.innerHTML='<div class="exp-empty">조건에 맞는 종목 없음</div>';return}
+
   list.innerHTML=rows.map(r=>`
-    <div class="phase-item" data-phase="${r.ph.phase}">
+    <div class="phase-item ${q?'open':''}" data-phase="${r.ph.phase}">
       <div class="phase-row">
         <span class="phase-dot"></span>
         <span class="phase-cat-name">${escapeHtml(r.title||'')}</span>
@@ -893,13 +857,19 @@ function renderHealth(){
         <span class="phase-chev">▸</span>
       </div>
       <div class="phase-stocks">
-        ${r.stocks.map(s=>`
-          <button class="phase-stock" data-tk="${escapeHtml(s.tk)}" data-market="${market}">
-            <span class="phase-stock-tk">${escapeHtml(s.tk)}</span>
-            <span class="phase-stock-nm">${escapeHtml(displayName(s.nm))}</span>
-            <span class="phase-stock-g ${s.g===null?'':(s.g>0.05?'up':(s.g<-0.05?'down':''))}">${s.g===null?'—':fmtPct(s.g)}</span>
-          </button>
-        `).join('')}
+        <div class="exp-cards">
+          ${r.stocks.map(s=>{
+            const gCls=s.g===null?'flat':(s.g>0.05?'up':(s.g<-0.05?'down':'flat'));
+            return `
+              <div class="exp-card" data-tk="${escapeHtml(s.tk)}" data-market="${market}">
+                <span class="exp-tk">${escapeHtml(s.tk)}</span>
+                <div class="exp-nm">${escapeHtml(displayName(s.nm))}</div>
+                <div class="exp-rs">${escapeHtml(s.rs||'')}</div>
+                ${s.g!==null?`<span class="exp-growth ${gCls}">FY26E ${fmtPct(s.g)}</span>`:''}
+              </div>
+            `;
+          }).join('')}
+        </div>
       </div>
     </div>
   `).join('');
@@ -907,10 +877,10 @@ function renderHealth(){
   list.querySelectorAll('.phase-row').forEach(row=>{
     row.addEventListener('click',()=>row.parentElement.classList.toggle('open'));
   });
-  list.querySelectorAll('.phase-stock').forEach(btn=>{
-    btn.addEventListener('click',e=>{
+  list.querySelectorAll('.exp-card').forEach(card=>{
+    card.addEventListener('click',e=>{
       e.stopPropagation();
-      openModal(btn.dataset.tk,btn.dataset.market);
+      openModal(card.dataset.tk,card.dataset.market);
     });
   });
 }
@@ -930,72 +900,8 @@ function getAllStocksOf(market){
   return out;
 }
 
-function renderExplorer(){
-  const market=STATE.market;
-  const data=STATE.data[market];
-  if(!data)return;
-  const q=STATE.expQuery.trim().toLowerCase();
-  const list=document.getElementById('expGrid');
-
-  // 카테고리별 phase 계산 (섹터 성장 단계와 동일)
-  const sections=data.map(cat=>{
-    const allStocks=cat.stocks||[];
-    const growths=allStocks.map(s=>{
-      const r1=parseFloat(s.r1),r2=parseFloat(s.r2);
-      return (r1>0&&r2>0)?(r2-r1)/r1:null;
-    }).filter(g=>g!==null);
-    const med=median(growths);
-    const ph=classifyPhase(med);
-    let stocks=allStocks;
-    if(q){
-      stocks=stocks.filter(s=>{
-        const hay=(s.tk+' '+s.nm+' '+displayName(s.nm)+' '+(s.rs||'')+' '+(cat.title||'')).toLowerCase();
-        return hay.includes(q);
-      });
-    }
-    return {cat,stocks,med,ph};
-  }).filter(sec=>sec.stocks.length).sort((a,b)=>{
-    // 섹터 성장 단계와 같은 순서 — 성장률 내림차순
-    if(a.med===null)return 1;
-    if(b.med===null)return -1;
-    return b.med-a.med;
-  });
-
-  if(!sections.length){list.innerHTML='<div class="exp-empty">조건에 맞는 종목 없음</div>';return}
-
-  list.innerHTML=sections.map(sec=>`
-    <div class="exp-cat-section">
-      <div class="exp-cat-head" data-phase="${sec.ph.phase}">
-        <span class="dot"></span>
-        <span class="name">${escapeHtml(sec.cat.title||'')}</span>
-        <span class="count">${sec.stocks.length}종목</span>
-        <span class="phase">${sec.ph.label}</span>
-      </div>
-      <div class="exp-cards">
-        ${sec.stocks.map(s=>{
-          const r1=parseFloat(s.r1),r2=parseFloat(s.r2);
-          const g=(r1>0&&r2>0)?(r2-r1)/r1:null;
-          const gCls=g===null?'flat':(g>0.05?'up':(g<-0.05?'down':'flat'));
-          return `
-            <div class="exp-card" data-tk="${escapeHtml(s.tk)}" data-market="${market}">
-              <span class="exp-tk">${escapeHtml(s.tk)}</span>
-              <div class="exp-nm">${escapeHtml(displayName(s.nm))}</div>
-              <div class="exp-rs">${escapeHtml(s.rs||'')}</div>
-              ${g!==null?`<span class="exp-growth ${gCls}">FY26E ${fmtPct(g)}</span>`:''}
-            </div>
-          `;
-        }).join('')}
-      </div>
-    </div>
-  `).join('');
-
-  list.querySelectorAll('.exp-card').forEach(card=>{
-    card.addEventListener('click',()=>openModal(card.dataset.tk,card.dataset.market));
-  });
-}
-
 // ═══════════════════════════════════════════════════════════
-// Watchlist render
+// Stock lookup (모달용)
 // ═══════════════════════════════════════════════════════════
 function findStock(tk){
   for(const market of ['stocks','kr']){
@@ -1149,17 +1055,9 @@ document.querySelectorAll('.health-tab').forEach(b=>{
     renderHealth();
   });
 });
-document.querySelectorAll('.exp-tab').forEach(b=>{
-  b.addEventListener('click',()=>{
-    document.querySelectorAll('.exp-tab').forEach(x=>x.classList.remove('on'));
-    b.classList.add('on');
-    STATE.market=b.dataset.market;
-    renderExplorer();
-  });
-});
 document.getElementById('expSearch').addEventListener('input',e=>{
   STATE.expQuery=e.target.value;
-  renderExplorer();
+  renderHealth();
 });
 
 // ═══════════════════════════════════════════════════════════
@@ -1197,7 +1095,6 @@ async function boot(){
     buildNarrative();
     renderCalendar();
     renderHealth();
-    renderExplorer();
   }catch(e){
     console.error('boot error:',e);
     document.getElementById('narrativeHeadline').textContent='데이터 로드 실패';
