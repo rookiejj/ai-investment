@@ -96,16 +96,35 @@ section:first-of-type{padding-top:48px;border-top:0}
 .narrative-body{font:400 16px/1.7 'Inter',sans-serif;color:var(--fg2);white-space:pre-line}
 
 /* Event Calendar */
+.cal-dow-row{
+  display:grid;grid-template-columns:repeat(7,1fr);
+  background:var(--panel-tint);border:1px solid var(--border);border-bottom:0;
+  border-radius:14px 14px 0 0;overflow:hidden;
+}
+.cal-dow-row > div{
+  padding:10px 12px;text-align:center;
+  font:600 11px/1 'Geist Mono',monospace;text-transform:uppercase;
+  color:var(--mut);letter-spacing:0.4px;
+  border-left:1px solid var(--border);
+}
+.cal-dow-row > div:first-child{border-left:0}
+.cal-dow-row > div.sun{color:var(--err)}
+.cal-dow-row > div.sat{color:var(--info)}
 .cal-grid{
   display:grid;grid-template-columns:repeat(7,1fr);
+  grid-auto-rows:160px;
   gap:1px;background:var(--border);
-  border:1px solid var(--border);border-radius:14px;overflow:hidden;
+  border:1px solid var(--border);border-top:0;
+  border-radius:0 0 14px 14px;overflow:hidden;
 }
 .cal-day{
-  padding:14px 12px;background:#fff;
-  display:flex;flex-direction:column;gap:8px;min-height:140px;transition:background .15s;
+  padding:10px 10px;background:#fff;
+  display:flex;flex-direction:column;gap:6px;
+  overflow:hidden;transition:background .15s;
 }
 .cal-day.today{background:var(--acc-soft);box-shadow:inset 3px 0 0 var(--acc-deep)}
+.cal-day.past{background:var(--panel-tint);color:var(--mut)}
+.cal-day.past .cal-date .num{color:var(--mut)}
 .cal-count{
   margin-left:auto;display:inline-flex;align-items:center;justify-content:center;
   min-width:18px;height:18px;padding:0 6px;border-radius:9999px;
@@ -347,20 +366,21 @@ footer a{color:var(--acc-deep)}
   .modal-nm{font-size:22px}
   .sec-title{font-size:22px}
   .exp-cards{gap:10px}
-  .cal-day{min-height:96px;padding:8px 6px;gap:4px}
+  .cal-grid{grid-auto-rows:96px}
+  .cal-dow-row > div{padding:8px 4px;font-size:10px}
+  .cal-day{padding:8px 6px;gap:4px}
   .cal-date .num{font-size:16px}
-  .cal-date .dow{font-size:9px}
   .cal-count{min-width:16px;height:16px;font-size:9px;padding:0 4px}
   .cal-events{display:none}
   .cal-empty-msg{display:none}
 }
 @media(max-width:480px){
-  .cal-day{min-height:72px;padding:6px 4px;gap:2px}
+  .cal-grid{grid-auto-rows:62px}
+  .cal-dow-row > div{padding:6px 2px;font-size:9px}
+  .cal-day{padding:6px 4px;gap:2px;position:relative}
   .cal-date{flex-direction:column;align-items:flex-start;gap:0}
   .cal-date .num{font-size:14px}
-  .cal-date .dow{font-size:8px}
-  .cal-count{position:absolute;top:6px;right:6px;min-width:14px;height:14px;font-size:8px}
-  .cal-day{position:relative}
+  .cal-count{position:absolute;top:6px;right:6px;min-width:14px;height:14px;font-size:8px;margin:0}
 }
 </style>
 </head>
@@ -405,8 +425,11 @@ footer a{color:var(--acc-deep)}
   <div class="sec-head">
     <div>
       <div class="sec-label">Forward-looking events</div>
-      <h2 class="sec-title">이벤트 캘린더 · 다음 14일</h2>
+      <h2 class="sec-title">이벤트 캘린더 · 2주</h2>
     </div>
+  </div>
+  <div class="cal-dow-row">
+    <div class="sun">일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div class="sat">토</div>
   </div>
   <div class="cal-grid" id="calendar"></div>
   <div class="cal-legend">
@@ -648,11 +671,18 @@ function expandRecurring(recurring, fromDate, days){
   return out;
 }
 
-function extractEvents(){
+function getDisplayRange(){
   const today=todayKST();
-  const startKey=fmtKSTDate(today);
-  const endDate=new Date(today.getTime()+14*86400*1000);
-  const endKey=fmtKSTDate(endDate);
+  const dow=today.getUTCDay(); // 0=Sun ... 6=Sat
+  const start=new Date(today.getTime()-dow*86400*1000); // 이번 주 일요일
+  const end=new Date(start.getTime()+13*86400*1000);    // 다음 주 토요일
+  return {start, end, today};
+}
+
+function extractEvents(){
+  const {start, end}=getDisplayRange();
+  const startKey=fmtKSTDate(start);
+  const endKey=fmtKSTDate(end);
 
   // calendar-events.js만 사용 — fixed·recurring 큐레이션 데이터
   const cal=STATE.calendar||{};
@@ -661,7 +691,7 @@ function extractEvents(){
     cat:ev.cat,impact:ev.impact||2,source:'fixed'
   }));
 
-  const fromRecurring=expandRecurring(cal.recurring||[],today,15).map(ev=>({...ev,desc:'',tickers:[]}));
+  const fromRecurring=expandRecurring(cal.recurring||[],start,14).map(ev=>({...ev,desc:'',tickers:[]}));
 
   const all=[...fromFixed,...fromRecurring];
   const dedup=new Map();
@@ -682,7 +712,8 @@ function getEvents(){if(!_eventsCache)_eventsCache=extractEvents();return _event
 
 function renderCalendar(){
   _eventsCache=null; // 매 렌더에서 새로 계산
-  const today=todayKST();
+  const {start, today}=getDisplayRange();
+  const todayKey=fmtKSTDate(today);
   const events=getEvents();
   const byDate={};
   for(const e of events){if(!byDate[e.date])byDate[e.date]=[];byDate[e.date].push(e)}
@@ -690,25 +721,31 @@ function renderCalendar(){
   const cal=document.getElementById('calendar');
   cal.innerHTML='';
   for(let i=0;i<14;i++){
-    const d=new Date(today.getTime()+i*86400*1000);
+    const d=new Date(start.getTime()+i*86400*1000);
     const dKey=fmtKSTDate(d);
-    const dow=['일','월','화','수','목','금','토'][d.getUTCDay()];
     const num=d.getUTCDate();
+    const isToday=dKey===todayKey;
+    const isPast=dKey<todayKey;
     const dayEvents=byDate[dKey]||[];
 
+    let cls='cal-day';
+    if(isToday)cls+=' today';
+    else if(isPast)cls+=' past';
+    if(dayEvents.length)cls+=' has-events clickable';
+
     const div=document.createElement('div');
-    div.className='cal-day '+(i===0?'today':dayEvents.length?'has-events':'empty')+(dayEvents.length?' clickable':'');
+    div.className=cls;
     div.dataset.date=dKey;
     div.innerHTML=`
       <div class="cal-date">
-        <span class="num">${num}</span><span class="dow">${dow}</span>
+        <span class="num">${num}</span>
         ${dayEvents.length?`<span class="cal-count">${dayEvents.length}</span>`:''}
       </div>
       <div class="cal-events">
         ${dayEvents.length
-          ? dayEvents.slice(0,5).map(e=>`<div class="cal-event ${(e.impact||1)>=3?'high':''}" data-cat="${e.cat}" title="${escapeHtml(e.title)}"><span class="ev-tag"></span><span>${escapeHtml(e.title)}</span></div>`).join('')
-            + (dayEvents.length>5?`<div class="cal-more">+${dayEvents.length-5}건 더 →</div>`:'<div class="cal-more cal-more-hint">자세히 →</div>')
-          : '<div class="cal-empty-msg">조용한 하루</div>'}
+          ? dayEvents.slice(0,3).map(e=>`<div class="cal-event ${(e.impact||1)>=3?'high':''}" data-cat="${e.cat}" title="${escapeHtml(e.title)}"><span class="ev-tag"></span><span>${escapeHtml(e.title)}</span></div>`).join('')
+            + (dayEvents.length>3?`<div class="cal-more">+${dayEvents.length-3}건 →</div>`:'')
+          : ''}
       </div>
     `;
     if(dayEvents.length){
