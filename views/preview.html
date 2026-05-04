@@ -643,31 +643,13 @@ function expandRecurring(recurring, fromDate, days){
   return out;
 }
 
-function expandDateRanges(ranges, fromDate, toDate){
-  const out=[];
-  const fromKey=fmtKSTDate(fromDate),toKey=fmtKSTDate(toDate);
-  for(const r of ranges){
-    if(!r.start||!r.end)continue;
-    const start=r.start>fromKey?r.start:fromKey;
-    const end=r.end<toKey?r.end:toKey;
-    if(start>end)continue;
-    let cur=new Date(start+'T00:00:00Z');
-    const endD=new Date(end+'T00:00:00Z');
-    while(cur<=endD){
-      out.push({date:fmtKSTDate(cur),title:`${r.title} (윈도우 ${r.start}~${r.end})`,cat:r.cat,impact:r.impact||1,source:'range'});
-      cur=new Date(cur.getTime()+86400*1000);
-    }
-  }
-  return out;
-}
-
 function extractEvents(){
   const today=todayKST();
   const startKey=fmtKSTDate(today);
   const endDate=new Date(today.getTime()+14*86400*1000);
   const endKey=fmtKSTDate(endDate);
 
-  // calendar-events.js만 사용 — fixed·recurring·dateRanges 모두 큐레이션 데이터
+  // calendar-events.js만 사용 — fixed·recurring 큐레이션 데이터
   const cal=STATE.calendar||{};
   const fromFixed=(cal.fixed||[]).map(ev=>({
     date:ev.date,title:ev.title,desc:ev.desc||'',tickers:ev.tickers||[],
@@ -676,9 +658,7 @@ function extractEvents(){
 
   const fromRecurring=expandRecurring(cal.recurring||[],today,15).map(ev=>({...ev,desc:'',tickers:[]}));
 
-  const fromRanges=expandDateRanges(cal.dateRanges||[],today,endDate).map(ev=>({...ev,desc:'',tickers:[]}));
-
-  const all=[...fromFixed,...fromRecurring,...fromRanges];
+  const all=[...fromFixed,...fromRecurring];
   const dedup=new Map();
   for(const ev of all){
     const k=`${ev.date}|${ev.title.slice(0,40)}`;
@@ -803,7 +783,6 @@ function openDayModal(dateKey, events){
                   <div class="day-event-text">
                     <div class="day-event-title">${escapeHtml(ev.title)}</div>
                     ${ev.desc?`<div class="day-event-desc">${escapeHtml(ev.desc)}</div>`:''}
-                    ${ev.source==='range'?'<div class="day-event-meta">윈도우 진행 중</div>':''}
                     ${ev.source==='recurring'?'<div class="day-event-meta">정기 일정</div>':''}
                   </div>
                 </div>

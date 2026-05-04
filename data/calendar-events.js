@@ -3,7 +3,10 @@
 // 데이터 분류:
 //   - recurring: 정기 패턴 (매주, 월N번째요일 등) → preview.html에서 다음 발생일 자동 계산
 //   - fixed:     구체 날짜 1회성 이벤트 (어닝·IPO·컨퍼런스 등 일정 알려진 것)
-//   - dateRange: 시작·끝일이 있는 윈도우(IPO 프라이싱 윈도우 등)
+//
+// 다일 윈도우 이벤트는 시작·종료일을 별도 fixed 항목 두 개로 등록할 것
+// (예: 'X 윈도우 시작' + 'X 마감'). 윈도우 안 모든 날짜에 채우는 dateRanges는
+// 동일 항목이 연속 반복되어 노이즈가 커지므로 폐기.
 //
 // 카테고리(cat): earnings·ipo·policy·product·conf·macro·other
 // 중요도(impact): 1(low) ~ 3(high)
@@ -100,11 +103,5 @@ const fixed = [
   { cat:'policy', impact:2, title:'EU 디지털시장법(DMA) 추가 라운드 결정', date:'2026-05-22' },
 ];
 
-// 시작·끝일이 있는 윈도우 (preview.html에서 매일 표시)
-const dateRanges = [
-  { cat:'ipo', impact:3, title:'SpaceX S-1 제출 윈도우', start:'2026-05-15', end:'2026-05-22' },
-  { cat:'conf', impact:3, title:'Apple WWDC 2026', start:'2026-06-09', end:'2026-06-13' },
-];
-
 // 외부에서 접근할 변수명 (다른 update.js와 일관성)
-const calendarEvents = { recurring, fixed, dateRanges };
+const calendarEvents = { recurring, fixed };
