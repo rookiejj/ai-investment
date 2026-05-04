@@ -312,6 +312,41 @@ section:first-of-type{padding-top:48px;border-top:0}
 .mention-tab[data-t="unicorn"]{background:#f3e8ff;color:#7c3aed}
 .mention-text{font:400 14px/1.6 'Inter',sans-serif;color:var(--fg2)}
 
+/* Day modal — 한 날의 이벤트 리스트 */
+.day-events-list{display:flex;flex-direction:column;gap:10px}
+.day-event{
+  padding:14px 16px;background:var(--panel-tint);border:1px solid var(--border);border-radius:12px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.day-event-row{display:flex;align-items:flex-start;gap:12px}
+.day-event-text{flex:1;min-width:0}
+.day-event-title{font:600 15px/1.45 'Inter',sans-serif;color:var(--fg);letter-spacing:-0.1px}
+.day-event-desc{font:400 13px/1.5 'Inter',sans-serif;color:var(--fg2);margin-top:4px}
+.day-event-meta{font:500 11px/1 'Geist Mono',monospace;text-transform:uppercase;color:var(--mut);letter-spacing:0.4px;margin-top:6px}
+.day-event-tickers{display:flex;flex-wrap:wrap;gap:6px;padding-left:32px}
+.day-ticker-btn{
+  display:inline-flex;align-items:center;padding:5px 12px;
+  background:#fff;border:1px solid var(--border-md);border-radius:9999px;
+  font:600 11px/1 'Geist Mono',monospace;color:var(--fg);letter-spacing:0.4px;transition:all .15s;
+}
+.day-ticker-btn:hover{background:var(--acc-light);color:var(--acc-deep);border-color:var(--acc)}
+
+/* Impact dots — 시각적 중요도 */
+.impact-dots{
+  flex-shrink:0;width:32px;font:500 10px/1 'Geist Mono',monospace;
+  display:inline-flex;justify-content:flex-start;letter-spacing:1px;padding-top:5px;
+}
+.impact-dots.impact-3{color:var(--err)}
+.impact-dots.impact-2{color:var(--warn)}
+.impact-dots.impact-1{color:var(--mut2)}
+.impact-rest{color:var(--border-md);margin-left:0}
+
+/* Cal day — clickable hint */
+.cal-day.clickable{cursor:pointer}
+.cal-day.clickable:hover{transform:translateY(-1px);box-shadow:var(--shadow-card);border-color:var(--border-md)}
+.cal-day.clickable.today:hover{border-color:var(--acc-deep)}
+.cal-more-hint{color:var(--mut2)}
+
 /* Peers grid in modal */
 .peers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
 .peer-card{
@@ -742,7 +777,9 @@ function extractEventsFromUpdates(today){
         const key=`${tab}|${month}/${day}|${ctx.slice(0,30)}`;
         if(seen.has(key))continue;
         seen.add(key);
-        events.push({date:fmtKSTDate(d),title:ctx,cat:categorizeEvent(ctx),impact:2,source:`update.js/${tab}`});
+        // 추출된 ctx에서 영문 티커도 끌어옴 — 모달에서 종목 deep-dive 링크로 활용
+        const tickers=extractTickers(ctx);
+        events.push({date:fmtKSTDate(d),title:ctx,desc:'',tickers,cat:categorizeEvent(ctx),impact:2,source:'update',sourceTab:tab});
       }
     }
   }
@@ -758,17 +795,18 @@ function extractEvents(){
   // 1) update.js 자동 추출
   const fromUpd=extractEventsFromUpdates(today);
 
-  // 2) calendar-events.js fixed 이벤트
+  // 2) calendar-events.js fixed 이벤트 — title·desc·tickers 분리 보존
   const cal=STATE.calendar||{};
   const fromFixed=(cal.fixed||[]).map(ev=>({
-    date:ev.date,title:ev.title+(ev.desc?` — ${ev.desc}`:''),cat:ev.cat,impact:ev.impact||2,source:'fixed'
+    date:ev.date,title:ev.title,desc:ev.desc||'',tickers:ev.tickers||[],
+    cat:ev.cat,impact:ev.impact||2,source:'fixed'
   }));
 
   // 3) 정기 패턴 expansion
-  const fromRecurring=expandRecurring(cal.recurring||[],today,15);
+  const fromRecurring=expandRecurring(cal.recurring||[],today,15).map(ev=>({...ev,desc:'',tickers:[]}));
 
   // 4) dateRanges expansion
-  const fromRanges=expandDateRanges(cal.dateRanges||[],today,endDate);
+  const fromRanges=expandDateRanges(cal.dateRanges||[],today,endDate).map(ev=>({...ev,desc:'',tickers:[]}));
 
   // 5) merge + dedup (date+title prefix)
   const all=[...fromFixed,...fromRecurring,...fromRanges,...fromUpd];
@@ -784,9 +822,14 @@ function extractEvents(){
   });
 }
 
+// extractEvents 결과를 캐시 (modal에서 같은 결과 재사용)
+let _eventsCache=null;
+function getEvents(){if(!_eventsCache)_eventsCache=extractEvents();return _eventsCache}
+
 function renderCalendar(){
+  _eventsCache=null; // 매 렌더에서 새로 계산
   const today=todayKST();
-  const events=extractEvents();
+  const events=getEvents();
   const byDate={};
   for(const e of events){if(!byDate[e.date])byDate[e.date]=[];byDate[e.date].push(e)}
 
@@ -801,7 +844,8 @@ function renderCalendar(){
     const hasHigh=dayEvents.some(e=>(e.impact||1)>=3);
 
     const div=document.createElement('div');
-    div.className='cal-day '+(i===0?'today':dayEvents.length?'has-events':'empty')+(hasHigh?' has-high':'');
+    div.className='cal-day '+(i===0?'today':dayEvents.length?'has-events':'empty')+(hasHigh?' has-high':'')+(dayEvents.length?' clickable':'');
+    div.dataset.date=dKey;
     div.innerHTML=`
       <div class="cal-date">
         <span class="num">${num}</span><span class="dow">${dow}</span>
@@ -810,12 +854,112 @@ function renderCalendar(){
       <div class="cal-events">
         ${dayEvents.length
           ? dayEvents.slice(0,5).map(e=>`<div class="cal-event ${(e.impact||1)>=3?'high':''}" data-cat="${e.cat}" title="${escapeHtml(e.title)}"><span class="ev-tag"></span><span>${escapeHtml(e.title)}</span></div>`).join('')
-            + (dayEvents.length>5?`<div class="cal-more">+${dayEvents.length-5}건 더</div>`:'')
+            + (dayEvents.length>5?`<div class="cal-more">+${dayEvents.length-5}건 더 →</div>`:'<div class="cal-more cal-more-hint">자세히 →</div>')
           : '<div class="cal-empty-msg">조용한 하루</div>'}
       </div>
     `;
+    if(dayEvents.length){
+      div.addEventListener('click',()=>openDayModal(dKey,dayEvents));
+    }
     cal.appendChild(div);
   }
+}
+
+// ═══════════════════════════════════════════════════════════
+// Day Modal — 한 날의 모든 이벤트 카테고리별
+// ═══════════════════════════════════════════════════════════
+const CAT_META={
+  earnings:{label:'실적 발표',  icon:'📊', color:'var(--acc-deep)'},
+  macro:   {label:'매크로 지표',icon:'📈', color:'#7c3aed'},
+  ipo:     {label:'IPO·펀딩',  icon:'🚀', color:'var(--info)'},
+  policy:  {label:'정책·휴장',  icon:'🏛️', color:'var(--warn)'},
+  conf:    {label:'컨퍼런스',  icon:'🎤', color:'#0ea5e9'},
+  product: {label:'신제품·출시',icon:'✨', color:'var(--err)'},
+  other:   {label:'기타',     icon:'·',  color:'var(--mut)'},
+};
+const CAT_ORDER=['earnings','macro','ipo','policy','conf','product','other'];
+
+function impactDots(n){
+  n=Math.max(1,Math.min(3,n||1));
+  return '<span class="impact-dots impact-'+n+'">'+'●'.repeat(n)+'<span class="impact-rest">'+'○'.repeat(3-n)+'</span></span>';
+}
+
+function openDayModal(dateKey, events){
+  const d=new Date(dateKey+'T00:00:00Z');
+  const dow=['일','월','화','수','목','금','토'][d.getUTCDay()];
+  const month=d.getUTCMonth()+1, day=d.getUTCDate();
+  const todayKey=fmtKSTDate(todayKST());
+  const isToday=dateKey===todayKey;
+  const dayDelta=Math.round((new Date(dateKey+'T00:00:00Z')-new Date(todayKey+'T00:00:00Z'))/86400000);
+  const relLabel=isToday?'오늘':(dayDelta===1?'내일':(`${dayDelta}일 후`));
+
+  // 카테고리별 그룹핑
+  const byCat={};
+  for(const e of events){
+    const c=byCat[e.cat]||(byCat[e.cat]=[]);
+    c.push(e);
+  }
+  // 각 그룹 안에서 impact desc 정렬
+  for(const k in byCat) byCat[k].sort((a,b)=>(b.impact||1)-(a.impact||1));
+
+  const highCount=events.filter(e=>(e.impact||1)>=3).length;
+
+  let html=`
+    <div class="modal-head">
+      <div>
+        <div class="modal-tk">${escapeHtml(relLabel)} · ${dow}요일</div>
+        <h2 class="modal-nm">${month}월 ${day}일</h2>
+        <div class="modal-cat">${events.length}개 이벤트${highCount?` · <span style="color:var(--err)">핵심 ${highCount}건</span>`:''}</div>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-close" id="modalCloseBtn" aria-label="닫기">✕</button>
+      </div>
+    </div>
+  `;
+
+  for(const cat of CAT_ORDER){
+    const evs=byCat[cat];
+    if(!evs||!evs.length)continue;
+    const meta=CAT_META[cat]||CAT_META.other;
+    html+=`
+      <div class="modal-section">
+        <div class="modal-sec-label" style="color:${meta.color}">${meta.icon} ${escapeHtml(meta.label)} · ${evs.length}건</div>
+        <div class="day-events-list">
+          ${evs.map(ev=>{
+            const tickers=(ev.tickers||[]).filter(t=>findStock(t));
+            return `
+              <div class="day-event">
+                <div class="day-event-row">
+                  ${impactDots(ev.impact)}
+                  <div class="day-event-text">
+                    <div class="day-event-title">${escapeHtml(ev.title)}</div>
+                    ${ev.desc?`<div class="day-event-desc">${escapeHtml(ev.desc)}</div>`:''}
+                    ${ev.source==='range'?'<div class="day-event-meta">윈도우 진행 중</div>':''}
+                    ${ev.source==='recurring'?'<div class="day-event-meta">정기 일정</div>':''}
+                    ${ev.source==='update'?`<div class="day-event-meta">${TAB_LABEL[ev.sourceTab]||ev.sourceTab} 탭 자동 추출</div>`:''}
+                  </div>
+                </div>
+                ${tickers.length?`<div class="day-event-tickers">${tickers.map(t=>`<button class="day-ticker-btn" data-tk="${escapeHtml(t)}">${escapeHtml(t)} →</button>`).join('')}</div>`:''}
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  document.getElementById('modalPad').innerHTML=html;
+  document.getElementById('modalCloseBtn').addEventListener('click',closeModal);
+  document.querySelectorAll('.day-ticker-btn').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const tk=b.dataset.tk;
+      const s=findStock(tk);
+      if(s)openModal(tk,s.market);
+    });
+  });
+
+  document.getElementById('modalBg').classList.add('on');
+  document.body.style.overflow='hidden';
 }
 
 // ═══════════════════════════════════════════════════════════
