@@ -744,10 +744,7 @@ function renderCalendar(){
         ${dayEvents.length?`<span class="cal-count">${dayEvents.length}</span>`:''}
       </div>
       <div class="cal-events">
-        ${dayEvents.length
-          ? dayEvents.slice(0,3).map(e=>`<div class="cal-event ${(e.impact||1)>=3?'high':''}" data-cat="${e.cat}" title="${escapeHtml(e.title)}"><span class="ev-tag"></span><span>${escapeHtml(e.title)}</span></div>`).join('')
-            + (dayEvents.length>3?`<div class="cal-more">+${dayEvents.length-3}건 →</div>`:'')
-          : ''}
+        ${dayEvents.map(e=>`<div class="cal-event ${(e.impact||1)>=3?'high':''}" data-cat="${e.cat}" title="${escapeHtml(e.title)}"><span class="ev-tag"></span><span>${escapeHtml(e.title)}</span></div>`).join('')}
       </div>
     `;
     if(dayEvents.length){
@@ -755,7 +752,46 @@ function renderCalendar(){
     }
     cal.appendChild(div);
   }
+
+  // 셀별로 들어가는 만큼만 보여주고 나머지는 +N건 → 처리
+  requestAnimationFrame(fitCalendarOverflow);
 }
+
+function fitCalendarOverflow(){
+  document.querySelectorAll('#calendar .cal-events').forEach(container=>{
+    // 이전 상태 초기화 (resize 시 재계산)
+    container.querySelectorAll('.cal-event').forEach(e=>e.style.display='');
+    container.querySelector('.cal-more')?.remove();
+
+    const all=[...container.querySelectorAll('.cal-event')];
+    if(!all.length)return;
+    if(getComputedStyle(container).display==='none')return;
+
+    const max=container.clientHeight;
+    let cut=-1;
+    for(let i=0;i<all.length;i++){
+      if(all[i].offsetTop+all[i].offsetHeight>max){cut=i;break}
+    }
+    if(cut===-1)return; // 다 들어감
+
+    for(let i=cut;i<all.length;i++)all[i].style.display='none';
+    const more=document.createElement('div');
+    more.className='cal-more';
+    more.textContent=`+${all.length-cut}건 →`;
+    container.appendChild(more);
+
+    while(cut>0 && more.offsetTop+more.offsetHeight>max){
+      cut--;
+      all[cut].style.display='none';
+      more.textContent=`+${all.length-cut}건 →`;
+    }
+  });
+}
+
+window.addEventListener('resize',()=>{
+  clearTimeout(window._calResize);
+  window._calResize=setTimeout(fitCalendarOverflow,100);
+});
 
 // ═══════════════════════════════════════════════════════════
 // Day Modal — 한 날의 모든 이벤트 카테고리별
