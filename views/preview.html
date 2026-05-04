@@ -152,32 +152,52 @@ section:first-of-type{padding-top:48px;border-top:0}
   display:flex;flex-direction:column;
   background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden;
 }
+.phase-item{border-top:1px solid var(--border)}
+.phase-item:first-child{border-top:0}
+.phase-item[data-phase="expansion"],.phase-item[data-phase="growth"]{color:var(--acc-deep)}
+.phase-item[data-phase="mature"]{color:var(--info)}
+.phase-item[data-phase="plateau"]{color:var(--warn)}
+.phase-item[data-phase="contraction"]{color:var(--err)}
+.phase-item[data-phase="unknown"]{color:var(--mut)}
 .phase-row{
-  display:grid;grid-template-columns:10px 1fr 80px 80px;gap:14px;align-items:center;
-  padding:14px 18px;border-top:1px solid var(--border);
+  display:grid;grid-template-columns:10px 1fr 80px 90px 12px;gap:14px;align-items:center;
+  padding:14px 18px;cursor:pointer;
   font:500 14px/1.4 'Inter',sans-serif;
 }
-.phase-row:first-child{border-top:0}
 .phase-row:hover{background:var(--panel-tint)}
-.phase-row[data-phase="expansion"]{color:var(--acc-deep)}
-.phase-row[data-phase="growth"]{color:var(--acc-deep)}
-.phase-row[data-phase="mature"]{color:var(--info)}
-.phase-row[data-phase="plateau"]{color:var(--warn)}
-.phase-row[data-phase="contraction"]{color:var(--err)}
-.phase-row[data-phase="unknown"]{color:var(--mut)}
 .phase-dot{width:8px;height:8px;border-radius:50%;background:currentColor}
 .phase-cat-name{font:600 14px/1.3 'Inter',sans-serif;color:var(--fg);letter-spacing:-0.2px}
 .phase-num{font:700 14px/1 'Geist Mono',monospace;letter-spacing:0.4px;color:currentColor;text-align:right}
 .phase-label{
-  font:600 11px/1 'Geist Mono',monospace;text-transform:uppercase;letter-spacing:0.6px;
+  font:600 11px/1 'Geist Mono',monospace;letter-spacing:0.4px;
   padding:6px 0;border-radius:9999px;background:currentColor;text-align:center;
 }
 .phase-label .lbl{color:#fff}
+.phase-chev{font:500 12px/1 'Geist Mono',monospace;color:var(--mut);transition:transform .2s;text-align:right}
+.phase-item.open .phase-chev{transform:rotate(90deg)}
+.phase-stocks{
+  display:none;padding:6px 18px 14px;background:var(--panel-tint);
+  flex-direction:column;gap:2px;
+}
+.phase-item.open .phase-stocks{display:flex}
+.phase-stock{
+  display:grid;grid-template-columns:60px 1fr auto;gap:12px;align-items:center;
+  width:100%;padding:8px 12px;border-radius:8px;background:transparent;
+  text-align:left;border:0;cursor:pointer;
+}
+.phase-stock:hover{background:#fff}
+.phase-stock-tk{font:600 12px/1 'Geist Mono',monospace;color:var(--mut);letter-spacing:0.4px}
+.phase-stock-nm{font:500 13px/1.3 'Inter',sans-serif;color:var(--fg)}
+.phase-stock-g{font:600 12px/1 'Geist Mono',monospace;color:var(--mut)}
+.phase-stock-g.up{color:var(--acc-deep)}
+.phase-stock-g.down{color:var(--err)}
 @media(max-width:640px){
-  .phase-row{grid-template-columns:8px 1fr 64px 70px;gap:10px;padding:12px 14px;font-size:13px}
+  .phase-row{grid-template-columns:8px 1fr 64px 78px 12px;gap:10px;padding:12px 14px;font-size:13px}
   .phase-cat-name{font-size:13px}
   .phase-num{font-size:13px}
   .phase-label{font-size:10px}
+  .phase-stock{grid-template-columns:50px 1fr auto;gap:10px;padding:6px 10px}
+  .phase-stock-nm{font-size:12px}
 }
 
 /* Stock Explorer */
@@ -810,11 +830,11 @@ function openDayModal(dateKey, events){
 // ═══════════════════════════════════════════════════════════
 function classifyPhase(growth){
   if(growth===null||isNaN(growth))return {phase:'unknown',label:'데이터 부족'};
-  if(growth>=0.30)return {phase:'expansion',label:'확장 사이클'};
+  if(growth>=0.30)return {phase:'expansion',label:'빠른 성장'};
   if(growth>=0.15)return {phase:'growth',label:'성장'};
-  if(growth>=0.05)return {phase:'mature',label:'성숙'};
-  if(growth>=-0.05)return {phase:'plateau',label:'정체'};
-  return {phase:'contraction',label:'둔화'};
+  if(growth>=0.05)return {phase:'mature',label:'완만 성장'};
+  if(growth>=-0.05)return {phase:'plateau',label:'보합'};
+  return {phase:'contraction',label:'역성장'};
 }
 
 function renderHealth(){
@@ -824,13 +844,17 @@ function renderHealth(){
   const list=document.getElementById('healthList');
 
   const rows=data.map(cat=>{
-    const stocks=cat.stocks||[];
-    const growths=stocks.map(s=>{
+    const stocks=(cat.stocks||[]).map(s=>{
       const r1=parseFloat(s.r1),r2=parseFloat(s.r2);
-      return (r1>0&&r2>0)?(r2-r1)/r1:null;
-    }).filter(g=>g!==null);
+      return {tk:s.tk,nm:s.nm,g:(r1>0&&r2>0)?(r2-r1)/r1:null};
+    }).sort((a,b)=>{
+      if(a.g===null)return 1;
+      if(b.g===null)return -1;
+      return b.g-a.g;
+    });
+    const growths=stocks.map(s=>s.g).filter(g=>g!==null);
     const med=median(growths);
-    return {title:cat.title,med,ph:classifyPhase(med)};
+    return {title:cat.title,med,ph:classifyPhase(med),stocks};
   }).sort((a,b)=>{
     if(a.med===null)return 1;
     if(b.med===null)return -1;
@@ -838,13 +862,35 @@ function renderHealth(){
   });
 
   list.innerHTML=rows.map(r=>`
-    <div class="phase-row" data-phase="${r.ph.phase}">
-      <span class="phase-dot"></span>
-      <span class="phase-cat-name">${escapeHtml(r.title||'')}</span>
-      <span class="phase-num">${r.med===null?'—':fmtPct(r.med)}</span>
-      <span class="phase-label"><span class="lbl">${r.ph.label}</span></span>
+    <div class="phase-item" data-phase="${r.ph.phase}">
+      <div class="phase-row">
+        <span class="phase-dot"></span>
+        <span class="phase-cat-name">${escapeHtml(r.title||'')}</span>
+        <span class="phase-num">${r.med===null?'—':fmtPct(r.med)}</span>
+        <span class="phase-label"><span class="lbl">${r.ph.label}</span></span>
+        <span class="phase-chev">▸</span>
+      </div>
+      <div class="phase-stocks">
+        ${r.stocks.map(s=>`
+          <button class="phase-stock" data-tk="${escapeHtml(s.tk)}" data-market="${market}">
+            <span class="phase-stock-tk">${escapeHtml(s.tk)}</span>
+            <span class="phase-stock-nm">${escapeHtml(displayName(s.nm))}</span>
+            <span class="phase-stock-g ${s.g===null?'':(s.g>0.05?'up':(s.g<-0.05?'down':''))}">${s.g===null?'—':fmtPct(s.g)}</span>
+          </button>
+        `).join('')}
+      </div>
     </div>
   `).join('');
+
+  list.querySelectorAll('.phase-row').forEach(row=>{
+    row.addEventListener('click',()=>row.parentElement.classList.toggle('open'));
+  });
+  list.querySelectorAll('.phase-stock').forEach(btn=>{
+    btn.addEventListener('click',e=>{
+      e.stopPropagation();
+      openModal(btn.dataset.tk,btn.dataset.market);
+    });
+  });
 }
 
 // ═══════════════════════════════════════════════════════════
