@@ -1123,7 +1123,16 @@ function renderHealth(){
       const item=row.parentElement;
       const wasOpen=item.classList.contains('open');
       list.querySelectorAll('.phase-item.open').forEach(x=>x.classList.remove('open'));
-      if(!wasOpen)item.classList.add('open');
+      if(!wasOpen){
+        item.classList.add('open');
+        // 펼친 후 선택한 섹터 행이 sticky 헤더 바로 아래로 오도록 스크롤
+        requestAnimationFrame(()=>{
+          const headerH=document.querySelector('header.top')?.offsetHeight||0;
+          const rect=row.getBoundingClientRect();
+          const targetY=window.scrollY+rect.top-headerH-8;
+          window.scrollTo({top:targetY,behavior:'smooth'});
+        });
+      }
     });
   });
   list.querySelectorAll('.exp-card').forEach(card=>{
