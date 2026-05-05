@@ -270,6 +270,70 @@ section:first-of-type{padding-top:48px;border-top:0}
 .exp-growth.flat{color:var(--mut)}
 .exp-empty{padding:32px;text-align:center;color:var(--mut);font-size:14px;grid-column:1/-1}
 
+/* 도메인 배지 */
+.dom-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  font:600 12px/1 'Geist Mono',monospace;letter-spacing:0.4px;text-transform:uppercase;
+  padding:6px 11px;border-radius:9999px;
+}
+.dom-badge[data-d="ai"]{background:var(--info-bg);color:var(--info)}
+.dom-badge[data-d="unicorn"]{background:#f3e8ff;color:#7c3aed}
+.dom-badge[data-d="commodity"]{background:var(--warn-bg);color:var(--warn)}
+.dom-badge[data-d="crypto"]{background:var(--acc-light);color:var(--acc-deep)}
+
+.dom-time{font:500 11px/1 'Geist Mono',monospace;color:var(--mut);letter-spacing:0.4px}
+.dom-time.stale{color:var(--warn)}
+
+/* change row — pulse 패널 안에서 쓰임 */
+.dom-change{border-top:1px solid var(--border);transition:background .12s}
+.dom-change:first-child{border-top:0}
+.dom-change-row{
+  display:grid;grid-template-columns:1fr 24px;gap:12px;align-items:center;
+  padding:12px 0;cursor:pointer;
+}
+.dom-change-row:hover{background:var(--panel-tint);margin:0 -16px;padding:12px 16px}
+.dom-change-headline{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;min-width:0}
+.dom-change-sector{font:600 13px/1.4 'Inter',sans-serif;color:var(--fg);letter-spacing:-0.1px;flex-shrink:0}
+.dom-change-summary{
+  flex:1 1 100%;font:400 13px/1.5 'Inter',sans-serif;color:var(--fg2);letter-spacing:-0.1px;
+  display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;
+}
+.dom-change-chev{font:500 18px/1 'Geist Mono',monospace;color:var(--mut);text-align:right;transition:transform .15s}
+.dom-change.open .dom-change-chev{transform:rotate(90deg)}
+.dom-change-detail{display:none;padding:0 0 14px;background:transparent}
+.dom-change.open .dom-change-detail{display:block}
+.dom-change-detail-body{
+  font:400 13.5px/1.65 'Inter',sans-serif;color:var(--fg2);letter-spacing:-0.1px;
+  padding:8px 0 12px;
+}
+
+/* 오늘의 마켓 펄스 — 4 도메인 vertical 패널 */
+.pulse-stack{display:flex;flex-direction:column;gap:14px}
+.pulse-panel{
+  position:relative;background:var(--panel);border:1px solid var(--border);border-radius:14px;
+  padding:20px 24px 18px;
+}
+.pulse-panel::before{
+  content:'';position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:0 3px 3px 0;
+}
+.pulse-panel[data-d="ai"]::before{background:var(--info)}
+.pulse-panel[data-d="unicorn"]::before{background:#7c3aed}
+.pulse-panel[data-d="commodity"]::before{background:var(--warn)}
+.pulse-panel[data-d="crypto"]::before{background:var(--acc-deep)}
+.pulse-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}
+.pulse-events{padding-top:6px}
+.pulse-empty{
+  padding:24px 4px;text-align:center;color:var(--mut);
+  font:500 13px/1 'Inter',sans-serif;
+}
+
+@media(max-width:760px){
+  .pulse-panel{padding:18px 18px 16px}
+  .dom-change-row{grid-template-columns:1fr 18px;gap:10px}
+  .dom-change-sector{font-size:12.5px}
+  .dom-change-summary{font-size:12.5px;-webkit-line-clamp:2}
+}
+
 /* Modal — deep dive */
 .modal-bg{
   position:fixed;inset:0;background:rgba(13,13,13,0.45);backdrop-filter:blur(8px);
@@ -664,6 +728,17 @@ body.sub-modal-open{overflow:hidden}
     <input class="exp-search" id="expSearch" placeholder="티커·기업명·키워드로 검색" />
   </div>
   <div class="phase-list" id="healthList"></div>
+</section>
+
+<!-- ─── 오늘의 마켓 펄스 — 4 도메인 vertical 패널 ─── -->
+<section>
+  <div class="sec-head">
+    <div>
+      <div class="sec-label">Alternative assets</div>
+      <h2 class="sec-title">대안 자산</h2>
+    </div>
+  </div>
+  <div class="pulse-stack" id="pulseStack"></div>
 </section>
 
 <div class="disclaimer" style="margin:0 24px 24px">
@@ -1297,6 +1372,178 @@ function renderHealth(){
 }
 
 // ═══════════════════════════════════════════════════════════
+// Domain Today (오늘 단일 시점) — A/B/C 후보 공용 데이터·헬퍼
+// ═══════════════════════════════════════════════════════════
+const DOMAINS=[
+  {key:'ai',       label:'AI 동향',         icon:'🤖'},
+  {key:'unicorn',  label:'유니콘·프리IPO',   icon:'🦄'},
+  {key:'commodity',label:'원자재',          icon:'🛢️'},
+  {key:'crypto',   label:'크립토',          icon:'₿'},
+];
+const CRYPTO_SECTOR_RE=/크립토|crypto|비트|이더|솔라나|리플/i;
+
+function fmtMD_HM(dateStr){
+  const m=String(dateStr||'').match(/(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})/);
+  return m?`${m[2]}/${m[3]} ${m[4]}:${m[5]}`:'';
+}
+function fmtMD(dateStr){
+  const m=String(dateStr||'').match(/(\d{4})-(\d{2})-(\d{2})/);
+  return m?`${m[2]}/${m[3]}`:'';
+}
+function daysAgoLabel(dateStr){
+  const m=String(dateStr||'').match(/(\d{4})-(\d{2})-(\d{2})/);
+  if(!m) return {days:null,label:''};
+  const target=Date.UTC(+m[1],+m[2]-1,+m[3]);
+  const today=todayKST();
+  const todayKey=Date.UTC(today.getUTCFullYear(),today.getUTCMonth(),today.getUTCDate());
+  const delta=Math.round((todayKey-target)/86400000);
+  if(delta===0) return {days:0,label:'오늘'};
+  if(delta===1) return {days:1,label:'어제'};
+  if(delta>1) return {days:delta,label:`${delta}일 전`};
+  return {days:delta,label:''};
+}
+
+// 도메인별 "최근 entry" 데이터 — 사건(changes) 중심
+function getDomainTodayData(domain){
+  if(domain==='ai'){
+    const e=STATE.upd.ai?.[0]; if(!e) return null;
+    return { domain, date:e.date, changes:e.changes||[] };
+  }
+  if(domain==='unicorn'){
+    const e=STATE.upd.unicorn?.[0]; if(!e) return null;
+    return { domain, date:e.date, changes:e.changes||[] };
+  }
+  if(domain==='commodity' || domain==='crypto'){
+    const e=STATE.upd.commodity?.[0]; if(!e) return null;
+    const isCrypto=domain==='crypto';
+    const filteredChanges=(e.changes||[]).filter(c=>{
+      const sc=CRYPTO_SECTOR_RE.test(c.sector||'');
+      return isCrypto?sc:!sc;
+    });
+    return { domain, date:e.date, changes:filteredChanges };
+  }
+  return null;
+}
+
+// detail에서 첫 문장 안전 추출 (Pulse change row의 헤드라인용):
+//  - 숫자 속 점 ($76.5) 무시 / 괄호 안의 점 무시
+//  - 길면 단어 경계로 잘라 ellipsis / 끝부분 괄호 균형 맞춤
+//  - "기업명(부제). " 선두 prefix는 sector와 중복이라 제거
+function extractHeadline(detail, sector){
+  let d=String(detail||'').trim();
+
+  // 1) 선두 "헤더(부제). " 패턴 제거 — sector 일치 여부 무관
+  d=d.replace(/^[^.()\n]{1,80}\([^)]{1,160}\)\s*[.\-·]\s*/,'');
+  // 2) sector와 동일한 짧은 prefix가 남아있으면 추가 제거 ("OpenAI. 본문...")
+  if(sector){
+    const esc=sector.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+    d=d.replace(new RegExp('^'+esc+'\\s*[.\\-·]\\s*'),'');
+  }
+
+  // 3) 첫 문장 종결점 찾기 — 최소 60자 누적, 최대 160자 스캔
+  const MIN_LEN=60, SCAN_MAX=160;
+  let depth=0, end=-1;
+  for(let i=0;i<d.length;i++){
+    const c=d[i];
+    if(c==='(' || c==='[' || c==='（' || c==='【') depth++;
+    else if(c===')' || c===']' || c==='）' || c==='】') depth=Math.max(0,depth-1);
+    else if(depth===0 && (c==='.' || c==='。' || c==='!')){
+      const prev=d[i-1]||'', next=d[i+1]||'';
+      if(/\d/.test(prev) && /\d/.test(next)) continue; // 숫자 속 점
+      if(!next || /\s/.test(next)){
+        if(i>=MIN_LEN){ end=i; break; }
+      }
+    }
+    if(i>=SCAN_MAX){ end=i; break; }
+  }
+  let head = end>0 ? d.slice(0,end) : d;
+
+  // 4) 길면 단어 경계로 컷 + ellipsis
+  const HARD_MAX=140;
+  if(head.length>HARD_MAX){
+    head=head.slice(0,HARD_MAX);
+    const cut=Math.max(
+      head.lastIndexOf(' '), head.lastIndexOf(','), head.lastIndexOf('·'),
+      head.lastIndexOf(' - '), head.lastIndexOf(' — ')
+    );
+    if(cut>80) head=head.slice(0,cut);
+    head=head.replace(/[\s,·\-—]+$/,'')+'…';
+  }
+
+  // 4) 끝부분 괄호 균형 — 열기만 있고 안 닫혔으면 그 직전까지만
+  const opens=(head.match(/[(\[（【]/g)||[]).length;
+  const closes=(head.match(/[)\]）】]/g)||[]).length;
+  if(opens>closes){
+    let dep=0;
+    for(let i=head.length-1;i>=0;i--){
+      const c=head[i];
+      if(c===')'||c===']'||c==='）'||c==='】') dep++;
+      else if(c==='('||c==='['||c==='（'||c==='【'){
+        if(dep===0){ head=head.slice(0,i).replace(/[\s,·\-—]+$/,'')+'…'; break; }
+        dep--;
+      }
+    }
+  }
+
+  return head.trim();
+}
+
+function buildChangeRows(changes, idPrefix){
+  return (changes||[]).map((ch,idx)=>{
+    const head=extractHeadline(ch.detail||'', ch.sector||'');
+    return `
+      <div class="dom-change" data-id="${idPrefix}-${idx}">
+        <div class="dom-change-row">
+          <div class="dom-change-headline">
+            <span class="dom-change-sector">${escapeHtml(ch.sector||'')}</span>
+            <span class="dom-change-summary">${escapeHtml(head)}</span>
+          </div>
+          <span class="dom-change-chev">▸</span>
+        </div>
+        <div class="dom-change-detail">
+          <div class="dom-change-detail-body">${escapeHtml(ch.detail||'')}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function attachChangeToggles(root){
+  root.querySelectorAll('.dom-change-row').forEach(row=>{
+    row.addEventListener('click',()=>row.parentElement.classList.toggle('open'));
+  });
+}
+
+// ─── 대안 자산: 4 도메인 vertical 패널 — 사건 단위 리스트 ───
+function renderPulse(){
+  const stack=document.getElementById('pulseStack');
+  if(!stack) return;
+  const html=DOMAINS.map(d=>{
+    const data=getDomainTodayData(d.key);
+    if(!data) return '';
+    const changeRows=buildChangeRows(data.changes, `pulse-${d.key}`);
+    const rel=daysAgoLabel(data.date);
+    const stale=(rel.days||0)>=2;
+    const headerText=rel.days===0
+      ? `오늘 ${data.changes.length}건`
+      : `${fmtMD(data.date)} 갱신 · ${rel.label}`;
+    return `
+      <div class="pulse-panel" data-d="${d.key}">
+        <div class="pulse-head">
+          <span class="dom-badge" data-d="${d.key}">${d.icon} ${escapeHtml(d.label)}</span>
+          <span class="dom-time ${stale?'stale':''}">${escapeHtml(headerText)}</span>
+        </div>
+        ${changeRows?`<div class="pulse-events">${changeRows}</div>`
+                    :`<div class="pulse-empty">갱신 내역 없음</div>`}
+      </div>
+    `;
+  }).join('');
+  stack.innerHTML=html;
+  attachChangeToggles(stack);
+}
+
+
+// ═══════════════════════════════════════════════════════════
 // Stock Explorer
 // ═══════════════════════════════════════════════════════════
 function getAllStocksOf(market){
@@ -1576,6 +1823,7 @@ async function boot(){
     buildNarrative();
     renderCalendar();
     renderHealth();
+    renderPulse();
   }catch(e){
     console.error('boot error:',e);
     document.getElementById('narrativeBody').innerHTML='<div class="updates-loading">데이터 로드 실패: '+escapeHtml(String(e.message||e))+'</div>';
