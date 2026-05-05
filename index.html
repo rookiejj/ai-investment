@@ -387,6 +387,126 @@ section:first-of-type{padding-top:48px;border-top:0}
 .peer-tk{font:600 11px/1 'Geist Mono',monospace;color:var(--mut);letter-spacing:0.4px}
 .peer-nm{font:600 13px/1.2 'Inter',sans-serif;color:var(--fg);margin-top:4px}
 
+/* ═══ SUBSCRIBE MODAL (legacy 포팅, sub- 프리픽스로 deep-dive 모달과 격리) ═══ */
+.sub-modal-bg{
+  position:fixed;inset:0;background:rgba(13,13,13,0.45);backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;
+  z-index:1000;padding:20px;
+}
+.sub-modal-bg.show{display:flex}
+body.sub-modal-open{overflow:hidden}
+.sub-modal{
+  background:var(--panel);border-radius:20px;padding:32px;width:100%;max-width:440px;
+  box-shadow:0 24px 60px rgba(0,0,0,0.18);position:relative;
+  animation:subModalIn .25s cubic-bezier(.4,0,.2,1);
+  max-height:calc(100vh - 40px);overflow-y:auto;-webkit-overflow-scrolling:touch;
+}
+@keyframes subModalIn{from{opacity:0;transform:translateY(12px) scale(0.98)}to{opacity:1;transform:none}}
+.sub-modal h2{font:600 22px/1.3 'Pretendard Variable',Pretendard,sans-serif;letter-spacing:-0.44px;margin:0 0 8px;color:var(--fg)}
+.sub-modal p.sub-modal-sub{color:var(--mut);font-size:14px;line-height:1.5;margin:0 0 20px}
+.sub-modal-close{
+  position:absolute;top:16px;right:16px;width:32px;height:32px;
+  border:none;background:var(--border-md);border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;color:var(--fg);
+  font-size:18px;line-height:1;transition:background .2s;
+}
+.sub-modal-close:hover{background:var(--fg);color:#fff}
+.sub-modal-field{margin-bottom:14px}
+.sub-modal-field label{display:block;font:500 13px/1.4 'Inter',sans-serif;color:var(--fg2);margin-bottom:6px}
+.sub-modal-field input[type="tel"]{
+  width:100%;padding:12px 14px;background:var(--bg);
+  border:1.5px solid var(--border-md);border-radius:10px;
+  font:400 15px/1.4 'Inter',sans-serif;color:var(--fg);transition:border-color .2s;
+}
+.sub-modal-field input[type="tel"]:focus{outline:none;border-color:var(--acc)}
+.sub-modal-consent{
+  display:flex;align-items:flex-start;gap:10px;padding:14px;
+  background:var(--acc-light);border-radius:10px;margin:16px 0 20px;
+  font-size:13px;color:var(--fg2);line-height:1.5;
+}
+.sub-modal-consent input[type="checkbox"]{margin-top:2px;accent-color:var(--acc-deep);flex-shrink:0}
+.sub-modal-honeypot{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.sub-modal-submit{
+  width:100%;padding:14px;background:var(--fg);color:#fff;border:none;
+  border-radius:10px;font:500 15px/1 'Inter',sans-serif;cursor:pointer;transition:background .2s;
+}
+.sub-modal-submit:hover{background:#000}
+.sub-modal-submit:disabled{background:var(--mut2);cursor:not-allowed}
+.sub-modal-cancel{
+  width:100%;padding:12px;margin-top:8px;background:transparent;color:var(--mut);
+  border:1px solid var(--border-md);border-radius:10px;
+  font:500 14px/1 'Inter',sans-serif;cursor:pointer;display:none;transition:all .2s;
+}
+.sub-modal-cancel:hover{background:var(--border-md);color:var(--fg)}
+.sub-modal-cancel.show{display:block}
+.sub-modal-status{margin-top:14px;padding:12px;border-radius:8px;font-size:13px;line-height:1.5;display:none}
+.sub-modal-status.show{display:block}
+.sub-modal-status.success{background:#fff4e5;color:#a35a00}
+.sub-modal-status.success .until-date{display:inline-block;margin-top:4px;font-size:13px;font-weight:500;opacity:0.85}
+.sub-modal-status.error{background:#fde8e8;color:var(--err)}
+.sub-modal-status.info{background:#fff4e5;color:#a35a00}
+.sub-confirm-box{
+  display:none;margin:16px 0;padding:20px;border-radius:12px;
+  background:var(--acc-light);text-align:center;
+}
+.sub-confirm-box.show{display:block}
+.sub-confirm-box .sub-confirm-label{
+  display:block;font:500 12px/1.3 'Inter',sans-serif;
+  color:var(--acc-deep);letter-spacing:0.4px;text-transform:uppercase;
+}
+.sub-confirm-box .sub-confirm-num{
+  display:block;margin:6px 0;font:600 26px/1.2 'Pretendard Variable',Pretendard,sans-serif;
+  color:var(--fg);letter-spacing:-0.5px;
+}
+.sub-confirm-box .sub-confirm-note{
+  display:block;font:500 13px/1.5 'Inter',sans-serif;color:var(--fg2);
+}
+.sub-modal-success-actions{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+.sub-modal-success-actions .sub-kakao-link{
+  display:block;padding:12px;background:#FEE500;color:#3c1e1e;text-decoration:none;
+  border-radius:10px;font:500 14px/1 'Inter',sans-serif;text-align:center;transition:transform .15s;
+}
+.sub-modal-success-actions .sub-kakao-link:hover{transform:translateY(-1px)}
+.sub-modal-success-actions .sub-kakao-link.emphasis{
+  font-size:15px;font-weight:600;padding:15px;
+  box-shadow:0 4px 12px rgba(254,229,0,0.45);
+}
+.sub-complete-notice{
+  display:none;padding:18px;border-radius:12px;
+  background:var(--acc-light);color:var(--acc-deep);border:2px solid var(--acc);
+  font:600 14px/1.6 'Inter','Pretendard Variable',sans-serif;
+  text-align:center;letter-spacing:-0.1px;
+  animation:subPulseNotice 2s ease-in-out infinite;
+}
+.sub-complete-notice.show{display:block}
+.sub-complete-notice .sub-notice-head{display:block;font-size:16px;color:#0a7a50;margin-bottom:6px}
+.sub-complete-notice .sub-notice-sub{display:block;font-weight:500;font-size:13px;color:var(--acc-deep);margin-top:6px}
+@keyframes subPulseNotice{
+  0%,100%{box-shadow:0 0 0 0 rgba(24,226,153,0.45)}
+  50%    {box-shadow:0 0 0 10px rgba(24,226,153,0)}
+}
+.sub-modal-test-banner{
+  margin:0 0 14px;padding:8px 12px;border-radius:8px;
+  background:#fde8e8;color:var(--err);border:1px solid #f7c6c6;
+  font:500 12px/1.5 'Inter','Pretendard Variable',sans-serif;
+  text-align:center;letter-spacing:-0.1px;
+}
+.sub-modal.completed > .sub-modal-test-banner,
+.sub-modal.completed > h2,
+.sub-modal.completed > p.sub-modal-sub,
+.sub-modal.completed .sub-modal-field,
+.sub-modal.completed .sub-modal-consent,
+.sub-modal.completed .sub-modal-honeypot,
+.sub-modal.completed .sub-confirm-box,
+.sub-modal.completed #subSubmit,
+.sub-modal.completed #subCancel{display:none !important}
+.sub-modal.completed .sub-modal-status{
+  margin-top:8px;padding:16px;font-size:15px;font-weight:500;
+  border-radius:12px;text-align:center;
+}
+.sub-modal.completed .sub-modal-success-actions{margin-top:14px}
+.sub-modal.completed .sub-kakao-link{padding:18px 16px;font-size:16px;font-weight:700}
+
 /* ═══ FOOTER ═══ */
 .footer{
   border-top:1px solid var(--border);margin-top:64px;
@@ -488,7 +608,7 @@ section:first-of-type{padding-top:48px;border-top:0}
       <span>브리픽<span class="dot">.</span></span>
     </a>
     <div class="top-nav">
-      <a class="btn-primary" href="#subscribeBtn" id="subscribeShortcut">매일 카톡으로 받기</a>
+      <button class="btn-primary" type="button" id="subscribeBtn">매일 카톡으로 받기</button>
     </div>
   </div>
 </header>
@@ -578,6 +698,39 @@ section:first-of-type{padding-top:48px;border-top:0}
 </footer>
 
 </main>
+
+<!-- Subscribe Modal -->
+<div class="sub-modal-bg" id="subscribeModal" aria-hidden="true" role="dialog" aria-labelledby="subscribeTitle">
+  <div class="sub-modal">
+    <button class="sub-modal-close" type="button" aria-label="닫기" id="subscribeClose">✕</button>
+    <h2 id="subscribeTitle">브리픽 구독하기</h2>
+    <div class="sub-modal-test-banner">본 결제는 테스트용으로, 실제로는 결제되지 않습니다.</div>
+    <p class="sub-modal-sub">매일 아침 8시, 최신 경제 뉴스를 카카오톡으로 받아보세요.<br><b>월 100원 · 1회 결제당 30일 이용</b></p>
+    <form id="subscribeForm" novalidate autocomplete="off">
+      <div class="sub-modal-field">
+        <label for="subPhone">전화번호 (하이픈 없이)</label>
+        <input id="subPhone" name="phone" type="tel" inputmode="numeric" pattern="01[016789][0-9]{7,8}" maxlength="11" placeholder="01012345678" required>
+      </div>
+      <input class="sub-modal-honeypot" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label class="sub-modal-consent">
+        <input id="subConsent" type="checkbox" required>
+        <span>카카오 친구톡을 통한 <b>광고성 정보 수신</b>에 동의합니다. 매일 오전 8시 발송되며, 언제든지 해지 요청으로 수신을 중단할 수 있습니다.</span>
+      </label>
+      <div class="sub-confirm-box" id="subConfirm"></div>
+      <button class="sub-modal-submit" id="subSubmit" type="submit">결제하고 구독 시작</button>
+      <button class="sub-modal-cancel" id="subCancel" type="button">취소</button>
+      <div class="sub-modal-status" id="subStatus"></div>
+      <div class="sub-modal-success-actions" id="subSuccess">
+        <div class="sub-complete-notice" id="subCompleteNotice">
+          <span class="sub-notice-head">⚠ 카카오 채널 친구 추가가 필수</span>
+          친구 추가 없이는<br>뉴스를 받을 수 없습니다.
+          <span class="sub-notice-sub">아래 버튼을 눌러 지금 바로 추가해주세요.</span>
+        </div>
+        <a class="sub-kakao-link" id="subKakaoLink" href="https://pf.kakao.com/_lpxkCX/friend" target="_blank" rel="noopener">카카오톡 채널 친구 추가하기</a>
+      </div>
+    </form>
+  </div>
+</div>
 
 <!-- Modal -->
 <div class="modal-bg" id="modalBg" role="dialog" aria-modal="true">
@@ -1430,6 +1583,246 @@ async function boot(){
 }
 
 boot();
+</script>
+
+<!-- Subscribe flow: PortOne SDK + 결제·검증 JS -->
+<script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
+<script>
+(function(){
+  const SUPABASE_URL='https://ytvcgoldauysvnqckzze.supabase.co';
+  const BRIEFICK_SUPABASE_PUBLISHABLE_KEY='sb_publishable_BRlDRwvdanR1sLX2b_Iagg_AtLA8Wyf';
+  const PORTONE_STORE_ID='store-94ded677-c4c2-45a7-adc2-eb735d601a52';
+  const PORTONE_CHANNEL_KEY='channel-key-e32b9dbf-38c1-43a0-a080-1e208f22ab40';
+  const SUBSCRIPTION_PRICE=100;
+  const SUBSCRIPTION_ORDER_NAME='브리픽 월간 구독 (테스트)';
+
+  // 포트원 모바일 REDIRECTION 복귀 처리
+  async function handlePortoneReturn(){
+    const params=new URLSearchParams(location.search);
+    const paymentId=params.get('paymentId');
+    if(!paymentId)return false;
+    history.replaceState(null,'',location.pathname);
+    let pending=null;
+    try{pending=JSON.parse(sessionStorage.getItem('briefickPendingPayment')||'null')}catch(_){}
+    if(!pending||pending.paymentId!==paymentId)return false;
+    sessionStorage.removeItem('briefickPendingPayment');
+
+    document.getElementById('subscribeModal').classList.add('show');
+    document.body.classList.add('sub-modal-open');
+    const s=document.getElementById('subStatus');
+    const sub=document.getElementById('subSubmit');
+    const phoneEl=document.getElementById('subPhone');
+    const consent=document.getElementById('subConsent');
+    const cancel=document.getElementById('subCancel');
+    phoneEl.value=pending.phone||'';
+    consent.checked=true;
+    phoneEl.disabled=true;
+    consent.disabled=true;
+    sub.disabled=true;
+    if(cancel)cancel.classList.remove('show');
+    const code=params.get('code');
+    if(code){
+      s.className='sub-modal-status show error';
+      s.textContent='결제 실패: '+(params.get('message')||code);
+      phoneEl.disabled=false;consent.disabled=false;
+      sub.disabled=false;sub.textContent='결제하고 구독 시작';
+      return true;
+    }
+    s.className='sub-modal-status show info';
+    s.textContent='결제 확인 중...';
+    sub.style.display='none';
+    try{
+      const res=await fetch(SUPABASE_URL+'/functions/v1/payment-confirm',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+BRIEFICK_SUPABASE_PUBLISHABLE_KEY,'apikey':BRIEFICK_SUPABASE_PUBLISHABLE_KEY},
+        body:JSON.stringify({paymentId,phone:pending.phone,ad_consent:true,expected_amount:SUBSCRIPTION_PRICE}),
+      });
+      const j=await res.json();
+      if(!res.ok||!j.ok){
+        s.className='sub-modal-status show error';
+        s.textContent=j.error||'결제 검증 오류';
+        phoneEl.disabled=false;consent.disabled=false;
+        sub.style.display='';sub.disabled=false;sub.textContent='결제하고 구독 시작';
+      }else{
+        const msgMap={registered:'구독 완료!',extended:'구독 연장 완료!'};
+        const mainMsg=msgMap[j.status]||'완료!';
+        const untilHtml=j.paid_until?'<br><span class="until-date">('+j.paid_until.slice(0,10)+' 까지)</span>':'';
+        s.className='sub-modal-status show success';
+        s.innerHTML=mainMsg+untilHtml;
+        document.getElementById('subCompleteNotice').classList.add('show');
+        document.getElementById('subKakaoLink').classList.add('emphasis');
+        document.querySelector('#subscribeModal .sub-modal').classList.add('completed');
+        document.getElementById('subPhone').disabled=true;
+        document.getElementById('subConsent').disabled=true;
+        sub.disabled=true;sub.textContent='구독 완료됨';
+        document.getElementById('subCancel').classList.remove('show');
+      }
+    }catch(err){
+      s.className='sub-modal-status show error';
+      s.textContent='네트워크 오류: '+err.message;
+      phoneEl.disabled=false;consent.disabled=false;
+      sub.style.display='';sub.disabled=false;sub.textContent='결제하고 구독 시작';
+    }
+    return true;
+  }
+  handlePortoneReturn();
+
+  const modal=document.getElementById('subscribeModal');
+  const openBtn=document.getElementById('subscribeBtn');
+  const closeBtn=document.getElementById('subscribeClose');
+  const form=document.getElementById('subscribeForm');
+  const phoneEl=document.getElementById('subPhone');
+  const consent=document.getElementById('subConsent');
+  const submit=document.getElementById('subSubmit');
+  const cancel=document.getElementById('subCancel');
+  const confirmBox=document.getElementById('subConfirm');
+  const status=document.getElementById('subStatus');
+
+  function fmtPhone(p){return p.replace(/(\d{3})(\d{3,4})(\d{4})/,'$1-$2-$3')}
+  function showConfirmBox(label,num,note){
+    confirmBox.innerHTML='<span class="sub-confirm-label">'+label+'</span>'+
+      '<span class="sub-confirm-num">'+num+'</span>'+
+      '<span class="sub-confirm-note">'+note+'</span>';
+    confirmBox.classList.add('show');
+  }
+  function hideConfirmBox(){confirmBox.classList.remove('show');confirmBox.innerHTML=''}
+  let confirmState=null;
+  function resetStatus(){status.className='sub-modal-status';status.textContent=''}
+  function showStatus(type,msg){status.className='sub-modal-status show '+type;status.textContent=msg}
+  function resetToInput(){
+    confirmState=null;
+    submit.disabled=false;submit.textContent='결제하고 구독 시작';
+    cancel.classList.remove('show');
+    hideConfirmBox();
+    document.getElementById('subCompleteNotice').classList.remove('show');
+    document.getElementById('subKakaoLink').classList.remove('emphasis');
+    document.querySelector('#subscribeModal .sub-modal').classList.remove('completed');
+    resetStatus();
+  }
+  function openSubModal(){
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden','false');
+    document.body.classList.add('sub-modal-open');
+    form.reset();
+    phoneEl.disabled=false;consent.disabled=false;
+    resetToInput();
+  }
+  function closeSubModal(){
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden','true');
+    document.body.classList.remove('sub-modal-open');
+    resetStatus();
+  }
+  cancel.addEventListener('click',()=>{phoneEl.disabled=false;consent.disabled=false;resetToInput()});
+  openBtn.addEventListener('click',openSubModal);
+  closeBtn.addEventListener('click',closeSubModal);
+  modal.addEventListener('click',e=>{if(e.target===modal)closeSubModal()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('show'))closeSubModal()});
+
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();
+    resetStatus();
+    const phone=phoneEl.value.replace(/[^0-9]/g,'');
+    if(!/^01[016789]\d{7,8}$/.test(phone)){
+      showStatus('error','전화번호 형식이 올바르지 않습니다.');
+      phoneEl.focus();return;
+    }
+    if(!consent.checked){
+      showStatus('error','광고 수신 동의가 필요합니다.');
+      consent.focus();return;
+    }
+    if(typeof PortOne==='undefined'){
+      showStatus('error','결제 SDK 로드 실패. 새로고침 후 다시 시도해주세요.');return;
+    }
+
+    if(confirmState===null){
+      submit.disabled=true;submit.textContent='확인 중...';
+      let isActive=false,paidUntilStr='',extStr='',daysLeft=0;
+      try{
+        const checkRes=await fetch(SUPABASE_URL+'/functions/v1/check-subscription',{
+          method:'POST',
+          headers:{'Content-Type':'application/json','Authorization':'Bearer '+BRIEFICK_SUPABASE_PUBLISHABLE_KEY,'apikey':BRIEFICK_SUPABASE_PUBLISHABLE_KEY},
+          body:JSON.stringify({phone}),
+        });
+        const chk=await checkRes.json();
+        if(checkRes.ok&&chk.ok&&chk.subscription_active&&chk.paid_until){
+          isActive=true;
+          const until=new Date(chk.paid_until);
+          const nowDate=new Date();
+          daysLeft=Math.max(0,Math.ceil((until-nowDate)/86400000));
+          const extended=new Date(until.getTime()+30*86400000);
+          paidUntilStr=until.toISOString().slice(0,10);
+          extStr=extended.toISOString().slice(0,10);
+        }
+      }catch(_){/* 체크 실패 시 번호 확인 단계로 진행 */}
+
+      if(isActive){
+        showConfirmBox('이 번호로 발송',fmtPhone(phone),
+          paidUntilStr+'까지 구독 중 (남은 '+daysLeft+'일). 지금 결제하면 '+extStr+'까지 연장');
+        submit.textContent='확인하고 연장 결제';
+        confirmState='extend';
+      }else{
+        showConfirmBox('이 번호로 매일 오전 8시 발송',fmtPhone(phone),'번호가 맞으신가요?');
+        submit.textContent='맞습니다, 결제하기';
+        confirmState='number';
+      }
+      phoneEl.disabled=true;consent.disabled=true;
+      submit.disabled=false;
+      cancel.classList.add('show');
+      return;
+    }
+
+    const paymentId='briefick'+Date.now()+Math.random().toString(36).slice(2,8);
+    submit.disabled=true;submit.textContent='결제창 여는 중...';
+    let completed=false;
+    try{sessionStorage.setItem('briefickPendingPayment',JSON.stringify({phone,paymentId}))}catch(_){}
+    try{
+      const pay=await PortOne.requestPayment({
+        storeId:PORTONE_STORE_ID,
+        channelKey:PORTONE_CHANNEL_KEY,
+        paymentId,
+        orderName:SUBSCRIPTION_ORDER_NAME,
+        totalAmount:SUBSCRIPTION_PRICE,
+        currency:'KRW',
+        payMethod:'CARD',
+        customer:{customerId:phone,phoneNumber:phone},
+        windowType:{pc:'IFRAME',mobile:'REDIRECTION'},
+        redirectUrl:location.origin+location.pathname,
+        bypass:{galaxia:{ITEM_CODE:'BRIEFICK1M'}},
+      });
+      if(pay.code){
+        showStatus('error','결제 실패: '+(pay.message||pay.code));return;
+      }
+      submit.textContent='결제 확인 중...';
+      const res=await fetch(SUPABASE_URL+'/functions/v1/payment-confirm',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+BRIEFICK_SUPABASE_PUBLISHABLE_KEY,'apikey':BRIEFICK_SUPABASE_PUBLISHABLE_KEY},
+        body:JSON.stringify({paymentId,phone,ad_consent:true,expected_amount:SUBSCRIPTION_PRICE}),
+      });
+      const j=await res.json();
+      if(!res.ok||!j.ok){
+        showStatus('error',j.error||'결제 검증 중 오류가 발생했습니다.');
+      }else{
+        const msgMap={registered:'구독 완료!',extended:'구독 연장 완료!'};
+        const mainMsg=msgMap[j.status]||'완료!';
+        const untilHtml=j.paid_until?'<br><span class="until-date">('+j.paid_until.slice(0,10)+' 까지)</span>':'';
+        status.className='sub-modal-status show success';
+        status.innerHTML=mainMsg+untilHtml;
+        document.getElementById('subCompleteNotice').classList.add('show');
+        document.getElementById('subKakaoLink').classList.add('emphasis');
+        document.querySelector('#subscribeModal .sub-modal').classList.add('completed');
+        phoneEl.disabled=true;consent.disabled=true;
+        submit.textContent='구독 완료됨';
+        cancel.classList.remove('show');
+        completed=true;
+      }
+    }catch(err){
+      showStatus('error','오류: '+err.message);
+    }finally{
+      if(!completed){submit.disabled=false;submit.textContent='결제하고 구독 시작'}
+    }
+  });
+})();
 </script>
 
 </body>
