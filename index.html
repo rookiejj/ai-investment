@@ -233,8 +233,9 @@ section:first-of-type{padding-top:48px;border-top:0}
   padding:6px 0;border-radius:9999px;background:currentColor;text-align:center;
 }
 .phase-label .lbl{color:#fff}
-.phase-chev{font:500 24px/1 'Geist Mono',monospace;color:var(--mut);transition:transform .2s;text-align:right}
-.phase-item.open .phase-chev{transform:rotate(90deg)}
+.phase-chev{font:500 24px/1 'Geist Mono',monospace;color:var(--mut);text-align:right}
+.phase-chev::before{content:'▸'}
+.phase-item.open .phase-chev::before{content:'▾'}
 .phase-stocks{display:none;padding:8px 14px 14px;background:var(--panel-tint)}
 .phase-item.open .phase-stocks{display:block}
 @media(max-width:640px){
@@ -1095,7 +1096,7 @@ function renderHealth(){
         <span class="phase-cat-name">${escapeHtml(r.title||'')}</span>
         <span class="phase-num">${r.med===null?'—':fmtPct(r.med)}</span>
         <span class="phase-label"><span class="lbl">${r.ph.label}</span></span>
-        <span class="phase-chev">▸</span>
+        <span class="phase-chev"></span>
       </div>
       <div class="phase-stocks">
         <div class="exp-cards">
