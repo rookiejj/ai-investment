@@ -268,6 +268,7 @@ section:first-of-type{padding-top:48px;border-top:0}
 .exp-px.down{color:var(--err)}
 .exp-px.flat{color:var(--fg)}
 .exp-px-chg{font-weight:500;font-size:11px;margin-left:2px}
+.exp-px-stale{font:500 10px/1 'Inter',sans-serif;color:var(--mut2);margin-left:4px;padding:2px 5px;background:var(--mut-bg,#f3f4f6);border-radius:4px}
 .exp-nm{font:600 15px/1.25 'Inter',sans-serif;letter-spacing:-0.2px;color:var(--fg)}
 .exp-rs{font:400 12px/1.5 'Inter',sans-serif;color:var(--mut);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .exp-growth{display:inline-flex;align-items:center;gap:4px;font:600 11px/1 'Geist Mono',monospace;letter-spacing:0.4px}
@@ -378,6 +379,7 @@ section:first-of-type{padding-top:48px;border-top:0}
 .modal-px.up{color:var(--acc-deep)}
 .modal-px.down{color:var(--err)}
 .modal-px-chg{font:600 14px/1 'Geist Mono',monospace;letter-spacing:0}
+.modal-px-stale{font:500 11px/1 'Inter',sans-serif;color:var(--mut2);padding:3px 8px;background:var(--mut-bg,#f3f4f6);border-radius:5px;align-self:center}
 .modal-actions{display:flex;align-items:center;gap:8px}
 .modal-close{width:36px;height:36px;border-radius:50%;background:var(--panel-tint);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--fg);font-size:18px}
 .modal-close:hover{background:var(--fg);color:#fff}
@@ -869,9 +871,7 @@ function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;
 function fmtPct(x){if(x===null||x===undefined||isNaN(x))return '—';const p=x*100;return (p>=0?'+':'')+p.toFixed(1)+'%'}
 function median(arr){const s=[...arr].sort((a,b)=>a-b);const n=s.length;if(!n)return null;return n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2}
 function todayKST(){
-  const now=new Date();
-  const kst=new Date(now.getTime()+9*3600*1000+now.getTimezoneOffset()*60*1000);
-  return kst;
+  return new Date(Date.now()+9*3600*1000);
 }
 function fmtKSTDate(d){
   const y=d.getUTCFullYear(),m=String(d.getUTCMonth()+1).padStart(2,'0'),day=String(d.getUTCDate()).padStart(2,'0');
@@ -930,6 +930,17 @@ function fmtPriceKR(p){return '₩'+Math.round(Number(p)).toLocaleString('ko-KR'
 function fmtPriceFor(p, market){return market==='kr' ? fmtPriceKR(p) : fmtPriceUS(p)}
 function fmtChgPct(c){if(c==null||isNaN(c))return '';return (c>=0?'+':'')+Number(c).toFixed(2)+'%'}
 function pxClass(c){if(c==null||isNaN(c))return 'flat';return c>0?'up':(c<0?'down':'flat')}
+// 시세 시각이 오늘 KST가 아니면 stale (한국 종목 장 시작 전·휴장일 다음날 새벽 등)
+function pxIsStale(px){
+  if(!px||px.time==null) return false;
+  const kst=new Date((Number(px.time)+9*3600)*1000);
+  return fmtKSTDate(kst)!==fmtKSTDate(todayKST());
+}
+function pxStaleLabel(px){
+  if(!pxIsStale(px)) return '';
+  const kst=new Date((Number(px.time)+9*3600)*1000);
+  return `${kst.getUTCMonth()+1}/${kst.getUTCDate()} 종가`;
+}
 
 // 영문 티커 추출 stop list
 const TICKER_STOP=new Set(['AI','EPS','CEO','CFO','CPI','GDP','OPEC','FOMC','ETF','IPO','API','SEC','LLM','SUV','EV','EU','US','UK','KST','AH','CC','QoQ','YoY','YTD','GAAP','NM','NA','MAU','DAU','SaaS','GPU','TPU','TSV','SMR','DRAM','HBM','LNG','WTI','M&A','PMI','UTC','D','PT','ET','CT','PR','GAAP','IT','TV','UI','UX','PC','OS','RPO','ARR','LTM','FY','GM','OPM','PER','PBR','ESG','OECD','NATO','APAC','EMEA','LATAM','PG','VC','CDP','PE','VR','AR','BCG','IPO','ROE','ROI','PG','PT','ST','RD']);
@@ -1357,12 +1368,14 @@ function renderHealth(){
                 const px=STATE.prices?.[s.tk];
                 const hasPx=px && px.price!=null;
                 const pxStr=hasPx?fmtPriceFor(px.price, market):'';
-                const chgPct=hasPx?px.changePct:null;
+                const stale=hasPx?pxIsStale(px):false;
+                const chgPct=hasPx&&!stale?px.changePct:null;
+                const staleLbl=stale?pxStaleLabel(px):'';
                 return `
                   <div class="exp-card" data-tk="${escapeHtml(s.tk)}" data-market="${market}">
                     <div class="exp-tk-row">
                       <span class="exp-tk">${escapeHtml(s.tk)}</span>
-                      ${hasPx?`<span class="exp-px ${pxClass(chgPct)}">${escapeHtml(pxStr)}${chgPct!=null?` <span class="exp-px-chg">${escapeHtml(fmtChgPct(chgPct))}</span>`:''}</span>`:''}
+                      ${hasPx?`<span class="exp-px ${stale?'flat':pxClass(chgPct)}">${escapeHtml(pxStr)}${chgPct!=null?` <span class="exp-px-chg">${escapeHtml(fmtChgPct(chgPct))}</span>`:''}${staleLbl?` <span class="exp-px-stale">${escapeHtml(staleLbl)}</span>`:''}</span>`:''}
                     </div>
                     <div class="exp-nm">${escapeHtml(displayName(s.nm))}</div>
                     <div class="exp-rs">${escapeHtml(s.rs||'')}</div>
@@ -1654,9 +1667,13 @@ function openModal(tk,market){
         ${(()=>{
           const px=STATE.prices?.[tk];
           if(!px || px.price==null) return '';
-          return `<div class="modal-px ${pxClass(px.changePct)}">
+          const stale=pxIsStale(px);
+          const chgPct=stale?null:px.changePct;
+          const staleLbl=stale?pxStaleLabel(px):'';
+          return `<div class="modal-px ${stale?'flat':pxClass(chgPct)}">
             <span class="modal-px-val">${escapeHtml(fmtPriceFor(px.price, market))}</span>
-            ${px.changePct!=null?`<span class="modal-px-chg">${escapeHtml(fmtChgPct(px.changePct))}</span>`:''}
+            ${chgPct!=null?`<span class="modal-px-chg">${escapeHtml(fmtChgPct(chgPct))}</span>`:''}
+            ${staleLbl?`<span class="modal-px-stale">${escapeHtml(staleLbl)}</span>`:''}
           </div>`;
         })()}
         <div class="modal-cat">${escapeHtml(s.catTitle||'')}${s.catTag?' · '+escapeHtml(s.catTag):''}</div>
