@@ -43,6 +43,7 @@ const recurring = [
 //       (preview.html에서 자동으로 오늘 이후만 표시).
 const fixed = [
   // === 5월 매크로 ===
+  { cat:'macro', impact:2, title:'중국 4월 CPI·PPI', date:'2026-05-11', desc:'주말 시프트로 월요일 발표' },
   { cat:'macro', impact:3, title:'미국 4월 CPI', date:'2026-05-13', desc:'근원 CPI YoY 컨센 +3.0%' },
   { cat:'macro', impact:2, title:'미국 4월 PPI', date:'2026-05-14' },
   { cat:'macro', impact:2, title:'유로존 1Q GDP 1차', date:'2026-05-14' },
