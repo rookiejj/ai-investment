@@ -659,8 +659,8 @@ body.sub-modal-open{overflow:hidden}
     </div>
   </div>
   <div class="health-controls">
-    <button class="health-tab on" data-market="stocks">미국</button>
-    <button class="health-tab" data-market="kr">한국</button>
+    <button class="health-tab on" data-market="kr">한국</button>
+    <button class="health-tab" data-market="stocks">미국</button>
     <input class="exp-search" id="expSearch" placeholder="티커·기업명·키워드로 검색" />
   </div>
   <div class="phase-list" id="healthList"></div>
@@ -771,7 +771,7 @@ async function loadUpd(url, varName){
   return new Function(t+`;return typeof ${varName}!=="undefined"?${varName}:[];`)();
 }
 
-const STATE={data:{},upd:{},market:'stocks',healthMarket:'stocks',expQuery:''};
+const STATE={data:{},upd:{},market:'kr',healthMarket:'kr',expQuery:''};
 
 // ═══════════════════════════════════════════════════════════
 // Helpers
@@ -871,8 +871,8 @@ function buildNarrative(){
     '최신 데이터 · '+dateLbl+(latestHHMM?' '+latestHHMM:'');
 
   const tabs=[
-    {key:'stocks',   flag:'🇺🇸', label:'미국 마켓'},
     {key:'kr',       flag:'🇰🇷', label:'한국 마켓'},
+    {key:'stocks',   flag:'🇺🇸', label:'미국 마켓'},
     {key:'ai',       flag:'🤖',  label:'AI 동향'},
     {key:'commodity',flag:'🛢️', label:'원자재·크립토'},
     {key:'unicorn',  flag:'🦄',  label:'유니콘·프리IPO'},

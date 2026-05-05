@@ -24,8 +24,8 @@ const SITE_URL = 'https://roysbriefing.vercel.app';
 const HANDLE = 'briefick';
 
 const TABS = [
-  { key: 'stocks',    file: 'stocks-update.js',    var: 'updates', emoji: '🇺🇸', label: '미국 마켓' },
   { key: 'kr',        file: 'kr-stocks-update.js', var: 'updates', emoji: '🇰🇷', label: '한국 마켓' },
+  { key: 'stocks',    file: 'stocks-update.js',    var: 'updates', emoji: '🇺🇸', label: '미국 마켓' },
   { key: 'ai',        file: 'ai-update.js',        var: 'UPDATES', emoji: '🤖', label: 'AI 기업' },
   { key: 'commodity', file: 'commodity-update.js', var: 'updates', emoji: '🛢️', label: '원자재·크립토' },
   { key: 'unicorn',   file: 'unicorn-update.js',   var: 'updates', emoji: '🦄', label: '유니콘' },
