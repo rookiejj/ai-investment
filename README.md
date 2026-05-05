@@ -94,7 +94,7 @@ ai-investment/
 | 종류 | 트리거 | 함수 | 카카오 타입 | 템플릿 / 본문 | 버튼 |
 |---|---|---|---|---|---|
 | **결제 완료 알림톡** (자동) | 결제 검증 직후 | `payment-confirm` | ATA | `KA01TP260424050234328BFWH2f2vfrN` (#{상점명}/#{상품명}/#{만료일}) | AC "채널 추가" |
-| **매일 뉴스 친구톡** (자동·수동) | 평일 KST 08:00 (cron) · 운영 대시보드 즉시 발송 | `daily-send` | CTA | 5개 탭 최신 1건씩 summary, 1000자 한도 초과 시 fitToLimit으로 모든 탭 균등 줄 단위 cut | WL "전체 뉴스 보기" → `/` |
+| **매일 뉴스 친구톡** (자동·수동) | 평일 KST 08:00 (cron) · 운영 대시보드 즉시 발송 | `daily-send` | CTA | 5개 탭 최신 1건씩 summary, 1000자 한도 초과 시 fitToLimit으로 모든 탭 균등 줄 단위 cut | WL "오늘의 브리핑" → `/` |
 | **재구독 안내 친구톡** (자동) | 매일 KST 20:00 (cron, D-1) | `expiry-notice` | CTA | 자유 텍스트 + 만료일 자동 삽입 | WL "재구독 신청하기" → `/renew` |
 | **미수신자 안내 알림톡** (수동) | 운영 대시보드 발송 | `admin-api` `manual_send` | ATA | `KA01TP260424060446377powJn1n8RGU` (#{상점명}) | WL "문제 해결하기" → `/help` |
 | **공지 친구톡** (수동·자유 본문) | 운영 대시보드 `📢 공지` 발송 | `admin-api` `notice_send` → `daily-send` (`customMessage`) | CTA | 임의 본문(1000자 한도) — 점검·이벤트·긴급 안내용 | (없음 — `daily-send` 발신프로필 기본 버튼) |
