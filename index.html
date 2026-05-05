@@ -1,1572 +1,1348 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>브리픽</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MHK455J1GP"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MHK455J1GP');</script>
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>브리픽 — 매일 경제 뉴스</title>
+<meta name="description" content="브리픽이 다음 단계로 가는 모습. 오늘의 시장 서사, 이벤트 캘린더, 산업 사이클, 종목 deep-dive." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist+Mono:wght@500;600&family=Pretendard+Variable:wght@700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="/assets/briefick_profile_640.jpeg">
 <style>
 :root{
-  --bg:#ffffff;--panel:#ffffff;--border:rgba(0,0,0,0.05);--border-md:rgba(0,0,0,0.08);
-  --fg:#0d0d0d;--fg2:#333333;--mut:#666666;--placeholder:#888888;
-  --acc:#18E299;--acc-light:#d4fae8;--acc-deep:#0fa76e;--new:#d45656;
-  --surface:#fafafa;--shadow:rgba(0,0,0,0.03) 0px 2px 4px;
-  --btn-shadow:rgba(0,0,0,0.06) 0px 1px 2px;
-  --glow:rgba(24,226,153,0.08);--glow-md:rgba(24,226,153,0.15);
+  --bg:#ffffff;--panel:#ffffff;--panel-tint:#fafafa;
+  --border:rgba(0,0,0,0.05);--border-md:rgba(0,0,0,0.08);--border-strong:rgba(0,0,0,0.12);
+  --fg:#0d0d0d;--fg2:#333333;--mut:#666666;--mut2:#888888;
+  --acc:#18E299;--acc-deep:#0fa76e;--acc-light:#d4fae8;--acc-soft:#e8fbf1;
+  --warn:#c37d0d;--warn-bg:#fef4e0;
+  --info:#3772cf;--info-bg:#eaf1fa;
+  --err:#d45656;--err-bg:#fbeaea;
+  --shadow-card:rgba(0,0,0,0.03) 0px 2px 4px;
+  --shadow-btn:rgba(0,0,0,0.06) 0px 1px 2px;
+  --shadow-pop:rgba(0,0,0,0.10) 0px 8px 32px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--fg);font:16px/1.5 'Inter',system-ui,-apple-system,sans-serif;overflow-x:hidden}
+html,body{background:var(--bg);color:var(--fg);font:16px/1.5 'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+::selection{background:var(--acc-light);color:var(--fg)}
 
-/* ═══ ATMOSPHERIC HERO GRADIENT ═══ */
-.hero-glow{
-  position:fixed;top:-120px;left:50%;transform:translateX(-50%);
-  width:900px;height:500px;
-  background:radial-gradient(ellipse at center,rgba(24,226,153,0.12) 0%,rgba(24,226,153,0.04) 40%,transparent 70%);
-  pointer-events:none;z-index:0;
-  animation:heroFloat 8s ease-in-out infinite;
-}
-@keyframes heroFloat{
-  0%,100%{transform:translateX(-50%) translateY(0)}
-  50%{transform:translateX(-50%) translateY(12px)}
+/* hero atmospheric gradient */
+.hero-bg{
+  position:fixed;top:0;left:0;right:0;height:520px;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(24,226,153,0.12) 0%, rgba(24,226,153,0.04) 40%, transparent 70%),
+    linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
 }
 
-/* ═══ HEADER ═══ */
-header{
-  position:sticky;top:0;z-index:10;
-  background:rgba(255,255,255,0.72);backdrop-filter:blur(20px) saturate(180%);
-  -webkit-backdrop-filter:blur(20px) saturate(180%);
+header.top{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,0.78);backdrop-filter:blur(20px) saturate(180%);
   border-bottom:1px solid var(--border);
-  padding:16px 32px;
+}
+.top-inner{max-width:1240px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:16px;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;font:600 18px/1 'Inter',sans-serif;letter-spacing:-0.4px;color:var(--fg)}
+.brand img{width:32px;height:32px;border-radius:8px;object-fit:cover}
+.brand .dot{color:var(--acc)}
+.top-nav{display:flex;align-items:center;gap:8px}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:6px;padding:8px 18px;
+  background:var(--fg);color:#fff;border-radius:9999px;
+  font:500 14px/1 'Inter',sans-serif;box-shadow:var(--shadow-btn);transition:opacity .15s;
+}
+.btn-primary:hover{opacity:0.9}
+
+main{max-width:1240px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+
+/* Section base */
+section{padding:64px 0;border-top:1px solid var(--border)}
+section:first-of-type{padding-top:48px;border-top:0}
+.sec-head{margin-bottom:24px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.sec-label{font:600 12px/1.5 'Geist Mono',monospace;text-transform:uppercase;letter-spacing:0.6px;color:var(--acc-deep);margin-bottom:6px}
+.sec-title{font:600 28px/1.2 'Inter',sans-serif;letter-spacing:-0.4px;color:var(--fg)}
+.sec-desc{font:400 12px/1.5 'Inter',sans-serif;color:var(--mut2);margin-top:8px;max-width:560px}
+.sec-aside{display:flex;align-items:center;gap:10px;color:var(--mut);font-size:13px}
+
+/* Hero */
+.hero{padding:48px 0 24px;text-align:center}
+.hero-eyebrow{font:600 12px/1.5 'Geist Mono',monospace;text-transform:uppercase;letter-spacing:0.6px;color:var(--acc-deep);margin-bottom:14px}
+.hero-title{font:600 52px/1.1 'Inter',sans-serif;letter-spacing:-1.0px;color:var(--fg);margin-bottom:14px}
+.hero-title .accent{
+  background:linear-gradient(90deg,var(--acc-deep),var(--acc));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-sub{font:400 18px/1.55 'Inter',sans-serif;color:var(--mut);max-width:640px;margin:0 auto 28px}
+.hero-meta{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;background:var(--panel-tint);border:1px solid var(--border);border-radius:9999px;font:500 13px/1 'Inter',sans-serif;color:var(--fg2)}
+.hero-meta .dot{width:6px;height:6px;background:var(--acc);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+
+/* Narrative card (today's market story) — unwrapped: 박스 없이 직접 노출 */
+.narrative-card{
+  margin-top:20px;padding:0;background:transparent;
+  border:0;border-radius:0;box-shadow:none;
+  text-align:left;
+}
+.updates-loading{font:400 15px/1.6 'Inter',sans-serif;color:var(--mut);text-align:center;padding:24px 0}
+
+/* TL;DR — 시장별 한 줄 카드 */
+.tldr-list{display:flex;flex-direction:column;gap:10px}
+.tldr-row{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 16px;background:var(--panel-tint);
+  border:1px solid var(--border);border-radius:14px;
+  transition:border-color .15s;
+}
+.tldr-row:hover{border-color:var(--border-strong)}
+.tldr-tag{
+  flex-shrink:0;font:600 11px/1 'Geist Mono',monospace;
+  letter-spacing:0.3px;
+  padding:6px 10px;border-radius:9999px;
+  background:#fff;border:1px solid var(--border);
+  color:var(--fg);white-space:nowrap;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.tldr-text{
+  flex:1;min-width:0;font:500 13px/1.5 'Inter',sans-serif;
+  color:var(--fg);letter-spacing:-0.1px;
 }
 
-.header-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}
-
-/* ═══ SUBSCRIBE BUTTON ═══ */
-.subscribe-btn{
-  padding:10px 20px;background:linear-gradient(135deg,var(--acc) 0%,var(--acc-deep) 100%);
-  color:#fff;border:none;border-radius:9999px;cursor:pointer;
-  font:500 14px/1.2 'Inter',sans-serif;letter-spacing:-0.1px;white-space:nowrap;
-  box-shadow:0 1px 2px rgba(0,0,0,0.06);transition:transform .2s,box-shadow .2s;
+/* Expand toggle + 시장별 풀 리스트 */
+.narrative-expand{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:13px;margin-top:14px;
+  background:#fff;border:1px solid var(--border);border-radius:12px;
+  font:500 13px/1 'Inter',sans-serif;color:var(--fg2);
+  cursor:pointer;transition:all .15s;
 }
-.subscribe-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(24,226,153,0.25)}
-.subscribe-btn:active{transform:translateY(0)}
-@media (max-width:768px){.subscribe-btn{padding:8px 14px;font-size:13px}}
+.narrative-expand:hover{background:var(--panel-tint);border-color:var(--border-strong)}
+.narrative-expand .chev{font-size:10px;transition:transform .2s;color:var(--mut)}
+.narrative-expand.open .chev{transform:rotate(180deg)}
+.narrative-full{display:none;margin-top:18px;padding-top:18px;border-top:1px solid var(--border)}
+.narrative-full.open{display:block}
+.updates-section{padding-top:18px;margin-top:18px;border-top:1px solid var(--border)}
+.updates-section:first-child{padding-top:0;margin-top:0;border-top:0}
+.updates-tab-head{
+  font:600 14px/1.3 'Inter',sans-serif;color:var(--fg2);
+  margin-bottom:10px;display:flex;align-items:center;gap:8px;letter-spacing:-0.2px;
+}
+.updates-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.updates-list li{
+  font:400 14px/1.6 'Inter',sans-serif;color:var(--fg2);
+  padding-left:16px;position:relative;
+}
+.updates-list li::before{
+  content:'';position:absolute;left:2px;top:9px;
+  width:4px;height:4px;border-radius:50%;background:var(--mut2);
+}
 
-/* 차세대 대시보드 프리뷰 진입 버튼 — 임시 (상용화 전) */
-.preview-btn{
-  padding:9px 16px;background:#fff;color:var(--fg);
-  border:1px solid var(--border-md);border-radius:9999px;cursor:pointer;
-  font:500 13px/1.2 'Inter',sans-serif;letter-spacing:-0.1px;white-space:nowrap;
-  display:inline-flex;align-items:center;gap:6px;text-decoration:none;
+/* Event Calendar */
+.cal-dow-row{
+  display:grid;grid-template-columns:repeat(7,1fr);
+  background:var(--panel-tint);border:1px solid var(--border);border-bottom:0;
+  border-radius:14px 14px 0 0;overflow:hidden;
+}
+.cal-dow-row > div{
+  padding:10px 12px;text-align:center;
+  font:600 11px/1 'Geist Mono',monospace;text-transform:uppercase;
+  color:var(--mut);letter-spacing:0.4px;
+  border-left:1px solid var(--border);
+}
+.cal-dow-row > div:first-child{border-left:0}
+.cal-dow-row > div.sun{color:var(--err)}
+.cal-dow-row > div.sat{color:var(--info)}
+.cal-grid{
+  display:grid;grid-template-columns:repeat(7,1fr);
+  grid-auto-rows:240px;
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);border-top:0;
+  border-radius:0 0 14px 14px;overflow:hidden;
+}
+.cal-day{
+  padding:10px 10px;background:#fff;
+  display:flex;flex-direction:column;gap:6px;
+  overflow:hidden;transition:background .15s;
+}
+.cal-day.today{background:var(--acc-soft);box-shadow:inset 3px 0 0 var(--acc-deep)}
+.cal-count{
+  margin-left:auto;display:inline-flex;align-items:center;justify-content:center;
+  min-width:18px;height:18px;padding:0 6px;border-radius:9999px;
+  background:var(--panel-tint);color:var(--fg2);
+  font:600 10px/1 'Geist Mono',monospace;letter-spacing:0;
+}
+.cal-day.today .cal-count{background:var(--acc-deep);color:#fff}
+.cal-date{display:flex;align-items:baseline;gap:6px}
+.cal-date .num{font:700 22px/1 'Inter',sans-serif;letter-spacing:-0.4px;color:var(--fg)}
+.cal-date .dow{font:500 11px/1 'Geist Mono',monospace;text-transform:uppercase;color:var(--mut);letter-spacing:0.4px}
+.cal-day.today .cal-date .num{color:var(--acc-deep)}
+.cal-events{display:flex;flex-direction:column;gap:4px;flex:1;min-height:0}
+.cal-event{
+  font:500 12px/1.35 'Inter',sans-serif;color:var(--fg2);
+  padding:5px 7px;background:var(--panel-tint);border:1px solid var(--border);border-radius:6px;
+  display:flex;align-items:flex-start;gap:6px;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+.cal-event > span:last-child{flex:1;min-width:0}
+.cal-event .ev-tag{
+  flex-shrink:0;width:6px;height:6px;border-radius:50%;margin-top:5px;
+}
+.cal-event[data-cat="earnings"] .ev-tag{background:var(--acc)}
+.cal-event[data-cat="ipo"] .ev-tag{background:var(--info)}
+.cal-event[data-cat="policy"] .ev-tag{background:var(--warn)}
+.cal-event[data-cat="product"] .ev-tag{background:var(--err)}
+.cal-event[data-cat="other"] .ev-tag{background:var(--mut2)}
+.cal-event[data-cat="macro"] .ev-tag{background:#7c3aed}
+.cal-event[data-cat="conf"] .ev-tag{background:#0ea5e9}
+.cal-event.high{font-weight:600;background:#fff;border-color:var(--border-md)}
+.cal-empty-msg{font:400 11px/1.4 'Inter',sans-serif;color:var(--mut2);font-style:italic}
+.cal-more{font:500 10px/1.4 'Geist Mono',monospace;color:var(--mut);text-transform:uppercase;letter-spacing:0.4px;margin-top:4px;text-align:center}
+.cal-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px;font:500 12px/1.4 'Inter',sans-serif;color:var(--mut)}
+.cal-legend-item{display:inline-flex;align-items:center;gap:6px}
+.cal-legend-item .dot{width:8px;height:8px;border-radius:50%}
+
+/* Sector Phase List */
+.health-controls{display:flex;align-items:center;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.health-tab{
+  padding:7px 14px;background:#fff;border:1px solid var(--border-md);border-radius:9999px;
+  font:500 13px/1 'Inter',sans-serif;color:var(--fg2);transition:all .15s;
+}
+.health-tab.on{background:var(--fg);color:#fff;border-color:var(--fg)}
+.health-tab:not(.on):hover{border-color:var(--border-strong)}
+.phase-list{
+  display:flex;flex-direction:column;
+  background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden;
+}
+.phase-item{border-top:1px solid var(--border)}
+.phase-item:first-child{border-top:0}
+.phase-item[data-phase="expansion"],.phase-item[data-phase="growth"]{color:var(--acc-deep)}
+.phase-item[data-phase="mature"]{color:var(--info)}
+.phase-item[data-phase="plateau"]{color:var(--warn)}
+.phase-item[data-phase="contraction"]{color:var(--err)}
+.phase-item[data-phase="unknown"]{color:var(--mut)}
+.phase-row{
+  display:grid;grid-template-columns:10px 1fr 80px 90px 24px;gap:14px;align-items:center;
+  padding:14px 18px;cursor:pointer;
+  font:500 14px/1.4 'Inter',sans-serif;
+}
+.phase-row:hover{background:var(--panel-tint)}
+.phase-dot{width:8px;height:8px;border-radius:50%;background:currentColor}
+.phase-cat-name{font:600 14px/1.3 'Inter',sans-serif;color:var(--fg);letter-spacing:-0.2px}
+.phase-num{font:700 14px/1 'Geist Mono',monospace;letter-spacing:0.4px;color:currentColor;text-align:right}
+.phase-label{
+  font:600 11px/1 'Geist Mono',monospace;letter-spacing:0.4px;
+  padding:6px 0;border-radius:9999px;background:currentColor;text-align:center;
+}
+.phase-label .lbl{color:#fff}
+.phase-chev{font:500 24px/1 'Geist Mono',monospace;color:var(--mut);transition:transform .2s;text-align:right}
+.phase-item.open .phase-chev{transform:rotate(90deg)}
+.phase-stocks{display:none;padding:8px 14px 14px;background:var(--panel-tint)}
+.phase-item.open .phase-stocks{display:block}
+@media(max-width:640px){
+  .phase-row{grid-template-columns:8px 1fr 64px 78px 24px;gap:10px;padding:12px 14px;font-size:13px}
+  .phase-cat-name{font-size:13px}
+  .phase-num{font-size:13px}
+  .phase-label{font-size:10px}
+  .phase-stocks{padding:8px 10px 12px}
+}
+
+/* Search input + cards (used inside phase expansion) */
+.exp-search{
+  flex:1;min-width:200px;padding:10px 16px;
+  background:#fff;border:1px solid var(--border-md);border-radius:9999px;
+  font:400 14px/1.4 'Inter',sans-serif;color:var(--fg);
+}
+.exp-search:focus{outline:1px solid var(--acc);border-color:var(--acc)}
+.exp-search::placeholder{color:var(--mut2)}
+.exp-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.exp-card{
+  padding:14px;background:var(--panel);border:1px solid var(--border);border-radius:12px;
+  display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:all .15s;
+  position:relative;
+}
+.exp-card:hover{border-color:var(--border-strong);box-shadow:var(--shadow-card);transform:translateY(-1px)}
+.exp-tk{font:600 12px/1 'Geist Mono',monospace;color:var(--mut);letter-spacing:0.4px}
+.exp-nm{font:600 15px/1.25 'Inter',sans-serif;letter-spacing:-0.2px;color:var(--fg)}
+.exp-rs{font:400 12px/1.5 'Inter',sans-serif;color:var(--mut);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.exp-growth{display:inline-flex;align-items:center;gap:4px;font:600 11px/1 'Geist Mono',monospace;letter-spacing:0.4px}
+.exp-growth.up{color:var(--acc-deep)}
+.exp-growth.down{color:var(--err)}
+.exp-growth.flat{color:var(--mut)}
+.exp-empty{padding:32px;text-align:center;color:var(--mut);font-size:14px;grid-column:1/-1}
+
+/* Modal — deep dive */
+.modal-bg{
+  position:fixed;inset:0;background:rgba(13,13,13,0.45);backdrop-filter:blur(8px);
+  display:none;align-items:flex-end;justify-content:center;z-index:100;padding:0;
+  overscroll-behavior:contain;touch-action:none;
+}
+.modal-bg.on{display:flex}
+.modal{
+  background:#fff;border-radius:24px 24px 0 0;width:100%;max-width:760px;max-height:92vh;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;animation:slideUp .25s ease-out;
+  overscroll-behavior:contain;touch-action:pan-y;
+}
+.modal-head::before{
+  content:'';display:block;position:absolute;top:8px;left:50%;transform:translateX(-50%);
+  width:36px;height:4px;border-radius:2px;background:var(--border-md);
+}
+@media(min-width:768px){
+  .modal-bg{align-items:center;padding:24px}
+  .modal{border-radius:24px;max-height:88vh}
+  .modal-head::before{display:none}
+}
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-pad{padding:0 32px 32px}
+.modal-head{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+  position:sticky;top:0;background:#fff;
+  padding:28px 0 16px;margin-bottom:8px;z-index:2;
+}
+.modal-tk{font:600 12px/1 'Geist Mono',monospace;color:var(--mut);text-transform:uppercase;letter-spacing:0.4px}
+.modal-nm{font:600 28px/1.2 'Inter',sans-serif;letter-spacing:-0.5px;color:var(--fg);margin-top:6px}
+.modal-cat{font:500 13px/1.4 'Inter',sans-serif;color:var(--mut);margin-top:6px}
+.modal-actions{display:flex;align-items:center;gap:8px}
+.modal-close{width:36px;height:36px;border-radius:50%;background:var(--panel-tint);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--fg);font-size:18px}
+.modal-close:hover{background:var(--fg);color:#fff}
+.modal-section{margin-top:24px;padding-top:24px;border-top:1px solid var(--border)}
+.modal-section:first-of-type{margin-top:0;padding-top:0;border-top:0}
+.modal-sec-label{font:600 12px/1.5 'Geist Mono',monospace;text-transform:uppercase;letter-spacing:0.6px;color:var(--acc-deep);margin-bottom:12px}
+.modal-rs{font:400 15px/1.7 'Inter',sans-serif;color:var(--fg2);background:var(--panel-tint);padding:18px;border-radius:14px;border:1px solid var(--border)}
+
+/* Revenue chart in modal */
+.rev-chart{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.rev-bar-wrap{padding:18px;background:var(--panel-tint);border:1px solid var(--border);border-radius:14px}
+.rev-year{font:500 11px/1 'Geist Mono',monospace;text-transform:uppercase;color:var(--mut);letter-spacing:0.4px;margin-bottom:14px}
+.rev-bars{display:flex;gap:14px;margin-bottom:14px}
+.rev-bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px}
+.rev-bar .bar-track{width:100%;height:80px;display:flex;align-items:flex-end}
+.rev-bar .bar-track .bar{width:100%;border-radius:6px 6px 0 0;background:var(--fg);transition:height .4s}
+.rev-bar.profit .bar-track .bar{background:var(--acc-deep)}
+.rev-bar.neg .bar-track .bar{background:var(--err)}
+.rev-bar.neg .bar-num{color:var(--err)}
+.rev-bar .bar-num{font:700 14px/1 'Geist Mono',monospace;color:var(--fg);letter-spacing:-0.2px}
+.rev-bar .bar-lbl{font:500 10px/1 'Geist Mono',monospace;text-transform:uppercase;color:var(--mut);letter-spacing:0.4px}
+.rev-growth-row{display:flex;justify-content:space-between;font:500 12px/1.4 'Inter',sans-serif;color:var(--fg2);padding-top:12px;border-top:1px solid var(--border)}
+.rev-growth-row .pct{font:700 13px/1 'Geist Mono',monospace}
+.rev-growth-row .pct.up{color:var(--acc-deep)}
+.rev-growth-row .pct.down{color:var(--err)}
+
+/* Mentions list in modal */
+.mentions-list{display:flex;flex-direction:column;gap:10px}
+.mention-item{
+  padding:14px;background:var(--panel-tint);border:1px solid var(--border);border-radius:12px;
+}
+.mention-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.mention-date{font:500 11px/1 'Geist Mono',monospace;color:var(--mut);text-transform:uppercase;letter-spacing:0.4px}
+.mention-tab{font:600 10px/1 'Geist Mono',monospace;padding:3px 8px;border-radius:9999px;text-transform:uppercase;letter-spacing:0.4px}
+.mention-tab[data-t="stocks"]{background:var(--acc-light);color:var(--acc-deep)}
+.mention-tab[data-t="kr"]{background:#fef4e0;color:var(--warn)}
+.mention-tab[data-t="ai"]{background:#eaf1fa;color:var(--info)}
+.mention-tab[data-t="commodity"]{background:#fbeaea;color:var(--err)}
+.mention-tab[data-t="unicorn"]{background:#f3e8ff;color:#7c3aed}
+.mention-text{font:400 14px/1.6 'Inter',sans-serif;color:var(--fg2)}
+
+/* Day modal — 한 날의 이벤트 리스트 */
+.day-events-list{display:flex;flex-direction:column;gap:10px}
+.day-event{
+  padding:14px 16px;background:var(--panel-tint);border:1px solid var(--border);border-radius:12px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.day-event-row{display:flex;align-items:flex-start;gap:12px}
+.day-event-text{flex:1;min-width:0}
+.day-event-title{font:600 15px/1.45 'Inter',sans-serif;color:var(--fg);letter-spacing:-0.1px}
+.day-event-desc{font:400 13px/1.5 'Inter',sans-serif;color:var(--fg2);margin-top:4px}
+.day-event-meta{font:500 11px/1 'Geist Mono',monospace;text-transform:uppercase;color:var(--mut);letter-spacing:0.4px;margin-top:6px}
+.day-event-tickers{display:flex;flex-wrap:wrap;gap:6px;padding-left:32px}
+.day-ticker-btn{
+  display:inline-flex;align-items:center;padding:5px 12px;
+  background:#fff;border:1px solid var(--border-md);border-radius:9999px;
+  font:600 11px/1 'Geist Mono',monospace;color:var(--fg);letter-spacing:0.4px;transition:all .15s;
+}
+.day-ticker-btn:hover{background:var(--acc-light);color:var(--acc-deep);border-color:var(--acc)}
+
+/* Impact dots — 시각적 중요도 */
+.impact-dots{
+  flex-shrink:0;width:32px;font:500 10px/1 'Geist Mono',monospace;
+  display:inline-flex;justify-content:flex-start;letter-spacing:1px;padding-top:5px;
+}
+.impact-dots.impact-3{color:var(--err)}
+.impact-dots.impact-2{color:var(--warn)}
+.impact-dots.impact-1{color:var(--mut2)}
+.impact-rest{color:var(--border-md);margin-left:0}
+
+/* Cal day — clickable hint */
+.cal-day.clickable{cursor:pointer}
+.cal-day.clickable:hover{background:var(--panel-tint)}
+.cal-day.clickable.today:hover{background:var(--acc-soft)}
+.cal-more-hint{color:var(--mut2)}
+
+/* Peers grid in modal */
+.peers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+.peer-card{
+  padding:10px;background:var(--panel-tint);border:1px solid var(--border);border-radius:10px;cursor:pointer;
   transition:all .15s;
 }
-.preview-btn:hover{border-color:var(--fg);background:var(--panel)}
-.preview-btn .badge{
-  display:inline-flex;align-items:center;padding:2px 7px;
-  background:var(--acc-light);color:var(--acc-deep);border-radius:9999px;
-  font:600 10px/1 'Geist Mono',monospace;text-transform:uppercase;letter-spacing:0.4px;
-}
-.header-actions{display:flex;align-items:center;gap:8px}
-@media (max-width:768px){
-  .preview-btn{padding:7px 11px;font-size:12px}
-  .preview-btn .badge{font-size:9px;padding:2px 5px}
-}
+.peer-card:hover{border-color:var(--border-strong)}
+.peer-tk{font:600 11px/1 'Geist Mono',monospace;color:var(--mut);letter-spacing:0.4px}
+.peer-nm{font:600 13px/1.2 'Inter',sans-serif;color:var(--fg);margin-top:4px}
 
-/* ═══ SUBSCRIBE MODAL ═══ */
-.modal-backdrop{
-  position:fixed;inset:0;background:rgba(13,13,13,0.45);backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;
-  z-index:1000;padding:20px;
-}
-.modal-backdrop.show{display:flex}
-body.modal-open{overflow:hidden}
-.modal{
-  background:var(--panel);border-radius:20px;padding:32px;width:100%;max-width:440px;
-  box-shadow:0 24px 60px rgba(0,0,0,0.18);position:relative;
-  animation:modalIn .25s cubic-bezier(.4,0,.2,1);
-  max-height:calc(100vh - 40px);overflow-y:auto;
-  -webkit-overflow-scrolling:touch;
-}
-@keyframes modalIn{from{opacity:0;transform:translateY(12px) scale(0.98)}to{opacity:1;transform:none}}
-.modal h2{font:600 22px/1.3 'Pretendard Variable',Pretendard,sans-serif;letter-spacing:-0.44px;margin:0 0 8px}
-.modal p.sub{color:var(--mut);font-size:14px;line-height:1.5;margin:0 0 20px}
-.modal-close{
-  position:absolute;top:16px;right:16px;width:32px;height:32px;
-  border:none;background:var(--border-md);border-radius:50%;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;color:var(--fg);
-  font-size:18px;line-height:1;transition:background .2s;
-}
-.modal-close:hover{background:var(--fg);color:#fff}
-.modal-field{margin-bottom:14px}
-.modal-field label{display:block;font:500 13px/1.4 'Inter',sans-serif;color:var(--fg2);margin-bottom:6px}
-.modal-field input[type="text"],.modal-field input[type="tel"]{
-  width:100%;padding:12px 14px;background:var(--bg);
-  border:1.5px solid var(--border-md);border-radius:10px;
-  font:400 15px/1.4 'Inter',sans-serif;color:var(--fg);
-  transition:border-color .2s;
-}
-.modal-field input[type="text"]:focus,.modal-field input[type="tel"]:focus{
-  outline:none;border-color:var(--acc);
-}
-.modal-consent{
-  display:flex;align-items:flex-start;gap:10px;padding:14px;
-  background:var(--acc-light);border-radius:10px;margin:16px 0 20px;
-  font-size:13px;color:var(--fg2);line-height:1.5;
-}
-.modal-consent input[type="checkbox"]{margin-top:2px;accent-color:var(--acc-deep);flex-shrink:0}
-.modal-honeypot{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.modal-submit{
-  width:100%;padding:14px;background:var(--fg);color:#fff;border:none;
-  border-radius:10px;font:500 15px/1 'Inter',sans-serif;cursor:pointer;
-  transition:background .2s;
-}
-.modal-submit:hover{background:#000}
-.modal-submit:disabled{background:var(--placeholder);cursor:not-allowed}
-.modal-cancel{
-  width:100%;padding:12px;margin-top:8px;background:transparent;color:var(--mut);
-  border:1px solid var(--border-md);border-radius:10px;
-  font:500 14px/1 'Inter',sans-serif;cursor:pointer;display:none;
-  transition:all .2s;
-}
-.modal-cancel:hover{background:var(--border-md);color:var(--fg)}
-.modal-cancel.show{display:block}
-.modal-status{margin-top:14px;padding:12px;border-radius:8px;font-size:13px;line-height:1.5;display:none}
-.modal-status.show{display:block}
-.modal-status.success{background:#fff4e5;color:#a35a00}
-.modal-status.success .until-date{display:inline-block;margin-top:4px;font-size:13px;font-weight:500;opacity:0.85}
-.modal-status.error{background:#fde8e8;color:var(--new)}
-.modal-status.info{background:#fff4e5;color:#a35a00}
+footer{border-top:1px solid var(--border);padding:48px 24px;margin-top:64px;color:var(--mut);font-size:13px;text-align:center;background:var(--panel-tint)}
+footer a{color:var(--acc-deep)}
+.disclaimer{padding:24px;border-radius:14px;background:var(--warn-bg);color:var(--warn);font:500 13px/1.5 'Inter',sans-serif;margin-top:24px;border:1px solid #f3e3c0}
 
-/* 번호 확인 블록 (결제 직전 큰 글씨로 재확인) */
-.confirm-box{
-  display:none;margin:16px 0;padding:20px;border-radius:12px;
-  background:var(--acc-light);text-align:center;
+/* Loading state */
+.loading-shimmer{
+  background:linear-gradient(90deg,var(--panel-tint) 25%,#f0f0f0 50%,var(--panel-tint) 75%);
+  background-size:200% 100%;animation:shimmer 1.4s infinite;
+  border-radius:14px;
 }
-.confirm-box.show{display:block}
-.confirm-box .confirm-label{
-  display:block;font:500 12px/1.3 'Inter',sans-serif;
-  color:var(--acc-deep);letter-spacing:0.4px;text-transform:uppercase;
-}
-.confirm-box .confirm-num{
-  display:block;margin:6px 0;font:600 26px/1.2 'Pretendard Variable',Pretendard,sans-serif;
-  color:var(--fg);letter-spacing:-0.5px;
-}
-.confirm-box .confirm-note{
-  display:block;font:500 13px/1.5 'Inter',sans-serif;color:var(--fg2);
-}
-.modal-success-actions{margin-top:16px;display:flex;flex-direction:column;gap:10px}
-.modal-success-actions .kakao-link{
-  display:block;padding:12px;background:#FEE500;color:#3c1e1e;text-decoration:none;
-  border-radius:10px;font:500 14px/1 'Inter',sans-serif;text-align:center;transition:transform .15s;
-}
-.modal-success-actions .kakao-link:hover{transform:translateY(-1px)}
-.modal-success-actions .kakao-link.emphasis{
-  font-size:15px;font-weight:600;padding:15px;
-  box-shadow:0 4px 12px rgba(254,229,0,0.45);
-}
-.complete-notice{
-  display:none;padding:18px;border-radius:12px;
-  background:var(--acc-light);color:var(--acc-deep);border:2px solid var(--acc);
-  font:600 14px/1.6 'Inter','Pretendard Variable',sans-serif;
-  text-align:center;letter-spacing:-0.1px;
-  animation:pulseNotice 2s ease-in-out infinite;
-}
-.complete-notice.show{display:block}
-.complete-notice .notice-head{
-  display:block;font-size:16px;color:#0a7a50;margin-bottom:6px;
-}
-.complete-notice .notice-sub{
-  display:block;font-weight:500;font-size:13px;color:var(--acc-deep);margin-top:6px;
-}
-@keyframes pulseNotice{
-  0%,100%{box-shadow:0 0 0 0 rgba(24,226,153,0.45)}
-  50%    {box-shadow:0 0 0 10px rgba(24,226,153,0)}
-}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
-/* 결제 완료 상태: 폼·헤더 숨기고 완료 화면만 표시 */
-.modal-test-banner{
-  margin:0 0 14px;padding:8px 12px;border-radius:8px;
-  background:#fde8e8;color:var(--new);border:1px solid #f7c6c6;
-  font:500 12px/1.5 'Inter','Pretendard Variable',sans-serif;
-  text-align:center;letter-spacing:-0.1px;
-}
-.modal.completed > .modal-test-banner,
-.modal.completed > h2,
-.modal.completed > p.sub,
-.modal.completed .modal-field,
-.modal.completed .modal-consent,
-.modal.completed .modal-honeypot,
-.modal.completed .confirm-box,
-.modal.completed #subSubmit,
-.modal.completed #subCancel{
-  display:none !important;
-}
-.modal.completed .modal-status{
-  margin-top:8px;padding:16px;font-size:15px;font-weight:500;
-  border-radius:12px;text-align:center;
-}
-.modal.completed .modal-success-actions{margin-top:14px}
-.modal.completed .kakao-link{
-  padding:18px 16px;font-size:16px;font-weight:700;
-}
-h1{font-size:28px;font-weight:700;letter-spacing:-0.56px;line-height:1.2;color:var(--fg);position:relative;font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;display:flex;align-items:center;flex-wrap:wrap}
-h1 .logo{width:34px;height:34px;border-radius:50%;object-fit:cover;margin-right:10px;flex-shrink:0}
-h1 span{
-  background:linear-gradient(135deg,var(--acc) 0%,#10b981 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
-}
-
-.tabs{display:flex;gap:8px;margin-bottom:14px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px;position:relative}
-.tabs::-webkit-scrollbar{display:none}
-.tab{
-  padding:8px 22px;background:transparent;border:1px solid var(--border-md);
-  border-radius:9999px;cursor:pointer;color:var(--mut);
-  font:500 14px/1.5 'Inter',sans-serif;
-  transition:all .25s cubic-bezier(.4,0,.2,1);
-  position:relative;overflow:hidden;
-}
-.tab::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,var(--fg) 0%,#1a1a1a 100%);
-  opacity:0;transition:opacity .25s;border-radius:9999px;
-}
-.tab:hover{border-color:var(--fg2);color:var(--fg2)}
-.tab.on{color:#fff;border-color:var(--fg)}
-.tab.on::before{opacity:1}
-.tab span{position:relative;z-index:1}
-
-/* ═══ TAB DESC ═══ */
-.tab-desc{
-  display:flex;align-items:center;gap:6px;
-  font-size:14px;color:var(--fg2);line-height:1.5;
-  margin-bottom:12px;letter-spacing:-0.1px;font-weight:500;
-}
-.tab-info-btn{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:18px;height:18px;padding:0;border:none;background:transparent;
-  color:var(--mut);cursor:pointer;border-radius:50%;
-  transition:color .15s,background .15s;flex-shrink:0;
-}
-.tab-info-btn:hover{color:var(--fg);background:var(--border-md)}
-.tab-info-btn svg{width:15px;height:15px}
-.tab-criteria{display:none}
-/* 정보 팝업 본문 */
-.info-body{
-  font:400 13px/1.7 'Geist Mono','SF Mono',monospace;
-  color:var(--fg2);letter-spacing:0.1px;white-space:pre-wrap;margin:0;
-}
-
-/* ═══ SEARCH ═══ */
-.search-row{position:relative}
-.search-wrap{position:relative;flex:1;min-width:0}
-.search-wrap::before{
-  content:'';position:absolute;left:14px;top:50%;transform:translateY(-50%);
-  width:15px;height:15px;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23888'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'/%3E%3C/svg%3E");
-  background-size:contain;pointer-events:none;
-  transition:opacity .2s;
-}
-.search-clear{
-  position:absolute;right:12px;top:50%;transform:translateY(-50%);
-  width:18px;height:18px;border:none;background:var(--border-md);
-  border-radius:50%;cursor:pointer;display:none;align-items:center;justify-content:center;
-  color:var(--mut);font-size:12px;line-height:1;transition:background .2s;padding:0;
-}
-.search-clear:hover{background:var(--fg);color:#fff}
-.search-clear.show{display:flex}
-#q{
-  width:100%;padding:6px 36px 6px 38px;
-  background:var(--bg);border:1.5px solid var(--border-md);border-radius:9999px;
-  color:var(--fg);font:400 13px/1.5 'Inter',sans-serif;
-  outline:none;transition:all .3s cubic-bezier(.4,0,.2,1);
-}
-#q::placeholder{color:var(--placeholder)}
-#q:focus{
-  border-color:var(--acc);
-  box-shadow:0 0 0 3px var(--glow),0 0 20px var(--glow);
-}
-
-/* ═══ FILTER BAR ═══ */
-.filterbar{display:flex;align-items:center;gap:10px;margin-top:12px}
-#toggle{
-  padding:6px 16px;background:var(--bg);border:1.5px solid var(--border-md);
-  border-radius:9999px;color:var(--mut);cursor:pointer;
-  font:500 13px/1.5 'Inter',sans-serif;white-space:nowrap;
-  transition:all .25s cubic-bezier(.4,0,.2,1);
-}
-#toggle:hover{color:var(--fg2);border-color:var(--fg2)}
-#toggle.on{color:var(--acc-deep);border-color:var(--acc);background:var(--acc-light)}
-#chips{display:flex;flex-wrap:wrap;gap:6px;flex:1}
-#count{color:var(--acc-deep);font-size:11px;margin-left:4px}
-.chip{
-  padding:4px 14px;background:var(--bg);border:1px solid var(--border-md);
-  border-radius:9999px;cursor:pointer;font:500 12px/1.5 'Inter',sans-serif;
-  color:var(--mut);transition:all .25s cubic-bezier(.4,0,.2,1);
-}
-.chip:hover{color:var(--fg2);border-color:var(--fg2);transform:translateY(-1px)}
-.chip.on{color:var(--acc-deep);background:var(--acc-light);border-color:var(--acc)}
-
-/* 모바일 필터 시트 트리거 (데스크톱에선 숨김) */
-#filterSheetOpen{
-  display:none;align-items:center;gap:6px;
-  padding:8px 16px;background:var(--bg);border:1.5px solid var(--border-md);
-  border-radius:9999px;color:var(--fg2);cursor:pointer;
-  font:500 13px/1.4 Pretendard,sans-serif;white-space:nowrap;
-  transition:all .2s;
-}
-#filterSheetOpen:hover{border-color:var(--fg2)}
-#filterSheetOpen.has-selection{color:var(--acc-deep);border-color:var(--acc);background:var(--acc-light)}
-#filterSheetOpen .count{
-  display:inline-flex;align-items:center;justify-content:center;
-  min-width:18px;height:18px;padding:0 6px;background:var(--acc-deep);
-  color:#fff;border-radius:9999px;font:700 11px/1 'Inter',sans-serif;
-}
-#filterSheetOpen .arrow{font-size:12px;line-height:1;color:var(--mut);margin-left:5px;display:inline-flex;align-items:center;transform:translateY(-1px)}
-
-/* 하단 시트 */
-.fs-backdrop{
-  position:fixed;inset:0;background:rgba(13,13,13,0.5);
-  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
-  opacity:0;pointer-events:none;transition:opacity .25s;z-index:90;
-}
-.fs-backdrop.show{opacity:1;pointer-events:auto}
-.fs-sheet{
-  position:fixed;left:0;right:0;bottom:0;
-  background:#fff;border-radius:18px 18px 0 0;
-  box-shadow:0 -8px 32px rgba(0,0,0,0.15);
-  transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
-  z-index:91;max-height:85vh;display:flex;flex-direction:column;
-  font-family:Pretendard,sans-serif;
-}
-.fs-sheet.show{transform:translateY(0)}
-.fs-handle{
-  width:36px;height:4px;background:rgba(0,0,0,0.15);
-  border-radius:2px;margin:10px auto 0;flex-shrink:0;
-}
-.fs-head{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:14px 20px 10px;flex-shrink:0;
-}
-.fs-title{font:700 16px/1.4 Pretendard;color:#0d0d0d;letter-spacing:-0.2px}
-.fs-close{
-  background:none;border:none;font-size:18px;color:#666;cursor:pointer;
-  width:32px;height:32px;border-radius:8px;display:flex;
-  align-items:center;justify-content:center;
-}
-.fs-close:hover{background:rgba(0,0,0,0.05)}
-.fs-list{
-  flex:1;overflow-y:auto;padding:4px 8px 8px;
-  -webkit-overflow-scrolling:touch;
-}
-.fs-item{
-  display:flex;align-items:center;gap:14px;
-  padding:14px 12px;border-radius:10px;
-  cursor:pointer;font:400 14px/1.4 Pretendard;color:#333;
-  transition:background .15s;
-}
-.fs-item:hover{background:rgba(0,0,0,0.03)}
-.fs-item.checked{color:#0d0d0d;font-weight:500;background:var(--acc-light)}
-.fs-item input[type=checkbox]{
-  width:20px;height:20px;accent-color:var(--acc-deep);
-  margin:0;flex-shrink:0;cursor:pointer;
-}
-.fs-actions{
-  display:flex;gap:8px;padding:14px 20px 22px;
-  border-top:1px solid var(--border);flex-shrink:0;
-  padding-bottom:max(22px, env(safe-area-inset-bottom));
-}
-.fs-btn-toggle{
-  flex:1;padding:14px 8px;border-radius:12px;
-  background:transparent;border:1px solid var(--border-md);
-  color:var(--mut);font:500 13px Pretendard;cursor:pointer;
-  white-space:nowrap;
-}
-.fs-btn-toggle:hover{background:rgba(0,0,0,0.03);color:var(--fg2)}
-.fs-btn-apply{
-  flex:2;padding:14px;border-radius:12px;
-  background:var(--fg);color:#fff;border:none;
-  font:600 14px Pretendard;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;gap:6px;
-}
-.fs-btn-apply:hover{background:#000}
-.fs-btn-apply .badge{
-  display:inline-flex;align-items:center;justify-content:center;
-  min-width:20px;height:20px;padding:0 6px;background:var(--acc);
-  color:var(--fg);border-radius:9999px;font:700 11px/1 'Inter',sans-serif;
-}
-
-/* ═══ MAIN CONTENT ═══ */
-main{padding:40px 32px 80px;position:relative;z-index:1;overflow:hidden}
-
-/* ═══ TAB SLIDE TRANSITION ═══ */
-@keyframes slideOutLeft{from{transform:translateX(0);opacity:1}to{transform:translateX(-60px);opacity:0}}
-@keyframes slideInRight{from{transform:translateX(60px);opacity:0}to{transform:translateX(0);opacity:1}}
-@keyframes slideOutRight{from{transform:translateX(0);opacity:1}to{transform:translateX(60px);opacity:0}}
-@keyframes slideInLeft{from{transform:translateX(-60px);opacity:0}to{transform:translateX(0);opacity:1}}
-main.slide-out-left{animation:slideOutLeft .18s ease-in forwards}
-main.slide-in-right{animation:slideInRight .22s ease-out forwards}
-main.slide-out-right{animation:slideOutRight .18s ease-in forwards}
-main.slide-in-left{animation:slideInLeft .22s ease-out forwards}
-
-/* ═══ GROUP SECTIONS ═══ */
-.group{margin-bottom:56px;opacity:0;transform:translateY(24px);animation:fadeSlideIn .6s ease forwards}
-.gh{
-  font-size:22px;font-weight:600;letter-spacing:-0.44px;line-height:1.3;
-  margin:0 0 4px;color:var(--fg);
-}
-.gt{
-  color:var(--mut);font-size:12px;font-weight:500;letter-spacing:0.8px;
-  text-transform:uppercase;margin-bottom:20px;
-  font-family:'Geist Mono','SF Mono',monospace;
-}
-
-/* ═══ CARD GRID ═══ */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(280px,100%),1fr));gap:14px}
-
-/* ═══ CARDS — THE STAR ═══ */
-.card{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:24px;
-  transition:all .35s cubic-bezier(.4,0,.2,1);
-  box-shadow:var(--shadow);
-  position:relative;
-  overflow:hidden;
-  opacity:0;
-  transform:translateY(16px);
-  animation:cardIn .5s ease forwards;
-}
-.card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--acc),#10b981,var(--acc));
-  opacity:0;transition:opacity .35s;
-}
-.card:hover{
-  border-color:rgba(24,226,153,0.2);
-  box-shadow:0 4px 24px rgba(0,0,0,0.04),0 0 0 1px rgba(24,226,153,0.08);
-  transform:translateY(-3px);
-}
-.card:hover::before{opacity:1}
-
-.ct{
-  font-weight:600;font-size:16px;letter-spacing:-0.16px;
-  margin-bottom:6px;color:var(--fg);
-  display:flex;align-items:flex-start;gap:8px;
-}
-.ct .b{flex-shrink:0;white-space:nowrap}
-.cs{
-  color:var(--mut);font-size:13px;font-weight:500;margin-bottom:8px;
-  font-family:'Geist Mono','SF Mono',monospace;letter-spacing:0.3px;
-  text-transform:uppercase;font-size:11px;
-}
-.cd{font-size:14px;color:var(--fg2);line-height:1.65}
-
-/* ═══ BADGES ═══ */
-.badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:14px}
-.b{
-  font:500 11px/1.5 'Inter',sans-serif;padding:3px 10px;
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:9999px;color:var(--mut);
-  transition:all .2s;
-}
-.b:hover{background:var(--acc-light);color:var(--acc-deep);border-color:var(--acc)}
-.new{
-  background:linear-gradient(135deg,#ef4444,#dc2626);
-  color:#fff;border-color:transparent;
-  animation:newPulse 2s ease-in-out infinite;
-}
-@keyframes newPulse{
-  0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.3)}
-  50%{box-shadow:0 0 0 4px rgba(239,68,68,0)}
-}
-
-/* ═══ NUMBERS PANEL ═══ */
-.nums{
-  display:grid;grid-template-columns:1fr 1fr;gap:8px;
-  margin-top:14px;font-size:12px;color:var(--mut);
-  background:var(--surface);border-radius:12px;padding:14px;
-  border:1px solid var(--border);
-}
-.nums-col{grid-template-columns:1fr;gap:4px}
-.nums span{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:2px 0;white-space:nowrap;overflow:hidden;gap:6px;
-}
-.nums b{
-  color:var(--fg);font-weight:600;
-  font-family:'Geist Mono','SF Mono',monospace;font-size:13px;
-}
-
-/* ═══ ANIMATIONS ═══ */
-@keyframes fadeSlideIn{
-  to{opacity:1;transform:translateY(0)}
-}
-@keyframes cardIn{
-  to{opacity:1;transform:translateY(0)}
-}
-
-/* ═══ STAGGER DELAYS ═══ */
-.card:nth-child(1){animation-delay:.05s}
-.card:nth-child(2){animation-delay:.1s}
-.card:nth-child(3){animation-delay:.15s}
-.card:nth-child(4){animation-delay:.2s}
-.card:nth-child(5){animation-delay:.25s}
-.card:nth-child(6){animation-delay:.3s}
-.card:nth-child(7){animation-delay:.35s}
-.card:nth-child(8){animation-delay:.4s}
-.card:nth-child(9){animation-delay:.45s}
-.card:nth-child(10){animation-delay:.5s}
-
-/* ═══ EMPTY STATE ═══ */
-.empty{
-  text-align:center;padding:80px 0;color:var(--mut);
-}
-.empty-icon{
-  font-size:48px;margin-bottom:16px;opacity:0.4;
-  animation:emptyFloat 3s ease-in-out infinite;
-}
-@keyframes emptyFloat{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-8px)}
-}
-.empty-text{font-size:15px;font-weight:500}
-
-/* ═══ LOADING STATE ═══ */
-.loading{
-  text-align:center;padding:80px 0;color:var(--mut);
-}
-.loader{
-  width:32px;height:32px;border:2.5px solid var(--border-md);
-  border-top-color:var(--acc);border-radius:50%;
-  animation:spin .8s linear infinite;
-  margin:0 auto 16px;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* ═══ SCROLLBAR ═══ */
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.1);border-radius:3px}
-::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,0.2)}
-
-/* ═══ FOOTER ═══ */
-.footer{
-  border-top:1px solid var(--border);
-  padding:24px 32px 28px;color:var(--mut);font-size:12px;line-height:1.6;
-  font-family:'Inter',sans-serif;letter-spacing:0;
-}
-.footer-grid{display:flex;align-items:center;gap:36px;flex-wrap:wrap;margin-bottom:18px}
-.footer-brand{display:flex;flex-direction:column;gap:12px;flex-shrink:0}
-.footer-brand .brand-mark{height:144px;width:auto;display:block}
-.footer-brand .tagline{
-  font-family:'Geist Mono','SF Mono',monospace;font-size:12px;
-  color:var(--placeholder);letter-spacing:0.5px;text-transform:uppercase;
-}
-.footer-biz{flex:1;min-width:280px;display:grid;grid-template-columns:1fr 1fr;gap:4px 32px;color:var(--mut)}
-.footer-biz .biz-col{display:grid;gap:4px;align-content:start}
-.footer-biz .biz-title{font-weight:600;color:var(--fg2);margin-bottom:4px;letter-spacing:-0.1px}
-.footer-biz .biz-note{color:var(--placeholder);font-size:11px;margin-top:6px}
-.footer-biz a{color:var(--fg2);text-decoration:none}
-.footer-biz a:hover{color:var(--acc-deep)}
-.footer-links{
-  margin-top:16px;padding-top:14px;border-top:1px solid var(--border);
-  display:flex;gap:16px;flex-wrap:wrap;
-}
-.footer-links a{
-  color:var(--fg2);text-decoration:none;font-size:12px;font-weight:500;
-  letter-spacing:-0.1px;transition:color .15s;
-}
-.footer-links a:hover{color:var(--acc-deep)}
-.footer-copy{
-  margin-top:12px;color:var(--placeholder);font-size:11px;letter-spacing:0.3px;
-}
-@media (max-width:768px){
-  .footer{padding:18px 16px 22px}
-  .footer-grid{gap:16px;margin-bottom:14px;flex-direction:column;align-items:stretch}
-  .footer-brand{align-items:flex-start}
-  .footer-brand .brand-mark{height:96px}
-  .footer-biz{min-width:0;grid-template-columns:1fr;gap:10px}
-  .footer-copy{text-align:center}
-}
-
-.hide{display:none}
-
-/* ═══ SCROLL TO TOP ═══ */
-.scroll-top{
-  position:fixed;bottom:32px;right:32px;z-index:20;
-  width:40px;height:40px;border-radius:9999px;
-  background:var(--fg);color:#fff;border:none;cursor:pointer;
-  box-shadow:var(--btn-shadow),0 4px 12px rgba(0,0,0,0.1);
-  display:flex;align-items:center;justify-content:center;
-  opacity:0;pointer-events:none;
-  transition:opacity .3s ease,transform .3s ease;
-  transform:translateY(8px);
-}
-.scroll-top.show{opacity:1;pointer-events:auto;transform:translateY(0)}
-.scroll-top:hover{opacity:0.9}
-.scroll-top svg{width:18px;height:18px}
-
-/* ═══ UPDATE BANNER ═══ */
-.update-box{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:16px;padding:20px 24px;margin-bottom:40px;
-  position:relative;overflow:hidden;
-  animation:fadeSlideIn .5s ease forwards;
-}
-.update-box::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--acc),#10b981,var(--acc));
-}
-.update-header{
-  display:flex;align-items:center;gap:10px;margin-bottom:14px;
-}
-.update-tag{
-  font:600 11px/1 'Geist Mono','SF Mono',monospace;
-  padding:4px 10px;border-radius:9999px;
-  background:linear-gradient(135deg,var(--acc),#10b981);color:#fff;
-  letter-spacing:0.5px;text-transform:uppercase;
-}
-.update-date{
-  font:500 12px/1 'Geist Mono','SF Mono',monospace;
-  color:var(--mut);letter-spacing:0.3px;
-}
-.update-summary{
-  font-size:14px;font-weight:600;color:var(--fg);
-  letter-spacing:-0.14px;
-}
-.update-summary-line{display:block;line-height:1.55;margin-bottom:2px}
-.update-summary-line:last-child{margin-bottom:0}
-.update-toggle{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:22px;height:22px;border-radius:6px;
-  color:var(--acc-deep);cursor:pointer;
-  transition:background .2s,transform .25s ease;
-}
-.update-toggle:hover{background:rgba(24,226,153,0.1)}
-.update-toggle svg{width:14px;height:14px;display:block}
-.update-box.expanded .update-toggle{transform:rotate(180deg)}
-.update-details{margin-top:12px}
-.update-list{list-style:none;display:flex;flex-direction:column;gap:8px}
-.update-item{
-  font-size:13px;color:var(--fg2);line-height:1.6;
-  padding:8px 12px;background:var(--panel);
-  border:1px solid var(--border);border-radius:10px;
-  transition:all .2s;
-}
-.update-item:hover{border-color:rgba(24,226,153,0.25)}
-.update-item-type{
-  font:600 10px/1.5 'Inter',sans-serif;
-  padding:2px 7px;border-radius:9999px;margin-right:6px;
-  background:var(--acc-light);color:var(--acc-deep);
-  letter-spacing:0.3px;display:inline-block;vertical-align:middle;
-  transform:translateY(-1px);
-}
-.update-item-sector{
-  font:600 10px/1.5 'Inter',sans-serif;
-  padding:2px 7px;border-radius:9999px;margin-right:6px;
-  background:rgba(99,102,241,0.12);color:#818cf8;
-  letter-spacing:0.3px;display:inline-block;vertical-align:middle;
-  transform:translateY(-1px);
-}
-.update-more{
-  margin-top:10px;font-size:13px;font-weight:500;
-  color:var(--acc-deep);cursor:pointer;
-  transition:opacity .2s;display:inline-block;
-}
-.update-more:hover{opacity:0.7}
-.update-box:not(.expanded) .update-details,
-.update-box:not(.expanded) .update-more.collapse{display:none}
-.update-box.expanded .update-more.expand{display:none}
-
-/* ═══ RESPONSIVE ═══ */
 @media(max-width:768px){
-  .hero-glow{width:100%;height:300px;top:-80px}
-  header{padding:12px 16px}
-  h1{font-size:22px;letter-spacing:-0.44px}
-  h1 .logo{width:28px;height:28px;margin-right:8px}
-  .subtitle{font-size:13px}
-  .tabs{gap:6px}
-  .tab{padding:6px 14px;font-size:13px;flex-shrink:0}
-  /* 모바일: 검색란 좌측에 필터 버튼 / 기존 칩·토글 영역은 통째 숨김 */
-  .search-row{display:flex;gap:8px;align-items:center;margin-top:6px}
-  .filterbar{display:none}
-  #filterSheetOpen{display:inline-flex !important}
-  main{padding:20px 16px 60px}
-  .group{margin-bottom:36px}
-  .grid{grid-template-columns:1fr;gap:12px}
-  .card{padding:18px;border-radius:14px}
-  .b{font-size:10px;padding:2px 8px}
-  .gh{font-size:19px}
+  .top-inner{padding:12px 16px}
+  main{padding:0 16px}
+  section{padding:48px 0}
+  .hero-title{font-size:36px;letter-spacing:-0.7px}
+  .hero-sub{font-size:16px}
+  .modal-pad{padding:0 24px 24px}
+  .modal-head{padding:24px 0 12px}
+  .modal-nm{font-size:22px}
+  .rev-bar-wrap{padding:14px}
+  .rev-growth-row{font-size:11px}
+  .rev-growth-row .pct{font-size:12px}
+  .tldr-row{flex-direction:column;align-items:flex-start;gap:8px;padding:12px 14px}
+  .tldr-text{font-size:12.5px;line-height:1.45}
+  .tldr-tag{font-size:10px;padding:6px 10px}
+  .sec-title{font-size:22px}
+  .exp-cards{gap:10px}
+  .cal-grid{grid-auto-rows:160px}
+  .cal-dow-row > div{padding:8px 4px;font-size:10px}
+  .cal-day{padding:8px 6px;gap:4px}
+  .cal-date .num{font-size:15px}
+  .cal-date .dow{display:none}
+  .cal-count{min-width:16px;height:16px;font-size:9px;padding:0 4px}
+  .cal-events{gap:3px}
+  .cal-event{font-size:10px;line-height:1.3;padding:3px 5px;gap:4px;border-radius:5px}
+  .cal-event .ev-tag{width:5px;height:5px;margin-top:4px}
+  .cal-event > span:last-child{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .cal-more{font-size:9px;margin-top:2px}
+  .cal-empty-msg{display:none}
 }
-
 @media(max-width:480px){
-  .grid{grid-template-columns:1fr}
-  .card{padding:16px;border-radius:12px}
-  .nums{gap:4px}
+  .cal-grid{grid-auto-rows:160px}
+  .cal-dow-row > div{padding:6px 2px;font-size:9px}
+  .cal-day{padding:6px 4px;gap:3px}
+  .cal-date .num{font-size:14px}
+  .cal-count{min-width:14px;height:14px;font-size:8px;padding:0 3px}
+  .cal-event{font-size:9.5px;padding:2px 4px;gap:3px;border-radius:4px}
+  .cal-event .ev-tag{width:4px;height:4px;margin-top:3px}
 }
 </style>
 </head>
 <body>
 
-<!-- Atmospheric gradient glow -->
-<div class="hero-glow"></div>
+<div class="hero-bg"></div>
 
-<header id="header">
-  <div class="header-top">
-    <div>
-      <h1><img class="logo" src="./assets/briefick_profile_640.jpeg" alt="브리픽"><span>브리픽</span></h1>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="/">
+      <img src="/assets/briefick_profile_640.jpeg" alt="">
+      <span>브리픽<span class="dot">.</span></span>
+    </a>
+    <div class="top-nav">
+      <a class="btn-primary" href="#subscribeBtn" id="subscribeShortcut">구독하기</a>
     </div>
-    <div class="header-actions">
-      <a class="preview-btn" href="/preview" aria-label="차세대 대시보드 프리뷰">
-        <span class="badge">NEW</span>
-        <span class="label">미리보기</span>
-      </a>
-      <button class="subscribe-btn" id="subscribeBtn" type="button">구독하기</button>
-    </div>
-  </div>
-  <div class="tabs">
-    <div class="tab" data-t="stocks"><span>미국 마켓</span></div>
-    <div class="tab" data-t="kr"><span>한국 마켓</span></div>
-    <div class="tab" data-t="ai"><span>AI 기업</span></div>
-    <div class="tab" data-t="unicorn"><span>유니콘</span></div>
-    <div class="tab" data-t="commodity"><span>원자재·크립토</span></div>
-  </div>
-  <script>!function(){var t=JSON.parse(sessionStorage.getItem('briefState')||'null'),s=t&&t.tab||'stocks';if(s==='jp')s='stocks';var el=document.querySelector('.tab[data-t="'+s+'"]');if(el)el.classList.add('on');else document.querySelector('.tab[data-t="stocks"]').classList.add('on')}()</script>
-  <div class="tab-desc">
-    <span id="tabDesc"></span>
-    <button class="tab-info-btn" id="tabInfoBtn" type="button" aria-label="선정 기준 자세히 보기">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-    </button>
-  </div>
-  <div class="tab-criteria" id="tabCriteria"></div>
-  <div class="search-row">
-    <button id="filterSheetOpen" type="button" aria-label="필터 열기">
-      <span>필터</span>
-      <span class="count" id="filterSheetOpenCount" style="display:none">0</span>
-      <span class="arrow">▼</span>
-    </button>
-    <div class="search-wrap">
-      <input id="q" placeholder="티커, 기업명, 제품, 설명으로 검색..." data-ph-mobile="티커, 기업명, 제품으로 검색">
-      <button class="search-clear" id="qClear" aria-label="검색 초기화">✕</button>
-    </div>
-  </div>
-  <div class="filterbar">
-    <button id="toggle">필터<span id="count"></span></button>
-    <div id="chips"></div>
   </div>
 </header>
 
-<div class="fs-backdrop" id="fsBackdrop" aria-hidden="true"></div>
-<aside class="fs-sheet" id="fsSheet" role="dialog" aria-modal="true" aria-labelledby="fsTitle" aria-hidden="true">
-  <div class="fs-handle" aria-hidden="true"></div>
-  <div class="fs-head">
-    <span class="fs-title" id="fsTitle">필터</span>
-    <button class="fs-close" id="fsClose" aria-label="닫기">✕</button>
-  </div>
-  <div class="fs-list" id="fsList"></div>
-  <div class="fs-actions">
-    <button class="fs-btn-toggle" id="fsToggleAll" type="button">모두 선택</button>
-    <button class="fs-btn-apply" id="fsApply" type="button">
-      <span>적용</span>
-      <span class="badge" id="fsApplyBadge" style="display:none">0</span>
-    </button>
-  </div>
-</aside>
+<main>
 
-<main id="out">
-  <div class="loading">
-    <div class="loader"></div>
-    <div style="font-size:14px;font-weight:500">데이터 불러오는 중...</div>
-  </div>
-</main>
+<!-- Hero + Today's Narrative -->
+<section class="hero">
+  <div class="hero-eyebrow">1분 마켓 브리핑</div>
+  <h1 class="hero-title">오늘<br><span class="accent">놓치면 안 되는 것</span></h1>
+  <div class="hero-meta"><span class="dot"></span><span id="lastUpdated">데이터 로드 중…</span></div>
 
-<button class="scroll-top" id="scrollTop" aria-label="맨 위로">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"/></svg>
-</button>
-<footer class="footer">
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <img class="brand-mark" src="./assets/roysoft_profile.jpg" alt="로이소프트">
-    </div>
-    <div class="footer-biz">
-      <div class="biz-col">
-        <div class="biz-title">브리픽 | 매일 뉴스 - 경제</div>
-        <div>서울시 은평구 갈현로 19길 3-1</div>
-        <div>대표 : 박도현</div>
-        <div>이메일: <a href="mailto:rookiejjj@gmail.com">rookiejjj@gmail.com</a></div>
-      </div>
-      <div class="biz-col">
-        <div>사업자등록번호: 737-42-01455</div>
-        <div>대표번호: 070-7938-6665</div>
-        <div class="biz-note">전화 문의는 운영하지 않습니다. 문의는 카카오 채널톡으로 부탁드립니다.</div>
-      </div>
+  <div class="narrative-card" id="narrativeCard">
+    <div id="narrativeBody"><div class="updates-loading">데이터를 불러오고 있습니다…</div></div>
+  </div>
+</section>
+
+<!-- Event Calendar -->
+<section>
+  <div class="sec-head">
+    <div>
+      <div class="sec-label">Forward-looking events</div>
+      <h2 class="sec-title">이벤트 캘린더 · 2주</h2>
     </div>
   </div>
-  <div class="footer-links">
-    <a href="/terms">이용약관</a>
-    <a href="/privacy">개인정보처리방침</a>
-    <a href="/refund">환불정책</a>
+  <div class="cal-dow-row">
+    <div class="sun">일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div class="sat">토</div>
   </div>
-  <div class="footer-copy">Copyright © 2026 브리픽 | 매일 경제 뉴스 All Rights Reserved.</div>
+  <div class="cal-grid" id="calendar"></div>
+  <div class="cal-legend">
+    <span class="cal-legend-item"><span class="dot" style="background:var(--acc)"></span>실적 발표</span>
+    <span class="cal-legend-item"><span class="dot" style="background:var(--info)"></span>IPO·펀딩</span>
+    <span class="cal-legend-item"><span class="dot" style="background:#7c3aed"></span>매크로 지표</span>
+    <span class="cal-legend-item"><span class="dot" style="background:var(--warn)"></span>정책·정상회담</span>
+    <span class="cal-legend-item"><span class="dot" style="background:#0ea5e9"></span>컨퍼런스</span>
+    <span class="cal-legend-item"><span class="dot" style="background:var(--err)"></span>신제품·출시</span>
+    <span class="cal-legend-item"><span class="dot" style="background:var(--mut2)"></span>기타</span>
+  </div>
+</section>
+
+<!-- Sector Phase List + Stocks (merged) -->
+<section>
+  <div class="sec-head">
+    <div>
+      <div class="sec-label">Sector growth phases</div>
+      <h2 class="sec-title">섹터 성장 단계</h2>
+      <p class="sec-desc">% = FY26E 매출의 전년(FY25) 대비 성장률 - 섹터값은 7종목 중앙값.</p>
+    </div>
+  </div>
+  <div class="health-controls">
+    <button class="health-tab on" data-market="stocks">미국</button>
+    <button class="health-tab" data-market="kr">한국</button>
+    <input class="exp-search" id="expSearch" placeholder="티커·기업명·키워드로 검색" />
+  </div>
+  <div class="phase-list" id="healthList"></div>
+</section>
+
+<div class="disclaimer" style="margin:0 24px 24px">
+  <strong>면책</strong> · 이 페이지는 정보 제공 목적이며 매수·매도 의견이 아닙니다. 모든 수치는 컨센서스 추정치 또는 자동 추출된 사건이며, 투자 판단은 사용자 책임입니다.
+</div>
+
+<footer>
+  © 브리픽 (Briefick) · 매일 경제 뉴스
 </footer>
 
+</main>
+
+<!-- Modal -->
+<div class="modal-bg" id="modalBg" role="dialog" aria-modal="true">
+  <div class="modal" id="modal">
+    <div class="modal-pad" id="modalPad"></div>
+  </div>
+</div>
+
 <script>
-const TAB_DESC={
-  stocks:'미국 상장 섹터별 TOP 7 — 실적·전망 요약',
-  kr:'한국 상장 섹터별 TOP 7 — 실적·전망 요약',
-  ai:'글로벌 AI 주요 기업의 모델·제품·투자 동향 한눈에 보기',
-  commodity:'원자재·크립토 — 에너지·금속·디지털 자산 가격 한눈에',
-  unicorn:'비상장 유니콘·프리IPO 기업 — 밸류에이션·IPO 전망',
+// ═══════════════════════════════════════════════════════════
+// 데이터 로드
+// ═══════════════════════════════════════════════════════════
+// 절대 경로 — Vercel 배포(루트 index.html)와 로컬 HTTP 서빙(/index.html) 양쪽에서 일관 동작.
+const URLS={
+  stocks:    '/data/stocks-data.js',
+  kr:        '/data/kr-stocks-data.js',
+  ai:        '/data/ai-data.js',
+  commodity: '/data/commodity-data.js',
+  unicorn:   '/data/unicorn-data.js',
 };
-const TAB_CRITERIA={
-  stocks:'선정 기준: 섹터 대표성 · FY26E 컨센서스 존재 · 펀드/레버리지 제외 · 회계이슈 시 즉시 교체',
-  kr:'선정 기준: 섹터 대표성 · FY26E 컨센서스 존재 · 펀드/레버리지 제외 · 회계이슈 시 즉시 교체',
-  ai:'선정 기준: 프론티어 모델 · 생태계 영향력 · 인프라 지배력 · 오픈소스 기여 · 시장 규모',
-  commodity:'데이터: 선물 기준가 · YTD/1Y 변동률 · 52주 범위',
-  unicorn:'선정 기준: 밸류에이션 $1B+ · 펀딩 실적 · IPO 가능성',
+const UPD_URLS={
+  stocks:    {url:'/data/stocks-update.js',    var:'updates'},
+  kr:        {url:'/data/kr-stocks-update.js', var:'updates'},
+  ai:        {url:'/data/ai-update.js',        var:'UPDATES'},
+  commodity: {url:'/data/commodity-update.js', var:'updates'},
+  unicorn:   {url:'/data/unicorn-update.js',   var:'updates'},
 };
-// Scroll to top
-const _stBtn=document.getElementById('scrollTop');
-let _stTick=false;
-window.addEventListener('scroll',()=>{
-  if(!_stTick){window.requestAnimationFrame(()=>{
-    _stBtn.classList.toggle('show',window.scrollY>300);
-    _stTick=false;
-  });_stTick=true;}
-});
-_stBtn.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+const CALENDAR_URL='/data/calendar-events.js';
 
-const _fy1=String(new Date().getFullYear()-1).slice(-2);
-const _fy2=String(new Date().getFullYear()).slice(-2);
-function fmtN(s){return /^-?\d+$/.test(s)?Number(s).toLocaleString():s;}
-function fitNums(){
-  document.querySelectorAll('.nums span').forEach(sp=>{
-    const b=sp.querySelector('b');if(!b)return;
-    b.style.fontSize='';
-    let fs=13;
-    while(sp.scrollWidth>sp.clientWidth&&fs>8){fs-=1;b.style.fontSize=fs+'px';}
-  });
-}
-
-const STOCKS_URL='./data/stocks-data.js';
-const AI_URL    ='./data/ai-data.js';
-const KR_URL    ='./data/kr-stocks-data.js';
-const COMMODITY_URL='./data/commodity-data.js';
-const UNICORN_URL='./data/unicorn-data.js';
-const STOCKS_UPD_URL='./data/stocks-update.js';
-const AI_UPD_URL    ='./data/ai-update.js';
-const KR_UPD_URL    ='./data/kr-stocks-update.js';
-const COMMODITY_UPD_URL='./data/commodity-update.js';
-const UNICORN_UPD_URL='./data/unicorn-update.js';
-
-
-async function loadJS(url,v){
-  const r=await fetch(v?url+'?v='+v:url);const buf=await r.arrayBuffer();
-  const t=new TextDecoder('utf-8').decode(buf);
+async function loadJS(url){
+  const r=await fetch(url+'?_='+Date.now());
+  const t=await r.text();
   return new Function(t+';return {data:typeof data!=="undefined"?data:null,META:typeof META!=="undefined"?META:null,BL:typeof BL!=="undefined"?BL:null};')();
 }
-
-// 모바일에서 검색 placeholder 잘림 방지 — 768px 이하에서 짧은 버전으로 스왑
-(function(){
-  const q=document.getElementById('q');if(!q)return;
-  const full=q.placeholder, mob=q.dataset.phMobile||full;
-  const mq=window.matchMedia('(max-width:768px)');
-  const sync=()=>{q.placeholder=mq.matches?mob:full};
-  sync();
-  mq.addEventListener ? mq.addEventListener('change',sync) : mq.addListener(sync);
-})();
-
-const _saved=JSON.parse(sessionStorage.getItem('briefState')||'null');
-let STATE={tab:_saved?.tab||'stocks',q:'',filter:new Set(_saved?.filters?.[_saved?.tab]||[]),ai:null,st:null,kr:null,commodity:null,unicorn:null,stUpd:null,aiUpd:null,krUpd:null,commodityUpd:null,unicornUpd:null};
-if(STATE.tab==='jp')STATE.tab='stocks';
-const TAB_FILTERS={stocks:new Set(_saved?.filters?.stocks||[]),kr:new Set(_saved?.filters?.kr||[]),ai:new Set(_saved?.filters?.ai||[]),commodity:new Set(_saved?.filters?.commodity||[]),unicorn:new Set(_saved?.filters?.unicorn||[])};
-function saveState(){
-  const f={};for(const k in TAB_FILTERS)f[k]=[...TAB_FILTERS[k]];
-  sessionStorage.setItem('briefState',JSON.stringify({tab:STATE.tab,filters:f}));
-}
-
-// ═══ DATA VERSION CHECK ═══
-let _dataVersion=null;
-async function fetchVersion(){
-  try{const r=await fetch('./data/version.js?_='+Date.now());const t=await r.text();
-  const m=t.match(/DATA_VERSION\s*=\s*["'](.+?)["']/);return m?m[1]:null;}catch(e){return null;}
-}
-async function refreshIfNeeded(){
-  const v=await fetchVersion();if(!v)return false;
-  if(!_dataVersion){_dataVersion=v;return false;}
-  if(v===_dataVersion)return false;
-  _dataVersion=v;
-  const[st,ai,kr,commodity,unicorn,stUpd,aiUpd,krUpd,commodityUpd,unicornUpd]=await Promise.all([loadJS(STOCKS_URL,v),loadJS(AI_URL,v),loadJS(KR_URL,v),loadJS(COMMODITY_URL,v),loadJS(UNICORN_URL,v),loadUpdJS(STOCKS_UPD_URL,'updates',v),loadUpdJS(AI_UPD_URL,'UPDATES',v),loadUpdJS(KR_UPD_URL,'updates',v),loadUpdJS(COMMODITY_UPD_URL,'updates',v),loadUpdJS(UNICORN_UPD_URL,'updates',v)]);
-  STATE.st=norm(st,'stocks');STATE.ai=norm(ai,'ai');STATE.kr=norm(kr,'kr');STATE.commodity=norm(commodity,'commodity');STATE.unicorn=norm(unicorn,'unicorn');
-  STATE.stUpd=stUpd;STATE.aiUpd=aiUpd;STATE.krUpd=krUpd;STATE.commodityUpd=commodityUpd;STATE.unicornUpd=unicornUpd;BL_MAP=ai.BL||{};
-  return true;
-}
-// 페이지 포커스 복귀 시 버전 체크 → 현재 탭 즉시 갱신
-document.addEventListener('visibilitychange',async()=>{
-  if(document.visibilityState==='visible'&&_dataVersion){
-    if(await refreshIfNeeded()){renderChips();updateCount();render();}
-  }
-});
-
-async function loadUpdJS(url,varName,v){
-  const r=await fetch(v?url+'?v='+v:url);const buf=await r.arrayBuffer();
-  const t=new TextDecoder('utf-8').decode(buf);
+async function loadUpd(url, varName){
+  const r=await fetch(url+'?_='+Date.now());
+  const t=await r.text();
   return new Function(t+`;return typeof ${varName}!=="undefined"?${varName}:[];`)();
 }
 
-const _updateExpand={stocks:false,kr:false,ai:false,commodity:false,unicorn:false};
-function _renderSummaryHtml(summary){
-  if(!summary) return '';
-  const lines=summary.split('\n').map(s=>s.trim()).filter(Boolean);
-  if(!lines.length) return '';
-  return lines.map(l=>`<span class="update-summary-line">• ${l}</span>`).join('');
-}
-function _renderItems(entry){
-  if(entry.changes){
-    return entry.changes.map(c=>{
-      const sec=c.sector?`<span class="update-item-sector">${c.sector}</span>`:'';
-      return `<span class="update-item-type">${c.type}</span>${sec}${c.detail}`;
-    });
-  }
-  // 레거시 AI entries[] fallback
-  if(entry.entries){
-    return entry.entries.map(e=>typeof e==='string'?e:e.text);
-  }
-  return [];
-}
-function renderUpdateBox(tab){
-  const updMap={stocks:STATE.stUpd,kr:STATE.krUpd,ai:STATE.aiUpd,commodity:STATE.commodityUpd,unicorn:STATE.unicornUpd};
-  const upd=updMap[tab];
-  if(!upd||!upd.length)return '';
-  const latest=upd[0];
-  const dateStr=latest.date;
-  const items=_renderItems(latest);
-  const expanded=!!_updateExpand[tab];
-  const summaryStr=latest.summary?`<div class="update-summary">${_renderSummaryHtml(latest.summary)}</div>`:'';
-  const hasDetails=items.length>0;
-  const toggleIcon=hasDetails?`<span class="update-toggle" onclick="toggleUpdateMore(this)" aria-label="펼쳐보기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>`:'';
-  let html=`<div class="update-box${expanded?' expanded':''}" data-tab="${tab}"><div class="update-header"><span class="update-tag">업데이트</span><span class="update-date">${dateStr}</span>${toggleIcon}</div>${summaryStr}`;
-  if(hasDetails){
-    html+=`<div class="update-details"><ul class="update-list">`;
-    items.forEach(it=>html+=`<li class="update-item">${it}</li>`);
-    html+=`</ul></div>`;
-    html+=`<span class="update-more expand" onclick="toggleUpdateMore(this)">펼쳐보기</span>`;
-    html+=`<span class="update-more collapse" onclick="toggleUpdateMore(this)">간단히 보기</span>`;
-  }
-  html+=`</div>`;
-  return html;
-}
-function toggleUpdateMore(el){
-  const box=el.closest('.update-box');
-  const tab=box.dataset.tab;
-  if(box.classList.contains('expanded')){
-    box.classList.remove('expanded');
-    if(tab) _updateExpand[tab]=false;
-  }else{
-    box.classList.add('expanded');
-    if(tab) _updateExpand[tab]=true;
-  }
-}
-function norm(raw,kind){
-  if(['stocks','kr'].includes(kind))return raw.data.map(g=>({group:g.title,tag:g.tag,items:g.stocks.map(s=>({
-    title:`${s.tk} · ${s.nm}`,sub:s.rs,badges:[g.title.replace(/^\S+\s/,'')],
-    meta:{r1:s.r1,p1:s.p1,r2:s.r2,p2:s.p2},_raw:`${s.tk} ${s.nm} ${s.rs}`
-  }))}));
-  if(kind==='commodity')return raw.data.map(g=>({group:g.title,tag:g.tag,items:g.stocks.map(s=>({
-    title:s.tk!=='—'?`${s.tk} · ${s.nm}`:s.nm,sub:s.rs,badges:[g.title.replace(/^\S+\s/,'')],
-    meta:{price:s.price,ytd:s.ytd,y1:s.y1,range:s.range},_raw:`${s.tk} ${s.nm} ${s.rs}`
-  }))}));
-  if(kind==='unicorn')return raw.data.map(g=>({group:g.title,tag:g.tag,items:g.stocks.map(s=>({
-    title:s.nm,sub:s.rs,badges:[g.title.replace(/^\S+\s/,'')],
-    meta:{val:s.val,round:s.round,sector:s.sector,ipo:s.ipo},_raw:`${s.nm} ${s.rs} ${s.sector}`
-  }))}));
-  return raw.data.map(c=>({group:`#${c.rank} ${c.name}`,tag:`${c.type} · ${c.focus}`,items:c.products.map(p=>({
-    title:p.name,sub:c.name,desc:p.desc,badges:p.badges||[],isNew:p.isNew,
-    _raw:`${c.name} ${p.name} ${p.desc}`
-  }))}));
-}
+const STATE={data:{},upd:{},market:'stocks',healthMarket:'stocks',expQuery:''};
 
-const META_CFG={
-  stocks:{labels:['매출'+_fy1,'순익'+_fy1,'매출'+_fy2+'E','순익'+_fy2+'E'],keys:['r1','p1','r2','p2'],pre:'$',suf:'B'},
-  kr:{labels:['매출'+_fy1,'순익'+_fy1,'매출'+_fy2+'E','순익'+_fy2+'E'],keys:['r1','p1','r2','p2'],pre:'',suf:'천억'},
-  commodity:{labels:['현재가','YTD','1Y','52주'],keys:['price','ytd','y1','range'],pre:'',suf:''},
-  unicorn:{labels:['밸류에이션','최근 라운드','섹터','IPO 전망'],keys:['val','round','sector','ipo'],pre:'',suf:'',col:true},
+// ═══════════════════════════════════════════════════════════
+// Helpers
+// ═══════════════════════════════════════════════════════════
+function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function fmtPct(x){if(x===null||x===undefined||isNaN(x))return '—';const p=x*100;return (p>=0?'+':'')+p.toFixed(1)+'%'}
+function median(arr){const s=[...arr].sort((a,b)=>a-b);const n=s.length;if(!n)return null;return n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2}
+function todayKST(){
+  const now=new Date();
+  const kst=new Date(now.getTime()+9*3600*1000+now.getTimezoneOffset()*60*1000);
+  return kst;
+}
+function fmtKSTDate(d){
+  const y=d.getUTCFullYear(),m=String(d.getUTCMonth()+1).padStart(2,'0'),day=String(d.getUTCDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
+function fmtKSTHuman(d){
+  const m=String(d.getUTCMonth()+1).padStart(2,'0'),day=String(d.getUTCDate()).padStart(2,'0');
+  const dow=['일','월','화','수','목','금','토'][d.getUTCDay()];
+  return `${m}/${day} ${dow}`;
+}
+const TAB_LABEL={stocks:'미국',kr:'한국',ai:'AI',commodity:'원자재',unicorn:'유니콘'};
+
+// 영문 종목명 → 한글 표기 매핑 (한국 매체 통용 표기 기준)
+const NAME_KO={
+  'Microsoft':'마이크로소프트','Alphabet':'알파벳','Meta':'메타','Oracle':'오라클',
+  'Palantir':'팔란티어','Salesforce':'세일즈포스','ServiceNow':'서비스나우',
+  'NVIDIA':'엔비디아','Broadcom':'브로드컴','TSMC':'TSMC','ASML':'ASML',
+  'Lam Research':'램리서치','Micron':'마이크론','AMD':'AMD',
+  'Digital Realty':'디지털 리얼티','Equinix':'에퀴닉스','Arista':'아리스타',
+  'Dell Tech':'델 테크','CoreWeave':'코어위브','Cisco':'시스코','HP Enterprise':'HPE',
+  'Vertiv':'버티브','Modine':'모다인','Trane Tech':'트레인','Johnson Controls':'존슨 컨트롤스',
+  'Carrier':'캐리어','Lennox Intl':'레녹스','Generac':'제네락',
+  'Xylem':'자일럼','American Water':'아메리칸 워터','Ecolab':'에코랩','Watts Water':'와츠 워터',
+  'Roper Tech':'로퍼 테크','Pentair':'펜테어','Essential Utilities':'에센셜 유틸리티스',
+  'GE Vernova':'GE 버노바','Eaton':'이튼','Quanta Svcs':'콴타 서비스','Hubbell':'허블',
+  'NextEra':'넥스트에라','Parker Hannifin':'파커 해니핀','AMETEK':'아메텍',
+  'Constellation':'컨스텔레이션','Vistra':'비스트라','BWX Tech':'BWX 테크','Centrus':'센트러스',
+  'Oklo':'오클로','Cameco':'카메코','Talen Energy':'탤런 에너지',
+  'Eli Lilly':'일라이 릴리','Novo Nordisk':'노보 노디스크','Intuitive Surgical':'인튜이티브 서지컬',
+  'Vertex Pharma':'버텍스 파마','Regeneron':'리제네론','Merck':'머크','AbbVie':'애브비',
+  'ExxonMobil':'엑손모빌','Chevron':'셰브런','Cheniere':'셰니어','Schlumberger':'슐럼버거',
+  'ConocoPhillips':'코노코필립스','Kinder Morgan':'킨더 모건','EOG Resources':'EOG 리소시스',
+  'First Solar':'퍼스트 솔라','Enphase':'엔페이즈','Albemarle':'앨버말','Bloom Energy':'블룸 에너지',
+  'Linde':'린데','Air Products':'에어 프로덕츠','Sunrun':'선런',
+  'Tesla':'테슬라','Toyota':'토요타','General Motors':'GM','Rivian':'리비안',
+  'Mobileye':'모빌아이','Uber':'우버','Ford':'포드',
+  'Lockheed Martin':'록히드 마틴','RTX Corp':'RTX','Northrop Grumman':'노스럽 그러먼',
+  'General Dynamics':'제너럴 다이내믹스','Boeing':'보잉','Rocket Lab':'로켓 랩','L3Harris':'L3해리스',
+  'IonQ':'아이온큐','Rigetti':'리게티','D-Wave':'D-웨이브',
+  'Coinbase':'코인베이스','Strategy':'스트래티지(MSTR)','Marathon Digital':'마라톤 디지털','Riot Platforms':'라이엇 플랫폼스',
+  'CrowdStrike':'크라우드스트라이크','Palo Alto':'팔로알토','Zscaler':'지스케일러','Fortinet':'포티넷',
+  'Cloudflare':'클라우드플레어','SentinelOne':'센티널원','Okta':'옥타',
+  'Visa':'비자','Mastercard':'마스터카드','American Express':'아메리칸 익스프레스','PayPal':'페이팔',
+  'Block':'블록','Fiserv':'파이서브','Global Payments':'글로벌 페이먼츠',
+  'JPMorgan':'JP모건','Goldman Sachs':'골드만삭스','Morgan Stanley':'모건스탠리',
+  'Bank of America':'뱅크오브아메리카','Charles Schwab':'찰스 슈왑','BlackRock':'블랙록','Wells Fargo':'웰스파고',
+  'ABB Ltd':'ABB','Rockwell Auto':'록웰 오토메이션','Emerson Elec':'에머슨','Cognex':'코그넥스',
+  'Teradyne':'테라다인','Zebra Tech':'지브라 테크','UiPath':'유아이패스',
+  'Amazon':'아마존','Walmart':'월마트','Costco':'코스트코','Home Depot':'홈디포',
+  'Chipotle':'치폴레','Lululemon':'룰루레몬','Starbucks':'스타벅스',
 };
-const TAB_SRC={stocks:'st',kr:'kr',ai:'ai',commodity:'commodity',unicorn:'unicorn'};
-function render(){
-  const mc=META_CFG[STATE.tab];
-  const src=STATE[TAB_SRC[STATE.tab]];
-  if(!src){out.innerHTML='<div class="loading"><div class="loader"></div><div style="font-size:14px;font-weight:500">데이터 불러오는 중...</div></div>';return}
-  const q=STATE.q.toLowerCase();const f=STATE.filter;
-  let totalItems=0;
-  const html=src.map(g=>{
-    const items=g.items.filter(it=>{
-      if(q&&!it._raw.toLowerCase().includes(q))return false;
-      if(f.size){
-        if(STATE.tab!=='ai')return f.has(g.group);
-        return it.badges.some(b=>f.has(b));
-      }
-      return true;
-    });
-    if(!items.length)return '';
-    totalItems+=items.length;
-    return `<div class="group"><div class="gh">${g.group}</div><div class="gt">${g.tag||''}</div><div class="grid">${
-      items.map(it=>`<div class="card"><div class="ct">${it.title}${it.isNew?' <span class="b new">신규</span>':''}</div><div class="cs">${it.sub||''}</div>${
-        it.desc?`<div class="cd">${it.desc}</div>`:''
-      }${it.badges&&it.badges.length?`<div class="badges">${it.badges.map(b=>`<span class="b">${BL_MAP[b]||b}</span>`).join('')}</div>`:''}${
-        it.meta&&mc?`<div class="nums${mc.col?' nums-col':''}">${mc.keys.map((k,i)=>`<span>${mc.labels[i]} <b>${mc.pre}${fmtN(it.meta[k])}${mc.suf}</b></span>`).join('')}</div>`:''
-      }</div>`).join('')
-    }</div></div>`;
-  }).join('');
-  const updateHtml=!STATE.q?renderUpdateBox(STATE.tab):'';
-  if(!html){
-    out.innerHTML=updateHtml+'<div class="empty"><div class="empty-icon">🔍</div><div class="empty-text">검색 결과가 없습니다</div></div>';
-  }else{
-    out.innerHTML=updateHtml+html;
-  }
-  requestAnimationFrame(fitNums);
+function displayName(nm){return (nm&&NAME_KO[nm])||nm||''}
+
+// 영문 티커 추출 stop list
+const TICKER_STOP=new Set(['AI','EPS','CEO','CFO','CPI','GDP','OPEC','FOMC','ETF','IPO','API','SEC','LLM','SUV','EV','EU','US','UK','KST','AH','CC','QoQ','YoY','YTD','GAAP','NM','NA','MAU','DAU','SaaS','GPU','TPU','TSV','SMR','DRAM','HBM','LNG','WTI','M&A','PMI','UTC','D','PT','ET','CT','PR','GAAP','IT','TV','UI','UX','PC','OS','RPO','ARR','LTM','FY','GM','OPM','PER','PBR','ESG','OECD','NATO','APAC','EMEA','LATAM','PG','VC','CDP','PE','VR','AR','BCG','IPO','ROE','ROI','PG','PT','ST','RD']);
+const KR_STOP=new Set(['동결','상회','하회','부합','갱신','발표','확정','동시','일제','연속','오늘','어제','이후','대비','컨센','컨센서스','매출','영업익','영업이익','이익','반등','매도','매수','강세','약세','지수','시간외','마감','종가','신고가','회사','기업','시장','분기','연간','전년','전기','이상','이하','이내','수준','정도','부분','일부','전체','계획','전망','가능','예상','이번','지난','다음','올해','내년','월간','분간','이슈','내용','사항','관련','때문','이유','중요','역시','특히','다소','약간','조금','상승','하락','감소','증가','브리핑','오늘의','시장','요약','한국','미국','반영']);
+
+function extractTickers(text){
+  const m=text.match(/\b[A-Z]{2,5}\b/g)||[];
+  return m.filter(t=>!TICKER_STOP.has(t));
 }
 
-let BL_MAP={};
-function renderChips(){
-  const box=document.getElementById('chips');
-  const opts=STATE.tab==='ai'?Object.keys(BL_MAP):(STATE[TAB_SRC[STATE.tab]]||[]).map(g=>g.group);
-  box.innerHTML=opts.map(o=>`<span class="chip${STATE.filter.has(o)?' on':''}" data-f="${o}">${BL_MAP[o]||o}</span>`).join('');
-  updateFilterSheetTrigger();
-}
-function updateFilterSheetTrigger(){
-  const btn=document.getElementById('filterSheetOpen');
-  if(!btn) return;
-  const cnt=STATE.filter.size;
-  const cntEl=document.getElementById('filterSheetOpenCount');
-  if(cnt>0){ btn.classList.add('has-selection'); cntEl.textContent=cnt; cntEl.style.display=''; }
-  else{ btn.classList.remove('has-selection'); cntEl.style.display='none'; }
-}
+// ═══════════════════════════════════════════════════════════
+// Today's Narrative builder
+// ═══════════════════════════════════════════════════════════
+function buildNarrative(){
+  const today=todayKST();
+  document.getElementById('lastUpdated').textContent='최신 데이터 · '+fmtKSTHuman(today);
 
-// ═══ 필터 시트 (모바일) ═══
-const _fs={
-  el:document.getElementById('fsSheet'),
-  back:document.getElementById('fsBackdrop'),
-  list:document.getElementById('fsList'),
-  applyBadge:document.getElementById('fsApplyBadge'),
-  temp:new Set(),
-};
-function _fsRender(){
-  const opts=STATE.tab==='ai'?Object.keys(BL_MAP):(STATE[TAB_SRC[STATE.tab]]||[]).map(g=>g.group);
-  _fs.list.innerHTML=opts.map(o=>{
-    const checked=_fs.temp.has(o);
-    const label=BL_MAP[o]||o;
-    return `<label class="fs-item${checked?' checked':''}" data-f="${o}"><input type="checkbox" ${checked?'checked':''}><span>${label}</span></label>`;
-  }).join('');
-}
-function _fsCurrentOpts(){
-  return STATE.tab==='ai'?Object.keys(BL_MAP):(STATE[TAB_SRC[STATE.tab]]||[]).map(g=>g.group);
-}
-function _fsUpdateApply(){
-  const n=_fs.temp.size;
-  if(n>0){ _fs.applyBadge.textContent=n; _fs.applyBadge.style.display=''; }
-  else{ _fs.applyBadge.style.display='none'; }
-  // 토글 버튼 라벨: 모두 선택돼있으면 '모두 해제', 아니면 '모두 선택'
-  const opts=_fsCurrentOpts();
-  const allOn=opts.length>0 && opts.every(o=>_fs.temp.has(o));
-  document.getElementById('fsToggleAll').textContent=allOn?'모두 해제':'모두 선택';
-}
-function fsOpen(){
-  _fs.temp=new Set(STATE.filter);
-  _fsRender();
-  _fsUpdateApply();
-  _fs.back.classList.add('show');
-  _fs.el.classList.add('show');
-  _fs.el.setAttribute('aria-hidden','false');
-  document.body.style.overflow='hidden';
-}
-function fsClose(){
-  _fs.back.classList.remove('show');
-  _fs.el.classList.remove('show');
-  _fs.el.setAttribute('aria-hidden','true');
-  document.body.style.overflow='';
-}
-document.getElementById('filterSheetOpen').addEventListener('click',fsOpen);
-document.getElementById('fsClose').addEventListener('click',fsClose);
-document.getElementById('fsBackdrop').addEventListener('click',fsClose);
-_fs.list.addEventListener('change',e=>{
-  const item=e.target.closest('.fs-item');if(!item)return;
-  const f=item.dataset.f;
-  if(e.target.checked){ _fs.temp.add(f); item.classList.add('checked'); }
-  else{ _fs.temp.delete(f); item.classList.remove('checked'); }
-  _fsUpdateApply();
-});
-document.getElementById('fsToggleAll').addEventListener('click',()=>{
-  const opts=_fsCurrentOpts();
-  const allOn=opts.length>0 && opts.every(o=>_fs.temp.has(o));
-  if(allOn) _fs.temp.clear();
-  else _fs.temp=new Set(opts);
-  _fsRender();
-  _fsUpdateApply();
-});
-document.getElementById('fsApply').addEventListener('click',()=>{
-  STATE.filter=new Set(_fs.temp);
-  TAB_FILTERS[STATE.tab]=new Set(STATE.filter);
-  fsClose();
-  renderChips();updateCount();render();saveState();
-});
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'&&_fs.el.classList.contains('show'))fsClose();
-});
+  const tabs=[
+    {key:'stocks',   flag:'🇺🇸', label:'미국 마켓'},
+    {key:'kr',       flag:'🇰🇷', label:'한국 마켓'},
+    {key:'ai',       flag:'🤖',  label:'AI 동향'},
+    {key:'commodity',flag:'🛢️', label:'원자재·크립토'},
+    {key:'unicorn',  flag:'🦄',  label:'유니콘·프리IPO'},
+  ];
 
-document.addEventListener('click',e=>{
-  const t=e.target.closest('.tab');if(t){switchTab(t.dataset.t);return}
-  const c=e.target.closest('.chip');if(c){const f=c.dataset.f;STATE.filter.has(f)?STATE.filter.delete(f):STATE.filter.add(f);TAB_FILTERS[STATE.tab]=new Set(STATE.filter);renderChips();updateCount();render();saveState()}
-});
-const _qInput=document.getElementById('q'),_qClear=document.getElementById('qClear');
-_qInput.oninput=e=>{STATE.q=e.target.value;_qClear.classList.toggle('show',!!e.target.value);render()};
-_qClear.onclick=()=>{_qInput.value='';STATE.q='';_qClear.classList.remove('show');render();_qInput.focus()};
-function getOpts(){
-  return STATE.tab==='ai'?Object.keys(BL_MAP):(STATE[TAB_SRC[STATE.tab]]||[]).map(g=>g.group);
-}
-document.getElementById('toggle').onclick=()=>{
-  const opts=getOpts();
-  const allOn=opts.length>0&&opts.every(o=>STATE.filter.has(o));
-  STATE.filter.clear();
-  if(!allOn) opts.forEach(o=>STATE.filter.add(o));
-  TAB_FILTERS[STATE.tab]=new Set(STATE.filter);
-  renderChips();updateCount();render();saveState();
-};
-function updateCount(){
-  const opts=getOpts();
-  const allOn=opts.length>0&&opts.every(o=>STATE.filter.has(o));
-  const btn=document.getElementById('toggle');
-  btn.classList.toggle('on',allOn);
-  const n=STATE.filter.size;
-  document.getElementById('count').textContent=n?` (${n})`:'';
-}
+  const tldrRows=[];
+  const fullSections=[];
+  let totalLines=0;
+  for(const t of tabs){
+    const list=STATE.upd[t.key];
+    if(!list||!list[0])continue;
+    const lines=(list[0].summary||'').split('\n').map(s=>s.trim()).filter(Boolean);
+    if(!lines.length)continue;
+    totalLines+=lines.length;
 
-// ═══ SWIPE NAV ═══
-const TAB_ORDER=['stocks','kr','ai','unicorn','commodity'];
-let _sliding=false;
-const _scrollPos={stocks:0,kr:0,ai:0};
-function ensureActiveTabVisible(){
-  const t=document.querySelector('.tab.on');if(!t)return;
-  const bar=t.parentElement;
-  // 양끝의 하나 안쪽(좌측 2번째·우측 2번째) 탭이 활성이면 끝 탭이 함께 보이도록
-  // 가시성 기준 탭(aim)을 끝 탭으로 옮긴다. 양끝 클릭 자체 케이스는 그대로 유지.
-  const tabs=Array.from(bar.querySelectorAll('.tab'));
-  const idx=tabs.indexOf(t);
-  let aim=t;
-  if(idx===1 && tabs[0]) aim=tabs[0];
-  else if(idx===tabs.length-2 && tabs.length>=2) aim=tabs[tabs.length-1];
-  // getBoundingClientRect 기반으로 bar 내부 좌표를 정확히 산출 — offsetParent 의존성 제거.
-  const tRect=aim.getBoundingClientRect(), bRect=bar.getBoundingClientRect();
-  const tLeftInBar=tRect.left-bRect.left+bar.scrollLeft;
-  const tRightInBar=tLeftInBar+tRect.width;
-  const sl=bar.scrollLeft, vw=bar.clientWidth;
-  if(tLeftInBar<sl) bar.scrollTo({left:Math.max(0,tLeftInBar-8),behavior:'smooth'});
-  else if(tRightInBar>sl+vw) bar.scrollTo({left:tRightInBar-vw+8,behavior:'smooth'});
-}
-function switchTab(id,dir){
-  if(_sliding)return;
-  // 같은 탭 다시 탭 시: 부분 스크롤된 탭바를 활성 탭이 다 보이도록 보정만 하고 종료
-  if(id===STATE.tab){ ensureActiveTabVisible(); return; }
-  const _refreshP=refreshIfNeeded();
-  const m=document.getElementById('out');
-  if(dir==null) dir=TAB_ORDER.indexOf(id)>TAB_ORDER.indexOf(STATE.tab)?1:-1;
-  _sliding=true;
-  _scrollPos[STATE.tab]=window.scrollY;
-  const outCls=dir>0?'slide-out-left':'slide-out-right';
-  const inCls=dir>0?'slide-in-right':'slide-in-left';
-  m.classList.add(outCls);
-  m.addEventListener('animationend',async function once(){
-    m.removeEventListener('animationend',once);
-    m.classList.remove(outCls);
-    await _refreshP;
-    const prev=STATE.tab;TAB_FILTERS[prev]=new Set(STATE.filter);
-    STATE.tab=id;STATE.filter=new Set(TAB_FILTERS[id]);
-    document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t===id));
-    ensureActiveTabVisible();
-    document.getElementById('tabDesc').textContent=TAB_DESC[id]||'';
-    document.getElementById('tabCriteria').textContent=TAB_CRITERIA[id]||'';
-    renderChips();updateCount();render();saveState();
-    window.scrollTo(0,_scrollPos[id]);
-    m.classList.add(inCls);
-    m.addEventListener('animationend',function once2(){
-      m.removeEventListener('animationend',once2);
-      m.classList.remove(inCls);
-      _sliding=false;
-    });
-  });
-}
-{
-  let sx=0,sy=0,tracking=false;
-  const el=document.getElementById('out');
-  el.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;tracking=true},{passive:true});
-  el.addEventListener('touchend',e=>{
-    if(!tracking)return;tracking=false;
-    const dx=e.changedTouches[0].clientX-sx;
-    const dy=e.changedTouches[0].clientY-sy;
-    if(Math.abs(dx)<50||Math.abs(dy)>Math.abs(dx)*0.7)return;
-    const i=TAB_ORDER.indexOf(STATE.tab);
-    if(dx<0&&i<TAB_ORDER.length-1)switchTab(TAB_ORDER[i+1],1);
-    else if(dx>0&&i>0)switchTab(TAB_ORDER[i-1],-1);
-  },{passive:true});
-}
-
-(async()=>{
-  try{
-    _dataVersion=await fetchVersion();
-    const _v=_dataVersion||Date.now();
-    const[st,ai,kr,commodity,unicorn,stUpd,aiUpd,krUpd,commodityUpd,unicornUpd]=await Promise.all([loadJS(STOCKS_URL,_v),loadJS(AI_URL,_v),loadJS(KR_URL,_v),loadJS(COMMODITY_URL,_v),loadJS(UNICORN_URL,_v),loadUpdJS(STOCKS_UPD_URL,'updates',_v),loadUpdJS(AI_UPD_URL,'UPDATES',_v),loadUpdJS(KR_UPD_URL,'updates',_v),loadUpdJS(COMMODITY_UPD_URL,'updates',_v),loadUpdJS(UNICORN_UPD_URL,'updates',_v)]);
-    STATE.st=norm(st,'stocks');STATE.ai=norm(ai,'ai');STATE.kr=norm(kr,'kr');STATE.commodity=norm(commodity,'commodity');STATE.unicorn=norm(unicorn,'unicorn');
-    STATE.stUpd=stUpd;STATE.aiUpd=aiUpd;STATE.krUpd=krUpd;STATE.commodityUpd=commodityUpd;STATE.unicornUpd=unicornUpd;
-    BL_MAP=ai.BL||{};
-    document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t===STATE.tab));
-    ensureActiveTabVisible();
-    document.getElementById('tabDesc').textContent=TAB_DESC[STATE.tab]||'';
-    document.getElementById('tabCriteria').textContent=TAB_CRITERIA[STATE.tab]||'';
-    renderChips();updateCount();render();
-  }catch(e){out.innerHTML='<p style="color:#ef4444;text-align:center;padding:64px 0;font-weight:500">불러오기 실패: '+e.message+'</p>'}
-})();
-</script>
-
-<div class="modal-backdrop" id="infoModal" aria-hidden="true" role="dialog" aria-labelledby="infoTitle">
-  <div class="modal">
-    <button class="modal-close" type="button" aria-label="닫기" id="infoClose">✕</button>
-    <h2 id="infoTitle">선정 기준</h2>
-    <p class="info-body" id="infoBody"></p>
-  </div>
-</div>
-
-<div class="modal-backdrop" id="subscribeModal" aria-hidden="true" role="dialog" aria-labelledby="subscribeTitle">
-  <div class="modal">
-    <button class="modal-close" type="button" aria-label="닫기" id="subscribeClose">✕</button>
-    <h2 id="subscribeTitle">브리픽 구독하기</h2>
-    <div class="modal-test-banner">본 결제는 테스트용으로, 실제로는 결제되지 않습니다.</div>
-    <p class="sub">매일 아침 8시, 최신 경제 뉴스를 카카오톡으로 받아보세요.<br><b>월 100원 · 1회 결제당 30일 이용</b></p>
-    <form id="subscribeForm" novalidate autocomplete="off">
-      <div class="modal-field">
-        <label for="subPhone">전화번호 (하이픈 없이)</label>
-        <input id="subPhone" name="phone" type="tel" inputmode="numeric" pattern="01[016789][0-9]{7,8}" maxlength="11" placeholder="01012345678" required>
+    // TL;DR 한 줄: 첫 줄 = 그날 가장 중요 가정
+    tldrRows.push(`
+      <div class="tldr-row">
+        <span class="tldr-tag">${t.flag} ${escapeHtml(t.label)}</span>
+        <span class="tldr-text">${escapeHtml(lines[0])}</span>
       </div>
-      <input class="modal-honeypot" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <label class="modal-consent">
-        <input id="subConsent" type="checkbox" required>
-        <span>카카오 친구톡을 통한 <b>광고성 정보 수신</b>에 동의합니다. 매일 오전 8시 발송되며, 언제든지 해지 요청으로 수신을 중단할 수 있습니다.</span>
-      </label>
-      <div class="confirm-box" id="subConfirm"></div>
-      <button class="modal-submit" id="subSubmit" type="submit">결제하고 구독 시작</button>
-      <button class="modal-cancel" id="subCancel" type="button">취소</button>
-      <div class="modal-status" id="subStatus"></div>
-      <div class="modal-success-actions" id="subSuccess">
-        <div class="complete-notice" id="subCompleteNotice">
-          <span class="notice-head">⚠ 카카오 채널 친구 추가가 필수</span>
-          친구 추가 없이는<br>뉴스를 받을 수 없습니다.
-          <span class="notice-sub">아래 버튼을 눌러 지금 바로 추가해주세요.</span>
+    `);
+
+    // 두 번째 줄부터는 풀 리스트로
+    const rest=lines.slice(1);
+    if(rest.length){
+      fullSections.push(`
+        <div class="updates-section">
+          <div class="updates-tab-head">${t.flag} ${escapeHtml(t.label)}</div>
+          <ul class="updates-list">
+            ${rest.map(l=>`<li>${escapeHtml(l)}</li>`).join('')}
+          </ul>
         </div>
-        <a class="kakao-link" id="subKakaoLink" href="https://pf.kakao.com/_lpxkCX/friend" target="_blank" rel="noopener">카카오톡 채널 친구 추가하기</a>
-      </div>
-    </form>
-  </div>
-</div>
-
-<script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
-<script>
-(function(){
-  const SUPABASE_URL = 'https://ytvcgoldauysvnqckzze.supabase.co';
-  const BRIEFICK_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_BRlDRwvdanR1sLX2b_Iagg_AtLA8Wyf';
-  const PORTONE_STORE_ID = 'store-94ded677-c4c2-45a7-adc2-eb735d601a52';
-  const PORTONE_CHANNEL_KEY = 'channel-key-e32b9dbf-38c1-43a0-a080-1e208f22ab40';
-  const SUBSCRIPTION_PRICE = 100;
-  const SUBSCRIPTION_ORDER_NAME = '브리픽 월간 구독 (테스트)';
-
-  // 포트원 모바일 REDIRECTION 복귀 처리
-  async function handlePortoneReturn(){
-    const params = new URLSearchParams(location.search);
-    const paymentId = params.get('paymentId');
-    if(!paymentId) return false;
-    history.replaceState(null, '', location.pathname);
-    let pending = null;
-    try{ pending = JSON.parse(sessionStorage.getItem('briefickPendingPayment') || 'null'); }catch(_e){}
-    if(!pending || pending.paymentId !== paymentId) return false;
-    sessionStorage.removeItem('briefickPendingPayment');
-
-    // 모달 띄우고 결과 처리
-    document.getElementById('subscribeModal').classList.add('show');
-    document.body.classList.add('modal-open');
-    const s = document.getElementById('subStatus');
-    const sub = document.getElementById('subSubmit');
-    const phoneEl = document.getElementById('subPhone');
-    const consent = document.getElementById('subConsent');
-    const cancel = document.getElementById('subCancel');
-    // 결제창 거쳐온 값 복원 (placeholder만 보이는 어색함 방지)
-    phoneEl.value = pending.phone || '';
-    consent.checked = true;
-    // 복귀 시점에 즉시 입력·액션 잠금
-    phoneEl.disabled = true;
-    consent.disabled = true;
-    sub.disabled = true;
-    if(cancel) cancel.classList.remove('show');
-    const code = params.get('code');
-    if(code){
-      s.className='modal-status show error';
-      s.textContent='결제 실패: '+(params.get('message')||code);
-      // 실패 시엔 재시도 가능하도록 다시 풀어줌
-      phoneEl.disabled=false; consent.disabled=false;
-      sub.disabled=false; sub.textContent='결제하고 구독 시작';
-      return true;
+      `);
     }
-    s.className='modal-status show info';
-    s.textContent='결제 확인 중...';
-    sub.style.display='none';
-    try{
-      const res = await fetch(SUPABASE_URL+'/functions/v1/payment-confirm',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','Authorization':'Bearer '+BRIEFICK_SUPABASE_PUBLISHABLE_KEY,'apikey':BRIEFICK_SUPABASE_PUBLISHABLE_KEY},
-        body:JSON.stringify({paymentId,phone:pending.phone,ad_consent:true,expected_amount:SUBSCRIPTION_PRICE}),
-      });
-      const j = await res.json();
-      if(!res.ok||!j.ok){
-        s.className='modal-status show error';
-        s.textContent=j.error||'결제 검증 오류';
-        phoneEl.disabled=false; consent.disabled=false;
-        sub.style.display=''; sub.disabled=false; sub.textContent='결제하고 구독 시작';
-      }else{
-        const msgMap={ registered:'구독 완료!', extended:'구독 연장 완료!' };
-        const mainMsg = msgMap[j.status] || '완료!';
-        const untilHtml = j.paid_until ? '<br><span class="until-date">('+j.paid_until.slice(0,10)+' 까지)</span>' : '';
-        s.className='modal-status show success';
-        s.innerHTML=mainMsg + untilHtml;
-        document.getElementById('subCompleteNotice').classList.add('show');
-        document.getElementById('subKakaoLink').classList.add('emphasis');
-        document.querySelector('#subscribeModal .modal').classList.add('completed');
-        document.getElementById('subPhone').disabled=true;
-        document.getElementById('subConsent').disabled=true;
-        sub.disabled=true;sub.textContent='구독 완료됨';
-        document.getElementById('subCancel').classList.remove('show');
-      }
-    }catch(err){
-      s.className='modal-status show error';
-      s.textContent='네트워크 오류: '+err.message;
-      phoneEl.disabled=false; consent.disabled=false;
-      sub.style.display=''; sub.disabled=false; sub.textContent='결제하고 구독 시작';
-    }
-    return true;
   }
-  handlePortoneReturn();
 
-  // 탭 정보 팝업
-  (function(){
-    const im = document.getElementById('infoModal');
-    const ib = document.getElementById('infoBody');
-    const btn = document.getElementById('tabInfoBtn');
-    const cls = document.getElementById('infoClose');
-    function open(){
-      ib.textContent = document.getElementById('tabCriteria').textContent || '';
-      im.classList.add('show');
-      im.setAttribute('aria-hidden','false');
-      document.body.classList.add('modal-open');
-    }
-    function close(){
-      im.classList.remove('show');
-      im.setAttribute('aria-hidden','true');
-      document.body.classList.remove('modal-open');
-    }
-    btn.addEventListener('click', open);
-    cls.addEventListener('click', close);
-    im.addEventListener('click', e => { if (e.target === im) close(); });
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && im.classList.contains('show')) close();
+  const body=document.getElementById('narrativeBody');
+  if(!tldrRows.length){
+    body.innerHTML='<div class="updates-loading">아직 수집된 데이터가 없습니다</div>';
+    return;
+  }
+
+  const remainingCount=totalLines-tldrRows.length;
+  body.innerHTML=`
+    <div class="tldr-list">${tldrRows.join('')}</div>
+    ${fullSections.length?`
+      <button class="narrative-expand" id="narrativeExpand">
+        <span>전체 헤드라인 ${remainingCount}건 더 보기</span>
+        <span class="chev">▾</span>
+      </button>
+      <div class="narrative-full" id="narrativeFull">${fullSections.join('')}</div>
+    `:''}
+  `;
+
+  const btn=document.getElementById('narrativeExpand');
+  if(btn){
+    btn.addEventListener('click',()=>{
+      const full=document.getElementById('narrativeFull');
+      const open=full.classList.toggle('open');
+      btn.classList.toggle('open',open);
+      btn.querySelector('span:first-child').textContent=open
+        ?'접기'
+        :`전체 헤드라인 ${remainingCount}건 더 보기`;
     });
-  })();
-
-  const modal   = document.getElementById('subscribeModal');
-  const openBtn = document.getElementById('subscribeBtn');
-  const closeBtn= document.getElementById('subscribeClose');
-  const form    = document.getElementById('subscribeForm');
-  const phoneEl = document.getElementById('subPhone');
-  const consent = document.getElementById('subConsent');
-  const submit  = document.getElementById('subSubmit');
-  const cancel  = document.getElementById('subCancel');
-  const confirmBox = document.getElementById('subConfirm');
-  const status  = document.getElementById('subStatus');
-  const success = document.getElementById('subSuccess');
-
-  function fmtPhone(p){return p.replace(/(\d{3})(\d{3,4})(\d{4})/,'$1-$2-$3')}
-  function showConfirmBox(label,num,note){
-    confirmBox.innerHTML = '<span class="confirm-label">'+label+'</span>'+
-      '<span class="confirm-num">'+num+'</span>'+
-      '<span class="confirm-note">'+note+'</span>';
-    confirmBox.classList.add('show');
   }
-  function hideConfirmBox(){
-    confirmBox.classList.remove('show');
-    confirmBox.innerHTML='';
-  }
+}
 
-  // confirmState: null | 'number' | 'extend'
-  let confirmState = null;
-
-  function resetToInput(){
-    confirmState=null;
-    submit.disabled=false;
-    submit.textContent='결제하고 구독 시작';
-    cancel.classList.remove('show');
-    hideConfirmBox();
-    document.getElementById('subCompleteNotice').classList.remove('show');
-    document.getElementById('subKakaoLink').classList.remove('emphasis');
-    document.querySelector('#subscribeModal .modal').classList.remove('completed');
-    resetStatus();
-  }
-  function openModal(){
-    modal.classList.add('show');
-    modal.setAttribute('aria-hidden','false');
-    document.body.classList.add('modal-open');
-    form.reset();
-    phoneEl.disabled=false;
-    consent.disabled=false;
-    resetToInput();
-    // 모바일 자동 키보드 노출 방지를 위해 auto focus 제거
-  }
-  cancel.addEventListener('click',()=>{
-    phoneEl.disabled=false;
-    consent.disabled=false;
-    resetToInput();
-  });
-  function closeModal(){
-    modal.classList.remove('show');
-    modal.setAttribute('aria-hidden','true');
-    document.body.classList.remove('modal-open');
-    resetStatus();
-  }
-  function resetStatus(){
-    status.className='modal-status';
-    status.textContent='';
-  }
-  function showStatus(type,msg){
-    status.className='modal-status show '+type;
-    status.textContent=msg;
-  }
-
-  openBtn.addEventListener('click',openModal);
-  closeBtn.addEventListener('click',closeModal);
-  modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('show'))closeModal()});
-
-  form.addEventListener('submit',async e=>{
-    e.preventDefault();
-    resetStatus();
-    const phone = phoneEl.value.replace(/[^0-9]/g,'');
-    if(!/^01[016789]\d{7,8}$/.test(phone)){
-      showStatus('error','전화번호 형식이 올바르지 않습니다.');
-      phoneEl.focus();return;
-    }
-    if(!consent.checked){
-      showStatus('error','광고 수신 동의가 필요합니다.');
-      consent.focus();return;
-    }
-    if(typeof PortOne==='undefined'){
-      showStatus('error','결제 SDK 로드 실패. 새로고침 후 다시 시도해주세요.');return;
-    }
-
-    // 1단계: 구독 상태 조회 후 확인 단계로 전환
-    if(confirmState===null){
-      submit.disabled=true;submit.textContent='확인 중...';
-      let isActive=false, paidUntilStr='', extStr='', daysLeft=0;
-      try{
-        const checkRes = await fetch(SUPABASE_URL+'/functions/v1/check-subscription',{
-          method:'POST',
-          headers:{'Content-Type':'application/json','Authorization':'Bearer '+BRIEFICK_SUPABASE_PUBLISHABLE_KEY,'apikey':BRIEFICK_SUPABASE_PUBLISHABLE_KEY},
-          body:JSON.stringify({phone}),
-        });
-        const chk = await checkRes.json();
-        if(checkRes.ok && chk.ok && chk.subscription_active && chk.paid_until){
-          isActive=true;
-          const until = new Date(chk.paid_until);
-          const nowDate = new Date();
-          daysLeft = Math.max(0, Math.ceil((until - nowDate) / 86400000));
-          const extended = new Date(until.getTime() + 30 * 86400000);
-          paidUntilStr = until.toISOString().slice(0,10);
-          extStr = extended.toISOString().slice(0,10);
+// ═══════════════════════════════════════════════════════════
+// Event Calendar
+// ═══════════════════════════════════════════════════════════
+// 정기 이벤트 패턴을 다음 60일 윈도우로 expansion
+function expandRecurring(recurring, fromDate, days){
+  const out=[];
+  for(let i=0;i<days;i++){
+    const d=new Date(fromDate.getTime()+i*86400*1000);
+    const y=d.getUTCFullYear(),m=d.getUTCMonth()+1,day=d.getUTCDate(),dow=d.getUTCDay();
+    for(const ev of recurring){
+      const s=ev.schedule||{};
+      let match=false;
+      if(s.type==='weekly' && s.dow===dow){match=true}
+      else if(s.type==='monthly_nth_dow' && s.dow===dow){
+        // n번째 dow of this month?
+        const firstDay=new Date(Date.UTC(y,m-1,1));
+        let firstDow=firstDay.getUTCDay();
+        let firstOfDow=1+((s.dow-firstDow+7)%7);
+        const target=firstOfDow+(s.n-1)*7;
+        if(day===target)match=true;
+      }
+      else if(s.type==='monthly_day' && s.day===day){match=true}
+      else if(s.type==='monthly_business_day'){
+        // 매월 N번째 영업일 (월~금)
+        let bd=0;
+        for(let dd=1;dd<=day;dd++){
+          const dy=new Date(Date.UTC(y,m-1,dd)).getUTCDay();
+          if(dy>=1&&dy<=5)bd++;
         }
-      }catch(_e){/* 체크 실패 시 번호 확인 단계로 진행 */}
-
-      if(isActive){
-        showConfirmBox('이 번호로 발송', fmtPhone(phone),
-          paidUntilStr+'까지 구독 중 (남은 '+daysLeft+'일). 지금 결제하면 '+extStr+'까지 연장');
-        submit.textContent='확인하고 연장 결제';
-        confirmState='extend';
-      }else{
-        showConfirmBox('이 번호로 매일 오전 8시 발송', fmtPhone(phone), '번호가 맞으신가요?');
-        submit.textContent='맞습니다, 결제하기';
-        confirmState='number';
+        if(bd===s.n && dow>=1 && dow<=5)match=true;
       }
-      phoneEl.disabled=true;
-      consent.disabled=true;
-      submit.disabled=false;
-      cancel.classList.add('show');
-      return;
+      if(match){
+        out.push({date:fmtKSTDate(d),title:ev.title,cat:ev.cat,impact:ev.impact||1,source:'recurring'});
+      }
     }
+  }
+  return out;
+}
 
-    const paymentId = 'briefick'+Date.now()+Math.random().toString(36).slice(2,8);
-    submit.disabled=true;submit.textContent='결제창 여는 중...';
-    let completed = false;
-    // 모바일 REDIRECTION 복귀 대비 세션 저장
-    try{
-      sessionStorage.setItem('briefickPendingPayment', JSON.stringify({ phone, paymentId }));
-    }catch(_e){}
-    try{
-      const pay = await PortOne.requestPayment({
-        storeId: PORTONE_STORE_ID,
-        channelKey: PORTONE_CHANNEL_KEY,
-        paymentId,
-        orderName: SUBSCRIPTION_ORDER_NAME,
-        totalAmount: SUBSCRIPTION_PRICE,
-        currency: 'KRW',
-        payMethod: 'CARD',
-        customer: { customerId: phone, phoneNumber: phone },
-        windowType: { pc: 'IFRAME', mobile: 'REDIRECTION' },
-        redirectUrl: location.origin + location.pathname,
-        bypass: { galaxia: { ITEM_CODE: 'BRIEFICK1M' } },
+function getDisplayRange(){
+  const today=todayKST();
+  const dow=today.getUTCDay(); // 0=Sun ... 6=Sat
+  const start=new Date(today.getTime()-dow*86400*1000); // 이번 주 일요일
+  const end=new Date(start.getTime()+13*86400*1000);    // 다음 주 토요일
+  return {start, end, today};
+}
 
+function extractEvents(){
+  const {start, end}=getDisplayRange();
+  const startKey=fmtKSTDate(start);
+  const endKey=fmtKSTDate(end);
+
+  // calendar-events.js만 사용 — fixed·recurring 큐레이션 데이터
+  const cal=STATE.calendar||{};
+  const fromFixed=(cal.fixed||[]).map(ev=>({
+    date:ev.date,title:ev.title,desc:ev.desc||'',tickers:ev.tickers||[],
+    cat:ev.cat,impact:ev.impact||2,source:'fixed'
+  }));
+
+  const fromRecurring=expandRecurring(cal.recurring||[],start,14).map(ev=>({...ev,desc:'',tickers:[]}));
+
+  const all=[...fromFixed,...fromRecurring];
+  const dedup=new Map();
+  for(const ev of all){
+    const k=`${ev.date}|${ev.title.slice(0,40)}`;
+    const existing=dedup.get(k);
+    if(!existing || (ev.impact||1)>(existing.impact||1)) dedup.set(k,ev);
+  }
+  return [...dedup.values()].filter(e=>e.date>=startKey&&e.date<=endKey).sort((a,b)=>{
+    if(a.date!==b.date)return a.date.localeCompare(b.date);
+    return (b.impact||1)-(a.impact||1);
+  });
+}
+
+// extractEvents 결과를 캐시 (modal에서 같은 결과 재사용)
+let _eventsCache=null;
+function getEvents(){if(!_eventsCache)_eventsCache=extractEvents();return _eventsCache}
+
+function renderCalendar(){
+  _eventsCache=null; // 매 렌더에서 새로 계산
+  const {start, today}=getDisplayRange();
+  const todayKey=fmtKSTDate(today);
+  const events=getEvents();
+  const byDate={};
+  for(const e of events){if(!byDate[e.date])byDate[e.date]=[];byDate[e.date].push(e)}
+
+  const cal=document.getElementById('calendar');
+  cal.innerHTML='';
+  for(let i=0;i<14;i++){
+    const d=new Date(start.getTime()+i*86400*1000);
+    const dKey=fmtKSTDate(d);
+    const num=d.getUTCDate();
+    const isToday=dKey===todayKey;
+    const isPast=dKey<todayKey;
+    const dayEvents=byDate[dKey]||[];
+
+    let cls='cal-day';
+    if(isToday)cls+=' today';
+    else if(isPast)cls+=' past';
+    if(dayEvents.length)cls+=' has-events clickable';
+
+    const div=document.createElement('div');
+    div.className=cls;
+    div.dataset.date=dKey;
+    div.innerHTML=`
+      <div class="cal-date">
+        <span class="num">${num}</span>
+        ${dayEvents.length?`<span class="cal-count">${dayEvents.length}</span>`:''}
+      </div>
+      <div class="cal-events">
+        ${dayEvents.map(e=>`<div class="cal-event ${(e.impact||1)>=3?'high':''}" data-cat="${e.cat}" title="${escapeHtml(e.title)}"><span class="ev-tag"></span><span>${escapeHtml(e.title)}</span></div>`).join('')}
+      </div>
+    `;
+    if(dayEvents.length){
+      div.addEventListener('click',()=>openDayModal(dKey,dayEvents));
+    }
+    cal.appendChild(div);
+  }
+
+  // 셀별로 들어가는 만큼만 보여주고 나머지는 +N건 → 처리
+  requestAnimationFrame(fitCalendarOverflow);
+}
+
+function fitCalendarOverflow(){
+  document.querySelectorAll('#calendar .cal-events').forEach(container=>{
+    // 이전 상태 초기화 (resize 시 재계산)
+    container.querySelectorAll('.cal-event').forEach(e=>e.style.display='');
+    container.querySelector('.cal-more')?.remove();
+
+    const all=[...container.querySelectorAll('.cal-event')];
+    if(!all.length)return;
+    if(getComputedStyle(container).display==='none')return;
+
+    const cRect=container.getBoundingClientRect();
+    const containerBottom=cRect.top+container.clientHeight;
+    let cut=-1;
+    for(let i=0;i<all.length;i++){
+      const r=all[i].getBoundingClientRect();
+      if(r.bottom>containerBottom){cut=i;break}
+    }
+    if(cut===-1)return; // 다 들어감
+
+    for(let i=cut;i<all.length;i++)all[i].style.display='none';
+    const more=document.createElement('div');
+    more.className='cal-more';
+    more.textContent=`+${all.length-cut}건 →`;
+    container.appendChild(more);
+
+    while(cut>0){
+      const mRect=more.getBoundingClientRect();
+      if(mRect.bottom<=containerBottom)break;
+      cut--;
+      all[cut].style.display='none';
+      more.textContent=`+${all.length-cut}건 →`;
+    }
+  });
+}
+
+window.addEventListener('resize',()=>{
+  clearTimeout(window._calResize);
+  window._calResize=setTimeout(fitCalendarOverflow,100);
+});
+
+// ═══════════════════════════════════════════════════════════
+// Day Modal — 한 날의 모든 이벤트 카테고리별
+// ═══════════════════════════════════════════════════════════
+const CAT_META={
+  earnings:{label:'실적 발표',  icon:'📊', color:'var(--acc-deep)'},
+  macro:   {label:'매크로 지표',icon:'📈', color:'#7c3aed'},
+  ipo:     {label:'IPO·펀딩',  icon:'🚀', color:'var(--info)'},
+  policy:  {label:'정책·휴장',  icon:'🏛️', color:'var(--warn)'},
+  conf:    {label:'컨퍼런스',  icon:'🎤', color:'#0ea5e9'},
+  product: {label:'신제품·출시',icon:'✨', color:'var(--err)'},
+  other:   {label:'기타',     icon:'·',  color:'var(--mut)'},
+};
+const CAT_ORDER=['earnings','macro','ipo','policy','conf','product','other'];
+
+function impactDots(n){
+  n=Math.max(1,Math.min(3,n||1));
+  return '<span class="impact-dots impact-'+n+'">'+'●'.repeat(n)+'<span class="impact-rest">'+'○'.repeat(3-n)+'</span></span>';
+}
+
+function openDayModal(dateKey, events){
+  const d=new Date(dateKey+'T00:00:00Z');
+  const dow=['일','월','화','수','목','금','토'][d.getUTCDay()];
+  const month=d.getUTCMonth()+1, day=d.getUTCDate();
+  const todayKey=fmtKSTDate(todayKST());
+  const isToday=dateKey===todayKey;
+  const dayDelta=Math.round((new Date(dateKey+'T00:00:00Z')-new Date(todayKey+'T00:00:00Z'))/86400000);
+  const relLabel=isToday?'오늘':(dayDelta===1?'내일':(`${dayDelta}일 후`));
+
+  // 카테고리별 그룹핑
+  const byCat={};
+  for(const e of events){
+    const c=byCat[e.cat]||(byCat[e.cat]=[]);
+    c.push(e);
+  }
+  // 각 그룹 안에서 impact desc 정렬
+  for(const k in byCat) byCat[k].sort((a,b)=>(b.impact||1)-(a.impact||1));
+
+  const highCount=events.filter(e=>(e.impact||1)>=3).length;
+
+  let html=`
+    <div class="modal-head">
+      <div>
+        <div class="modal-tk">${escapeHtml(relLabel)} · ${dow}요일</div>
+        <h2 class="modal-nm">${month}월 ${day}일</h2>
+        <div class="modal-cat">${events.length}개 이벤트${highCount?` · <span style="color:var(--err)">핵심 ${highCount}건</span>`:''}</div>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-close" id="modalCloseBtn" aria-label="닫기">✕</button>
+      </div>
+    </div>
+  `;
+
+  for(const cat of CAT_ORDER){
+    const evs=byCat[cat];
+    if(!evs||!evs.length)continue;
+    const meta=CAT_META[cat]||CAT_META.other;
+    html+=`
+      <div class="modal-section">
+        <div class="modal-sec-label" style="color:${meta.color}">${meta.icon} ${escapeHtml(meta.label)} · ${evs.length}건</div>
+        <div class="day-events-list">
+          ${evs.map(ev=>{
+            const tickers=(ev.tickers||[]).filter(t=>findStock(t));
+            return `
+              <div class="day-event">
+                <div class="day-event-row">
+                  ${impactDots(ev.impact)}
+                  <div class="day-event-text">
+                    <div class="day-event-title">${escapeHtml(ev.title)}</div>
+                    ${ev.desc?`<div class="day-event-desc">${escapeHtml(ev.desc)}</div>`:''}
+                    ${ev.source==='recurring'?'<div class="day-event-meta">정기 일정</div>':''}
+                  </div>
+                </div>
+                ${tickers.length?`<div class="day-event-tickers">${tickers.map(t=>`<button class="day-ticker-btn" data-tk="${escapeHtml(t)}">${escapeHtml(t)} →</button>`).join('')}</div>`:''}
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  document.getElementById('modalPad').innerHTML=html;
+  document.getElementById('modalCloseBtn').addEventListener('click',closeModal);
+  document.querySelectorAll('.day-ticker-btn').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const tk=b.dataset.tk;
+      const s=findStock(tk);
+      if(s)openModal(tk,s.market);
+    });
+  });
+
+  showModal();
+}
+
+// ═══════════════════════════════════════════════════════════
+// Industry Health Cards
+// ═══════════════════════════════════════════════════════════
+function classifyPhase(growth){
+  if(growth===null||isNaN(growth))return {phase:'unknown',label:'데이터 부족'};
+  if(growth>=0.30)return {phase:'expansion',label:'빠른 성장'};
+  if(growth>=0.15)return {phase:'growth',label:'성장'};
+  if(growth>=0.05)return {phase:'mature',label:'완만 성장'};
+  if(growth>=-0.05)return {phase:'plateau',label:'보합'};
+  return {phase:'contraction',label:'역성장'};
+}
+
+function renderHealth(){
+  const market=STATE.healthMarket;
+  const data=STATE.data[market];
+  if(!data)return;
+  const list=document.getElementById('healthList');
+  const q=(STATE.expQuery||'').trim().toLowerCase();
+
+  const rows=data.map(cat=>{
+    const allStocks=(cat.stocks||[]).map(s=>{
+      const r1=parseFloat(s.r1),r2=parseFloat(s.r2);
+      return {...s,g:(r1>0&&r2>0)?(r2-r1)/r1:null};
+    }).sort((a,b)=>{
+      if(a.g===null)return 1;
+      if(b.g===null)return -1;
+      return b.g-a.g;
+    });
+    const growths=allStocks.map(s=>s.g).filter(g=>g!==null);
+    const med=median(growths);
+    let stocks=allStocks;
+    if(q){
+      stocks=stocks.filter(s=>{
+        const hay=(s.tk+' '+s.nm+' '+displayName(s.nm)+' '+(s.rs||'')+' '+(cat.title||'')).toLowerCase();
+        return hay.includes(q);
       });
-      if(pay.code){
-        showStatus('error','결제 실패: '+(pay.message||pay.code));
-        return;
+    }
+    return {title:cat.title,med,ph:classifyPhase(med),stocks,allCount:allStocks.length};
+  }).filter(r=>!q||r.stocks.length).sort((a,b)=>{
+    if(a.med===null)return 1;
+    if(b.med===null)return -1;
+    return b.med-a.med;
+  });
+
+  if(!rows.length){list.innerHTML='<div class="exp-empty">조건에 맞는 종목 없음</div>';return}
+
+  list.innerHTML=rows.map(r=>`
+    <div class="phase-item ${q?'open':''}" data-phase="${r.ph.phase}">
+      <div class="phase-row">
+        <span class="phase-dot"></span>
+        <span class="phase-cat-name">${escapeHtml(r.title||'')}</span>
+        <span class="phase-num">${r.med===null?'—':fmtPct(r.med)}</span>
+        <span class="phase-label"><span class="lbl">${r.ph.label}</span></span>
+        <span class="phase-chev">▸</span>
+      </div>
+      <div class="phase-stocks">
+        <div class="exp-cards">
+          ${r.stocks.map(s=>{
+            const gCls=s.g===null?'flat':(s.g>0.05?'up':(s.g<-0.05?'down':'flat'));
+            return `
+              <div class="exp-card" data-tk="${escapeHtml(s.tk)}" data-market="${market}">
+                <span class="exp-tk">${escapeHtml(s.tk)}</span>
+                <div class="exp-nm">${escapeHtml(displayName(s.nm))}</div>
+                <div class="exp-rs">${escapeHtml(s.rs||'')}</div>
+                ${s.g!==null?`<span class="exp-growth ${gCls}">FY26E ${fmtPct(s.g)}</span>`:''}
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  list.querySelectorAll('.phase-row').forEach(row=>{
+    row.addEventListener('click',()=>{
+      const item=row.parentElement;
+      const wasOpen=item.classList.contains('open');
+      list.querySelectorAll('.phase-item.open').forEach(x=>x.classList.remove('open'));
+      if(!wasOpen)item.classList.add('open');
+    });
+  });
+  list.querySelectorAll('.exp-card').forEach(card=>{
+    card.addEventListener('click',e=>{
+      e.stopPropagation();
+      openModal(card.dataset.tk,card.dataset.market);
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// Stock Explorer
+// ═══════════════════════════════════════════════════════════
+function getAllStocksOf(market){
+  const data=STATE.data[market];
+  if(!data)return [];
+  const out=[];
+  for(const cat of data){
+    for(const s of (cat.stocks||[])){
+      out.push({...s,catTitle:cat.title,catTag:cat.tag,market});
+    }
+  }
+  return out;
+}
+
+// ═══════════════════════════════════════════════════════════
+// Stock lookup (모달용)
+// ═══════════════════════════════════════════════════════════
+function findStock(tk){
+  for(const market of ['stocks','kr']){
+    const all=getAllStocksOf(market);
+    const found=all.find(s=>s.tk===tk);
+    if(found)return found;
+  }
+  return null;
+}
+
+
+// ═══════════════════════════════════════════════════════════
+// Modal — deep dive
+// ═══════════════════════════════════════════════════════════
+function findMentions(tk){
+  const out=[];
+  for(const tab of Object.keys(UPD_URLS)){
+    const list=STATE.upd[tab];
+    if(!list)continue;
+    for(const entry of list){
+      const dateStr=(entry.date||'').slice(0,10);
+      const detailTexts=(entry.changes||[]).map(c=>c.detail).filter(d=>new RegExp(`\\b${tk}\\b`).test(d));
+      const entryTexts=(entry.entries||[]).map(e=>e.text||'').filter(t=>new RegExp(`\\b${tk}\\b`).test(t));
+      const summaryHas=new RegExp(`\\b${tk}\\b`).test(entry.summary||'');
+      if(detailTexts.length){
+        for(const d of detailTexts.slice(0,3))out.push({tab,date:dateStr,text:d});
+      } else if(entryTexts.length){
+        for(const t of entryTexts.slice(0,3))out.push({tab,date:dateStr,text:t});
+      } else if(summaryHas){
+        const lines=(entry.summary||'').split('\n').filter(l=>new RegExp(`\\b${tk}\\b`).test(l));
+        for(const l of lines.slice(0,2))out.push({tab,date:dateStr,text:l.trim()});
       }
-      submit.textContent='결제 확인 중...';
-      const res = await fetch(SUPABASE_URL+'/functions/v1/payment-confirm',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','Authorization':'Bearer '+BRIEFICK_SUPABASE_PUBLISHABLE_KEY,'apikey':BRIEFICK_SUPABASE_PUBLISHABLE_KEY},
-        body:JSON.stringify({paymentId,phone,ad_consent:true,expected_amount:SUBSCRIPTION_PRICE}),
-      });
-      const j = await res.json();
-      if(!res.ok||!j.ok){
-        showStatus('error',j.error||'결제 검증 중 오류가 발생했습니다.');
-      }else{
-        const msgMap={ registered:'구독 완료!', extended:'구독 연장 완료!' };
-        const mainMsg = msgMap[j.status] || '완료!';
-        const untilHtml = j.paid_until ? '<br><span class="until-date">('+j.paid_until.slice(0,10)+' 까지)</span>' : '';
-        status.className='modal-status show success';
-        status.innerHTML=mainMsg + untilHtml;
-        document.getElementById('subCompleteNotice').classList.add('show');
-        document.getElementById('subKakaoLink').classList.add('emphasis');
-        document.querySelector('#subscribeModal .modal').classList.add('completed');
-        phoneEl.disabled=true;
-        consent.disabled=true;
-        submit.textContent='구독 완료됨';
-        cancel.classList.remove('show');
-        completed=true;
-      }
-    }catch(err){
-      showStatus('error','오류: '+err.message);
-    }finally{
-      if(!completed){
-        submit.disabled=false;
-        submit.textContent='결제하고 구독 시작';
-      }
+      if(out.length>=12)break;
+    }
+    if(out.length>=12)break;
+  }
+  return out.slice(0,12);
+}
+
+function openModal(tk,market){
+  const s=findStock(tk);
+  if(!s)return;
+  const mentions=findMentions(tk);
+  const all=getAllStocksOf(market);
+  const peers=all.filter(p=>p.catTitle===s.catTitle&&p.tk!==s.tk).slice(0,6);
+
+  const r1=parseFloat(s.r1),p1=parseFloat(s.p1),r2=parseFloat(s.r2),p2=parseFloat(s.p2);
+  const rg=(r1>0&&r2>0)?(r2-r1)/r1:null;
+  const pg=(p1>0&&p2>0)?(p2-p1)/p1:null;
+  const unit=market==='kr'?'천억원':'$B';
+
+  const maxRev=Math.max(Math.abs(r1)||0,Math.abs(r2)||0)||1;
+  const maxProf=Math.max(Math.abs(p1)||0,Math.abs(p2)||0)||1;
+  const barH=(v,max)=>Math.max(12,Math.min(100,(Math.abs(v)/max)*100));
+
+  document.getElementById('modalPad').innerHTML=`
+    <div class="modal-head">
+      <div>
+        <div class="modal-tk">${escapeHtml(tk)} · ${escapeHtml(market==='stocks'?'미국':'한국')}</div>
+        <h2 class="modal-nm">${escapeHtml(displayName(s.nm))}</h2>
+        <div class="modal-cat">${escapeHtml(s.catTitle||'')}${s.catTag?' · '+escapeHtml(s.catTag):''}</div>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-close" id="modalCloseBtn" aria-label="닫기">✕</button>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-sec-label">차별화 포인트</div>
+      <div class="modal-rs">${escapeHtml(s.rs||'설명 데이터 없음')}</div>
+    </div>
+
+    ${(r1||r2||p1||p2)?`
+    <div class="modal-section">
+      <div class="modal-sec-label">매출·이익 추이 (단위: ${unit})</div>
+      <div class="rev-chart">
+        <div class="rev-bar-wrap">
+          <div class="rev-year">매출</div>
+          <div class="rev-bars">
+            <div class="rev-bar"><span class="bar-num">${r1||'—'}</span><div class="bar-track"><div class="bar" style="height:${barH(r1,maxRev)}%"></div></div><span class="bar-lbl">FY25</span></div>
+            <div class="rev-bar"><span class="bar-num">${r2||'—'}</span><div class="bar-track"><div class="bar" style="height:${barH(r2,maxRev)}%"></div></div><span class="bar-lbl">FY26E</span></div>
+          </div>
+          <div class="rev-growth-row"><span>YoY 성장률</span><span class="pct ${rg>0?'up':(rg<0?'down':'')}">${rg===null?'—':fmtPct(rg)}</span></div>
+        </div>
+        <div class="rev-bar-wrap">
+          <div class="rev-year">영업이익</div>
+          <div class="rev-bars">
+            <div class="rev-bar profit ${p1<0?'neg':''}"><span class="bar-num">${p1||'—'}</span><div class="bar-track"><div class="bar" style="height:${barH(p1,maxProf)}%"></div></div><span class="bar-lbl">FY25</span></div>
+            <div class="rev-bar profit ${p2<0?'neg':''}"><span class="bar-num">${p2||'—'}</span><div class="bar-track"><div class="bar" style="height:${barH(p2,maxProf)}%"></div></div><span class="bar-lbl">FY26E</span></div>
+          </div>
+          <div class="rev-growth-row"><span>YoY 성장률</span><span class="pct ${pg>0?'up':(pg<0?'down':'')}">${pg===null?'—':fmtPct(pg)}</span></div>
+        </div>
+      </div>
+    </div>
+    `:''}
+
+    <div class="modal-section">
+      <div class="modal-sec-label">최근 사건</div>
+      <div class="mentions-list">
+        ${mentions.length?mentions.map(m=>`
+          <div class="mention-item">
+            <div class="mention-head">
+              <span class="mention-tab" data-t="${escapeHtml(m.tab)}">${TAB_LABEL[m.tab]||m.tab}</span>
+              <span class="mention-date">${escapeHtml(m.date||'')}</span>
+            </div>
+            <div class="mention-text">${escapeHtml(m.text)}</div>
+          </div>
+        `).join(''):'<div style="color:var(--mut);font-size:14px;padding:12px">최근 30일 직접 언급 없음</div>'}
+      </div>
+    </div>
+
+    ${peers.length?`
+    <div class="modal-section">
+      <div class="modal-sec-label">같은 카테고리 다른 종목</div>
+      <div class="peers-grid">
+        ${peers.map(p=>`<div class="peer-card" data-tk="${escapeHtml(p.tk)}" data-market="${escapeHtml(p.market)}"><div class="peer-tk">${escapeHtml(p.tk)}</div><div class="peer-nm">${escapeHtml(displayName(p.nm))}</div></div>`).join('')}
+      </div>
+    </div>
+    `:''}
+  `;
+
+  document.getElementById('modalCloseBtn').addEventListener('click',closeModal);
+  document.querySelectorAll('.peer-card').forEach(p=>{
+    p.addEventListener('click',()=>openModal(p.dataset.tk,p.dataset.market));
+  });
+
+  showModal();
+}
+
+// ─────────────────────────────────────────────────────────────
+// 모달 공통: 히스토리 스택 + 스와이프-다운 닫기
+// ─────────────────────────────────────────────────────────────
+let _modalHistoryPushed=false;
+function showModal(){
+  const modal=document.getElementById('modal');
+  modal.scrollTop=0;
+  modal.style.transform='';
+  document.getElementById('modalBg').classList.add('on');
+  document.body.style.overflow='hidden';
+  document.documentElement.style.overflow='hidden';
+  if(!_modalHistoryPushed){
+    history.pushState({modalOpen:true},'');
+    _modalHistoryPushed=true;
+  }
+}
+
+function closeModal(fromPopState){
+  const modal=document.getElementById('modal');
+  document.getElementById('modalBg').classList.remove('on');
+  document.body.style.overflow='';
+  document.documentElement.style.overflow='';
+  modal.style.transform='';
+  if(_modalHistoryPushed){
+    const wasPushed=_modalHistoryPushed;
+    _modalHistoryPushed=false;
+    if(!fromPopState && wasPushed) history.back();
+  }
+}
+
+// Android 물리 백키 / 브라우저 뒤로가기로 모달 닫기
+window.addEventListener('popstate',()=>{
+  if(document.getElementById('modalBg').classList.contains('on')){
+    closeModal(true);
+  }
+});
+
+document.getElementById('modalBg').addEventListener('click',e=>{
+  if(e.target.id==='modalBg')closeModal();
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+// iOS 바텀시트 스와이프-다운 닫기 (모바일 전용 — flex-end 정렬일 때만)
+(function(){
+  const modal=document.getElementById('modal');
+  let startY=0,curY=0,dragging=false,startScrollTop=0;
+  const THRESHOLD=80;
+
+  modal.addEventListener('touchstart',e=>{
+    if(window.innerWidth>=768)return; // 데스크톱은 중앙 정렬이라 스와이프 아이디엄 부적절
+    startY=e.touches[0].clientY;
+    curY=startY;
+    startScrollTop=modal.scrollTop;
+    dragging=true;
+    modal.style.transition='';
+  },{passive:true});
+
+  modal.addEventListener('touchmove',e=>{
+    if(!dragging)return;
+    curY=e.touches[0].clientY;
+    const dy=curY-startY;
+    // 모달이 맨 위로 스크롤된 상태에서 아래로만 드래그 허용
+    if(dy>0 && startScrollTop<=0){
+      modal.style.transform=`translateY(${dy}px)`;
+    }
+  },{passive:true});
+
+  modal.addEventListener('touchend',()=>{
+    if(!dragging)return;
+    dragging=false;
+    const dy=curY-startY;
+    if(dy>THRESHOLD && startScrollTop<=0){
+      modal.style.transition='transform .2s ease-out';
+      modal.style.transform=`translateY(100%)`;
+      setTimeout(()=>{closeModal();modal.style.transition='';modal.style.transform='';},200);
+    }else{
+      modal.style.transition='transform .2s ease-out';
+      modal.style.transform='';
+      setTimeout(()=>{modal.style.transition=''},200);
     }
   });
 })();
+
+// ═══════════════════════════════════════════════════════════
+// Wire up controls
+// ═══════════════════════════════════════════════════════════
+document.querySelectorAll('.health-tab').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.health-tab').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    STATE.healthMarket=b.dataset.market;
+    renderHealth();
+  });
+});
+document.getElementById('expSearch').addEventListener('input',e=>{
+  STATE.expQuery=e.target.value;
+  renderHealth();
+});
+
+// ═══════════════════════════════════════════════════════════
+// Boot
+// ═══════════════════════════════════════════════════════════
+async function loadCalendar(){
+  try{
+    const r=await fetch(CALENDAR_URL+'?_='+Date.now());
+    const t=await r.text();
+    return new Function(t+';return typeof calendarEvents!=="undefined"?calendarEvents:{recurring:[],fixed:[],dateRanges:[]};')();
+  }catch(e){
+    console.warn('캘린더 로드 실패:',e);
+    return {recurring:[],fixed:[],dateRanges:[]};
+  }
+}
+
+async function boot(){
+  try{
+    const [stocks,kr,ai,commodity,unicorn,calendar]=await Promise.all([
+      loadJS(URLS.stocks),loadJS(URLS.kr),loadJS(URLS.ai),loadJS(URLS.commodity),loadJS(URLS.unicorn),
+      loadCalendar(),
+    ]);
+    STATE.data.stocks=stocks.data;
+    STATE.data.kr=kr.data;
+    STATE.data.ai=ai.data;
+    STATE.data.commodity=commodity.data;
+    STATE.data.unicorn=unicorn.data;
+    STATE.calendar=calendar;
+
+    const updResults=await Promise.all(
+      Object.entries(UPD_URLS).map(([tab,cfg])=>loadUpd(cfg.url,cfg.var).then(d=>[tab,d]))
+    );
+    for(const [tab,data] of updResults)STATE.upd[tab]=data;
+
+    buildNarrative();
+    renderCalendar();
+    renderHealth();
+  }catch(e){
+    console.error('boot error:',e);
+    document.getElementById('narrativeBody').innerHTML='<div class="updates-loading">데이터 로드 실패: '+escapeHtml(String(e.message||e))+'</div>';
+  }
+}
+
+boot();
 </script>
-</body></html>
+
+</body>
+</html>
