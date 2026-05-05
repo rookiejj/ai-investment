@@ -59,6 +59,7 @@ interface Price {
   currency?: string;
   time?: number;
   exchange?: string;
+  extended?: boolean;
 }
 
 async function fetchTickers(): Promise<{ us: string[]; kr: string[]; commodity: string[] }> {
@@ -80,35 +81,79 @@ async function fetchTickers(): Promise<{ us: string[]; kr: string[]; commodity: 
   return { us, kr, commodity };
 }
 
-async function yahooChartOne(symbol: string): Promise<Price | null> {
-  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=1d&range=1d`;
+async function yahooChartOne(symbol: string, attempt = 1): Promise<Price | null> {
+  // 15분봉 + prePost 포함으로 정규세션 + 프리·애프터마켓 + 24h 자산 모두 커버
+  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=15m&range=1d&includePrePost=true`;
   try {
     const r = await fetch(url, {
       headers: { "User-Agent": UA, "Accept": "application/json" },
     });
+    // 429/5xx — 짧게 대기 후 1회 재시도
+    if ((r.status === 429 || r.status >= 500) && attempt === 1) {
+      await new Promise((res) => setTimeout(res, 500 + Math.random() * 1000));
+      return yahooChartOne(symbol, 2);
+    }
     if (!r.ok) return null;
     const j = await r.json();
-    const meta = j?.chart?.result?.[0]?.meta;
-    if (!meta || meta.regularMarketPrice == null) return null;
-    const price = Number(meta.regularMarketPrice);
-    const prev = Number(meta.previousClose ?? meta.chartPreviousClose ?? 0);
-    const change = prev > 0 ? price - prev : undefined;
-    const changePct = prev > 0 ? ((price - prev) / prev) * 100 : undefined;
+    const result = j?.chart?.result?.[0];
+    const meta = result?.meta;
+    if (!meta) return null;
+
+    // 마지막 non-null bar close = 가장 최신 가격 (프리/정규/애프터 모두 포함)
+    const ts: number[] = result?.timestamp ?? [];
+    const closes: (number | null)[] = result?.indicators?.quote?.[0]?.close ?? [];
+    let lastPrice: number | null = null;
+    let lastTime: number | null = null;
+    for (let i = closes.length - 1; i >= 0; i--) {
+      if (closes[i] != null) {
+        lastPrice = Number(closes[i]);
+        lastTime = ts[i] ?? null;
+        break;
+      }
+    }
+
+    // fallback: meta.regularMarketPrice
+    const price = lastPrice ?? (meta.regularMarketPrice != null ? Number(meta.regularMarketPrice) : null);
+    if (price == null) {
+      // 응답은 왔지만 데이터 비어있음 — 1회 재시도
+      if (attempt === 1) {
+        await new Promise((res) => setTimeout(res, 300 + Math.random() * 700));
+        return yahooChartOne(symbol, 2);
+      }
+      return null;
+    }
+
+    // 정규세션 시각 이후 데이터면 extended hours (프리/애프터마켓)
+    const regTime = Number(meta.regularMarketTime ?? 0);
+    const isExtended = lastTime != null && regTime > 0 && lastTime > regTime + 60;
+
+    // baseline 선택:
+    //   - 정규세션 중: previousClose (=전일 정규 종가)
+    //   - 프리/애프터마켓: regularMarketPrice (=가장 최근 정규세션 종가, 즉 직전 일자 종가)
+    // Yahoo API에서 prePost 시간대엔 previousClose가 "그저께" 값이라 baseline 잘못 잡힘.
+    const regularPx = Number(meta.regularMarketPrice ?? 0);
+    const baseline = isExtended && regularPx > 0
+      ? regularPx
+      : Number(meta.previousClose ?? meta.chartPreviousClose ?? 0);
+    const change = baseline > 0 ? price - baseline : undefined;
+    const changePct = baseline > 0 ? ((price - baseline) / baseline) * 100 : undefined;
+
     return {
       price,
-      prevClose: prev || undefined,
+      prevClose: baseline || undefined,
       change,
       changePct,
       currency: meta.currency,
-      time: meta.regularMarketTime,
-    };
+      time: lastTime ?? meta.regularMarketTime,
+      ...(isExtended ? { extended: true } : {}),
+    } as Price;
   } catch {
     return null;
   }
 }
 
 // 동시성 제어된 batch fetch
-async function batchPrices(symbols: string[], concurrency = 16): Promise<Record<string, Price>> {
+async function batchPrices(symbols: string[], concurrency = 10): Promise<Record<string, Price>> {
   const out: Record<string, Price> = {};
   for (let i = 0; i < symbols.length; i += concurrency) {
     const batch = symbols.slice(i, i + concurrency);
