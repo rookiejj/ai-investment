@@ -9,6 +9,7 @@ scripts/instagram/out/
 
 # Claude Code 로컬 권한 설정 (사용자별·머신별로 달라 공유 X)
 .claude/settings.local.json
+.claude/*.lock
 
 # Supabase CLI
 supabase/.branches
