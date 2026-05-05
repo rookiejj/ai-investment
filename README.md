@@ -1,6 +1,6 @@
 # 브리픽 (Briefick)
 
-미국·한국 주식 + AI 기업 + 유니콘 + 원자재·크립토를 5개 탭으로 보여주는 통합 투자 대시보드, 그리고 해당 데이터 핵심 요약을 매일 카카오 친구톡으로 발송하는 **유료 구독 서비스**. (일본 주식은 UI에서 제외, 데이터 파일만 보존)
+한국·미국 주식, AI 기업, 유니콘, 원자재·크립토 시장의 오늘 핵심 헤드라인을 한눈에 보여주는 투자 대시보드, 그리고 매일 카카오 친구톡으로 동일 콘텐츠를 발송하는 **유료 구독 서비스**. (일본 주식은 UI에서 제외, 데이터 파일만 보존)
 
 - **웹 대시보드**: https://roysbriefing.vercel.app
 - **카카오 채널**: https://pf.kakao.com/_lpxkCX
@@ -12,15 +12,16 @@
 
 ```
 ai-investment/
-├── index.html                    ← 통합 대시보드 UI + 구독 결제 모달 (루트)
+├── index.html                    ← 메인 대시보드 (헤드라인 TL;DR + 이벤트 캘린더 + 섹터 성장 단계 + 종목 deep-dive 모달 + 구독 결제 모달)
 ├── views/
-│   ├── admin.html                ← 운영 대시보드 (대시보드·구독자·결제·발송)
+│   ├── admin.html                ← 운영 대시보드 (대시보드·구독자·결제·발송·공지)
+│   ├── legacy.html               ← 구 메인 (5탭 카드 그리드) 백업 — `/legacy` 라우트
 │   ├── renew.html                ← 재구독 전용 페이지
 │   ├── help.html                 ← 수신 문제 해결 가이드 (마스터-디테일, #friend / #ad)
 │   ├── terms.html                ← 이용약관
 │   ├── privacy.html              ← 개인정보처리방침
 │   └── refund.html               ← 환불정책
-├── vercel.json                   ← /admin · /renew · /help · /terms ... → views/ rewrite
+├── vercel.json                   ← /admin · /legacy · /renew · /help · /terms ... → views/ rewrite
 ├── CLAUDE.md                     ← 데이터 유지보수·자동화 지침
 ├── assets/
 │   ├── briefick_profile_640.jpeg ← 헤더 로고
@@ -32,7 +33,8 @@ ai-investment/
 │   ├── jp-stocks-{data,update}.js← 일본 주식 (UI·자동 갱신 제외, 데이터 보존)
 │   ├── ai-{data,update}.js       ← AI 기업 10사
 │   ├── commodity-{data,update}.js← 원자재·크립토 (6 × 4 = 24)
-│   └── unicorn-{data,update}.js  ← 유니콘 (5 × 7 = 35, AI 전업 기업 제외)
+│   ├── unicorn-{data,update}.js  ← 유니콘 (5 × 7 = 35, AI 전업 기업 제외)
+│   └── calendar-events.js        ← 메인 14일 이벤트 캘린더용 (recurring 패턴 + fixed 알려진 일정)
 ├── scripts/
 │   ├── generate-message.js       ← 로컬 친구톡 메시지 미리보기
 │   ├── send-friendtalk.js        ← 로컬 수동 발송 (디버깅)
@@ -57,7 +59,7 @@ ai-investment/
 │   │   ├── daily-send/           ← 매일 뉴스 친구톡 발송 (평일 cron 트리거)
 │   │   ├── expiry-notice/        ← D-1 만료 임박 재구독 안내 친구톡 (매일 20:00 cron)
 │   │   ├── solapi-webhook/       ← 솔라피 발송 결과 수신 (실시간 상태 갱신)
-│   │   └── admin-api/            ← 운영 대시보드용 (login / change_password / stats / logs / subscribers / payments / expiring_soon / manual_send[알림톡] / daily_send_preview / daily_send_now)
+│   │   └── admin-api/            ← 운영 대시보드용 (login / change_password / stats / logs / subscribers / payments / expiring_soon / manual_send[알림톡] / daily_send_preview / daily_send_now / notice_send[공지 친구톡])
 │   ├── schedule.sql              ← 매일 뉴스 cron (평일 08:00 KST)
 │   ├── schedule-expiry.sql       ← 만료 임박 cron (매일 20:00 KST)
 │   ├── queries.sql               ← 운영 조회·상태 변경 템플릿
@@ -68,25 +70,26 @@ ai-investment/
 └── README.md
 ```
 
-UI 노출 5개 탭 (일본 주식 70항목은 데이터 파일만 보존).
-
 ## 기능
 
-### 공개 대시보드
-- **5개 탭**: 미국 마켓 · 한국 마켓 · AI 기업 · 유니콘 · 원자재·크립토
-- **검색 · 필터 · 스와이프 · 자동 버전 체크 · 연도 동적 라벨 · 탭 상태 유지**
-- **업데이트 박스**: 각 탭 최신 3건 요약 (접기/펼치기)
-- **탭 정보 아이콘**: 선정 기준을 팝업으로 노출
+### 메인 대시보드 (루트 `/`)
+브리핑은 정보 양보다 **첫 진입 시 핵심 인지**에 초점. 4개 섹션 단방향 스크롤:
+1. **헤드라인 TL;DR strip** — "오늘 놓치면 안 되는 것"이라는 promise 아래 5개 시장 각각의 첫 줄(그날 가장 임팩트 큰 사건) 카드 5개. 각 줄은 update.js summary 첫 줄을 그대로 노출. **한국 → 미국 → AI → 원자재·크립토 → 유니콘** 순서(초보 진입 장벽 낮춤). 펼침 토글로 시장별 전체 불릿 노출.
+2. **이벤트 캘린더 · 2주** — `data/calendar-events.js`의 recurring 패턴(매크로 정기 일정) + fixed(알려진 어닝·IPO·컨퍼런스)을 14일 윈도우(일~토 정렬)로 표시. 셀 클릭 시 그날 모든 이벤트를 카테고리별로 모달에 노출, 종목 칩 클릭 시 deep-dive 모달로 연결.
+3. **섹터 성장 단계** — 18개 섹터 행을 FY26E 매출 성장률(7종목 중앙값) 내림차순 정렬, 단계 라벨(빠른 성장·성장·완만 성장·보합·역성장) + 색상으로 시장 모멘텀 한눈에. 한국·미국 토글(기본 한국). 행 클릭 시 7종목 카드 펼침, 펼친 행이 sticky 헤더 바로 아래로 자동 스크롤. 검색 입력란으로 종목·키워드 필터.
+4. **종목 deep-dive 모달** — 카드 클릭 또는 캘린더 종목 칩에서 진입. 차별화 포인트(rs) + 매출·영업이익 막대그래프(FY25 vs FY26E) + 최근 사건(update.js mentions) + 같은 섹터 peers. 모바일에선 바텀시트로 슬라이드 업, 스와이프-다운/Android 백키/✕로 닫힘.
+
+> 구 메인(5탭 카드 그리드, 검색·필터·스와이프 UI)은 `/legacy`에 백업 — 신 메인의 deep-dive 모달이 같은 종목 데이터를 활용하므로 정보 손실 없음.
 
 ### 구독 서비스 (유료)
-- **구독 모달**: 헤더 "구독하기" → 전화번호 + 광고 수신 동의
+- **구독 모달**: 헤더 "매일 카톡으로 받기" → 전화번호 + 광고 수신 동의
 - **번호 재확인 단계**: 결제 직전 큰 글씨로 번호 재표시 (오타 방지)
 - **연장 확인**: 기존 구독자엔 남은 일수·연장 후 만료일 안내
 - **결제**: 포트원 V2 (현재 갤럭시아 테스트 채널 · 월 100원)
 - **카카오 채널 친구 추가 필수 안내**: 완료 화면에 강조 배너
 - **결제 완료 후 폼 잠금**: 모바일 REDIRECTION 복귀 시 입력값 복원 + 즉시 잠금 (placeholder 노출 방지)
 
-### 메시징 시스템 (4종)
+### 메시징 시스템 (5종)
 
 | 종류 | 트리거 | 함수 | 카카오 타입 | 템플릿 / 본문 | 버튼 |
 |---|---|---|---|---|---|
@@ -94,17 +97,19 @@ UI 노출 5개 탭 (일본 주식 70항목은 데이터 파일만 보존).
 | **매일 뉴스 친구톡** (자동·수동) | 평일 KST 08:00 (cron) · 운영 대시보드 즉시 발송 | `daily-send` | CTA | 5개 탭 최신 1건씩 summary, 1000자 한도 초과 시 fitToLimit으로 모든 탭 균등 줄 단위 cut | WL "전체 뉴스 보기" → `/` |
 | **재구독 안내 친구톡** (자동) | 매일 KST 20:00 (cron, D-1) | `expiry-notice` | CTA | 자유 텍스트 + 만료일 자동 삽입 | WL "재구독 신청하기" → `/renew` |
 | **미수신자 안내 알림톡** (수동) | 운영 대시보드 발송 | `admin-api` `manual_send` | ATA | `KA01TP260424060446377powJn1n8RGU` (#{상점명}) | WL "문제 해결하기" → `/help` |
+| **공지 친구톡** (수동·자유 본문) | 운영 대시보드 `📢 공지` 발송 | `admin-api` `notice_send` → `daily-send` (`customMessage`) | CTA | 임의 본문(1000자 한도) — 점검·이벤트·긴급 안내용 | (없음 — `daily-send` 발신프로필 기본 버튼) |
 
 > **알림톡 vs 친구톡 선택 기준**: 정보성 거래 알림(결제 완료·미수신 안내)은 **알림톡** — 채널 친구 여부·광고 수신 거부와 무관하게 도달. 광고성 콘텐츠(뉴스·재구독 권유)는 **친구톡** — 채널 친구만 도달, 야간(21~08) 발송 금지.
 
 ### 운영 대시보드 `/admin`
 - 비밀번호 인증 (Edge Function `admin-api` · DB 해시 저장 · 최소 4자)
-- **사이드바 3-도메인 구조** + 상단 오버뷰 (해시 라우팅 · 모바일 드로어 · 헤더 새로고침 버튼)
+- **사이드바 3-도메인 구조** + 상단 오버뷰 + 공지 (해시 라우팅 · 모바일 드로어 · 헤더 새로고침 버튼)
   - **📊 대시보드**: 3개 도메인 통합 카드(활성·7일 매출·14일 성공률·만료 임박·채널 미가입·결제 실패) + 14일 발송 차트 + 구독 상태 도넛 + 최근 결제 5건 + 만료 임박 5건
   - **👤 구독자**: 상태별 카운트 카드 + 구독 상태 분포 도넛 + 전체 목록(상태·구독 상태 필터)
   - **💳 결제**: 7일/30일 매출 카드 + 만료 임박(D-7) 리스트 + 결제 이력(상태·기간 필터 + 페이지네이션)
   - **📬 발송**: 14일 성공률 카드 + 일별 발송량 차트 + **매일 뉴스 즉시 발송**(미리보기→대상 선택→발송, 2x2 그리드 UI) + 미수신자 안내 알림톡 수동 발송 + 발송 이력(상태·타입·**용도**·번호·기간 필터)
-- **발송 이력 용도 분류** — `template_code` 컬럼 기반 색상 뱃지: 매일 뉴스 / 수동 발송 / 결제 완료 / 재구독 안내 / (만료 안내 예약)
+  - **📢 공지**: 자유 본문 친구톡 발송 — 활성 구독자 선택 + textarea 입력(1000자 카운터) + 야간(KST 21~08) 발송 경고 + 발송 이력은 `template_code='notice'`로 분리 기록
+- **발송 이력 용도 분류** — `template_code` 컬럼 기반 색상 뱃지: 매일 뉴스 / 수동 발송 / 결제 완료 / 재구독 안내 / 공지
 - **수동 발송**: 친구톡 미도달 구독자(채널 미친구·광고 차단 등)에게 알림톡으로 안내 — 검수 승인 본문 고정, 미리보기 표시
 - **시각 표기**: 모두 브라우저 시스템 시간 기준
 - **비밀번호 변경** 모달 (헤더) — 현재 비번 확인 후 DB 해시 즉시 갱신
@@ -158,19 +163,20 @@ UI 노출 5개 탭 (일본 주식 70항목은 데이터 파일만 보존).
 
 > KST 08:00 = UTC 23:00(전날). UTC 기준 dow 0~4가 한국 평일에 해당.
 
-### 매일 뉴스 친구톡 (08:00 KST 평일 · 또는 관리자 수동 트리거)
+### 매일 뉴스 친구톡 (08:00 KST 평일 · 또는 관리자 수동 트리거 · 또는 공지 자유 본문)
 ```
 pg_cron(또는 admin-api 프록시) → Vault X-Cron-Secret → daily-send
-    ├ GitHub Contents API로 data/*-update.js fetch
-    ├ 한 탭 summary = 한 글머리표 줄(자유 문체 그대로)
+    ├ body.customMessage 있으면 자동 조립 건너뛰고 본문 그대로 사용 (공지)
+    │  없으면 GitHub Contents API로 data/*-update.js fetch
+    ├ 한 탭 summary = 한 글머리표 줄(자유 문체 그대로) — 한국 → 미국 → AI → 유니콘 → 원자재
     ├ 1000자 한도 초과 시 fitToLimit (모든 탭 보존하며 균등 줄 단위 cut)
     ├ 만료 구독자 expired 전환 (paid_until 과거)
     ├ 활성 구독자 조회 (body.subscriberIds 있으면 그 ID만)
     ├ 솔라피 친구톡 발송 (bms.targeting='I', disableSms=Y, 배치 500)
-    └ send_logs INSERT (template_code='daily_news')
+    └ send_logs INSERT (template_code='daily_news' · 공지면 'notice')
 ```
 
-운영 대시보드 발송 뷰의 **매일 뉴스 즉시 발송**은 admin-api `daily_send_preview` / `daily_send_now`가 동일 함수를 X-Cron-Secret으로 프록시 호출. 발송 누락·재발송 등 예외 상황 대응용.
+운영 대시보드의 매일 뉴스 즉시 발송은 admin-api `daily_send_preview` / `daily_send_now`가 동일 함수를 X-Cron-Secret으로 프록시 호출. 공지 발송은 `notice_send`가 `customMessage` 필드로 동일 함수를 프록시 호출 (1000자 검증 + 빈 본문 거부). 두 경로 모두 발송 누락·재발송·자유 본문 즉시 발송 등 예외 상황 대응용.
 
 ### 재구독 안내 친구톡 (20:00 KST D-1)
 ```
@@ -256,7 +262,7 @@ payments
 send_logs
   id bigserial, subscriber_id, phone, message, char_count
   status (success/fail/skipped), message_type (friendtalk/alimtalk/sms)
-  template_code (daily_news/manual/payment_complete/renew_reminder/expiry_notice/null)
+  template_code (daily_news/manual/payment_complete/renew_reminder/expiry_notice/notice/null)
   provider, provider_code (groupId), provider_message, provider_msg_id
   batch_id, sent_at
 
@@ -278,6 +284,7 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-05**: **메인 페이지 전면 개편 — 5탭 카드 그리드 → 헤드라인 TL;DR + 14일 이벤트 캘린더 + 섹터 성장 단계 단일 흐름**. 신 메인 구성: (a) "오늘 놓치면 안 되는 것" hero + 시장별 첫 줄 카드 5개(TL;DR, 펼침 토글로 전체 불릿) (b) `data/calendar-events.js` 기반 2주 이벤트 캘린더(셀 클릭 → 카테고리별 day modal, 종목 칩 → deep-dive 모달) (c) 18 섹터 성장 단계 정렬 리스트(한국·미국 토글, 행 클릭 → 7종목 카드 + 자동 스크롤) (d) 종목 deep-dive 모달(차별화 포인트 + 매출·영업이익 막대그래프 + mentions + peers, 모바일 바텀시트 + 스와이프-다운/Android 백키/✕). **구 메인 백업** — `views/legacy.html`로 보존, `/legacy` 라우트 신설 (vercel rewrite). **구독 모달 풀 포팅** — sub- 프리픽스로 deep-dive 모달과 격리, PortOne v2 + check-subscription/payment-confirm Edge Function 호출 신 메인에서 동작. **헤더 카피 변경** — "구독하기" → "매일 카톡으로 받기" (정기성 + 채널 명시 + 동작 직관성). **한국·미국 순서 전면 swap** — TL;DR 카드 / 친구톡 메시지 / 운영 대시보드 매일 뉴스 / 인스타그램 캐러셀 / 섹터 단계 토글 기본값 모두 한국 우선(초보 진입 장벽 완화). **모바일 캘린더 가독성** — 셀 높이 160px 통일, 칩 폰트 9px(≤768) / 8.5px(≤480) + 1줄 nowrap + ellipsis 없음(clip), today 좌측 라인·배경 tint 제거(셀 폭 동일감). high-impact 칩의 폰트 굵기·흰 배경 모바일 한정 제거. 섹터 카테고리명 한 줄 유지(자동차·모빌리티 등 줄바꿈 방지). **공지 친구톡 발송 기능 신설** — 운영 대시보드 좌측 메뉴 `📢 공지`. 활성 구독자 선택 + textarea 자유 본문(1000자 카운터) + 야간 발송 경고 confirm. 백엔드: admin-api `notice_send` 액션이 `daily-send`에 `customMessage` 필드로 프록시, daily-send은 customMessage 있으면 update.js 조립 건너뛰고 본문 그대로 발송, send_logs.template_code='notice'로 분리 기록. **CLAUDE.md 정책 보강** — (a) summary 첫 줄 = 그날의 대표 헤드라인 엄수(TL;DR strip이 그대로 노출하므로 메가캡 신고가·메이저 펀딩 같은 임팩트 큰 사건을 첫 줄에, 시장 지수 동향은 둘째 줄 이후) (b) 캘린더 빈 날짜 의식적 점검 — 자동 갱신마다 향후 14일 윈도우 내 빈 평일을 식별하고 중국 매크로(CPI·PPI 9~10일·무역수지)·미국 주중 정기(도매재고·재정수지·NFIB·JOLTS)·일본·어닝 잔여 종목 후보를 한 번 더 확인. 5/11 빈 날에 "중국 4월 CPI·PPI" 추가(주말 시프트). **수치 표시 정리** — 모달 매출/영업이익 헤더 "(Revenue)/(Operating Profit)" 영문 부연 제거, "최근 사건 (최대 12건)" → "최근 사건", 섹터 단계 설명에 "수치·종목 구성 모두 매일 오전·오후 2회 갱신" 부연. hero 메타 pill에 수집 시간 HH:MM 부착(latest update.js entry 기반).
 - **2026-05-03**: **인스타그램 Reels 자동 게시 추가**. `scripts/instagram/render-reels.js` — 기존 1080×1350 PNG를 ffmpeg `xfade` 필터로 1080×1920 9:16 mp4로 변환(슬라이드당 6초 + 0.5초 crossfade, 위·아래 같은 이미지의 블러 BG로 letterbox 회피, 총 ~39초). `scripts/instagram/music/` 디렉토리에 royalty-free mp3 드롭하면 자동 페이드인/아웃 합성. `publish.js`에 `publishReels()` 추가 (REELS media_type · `share_to_feed=true` · 비디오 처리 대기 5분). `IG_MODE` 환경변수(all/carousel/reels)로 발행 분기. **시간대별 포맷 분기** — push 트리거의 자동 갱신 커밋에 KST 시간대 기반 mode 결정 step 추가: 05~12시→carousel, 13~23시→reels, 그 외→all. 결과 하루 4개 → **하루 2개 포스트(오전 캐러셀 + 오후 Reels)**로 알고리즘 sweet spot 정렬. **`/publish` 슬래시 명령** 신설 — `mode`·`dry` 인자 자유 순서 파싱(`/publish reels`, `/publish carousel dry` 등). **발행 트리거 게이팅** — push로 발행하려면 커밋 메시지가 `데이터 자동 갱신` 또는 `데이터 정합성 강제 갱신`으로 시작해야 함, 사람이 수동 편집한 커밋이 의도하지 않은 시간대 발행으로 이어지지 않게 차단. workflow_dispatch는 게이팅 미적용. workflow에 `ffmpeg` apt 설치 step 추가. **자동 갱신 13시 슬롯 비활성화** — RemoteTrigger cron `0 22,4,10` UTC → `0 22,10` UTC, 매일 07/19시 KST 2회로 축소. **CLAUDE.md 정책 보강** — (a) 탭 콘텐츠 독립성 원칙(cross-tab 인용 금지), (b) 탭 간 사건 중복 방지(stocks→kr→ai→unicorn→commodity 선점 우선), (c) summary·detail 문체 — em-dash(`—`) → hyphen(`-`)·"톤(tone)" 트레이더 은어 → 자연어 기조/흐름·"비트/미스" → 컨센 상회/하회. 5개 update.js 일괄 sweep으로 기존 데이터 정정.
 - **2026-05-01**: Supabase 키 namespace 통일 — `SUPABASE_SECRET_KEY` → **`BRIEFICK_SUPABASE_SECRET_KEY`**, `SUPABASE_PUBLISHABLE_KEY` → **`BRIEFICK_SUPABASE_PUBLISHABLE_KEY`**. 원인: Supabase가 사용자 정의 secret 이름의 `SUPABASE_` 접두사를 거부(`Name must not start with the SUPABASE_ prefix`)하며 `SUPABASE_SECRET_KEYS`(복수 JSON) 등 자동 주입 변수와 namespace 충돌. 프로젝트 prefix `BRIEFICK_` 부여로 일괄 정리. Edge Function 7개·`publish.js`·workflow yml·프론트 JS 변수명·문서 동기화. `.claude/settings.local.json`을 git 추적 해제(머신별 권한 설정).
 - **2026-04-30**: **인스타그램 캐러셀 자동 게시** 추가 (`@briefick`). `data/*-update.js` 푸시 시 GitHub Actions가 발동 → Playwright로 1080×1350 PNG 7장 렌더 → Supabase Storage 업로드 → Graph API 캐러셀 게시. 다크 테마 + Unsplash 콘텐츠 매칭 사진 BG(인물 필터·게시물 내 중복 방지·CDN 캐시 회피용 시각 경로). 캡션은 마켓 정보 없이 프로필 링크 유도 CTA + 가변 해시태그(`#브리픽 #briefick` 보존·30개 한도). transient Graph API 에러 자동 재시도(9007/2207027/code:1·subcode:99 등). Supabase 키 신포맷(`sb_secret_...`/`sb_publishable_...`) 1차 정리 + 변수 네이밍 일관 정리(이후 `BRIEFICK_` 접두사로 5/1 추가 정리).
