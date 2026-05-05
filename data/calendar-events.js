@@ -76,6 +76,10 @@ const fixed = [
   { cat:'earnings', impact:3, title:'NVDA Q1 FY27 실적', date:'2026-05-20', desc:'장후 D-Day·컨센 매출 $78.5B +78% YoY·Rubin 풀프로덕션', tickers:['NVDA'] },
   { cat:'earnings', impact:1, title:'CRM Q1 FY27 실적', date:'2026-05-28', tickers:['CRM'] },
   { cat:'earnings', impact:1, title:'COST Q3 FY26 실적', date:'2026-05-29', tickers:['COST'] },
+  { cat:'earnings', impact:2, title:'Cisco Q3 FY26 실적', date:'2026-05-13', desc:'장후 발표·AI 네트워킹 모멘텀', tickers:['CSCO'] },
+  { cat:'earnings', impact:1, title:'Palo Alto Q3 FY26 실적', date:'2026-05-19', desc:'CyberArk 통합 효과', tickers:['PANW'] },
+  { cat:'earnings', impact:1, title:'Snowflake Q1 FY27 실적', date:'2026-05-21', tickers:['SNOW'] },
+  { cat:'earnings', impact:2, title:'한화에어로스페이스 Q1 콜', date:'2026-05-06', desc:'Q1 5.75조·OP 6,389억 +21% 베이스', tickers:['012450'] },
 
   // === 한국 어닝·이벤트 ===
   { cat:'earnings', impact:2, title:'카카오 Q1 실적', date:'2026-05-08', tickers:['035720'] },

@@ -1,6 +1,24 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-05-06 07:25 KST",
+    summary: `Anthropic $50B 라운드 $900B 밸류 5월 보드 미팅 결정 임박 - 한 기관 $5B 단일 수표
+SpaceX S-1 정식 제출 5/15~5/22 윈도우·6/8 로드쇼·6/18~6/30 프라이싱 카운트다운
+OpenAI·Anthropic 5/5 인도 동시 진출 + Anthropic 금융 서비스 에이전트 10종 출시
+Sierra·Cursor 베이스에서 후기 단계 AI 자본 환경 우호 톤 유지`,
+    changes: [
+      { type: "펀딩", sector: "엔터프라이즈 SW",
+        detail: "Anthropic($50B 라운드 $900B 밸류 - 5월 보드 미팅 결정 임박). 5/5 후속 보도 - 신규 $50B 펀딩 라운드를 $900B 밸류로 검토 중, 5월 보드 미팅에서 진행 여부와 조건 결정 임박. 한 기관이 $5B 단일 수표를 제안했으나 CFO Krishna Rao 미팅조차 못 잡을 정도의 수요 압축 - 투자자 수요가 라운드 사이즈를 추가 확장시킬 가능성 잔존. 매출 런레이트 3월 기준 $39B 연환산, OpenAI $24~25B 컨센 $14B 손실 베이스 대비 마진 우위가 밸류 정당화 핵심. 본 5개 카테고리 미수록(IPO 직전이지만 Sacra·Counterpoint 베이스 자체 분석은 비상장), 다만 엔터프라이즈 SW·AI 카테고리 자본 환경의 단일 톱 시그널 - Cursor·Sierra·Perplexity 등 후기 단계 AI 자본 베이스라인 동반 상향. 성사 시 OpenAI($852B) 추월·사상 가장 비싼 AI 스타트업.",
+        time: "2026-05-06 07:25 KST" },
+      { type: "정보 갱신", sector: "우주·모빌리티·방산",
+        detail: "SpaceX(S-1 정식 제출 5/15~5/22 윈도우·6/8 로드쇼·6/18~6/30 프라이싱 카운트다운). 5/5 정규장 시점에서 비밀 S-1 제출 베이스에서 정식 공개 제출까지 D-9~16 카운트다운 진입 - 6/8 로드쇼 시작·6/11 1,500명 리테일 투자자 투어·6/18~6/30 프라이싱 윈도우 일정 그대로. 목표 밸류 $1.75~2.0T·조달 $75B·UK·EU·호주·캐나다·일본·한국 리테일 30% 할당 베이스 잔존. ARK·Stableton 등 주요 분석 보고서 가격 정당화 모멘텀 누적. SpaceX-xAI 합병 베이스 + Cursor $60B 옵션 + Grok 코딩 팀 재건 + Colossus 2 슈퍼클러스터 1.5GW 가동 펀더멘털 라인업이 IPO 직전 단일 분기점.",
+        time: "2026-05-06 07:25 KST" },
+      { type: "정보 갱신", sector: "엔터프라이즈 SW",
+        detail: "Cursor·Perplexity·Notion 등 엔터프라이즈 AI 에이전트 카테고리 베이스. 5/5 OpenAI x PwC 글로벌 재무 운영 파트너십 + Anthropic 금융 서비스 AI 에이전트 10종 + Claude의 MS Excel·PPT 통합 + 양사 인도 동시 진출 = 단일 24h 윈도우에 글로벌 엔터프라이즈 AI 채널 양강 선점이 가속. 본 카테고리 후기 단계 AI 펀더멘털 베이스 우호 톤 유지 - Cursor의 SpaceX $60B 옵션 베이스, Perplexity의 ARR $500M +335% YoY 베이스, Notion의 AI 워크스페이스 베이스 모두 매출·자본 동반 가속. 다음 분기점 - Anthropic $900B 라운드 5월 보드 미팅 결정 + SpaceX IPO 6월 프라이싱 + Cursor 자체 라운드 클로징.",
+        time: "2026-05-06 07:25 KST" },
+    ]
+  },
+  {
     date: "2026-05-05 19:30 KST",
     summary: `Sierra Series E $950M $15.8B 밸류 - Bret Taylor 주도 AI 고객서비스 에이전트 톱주자
 Tiger·Google GV 리드, ARR $150M 8분기 만 도달 - 엔터프라이즈 AI 에이전트 자본 가속
