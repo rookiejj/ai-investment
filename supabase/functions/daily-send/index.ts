@@ -296,10 +296,15 @@ Deno.serve(async (req) => {
       || url.searchParams.get("dryRun") === "1";
 
     // body.subscriberIds 가 있으면 해당 active 구독자만 발송 (운영 대시보드 선택 발송용)
+    // body.customMessage 가 있으면 update.js 조립 대신 본문 그대로 사용 (공지 발송)
     const reqBody = await req.json().catch(() => ({} as Record<string, unknown>));
     const rawIds = (reqBody as { subscriberIds?: unknown }).subscriberIds;
     const subscriberIds: string[] | null = Array.isArray(rawIds)
       ? rawIds.filter((x): x is string => typeof x === "string" && x.length > 0)
+      : null;
+    const customMessageRaw = (reqBody as { customMessage?: unknown }).customMessage;
+    const customMessage = typeof customMessageRaw === "string" && customMessageRaw.trim().length > 0
+      ? customMessageRaw
       : null;
 
     const supabase = createClient(
@@ -307,18 +312,29 @@ Deno.serve(async (req) => {
       Deno.env.get("BRIEFICK_SUPABASE_SECRET_KEY")!,
     );
 
-    // 1) 메시지 조립
-    const tabs: TabWithEntries[] = [];
-    for (const t of TABS) {
-      const entries = await fetchTabEntries(t);
-      if (entries.length) tabs.push({ ...t, entries });
+    // 1) 메시지 조립 — 공지(customMessage) 또는 update.js 자동 조립
+    let message: string;
+    let rawMessage: string;
+    let truncated = false;
+    let tabCount = 0;
+    if (customMessage) {
+      message = customMessage;
+      rawMessage = customMessage;
+    } else {
+      const tabs: TabWithEntries[] = [];
+      for (const t of TABS) {
+        const entries = await fetchTabEntries(t);
+        if (entries.length) tabs.push({ ...t, entries });
+      }
+      tabCount = tabs.length;
+      rawMessage = buildMessage(tabs);
+      message = fitToLimit(tabs, LIMIT);
+      truncated = message.length < rawMessage.length;
+      if (truncated) {
+        console.warn(`[warn] message truncated even-share: ${rawMessage.length}→${message.length}`);
+      }
     }
-    const rawMessage = buildMessage(tabs);
-    const message = fitToLimit(tabs, LIMIT);
-    const truncated = message.length < rawMessage.length;
-    if (truncated) {
-      console.warn(`[warn] message truncated even-share: ${rawMessage.length}→${message.length}`);
-    }
+    const templateCode = customMessage ? "notice" : "daily_news";
 
     // 2) 만료된 구독자 상태 최신화 (paid_until이 과거인 active → expired)
     const nowIso = new Date().toISOString();
@@ -352,8 +368,9 @@ Deno.serve(async (req) => {
         truncated,
         overflow: message.length > LIMIT,
         activeSubscribers: subs?.length ?? 0,
-        tabCount: tabs.length,
+        tabCount,
         message,
+        templateCode,
         elapsedMs: Date.now() - startedAt,
       });
     }
@@ -405,7 +422,7 @@ Deno.serve(async (req) => {
           char_count: message.length,
           status: failed ? "fail" : "success",
           message_type: "friendtalk",
-          template_code: "daily_news",
+          template_code: templateCode,
           provider: "solapi",
           provider_code: result?.groupId ?? null,
           provider_message: providerMsg,

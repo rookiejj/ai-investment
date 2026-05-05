@@ -12,6 +12,7 @@
  *   action='manual_send'        → { token, subscriberIds } → { ok, sent, failed } — 알림톡
  *   action='daily_send_preview' → { token } → { preview, alreadySent } — 매일 뉴스 친구톡 드라이런
  *   action='daily_send_now'     → { token } → { response } — 매일 뉴스 친구톡 즉시 발송
+ *   action='notice_send'        → { token, subscriberIds, message } → { response } — 공지 친구톡(커스텀 본문) 발송
  *
  * 인증: login 외 모든 액션은 token(세션) 필요.
  *       token = HMAC(timestamp:version, ADMIN_SESSION_SECRET) + 만료 확인.
@@ -402,6 +403,39 @@ Deno.serve(async (req) => {
         }, { cors });
       }
 
+      return json({
+        ok: res.ok && (respBody as { ok?: boolean })?.ok !== false,
+        status: res.status,
+        response: respBody,
+      }, { cors });
+    }
+
+    // ─── notice_send ─── 공지 친구톡 즉시 발송 (커스텀 본문)
+    if (action === "notice_send") {
+      const cronSecret = Deno.env.get("CRON_SECRET");
+      const supabaseUrl = Deno.env.get("SUPABASE_URL");
+      if (!cronSecret || !supabaseUrl) {
+        return json({ ok: false, error: "CRON_SECRET or SUPABASE_URL missing" }, { status: 500, cors });
+      }
+      const rawIds = (body as { subscriberIds?: unknown }).subscriberIds;
+      const subscriberIds = Array.isArray(rawIds)
+        ? (rawIds as unknown[]).filter((x): x is string => typeof x === "string" && x.length > 0)
+        : [];
+      const message = typeof (body as { message?: unknown }).message === "string"
+        ? ((body as { message: string }).message).trim()
+        : "";
+      if (!subscriberIds.length) return json({ ok: false, error: "subscriberIds required" }, { status: 400, cors });
+      if (!message) return json({ ok: false, error: "message required" }, { status: 400, cors });
+      if (message.length > 1000) return json({ ok: false, error: `메시지 길이 ${message.length}자 — 1000자 한도 초과` }, { status: 400, cors });
+
+      const proxyBody = JSON.stringify({ subscriberIds, customMessage: message });
+      const url = `${supabaseUrl}/functions/v1/daily-send`;
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-Cron-Secret": cronSecret },
+        body: proxyBody,
+      });
+      const respBody = await res.json().catch(() => ({}));
       return json({
         ok: res.ok && (respBody as { ok?: boolean })?.ok !== false,
         status: res.status,

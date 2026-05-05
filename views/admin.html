@@ -293,6 +293,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
       <button class="nav-item" data-view="subscribers"><span class="icon">👤</span>구독자</button>
       <button class="nav-item" data-view="payments"><span class="icon">💳</span>결제</button>
       <button class="nav-item" data-view="sends"><span class="icon">📬</span>발송</button>
+      <button class="nav-item" data-view="notice"><span class="icon">📢</span>공지</button>
     </nav>
     <div class="sidebar-footer">
       <a href="/" target="_blank">← 브리픽 홈</a>
@@ -512,6 +513,33 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
         <div class="pager" id="logsPager"></div>
       </div>
     </section>
+
+    <!-- ═══ 공지 ═══ -->
+    <section class="view hidden" data-view="notice">
+      <div class="section">
+        <div class="section-title">공지 친구톡 즉시 발송</div>
+        <div class="section-subtitle">매일 뉴스와 별개로, 임의 본문을 선택한 구독자에게 친구톡으로 발송합니다. 점검·이벤트·긴급 안내 등에 사용. 카카오 광고성 발송 정책 준수 (KST 21:00~08:00 야간 발송 금지).</div>
+        <div class="ds-grid">
+          <div class="filter-bar ds-toolbar">
+            <button class="btn ghost" id="noticeReload">대상 새로고침</button>
+            <button class="btn ghost select-all" id="noticeSelectAll">모두 선택/해제</button>
+          </div>
+          <div class="ds-warn-area info" id="noticeWarn">본문 입력·구독자 선택 후 [지금 발송] 클릭. 발송 전 한 번 더 확인합니다.</div>
+          <div class="targets" id="noticeTargets"><div class="loading">활성 구독자 로딩 중…</div></div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <textarea id="noticeBody" placeholder="공지 본문을 입력하세요. 카카오 친구톡 1000자 한도. 줄바꿈은 그대로 적용됩니다." style="width:100%;min-height:240px;padding:14px;border:1px solid var(--border);border-radius:10px;font:400 14px/1.6 'Inter','Pretendard Variable',sans-serif;color:var(--fg);background:#fff;resize:vertical"></textarea>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--mut)">
+              <span id="noticeCharCount">0 / 1000자</span>
+              <span id="noticeTargetCount">선택된 구독자 없음</span>
+            </div>
+          </div>
+        </div>
+        <div class="filter-bar" style="margin-top:4px">
+          <button class="primary" id="noticeSendBtn" disabled>지금 발송</button>
+        </div>
+        <div id="noticeStatus" style="display:none;padding:10px 12px;border-radius:8px;font-size:13px"></div>
+      </div>
+    </section>
   </main>
 </div>
 
@@ -538,8 +566,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 const API = 'https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/admin-api';
 const KEY_TOKEN = 'briefick_admin_token';
 const KEY_EXPIRES = 'briefick_admin_expires';
-const VIEWS = ['overview','subscribers','payments','sends'];
-const TITLES = { overview:'대시보드', subscribers:'구독자', payments:'결제', sends:'발송' };
+const VIEWS = ['overview','subscribers','payments','sends','notice'];
+const TITLES = { overview:'대시보드', subscribers:'구독자', payments:'결제', sends:'발송', notice:'공지' };
 
 const $ = (id)=>document.getElementById(id);
 const loginView = $('loginView');
@@ -654,6 +682,7 @@ function loadView(name){
   else if(name === 'subscribers'){ loadSubsStats(); loadSubscribers(); }
   else if(name === 'payments'){ loadPaysStats(); loadExpiring(); loadPayments(); }
   else if(name === 'sends'){ loadSendsStats(); loadLogs(); loadManualTargets(); dsLoadTargets(); }
+  else if(name === 'notice'){ noticeLoadTargets(); }
 }
 function reloadCurrentView(){
   loadedViews.delete(currentView);
@@ -1087,6 +1116,91 @@ $('dsSendBtn').addEventListener('click', async ()=>{
     $('dsPreviewBtn').disabled = false;
     $('dsSendBtn').classList.add('ghost');
     dsUpdateButtons();
+  }
+});
+
+// ─── 공지 친구톡 (커스텀 본문) ───
+let noticeRows = [];
+function noticeSetStatus(type, text){
+  const s = $('noticeStatus');
+  if(!text){ s.style.display='none'; s.textContent=''; return; }
+  s.style.display='block';
+  s.textContent = text;
+  s.style.background = type==='success' ? '#d4fae8' : type==='error' ? '#fde8e8' : '#fff4e5';
+  s.style.color = type==='success' ? '#0a7a50' : type==='error' ? 'var(--danger)' : 'var(--warn)';
+}
+function noticeSelectedIds(){
+  return [...$('noticeTargets').querySelectorAll('input[type=checkbox]:checked')].map(c=>c.dataset.id);
+}
+function noticeUpdateUI(){
+  const n = noticeSelectedIds().length;
+  const len = $('noticeBody').value.length;
+  $('noticeTargetCount').textContent = n ? `선택 ${n}명` : '선택된 구독자 없음';
+  $('noticeCharCount').textContent = `${len} / 1000자`;
+  $('noticeCharCount').style.color = len > 1000 ? 'var(--danger)' : 'var(--mut)';
+  $('noticeSendBtn').disabled = !(n>0 && len>0 && len<=1000);
+}
+async function noticeLoadTargets(){
+  $('noticeTargets').innerHTML = '<div class="loading">활성 구독자 로딩 중…</div>';
+  try{
+    const r = await api('subscribers', { filter: { status: 'active' } });
+    noticeRows = r.rows || [];
+    if(!noticeRows.length){
+      $('noticeTargets').innerHTML = '<div class="empty">활성 구독자가 없습니다</div>';
+      noticeUpdateUI();
+      return;
+    }
+    $('noticeTargets').innerHTML = noticeRows.map(r=>(
+      `<div class="target-row">`
+      +`<input type="checkbox" data-id="${r.id}">`
+      +`<span class="phone">${r.phone}</span>`
+      +`<span style="color:var(--mut);font-size:12px">${r.name||''}</span>`
+      +`<span class="badge ${r.delivery_state||'unknown'}" style="margin-left:auto">${r.delivery_state||'unknown'}</span>`
+      +`</div>`
+    )).join('');
+    $('noticeTargets').querySelectorAll('input[type=checkbox]').forEach(c=>{
+      c.addEventListener('change', noticeUpdateUI);
+    });
+    noticeUpdateUI();
+  }catch(err){
+    $('noticeTargets').innerHTML = `<div class="empty">오류: ${err.message}</div>`;
+  }
+}
+$('noticeBody').addEventListener('input', noticeUpdateUI);
+$('noticeReload').addEventListener('click', noticeLoadTargets);
+$('noticeSelectAll').addEventListener('click', ()=>{
+  const boxes = $('noticeTargets').querySelectorAll('input[type=checkbox]');
+  const allChecked = [...boxes].every(c=>c.checked);
+  boxes.forEach(c=>{ c.checked = !allChecked; });
+  noticeUpdateUI();
+});
+$('noticeSendBtn').addEventListener('click', async ()=>{
+  const ids = noticeSelectedIds();
+  const message = $('noticeBody').value;
+  if(!ids.length || !message.trim()) return;
+  if(message.length > 1000){ noticeSetStatus('error','메시지가 1000자를 초과했습니다.'); return; }
+  // 야간 발송 경고
+  const kstHour = new Date(Date.now() + 9*3600000).getUTCHours();
+  const isNight = kstHour < 8 || kstHour >= 21;
+  const nightWarn = isNight ? '\n⚠ 현재 KST 야간(21:00~08:00) — 카카오 광고성 발송 정책상 차단될 수 있습니다.' : '';
+  if(!confirm(`선택한 ${ids.length}명에게 입력한 본문(${message.length}자)으로 공지 친구톡을 발송할까요?${nightWarn}`)) return;
+  $('noticeSendBtn').disabled = true;
+  noticeSetStatus('info', '발송 요청 중…');
+  try{
+    const r = await api('notice_send', { subscriberIds: ids, message });
+    const resp = r.response || {};
+    if(r.ok){
+      noticeSetStatus('success', `발송 요청 성공 — ${resp.charCount ?? message.length}자. 결과는 발송 이력에서 확인하세요.`);
+    }else{
+      noticeSetStatus('error', `발송 실패 (status ${r.status}): ${JSON.stringify(resp).slice(0, 300)}`);
+    }
+    invalidateStats();
+    loadedViews.delete('overview');
+    if(loadedViews.has('sends')){ loadedViews.delete('sends'); }
+  }catch(err){
+    noticeSetStatus('error', '오류: ' + err.message);
+  }finally{
+    noticeUpdateUI();
   }
 });
 
