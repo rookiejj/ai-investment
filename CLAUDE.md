@@ -77,11 +77,19 @@ ai-investment/
 
 **처리 순서 (선점 우선순위)**
 
-1. **미국 주식 (stocks)**
-2. **한국 주식 (kr)**
+1. **한국 주식 (kr)**
+2. **미국 주식 (stocks)**
 3. **AI 기업 (ai)**
 4. **유니콘·프리IPO (unicorn)**
 5. **원자재·크립토 (commodity)**
+
+⚠️ **선점 순서 ≠ 표시 순서** — 위는 자동 갱신 시 dedup 우선권을 정하는 처리 순서. 사용자에게 노출되는 면(헤드라인·인스타 포스팅·대안 자산·친구톡 등)은 아래 [표시 순서] 따름.
+
+**표시 순서 (모든 사용자 노출 면)**
+
+`kr → stocks → ai → commodity → unicorn`
+
+선점 순서와 unicorn↔commodity 위치가 뒤바뀐다. 사용자에겐 자산성 친숙도(원자재가 비상장 유니콘보다 일상적)가 우선이라 commodity가 먼저 나오고 unicorn이 마지막. 대안 자산 섹션처럼 commodity가 원자재·크립토로 분리된 면에서는 `ai → commodity → crypto → unicorn` (commodity·crypto 인접 — 동일 데이터 출처).
 
 **선점 판정 — 사건의 1차 도메인이 우선**
 
