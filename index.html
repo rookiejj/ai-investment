@@ -72,7 +72,6 @@ section:first-of-type{padding-top:48px;border-top:0}
   background:linear-gradient(90deg,var(--acc-deep),var(--acc));
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
-.hero-title .time-of-day{color:var(--mut);font-weight:500}
 .hero-sub{font:400 18px/1.55 'Inter',sans-serif;color:var(--mut);max-width:640px;margin:0 auto 28px}
 .hero-meta{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;background:var(--panel-tint);border:1px solid var(--border);border-radius:9999px;font:500 13px/1 'Inter',sans-serif;color:var(--fg2)}
 .hero-meta .dot{width:6px;height:6px;background:var(--acc);border-radius:50%;animation:pulse 2s infinite}
@@ -496,7 +495,7 @@ section:first-of-type{padding-top:48px;border-top:0}
 <!-- Hero + Today's Narrative -->
 <section class="hero">
   <div class="hero-eyebrow">1분 마켓 브리핑</div>
-  <h1 class="hero-title">오늘 <span class="time-of-day" id="heroTimeOfDay"></span><br><span class="accent">놓치면 안 되는 것</span></h1>
+  <h1 class="hero-title">오늘<br><span class="accent">놓치면 안 되는 것</span></h1>
   <div class="hero-meta"><span class="dot"></span><span id="lastUpdated">데이터 로드 중…</span></div>
 
   <div class="narrative-card" id="narrativeCard">
@@ -695,31 +694,25 @@ function extractTickers(text){
 // ═══════════════════════════════════════════════════════════
 function buildNarrative(){
   const today=todayKST();
-  document.getElementById('lastUpdated').textContent='최신 데이터 · '+fmtKSTHuman(today);
 
-  // 데이터 수집 시간(07:00 / 19:00 KST) 기준 오전/오후 라벨
-  // 모든 탭 중 가장 최신 datetime entry의 시간을 사용 (단순 max hour는
-  // 일부 탭이 늦게 갱신될 때 오작동)
-  const todEl=document.getElementById('heroTimeOfDay');
-  if(todEl){
-    let latestKey='';
-    let latestHour=null;
-    for(const k of ['stocks','kr','ai','commodity','unicorn']){
-      const e=STATE.upd[k]?.[0];
-      if(!e||!e.date)continue;
-      const m=e.date.match(/(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})/);
-      if(m){
-        const key=m[1]+m[2]+m[3]+m[4]+m[5];
-        if(key>latestKey){
-          latestKey=key;
-          latestHour=parseInt(m[4],10);
-        }
+  // 모든 탭 중 가장 최신 datetime entry의 HH:MM을 hero pill에 부착
+  let latestKey='';
+  let latestHHMM=null;
+  for(const k of ['stocks','kr','ai','commodity','unicorn']){
+    const e=STATE.upd[k]?.[0];
+    if(!e||!e.date)continue;
+    const m=e.date.match(/(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})/);
+    if(m){
+      const key=m[1]+m[2]+m[3]+m[4]+m[5];
+      if(key>latestKey){
+        latestKey=key;
+        latestHHMM=`${m[4]}:${m[5]}`;
       }
     }
-    if(latestHour!==null){
-      todEl.textContent=latestHour<12?'오전':'오후';
-    }
   }
+  const dateLbl=fmtKSTHuman(today);
+  document.getElementById('lastUpdated').textContent=
+    '최신 데이터 · '+dateLbl+(latestHHMM?' '+latestHHMM:'');
 
   const tabs=[
     {key:'stocks',   flag:'🇺🇸', label:'미국 마켓'},
