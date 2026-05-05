@@ -1,6 +1,21 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-05-05 19:30 KST",
+    summary: `Sierra Series E $950M $15.8B 밸류 - Bret Taylor 주도 AI 고객서비스 에이전트 톱주자
+Tiger·Google GV 리드, ARR $150M 8분기 만 도달 - 엔터프라이즈 AI 에이전트 자본 가속
+SpaceX IPO 6월 로드쇼 카운트다운 + Anthropic $900B 라운드 5월 마감 임박 - 빅3 메가 IPO 환경
+OpenAI·Anthropic 5/4 PE 합작벤처 동시 발표 - 엔터프라이즈 AI 채널 양강 선점 구도`,
+    changes: [
+      { type: "펀딩", sector: "엔터프라이즈 SW",
+        detail: "Sierra(Series E $950M $15.8B 밸류 - 본 카테고리 외부지만 AI 에이전트 자본 흐름 베이스라인). 5/4 CNBC·TechCrunch 동시 보도 - Bret Taylor·Clay Bavor 공동창업 Sierra가 Tiger Global·Google GV 리드로 Series E $950M 라운드 마감, 밸류 $15.8B로 진입. 직전 가을 라운드 $10B 대비 +58% 업라운드, Benchmark·Sequoia·Greenoaks 등 기존 투자자 동반 참여. 펀더멘털 - ARR $150M 8분기 만 도달, AI 고객서비스 에이전트로 OpenAI·Anthropic 파운데이션 모델 위에 SaaS 레이어를 구축하는 풀스택 에이전트 회사 포지셔닝. 본 5개 카테고리 미수록이지만 엔터프라이즈 AI 에이전트 자본 환경의 단일 톱 시그널 - Anthropic·OpenAI 5/4 PE 합작벤처 + Anthropic $900B 라운드 마감 임박 + SpaceX IPO 6월 로드쇼 카운트다운과 결합돼 후기 단계 AI 자본 환경 우호 베이스 추가. Cursor·Perplexity 동반 카테고리에 밸류 베이스라인 상향 시그널.",
+        time: "2026-05-05 19:30 KST" },
+      { type: "정보 갱신", sector: "엔터프라이즈 SW",
+        detail: "Cursor(SpaceX 옵션 베이스 점검). 4/21 SpaceX $60B 인수 옵션 + 별도 자체 라운드 $50B+ 트랙 진행 그대로, 5/4 PE 합작벤처 발표(OpenAI The Deployment Company $10B + Anthropic $1.5B Wall Street JV)로 후기 단계 AI 자본 환경 우호 시그널 추가 - Cursor 자체 라운드 클로징 환경에 우호 베이스. SpaceX는 S-1 정식 제출 윈도우 5/15~5/22 + 6/8 로드쇼 시작 카운트다운 그대로, IPO 직후 Q3 Cursor 인수 결정 시나리오 유력. 동시에 Sierra가 8분기 만 ARR $150M 도달로 엔터프라이즈 AI 에이전트 카테고리의 매출 가속 베이스라인 추가 - Cursor의 ARR 가속(약 $9B → $50B+ 6배 가속) 추세도 동반 카테고리 펀더멘털 우호.",
+        time: "2026-05-05 19:30 KST" },
+    ]
+  },
+  {
     date: "2026-05-03 19:20 KST",
     summary: `Helix Digital Infrastructure $10B 출범 - KKR 사모 자본의 AI 인프라 직접 진입
 前 AWS CEO 애덤 셀립스키 CEO·이사회 의장 - 하이퍼스케일러 풀스택 인프라 운영 모델
