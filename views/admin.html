@@ -177,11 +177,11 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 
 /* 수동 발송 */
 .manual-send textarea{width:100%;min-height:100px;margin-bottom:10px;resize:vertical;font-family:Pretendard,sans-serif;line-height:1.5}
-.manual-send .targets{display:flex;flex-direction:column;gap:4px;max-height:300px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;padding:10px;background:#fcfcfc;margin-bottom:12px}
-.manual-send .target-row{display:flex;align-items:center;gap:10px;padding:6px 4px;border-bottom:1px dashed var(--border)}
-.manual-send .target-row:last-child{border-bottom:none}
-.manual-send .target-row input[type="checkbox"]{margin:0;accent-color:var(--acc-deep)}
-.manual-send .target-row .phone{font-family:'Geist Mono','SF Mono',monospace;font-size:12px;color:var(--fg2)}
+.manual-send .targets,.notice-send .targets{display:flex;flex-direction:column;gap:4px;max-height:300px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;padding:10px;background:#fcfcfc;margin-bottom:12px}
+.manual-send .target-row,.notice-send .target-row{display:flex;align-items:center;gap:10px;padding:6px 4px;border-bottom:1px dashed var(--border)}
+.manual-send .target-row:last-child,.notice-send .target-row:last-child{border-bottom:none}
+.manual-send .target-row input[type="checkbox"],.notice-send .target-row input[type="checkbox"]{margin:0;accent-color:var(--acc-deep)}
+.manual-send .target-row .phone,.notice-send .target-row .phone{font-family:'Geist Mono','SF Mono',monospace;font-size:12px;color:var(--fg2)}
 .manual-send .actions{display:flex;gap:8px;align-items:center}
 .manual-send button.primary{padding:10px 16px;background:var(--fg);color:#fff;border-radius:8px;font-weight:600}
 .manual-send button.primary:hover{background:#000}
@@ -255,7 +255,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
   .badge{font-size:10px;padding:2px 6px}
 
   .manual-send textarea{min-height:80px;font-size:13px}
-  .manual-send .targets{max-height:240px}
+  .manual-send .targets,.notice-send .targets{max-height:240px}
 
   .pager{gap:4px;flex-wrap:wrap}
   .pager button{padding:5px 10px;font-size:12px}
@@ -516,7 +516,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 
     <!-- ═══ 공지 ═══ -->
     <section class="view hidden" data-view="notice">
-      <div class="section">
+      <div class="section notice-send">
         <div class="section-title">공지 친구톡 즉시 발송</div>
         <div class="section-subtitle">매일 뉴스와 별개로, 임의 본문을 선택한 구독자에게 친구톡으로 발송합니다. 점검·이벤트·긴급 안내 등에 사용. 카카오 광고성 발송 정책 준수 (KST 21:00~08:00 야간 발송 금지).</div>
         <div class="ds-grid">
