@@ -1843,7 +1843,7 @@ async function loadCalendar(){
 
 async function loadPrices(){
   try{
-    const r=await fetch(PRICES_URL);
+    const r=await fetch(PRICES_URL+'?_='+Date.now());
     if(!r.ok) throw new Error('prices '+r.status);
     const j=await r.json();
     return j.prices||{};
@@ -1851,6 +1851,19 @@ async function loadPrices(){
     console.warn('시세 로드 실패:',e);
     return {};
   }
+}
+
+// 페이지 오래 열어둘 때 stale 방지 — 5분마다 백그라운드 갱신 + 카드 재렌더
+const PRICE_REFRESH_MS=5*60*1000;
+function startPricePolling(){
+  setInterval(async ()=>{
+    if(document.hidden)return; // 백그라운드 탭은 skip
+    const fresh=await loadPrices();
+    if(Object.keys(fresh).length){
+      STATE.prices=fresh;
+      if(STATE.data[STATE.healthMarket]) renderHealth();
+    }
+  }, PRICE_REFRESH_MS);
 }
 
 async function boot(){
@@ -1887,6 +1900,7 @@ async function boot(){
   pricesPromise.then(prices=>{
     STATE.prices=prices;
     if(STATE.data[STATE.healthMarket]) renderHealth();
+    startPricePolling();
   });
 }
 
