@@ -261,7 +261,13 @@ section:first-of-type{padding-top:48px;border-top:0}
   position:relative;
 }
 .exp-card:hover{border-color:var(--border-strong);box-shadow:var(--shadow-card);transform:translateY(-1px)}
+.exp-tk-row{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
 .exp-tk{font:600 12px/1 'Geist Mono',monospace;color:var(--mut);letter-spacing:0.4px}
+.exp-px{font:600 12px/1 'Geist Mono',monospace;letter-spacing:-0.1px;color:var(--fg);white-space:nowrap}
+.exp-px.up{color:var(--acc-deep)}
+.exp-px.down{color:var(--err)}
+.exp-px.flat{color:var(--fg)}
+.exp-px-chg{font-weight:500;font-size:11px;margin-left:2px}
 .exp-nm{font:600 15px/1.25 'Inter',sans-serif;letter-spacing:-0.2px;color:var(--fg)}
 .exp-rs{font:400 12px/1.5 'Inter',sans-serif;color:var(--mut);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .exp-growth{display:inline-flex;align-items:center;gap:4px;font:600 11px/1 'Geist Mono',monospace;letter-spacing:0.4px}
@@ -365,6 +371,13 @@ section:first-of-type{padding-top:48px;border-top:0}
 .modal-tk{font:600 12px/1 'Geist Mono',monospace;color:var(--mut);text-transform:uppercase;letter-spacing:0.4px}
 .modal-nm{font:600 28px/1.2 'Inter',sans-serif;letter-spacing:-0.5px;color:var(--fg);margin-top:6px}
 .modal-cat{font:500 13px/1.4 'Inter',sans-serif;color:var(--mut);margin-top:6px}
+.modal-px{
+  display:inline-flex;align-items:baseline;gap:8px;margin-top:8px;
+  font:700 22px/1 'Geist Mono',monospace;letter-spacing:-0.4px;color:var(--fg);
+}
+.modal-px.up{color:var(--acc-deep)}
+.modal-px.down{color:var(--err)}
+.modal-px-chg{font:600 14px/1 'Geist Mono',monospace;letter-spacing:0}
 .modal-actions{display:flex;align-items:center;gap:8px}
 .modal-close{width:36px;height:36px;border-radius:50%;background:var(--panel-tint);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--fg);font-size:18px}
 .modal-close:hover{background:var(--fg);color:#fff}
@@ -834,6 +847,7 @@ const UPD_URLS={
   unicorn:   {url:'/data/unicorn-update.js',   var:'updates'},
 };
 const CALENDAR_URL='/data/calendar-events.js';
+const PRICES_URL='https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/prices/latest.json';
 
 async function loadJS(url){
   const r=await fetch(url+'?_='+Date.now());
@@ -846,7 +860,7 @@ async function loadUpd(url, varName){
   return new Function(t+`;return typeof ${varName}!=="undefined"?${varName}:[];`)();
 }
 
-const STATE={data:{},upd:{},market:'kr',healthMarket:'kr',expQuery:''};
+const STATE={data:{},upd:{},prices:{},market:'kr',healthMarket:'kr',expQuery:''};
 
 // ═══════════════════════════════════════════════════════════
 // Helpers
@@ -910,6 +924,12 @@ const NAME_KO={
   'Chipotle':'치폴레','Lululemon':'룰루레몬','Starbucks':'스타벅스',
 };
 function displayName(nm){return (nm&&NAME_KO[nm])||nm||''}
+
+function fmtPriceUS(p){return '$'+Number(p).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function fmtPriceKR(p){return '₩'+Math.round(Number(p)).toLocaleString('ko-KR')}
+function fmtPriceFor(p, market){return market==='kr' ? fmtPriceKR(p) : fmtPriceUS(p)}
+function fmtChgPct(c){if(c==null||isNaN(c))return '';return (c>=0?'+':'')+Number(c).toFixed(2)+'%'}
+function pxClass(c){if(c==null||isNaN(c))return 'flat';return c>0?'up':(c<0?'down':'flat')}
 
 // 영문 티커 추출 stop list
 const TICKER_STOP=new Set(['AI','EPS','CEO','CFO','CPI','GDP','OPEC','FOMC','ETF','IPO','API','SEC','LLM','SUV','EV','EU','US','UK','KST','AH','CC','QoQ','YoY','YTD','GAAP','NM','NA','MAU','DAU','SaaS','GPU','TPU','TSV','SMR','DRAM','HBM','LNG','WTI','M&A','PMI','UTC','D','PT','ET','CT','PR','GAAP','IT','TV','UI','UX','PC','OS','RPO','ARR','LTM','FY','GM','OPM','PER','PBR','ESG','OECD','NATO','APAC','EMEA','LATAM','PG','VC','CDP','PE','VR','AR','BCG','IPO','ROE','ROI','PG','PT','ST','RD']);
@@ -1333,12 +1353,23 @@ function renderHealth(){
           ${r.stocks.map(s=>{
             const gCls=s.g===null?'flat':(s.g>0.05?'up':(s.g<-0.05?'down':'flat'));
             return `
-              <div class="exp-card" data-tk="${escapeHtml(s.tk)}" data-market="${market}">
-                <span class="exp-tk">${escapeHtml(s.tk)}</span>
-                <div class="exp-nm">${escapeHtml(displayName(s.nm))}</div>
-                <div class="exp-rs">${escapeHtml(s.rs||'')}</div>
-                ${s.g!==null?`<span class="exp-growth ${gCls}">FY26E ${fmtPct(s.g)}</span>`:''}
-              </div>
+              ${(()=>{
+                const px=STATE.prices?.[s.tk];
+                const hasPx=px && px.price!=null;
+                const pxStr=hasPx?fmtPriceFor(px.price, market):'';
+                const chgPct=hasPx?px.changePct:null;
+                return `
+                  <div class="exp-card" data-tk="${escapeHtml(s.tk)}" data-market="${market}">
+                    <div class="exp-tk-row">
+                      <span class="exp-tk">${escapeHtml(s.tk)}</span>
+                      ${hasPx?`<span class="exp-px ${pxClass(chgPct)}">${escapeHtml(pxStr)}${chgPct!=null?` <span class="exp-px-chg">${escapeHtml(fmtChgPct(chgPct))}</span>`:''}</span>`:''}
+                    </div>
+                    <div class="exp-nm">${escapeHtml(displayName(s.nm))}</div>
+                    <div class="exp-rs">${escapeHtml(s.rs||'')}</div>
+                    ${s.g!==null?`<span class="exp-growth ${gCls}">FY26E ${fmtPct(s.g)}</span>`:''}
+                  </div>
+                `;
+              })()}
             `;
           }).join('')}
         </div>
@@ -1620,6 +1651,14 @@ function openModal(tk,market){
       <div>
         <div class="modal-tk">${escapeHtml(tk)} · ${escapeHtml(market==='stocks'?'미국':'한국')}</div>
         <h2 class="modal-nm">${escapeHtml(displayName(s.nm))}</h2>
+        ${(()=>{
+          const px=STATE.prices?.[tk];
+          if(!px || px.price==null) return '';
+          return `<div class="modal-px ${pxClass(px.changePct)}">
+            <span class="modal-px-val">${escapeHtml(fmtPriceFor(px.price, market))}</span>
+            ${px.changePct!=null?`<span class="modal-px-chg">${escapeHtml(fmtChgPct(px.changePct))}</span>`:''}
+          </div>`;
+        })()}
         <div class="modal-cat">${escapeHtml(s.catTitle||'')}${s.catTag?' · '+escapeHtml(s.catTag):''}</div>
       </div>
       <div class="modal-actions">
@@ -1802,7 +1841,22 @@ async function loadCalendar(){
   }
 }
 
+async function loadPrices(){
+  try{
+    const r=await fetch(PRICES_URL);
+    if(!r.ok) throw new Error('prices '+r.status);
+    const j=await r.json();
+    return j.prices||{};
+  }catch(e){
+    console.warn('시세 로드 실패:',e);
+    return {};
+  }
+}
+
 async function boot(){
+  // 시세는 비차단 — 백그라운드에서 받아와 도착 시 재렌더
+  const pricesPromise=loadPrices();
+
   try{
     const [stocks,kr,ai,commodity,unicorn,calendar]=await Promise.all([
       loadJS(URLS.stocks),loadJS(URLS.kr),loadJS(URLS.ai),loadJS(URLS.commodity),loadJS(URLS.unicorn),
@@ -1828,6 +1882,12 @@ async function boot(){
     console.error('boot error:',e);
     document.getElementById('narrativeBody').innerHTML='<div class="updates-loading">데이터 로드 실패: '+escapeHtml(String(e.message||e))+'</div>';
   }
+
+  // 시세 도착 시 종목 카드만 재렌더 (모달은 다음 열 때 자동 반영)
+  pricesPromise.then(prices=>{
+    STATE.prices=prices;
+    if(STATE.data[STATE.healthMarket]) renderHealth();
+  });
 }
 
 boot();
