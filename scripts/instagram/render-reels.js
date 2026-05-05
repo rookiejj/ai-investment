@@ -40,7 +40,9 @@ function checkInputs() {
 function findMusicTrack() {
   if (!fs.existsSync(MUSIC_DIR)) return null;
   const candidates = fs.readdirSync(MUSIC_DIR).filter(f => /\.(mp3|m4a|wav|ogg)$/i.test(f));
-  return candidates.length ? path.join(MUSIC_DIR, candidates[0]) : null;
+  if (!candidates.length) return null;
+  const pick = candidates[Math.floor(Math.random() * candidates.length)];
+  return path.join(MUSIC_DIR, pick);
 }
 
 // 슬라이드 i를 9:16 캔버스로 — 같은 이미지를 블러 BG로 깔고, 가운데 원본 비율 유지 배치
