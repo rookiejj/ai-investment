@@ -164,7 +164,7 @@ section:first-of-type{padding-top:48px;border-top:0}
   display:flex;flex-direction:column;gap:6px;
   overflow:hidden;transition:background .15s;
 }
-.cal-day.today{background:var(--acc-soft);box-shadow:inset 3px 0 0 var(--acc-deep)}
+.cal-day.today{background:var(--acc-soft)}
 .cal-count{
   margin-left:auto;display:inline-flex;align-items:center;justify-content:center;
   min-width:18px;height:18px;padding:0 6px;border-radius:9999px;
@@ -456,7 +456,6 @@ section:first-of-type{padding-top:48px;border-top:0}
   .cal-date .dow{display:none}
   .cal-count{min-width:16px;height:16px;font-size:9px;padding:0 4px}
   .cal-day{padding:8px 2px;gap:4px}
-  .cal-day.today{box-shadow:none}
   .cal-events{gap:3px}
   .cal-event{font-size:9px;line-height:1.25;padding:3px 3px;gap:0;border-radius:5px}
   .cal-event .ev-tag{display:none}
@@ -698,16 +697,22 @@ function buildNarrative(){
   document.getElementById('lastUpdated').textContent='최신 데이터 · '+fmtKSTHuman(today);
 
   // 데이터 수집 시간(07:00 / 19:00 KST) 기준 오전/오후 라벨
+  // 모든 탭 중 가장 최신 datetime entry의 시간을 사용 (단순 max hour는
+  // 일부 탭이 늦게 갱신될 때 오작동)
   const todEl=document.getElementById('heroTimeOfDay');
   if(todEl){
+    let latestKey='';
     let latestHour=null;
     for(const k of ['stocks','kr','ai','commodity','unicorn']){
       const e=STATE.upd[k]?.[0];
       if(!e||!e.date)continue;
-      const m=e.date.match(/\d{4}-\d{2}-\d{2}\s+(\d{2}):/);
+      const m=e.date.match(/(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})/);
       if(m){
-        const h=parseInt(m[1],10);
-        if(latestHour===null||h>latestHour)latestHour=h;
+        const key=m[1]+m[2]+m[3]+m[4]+m[5];
+        if(key>latestKey){
+          latestKey=key;
+          latestHour=parseInt(m[4],10);
+        }
       }
     }
     if(latestHour!==null){
