@@ -59,9 +59,11 @@ ai-investment/
 │   │   ├── daily-send/           ← 매일 뉴스 친구톡 발송 (평일 cron 트리거)
 │   │   ├── expiry-notice/        ← D-1 만료 임박 재구독 안내 친구톡 (매일 20:00 cron)
 │   │   ├── solapi-webhook/       ← 솔라피 발송 결과 수신 (실시간 상태 갱신)
+│   │   ├── stock-prices/         ← Yahoo Finance 15분 지연 시세 fetch + Storage `prices/latest.json` 갱신 (15분 cron)
 │   │   └── admin-api/            ← 운영 대시보드용 (login / change_password / stats / logs / subscribers / payments / expiring_soon / manual_send[알림톡] / daily_send_preview / daily_send_now / notice_send[공지 친구톡])
 │   ├── schedule.sql              ← 매일 뉴스 cron (평일 08:00 KST)
 │   ├── schedule-expiry.sql       ← 만료 임박 cron (매일 20:00 KST)
+│   ├── schedule-prices.sql       ← 시세 갱신 cron (매 15분)
 │   ├── queries.sql               ← 운영 조회·상태 변경 템플릿
 │   └── README.md                 ← Supabase 세팅 가이드
 ├── docs/
@@ -129,6 +131,13 @@ ai-investment/
 ### 콘텐츠 자동 갱신
 - Claude Opus 4.7 원격 에이전트(`trig_016nvC9rVppRnQ9nFZeDjnP8`)가 매일 2회(KST 07:00 / 19:00)로 5개 탭 데이터 갱신·커밋·푸시 — 13시 슬롯은 2026-05-02부터 비활성화
 
+### 실시간 시세 (15분 지연)
+- **`stock-prices` Edge Function** — Yahoo Finance v8 chart endpoint(`includePrePost=true`)로 미국·한국·원자재·크립토 시세 fetch. 한국은 `.KS`/`.KQ` 둘 다 시도 매칭, 원자재·크립토는 `COMMODITY_YH` 매핑 테이블(`BTC→BTC-USD`·`GC→GC=F` 등). 결과를 Supabase Storage `prices/latest.json`에 저장.
+- **15분 갱신** — pg_cron `stock-prices-refresh`가 매 15분 함수 호출. 사용자 접속 무관 항상 최신 유지.
+- **클라이언트 5분 폴링** — `index.html`이 Storage public URL을 직접 fetch, 5분마다 자동 재로드(`document.hidden`이면 skip). STATE.prices 갱신 시 섹터 단계·deep-dive 모달 시세 라벨 즉시 재렌더.
+- **표시** — 종목 카드 우측에 `$216.57 +4.0%`(미국) / `₩78,500 +1.2%`(한국) 형식, 등락 색상(상승 녹·하락 적). 모달 헤더에도 동일 노출. 프리/애프터마켓 시간대엔 baseline을 `regularMarketPrice`로 보정해 Yahoo 표시값과 일치 (정규세션은 `previousClose` 기준).
+- **표기 안내** — 섹터 단계 섹션 헤더에 "시세는 15분 지연 (Yahoo Finance)" 명시.
+
 ### 인스타그램 자동 게시 (`@briefick`)
 - **시간대별 포맷 분기** (push 트리거 한정, 자동 갱신 커밋에만 발행):
   - **오전 자동 갱신(07시)** → 캐러셀(정적 게시물)만
@@ -147,7 +156,7 @@ ai-investment/
 - **Reels 흐름** (~5~8분):
   1. 캐러셀과 동일하게 PNG 7장 먼저 렌더 (소스로 재사용)
   2. ffmpeg `xfade` 필터로 슬라이드당 6초 + 0.5초 crossfade로 1080×1920 mp4 생성. 9:16 캔버스의 위·아래 빈 공간은 같은 이미지를 블러 처리한 BG로 채워 letterbox 회피. 총 길이 ~39초.
-  3. `scripts/instagram/music/` 하위 mp3 자동 픽업해 페이드인/아웃 합성 (없으면 무음 트랙 부착)
+  3. `scripts/instagram/music/` 하위 mp3 풀에서 **랜덤 픽**, 페이드인/아웃 합성 (없으면 무음 트랙 부착) — 트랙 다양성 위해 폴더에 mp3 더 떨어뜨리면 자동으로 풀 확장
   4. Supabase Storage 업로드 (`Content-Type: video/mp4`)
   5. Graph API REELS 컨테이너 생성(`media_type=REELS`, `share_to_feed=true`) → FINISHED 대기(최대 5분) → publish
 - **캡션**: 캐러셀·Reels 동일. 헤더(날짜·브랜드) + 프로필 링크 유도 CTA + 가변 해시태그(티커·키워드 자동 추출, `#브리픽 #briefick` 항상 보존, 30개 한도)
@@ -161,6 +170,7 @@ ai-investment/
 |---|---|---|---|
 | `daily-friendtalk-send` | `0 23 * * 0-4` | 평일 08:00 | `daily-send` |
 | `daily-expiry-notice` | `0 11 * * *` | 매일 20:00 | `expiry-notice` |
+| `stock-prices-refresh` | `*/15 * * * *` | 매 15분 | `stock-prices` |
 
 > KST 08:00 = UTC 23:00(전날). UTC 기준 dow 0~4가 한국 평일에 해당.
 
@@ -169,7 +179,7 @@ ai-investment/
 pg_cron(또는 admin-api 프록시) → Vault X-Cron-Secret → daily-send
     ├ body.customMessage 있으면 자동 조립 건너뛰고 본문 그대로 사용 (공지)
     │  없으면 GitHub Contents API로 data/*-update.js fetch
-    ├ 한 탭 summary = 한 글머리표 줄(자유 문체 그대로) — 한국 → 미국 → AI → 유니콘 → 원자재
+    ├ 한 탭 summary = 한 글머리표 줄(자유 문체 그대로) — 한국 → 미국 → AI → 원자재 → 유니콘 (표시 순서 통일)
     ├ 1000자 한도 초과 시 fitToLimit (모든 탭 보존하며 균등 줄 단위 cut)
     ├ 만료 구독자 expired 전환 (paid_until 과거)
     ├ 활성 구독자 조회 (body.subscriberIds 있으면 그 ID만)
@@ -285,6 +295,7 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-05 (2)**: **실시간 시세 표시 (Yahoo Finance 15분 지연)**. `supabase/functions/stock-prices/` 신설 — v8 chart endpoint(`includePrePost=true`)로 미국·한국(.KS/.KQ 자동 매칭)·원자재·크립토 시세 fetch, Supabase Storage `prices/latest.json`에 저장. pg_cron `stock-prices-refresh`(매 15분)이 사용자 접속 무관 항상 최신화. `index.html`이 Storage public URL을 직접 fetch + 5분 폴링(`document.hidden` 시 skip). 종목 카드·deep-dive 모달에 `$가격 +N%` / `₩가격 +N%` 형식 노출, 등락 색상 적용. 프리/애프터마켓 시간대 baseline `previousClose` 대신 `regularMarketPrice` 사용해 Yahoo 표시값 일치. 섹터 단계 헤더 안내 문구 "수치·종목 구성 매일 2회 갱신" → "시세는 15분 지연 (Yahoo Finance)"로 교체. **표시 순서 룰 정립** — 선점 순서(자동 갱신 dedup, `kr→stocks→ai→unicorn→commodity`)와 표시 순서(사용자 노출, `kr→stocks→ai→commodity→unicorn`)를 별도 룰로 분리, CLAUDE.md 명문화. 헤드라인 TL;DR / 친구톡 발송(`daily-send`) / 인스타 슬라이드(`render-slides`) / 메시지 생성(`generate-message`) / 대안 자산(`DOMAINS`) 모두 표시 순서로 통일. 대안 자산은 commodity가 원자재·크립토로 분리되므로 `ai→commodity→crypto→unicorn`(공통 데이터 출처 인접). **인스타 릴스 BGM 랜덤 픽** — 첫 트랙 고정 → `Math.random()` 풀 픽으로 변경, 트랙 추가 시 자동 확장. **미국마켓 헤드라인 첫 줄 룰 위반 정정** — 5/5 19:15 엔트리가 시장 지수 일상 라인을 첫 줄에 둬 임팩트 큰 단일 사건(AMD·MSTR Q1 D-Day) 우선 룰 위반, 라인 재정렬·유가는 미국 정유 마진 관점으로 강등(commodity 탭과 슬롯 중복 회피).
 - **2026-05-05**: **메인 페이지 전면 개편 — 5탭 카드 그리드 → 헤드라인 TL;DR + 14일 이벤트 캘린더 + 섹터 성장 단계 단일 흐름**. 신 메인 구성: (a) "오늘 놓치면 안 되는 것" hero + 시장별 첫 줄 카드 5개(TL;DR, 펼침 토글로 전체 불릿) (b) `data/calendar-events.js` 기반 2주 이벤트 캘린더(셀 클릭 → 카테고리별 day modal, 종목 칩 → deep-dive 모달) (c) 18 섹터 성장 단계 정렬 리스트(한국·미국 토글, 행 클릭 → 7종목 카드 + 자동 스크롤) (d) 종목 deep-dive 모달(차별화 포인트 + 매출·영업이익 막대그래프 + mentions + peers, 모바일 바텀시트 + 스와이프-다운/Android 백키/✕). **구 메인 백업** — `views/legacy.html`로 보존, `/legacy` 라우트 신설 (vercel rewrite). **구독 모달 풀 포팅** — sub- 프리픽스로 deep-dive 모달과 격리, PortOne v2 + check-subscription/payment-confirm Edge Function 호출 신 메인에서 동작. **헤더 카피 변경** — "구독하기" → "매일 카톡으로 받기" (정기성 + 채널 명시 + 동작 직관성). **한국·미국 순서 전면 swap** — TL;DR 카드 / 친구톡 메시지 / 운영 대시보드 매일 뉴스 / 인스타그램 캐러셀 / 섹터 단계 토글 기본값 모두 한국 우선(초보 진입 장벽 완화). **모바일 캘린더 가독성** — 셀 높이 160px 통일, 칩 폰트 9px(≤768) / 8.5px(≤480) + 1줄 nowrap + ellipsis 없음(clip), today 좌측 라인·배경 tint 제거(셀 폭 동일감). high-impact 칩의 폰트 굵기·흰 배경 모바일 한정 제거. 섹터 카테고리명 한 줄 유지(자동차·모빌리티 등 줄바꿈 방지). **공지 친구톡 발송 기능 신설** — 운영 대시보드 좌측 메뉴 `📢 공지`. 활성 구독자 선택 + textarea 자유 본문(1000자 카운터) + 야간 발송 경고 confirm. 백엔드: admin-api `notice_send` 액션이 `daily-send`에 `customMessage` 필드로 프록시, daily-send은 customMessage 있으면 update.js 조립 건너뛰고 본문 그대로 발송, send_logs.template_code='notice'로 분리 기록. **CLAUDE.md 정책 보강** — (a) summary 첫 줄 = 그날의 대표 헤드라인 엄수(TL;DR strip이 그대로 노출하므로 메가캡 신고가·메이저 펀딩 같은 임팩트 큰 사건을 첫 줄에, 시장 지수 동향은 둘째 줄 이후) (b) 캘린더 빈 날짜 의식적 점검 — 자동 갱신마다 향후 14일 윈도우 내 빈 평일을 식별하고 중국 매크로(CPI·PPI 9~10일·무역수지)·미국 주중 정기(도매재고·재정수지·NFIB·JOLTS)·일본·어닝 잔여 종목 후보를 한 번 더 확인. 5/11 빈 날에 "중국 4월 CPI·PPI" 추가(주말 시프트). **수치 표시 정리** — 모달 매출/영업이익 헤더 "(Revenue)/(Operating Profit)" 영문 부연 제거, "최근 사건 (최대 12건)" → "최근 사건", 섹터 단계 설명에 "수치·종목 구성 모두 매일 오전·오후 2회 갱신" 부연. hero 메타 pill에 수집 시간 HH:MM 부착(latest update.js entry 기반). **대안 자산 섹션 신설** — 메인 4번째 섹션으로 추가, AI 동향·유니콘·원자재·크립토 4 도메인을 vertical 패널 4개로 동등 비중 노출(메인 한국·미국 주식 외 자산 가치 강조). 각 패널: 헤더(갱신 시점 + 상대 라벨 `오늘 N건` / `5/03 갱신 · 2일 전`, 2일 이상 stale 시 warn 색) + 사건 단위 리스트(섹터 + 헤드라인, 클릭 시 inline 펼침으로 detail 풀 텍스트). commodity-update의 sector 기준 commodity vs crypto 자동 분기. 헤드라인 추출은 괄호 깊이·숫자 점·괄호 균형 처리하는 `extractHeadline` 헬퍼 사용. 좌측 도메인 색상 라인(AI 파랑·유니콘 보라·원자재 주황·크립토 녹색). hero TL;DR이 5 도메인 한 줄씩이라면 이 섹션은 4 도메인의 사건 단위 깊이 — 보완 관계. **친구톡 WL 버튼명 변경** — `daily-send` 친구톡 발송 버튼 "전체 뉴스 보기" → "오늘의 브리핑" (메인이 뉴스 단일 축에서 하이라이트·캘린더·섹터 단계·대안 자산 다축으로 확장됨에 따라 셋을 포괄하는 표현으로 교체).
 - **2026-05-03**: **인스타그램 Reels 자동 게시 추가**. `scripts/instagram/render-reels.js` — 기존 1080×1350 PNG를 ffmpeg `xfade` 필터로 1080×1920 9:16 mp4로 변환(슬라이드당 6초 + 0.5초 crossfade, 위·아래 같은 이미지의 블러 BG로 letterbox 회피, 총 ~39초). `scripts/instagram/music/` 디렉토리에 royalty-free mp3 드롭하면 자동 페이드인/아웃 합성. `publish.js`에 `publishReels()` 추가 (REELS media_type · `share_to_feed=true` · 비디오 처리 대기 5분). `IG_MODE` 환경변수(all/carousel/reels)로 발행 분기. **시간대별 포맷 분기** — push 트리거의 자동 갱신 커밋에 KST 시간대 기반 mode 결정 step 추가: 05~12시→carousel, 13~23시→reels, 그 외→all. 결과 하루 4개 → **하루 2개 포스트(오전 캐러셀 + 오후 Reels)**로 알고리즘 sweet spot 정렬. **`/publish` 슬래시 명령** 신설 — `mode`·`dry` 인자 자유 순서 파싱(`/publish reels`, `/publish carousel dry` 등). **발행 트리거 게이팅** — push로 발행하려면 커밋 메시지가 `데이터 자동 갱신` 또는 `데이터 정합성 강제 갱신`으로 시작해야 함, 사람이 수동 편집한 커밋이 의도하지 않은 시간대 발행으로 이어지지 않게 차단. workflow_dispatch는 게이팅 미적용. workflow에 `ffmpeg` apt 설치 step 추가. **자동 갱신 13시 슬롯 비활성화** — RemoteTrigger cron `0 22,4,10` UTC → `0 22,10` UTC, 매일 07/19시 KST 2회로 축소. **CLAUDE.md 정책 보강** — (a) 탭 콘텐츠 독립성 원칙(cross-tab 인용 금지), (b) 탭 간 사건 중복 방지(stocks→kr→ai→unicorn→commodity 선점 우선), (c) summary·detail 문체 — em-dash(`—`) → hyphen(`-`)·"톤(tone)" 트레이더 은어 → 자연어 기조/흐름·"비트/미스" → 컨센 상회/하회. 5개 update.js 일괄 sweep으로 기존 데이터 정정.
 - **2026-05-01**: Supabase 키 namespace 통일 — `SUPABASE_SECRET_KEY` → **`BRIEFICK_SUPABASE_SECRET_KEY`**, `SUPABASE_PUBLISHABLE_KEY` → **`BRIEFICK_SUPABASE_PUBLISHABLE_KEY`**. 원인: Supabase가 사용자 정의 secret 이름의 `SUPABASE_` 접두사를 거부(`Name must not start with the SUPABASE_ prefix`)하며 `SUPABASE_SECRET_KEYS`(복수 JSON) 등 자동 주입 변수와 namespace 충돌. 프로젝트 prefix `BRIEFICK_` 부여로 일괄 정리. Edge Function 7개·`publish.js`·workflow yml·프론트 JS 변수명·문서 동기화. `.claude/settings.local.json`을 git 추적 해제(머신별 권한 설정).
