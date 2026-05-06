@@ -112,8 +112,18 @@ async function yahooChartOne(symbol: string, attempt = 1): Promise<Price | null>
       }
     }
 
-    // fallback: meta.regularMarketPrice
-    const price = lastPrice ?? (meta.regularMarketPrice != null ? Number(meta.regularMarketPrice) : null);
+    const regTime = Number(meta.regularMarketTime ?? 0);
+    const regPx = Number(meta.regularMarketPrice ?? 0);
+
+    // regularMarket이 마지막 봉보다 최신이면 그쪽 우선 (한국 종목 정규장 직후
+    // 15분 봉이 아직 close되지 않아 직전 거래일 종가가 잡히는 케이스 방지).
+    // 미국 프리/애프터마켓처럼 regTime 이후 봉이 있으면 lastTime > regTime이라 그대로.
+    if (regTime > 0 && regPx > 0 && (lastTime == null || regTime > lastTime)) {
+      lastPrice = regPx;
+      lastTime = regTime;
+    }
+
+    const price = lastPrice;
     if (price == null) {
       // 응답은 왔지만 데이터 비어있음 — 1회 재시도
       if (attempt === 1) {
@@ -124,7 +134,6 @@ async function yahooChartOne(symbol: string, attempt = 1): Promise<Price | null>
     }
 
     // 정규세션 시각 이후 데이터면 extended hours (프리/애프터마켓)
-    const regTime = Number(meta.regularMarketTime ?? 0);
     const isExtended = lastTime != null && regTime > 0 && lastTime > regTime + 60;
 
     // baseline 선택:
