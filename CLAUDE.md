@@ -202,11 +202,20 @@ ai-investment/
 
 **🔴 커밋 전 lint 체크리스트 (엄수)**
 
-데이터 파일 수정 후, 커밋 전에 반드시 다음 lint 실행. 0건이면 통과, 1건이라도 잡히면 컨센 상회/하회/부합/자연어 기조로 치환 후 재실행.
+데이터 파일 수정 후, 커밋 전에 다음 두 lint를 모두 실행. 0건 통과해야 커밋.
 
 ```bash
-./scripts/lint-jargon.sh
+./scripts/lint-jargon.sh           # 트레이더 은어·편집자 메타 표현 잔재
+node scripts/lint-finmap-pool.js   # 핀맵 풀 종목 형식·한글명 lookup 검증
 ```
+
+핀맵 풀 lint가 잡는 것:
+- 한국 ticker 형식 (6자리 숫자)
+- 한국 ticker 한글명 lookup 가능 여부 (kr-stocks-data.js 큐레이션 OR sector-pool.js의 KR_NAME_OVERRIDE 매핑 필요)
+- 미국 ticker 형식 (대문자)
+- KR_NAME_OVERRIDE에 있지만 풀에 없는 dead 매핑 (정리 권장)
+
+위반 시 ticker 자체가 잘못됐을 수 있으니 풀에서 제거하거나, 정확한 한글명을 KR_NAME_OVERRIDE에 추가.
 
 이 lint는 자동 갱신 에이전트가 작성하는 모든 update.js·data.js 텍스트에 적용. 사후에 사용자가 발견해 지적하는 비용이 누적되면 신뢰도 직격이라 발견 즉시 룰 강화한 이력(2026-05-06)이 있다.
 

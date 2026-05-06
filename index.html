@@ -314,6 +314,66 @@ section:first-of-type{padding-top:48px;border-top:0}
   padding:8px 0 12px;
 }
 
+/* 시장 핀맵 — 섹터별 squarify 트리맵 */
+.finmap-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+}
+@media (max-width:1024px){.finmap-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.finmap-grid{grid-template-columns:1fr}}
+.finmap-sector{
+  background:var(--panel);border:1px solid var(--border);
+  padding:8px;display:flex;flex-direction:column;gap:6px;min-height:0;
+}
+.finmap-sector-head{
+  display:flex;align-items:center;justify-content:space-between;gap:6px;
+  font:600 11px/1.2 'Inter',sans-serif;color:var(--fg2);
+  padding:0 2px;
+}
+.finmap-sector-title{display:flex;align-items:center;gap:4px;min-width:0;flex:1}
+.finmap-sector-title-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.finmap-sector-avg{font:600 10px/1 'Geist Mono',monospace;letter-spacing:0;flex-shrink:0}
+.finmap-sector-avg.up{color:var(--acc-deep)}
+.finmap-sector-avg.down{color:var(--err)}
+.finmap-sector-avg.flat{color:var(--mut2)}
+.finmap-cells{
+  position:relative;width:100%;
+  /* aspect-ratio 보정: 데스크톱은 16:9 정도, 모바일은 더 짧게 */
+  aspect-ratio:16/10;
+}
+@media (max-width:640px){.finmap-cells{aspect-ratio:16/8}}
+.finmap-cell{
+  position:absolute;cursor:pointer;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  padding:2px 4px;overflow:hidden;
+  font-family:'Inter',sans-serif;line-height:1.15;
+  transition:transform .12s ease, box-shadow .12s ease;
+  user-select:none;
+  border:0.5px solid rgba(0,0,0,0.35);
+  box-sizing:border-box;
+}
+.finmap-cell:hover{transform:scale(1.03);z-index:2;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+.finmap-cell .fc-nm{font-weight:600;font-size:11px;letter-spacing:-0.2px;text-align:center;
+  max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.finmap-cell .fc-pct{font:600 10px/1 'Geist Mono',monospace;margin-top:2px;letter-spacing:0}
+/* 큰 셀: 폰트 키움 */
+.finmap-cell.large .fc-nm{font-size:13px}
+.finmap-cell.large .fc-pct{font-size:11px;margin-top:3px}
+.finmap-cell.tiny .fc-pct{display:none}
+.finmap-cell.tiny .fc-nm{font-size:9px}
+/* 색상 — 등락률 강도별. 시장 마감/stale도 회색 대신 직전 chgPct 색상 유지 */
+.finmap-cell.up-0{background:#c5f2dc;color:#054d2e}
+.finmap-cell.up-1{background:#8de5b8;color:#054d2e}
+.finmap-cell.up-2{background:#5fdc99;color:#fff}
+.finmap-cell.up-3{background:#1fb872;color:#fff}
+.finmap-cell.up-4{background:#0e7a4a;color:#fff}
+.finmap-cell.down-0{background:#f7c8c8;color:#5a1414}
+.finmap-cell.down-1{background:#ee9999;color:#5a1414}
+.finmap-cell.down-2{background:#e87878;color:#fff}
+.finmap-cell.down-3{background:#cc4040;color:#fff}
+.finmap-cell.down-4{background:#8a1a1a;color:#fff}
+/* 데이터 자체가 없는 종목 — 흰 바탕 (회색 X) */
+.finmap-cell.none{background:#fff;color:var(--fg)}
+
 /* 오늘의 마켓 펄스 — 4 도메인 vertical 패널 */
 .pulse-stack{display:flex;flex-direction:column;gap:14px}
 .pulse-panel{
@@ -733,7 +793,7 @@ body.sub-modal-open{overflow:hidden}
   <div class="sec-head">
     <div>
       <div class="sec-label">Sector growth phases</div>
-      <h2 class="sec-title">섹터 성장 단계</h2>
+      <h2 class="sec-title">돈버는 섹터</h2>
       <p class="sec-desc">% = FY26E 매출의 전년(FY25) 대비 성장률 · 시세는 15분 지연 (Yahoo Finance)</p>
     </div>
   </div>
@@ -743,6 +803,22 @@ body.sub-modal-open{overflow:hidden}
     <input class="exp-search" id="expSearch" placeholder="티커·기업명·키워드로 검색" />
   </div>
   <div class="phase-list" id="healthList"></div>
+</section>
+
+<!-- ─── 시장 핀맵 — 섹터별 squarify 트리맵 ─── -->
+<section>
+  <div class="sec-head">
+    <div>
+      <div class="sec-label">Market heatmap</div>
+      <h2 class="sec-title">시장 한눈에</h2>
+      <p class="sec-desc">셀 크기 = 시가총액 · 색상 = 오늘 등락률 · 시세 15분 지연 (Yahoo Finance)</p>
+    </div>
+  </div>
+  <div class="health-controls">
+    <button class="health-tab on" data-fmap-market="kr">한국</button>
+    <button class="health-tab" data-fmap-market="stocks">미국</button>
+  </div>
+  <div class="finmap-grid" id="finmapGrid"></div>
 </section>
 
 <!-- ─── 오늘의 마켓 펄스 — 4 도메인 vertical 패널 ─── -->
@@ -840,6 +916,7 @@ const URLS={
   ai:        '/data/ai-data.js',
   commodity: '/data/commodity-data.js',
   unicorn:   '/data/unicorn-data.js',
+  sectorPool:'/data/sector-pool.js',
 };
 const UPD_URLS={
   stocks:    {url:'/data/stocks-update.js',    var:'updates'},
@@ -854,7 +931,7 @@ const PRICES_URL='https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/pub
 async function loadJS(url){
   const r=await fetch(url+'?_='+Date.now());
   const t=await r.text();
-  return new Function(t+';return {data:typeof data!=="undefined"?data:null,META:typeof META!=="undefined"?META:null,BL:typeof BL!=="undefined"?BL:null};')();
+  return new Function(t+';return {data:typeof data!=="undefined"?data:null,META:typeof META!=="undefined"?META:null,BL:typeof BL!=="undefined"?BL:null,krNameOverride:typeof KR_NAME_OVERRIDE!=="undefined"?KR_NAME_OVERRIDE:null,usNameOverride:typeof US_NAME_OVERRIDE!=="undefined"?US_NAME_OVERRIDE:null};')();
 }
 async function loadUpd(url, varName){
   const r=await fetch(url+'?_='+Date.now());
@@ -862,7 +939,7 @@ async function loadUpd(url, varName){
   return new Function(t+`;return typeof ${varName}!=="undefined"?${varName}:[];`)();
 }
 
-const STATE={data:{},upd:{},prices:{},market:'kr',healthMarket:'kr',expQuery:''};
+const STATE={data:{},upd:{},prices:{},pool:null,market:'kr',healthMarket:'kr',expQuery:''};
 
 // ═══════════════════════════════════════════════════════════
 // Helpers
@@ -1574,6 +1651,216 @@ function attachChangeToggles(root){
   });
 }
 
+// ─── 시장 핀맵: 섹터별 squarify 트리맵 ───
+const FINMAP_STATE={market:'kr'};
+
+// 단순 binary squarify: items 배열을 (x,y,w,h) 사각형으로 분할
+// 큰 값부터 정렬한 뒤 절반 가까이 누적되는 지점에서 split, 짧은 변 따라 재귀
+function squarify(items, x, y, w, h){
+  if(!items.length) return [];
+  if(items.length===1){
+    return [{...items[0], x, y, w, h}];
+  }
+  const total=items.reduce((s,i)=>s+(i.value||0), 0);
+  if(total<=0){
+    // 균등 분할 fallback
+    return items.map((it,i)=>({
+      ...it,
+      x: x + (w/items.length)*i,
+      y, w: w/items.length, h
+    }));
+  }
+  const half=total/2;
+  let acc=0, splitIdx=1;
+  for(let i=0;i<items.length;i++){
+    acc+=items[i].value||0;
+    if(acc>=half){ splitIdx=i+1; break; }
+  }
+  splitIdx=Math.max(1, Math.min(items.length-1, splitIdx));
+  const left=items.slice(0, splitIdx);
+  const right=items.slice(splitIdx);
+  const leftTotal=left.reduce((s,i)=>s+(i.value||0), 0);
+  const ratio=leftTotal/total;
+  if(w>=h){
+    const wL=w*ratio;
+    return [...squarify(left, x, y, wL, h), ...squarify(right, x+wL, y, w-wL, h)];
+  } else {
+    const hT=h*ratio;
+    return [...squarify(left, x, y, w, hT), ...squarify(right, x, y+hT, w, h-hT)];
+  }
+}
+
+// chgPct 강도를 0~4 단계로
+function chgIntensity(pct){
+  const a=Math.abs(pct||0);
+  if(a<0.5) return 0;
+  if(a<1.5) return 1;
+  if(a<3) return 2;
+  if(a<5) return 3;
+  return 4;
+}
+
+function renderFinmap(){
+  const grid=document.getElementById('finmapGrid');
+  if(!grid) return;
+  const market=FINMAP_STATE.market;
+  const cats=STATE.data[market];
+  if(!cats||!cats.length){
+    grid.innerHTML='<div class="updates-loading">데이터 로딩 중…</div>';
+    return;
+  }
+
+  // 섹터 순서: 섹터 성장 단계와 동일 — FY26E 매출 성장률 중앙값 내림차순 (큐레이션 7종목 기준)
+  // 종목 선별: sector-pool.js의 풀에서 시총 상위 7 동적 선별 (큐레이션 7과 다를 수 있음)
+  const poolMarket=STATE.pool?.[market]||{};
+
+  const enriched=cats.map(cat=>{
+    const stocks=cat.stocks||[];
+    const growths=stocks.map(s=>{
+      const r1=parseFloat(s.r1), r2=parseFloat(s.r2);
+      return (r1>0&&r2>0)?(r2-r1)/r1:null;
+    }).filter(g=>g!==null);
+    const med=median(growths);
+    return {cat, stocks, med};
+  }).sort((a,b)=>{
+    if(a.med===null)return 1;
+    if(b.med===null)return -1;
+    return b.med-a.med;
+  });
+
+  const html=enriched.map(({cat, stocks})=>{
+    // 풀에서 시총 상위 7 선별 — 풀 데이터 없으면 큐레이션 7 fallback
+    const poolTks=poolMarket[cat.title];
+    let displayTks;
+    if(poolTks && poolTks.length){
+      const candidates=poolTks
+        .map(tk=>({tk, mc:Number(STATE.prices?.[tk]?.marketCap||0)}))
+        .filter(c=>c.mc>0)
+        .sort((a,b)=>b.mc-a.mc);
+      displayTks=candidates.slice(0,7).map(c=>c.tk);
+      // 시총 데이터가 7개 미만이면 부족분을 큐레이션에서 보충
+      if(displayTks.length<7){
+        for(const s of stocks){
+          if(!displayTks.includes(s.tk)) displayTks.push(s.tk);
+          if(displayTks.length>=7) break;
+        }
+      }
+    } else {
+      displayTks=stocks.map(s=>s.tk);
+    }
+
+    // 종목명 lookup 우선순위:
+    //  1) 현재 섹터 큐레이션 (s.nm)
+    //  2) 다른 섹터 큐레이션 (cross-sector — 같은 종목이 다른 카테고리에 있는 경우, 예: 007660 이수페타시스)
+    //  3) KR_NAME_OVERRIDE (풀-only 한국 종목 한글명)
+    //  4) Yahoo longName/shortName (영문 fallback)
+    //  5) ticker
+    const curated=new Map(stocks.map(s=>[s.tk, s]));
+    const allCurated=STATE.allCurated?.[market]||{};
+    const override=market==='kr'?(STATE.krNameOverride||{}):(STATE.usNameOverride||{});
+    const items=displayTks.map(tk=>{
+      const c=curated.get(tk);
+      const xc=allCurated[tk]; // cross-sector
+      const px=STATE.prices?.[tk];
+      const chg=(px && px.changePct!=null) ? Number(px.changePct) : null;
+      const mcap=(px && px.marketCap) ? Number(px.marketCap) : null;
+      const r2=c?parseFloat(c.r2):(xc?parseFloat(xc.r2):0);
+      const sizeRaw=mcap!=null?mcap:(r2>0?r2:0.5);
+      // 큐레이션 nm은 displayName()으로 한글 매핑 (영문 이름 → 한글)
+      // 풀-only는 override[tk] 직접 (이미 한글)
+      const curatedNm=c?.nm || xc?.nm;
+      const nm=(curatedNm && displayName(curatedNm)) || override[tk] || px?.name || tk;
+      return {
+        tk, nm,
+        value:Math.sqrt(sizeRaw),
+        chg
+      };
+    }).sort((a,b)=>b.value-a.value);
+
+    if(!items.length) return '';
+
+    // 섹터 평균 등락률 (시총 가중)
+    let wSum=0, vSum=0;
+    for(const it of items){
+      if(it.chg!=null){ wSum+=it.value; vSum+=it.value*it.chg; }
+    }
+    const avg=wSum>0 ? vSum/wSum : null;
+    const avgCls=avg==null?'flat':(avg>0.1?'up':(avg<-0.1?'down':'flat'));
+    const avgLbl=avg==null?'—':((avg>=0?'+':'')+avg.toFixed(2)+'%');
+
+    return `
+      <div class="finmap-sector">
+        <div class="finmap-sector-head">
+          <div class="finmap-sector-title">
+            <span class="finmap-sector-title-text">${escapeHtml(cat.title||'')}</span>
+          </div>
+          <span class="finmap-sector-avg ${avgCls}">${avgLbl}</span>
+        </div>
+        <div class="finmap-cells" data-cat="${escapeHtml(cat.title||'')}">
+          ${items.map(it=>`<div data-w="${it.value}" data-tk="${escapeHtml(it.tk)}" data-nm="${escapeHtml(displayName(it.nm))}" data-chg="${it.chg==null?'':it.chg}"></div>`).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  grid.innerHTML=html;
+
+  // 각 섹터 컨테이너 크기 측정 후 squarify 적용
+  grid.querySelectorAll('.finmap-cells').forEach(box=>{
+    // 컨테이너 크기를 정수로 floor — fractional clientWidth/Height에 의한 sub-pixel 누적 방지
+    const w=Math.floor(box.clientWidth), h=Math.floor(box.clientHeight);
+    if(w<=0||h<=0) return;
+    const seed=Array.from(box.children).map(c=>({
+      tk: c.dataset.tk,
+      nm: c.dataset.nm||c.dataset.tk,
+      value: parseFloat(c.dataset.w)||0.5,
+      chg: c.dataset.chg===''?null:parseFloat(c.dataset.chg),
+    }));
+    const rects=squarify(seed, 0, 0, w, h);
+    // 인접 셀 경계가 정수 픽셀에 정확히 정렬되도록 스냅
+    // 셀의 right/bottom edge를 round → x/y는 round, w/h는 그 차이로 재계산
+    for(const r of rects){
+      const x2=Math.round(r.x+r.w);
+      const y2=Math.round(r.y+r.h);
+      r.x=Math.round(r.x);
+      r.y=Math.round(r.y);
+      r.w=x2-r.x;
+      r.h=y2-r.y;
+    }
+    box.innerHTML=rects.map(r=>{
+      let colorCls='none';
+      if(r.chg!=null){
+        const intensity=chgIntensity(r.chg);
+        if(r.chg>0) colorCls=`up-${intensity}`;
+        else if(r.chg<0) colorCls=`down-${intensity}`;
+        else colorCls='up-0'; // 정확히 0%면 가장 옅은 상승색
+      }
+      const area=r.w*r.h;
+      const tot=w*h;
+      const pctArea=area/tot;
+      const sizeCls=pctArea>0.18?'large':(pctArea<0.04?'tiny':'');
+      const pctLbl=r.chg==null?'':((r.chg>=0?'+':'')+r.chg.toFixed(2)+'%');
+      return `
+        <div class="finmap-cell ${colorCls} ${sizeCls}" data-tk="${escapeHtml(r.tk)}"
+             style="left:${r.x}px;top:${r.y}px;width:${r.w}px;height:${r.h}px">
+          <span class="fc-nm">${escapeHtml(r.nm)}</span>
+          ${pctLbl?`<span class="fc-pct">${escapeHtml(pctLbl)}</span>`:''}
+        </div>
+      `;
+    }).join('');
+    box.querySelectorAll('.finmap-cell').forEach(cell=>{
+      cell.addEventListener('click',()=>openModal(cell.dataset.tk, market));
+    });
+  });
+}
+
+// 윈도우 리사이즈에 대응 (디바운스)
+let _finmapResizeT=null;
+window.addEventListener('resize', ()=>{
+  clearTimeout(_finmapResizeT);
+  _finmapResizeT=setTimeout(renderFinmap, 150);
+});
+
 // ─── 대안 자산: 4 도메인 vertical 패널 — 사건 단위 리스트 ───
 function renderPulse(){
   const stack=document.getElementById('pulseStack');
@@ -1660,8 +1947,21 @@ function findMentions(tk){
 }
 
 function openModal(tk,market,_peerSwap){
-  const s=findStock(tk);
-  if(!s)return;
+  let s=findStock(tk);
+  if(!s){
+    // 풀-only 종목 (큐레이션 데이터 외) — STATE.prices에서 시총·시세만 있는 케이스.
+    // 한글명·섹터를 사용 가능한 소스에서 합성해 모달을 그대로 띄우고, 비어있는 섹션(매출·이익 그래프·peers)은 자연 누락.
+    const px=STATE.prices?.[tk];
+    if(!px)return;
+    const override=market==='kr'?(STATE.krNameOverride||{}):(STATE.usNameOverride||{});
+    const nm=override[tk] || px.name || tk;
+    const poolMarket=STATE.pool?.[market]||{};
+    let catTitle='';
+    for(const [sec,list] of Object.entries(poolMarket)){
+      if(list.includes(tk)){catTitle=sec;break;}
+    }
+    s={tk, nm, rs:'', catTitle, r1:'', r2:'', p1:'', p2:'', _poolOnly:true};
+  }
   // peer 이동은 stack top(stock)을 교체해 무한 chain(A→B→A→B…) 방지.
   // history도 push하지 않아 백키 한 번에 직전 레벨(일자별 모달 또는 root)로 바로 복원.
   if(_peerSwap && _modalStack.length>0 && _modalStack[_modalStack.length-1].type==='stock'){
@@ -1924,17 +2224,29 @@ function startPricePolling(){
     if(Object.keys(fresh).length){
       STATE.prices=fresh;
       if(STATE.data[STATE.healthMarket]) renderHealth();
+      renderFinmap();
     }
   }, PRICE_REFRESH_MS);
 }
+
+// 핀맵 토글 (한국·미국)
+document.querySelectorAll('[data-fmap-market]').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('[data-fmap-market]').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    FINMAP_STATE.market=b.dataset.fmapMarket;
+    renderFinmap();
+  });
+});
 
 async function boot(){
   // 시세는 비차단 — 백그라운드에서 받아와 도착 시 재렌더
   const pricesPromise=loadPrices();
 
   try{
-    const [stocks,kr,ai,commodity,unicorn,calendar]=await Promise.all([
+    const [stocks,kr,ai,commodity,unicorn,pool,calendar]=await Promise.all([
       loadJS(URLS.stocks),loadJS(URLS.kr),loadJS(URLS.ai),loadJS(URLS.commodity),loadJS(URLS.unicorn),
+      loadJS(URLS.sectorPool).catch(()=>null),
       loadCalendar(),
     ]);
     STATE.data.stocks=stocks.data;
@@ -1942,6 +2254,18 @@ async function boot(){
     STATE.data.ai=ai.data;
     STATE.data.commodity=commodity.data;
     STATE.data.unicorn=unicorn.data;
+    STATE.pool=pool?.data||null;
+    STATE.krNameOverride=pool?.krNameOverride||{};
+    STATE.usNameOverride=pool?.usNameOverride||{};
+    // 큐레이션 전체 종목 (모든 섹터)을 ticker → {nm, market} 매핑으로 평탄화 (cross-sector lookup용)
+    STATE.allCurated={stocks:{}, kr:{}};
+    for(const m of ['stocks','kr']){
+      for(const cat of (STATE.data[m]||[])){
+        for(const s of (cat.stocks||[])){
+          STATE.allCurated[m][s.tk]={...s, catTitle:cat.title, market:m};
+        }
+      }
+    }
     STATE.calendar=calendar;
 
     const updResults=await Promise.all(
@@ -1952,6 +2276,7 @@ async function boot(){
     buildNarrative();
     renderCalendar();
     renderHealth();
+    renderFinmap();
     renderPulse();
   }catch(e){
     console.error('boot error:',e);
@@ -1962,6 +2287,7 @@ async function boot(){
   pricesPromise.then(prices=>{
     STATE.prices=prices;
     if(STATE.data[STATE.healthMarket]) renderHealth();
+    renderFinmap();
     startPricePolling();
   });
 }

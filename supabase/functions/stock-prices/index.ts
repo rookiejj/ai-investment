@@ -60,9 +60,118 @@ interface Price {
   time?: number;
   exchange?: string;
   extended?: boolean;
+  marketCap?: number;
+  name?: string;
 }
 
-async function fetchTickers(): Promise<{ us: string[]; kr: string[]; commodity: string[] }> {
+// Yahoo crumb 인증 — marketCap 가져오는 v7/quote 엔드포인트는 cookie+crumb 필수
+let _yahooCookie: string | null = null;
+let _yahooCrumb: string | null = null;
+async function getYahooAuth(): Promise<{ cookie: string; crumb: string } | null> {
+  if (_yahooCookie && _yahooCrumb) {
+    return { cookie: _yahooCookie, crumb: _yahooCrumb };
+  }
+  try {
+    // 1) Yahoo 도메인에서 쿠키 발급
+    const r1 = await fetch("https://fc.yahoo.com/", {
+      headers: { "User-Agent": UA },
+    });
+    const setCookie = r1.headers.get("set-cookie") || "";
+    // Set-Cookie 헤더에서 name=value 부분만 추출 (path=, domain=, expires= 등 attribute 제거)
+    const cookieParts: string[] = [];
+    for (const part of setCookie.split(/,(?=[^;]+=)/)) {
+      const first = part.split(";")[0]?.trim();
+      if (first && first.includes("=") && !/^(path|domain|expires|max-age|secure|httponly|samesite)/i.test(first)) {
+        cookieParts.push(first);
+      }
+    }
+    const cookie = cookieParts.join("; ");
+    if (!cookie) return null;
+    // 2) crumb 발급
+    const r2 = await fetch("https://query1.finance.yahoo.com/v1/test/getcrumb", {
+      headers: { "User-Agent": UA, "Cookie": cookie },
+    });
+    if (!r2.ok) return null;
+    const crumb = (await r2.text()).trim();
+    if (!crumb) return null;
+    _yahooCookie = cookie;
+    _yahooCrumb = crumb;
+    return { cookie, crumb };
+  } catch {
+    return null;
+  }
+}
+
+interface QuoteData {
+  marketCap?: number;
+  price?: number;
+  changePct?: number;
+  prevClose?: number;
+  time?: number;
+  currency?: string;
+  name?: string;
+}
+
+// v7/finance/quote 엔드포인트로 시총·시세 일괄 fetch (배치 단위)
+// 풀 추가 종목은 chart endpoint 호출량 부담을 피하려고 quote에서 시세도 같이 추출
+async function fetchQuotes(symbols: string[]): Promise<Record<string, QuoteData>> {
+  const auth = await getYahooAuth();
+  if (!auth) return {};
+  const out: Record<string, QuoteData> = {};
+  const BATCH = 50;
+
+  const extract = (q: Record<string, unknown>) => {
+    const sym = q.symbol as string | undefined;
+    if (!sym) return;
+    const data: QuoteData = {};
+    if (q.marketCap != null) data.marketCap = Number(q.marketCap);
+    if (q.regularMarketPrice != null) data.price = Number(q.regularMarketPrice);
+    if (q.regularMarketChangePercent != null) data.changePct = Number(q.regularMarketChangePercent);
+    if (q.regularMarketPreviousClose != null) data.prevClose = Number(q.regularMarketPreviousClose);
+    if (q.regularMarketTime != null) data.time = Number(q.regularMarketTime);
+    if (q.currency != null) data.currency = String(q.currency);
+    // 종목명: longName 우선, shortName 폴백 — 풀 추가 종목 사용자 표시용
+    const nm = (q.longName || q.shortName) as string | undefined;
+    if (nm) data.name = nm;
+    out[sym] = data;
+  };
+
+  for (let i = 0; i < symbols.length; i += BATCH) {
+    const batch = symbols.slice(i, i + BATCH);
+    const url = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${batch.map(encodeURIComponent).join(",")}&crumb=${encodeURIComponent(auth.crumb)}`;
+    try {
+      const r = await fetch(url, { headers: { "User-Agent": UA, "Cookie": auth.cookie } });
+      if (r.status === 401) {
+        _yahooCookie = null; _yahooCrumb = null;
+        const fresh = await getYahooAuth();
+        if (!fresh) return out;
+        const r2 = await fetch(`https://query1.finance.yahoo.com/v7/finance/quote?symbols=${batch.map(encodeURIComponent).join(",")}&crumb=${encodeURIComponent(fresh.crumb)}`, {
+          headers: { "User-Agent": UA, "Cookie": fresh.cookie },
+        });
+        if (!r2.ok) continue;
+        const j = await r2.json();
+        for (const q of (j?.quoteResponse?.result || [])) extract(q);
+        continue;
+      }
+      if (!r.ok) continue;
+      const j = await r.json();
+      for (const q of (j?.quoteResponse?.result || [])) extract(q);
+    } catch { /* skip batch */ }
+  }
+  return out;
+}
+
+// 호환용 wrapper (marketCap만)
+async function fetchMarketCaps(symbols: string[]): Promise<Record<string, number>> {
+  const q = await fetchQuotes(symbols);
+  const out: Record<string, number> = {};
+  for (const [sym, d] of Object.entries(q)) {
+    if (d.marketCap) out[sym] = d.marketCap;
+  }
+  return out;
+}
+
+async function fetchTickers(): Promise<{ us: string[]; kr: string[]; commodity: string[]; usPool: string[]; krPool: string[] }> {
   const grab = async (path: string): Promise<string[]> => {
     const url = `${SITE_URL}${path}?_=${Date.now()}`;
     const r = await fetch(url, { headers: { "User-Agent": UA } });
@@ -73,12 +182,29 @@ async function fetchTickers(): Promise<{ us: string[]; kr: string[]; commodity: 
     for (const cat of data ?? []) for (const s of (cat.stocks ?? [])) if (s.tk) out.push(s.tk);
     return out;
   };
-  const [us, kr, commodity] = await Promise.all([
+  // sector-pool.js: { stocks: {sector: [tk,...]}, kr: {...} } 객체
+  // URL fetch 실패 시 빈 풀로 fallback (다음 cron에서 자동 복구)
+  const grabPool = async (): Promise<{ us: string[]; kr: string[] }> => {
+    try {
+      const url = `${SITE_URL}/data/sector-pool.js?_=${Date.now()}`;
+      const r = await fetch(url, { headers: { "User-Agent": UA } });
+      if (!r.ok) return { us: [], kr: [] };
+      const text = await r.text();
+      const pool = new Function(text + ";return data;")() as { stocks?: Record<string, string[]>; kr?: Record<string, string[]> };
+      const us = Array.from(new Set(Object.values(pool.stocks ?? {}).flat()));
+      const kr = Array.from(new Set(Object.values(pool.kr ?? {}).flat()));
+      return { us, kr };
+    } catch {
+      return { us: [], kr: [] };
+    }
+  };
+  const [us, kr, commodity, pool] = await Promise.all([
     grab("/data/stocks-data.js"),
     grab("/data/kr-stocks-data.js"),
     grab("/data/commodity-data.js"),
+    grabPool(),
   ]);
-  return { us, kr, commodity };
+  return { us, kr, commodity, usPool: pool.us, krPool: pool.kr };
 }
 
 async function yahooChartOne(symbol: string, attempt = 1): Promise<Price | null> {
@@ -210,12 +336,18 @@ Deno.serve(async (req) => {
       Deno.env.get("BRIEFICK_SUPABASE_SECRET_KEY")!,
     );
     await ensureBucket(supabase);
-    const { us, kr, commodity } = await fetchTickers();
+    const { us, kr, commodity, usPool, krPool } = await fetchTickers();
 
-    // 미국: 그대로
+    // 풀(섹터 풀)은 큐레이션 7종목 union 추가 후보로 시총 fetch에 포함.
+    // 시세까지 fetch하면 호출량이 두 배로 늘어 부담 — 시세는 큐레이션 종목만,
+    // 시총은 큐레이션 + 풀 합쳐서 가져와 핀맵 동적 선별 가능하게.
+    const usAll = Array.from(new Set([...us, ...usPool]));
+    const krAll = Array.from(new Set([...kr, ...krPool]));
+
+    // 미국: 시세는 큐레이션만, 풀 추가 종목은 시총만
     const usSymbols = us;
 
-    // 한국: .KS와 .KQ 둘 다 query
+    // 한국: .KS와 .KQ 둘 다 query (큐레이션만 시세, 풀 추가는 시총만)
     const krKsSymbols = kr.map((t) => `${t}.KS`);
     const krKqSymbols = kr.map((t) => `${t}.KQ`);
 
@@ -260,11 +392,64 @@ Deno.serve(async (req) => {
       if (raw[yh]) prices[tk] = raw[yh];
     }
 
+    // 시총 일괄 fetch — 큐레이션 + 풀 union (핀맵이 풀에서 시총 상위 7 동적 선별)
+    // 한국 풀 종목은 거래소 미정 → .KS와 .KQ 둘 다 시도해 더 큰 쪽 사용
+    const mcapSymbols: string[] = [...usAll];
+    const mcapToTk: Record<string, string> = {};
+    for (const tk of usAll) mcapToTk[tk] = tk;
+    // 한국: 큐레이션은 prices에 결정된 거래소, 풀 추가분은 양쪽 시도
+    for (const tk of kr) {
+      const p = prices[tk];
+      const ex = p?.exchange || "KS";
+      const sym = `${tk}.${ex}`;
+      mcapSymbols.push(sym);
+      mcapToTk[sym] = tk;
+    }
+    const krOnlyPool = krPool.filter((t) => !kr.includes(t));
+    for (const tk of krOnlyPool) {
+      mcapToTk[`${tk}.KS`] = tk;
+      mcapToTk[`${tk}.KQ`] = tk;
+      mcapSymbols.push(`${tk}.KS`, `${tk}.KQ`);
+    }
+    const quotes = await fetchQuotes(mcapSymbols);
+
+    // 풀 종목 시총·시세 처리
+    let mcapCount = 0;
+    for (const [sym, qd] of Object.entries(quotes)) {
+      const tk = mcapToTk[sym];
+      if (!tk) continue;
+      if (qd.marketCap) {
+        if (prices[tk]) {
+          // 큐레이션 종목: 같은 종목이 KS·KQ 양쪽에서 잡힐 경우 더 큰 값(정상 거래소) 우선
+          const cur = prices[tk].marketCap || 0;
+          if (qd.marketCap > cur) prices[tk].marketCap = qd.marketCap;
+        } else {
+          // 풀 추가 종목: 시세도 quote에서 같이 추출해 prices에 추가
+          // 이미 prices[tk]가 있으면 위 분기, 없으면 여기 — 거래소 모호 시 더 큰 시총 쪽 우선
+          const cur = prices[tk]?.marketCap || 0;
+          if (qd.marketCap > cur) {
+            prices[tk] = {
+              price: qd.price ?? 0,
+              prevClose: qd.prevClose,
+              changePct: qd.changePct,
+              currency: qd.currency,
+              time: qd.time,
+              marketCap: qd.marketCap,
+              name: qd.name,
+              exchange: sym.endsWith(".KS") ? "KS" : (sym.endsWith(".KQ") ? "KQ" : undefined),
+            };
+          }
+        }
+        mcapCount++;
+      }
+    }
+
     const body = {
       updatedAt: new Date().toISOString(),
       elapsedMs: Date.now() - t0,
       requested: allSymbols.length,
       count: Object.keys(prices).length,
+      mcapCount,
       prices,
     };
 
