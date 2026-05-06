@@ -254,11 +254,21 @@ async function yahooChartOne(symbol: string, attempt = 1): Promise<Price | null>
 
     const regTime = Number(meta.regularMarketTime ?? 0);
     const regPx = Number(meta.regularMarketPrice ?? 0);
+    const nowSec = Date.now() / 1000;
+    const STALE_SEC = 30 * 60; // 30분 — extended 데이터 freshness 임계
 
     // regularMarket이 마지막 봉보다 최신이면 그쪽 우선 (한국 종목 정규장 직후
     // 15분 봉이 아직 close되지 않아 직전 거래일 종가가 잡히는 케이스 방지).
     // 미국 프리/애프터마켓처럼 regTime 이후 봉이 있으면 lastTime > regTime이라 그대로.
     if (regTime > 0 && regPx > 0 && (lastTime == null || regTime > lastTime)) {
+      lastPrice = regPx;
+      lastTime = regTime;
+    }
+
+    // 미국 휴장 idle 처리 — 마지막 봉이 extended(정규 종료 후)인데 30분+ 경과면
+    // AH/프리 거래 없는 idle 시간대(KST 09:00~17:00 등)로 보고 정규 종가로 fallback.
+    // 데이터 timestamp 기준이라 DST·timezone 변동 자동 대응.
+    if (regTime > 0 && regPx > 0 && lastTime != null && lastTime > regTime + 60 && lastTime < nowSec - STALE_SEC) {
       lastPrice = regPx;
       lastTime = regTime;
     }
@@ -461,7 +471,10 @@ Deno.serve(async (req) => {
     // 미국 종목 AH/PreMarket 보강 — chart 15분 봉 미생성 thin 종목(PL·RDW·ASTS·LUNR 등)이
     // 정규장 종가만 보이던 문제. quote의 postMarketPrice·preMarketPrice는 체결 1건이라도
     // 있으면 누적 가격을 줘서 chart bar 부재 시에도 확장 거래 가격 노출 가능.
+    // 단 30분+ 지난 post/pre는 idle stale로 보고 적용 안 함 — chart 측 idle fallback과 일관.
     let extCount = 0;
+    const STALE_SEC_AUG = 30 * 60;
+    const nowSecAug = Date.now() / 1000;
     for (const tk of usAll) {
       const qd = quotes[tk];
       const px = prices[tk];
@@ -470,9 +483,11 @@ Deno.serve(async (req) => {
       const postTime = Number(qd.postMarketTime ?? 0);
       const preTime = Number(qd.preMarketTime ?? 0);
       const baseline = Number(qd.price ?? px.prevClose ?? 0);
+      const postFresh = postTime > 0 && (nowSecAug - postTime) < STALE_SEC_AUG;
+      const preFresh = preTime > 0 && (nowSecAug - preTime) < STALE_SEC_AUG;
 
-      // post 우선 (장 마감 후 가장 신선한 데이터)
-      if (postTime > chartTime && qd.postMarketPrice && qd.postMarketPrice > 0 && baseline > 0) {
+      // post 우선 (장 마감 후 가장 신선한 데이터) — fresh 한정
+      if (postFresh && postTime > chartTime && qd.postMarketPrice && qd.postMarketPrice > 0 && baseline > 0) {
         const newPx = qd.postMarketPrice;
         const pct = qd.postMarketChangePercent != null
           ? Number(qd.postMarketChangePercent)
@@ -487,7 +502,7 @@ Deno.serve(async (req) => {
           extended: true,
         };
         extCount++;
-      } else if (preTime > chartTime && qd.preMarketPrice && qd.preMarketPrice > 0 && baseline > 0) {
+      } else if (preFresh && preTime > chartTime && qd.preMarketPrice && qd.preMarketPrice > 0 && baseline > 0) {
         const newPx = qd.preMarketPrice;
         const pct = qd.preMarketChangePercent != null
           ? Number(qd.preMarketChangePercent)
