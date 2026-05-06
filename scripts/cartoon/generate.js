@@ -77,11 +77,11 @@ const todaysHeadlines = () => headlinesAt(0);
 
 // 화풍 프리셋 — --style 플래그로 선택. 사용처별로 다른 톤 적용 가능.
 const STYLES = {
-  '1950s': `1950s American newspaper political cartoon style, single panel. Heavy ink crosshatching, sepia-toned limited palette, exaggerated caricature in vintage editorial tradition, classic ink-wash shading, hand-lettered captions, mid-century WSJ/NYT op-ed page look. 1080×1080 square format.`,
-  'mad-mag': `Mad Magazine style satirical cartoon, single panel. Wildly exaggerated caricature with rubber-hose proportions, loud primary colors, busy chaotic composition with multiple gags happening at once, bold outlines, screaming faces, sound-effect text bursts. Garish 1970s magazine print look. 1080×1080 square format.`,
-  'ghibli': `Studio Ghibli inspired hand-painted watercolor illustration, single panel editorial scene. Warm soft tones, painterly clouds and atmospheric lighting, expressive but gentle character design, dreamlike composition with rich background detail. 1080×1080 square format.`,
-  'pixar': `Pixar-style 3D rendered editorial scene, single still frame. Clean polished CGI with cinematic lighting, optimistic tone, expressive but realistic character proportions, beautiful background detail with depth-of-field. 1080×1080 square format.`,
-  'k-webtoon': `Korean webtoon style illustration, single panel. Flat cel-shaded colors with crisp linework, expressive manhwa character faces, dynamic posing, vibrant accent colors against neutral backgrounds, modern digital art finish. 1080×1080 square format.`,
+  '1950s': `1950s American newspaper political cartoon style, single panel. Heavy ink crosshatching, sepia-toned limited palette, exaggerated caricature in vintage editorial tradition, classic ink-wash shading, hand-lettered captions, mid-century WSJ/NYT op-ed page look. 1080×1350 portrait (4:5) format — vertical, taller than wide.`,
+  'mad-mag': `Mad Magazine style satirical cartoon, single panel. Wildly exaggerated caricature with rubber-hose proportions, loud primary colors, busy chaotic composition with multiple gags happening at once, bold outlines, screaming faces, sound-effect text bursts. Garish 1970s magazine print look. 1080×1350 portrait (4:5) format — vertical, taller than wide.`,
+  'ghibli': `Studio Ghibli inspired hand-painted watercolor illustration, single panel editorial scene. Warm soft tones, painterly clouds and atmospheric lighting, expressive but gentle character design, dreamlike composition with rich background detail. 1080×1350 portrait (4:5) format — vertical, taller than wide.`,
+  'pixar': `Pixar-style 3D rendered editorial scene, single still frame. Clean polished CGI with cinematic lighting, optimistic tone, expressive but realistic character proportions, beautiful background detail with depth-of-field. 1080×1350 portrait (4:5) format — vertical, taller than wide.`,
+  'k-webtoon': `Korean webtoon style illustration, single panel. Flat cel-shaded colors with crisp linework, expressive manhwa character faces, dynamic posing, vibrant accent colors against neutral backgrounds, modern digital art finish. 1080×1350 portrait (4:5) format — vertical, taller than wide.`,
 };
 
 // 그날의 실제 헤드라인을 프롬프트에 직접 주입 — 모델이 매번 다른 장면 합성

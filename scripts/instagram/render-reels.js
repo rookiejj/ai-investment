@@ -169,10 +169,11 @@ function mainSingle() {
 
   const fps = 30;
   const totalFrames = duration * fps;
-  // zoompan: 1.0x → 1.15x over duration, 1080×1080 정사각 출력
-  // 그 후 split + 블러 BG로 1080×1920 letterbox
+  const SRC_H = 1350;  // 카툰 입력 크기 1080×1350 (IG 포트레이트 4:5).
+  // zoompan: 1.0x → 1.15x over duration, 1080×1350 4:5 포트레이트 출력
+  // 그 후 split + 블러 BG로 1080×1920 letterbox (위·아래 285px씩)
   const filter = [
-    `[0:v]zoompan=z='min(zoom+0.000167\\,1.15)':d=${totalFrames}:s=${TARGET_W}x${TARGET_W}:fps=${fps},split=2[orig][bg]`,
+    `[0:v]zoompan=z='min(zoom+0.000167\\,1.15)':d=${totalFrames}:s=${TARGET_W}x${SRC_H}:fps=${fps},split=2[orig][bg]`,
     `[bg]scale=${TARGET_W}:${TARGET_H}:force_original_aspect_ratio=increase,crop=${TARGET_W}:${TARGET_H},gblur=sigma=40,eq=brightness=-0.15[bgblur]`,
     `[bgblur][orig]overlay=(W-w)/2:(H-h)/2:format=auto,setsar=1[vout]`,
   ].join(';');

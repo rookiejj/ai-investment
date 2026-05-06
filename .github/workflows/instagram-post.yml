@@ -149,23 +149,18 @@ jobs:
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
         run: node scripts/instagram/render-slides.js
 
-      - name: 1950s 카툰 다운로드·1080×1350으로 확장 (캐러셀 1번 슬라이드)
+      - name: 1950s 카툰 다운로드 (캐러셀 1번 슬라이드)
         if: steps.gate.outputs.should_run == 'true' && (steps.mode.outputs.mode == 'carousel' || steps.mode.outputs.mode == 'all')
         run: |
-          # cartoon-generate 워크플로가 직전에 업로드한 today.png를 캐러셀 첫 장으로 사용.
-          # 홈페이지·캐러셀이 같은 1950s 1장을 공유 → 시각 일관성 확보.
+          # cartoon-generate 워크플로가 직전에 업로드한 today.png(1080×1350 4:5)를 캐러셀 첫 장으로 사용.
+          # 홈페이지·캐러셀이 같은 1장을 공유 → 시각 일관성. CTA 슬라이드와 비율 동일해 letterbox 불필요.
           STAMP=$(date +%s)
           curl -fsSL "https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/today.png?t=$STAMP" \
-            -o scripts/instagram/out/cartoon-1950s-src.png
-          if [ ! -s scripts/instagram/out/cartoon-1950s-src.png ]; then
+            -o scripts/instagram/out/cartoon-1950s.png
+          if [ ! -s scripts/instagram/out/cartoon-1950s.png ]; then
             echo "::error::cartoon today.png 다운로드 실패 — Supabase 업로드 미완료 가능성"
             exit 1
           fi
-          # 1080×1080(정사각)을 1080×1350(4:5)로 확장 — 위·아래 135px씩 블러 BG로 채움.
-          # IG 캐러셀이 첫 슬라이드 비율을 따라가므로 CTA 슬라이드(1080×1350)와 비율 통일.
-          ffmpeg -y -i scripts/instagram/out/cartoon-1950s-src.png \
-            -filter_complex "[0:v]split=2[orig][bg];[bg]scale=1080:1350:force_original_aspect_ratio=increase,crop=1080:1350,gblur=sigma=30,eq=brightness=-0.1[bgblur];[bgblur][orig]overlay=(W-w)/2:(H-h)/2:format=auto,setsar=1" \
-            -frames:v 1 scripts/instagram/out/cartoon-1950s.png
           ls -la scripts/instagram/out/cartoon-1950s.png
 
       - name: Mad Magazine 카툰 생성 (Reels 영상 소스)
