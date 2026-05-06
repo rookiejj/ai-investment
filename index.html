@@ -47,22 +47,27 @@ header.top{
 .brand img{width:32px;height:32px;border-radius:8px;object-fit:cover}
 .brand .dot{color:var(--acc)}
 
-/* 우측 하단 최상단 이동 버튼 — 스크롤 ≥400px 시 페이드인, 반투명 + blur로 배경 비침 유지 */
-.scroll-top{
-  position:fixed;bottom:24px;right:24px;
-  width:48px;height:48px;border-radius:50%;
+/* 우측 하단 플로팅 버튼 — 반투명 + blur로 배경 비침 유지 */
+.scroll-top, .mobile-refresh{
+  position:fixed;right:24px;
+  width:42px;height:42px;border-radius:50%;
   background:rgba(13,13,13,0.55);backdrop-filter:blur(14px) saturate(140%);
   border:1px solid rgba(255,255,255,0.16);color:#fff;
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;opacity:0;pointer-events:none;
+  cursor:pointer;
   transition:opacity .25s, transform .15s, background .15s;
   z-index:40;box-shadow:0 4px 18px rgba(0,0,0,0.18);
 }
+.scroll-top:hover, .mobile-refresh:hover{transform:translateY(-2px);background:rgba(13,13,13,0.7)}
+.scroll-top:active, .mobile-refresh:active{transform:scale(0.95)}
+/* 최상단 이동 — 스크롤 ≥400px 시 페이드인 */
+.scroll-top{bottom:24px;opacity:0;pointer-events:none}
 .scroll-top.show{opacity:1;pointer-events:auto}
-.scroll-top:hover{transform:translateY(-2px);background:rgba(13,13,13,0.7)}
-.scroll-top:active{transform:scale(0.95)}
+/* 모바일 새로고침 — 데스크톱 키보드 단축키 있어 모바일에서만 노출, 항상 표시 */
+.mobile-refresh{display:none;bottom:74px}
 @media (max-width:640px){
-  .scroll-top{bottom:18px;right:18px;width:44px;height:44px}
+  .scroll-top{bottom:18px;right:18px;width:38px;height:38px}
+  .mobile-refresh{display:flex;bottom:64px;right:18px;width:38px;height:38px}
 }
 .top-nav{display:flex;align-items:center;gap:8px}
 .btn-primary{
@@ -897,9 +902,18 @@ body.sub-modal-open{overflow:hidden}
 
 </main>
 
+<!-- 우측 하단 모바일 새로고침 (mobile only, 항상 표시) — 최상단 이동 버튼 위에 배치 -->
+<button class="mobile-refresh" id="mobileRefreshBtn" type="button" aria-label="새로고침">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="23 4 23 10 17 10"></polyline>
+    <polyline points="1 20 1 14 7 14"></polyline>
+    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+  </svg>
+</button>
+
 <!-- 우측 하단 최상단 이동 버튼 -->
 <button class="scroll-top" id="scrollTopBtn" type="button" aria-label="맨 위로">
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
     <polyline points="18 15 12 9 6 15"></polyline>
   </svg>
 </button>
@@ -2268,14 +2282,17 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 // ═══════════════════════════════════════════════════════════
 // Wire up controls
 // ═══════════════════════════════════════════════════════════
-// 좌상단 로고 클릭 - 강제 새로고침 + 스크롤 위치 리셋 (홈처럼 최상단에서 시작)
+// 좌상단 로고 + 우측 하단 모바일 새로고침 버튼 - 강제 새로고침 + 스크롤 위치 리셋
+function _doRefresh(e){
+  if(e) e.preventDefault();
+  sessionStorage.setItem(SCROLL_KEY,'0');
+  location.reload();
+}
 {
   const brand=document.getElementById('brandLogo');
-  if(brand) brand.addEventListener('click',e=>{
-    e.preventDefault();
-    sessionStorage.setItem(SCROLL_KEY,'0');
-    location.reload();
-  });
+  if(brand) brand.addEventListener('click', _doRefresh);
+  const refresh=document.getElementById('mobileRefreshBtn');
+  if(refresh) refresh.addEventListener('click', _doRefresh);
 }
 
 // 우측 하단 최상단 이동 버튼 - 스크롤 ≥400px 시 표시
