@@ -19,6 +19,7 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 const OUT_DIR = path.join(__dirname, 'out');
+fs.mkdirSync(OUT_DIR, { recursive: true });
 
 // .env 로드 (zero deps)
 function loadEnv() {
