@@ -25,7 +25,8 @@ const SECTOR_POOL = {
     "🛢️ 에너지":         ["XOM","CVX","COP","SLB","LNG","EOG","OXY","MPC","PSX","VLO","HAL","BKR","FANG","KMI","ENB","TRP"],
     "🌱 친환경·청정기술":["TSLA","ENPH","FSLR","BE","BLDP","PLUG","RUN","NOVA","ARRY","SHLS","CWEN","NEE","BEP"],
     "🚗 자동차·모빌리티":["TSLA","TM","GM","F","STLA","HMC","RIVN","LCID","NIO","XPEV","LI","FORD","BWA","LEA"],
-    "✈️ 항공우주·방산":  ["RTX","BA","LMT","NOC","GD","HII","LHX","TXT","KTOS","AVAV","TDG","HEI","HWM","TXT"],
+    "🚀 우주항공":       ["BA","TDG","HEI","HWM","TXT","RKLB","ASTS","LUNR","IRDM","PL","BKSY","SPIR","JOBY","ACHR"],
+    "🛡️ 방산":           ["LMT","RTX","NOC","GD","HII","LHX","KTOS","AVAV","LDOS","BAH","CW","HEI","TDG"],
     "⚛️ 양자·크립토":    ["IBM","COIN","MSTR","RGTI","IONQ","QUBT","HOOD","MARA","RIOT","CLSK","BTBT","HUT","BTDR","BITF"],
     "🔒 사이버보안":     ["PANW","CRWD","FTNT","ZS","OKTA","NET","S","CYBR","RBRK","TENB","CHKP","QLYS"],
     "💳 핀테크·결제":    ["V","MA","PYPL","SQ","AXP","COF","FIS","FI","GPN","TOST","MQ","DLO","HOOD","SOFI","AFRM"],
@@ -166,10 +167,14 @@ const US_NAME_OVERRIDE = {
   "TM": "토요타", "F": "포드", "STLA": "스텔란티스", "HMC": "혼다",
   "LCID": "루시드", "NIO": "니오", "XPEV": "샤오펑", "LI": "리오토",
   "BWA": "보그워너", "LEA": "리어",
-  // 항공우주·방산
+  // 우주항공·방산
   "HII": "헌팅턴 잉걸스", "LHX": "L3해리스", "TXT": "텍스트론",
   "KTOS": "크라토스", "AVAV": "에어로바이런먼트",
   "TDG": "트랜스다임", "HEI": "헤이코", "HWM": "하월멧",
+  "ASTS": "AST 스페이스모바일", "LUNR": "인튜이티브 머신스",
+  "IRDM": "이리듐", "PL": "플래닛 랩스", "BKSY": "블랙스카이", "SPIR": "스파이어",
+  "JOBY": "조비 에비에이션", "ACHR": "아처 에비에이션",
+  "LDOS": "레이도스", "BAH": "부즈 알렌", "CW": "커티스 라이트",
   // 양자·크립토
   "IBM": "IBM", "COIN": "코인베이스", "MSTR": "스트래티지",
   "RGTI": "리게티", "IONQ": "아이온큐", "QUBT": "큐비트",

@@ -3,6 +3,18 @@
 
 const updates = [
   {
+    date: "2026-05-06 21:30 KST",
+    summary: `우주항공·방산 카테고리 분리 - 18 → 19개로 확장
+우주항공 신설 - BA·TDG·RKLB·ASTS·LUNR·IRDM·PL 7종목
+방산 신설 - LMT·RTX·NOC·GD·HII·LHX·KTOS 7종목
+ASTS·LUNR·IRDM·PL 신규 편입으로 위성·우주 인프라 커버리지 확보`,
+    changes: [
+      { type: "구조 변경", sector: "우주항공·방산",
+        detail: "기존 ✈️ 항공우주·방산 단일 카테고리를 🚀 우주항공 + 🛡️ 방산 두 카테고리로 분리. 미국 탭 18 → 19 카테고리 확장. 우주항공 비중이 작아 방산 프라임에 가려지던 종목 노출 강화 목적. ASTS(위성-스마트폰 직통)·LUNR(NASA 달 착륙)·IRDM(LEO 음성·IoT)·PL(위성 영상)을 우주항공에 신규 편입해 우주 pure-play 커버리지 확보. 방산은 LMT·RTX·NOC·GD·HII·LHX 전통 프라임 + KTOS(무인 표적·하이퍼소닉)로 재구성. BA·TDG는 민항 비중·애프터마켓 부품 특성으로 우주항공으로 이동.",
+        time: "2026-05-06 21:30 KST" },
+    ],
+  },
+  {
     date: "2026-05-06 19:15 KST",
     summary: `5/6 프리마켓 어닝 - Uber Q1·Disney Q2 발표 직전·컨센 매출 $13.27B/$24.78B
 AMD $379.90 시간외 +5% 사상 최고 - Q1 컨센 상회 + Q2 가이던스 컨센 압도 결과 흡수

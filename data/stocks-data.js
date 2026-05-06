@@ -146,16 +146,29 @@ const data = [
     ]
   },
   {
-    title: "✈️ 항공우주·방산",
-    tag: "전투기·미사일·우주·위성",
+    title: "🚀 우주항공",
+    tag: "민항·로켓·위성·우주 인프라",
+    stocks: [
+      { tk:"BA", nm:"Boeing", rs:"Q1 매출 $22.22B·EPS -$0.20 대폭 컨센 상회·상업기 143대 2019 이후 최대·총 백로그 $695B 사상 최고·풀해 FCF $1~3B 가이던스·737 월 47대 여름 증산·MAX7/10 연말 인증", r1:"89.5", p1:"2.2", r2:"80", p2:"3.5" },
+      { tk:"TDG", nm:"TransDigm", rs:"항공기 애프터마켓 부품 독점·민항·방산 양다리·EBITDA 50%대 마진·M&A 인수 성장", r1:"8.5", p1:"2.0", r2:"9.5", p2:"2.4" },
+      { tk:"RKLB", nm:"Rocket Lab", rs:"Neutron 4Q26 재지연·$816M SDA 수주·국방 프라임 전환", r1:"0.60", p1:"-0.15", r2:"0.90", p2:"-0.08" },
+      { tk:"ASTS", nm:"AST SpaceMobile", rs:"위성-스마트폰 직통 LEO·BlueBird 양산 발사 가속·AT&T·Verizon 파트너", r1:"0.05", p1:"-0.30", r2:"0.45", p2:"-0.25" },
+      { tk:"LUNR", nm:"Intuitive Machines", rs:"NASA CLPS 달 착륙선·IM-3 Q4 발사 예정·Lunar Terrain Vehicle 입찰", r1:"0.32", p1:"-0.20", r2:"0.50", p2:"-0.15" },
+      { tk:"IRDM", nm:"Iridium", rs:"66 위성 LEO 음성·IoT 글로벌 커버리지·자체 흑자·자유 현금흐름 안정", r1:"0.85", p1:"0.20", r2:"0.92", p2:"0.25" },
+      { tk:"PL", nm:"Planet Labs", rs:"위성 일일 영상 200+·국방·기후 모니터링·ARR 기반 안정 성장", r1:"0.25", p1:"-0.05", r2:"0.30", p2:"-0.02" },
+    ]
+  },
+  {
+    title: "🛡️ 방산",
+    tag: "방산 프라임·전략무기·해군 조선",
     stocks: [
       { tk:"LMT", nm:"Lockheed Martin", rs:"Q1 EPS $6.44 컨센 $6.77 하회·매출 $18.0B 컨센 $18.4B 하회·FCF -$291M 음전환·풀해 매출 $80B·FCF $6.8B 가이던스 재확인·주가 -6.3%", r1:"72", p1:"6.5", r2:"75", p2:"7.0" },
       { tk:"RTX", nm:"RTX Corp", rs:"Q1 EPS $1.78 컨센 상회(+21% YoY)·매출 $22.1B +9%·Raytheon 섹그 +10%·가이던스 EPS $6.70~6.90 상향·FCF $1.9B", r1:"82", p1:"6.5", r2:"88", p2:"7.5" },
       { tk:"NOC", nm:"Northrop Grumman", rs:"B-21·전략무기", r1:"42", p1:"4.0", r2:"44", p2:"4.3" },
       { tk:"GD", nm:"General Dynamics", rs:"잠수함·Gulfstream", r1:"49", p1:"4.2", r2:"52", p2:"4.6" },
-      { tk:"BA", nm:"Boeing", rs:"Q1 매출 $22.22B·EPS -$0.20 대폭 컨센 상회·상업기 143대 2019 이후 최대·총 백로그 $695B 사상 최고·풀해 FCF $1~3B 가이던스·737 월 47대 여름 증산·MAX7/10 연말 인증", r1:"89.5", p1:"2.2", r2:"80", p2:"3.5" },
-      { tk:"RKLB", nm:"Rocket Lab", rs:"Neutron 4Q26 재지연·$816M SDA 수주·국방 프라임 전환", r1:"0.60", p1:"-0.15", r2:"0.90", p2:"-0.08" },
+      { tk:"HII", nm:"Huntington Ingalls", rs:"미 해군 항모·잠수함 단독 공급·Newport News·Ingalls 조선소·백로그 $50B+", r1:"11", p1:"0.7", r2:"12", p2:"0.8" },
       { tk:"LHX", nm:"L3Harris", rs:"전자전·ISR·위성통신", r1:"21", p1:"2.0", r2:"23", p2:"2.3" },
+      { tk:"KTOS", nm:"Kratos", rs:"무인 표적기·하이퍼소닉 시뮬레이션·국방 R&D 투자 수혜", r1:"1.2", p1:"0.1", r2:"1.4", p2:"0.15" },
     ]
   },
   {
