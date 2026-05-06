@@ -168,13 +168,12 @@ function mainSingle() {
   console.log(`[single mode] input=${inputPath} duration=${duration}s`);
 
   const fps = 30;
-  const totalFrames = duration * fps;
-  const SRC_H = 1350;  // 카툰 입력 크기 1080×1350 (IG 포트레이트 4:5).
-  // zoompan: 1.0x → 1.15x over duration, 1080×1350 4:5 포트레이트 출력
-  // 그 후 split + 블러 BG로 1080×1920 letterbox (위·아래 285px씩)
+  // 정적 디스플레이 — 줌·이동 없음. 입력 이미지 그대로 1080 폭 맞춤(높이는 비율 유지).
+  // 1080×1920 캔버스 가운데 배치, 위·아래 빈 공간은 같은 이미지 블러 BG로 채움.
   const filter = [
-    `[0:v]zoompan=z='min(zoom+0.000167\\,1.15)':d=${totalFrames}:s=${TARGET_W}x${SRC_H}:fps=${fps},split=2[orig][bg]`,
-    `[bg]scale=${TARGET_W}:${TARGET_H}:force_original_aspect_ratio=increase,crop=${TARGET_W}:${TARGET_H},gblur=sigma=40,eq=brightness=-0.15[bgblur]`,
+    `[0:v]split=2[v0][v1]`,
+    `[v0]scale=${TARGET_W}:-2,fps=${fps}[orig]`,
+    `[v1]scale=${TARGET_W}:${TARGET_H}:force_original_aspect_ratio=increase,crop=${TARGET_W}:${TARGET_H},gblur=sigma=40,eq=brightness=-0.15,fps=${fps}[bgblur]`,
     `[bgblur][orig]overlay=(W-w)/2:(H-h)/2:format=auto,setsar=1[vout]`,
   ].join(';');
 
