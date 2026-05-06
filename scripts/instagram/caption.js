@@ -55,13 +55,13 @@ function uniqByCount(arr) {
 }
 
 function buildHeader(meta) {
-  return `${meta.date} (${meta.dow}) 브리픽 데일리`;
+  return `매일 아침 카톡으로 받아보는 ${meta.date} (${meta.dow}) 브리픽 데일리`;
 }
 
 function buildCTA() {
   // 인스타 피드 캡션의 URL은 클릭 안 됨 → Bio 링크로 유도
   return [
-    '매일 아침 카톡으로 5개 시장의 핵심만 받아보기.',
+    '5개 시장의 핵심만 전달해 드립니다.',
     '',
     '👉 카톡으로 받아보려면 - 프로필 링크 클릭',
     '',
