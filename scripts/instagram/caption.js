@@ -61,7 +61,7 @@ function buildHeader(meta) {
 function buildCTA() {
   // 인스타 피드 캡션의 URL은 클릭 안 됨 → Bio 링크로 유도
   return [
-    '5개 시장의 핵심만 전달해 드립니다.',
+    '5개 시장의 핵심 뉴스와 돈되는 섹터 분석까지.',
     '',
     '👉 카톡으로 받아보려면 - 프로필 링크 클릭',
     '',
