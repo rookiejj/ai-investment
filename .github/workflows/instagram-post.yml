@@ -125,19 +125,20 @@ jobs:
 
       - name: 한글·이모지 폰트 + ffmpeg 설치
         if: steps.gate.outputs.should_run == 'true'
-        timeout-minutes: 5
+        timeout-minutes: 2
         run: |
-          # apt-get update가 미러 응답 대기로 hang 걸리는 경우 timeout-minutes로 5분 cut.
-          # 실패 시 한 번 자동 재시도해 일시적 미러 장애 흡수.
+          # apt-get 기본 동작에 HTTP timeout 45초 + 재시도 2회 명시.
+          # 평소 30~60초 끝나는 작업이라 step 전체 2분 timeout으로 hang 빠른 cut.
           set -e
+          APT_OPTS='-o Acquire::http::Timeout=45 -o Acquire::https::Timeout=45 -o Acquire::Retries=2'
           for attempt in 1 2; do
-            if sudo apt-get update -qq -o Acquire::Retries=3; then
+            if sudo apt-get update -qq $APT_OPTS; then
               break
             fi
-            echo "apt-get update attempt $attempt failed, retrying in 10s..."
-            sleep 10
+            echo "apt-get update attempt $attempt failed, retrying in 3s..."
+            sleep 3
           done
-          sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-color-emoji ffmpeg
+          sudo apt-get install -y -qq $APT_OPTS fonts-noto-cjk fonts-noto-color-emoji ffmpeg
           fc-cache -fv
 
       - name: npm 의존성 설치
