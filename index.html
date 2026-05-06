@@ -1659,10 +1659,16 @@ function findMentions(tk){
   return out.slice(0,12);
 }
 
-function openModal(tk,market){
+function openModal(tk,market,_peerSwap){
   const s=findStock(tk);
   if(!s)return;
-  _pushModalState({type:'stock', tk, market});
+  // peer 이동은 stack top(stock)을 교체해 무한 chain(A→B→A→B…) 방지.
+  // history도 push하지 않아 백키 한 번에 직전 레벨(일자별 모달 또는 root)로 바로 복원.
+  if(_peerSwap && _modalStack.length>0 && _modalStack[_modalStack.length-1].type==='stock'){
+    _modalStack[_modalStack.length-1]={type:'stock', tk, market};
+  } else {
+    _pushModalState({type:'stock', tk, market});
+  }
   const mentions=findMentions(tk);
   const all=getAllStocksOf(market);
   const peers=all.filter(p=>p.catTitle===s.catTitle&&p.tk!==s.tk).slice(0,6);
@@ -1756,7 +1762,7 @@ function openModal(tk,market){
 
   document.getElementById('modalCloseBtn').addEventListener('click',closeModal);
   document.querySelectorAll('.peer-card').forEach(p=>{
-    p.addEventListener('click',()=>openModal(p.dataset.tk,p.dataset.market));
+    p.addEventListener('click',()=>openModal(p.dataset.tk,p.dataset.market,true));
   });
 
   showModal();
