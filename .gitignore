@@ -6,6 +6,7 @@ scripts/subscribers.json
 node_modules/
 package-lock.json
 scripts/instagram/out/
+scripts/cartoon/out/
 
 # Claude Code 로컬 권한 설정 (사용자별·머신별로 달라 공유 X)
 .claude/settings.local.json

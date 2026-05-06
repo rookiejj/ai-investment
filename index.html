@@ -85,7 +85,16 @@ section:first-of-type{padding-top:48px;border-top:0}
 }
 .updates-loading{font:400 15px/1.6 'Inter',sans-serif;color:var(--mut);text-align:center;padding:24px 0}
 
-/* TL;DR — 시장별 한 줄 카드 */
+/* TL;DR — 시장별 한 줄 카드 + 좌측 1컷 만화 */
+.narrative-flex{display:flex;gap:20px;align-items:flex-start}
+.narrative-cartoon{flex:0 0 360px;border-radius:14px;overflow:hidden;border:1px solid var(--border);background:var(--panel)}
+.narrative-cartoon img{display:block;width:100%;height:auto}
+.narrative-cartoon.empty{display:none}
+.narrative-text{flex:1;min-width:0}
+@media (max-width:768px){
+  .narrative-flex{flex-direction:column;gap:14px}
+  .narrative-cartoon{flex:0 0 auto;width:100%;max-width:100%}
+}
 .tldr-list{display:flex;flex-direction:column;gap:10px}
 .tldr-row{
   display:flex;align-items:center;gap:14px;
@@ -1098,8 +1107,19 @@ function buildNarrative(){
   }
 
   const remainingCount=totalLines-tldrRows.length;
+  // 1컷 만화: Supabase Storage cartoon/today.png. 데이터 갱신 시 GH Actions가 자동 재생성·업로드.
+  // 로컬 개발 시 `node scripts/cartoon/generate.js --upload` 수동 갱신 가능.
+  // 없으면 onerror로 자동 숨김. 캐시 우회용 timestamp.
+  const cartoonSrc=`https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/today.png?_=${Date.now()}`;
   body.innerHTML=`
-    <div class="tldr-list">${tldrRows.join('')}</div>
+    <div class="narrative-flex">
+      <div class="narrative-cartoon" id="narrativeCartoon">
+        <img src="${cartoonSrc}" alt="오늘의 1컷" onerror="document.getElementById('narrativeCartoon').classList.add('empty')">
+      </div>
+      <div class="narrative-text">
+        <div class="tldr-list">${tldrRows.join('')}</div>
+      </div>
+    </div>
     ${fullSections.length?`
       <button class="narrative-expand" id="narrativeExpand">
         <span>전체 헤드라인 ${remainingCount}건 더 보기</span>
