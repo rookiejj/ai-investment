@@ -1230,6 +1230,7 @@ function impactDots(n){
 }
 
 function openDayModal(dateKey, events){
+  _pushModalState({type:'day', dateKey, events});
   const d=new Date(dateKey+'T00:00:00Z');
   const dow=['일','월','화','수','목','금','토'][d.getUTCDay()];
   const month=d.getUTCMonth()+1, day=d.getUTCDate();
@@ -1661,6 +1662,7 @@ function findMentions(tk){
 function openModal(tk,market){
   const s=findStock(tk);
   if(!s)return;
+  _pushModalState({type:'stock', tk, market});
   const mentions=findMentions(tk);
   const all=getAllStocksOf(market);
   const peers=all.filter(p=>p.catTitle===s.catTitle&&p.tk!==s.tk).slice(0,6);
@@ -1761,9 +1763,14 @@ function openModal(tk,market){
 }
 
 // ─────────────────────────────────────────────────────────────
-// 모달 공통: 히스토리 스택 + 스와이프-다운 닫기
+// 모달 공통: 모달 스택 + 히스토리 + 스와이프-다운 닫기
+//
+// _modalStack에 day / stock 상태를 누적해 닫을 때 한 단계씩 pop.
+// 캘린더 → 일자별 모달 → 종목 모달 → 백키 → 일자별 모달로 복원되는 흐름.
 // ─────────────────────────────────────────────────────────────
-let _modalHistoryPushed=false;
+let _modalStack=[];
+let _restoringStack=false; // true일 동안 openDayModal/openModal이 stack을 쌓지 않음
+
 function showModal(){
   const modal=document.getElementById('modal');
   modal.scrollTop=0;
@@ -1771,28 +1778,45 @@ function showModal(){
   document.getElementById('modalBg').classList.add('on');
   document.body.style.overflow='hidden';
   document.documentElement.style.overflow='hidden';
-  if(!_modalHistoryPushed){
-    history.pushState({modalOpen:true},'');
-    _modalHistoryPushed=true;
-  }
+}
+
+function _pushModalState(state){
+  if(_restoringStack)return;
+  _modalStack.push(state);
+  history.pushState({modalDepth:_modalStack.length},'');
 }
 
 function closeModal(fromPopState){
+  if(!fromPopState){
+    // 사용자 액션(✕·Esc·배경 클릭) — 직접 pop하지 않고 history.back으로
+    // 브라우저 back을 트리거. popstate 핸들러에서 stack pop·복원이 일관 처리됨.
+    if(_modalStack.length>0) history.back();
+    return;
+  }
+  // popstate 경로 (브라우저 back / Android 백키)
+  if(_modalStack.length===0)return;
+  _modalStack.pop();
+  if(_modalStack.length>0){
+    // 이전 레벨 복원 — stack 추가 push 없이 render만
+    const prev=_modalStack[_modalStack.length-1];
+    _restoringStack=true;
+    try{
+      if(prev.type==='day') openDayModal(prev.dateKey,prev.events);
+      else if(prev.type==='stock') openModal(prev.tk,prev.market);
+    } finally { _restoringStack=false; }
+    return;
+  }
+  // 스택 끝 — UI 완전히 정리
   const modal=document.getElementById('modal');
   document.getElementById('modalBg').classList.remove('on');
   document.body.style.overflow='';
   document.documentElement.style.overflow='';
   modal.style.transform='';
-  if(_modalHistoryPushed){
-    const wasPushed=_modalHistoryPushed;
-    _modalHistoryPushed=false;
-    if(!fromPopState && wasPushed) history.back();
-  }
 }
 
-// Android 물리 백키 / 브라우저 뒤로가기로 모달 닫기
+// Android 물리 백키 / 브라우저 뒤로가기로 한 단계씩 pop
 window.addEventListener('popstate',()=>{
-  if(document.getElementById('modalBg').classList.contains('on')){
+  if(_modalStack.length>0){
     closeModal(true);
   }
 });
