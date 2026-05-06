@@ -23,7 +23,7 @@ const SECTOR_POOL = {
     "☢️ 원자력·SMR":    ["CEG","VST","BWXT","LEU","OKLO","CCJ","TLN","NNE","SMR","UEC","UUUU","DNN"],
     "🧬 바이오·헬스케어":["LLY","NVO","ISRG","VRTX","REGN","MRK","JNJ","ABBV","PFE","MRNA","AMGN","GILD","BMY","BIIB","NVS"],
     "🛢️ 에너지":         ["XOM","CVX","COP","SLB","LNG","EOG","OXY","MPC","PSX","VLO","HAL","BKR","FANG","KMI","ENB","TRP"],
-    "🌱 친환경·청정기술":["TSLA","ENPH","FSLR","BE","BLDP","PLUG","RUN","NOVA","ARRY","SHLS","CWEN","NEE","BEP"],
+    "🌱 친환경·청정기술":["ENPH","FSLR","BE","BLDP","PLUG","RUN","NOVA","ARRY","SHLS","CWEN","NEE","BEP"],
     "🚗 자동차·모빌리티":["TSLA","TM","GM","F","STLA","HMC","RIVN","LCID","NIO","XPEV","LI","FORD","BWA","LEA"],
     "🚀 우주":           ["RKLB","ASTS","LUNR","IRDM","PL","BKSY","SPIR","MNTS","RDW"],
     "✈️ 항공":           ["BA","TDG","HEI","HWM","DAL","UAL","LUV","AAL","JOBY","ACHR","TXT"],
