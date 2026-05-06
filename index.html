@@ -2202,9 +2202,11 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 // ═══════════════════════════════════════════════════════════
 // Wire up controls
 // ═══════════════════════════════════════════════════════════
-document.querySelectorAll('.health-tab').forEach(b=>{
+// 돈되는 섹터 토글 — data-market 있는 .health-tab만 대상.
+// 시장 한눈에 토글은 같은 클래스를 공유하지만 data-fmap-market을 사용해 분리.
+document.querySelectorAll('.health-tab[data-market]').forEach(b=>{
   b.addEventListener('click',()=>{
-    document.querySelectorAll('.health-tab').forEach(x=>x.classList.remove('on'));
+    document.querySelectorAll('.health-tab[data-market]').forEach(x=>x.classList.remove('on'));
     b.classList.add('on');
     STATE.healthMarket=b.dataset.market;
     renderHealth();
