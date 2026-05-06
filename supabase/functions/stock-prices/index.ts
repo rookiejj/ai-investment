@@ -110,6 +110,13 @@ interface QuoteData {
   time?: number;
   currency?: string;
   name?: string;
+  // Extended hours — chart bar가 없어도 quote에서 누적 가격을 줘서 thin 종목 AH 보강
+  postMarketPrice?: number;
+  postMarketTime?: number;
+  postMarketChangePercent?: number;
+  preMarketPrice?: number;
+  preMarketTime?: number;
+  preMarketChangePercent?: number;
 }
 
 // v7/finance/quote 엔드포인트로 시총·시세 일괄 fetch (배치 단위)
@@ -130,6 +137,13 @@ async function fetchQuotes(symbols: string[]): Promise<Record<string, QuoteData>
     if (q.regularMarketPreviousClose != null) data.prevClose = Number(q.regularMarketPreviousClose);
     if (q.regularMarketTime != null) data.time = Number(q.regularMarketTime);
     if (q.currency != null) data.currency = String(q.currency);
+    // 확장 거래 — chart 15분 봉 미생성 thin 종목 AH 보강용
+    if (q.postMarketPrice != null) data.postMarketPrice = Number(q.postMarketPrice);
+    if (q.postMarketTime != null) data.postMarketTime = Number(q.postMarketTime);
+    if (q.postMarketChangePercent != null) data.postMarketChangePercent = Number(q.postMarketChangePercent);
+    if (q.preMarketPrice != null) data.preMarketPrice = Number(q.preMarketPrice);
+    if (q.preMarketTime != null) data.preMarketTime = Number(q.preMarketTime);
+    if (q.preMarketChangePercent != null) data.preMarketChangePercent = Number(q.preMarketChangePercent);
     // 종목명: longName 우선, shortName 폴백 — 풀 추가 종목 사용자 표시용
     const nm = (q.longName || q.shortName) as string | undefined;
     if (nm) data.name = nm;
@@ -443,6 +457,54 @@ Deno.serve(async (req) => {
         mcapCount++;
       }
     }
+
+    // 미국 종목 AH/PreMarket 보강 — chart 15분 봉 미생성 thin 종목(PL·RDW·ASTS·LUNR 등)이
+    // 정규장 종가만 보이던 문제. quote의 postMarketPrice·preMarketPrice는 체결 1건이라도
+    // 있으면 누적 가격을 줘서 chart bar 부재 시에도 확장 거래 가격 노출 가능.
+    let extCount = 0;
+    for (const tk of usAll) {
+      const qd = quotes[tk];
+      const px = prices[tk];
+      if (!qd || !px) continue;
+      const chartTime = Number(px.time ?? 0);
+      const postTime = Number(qd.postMarketTime ?? 0);
+      const preTime = Number(qd.preMarketTime ?? 0);
+      const baseline = Number(qd.price ?? px.prevClose ?? 0);
+
+      // post 우선 (장 마감 후 가장 신선한 데이터)
+      if (postTime > chartTime && qd.postMarketPrice && qd.postMarketPrice > 0 && baseline > 0) {
+        const newPx = qd.postMarketPrice;
+        const pct = qd.postMarketChangePercent != null
+          ? Number(qd.postMarketChangePercent)
+          : ((newPx - baseline) / baseline) * 100;
+        prices[tk] = {
+          ...px,
+          price: newPx,
+          time: postTime,
+          changePct: pct,
+          change: (pct / 100) * baseline,
+          prevClose: baseline,
+          extended: true,
+        };
+        extCount++;
+      } else if (preTime > chartTime && qd.preMarketPrice && qd.preMarketPrice > 0 && baseline > 0) {
+        const newPx = qd.preMarketPrice;
+        const pct = qd.preMarketChangePercent != null
+          ? Number(qd.preMarketChangePercent)
+          : ((newPx - baseline) / baseline) * 100;
+        prices[tk] = {
+          ...px,
+          price: newPx,
+          time: preTime,
+          changePct: pct,
+          change: (pct / 100) * baseline,
+          prevClose: baseline,
+          extended: true,
+        };
+        extCount++;
+      }
+    }
+    console.log(`[ext-hours] ${extCount} US tickers updated with post/pre market price`);
 
     const body = {
       updatedAt: new Date().toISOString(),
