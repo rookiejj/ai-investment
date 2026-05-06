@@ -125,8 +125,18 @@ jobs:
 
       - name: 한글·이모지 폰트 + ffmpeg 설치
         if: steps.gate.outputs.should_run == 'true'
+        timeout-minutes: 5
         run: |
-          sudo apt-get update -qq
+          # apt-get update가 미러 응답 대기로 hang 걸리는 경우 timeout-minutes로 5분 cut.
+          # 실패 시 한 번 자동 재시도해 일시적 미러 장애 흡수.
+          set -e
+          for attempt in 1 2; do
+            if sudo apt-get update -qq -o Acquire::Retries=3; then
+              break
+            fi
+            echo "apt-get update attempt $attempt failed, retrying in 10s..."
+            sleep 10
+          done
           sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-color-emoji ffmpeg
           fc-cache -fv
 
