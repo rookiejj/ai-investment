@@ -1394,12 +1394,24 @@ function renderHealth(){
     row.addEventListener('click',()=>{
       const item=row.parentElement;
       const wasOpen=item.classList.contains('open');
+      const isMobile=window.innerWidth<=768;
+      // 모바일: 다른 섹터가 위에서 닫히며 행이 viewport 위쪽으로 밀리는 경우
+      // 보정용으로 변경 전 row의 viewport top 기록
+      const oldTop=isMobile ? row.getBoundingClientRect().top : 0;
       list.querySelectorAll('.phase-item.open').forEach(x=>x.classList.remove('open'));
       if(!wasOpen){
         item.classList.add('open');
-        // 데스크톱만 sticky 헤더 아래로 스크롤. 모바일에선 행 위치 고정해
-        // 사용자 시선이 그대로 머물도록 (펼친 카드는 자연스레 아래로 노출).
-        if(window.innerWidth>768){
+        if(isMobile){
+          // 모바일: 위쪽 섹터가 닫혀 row가 위로 딸려 올라간 만큼만 scrollBy로 보정.
+          // 결과적으로 row는 클릭 직전과 동일한 viewport 위치에 머물고, 펼친 카드는
+          // 그 아래로 자연스럽게 노출.
+          requestAnimationFrame(()=>{
+            const newTop=row.getBoundingClientRect().top;
+            const diff=newTop-oldTop;
+            if(Math.abs(diff)>4) window.scrollBy({top:diff,behavior:'auto'});
+          });
+        } else {
+          // 데스크톱: 기존 동작 (sticky 헤더 바로 아래로 smooth scroll)
           requestAnimationFrame(()=>{
             const headerH=document.querySelector('header.top')?.offsetHeight||0;
             const rect=row.getBoundingClientRect();
