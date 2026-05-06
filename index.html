@@ -115,6 +115,7 @@ section:first-of-type{padding-top:48px;border-top:0}
 .narrative-flex{display:flex;gap:20px;align-items:flex-start}
 .narrative-cartoon{flex:0 0 280px;aspect-ratio:4/5;border-radius:14px;border:1px solid var(--border);background:var(--panel-tint);display:flex;align-items:center;justify-content:center;position:relative;padding:10px;box-sizing:border-box}
 .narrative-cartoon img{display:block;width:100%;height:100%;object-fit:contain;border-radius:6px;cursor:zoom-in}
+@media(max-width:640px){.narrative-cartoon img{cursor:default}}
 
 /* 카툰 클릭 시 풀사이즈 라이트박스 — 어두운 배경에 이미지 중앙 정렬 */
 .cartoon-lightbox{
@@ -2318,6 +2319,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
   const lbClose=document.getElementById('cartoonLightboxClose');
   if(lb && lbImg){
     document.addEventListener('click',e=>{
+      // 모바일은 라이트박스 비활성 — 데스크톱(>640px)에서만 동작
+      if(window.innerWidth<=640)return;
       const img=e.target.closest('.narrative-cartoon img');
       if(img && img.src){
         lbImg.src=img.src;
