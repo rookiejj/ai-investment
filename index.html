@@ -945,6 +945,10 @@ body.sub-modal-open{overflow:hidden}
 </div>
 
 <script>
+// 모바일 Safari·Chrome이 reload 시 직전 스크롤 위치를 자동 복원해 로고 새로고침 후 페이지 중간으로 이동하던 문제 차단.
+// scrollRestoration='manual' 지정 시 모든 reload·뒤로가기가 (0,0)에서 시작.
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
 // ═══════════════════════════════════════════════════════════
 // 데이터 로드
 // ═══════════════════════════════════════════════════════════
