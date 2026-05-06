@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>삼성전자 (005930) — 브리픽</title>
+<meta name="description" content="삼성전자 — 시총 $1T 돌파 한국 첫 글로벌 메가캡. FY26E 매출 450조 컨센, 애플 텍사스 파운드리 방문·아이폰 SoC 위탁 협상 본격화.">
+<meta property="og:title" content="삼성전자 (005930) · 브리픽">
+<meta property="og:description" content="시총 $1T 한국 첫·애플 텍사스 방문·HBM4 슈퍼사이클">
+<meta property="og:type" content="article">
+<style>
+  :root{
+    --bg:#ffffff;--panel:#ffffff;--panel-tint:#fafafa;
+    --border:rgba(0,0,0,0.05);--border-md:rgba(0,0,0,0.08);--border-strong:rgba(0,0,0,0.12);
+    --fg:#0d0d0d;--fg2:#333333;--mut:#666666;--mut2:#888888;
+    --acc:#18E299;--acc-deep:#0fa76e;--acc-light:#d4fae8;--acc-soft:#e8fbf1;
+    --err:#d45656;--err-bg:#fbeaea;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter','Pretendard',-apple-system,sans-serif;background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:920px;margin:0 auto;padding:32px 24px 72px}
+
+  .crumb{font:500 12px/1.4 'Geist Mono',monospace;color:var(--mut2);letter-spacing:0.3px;margin-bottom:24px}
+  .crumb a:hover{color:var(--acc-deep)}
+  .crumb .sep{margin:0 8px;opacity:0.5}
+
+  .head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+  .tk{font:700 13px/1 'Geist Mono',monospace;color:var(--mut);letter-spacing:0.5px;text-transform:uppercase}
+  .nm{font:700 36px/1.15 'Inter',sans-serif;letter-spacing:-0.8px;color:var(--fg);margin-top:6px}
+  .cat{font:500 13px/1.4 'Inter',sans-serif;color:var(--mut);margin-top:8px}
+  .px{display:flex;align-items:baseline;gap:10px;margin-top:14px}
+  .px .v{font:700 28px/1 'Geist Mono',monospace;letter-spacing:-0.4px}
+  .px .chg{font:600 16px/1 'Geist Mono',monospace;color:var(--acc-deep)}
+  .px.dn .chg{color:var(--err)}
+  .badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--acc-soft);border:1px solid var(--acc-light);border-radius:9999px;font:600 11px/1 'Geist Mono',monospace;color:var(--acc-deep);text-transform:uppercase;letter-spacing:0.4px}
+
+  .sec{margin-top:36px}
+  .sec-label{font:600 11px/1.5 'Geist Mono',monospace;text-transform:uppercase;letter-spacing:0.6px;color:var(--acc-deep);margin-bottom:10px}
+  .sec h2{font:700 20px/1.3 'Inter',sans-serif;letter-spacing:-0.3px;color:var(--fg);margin-bottom:14px}
+
+  .rs-box{background:var(--panel-tint);border:1px solid var(--border);border-radius:14px;padding:20px;font:400 15px/1.7 'Inter',sans-serif;color:var(--fg2)}
+
+  .fin-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  .fin-card{background:var(--panel-tint);border:1px solid var(--border);border-radius:14px;padding:18px}
+  .fin-yr{font:500 11px/1 'Geist Mono',monospace;color:var(--mut);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:14px}
+  .fin-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .fin-row:last-child{margin-bottom:0}
+  .fin-key{font:500 12px/1 'Inter',sans-serif;color:var(--mut)}
+  .fin-val{font:700 16px/1 'Geist Mono',monospace;color:var(--fg)}
+  .fin-bar{height:6px;background:var(--acc-soft);border-radius:3px;overflow:hidden;margin-top:6px}
+  .fin-bar .fill{height:100%;background:var(--acc-deep);border-radius:3px}
+  .growth{display:inline-flex;align-items:center;gap:4px;font:600 11px/1 'Geist Mono',monospace;color:var(--acc-deep);margin-top:8px}
+
+  .mention{display:flex;flex-direction:column;gap:10px}
+  .mention-item{padding:14px 16px;background:var(--panel-tint);border:1px solid var(--border);border-radius:12px}
+  .mention-meta{font:500 11px/1 'Geist Mono',monospace;color:var(--mut);letter-spacing:0.3px;margin-bottom:8px;text-transform:uppercase}
+  .mention-text{font:400 14px/1.6 'Inter',sans-serif;color:var(--fg2)}
+
+  .peers{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+  .peer{padding:14px;background:var(--panel-tint);border:1px solid var(--border);border-radius:12px;cursor:pointer;transition:border-color .15s}
+  .peer:hover{border-color:var(--border-strong)}
+  .peer-tk{font:600 11px/1 'Geist Mono',monospace;color:var(--mut)}
+  .peer-nm{font:600 14px/1.3 'Inter',sans-serif;color:var(--fg);margin-top:4px}
+
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:8px}
+  .stat-card{padding:18px;background:var(--panel-tint);border:1px solid var(--border);border-radius:12px}
+  .stat-key{font:500 11px/1 'Geist Mono',monospace;color:var(--mut);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px}
+  .stat-val{font:700 18px/1.2 'Inter',sans-serif;color:var(--fg);letter-spacing:-0.3px}
+  .stat-sub{font:500 11px/1.4 'Inter',sans-serif;color:var(--mut2);margin-top:4px}
+
+  .cta{margin-top:48px;padding:24px;background:linear-gradient(135deg,var(--acc-soft),#fff);border:1px solid var(--acc-light);border-radius:16px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .cta-text{font:600 16px/1.4 'Inter',sans-serif;color:var(--fg)}
+  .cta-sub{font:400 13px/1.4 'Inter',sans-serif;color:var(--mut);margin-top:4px}
+  .cta-btn{padding:11px 20px;background:var(--fg);color:#fff;border-radius:9999px;font:600 13px/1 'Inter',sans-serif;letter-spacing:-0.1px;flex-shrink:0}
+
+  .footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);font:400 12px/1.5 'Inter',sans-serif;color:var(--mut2);text-align:center}
+
+  @media(max-width:640px){
+    .wrap{padding:20px 16px 48px}
+    .head{flex-direction:column}
+    .nm{font-size:28px}
+    .fin-grid{grid-template-columns:1fr}
+    .cta{flex-direction:column;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="crumb">
+    <a href="/">홈</a> <span class="sep">›</span>
+    <a href="/?market=kr">한국 주식</a> <span class="sep">›</span>
+    <a href="/?sector=반도체">반도체</a> <span class="sep">›</span>
+    <span>005930</span>
+  </div>
+
+  <header class="head">
+    <div>
+      <div class="tk">005930 · 한국</div>
+      <h1 class="nm">삼성전자</h1>
+      <div class="cat">🔩 반도체 — 메모리·파운드리·디스플레이</div>
+      <div class="px">
+        <span class="v">₩261,000</span>
+        <span class="chg">+12.26%</span>
+      </div>
+    </div>
+    <div class="badge">🏆 사상 최고 · $1T 시총</div>
+  </header>
+
+  <section class="sec">
+    <div class="sec-label">오늘의 시장 사건</div>
+    <h2>한국 첫 글로벌 메가캡 진입 — 시총 $1T 돌파</h2>
+    <div class="rs-box">
+      5/6 ₩261,000 +12.26% 사상 최고 · 시총 $1T 돌파 한국 첫 글로벌 메가캡 진입 · 애플 임원진 테일러 텍사스 파운드리 방문 · 아이폰 SoC 위탁 협상 본격화 · Q1 매출 133.9조 영업익 57.2조 사상 최대 베이스 + 메모리 슈퍼사이클 가속
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-label">핵심 지표</div>
+    <h2>한눈에 보는 삼성전자</h2>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-key">시총</div>
+        <div class="stat-val">$1.05T</div>
+        <div class="stat-sub">한국 1위 · 글로벌 12위권</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-key">52주 변동</div>
+        <div class="stat-val">+78%</div>
+        <div class="stat-sub">₩146,500 → ₩261,000</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-key">FY26E PER</div>
+        <div class="stat-val">~10x</div>
+        <div class="stat-sub">한국 대비 평균</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-key">외국인 보유</div>
+        <div class="stat-val">~54%</div>
+        <div class="stat-sub">최근 4일 +6조 순매수</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-label">재무 컨센서스</div>
+    <h2>FY25 → FY26E (단위: 천억원)</h2>
+    <div class="fin-grid">
+      <div class="fin-card">
+        <div class="fin-yr">FY25 (실적)</div>
+        <div class="fin-row"><span class="fin-key">매출</span><span class="fin-val">300조</span></div>
+        <div class="fin-bar"><div class="fill" style="width:67%"></div></div>
+        <div class="fin-row" style="margin-top:14px"><span class="fin-key">영업이익</span><span class="fin-val">32조</span></div>
+        <div class="fin-bar"><div class="fill" style="width:18%"></div></div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-yr">FY26E (컨센)</div>
+        <div class="fin-row"><span class="fin-key">매출</span><span class="fin-val">450조</span></div>
+        <div class="fin-bar"><div class="fill" style="width:100%"></div></div>
+        <div class="growth">▲ +50% YoY</div>
+        <div class="fin-row" style="margin-top:14px"><span class="fin-key">영업이익</span><span class="fin-val">180조</span></div>
+        <div class="fin-bar"><div class="fill" style="width:100%"></div></div>
+        <div class="growth">▲ +462% YoY</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-label">최근 사건 아카이브</div>
+    <h2>이 종목이 등장한 최근 헤드라인</h2>
+    <div class="mention">
+      <div class="mention-item">
+        <div class="mention-meta">2026-05-06 19:15 KST · 반도체</div>
+        <div class="mention-text">5/6 ₩261,000 +12.26% 사상 최고 · 시총 $1T 돌파로 한국 첫 글로벌 메가캡 진입. 애플 임원진 테일러 텍사스 파운드리 직접 방문 — 아이폰 SoC 위탁 협상 본격화 신호. Q1 매출 133.9조·영업익 57.2조 사상 최대 베이스에 메모리 슈퍼사이클 가속 결합.</div>
+      </div>
+      <div class="mention-item">
+        <div class="mention-meta">2026-05-06 07:05 KST · 반도체</div>
+        <div class="mention-text">KOSPI 7,300 돌파 8번째 매수 사이드카. 외국인·기관 합산 +6조원 순매수 4일 연속. 삼성전자·SK하이닉스 동반 사상 최고 갱신. HBM4 2Q 램프 + 245TB SSD memflation 시나리오 견조.</div>
+      </div>
+      <div class="mention-item">
+        <div class="mention-meta">2026-04-25 08:30 KST · 반도체</div>
+        <div class="mention-text">삼성전자 Q1 발표 — 영업이익 57.2조 사상 최대. 메모리 부문 +85% YoY · DS 부문 가이던스 상향. 애플 텍사스 파운드리 협상 초기 신호 출현.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-label">동일 섹터</div>
+    <h2>반도체 카테고리 다른 종목</h2>
+    <div class="peers">
+      <a class="peer" href="/s/000660"><div class="peer-tk">000660</div><div class="peer-nm">SK하이닉스</div></a>
+      <a class="peer" href="/s/042700"><div class="peer-tk">042700</div><div class="peer-nm">한미반도체</div></a>
+      <a class="peer" href="/s/240810"><div class="peer-tk">240810</div><div class="peer-nm">원익IPS</div></a>
+      <a class="peer" href="/s/058470"><div class="peer-tk">058470</div><div class="peer-nm">리노공업</div></a>
+      <a class="peer" href="/s/240690"><div class="peer-tk">240690</div><div class="peer-nm">티에스이</div></a>
+      <a class="peer" href="/s/039030"><div class="peer-tk">039030</div><div class="peer-nm">이오테크닉스</div></a>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-label">미국 동종 흐름</div>
+    <h2>미국 시장의 같은 테마 종목</h2>
+    <div class="peers">
+      <a class="peer" href="/s/MU"><div class="peer-tk">MU</div><div class="peer-nm">Micron</div></a>
+      <a class="peer" href="/s/NVDA"><div class="peer-tk">NVDA</div><div class="peer-nm">NVIDIA</div></a>
+      <a class="peer" href="/s/TSM"><div class="peer-tk">TSM</div><div class="peer-nm">TSMC</div></a>
+      <a class="peer" href="/s/AAPL"><div class="peer-tk">AAPL</div><div class="peer-nm">Apple</div></a>
+    </div>
+  </section>
+
+  <div class="cta">
+    <div>
+      <div class="cta-text">매일 아침 카톡으로 받아보는 브리픽 데일리</div>
+      <div class="cta-sub">5개 시장의 핵심 뉴스와 돈되는 섹터 분석까지</div>
+    </div>
+    <a class="cta-btn" href="/">구독하기 →</a>
+  </div>
+
+  <div class="footer">
+    데이터: FY26E 시장 컨센서스 추정치 · 매수·매도 의견 아님 · briefick.com
+  </div>
+</div>
+</body>
+</html>

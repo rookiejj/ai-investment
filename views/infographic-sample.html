@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>인포그래픽 예시 — 브리픽 데일리</title>
+<meta name="viewport" content="width=1080,initial-scale=1">
+<style>
+  /*
+   * 인포그래픽: 1080×1350 (4:5 인스타 포트레이트).
+   * 카톡 공유·블로그·인스타 캡처 모두 호환.
+   * 매일 자동 생성 가능 — 데이터는 update.js·prices에서 추출.
+   */
+  :root{
+    --fg:#0d0d0d;--mut:#666;--mut2:#aaa;
+    --acc:#18E299;--acc-deep:#0fa76e;--acc-soft:#e8fbf1;
+    --err:#d45656;--err-bg:#fbeaea;
+    --warn:#f59e0b;--warn-bg:#fef3c7;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{font-family:'Inter','Pretendard',-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+  body{background:#e5e5e5;display:flex;justify-content:center;align-items:flex-start;padding:40px 16px;min-height:100vh}
+
+  .info{
+    width:1080px;height:1350px;
+    background:#fff;
+    border-radius:16px;
+    box-shadow:0 4px 30px rgba(0,0,0,0.08);
+    padding:64px 72px;
+    display:flex;flex-direction:column;
+    color:var(--fg);
+    transform-origin:top center;
+  }
+
+  /* 헤더 */
+  .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px}
+  .brand{font:700 22px/1 'Geist Mono',monospace;letter-spacing:-0.5px;color:var(--fg)}
+  .brand .dot{display:inline-block;width:10px;height:10px;background:var(--acc);border-radius:50%;margin-right:10px;vertical-align:middle}
+  .date-box{padding:8px 16px;background:var(--acc-soft);border-radius:9999px;font:600 14px/1 'Geist Mono',monospace;color:var(--acc-deep)}
+
+  /* 메인 타이틀 */
+  .lead{margin-bottom:36px}
+  .lead-eyebrow{font:600 13px/1 'Geist Mono',monospace;color:var(--acc-deep);text-transform:uppercase;letter-spacing:1px;margin-bottom:18px}
+  .lead-title{font:800 56px/1.05 'Inter',sans-serif;letter-spacing:-1.8px;color:var(--fg)}
+  .lead-title .hi{background:linear-gradient(135deg,var(--acc-deep),var(--acc));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* 핵심 카드 - 큰 사건 1건 */
+  .hero-card{
+    padding:32px 36px;
+    background:linear-gradient(135deg,#0d0d0d,#1a1a1a);
+    border-radius:24px;
+    color:#fff;
+    margin-bottom:32px;
+  }
+  .hero-tag{display:inline-block;padding:5px 12px;background:rgba(24,226,153,0.15);border-radius:9999px;font:700 11px/1 'Geist Mono',monospace;color:var(--acc);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:18px}
+  .hero-text{font:700 32px/1.25 'Inter',sans-serif;letter-spacing:-0.6px;color:#fff}
+  .hero-foot{display:flex;align-items:center;gap:14px;margin-top:22px;padding-top:22px;border-top:1px solid rgba(255,255,255,0.1)}
+  .hero-tk{font:700 18px/1 'Geist Mono',monospace;color:var(--acc);letter-spacing:0.5px}
+  .hero-pct{font:700 22px/1 'Geist Mono',monospace;color:var(--acc);margin-left:auto}
+
+  /* 5개 시장 한 줄 */
+  .markets{display:flex;flex-direction:column;gap:14px;margin-bottom:32px}
+  .mk-row{display:flex;align-items:center;gap:14px;padding:18px 22px;background:#fafafa;border-radius:14px;border:1px solid rgba(0,0,0,0.04)}
+  .mk-flag{font-size:24px;width:32px;text-align:center;flex-shrink:0}
+  .mk-name{font:700 14px/1 'Inter',sans-serif;color:var(--mut);width:80px;flex-shrink:0;text-transform:uppercase;letter-spacing:0.4px;font-size:11px}
+  .mk-text{font:500 16px/1.4 'Inter',sans-serif;color:var(--fg);flex:1;letter-spacing:-0.2px}
+  .mk-pct{font:700 15px/1 'Geist Mono',monospace;flex-shrink:0;letter-spacing:-0.2px}
+  .mk-pct.up{color:var(--acc-deep)}
+  .mk-pct.dn{color:var(--err)}
+
+  /* 푸터 */
+  .bottom{margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding-top:24px;border-top:1px solid rgba(0,0,0,0.06)}
+  .bottom-cta{font:600 16px/1.4 'Inter',sans-serif;color:var(--fg);letter-spacing:-0.2px}
+  .bottom-cta strong{font-weight:800}
+  .bottom-handle{font:600 14px/1 'Geist Mono',monospace;color:var(--mut);letter-spacing:0.3px}
+
+  /* 다운로드 안내 */
+  .meta-note{position:fixed;top:8px;right:8px;font:500 11px/1.4 'Geist Mono',monospace;color:#666;background:#fff;padding:6px 10px;border-radius:6px;border:1px solid rgba(0,0,0,0.08)}
+
+  @media(max-width:1140px){
+    .info{transform:scale(calc((100vw - 32px) / 1080))}
+  }
+</style>
+</head>
+<body>
+
+<div class="meta-note">1080 × 1350 px · IG 포트레이트 4:5</div>
+
+<div class="info">
+
+  <div class="top">
+    <div class="brand"><span class="dot"></span>BRIEFICK</div>
+    <div class="date-box">2026.05.06 · 화</div>
+  </div>
+
+  <div class="lead">
+    <div class="lead-eyebrow">▸ 오늘의 시장</div>
+    <h1 class="lead-title">메모리 슈퍼사이클이<br>한국 시총을 <span class="hi">$1T</span>로 끌어올렸다</h1>
+  </div>
+
+  <div class="hero-card">
+    <div class="hero-tag">⚡ TODAY'S TOP</div>
+    <div class="hero-text">삼성전자, 한국 첫 시총 $1T 돌파.<br>애플 텍사스 파운드리 방문 — 아이폰 SoC 위탁 협상 본격화.</div>
+    <div class="hero-foot">
+      <span class="hero-tk">005930 · KOSPI</span>
+      <span class="hero-pct">+12.26%</span>
+    </div>
+  </div>
+
+  <div class="markets">
+    <div class="mk-row">
+      <span class="mk-flag">🇰🇷</span>
+      <span class="mk-name">한국</span>
+      <span class="mk-text">KOSPI 7,300 돌파 8번째 사이드카, 외국인 +6조 순매수 4일 연속</span>
+      <span class="mk-pct up">+5.82%</span>
+    </div>
+    <div class="mk-row">
+      <span class="mk-flag">🇺🇸</span>
+      <span class="mk-name">미국</span>
+      <span class="mk-text">AMD AH +5% 사상 최고 $379.90, NVDA 5/20 Q1 FY27 D-14</span>
+      <span class="mk-pct up">+0.35%</span>
+    </div>
+    <div class="mk-row">
+      <span class="mk-flag">🤖</span>
+      <span class="mk-name">AI</span>
+      <span class="mk-text">OpenAI·Anthropic 5/5 인도 동시 진출 — 14억 인구 시장 양사 동시 선점</span>
+      <span class="mk-pct up">+2.10%</span>
+    </div>
+    <div class="mk-row">
+      <span class="mk-flag">🛢️</span>
+      <span class="mk-name">원자재</span>
+      <span class="mk-text">BTC $81,286 1월 이후 첫 회복 영역 — 200EMA 돌파 시도</span>
+      <span class="mk-pct up">+5.20%</span>
+    </div>
+    <div class="mk-row">
+      <span class="mk-flag">🦄</span>
+      <span class="mk-name">유니콘</span>
+      <span class="mk-text">Anthropic $50B 라운드 $900B 밸류 5월 보드 결정 임박</span>
+      <span class="mk-pct up">+18.0%</span>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="bottom-cta">
+      <strong>매일 아침 카톡으로</strong> 받아보세요
+    </div>
+    <div class="bottom-handle">@briefick · briefick.com</div>
+  </div>
+
+</div>
+
+</body>
+</html>
