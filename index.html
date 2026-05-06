@@ -422,7 +422,12 @@ section:first-of-type{padding-top:48px;border-top:0}
   background:#fff;border-radius:24px 24px 0 0;width:100%;max-width:760px;max-height:92vh;
   overflow-y:auto;-webkit-overflow-scrolling:touch;animation:slideUp .25s ease-out;
   overscroll-behavior:contain;touch-action:pan-y;
+  scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.18) transparent;
 }
+.modal::-webkit-scrollbar{width:6px}
+.modal::-webkit-scrollbar-track{background:transparent;margin:24px 0}
+.modal::-webkit-scrollbar-thumb{background:rgba(0,0,0,.18);border-radius:3px}
+.modal::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,.32)}
 .modal-head::before{
   content:'';display:block;position:absolute;top:8px;left:50%;transform:translateX(-50%);
   width:36px;height:4px;border-radius:2px;background:var(--border-md);
@@ -2098,11 +2103,13 @@ let _restoringStack=false; // true일 동안 openDayModal/openModal이 stack을 
 
 function showModal(){
   const modal=document.getElementById('modal');
-  modal.scrollTop=0;
   modal.style.transform='';
   document.getElementById('modalBg').classList.add('on');
   document.body.style.overflow='hidden';
   document.documentElement.style.overflow='hidden';
+  // display:none → flex 전환 직후엔 layout 안 잡혀 scrollTop 적용이 일관되지 않음.
+  // 다음 프레임에서 리셋해 직전 모달 스크롤 위치가 carry-over되는 현상 차단.
+  requestAnimationFrame(()=>{ modal.scrollTop=0; });
 }
 
 function _pushModalState(state){
