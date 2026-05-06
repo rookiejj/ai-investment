@@ -486,6 +486,67 @@ Deno.serve(async (req) => {
       }, { cors });
     }
 
+    // ─── system_check_instagram ─── IG 비즈 계정 최근 글 timestamp 조회
+    if (action === "system_check_instagram") {
+      const igToken = Deno.env.get("META_ACCESS_TOKEN");
+      const igUser = Deno.env.get("IG_BUSINESS_USER_ID");
+      if (!igToken || !igUser) {
+        return json({ ok: false, error: "META_ACCESS_TOKEN or IG_BUSINESS_USER_ID missing in env" }, { status: 500, cors });
+      }
+      const url = `https://graph.facebook.com/v21.0/${igUser}/media?fields=id,timestamp,caption,media_type,permalink&limit=5&access_token=${igToken}`;
+      try {
+        const r = await fetch(url);
+        const j = await r.json();
+        if (!r.ok || j.error) {
+          return json({ ok: false, error: j.error?.message || `Meta API ${r.status}` }, { status: 500, cors });
+        }
+        const posts = (j.data || []).slice(0, 5).map((p: Record<string, unknown>) => ({
+          id: p.id,
+          timestamp: p.timestamp,
+          type: p.media_type,
+          permalink: p.permalink,
+          captionPrefix: typeof p.caption === "string" ? p.caption.split("\n")[0].slice(0, 80) : "",
+        }));
+        return json({ ok: true, posts }, { cors });
+      } catch (e) {
+        return json({ ok: false, error: (e as Error).message }, { status: 500, cors });
+      }
+    }
+
+    // ─── system_retrigger_instagram ─── GitHub workflow_dispatch로 instagram-post 재실행
+    // KST 시간으로 mode 자동(05~12 carousel / 13~23 reels / 그 외 all)
+    if (action === "system_retrigger_instagram") {
+      const ghToken = Deno.env.get("GITHUB_TOKEN");
+      if (!ghToken) {
+        return json({ ok: false, error: "GITHUB_TOKEN missing in env (Actions:write 권한 PAT 필요)" }, { status: 500, cors });
+      }
+      const kstHour = new Date(Date.now() + 9 * 3600 * 1000).getUTCHours();
+      let mode = "all";
+      if (kstHour >= 5 && kstHour <= 12) mode = "carousel";
+      else if (kstHour >= 13 && kstHour <= 23) mode = "reels";
+      const url = "https://api.github.com/repos/rookiejj/ai-investment/actions/workflows/instagram-post.yml/dispatches";
+      try {
+        const r = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${ghToken}`,
+            "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ref: "main", inputs: { mode, dry_run: "false" } }),
+        });
+        if (!r.ok) {
+          const errText = await r.text();
+          return json({ ok: false, error: `GitHub API ${r.status}: ${errText.slice(0, 300)}` }, { status: 500, cors });
+        }
+        // GitHub workflow_dispatch는 204 No Content 반환 — 성공 시 body 없음
+        return json({ ok: true, mode, kstHour, message: `${mode} 모드로 instagram-post 워크플로 재실행 시작 — Actions UI에서 진행 상태 확인 가능` }, { cors });
+      } catch (e) {
+        return json({ ok: false, error: (e as Error).message }, { status: 500, cors });
+      }
+    }
+
     return json({ ok: false, error: `unknown action: ${action}` }, { status: 400, cors });
   } catch (err) {
     console.error("[admin-api]", err);

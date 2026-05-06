@@ -294,6 +294,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
       <button class="nav-item" data-view="payments"><span class="icon">💳</span>결제</button>
       <button class="nav-item" data-view="sends"><span class="icon">📬</span>발송</button>
       <button class="nav-item" data-view="notice"><span class="icon">📢</span>공지</button>
+      <button class="nav-item" data-view="system"><span class="icon">🛠️</span>시스템</button>
     </nav>
     <div class="sidebar-footer">
       <a href="/" target="_blank">← 브리픽 홈</a>
@@ -540,6 +541,29 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
         <div id="noticeStatus" style="display:none;padding:10px 12px;border-radius:8px;font-size:13px"></div>
       </div>
     </section>
+
+    <!-- ═══ 시스템 (운영 점검·재실행) ═══ -->
+    <section class="view hidden" data-view="system">
+      <div class="section">
+        <div class="section-title">자동 갱신 (KST 07:00 / 19:00)</div>
+        <div class="section-subtitle">데이터 자동 갱신 트리거 점검·재실행. 체크는 Vercel 배포 사이트의 version.js를 읽어 마지막 갱신 시각 확인.</div>
+        <div class="filter-bar" style="margin-top:8px">
+          <button class="btn" id="sysCheckUpdateBtn">자동 갱신 체크</button>
+          <button class="btn ghost" id="sysRetriggerUpdateBtn">자동 갱신 재실행 (claude.ai 이동)</button>
+        </div>
+        <div id="sysUpdateResult" style="margin-top:12px;padding:12px 14px;border-radius:8px;font-size:13px;display:none"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">인스타그램 (오전 캐러셀 / 오후 Reels)</div>
+        <div class="section-subtitle">IG 비즈 계정 최근 게시물 확인·재발행. 재발행 모드는 KST 시간대로 자동 결정 (05~12 캐러셀 · 13~23 Reels).</div>
+        <div class="filter-bar" style="margin-top:8px">
+          <button class="btn" id="sysCheckIgBtn">인스타 발행 체크</button>
+          <button class="btn ghost" id="sysRetriggerIgBtn">인스타 재발행</button>
+        </div>
+        <div id="sysIgResult" style="margin-top:12px;padding:12px 14px;border-radius:8px;font-size:13px;display:none"></div>
+      </div>
+    </section>
   </main>
 </div>
 
@@ -566,8 +590,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 const API = 'https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/admin-api';
 const KEY_TOKEN = 'briefick_admin_token';
 const KEY_EXPIRES = 'briefick_admin_expires';
-const VIEWS = ['overview','subscribers','payments','sends','notice'];
-const TITLES = { overview:'대시보드', subscribers:'구독자', payments:'결제', sends:'발송', notice:'공지' };
+const VIEWS = ['overview','subscribers','payments','sends','notice','system'];
+const TITLES = { overview:'대시보드', subscribers:'구독자', payments:'결제', sends:'발송', notice:'공지', system:'시스템' };
 
 const $ = (id)=>document.getElementById(id);
 const loginView = $('loginView');
@@ -683,7 +707,116 @@ function loadView(name){
   else if(name === 'payments'){ loadPaysStats(); loadExpiring(); loadPayments(); }
   else if(name === 'sends'){ loadSendsStats(); loadLogs(); loadManualTargets(); dsLoadTargets(); }
   else if(name === 'notice'){ noticeLoadTargets(); }
+  else if(name === 'system'){ /* 버튼 클릭 시 lazy fetch — 즉시 fetch는 안 함 */ }
 }
+
+// ─── 시스템: 자동 갱신·인스타 운영 ───
+function sysShowResult(elId, ok, html){
+  const el=$(elId);
+  el.style.display='block';
+  el.style.background = ok ? '#e8fbf1' : '#fbeaea';
+  el.style.color = ok ? '#0fa76e' : '#d45656';
+  el.style.border = ok ? '1px solid #d4fae8' : '1px solid #f7c6c6';
+  el.innerHTML = html;
+}
+function sysShowLoading(elId, msg){
+  const el=$(elId);
+  el.style.display='block';
+  el.style.background='#fafafa';
+  el.style.color='#666';
+  el.style.border='1px solid #eee';
+  el.textContent=msg||'처리 중…';
+}
+async function sysCheckUpdate(){
+  sysShowLoading('sysUpdateResult','version.js 조회 중…');
+  try{
+    const r=await fetch('/data/version.js?_='+Date.now());
+    if(!r.ok) throw new Error('version.js 응답 ' + r.status);
+    const t=await r.text();
+    const m=t.match(/DATA_VERSION\s*=\s*"([^"]+)"/);
+    if(!m) throw new Error('DATA_VERSION 파싱 실패');
+    const ver=m[1]; // "YYYYMMDD-HHmm"
+    const dm=ver.match(/^(\d{4})(\d{2})(\d{2})-(\d{2})(\d{2})$/);
+    if(!dm) throw new Error('포맷 이상: '+ver);
+    // KST 기준 Date 생성 (브라우저 로컬 → UTC 변환 거치지 않게 ms 직접 계산)
+    const verMs = Date.UTC(+dm[1], +dm[2]-1, +dm[3], +dm[4]-9, +dm[5]); // KST → UTC
+    const nowMs = Date.now();
+    const diffMin = Math.round((nowMs - verMs) / 60000);
+    const hours = Math.floor(diffMin/60);
+    const mins = diffMin % 60;
+    const ago = hours>0 ? `${hours}시간 ${mins}분 전` : `${mins}분 전`;
+    const stale = diffMin > 13*60; // 13시간 이상 지나면 누락 의심 (다음 트리거 못 받은 케이스)
+    const status = stale ? '⚠ 갱신 누락 의심 — 직전 12시간 윈도우 초과' : '✓ 정상';
+    sysShowResult('sysUpdateResult', !stale,
+      `<div><strong>${status}</strong></div>` +
+      `<div style="margin-top:6px;font-family:monospace">DATA_VERSION = ${ver}</div>` +
+      `<div>마지막 갱신: ${ago}</div>` +
+      (stale ? '<div style="margin-top:6px">"자동 갱신 재실행" 버튼으로 트리거 강제 호출 가능 (claude.ai 이동).</div>' : '')
+    );
+  }catch(e){
+    sysShowResult('sysUpdateResult', false, '실패: '+e.message);
+  }
+}
+function sysRetriggerUpdate(){
+  // claude.ai의 RemoteTrigger UI로 이동 — 사용자가 거기서 "Run now" 클릭
+  // claude.ai/automations 또는 claude.ai/triggers 페이지 진입
+  window.open('https://claude.ai/automations', '_blank');
+  sysShowResult('sysUpdateResult', true,
+    'claude.ai 자동화 페이지를 새 탭으로 열었습니다.<br>' +
+    '"브리핑 데이터 자동 갱신" 트리거 옆 <strong>"Run now"</strong>를 클릭하면 새 세션이 즉시 spawn됩니다.<br>' +
+    '5~10분 내 새 커밋 + 인스타 발행까지 자동 진행.'
+  );
+}
+async function sysCheckIg(){
+  sysShowLoading('sysIgResult','Meta Graph API 조회 중…');
+  try{
+    const r=await api('system_check_instagram');
+    if(!r.ok) throw new Error(r.error||'unknown');
+    const posts=r.posts||[];
+    if(!posts.length){
+      sysShowResult('sysIgResult', false, '최근 게시물 없음 (또는 권한 문제)');
+      return;
+    }
+    const rows = posts.map(p=>{
+      const ts=new Date(p.timestamp);
+      const ago = Math.round((Date.now()-ts.getTime())/60000);
+      const hours = Math.floor(ago/60), mins = ago%60;
+      const agoLbl = hours>0 ? `${hours}h ${mins}m 전` : `${mins}m 전`;
+      const typeLbl = p.type==='VIDEO' ? '🎬 Reels' : (p.type==='CAROUSEL_ALBUM' ? '🖼️ 캐러셀' : '📷 사진');
+      const link = p.permalink ? `<a href="${p.permalink}" target="_blank" style="color:inherit;text-decoration:underline">↗</a>` : '';
+      return `<tr><td style="padding:4px 8px">${typeLbl}</td><td style="padding:4px 8px;font-family:monospace;font-size:11px">${ts.toLocaleString('ko-KR',{hour12:false})}</td><td style="padding:4px 8px">${agoLbl}</td><td style="padding:4px 8px">${link}</td></tr>`;
+    }).join('');
+    const latest = posts[0];
+    const latestAge = Math.round((Date.now()-new Date(latest.timestamp).getTime())/60000);
+    // 정상 윈도우: 마지막 게시가 13시간 이내면 OK (07/19시 트리거 ±)
+    const ok = latestAge < 13*60;
+    sysShowResult('sysIgResult', ok,
+      `<div><strong>${ok ? '✓ 정상' : '⚠ 13시간+ 미발행 — 누락 의심'}</strong></div>` +
+      `<table style="margin-top:8px;width:100%;border-collapse:collapse;font-size:12px"><tr style="background:rgba(0,0,0,0.04);font-weight:600"><td style="padding:4px 8px">유형</td><td style="padding:4px 8px">시각</td><td style="padding:4px 8px">경과</td><td style="padding:4px 8px"></td></tr>${rows}</table>`
+    );
+  }catch(e){
+    sysShowResult('sysIgResult', false, '실패: '+e.message);
+  }
+}
+async function sysRetriggerIg(){
+  if(!confirm('인스타 워크플로 재실행. 현재 시간대에 따라 자동 모드(오전:캐러셀 / 오후:Reels) 결정. 진행?')) return;
+  sysShowLoading('sysIgResult','GitHub workflow_dispatch 호출 중…');
+  try{
+    const r=await api('system_retrigger_instagram');
+    if(!r.ok) throw new Error(r.error||'unknown');
+    sysShowResult('sysIgResult', true,
+      `<div><strong>✓ 워크플로 재실행 시작</strong></div>` +
+      `<div style="margin-top:6px">모드: <code>${r.mode}</code> (KST ${r.kstHour}시)</div>` +
+      `<div style="margin-top:4px;font-size:12px;color:#666"><a href="https://github.com/rookiejj/ai-investment/actions/workflows/instagram-post.yml" target="_blank">Actions UI에서 진행 상태 확인 →</a></div>`
+    );
+  }catch(e){
+    sysShowResult('sysIgResult', false, '실패: '+e.message);
+  }
+}
+$('sysCheckUpdateBtn').addEventListener('click', sysCheckUpdate);
+$('sysRetriggerUpdateBtn').addEventListener('click', sysRetriggerUpdate);
+$('sysCheckIgBtn').addEventListener('click', sysCheckIg);
+$('sysRetriggerIgBtn').addEventListener('click', sysRetriggerIg);
 function reloadCurrentView(){
   loadedViews.delete(currentView);
   loadView(currentView);
