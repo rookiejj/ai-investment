@@ -952,7 +952,16 @@ async function loadUpd(url, varName){
   return new Function(t+`;return typeof ${varName}!=="undefined"?${varName}:[];`)();
 }
 
-const STATE={data:{},upd:{},prices:{},pool:null,market:'kr',healthMarket:'kr',expQuery:''};
+// 시간대별 기본 마켓 — 오전 7시 발송 사이클(KST 7:00~18:59)에는 한국,
+// 오후 7시 발송 사이클(19:00~다음날 6:59)에는 미국이 디폴트로 선택.
+function defaultMarketByHour(){
+  const kst=new Date(Date.now()+9*3600*1000);
+  const h=kst.getUTCHours();
+  return (h>=7 && h<19) ? 'kr' : 'stocks';
+}
+const _DEFAULT_MARKET=defaultMarketByHour();
+
+const STATE={data:{},upd:{},prices:{},pool:null,market:'kr',healthMarket:_DEFAULT_MARKET,expQuery:''};
 
 // ═══════════════════════════════════════════════════════════
 // Helpers
@@ -1676,7 +1685,7 @@ function attachChangeToggles(root){
 }
 
 // ─── 시장 핀맵: 섹터별 squarify 트리맵 ───
-const FINMAP_STATE={market:'kr'};
+const FINMAP_STATE={market:_DEFAULT_MARKET};
 
 // 단순 binary squarify: items 배열을 (x,y,w,h) 사각형으로 분할
 // 큰 값부터 정렬한 뒤 절반 가까이 누적되는 지점에서 split, 짧은 변 따라 재귀
@@ -2202,6 +2211,15 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 // ═══════════════════════════════════════════════════════════
 // Wire up controls
 // ═══════════════════════════════════════════════════════════
+// 두 토글 그룹의 .on 클래스를 _DEFAULT_MARKET에 맞춰 동기화 — HTML은 한국 default로 박혀있지만
+// 저녁 사이클(19시 이후) 진입 시 미국이 활성으로 표시되도록 초기 visual 보정.
+document.querySelectorAll('.health-tab[data-market]').forEach(b=>{
+  b.classList.toggle('on', b.dataset.market===_DEFAULT_MARKET);
+});
+document.querySelectorAll('[data-fmap-market]').forEach(b=>{
+  b.classList.toggle('on', b.dataset.fmapMarket===_DEFAULT_MARKET);
+});
+
 // 돈되는 섹터 토글 — data-market 있는 .health-tab만 대상.
 // 시장 한눈에 토글은 같은 클래스를 공유하지만 data-fmap-market을 사용해 분리.
 document.querySelectorAll('.health-tab[data-market]').forEach(b=>{
