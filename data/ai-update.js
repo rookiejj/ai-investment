@@ -319,7 +319,7 @@ Apple·Google Foundation Models 트레이닝 수요 8세대 TPU 8t/8i 가동`,
     date: "2026-04-20 19:19 KST",
     summary: "xAI Grok Speech STT·TTS API 엔터프라이즈 공개 - ElevenLabs·Deepgram 정면 경쟁, Tesla·Starlink 구동 스택의 API화",
     changes: [
-      { type: "제품 출시", sector: "xAI", detail: "xAI Grok Speech API. 4/17 공식 공개 - Grok Voice·Tesla 차량·Starlink 고객지원을 실서비스로 구동하는 내부 음성 스택을 엔터프라이즈 개발자용 독립 STT·TTS API 두 개로 분리 출시. STT는 25+ 언어·단어별 타임스탬프·스피커 다이어라이제이션·멀티채널 지원, 배치 $0.10/시간·스트리밍 $0.20/시간. TTS는 5개 음성·20+ 언어, [laugh]·[sigh]·[whisper] 등 감정 태그 인라인 제어, $4.20/1M 글자. 전화 통화 엔티티 인식 오류율 5.0%(ElevenLabs 12%·Deepgram 13.5%·AssemblyAI 21.3% 대비)를 직접 제시하며 보이스 AI 1위 ElevenLabs의 가격대까지 공격. Grok 4.3 Beta·XChat 슈퍼앱과 묶이며 'SpaceXAI 모델 팩토리' 일 단위 배포 체제의 첫 음성 독립 제품.", time: "2026-04-20 19:19 KST" },
+      { type: "제품 출시", sector: "xAI", detail: "xAI Grok Speech API. 4/17 공식 공개 - Grok Voice·Tesla 차량·Starlink 고객지원을 실서비스로 구동하는 내부 음성 스택을 엔터프라이즈 개발자용 독립 STT·TTS API 두 개로 분리 출시. STT는 25+ 언어·단어별 타임스탬프·스피커 다이어라이제이션·멀티채널 지원, 배치 $0.10/시간·스트리밍 $0.20/시간. TTS는 5개 음성·20+ 언어, [laugh]·[sigh]·[whisper] 등 감정 태그 본문 내 제어, $4.20/1M 글자. 전화 통화 엔티티 인식 오류율 5.0%(ElevenLabs 12%·Deepgram 13.5%·AssemblyAI 21.3% 대비)를 직접 제시하며 보이스 AI 1위 ElevenLabs의 가격대까지 공격. Grok 4.3 Beta·XChat 슈퍼앱과 묶이며 'SpaceXAI 모델 팩토리' 일 단위 배포 체제의 첫 음성 독립 제품.", time: "2026-04-20 19:19 KST" },
     ]
   },
   {
