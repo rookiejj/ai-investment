@@ -8,21 +8,21 @@ const UPDATES = [
   {
     date: "2026-05-06 07:15 KST",
     summary: `OpenAI·Anthropic 5/5 인도 동시 진출 - 14억 인구 시장 양사 동시 선점
-Anthropic 금융 서비스 AI 에이전트 10종 + Claude의 MS Excel·PPT 통합
+Anthropic 금융 서비스 AI 에이전트 10종 + Claude의 마이크로소프트 엑셀·파워포인트 통합
 OpenAI x PwC 글로벌 재무 운영 파트너십 - 142개국 채널 가동
 Anthropic $50B 라운드 $900B 밸류 - 5월 보드 미팅 결정 임박, 한 기관 $5B 단일 수표`,
     changes: [
       { type: "전략", sector: "Anthropic",
-        detail: "Anthropic(Claude Financial Services Agents 10종 + Microsoft 365 통합). 5/5 공식 출시 - 금융 서비스 전용 AI 에이전트 10종을 동시 데뷔. 피치북 자동 생성·KYC(고객 신원 확인) 검증·신용 분석·M&A 듀딜리전스·재무제표 분석·리스크 모델링·포트폴리오 모니터링·규제 컴플라이언스 점검 등 'time-consuming' 금융 본업 전반을 커버. 동시에 Claude가 Microsoft Excel·PowerPoint 등 MS 365 비즈니스 제품에 네이티브 통합 - Office Side Pane에서 직접 호출, Microsoft Copilot과 동일 면에서 실질 경쟁 진입. Dun & Bradstreet·Verisk·Moody's 등 금융 데이터 플랫폼 추가 파트너십 동시 발표. 5/4 Blackstone·Goldman·H&F $1.5B 합작벤처에 이어 Big4·금융 데이터 양 채널 선점 - OpenAI가 동일 5/5 PwC와 글로벌 재무 운영 파트너십을 발표한 것에 대한 직접 대응. 24h 내 양사 채널 동시 확장 - 'AI 모델 회사' → '풀스택 엔터프라이즈 배치 엔진' 포지셔닝 전환 본격화.",
+        detail: "Anthropic(금융 서비스 에이전트 10종 + 마이크로소프트 365 통합). 5/5 공식 출시 - 금융 서비스 전용 AI 에이전트 10종을 동시 데뷔. 피치북 자동 생성·고객 신원 확인(KYC) 검증·신용 분석·M&A 듀딜리전스·재무제표 분석·리스크 모델링·포트폴리오 모니터링·규제 준수 점검 등 시간이 오래 걸리던 금융 본업 전반을 커버. 동시에 Claude가 마이크로소프트 엑셀·파워포인트 등 365 비즈니스 제품에 네이티브 통합 - 사이드 패널에서 직접 호출, 마이크로소프트 코파일럿과 동일 면에서 실질 경쟁 진입. Dun & Bradstreet·Verisk·Moody's 등 금융 데이터 플랫폼 추가 파트너십 동시 발표. 5/4 블랙스톤·골드만삭스·H&F $1.5B 합작벤처에 이어 빅4·금융 데이터 양 채널 선점 - OpenAI가 동일 5/5 PwC와 글로벌 재무 운영 파트너십을 발표한 것에 대한 직접 대응. 24시간 내 양사 채널 동시 확장 - 'AI 모델 회사' → '풀스택 엔터프라이즈 배치 엔진' 포지셔닝 전환 본격화.",
         time: "2026-05-06 07:15 KST" },
       { type: "전략", sector: "OpenAI",
-        detail: "OpenAI x PwC 글로벌 재무 운영 파트너십. 5/5 공식 발표 - PwC와 전략 파트너십 체결, '재무 운영의 핵심 리듬'에 특화한 AI 에이전트 공동 개발. 예측·계획·보고·조달·결제·재무 관리 등 기업 재무 본업 전반에 GPT-5.5·Codex·Privacy Filter 라인업을 임베드, PwC의 142개국·370,000명 컨설턴트 채널이 직접 배치 채널로 가동. 5/4 The Deployment Company($10B PE 합작벤처) 발표에 이어 24h 내 'PE → 전문서비스 → 재무특화' 채널 추가 선점 - Anthropic이 동일 5/5 금융 서비스 전용 에이전트 10종을 출시한 것과 동일한 시점에 대응. PwC는 Big4 중 OpenAI 채널 단독 선점, Deloitte·EY·KPMG는 Anthropic·Google·Microsoft 채널로 분산되는 구도. 양사가 IPO 직전 'high-margin 엔터프라이즈 트랙션' 정량 입증을 위해 24h 내 동시 발표 양상.",
+        detail: "OpenAI x PwC 글로벌 재무 운영 파트너십. 5/5 공식 발표 - PwC와 전략 파트너십 체결, '재무 운영의 핵심 리듬'에 특화한 AI 에이전트 공동 개발. 예측·계획·보고·조달·결제·재무 관리 등 기업 재무 본업 전반에 GPT-5.5·Codex·Privacy Filter 라인업을 임베드, PwC의 142개국·370,000명 컨설턴트 채널이 직접 배치 채널로 가동. 5/4 The Deployment Company($10B 사모 합작벤처) 발표에 이어 24시간 내 '사모 → 전문서비스 → 재무특화' 채널 추가 선점 - Anthropic이 동일 5/5 금융 서비스 전용 에이전트 10종을 출시한 것과 동일한 시점에 대응. PwC는 빅4 중 OpenAI 채널 단독 선점, 딜로이트·EY·KPMG는 Anthropic·구글·마이크로소프트 채널로 분산되는 구도. 양사가 IPO 직전 '고마진 엔터프라이즈 트랙션' 정량 입증을 위해 24시간 내 동시 발표 양상.",
         time: "2026-05-06 07:15 KST" },
       { type: "생태계", sector: "OpenAI",
-        detail: "OpenAI·Anthropic 5/5 인도 동시 진출. OpenAI는 ChatGPT Enterprise·API·Codex·Privacy Filter 라인업을 인도 데이터센터 호스팅으로 가동, 인도 정부·교육기관·Tata·Reliance·Infosys 직접 채널 가동. Anthropic도 동일 5/5 인도 시장 동시 진출 - Claude API·Claude Code·Financial Services Agents 라인업을 인도 시장에 직접 공급. 양사가 14억 인구 시장을 동시 선점하는 구도 - 인도는 글로벌 IT 서비스 본업·1.4M 개발자·연 30B 코드 커밋 규모로 코딩 모델·엔터프라이즈 자동화 양 영역 직접 수요. 미국·EU·일본·한국에 이은 4번째 글로벌 거점 시장 확정 - 양사 모두 IPO 직전 매출 가속 트리거 추가 확보.",
+        detail: "OpenAI·Anthropic 5/5 인도 동시 진출. OpenAI는 ChatGPT Enterprise·API·Codex·Privacy Filter 라인업을 인도 데이터센터 호스팅으로 가동, 인도 정부·교육기관·타타·릴라이언스·인포시스 직접 채널 가동. Anthropic도 동일 5/5 인도 시장 동시 진출 - Claude API·Claude Code·금융 서비스 에이전트 라인업을 인도 시장에 직접 공급. 양사가 14억 인구 시장을 동시 선점하는 구도 - 인도는 글로벌 IT 서비스 본업·140만 개발자·연 300억 코드 커밋 규모로 코딩 모델·엔터프라이즈 자동화 양 영역 직접 수요. 미국·EU·일본·한국에 이은 4번째 글로벌 거점 시장 확정 - 양사 모두 IPO 직전 매출 가속 트리거 추가 확보.",
         time: "2026-05-06 07:15 KST" },
       { type: "펀딩", sector: "Anthropic",
-        detail: "Anthropic($50B 펀딩 라운드 $900B 밸류 - 5월 보드 미팅 결정 임박). 5/5 후속 보도 - 신규 $50B 펀딩 라운드를 $900B 밸류로 검토 중, 5월 보드 미팅에서 진행 여부와 조건 결정 임박. 한 기관이 $5B 단일 수표를 제안했으나 CFO Krishna Rao 미팅조차 못 잡을 정도의 수요 압축 - 투자자 수요가 라운드 사이즈를 추가 확장시킬 가능성. 매출 런레이트 3월 기준 $39B 연환산, OpenAI $24~25B 컨센 $14B 손실 베이스 대비 마진 우위가 밸류 정당화 핵심. 성사 시 OpenAI($852B) 추월·사상 가장 비싼 AI 스타트업 - 'AI 섹터 사상 단일 최대 펀딩 이벤트' 라인업. 10월 IPO $400~500B 타겟에 직결되는 자본 라인.",
+        detail: "Anthropic($50B 펀딩 라운드 $900B 밸류 - 5월 보드 미팅 결정 임박). 5/5 후속 보도 - 신규 $50B 펀딩 라운드를 $900B 밸류로 검토 중, 5월 보드 미팅에서 진행 여부와 조건 결정 임박. 한 기관이 $5B 단일 수표를 제안했으나 CFO 크리슈나 라오 미팅조차 못 잡을 정도의 수요 압축 - 투자자 수요가 라운드 사이즈를 추가 확장시킬 가능성. 매출 런레이트 3월 기준 $39B 연환산, OpenAI $24~25B 컨센 $14B 손실 베이스 대비 마진 우위가 밸류 정당화 핵심. 성사 시 OpenAI($852B) 추월·사상 가장 비싼 AI 스타트업 - 'AI 섹터 사상 단일 최대 펀딩 이벤트' 라인업. 10월 IPO $400~500B 타겟에 직결되는 자본 라인.",
         time: "2026-05-06 07:15 KST" },
     ]
   },
