@@ -43,6 +43,8 @@ const recurring = [
 //       (preview.html에서 자동으로 오늘 이후만 표시).
 const fixed = [
   // === 5월 매크로 ===
+  { cat:'policy', impact:3, title:'美·이란 14개항 양해각서 응답 마감', date:'2026-05-08', desc:'5/6 백악관 보도 48시간 윈도우·호르무즈 통항 정상화 단일 분기점' },
+  { cat:'macro', impact:3, title:'미국 4월 NFP 비농업 고용', date:'2026-05-08', desc:'4월 고용 시그널·5/14 CPI 직전 매크로' },
   { cat:'macro', impact:2, title:'중국 4월 CPI·PPI', date:'2026-05-11', desc:'주말 시프트로 월요일 발표' },
   { cat:'macro', impact:3, title:'미국 4월 CPI', date:'2026-05-13', desc:'근원 CPI YoY 컨센 +3.0%' },
   { cat:'macro', impact:2, title:'미국 4월 PPI', date:'2026-05-14' },
