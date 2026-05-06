@@ -945,9 +945,31 @@ body.sub-modal-open{overflow:hidden}
 </div>
 
 <script>
-// 모바일 Safari·Chrome이 reload 시 직전 스크롤 위치를 자동 복원해 로고 새로고침 후 페이지 중간으로 이동하던 문제 차단.
-// scrollRestoration='manual' 지정 시 모든 reload·뒤로가기가 (0,0)에서 시작.
+// 브라우저 default(auto)는 콘텐츠 비동기 로드 전에 복원 시도해 잘못된 위치로 점프 — manual로 끄고 수동 복원.
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+// 스크롤 위치 저장·복원 (sessionStorage 기반)
+//  - 일반 reload·뒤로가기: 직전 위치 기억
+//  - 로고 클릭 reload: 키를 0으로 덮어써 항상 최상단에서 시작 (브랜드 클릭 핸들러가 처리)
+//  - 데이터 로드 완료 후 복원 — boot() 끝에서 호출
+const SCROLL_KEY = 'briefick:scrollY';
+let _scrollSaveT = 0;
+window.addEventListener('scroll', () => {
+  if (_scrollSaveT) return;
+  _scrollSaveT = setTimeout(() => {
+    _scrollSaveT = 0;
+    sessionStorage.setItem(SCROLL_KEY, String(window.pageYOffset || document.documentElement.scrollTop || 0));
+  }, 200);
+}, { passive: true });
+window.addEventListener('beforeunload', () => {
+  sessionStorage.setItem(SCROLL_KEY, String(window.pageYOffset || document.documentElement.scrollTop || 0));
+});
+function restoreScroll(){
+  const v = Number(sessionStorage.getItem(SCROLL_KEY) || 0);
+  if (v <= 0) return;
+  // 콘텐츠 렌더 직후 한 프레임 양보해 layout 안정화 후 점프
+  requestAnimationFrame(() => window.scrollTo(0, v));
+}
 
 // ═══════════════════════════════════════════════════════════
 // 데이터 로드
@@ -2246,11 +2268,12 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 // ═══════════════════════════════════════════════════════════
 // Wire up controls
 // ═══════════════════════════════════════════════════════════
-// 좌상단 로고 클릭 - 강제 새로고침 (브라우저 캐시 회피)
+// 좌상단 로고 클릭 - 강제 새로고침 + 스크롤 위치 리셋 (홈처럼 최상단에서 시작)
 {
   const brand=document.getElementById('brandLogo');
   if(brand) brand.addEventListener('click',e=>{
     e.preventDefault();
+    sessionStorage.setItem(SCROLL_KEY,'0');
     location.reload();
   });
 }
@@ -2395,6 +2418,9 @@ async function boot(){
     renderFinmap();
     startPricePolling();
   });
+
+  // 데이터·시세 모두 도착·렌더 완료 후 스크롤 위치 복원 — 비동기 콘텐츠가 layout에 들어간 다음 점프해야 정확
+  restoreScroll();
 }
 
 boot();
