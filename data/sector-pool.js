@@ -186,7 +186,7 @@ const US_NAME_OVERRIDE = {
   "IBM": "IBM", "COIN": "코인베이스", "MSTR": "스트래티지",
   "RGTI": "리게티", "IONQ": "아이온큐", "QUBT": "큐비트",
   "HOOD": "로빈후드", "MARA": "마라톤 디지털", "RIOT": "라이엇",
-  "CLSK": "클린스파크", "BTBT": "비트 디지털", "HUT": "헛8",
+  "CLSK": "클린스파크", "BTBT": "비트 디지털", "HUT": "Hut8",
   "BTDR": "비트디어", "BITF": "비트팜",
   // 사이버보안
   "CYBR": "사이버아크", "RBRK": "루브릭", "TENB": "테너블",
