@@ -1020,12 +1020,11 @@ async function loadUpd(url, varName){
   return new Function(t+`;return typeof ${varName}!=="undefined"?${varName}:[];`)();
 }
 
-// 시간대별 기본 마켓 — 오전 7시 발송 사이클(KST 7:00~18:59)에는 한국,
-// 오후 7시 발송 사이클(19:00~다음날 6:59)에는 미국이 디폴트로 선택.
+// 시간대별 기본 마켓 — KST 8:00~18:59 한국, 19:00~다음날 7:59 미국 디폴트.
 function defaultMarketByHour(){
   const kst=new Date(Date.now()+9*3600*1000);
   const h=kst.getUTCHours();
-  return (h>=7 && h<19) ? 'kr' : 'stocks';
+  return (h>=8 && h<19) ? 'kr' : 'stocks';
 }
 const _DEFAULT_MARKET=defaultMarketByHour();
 
