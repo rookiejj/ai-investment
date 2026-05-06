@@ -1397,13 +1397,16 @@ function renderHealth(){
       list.querySelectorAll('.phase-item.open').forEach(x=>x.classList.remove('open'));
       if(!wasOpen){
         item.classList.add('open');
-        // 펼친 후 선택한 섹터 행이 sticky 헤더 바로 아래로 오도록 스크롤
-        requestAnimationFrame(()=>{
-          const headerH=document.querySelector('header.top')?.offsetHeight||0;
-          const rect=row.getBoundingClientRect();
-          const targetY=window.scrollY+rect.top-headerH-8;
-          window.scrollTo({top:targetY,behavior:'smooth'});
-        });
+        // 데스크톱만 sticky 헤더 아래로 스크롤. 모바일에선 행 위치 고정해
+        // 사용자 시선이 그대로 머물도록 (펼친 카드는 자연스레 아래로 노출).
+        if(window.innerWidth>768){
+          requestAnimationFrame(()=>{
+            const headerH=document.querySelector('header.top')?.offsetHeight||0;
+            const rect=row.getBoundingClientRect();
+            const targetY=window.scrollY+rect.top-headerH-8;
+            window.scrollTo({top:targetY,behavior:'smooth'});
+          });
+        }
       }
     });
   });
