@@ -78,15 +78,7 @@ const todaysHeadlines = () => headlinesAt(0);
 // 화풍 프리셋 — --style 플래그로 선택. 사용처별로 다른 톤 적용 가능.
 const STYLES = {
   '1950s': `1950s American newspaper political cartoon style, single panel. Heavy ink crosshatching, sepia-toned limited palette, exaggerated caricature in vintage editorial tradition, classic ink-wash shading, hand-lettered captions, mid-century WSJ/NYT op-ed page look. 1080×1080 square format.`,
-  'mad-mag': `Mad Magazine 1970s satirical cartoon spread — chaotic full-color magazine page. 1080×1080 single panel with these MUST-HAVE traits:
-- Wildly exaggerated rubber-hose caricatures (oversized heads, tiny bodies, bulging eyes, gap-toothed grins)
-- LOUD primary palette only: bright red, yellow, blue, orange, hot pink — absolutely no muted/sepia/pastel tones
-- Multiple gags simultaneously: characters in mid-action, props flying, charts visibly crashing
-- Bold black ink outlines + frantic crosshatching shading
-- Every face screaming, laughing, sweating, or crying — never neutral
-- Multiple speech bubbles overlapping; jagged onomatopoeia bursts (POW! WHAM! SPLAT! BANG!) in starburst callouts
-- Visual reference: Don Martin, Mort Drucker, Sergio Aragonés (MAD Magazine staff artists)
-DO NOT render as: photorealistic, minimalist, muted editorial, refined manga/manhwa, sepia ink-wash, or 1950s newspaper style.`,
+  'mad-mag': `Mad Magazine style satirical cartoon, single panel. Wildly exaggerated caricature with rubber-hose proportions, loud primary colors, busy chaotic composition with multiple gags happening at once, bold outlines, screaming faces, sound-effect text bursts. Garish 1970s magazine print look. 1080×1080 square format.`,
   'ghibli': `Studio Ghibli inspired hand-painted watercolor illustration, single panel editorial scene. Warm soft tones, painterly clouds and atmospheric lighting, expressive but gentle character design, dreamlike composition with rich background detail. 1080×1080 square format.`,
   'pixar': `Pixar-style 3D rendered editorial scene, single still frame. Clean polished CGI with cinematic lighting, optimistic tone, expressive but realistic character proportions, beautiful background detail with depth-of-field. 1080×1080 square format.`,
   'k-webtoon': `Korean webtoon style illustration, single panel. Flat cel-shaded colors with crisp linework, expressive manhwa character faces, dynamic posing, vibrant accent colors against neutral backgrounds, modern digital art finish. 1080×1080 square format.`,
@@ -104,10 +96,7 @@ function buildPrompt(headlines, styleKey) {
   }
   const situation = lines.join('\n');
 
-  // 한국어 instruction 비중이 커서 단일 위치 style 지시는 attention 약함.
-  // 처음·끝 양쪽에 style 박아 모델이 visual style을 끝까지 유지하도록 강제.
-  return `STYLE — RENDER STRICTLY IN THIS VISUAL STYLE:
-${baseStyle}
+  return `${baseStyle}
 
 오늘의 시장 상황 (아래 사건들을 한 화면에 풍자·은유로 통합 표현):
 ${situation}
@@ -118,10 +107,7 @@ ${situation}
 - 한국어 말풍선 1~2개로 핵심 메시지를 짧고 또렷하게 표시 — 정확한 한국어 한글 글자.
 - 차트·라벨·플래카드 등 소품에 한국어/영문 텍스트 자연스럽게 표기 (수치는 정확히).
 - 시장이 상승장이면 밝고 흥겨운 톤, 하락·긴장 분위기면 그에 맞는 표정·구도.
-- 화면 우하단 모서리에 작게 "오늘의 브리픽" 워터마크.
-
-FINAL REMINDER — THE VISUAL STYLE OF THE OUTPUT MUST MATCH:
-${baseStyle}`;
+- 화면 우하단 모서리에 작게 "오늘의 브리픽" 워터마크.`;
 }
 
 // Supabase Storage 업로드 — public bucket 'cartoon'에 today.png로 갱신
