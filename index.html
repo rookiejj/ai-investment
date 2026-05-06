@@ -43,9 +43,27 @@ header.top{
   border-bottom:1px solid var(--border);
 }
 .top-inner{max-width:1240px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:16px;justify-content:space-between}
-.brand{display:flex;align-items:center;gap:10px;font:600 18px/1 'Inter',sans-serif;letter-spacing:-0.4px;color:var(--fg)}
+.brand{display:flex;align-items:center;gap:10px;font:600 18px/1 'Inter',sans-serif;letter-spacing:-0.4px;color:var(--fg);cursor:pointer}
 .brand img{width:32px;height:32px;border-radius:8px;object-fit:cover}
 .brand .dot{color:var(--acc)}
+
+/* 우측 하단 최상단 이동 버튼 — 스크롤 ≥400px 시 페이드인, 반투명 + blur로 배경 비침 유지 */
+.scroll-top{
+  position:fixed;bottom:24px;right:24px;
+  width:48px;height:48px;border-radius:50%;
+  background:rgba(13,13,13,0.55);backdrop-filter:blur(14px) saturate(140%);
+  border:1px solid rgba(255,255,255,0.16);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;opacity:0;pointer-events:none;
+  transition:opacity .25s, transform .15s, background .15s;
+  z-index:40;box-shadow:0 4px 18px rgba(0,0,0,0.18);
+}
+.scroll-top.show{opacity:1;pointer-events:auto}
+.scroll-top:hover{transform:translateY(-2px);background:rgba(13,13,13,0.7)}
+.scroll-top:active{transform:scale(0.95)}
+@media (max-width:640px){
+  .scroll-top{bottom:18px;right:18px;width:44px;height:44px}
+}
 .top-nav{display:flex;align-items:center;gap:8px}
 .btn-primary{
   display:inline-flex;align-items:center;gap:6px;padding:8px 18px;
@@ -756,7 +774,7 @@ body.sub-modal-open{overflow:hidden}
 
 <header class="top">
   <div class="top-inner">
-    <a class="brand" href="/">
+    <a class="brand" href="/" id="brandLogo">
       <img src="/assets/briefick_profile_640.jpeg" alt="">
       <span>브리픽<span class="dot">.</span></span>
     </a>
@@ -878,6 +896,13 @@ body.sub-modal-open{overflow:hidden}
 </footer>
 
 </main>
+
+<!-- 우측 하단 최상단 이동 버튼 -->
+<button class="scroll-top" id="scrollTopBtn" type="button" aria-label="맨 위로">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="18 15 12 9 6 15"></polyline>
+  </svg>
+</button>
 
 <!-- Subscribe Modal -->
 <div class="sub-modal-bg" id="subscribeModal" aria-hidden="true" role="dialog" aria-labelledby="subscribeTitle">
@@ -2217,6 +2242,30 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 // ═══════════════════════════════════════════════════════════
 // Wire up controls
 // ═══════════════════════════════════════════════════════════
+// 좌상단 로고 클릭 - 강제 새로고침 (브라우저 캐시 회피)
+{
+  const brand=document.getElementById('brandLogo');
+  if(brand) brand.addEventListener('click',e=>{
+    e.preventDefault();
+    location.reload();
+  });
+}
+
+// 우측 하단 최상단 이동 버튼 - 스크롤 ≥400px 시 표시
+{
+  const btn=document.getElementById('scrollTopBtn');
+  if(btn){
+    let raf=0;
+    const update=()=>{
+      raf=0;
+      btn.classList.toggle('show', (window.pageYOffset||document.documentElement.scrollTop) > 400);
+    };
+    window.addEventListener('scroll',()=>{ if(!raf) raf=requestAnimationFrame(update); }, { passive:true });
+    btn.addEventListener('click',()=>window.scrollTo({top:0, behavior:'smooth'}));
+  }
+}
+
+
 // 두 토글 그룹의 .on 클래스를 _DEFAULT_MARKET에 맞춰 동기화 — HTML은 한국 default로 박혀있지만
 // 저녁 사이클(19시 이후) 진입 시 미국이 활성으로 표시되도록 초기 visual 보정.
 document.querySelectorAll('.health-tab[data-market]').forEach(b=>{
