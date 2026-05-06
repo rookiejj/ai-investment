@@ -7,8 +7,8 @@
 
 cd "$(dirname "$0")/.."
 
-PATTERNS='비트|미스|인라인|rs 갱신|rs 및|rs 맥락|실적 반영|수치 반영|갱신 반영|데이터 반영|rs 반영|도브 톤|매파 톤|약세 톤|회복 톤|디에스컬레이션 톤|거부 톤'
-EXCLUDE='비트코인|비트맥스|비트파|온프레미스|프리미스|미스트랄|메가트론|선반영|priced in'
+PATTERNS='비트|미스|인라인|rs 갱신|rs 및|rs 맥락|실적 반영|수치 반영|갱신 반영|데이터 반영|rs 반영|도브 톤|매파 톤|약세 톤|회복 톤|디에스컬레이션 톤|거부 톤|우호 톤|\bATH\b'
+EXCLUDE='비트코인|비트맥스|비트파|온프레미스|프리미스|미스트랄|메가트론|선반영|priced in|MATH|PATH'
 
 HITS=$(grep -nE "$PATTERNS" data/*.js 2>/dev/null | grep -vE "$EXCLUDE")
 
