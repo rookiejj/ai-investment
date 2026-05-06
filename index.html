@@ -114,7 +114,29 @@ section:first-of-type{padding-top:48px;border-top:0}
 /* TL;DR — 시장별 한 줄 카드 + 좌측 1컷 만화 */
 .narrative-flex{display:flex;gap:20px;align-items:flex-start}
 .narrative-cartoon{flex:0 0 280px;aspect-ratio:4/5;border-radius:14px;border:1px solid var(--border);background:var(--panel-tint);display:flex;align-items:center;justify-content:center;position:relative;padding:10px;box-sizing:border-box}
-.narrative-cartoon img{display:block;width:100%;height:100%;object-fit:contain;border-radius:6px}
+.narrative-cartoon img{display:block;width:100%;height:100%;object-fit:contain;border-radius:6px;cursor:zoom-in}
+
+/* 카툰 클릭 시 풀사이즈 라이트박스 — 어두운 배경에 이미지 중앙 정렬 */
+.cartoon-lightbox{
+  position:fixed;inset:0;background:rgba(0,0,0,0.88);backdrop-filter:blur(8px);
+  display:none;align-items:center;justify-content:center;z-index:95;
+  padding:32px;cursor:zoom-out;
+  animation:cartoonLbFade .2s ease-out;
+}
+.cartoon-lightbox.show{display:flex}
+.cartoon-lightbox img{max-width:100%;max-height:100%;object-fit:contain;border-radius:10px;box-shadow:0 12px 48px rgba(0,0,0,0.4)}
+.cartoon-lightbox-close{
+  position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,0.12);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:20px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+}
+.cartoon-lightbox-close:hover{background:rgba(255,255,255,0.22)}
+@keyframes cartoonLbFade{from{opacity:0}to{opacity:1}}
+@media(max-width:640px){
+  .cartoon-lightbox{padding:16px}
+  .cartoon-lightbox-close{top:12px;right:12px;width:36px;height:36px;font-size:18px}
+}
 .narrative-cartoon.empty img{display:none}
 .narrative-cartoon.empty::after{content:'1컷 만화 준비 중';color:var(--mut);font:500 13px/1.4 'Inter','Pretendard',sans-serif;letter-spacing:-0.01em}
 .narrative-text{flex:1;min-width:0}
@@ -903,6 +925,12 @@ body.sub-modal-open{overflow:hidden}
 </footer>
 
 </main>
+
+<!-- 카툰 라이트박스 — 카툰 클릭 시 풀사이즈로 표시 -->
+<div class="cartoon-lightbox" id="cartoonLightbox" aria-hidden="true" role="dialog">
+  <button class="cartoon-lightbox-close" id="cartoonLightboxClose" type="button" aria-label="닫기">✕</button>
+  <img id="cartoonLightboxImg" alt="오늘의 1컷 만화 확대">
+</div>
 
 <!-- 우측 하단 모바일 새로고침 (mobile only, 항상 표시) — 최상단 이동 버튼 위에 배치 -->
 <button class="mobile-refresh" id="mobileRefreshBtn" type="button" aria-label="새로고침">
@@ -2283,6 +2311,34 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 // ═══════════════════════════════════════════════════════════
 // Wire up controls
 // ═══════════════════════════════════════════════════════════
+// 카툰 클릭 → 라이트박스 풀사이즈 표시 (event delegation으로 동적 innerHTML 대응)
+{
+  const lb=document.getElementById('cartoonLightbox');
+  const lbImg=document.getElementById('cartoonLightboxImg');
+  const lbClose=document.getElementById('cartoonLightboxClose');
+  if(lb && lbImg){
+    document.addEventListener('click',e=>{
+      const img=e.target.closest('.narrative-cartoon img');
+      if(img && img.src){
+        lbImg.src=img.src;
+        lb.classList.add('show');
+        lb.setAttribute('aria-hidden','false');
+      }
+    });
+    const closeLb=()=>{
+      lb.classList.remove('show');
+      lb.setAttribute('aria-hidden','true');
+    };
+    // 배경 클릭으로 닫기 (이미지 본체 클릭은 stopPropagation으로 차단)
+    lb.addEventListener('click',closeLb);
+    lbImg.addEventListener('click',e=>e.stopPropagation());
+    if(lbClose) lbClose.addEventListener('click',e=>{e.stopPropagation();closeLb();});
+    document.addEventListener('keydown',e=>{
+      if(e.key==='Escape' && lb.classList.contains('show')) closeLb();
+    });
+  }
+}
+
 // 좌상단 로고 + 우측 하단 모바일 새로고침 버튼 - 강제 새로고침 + 스크롤 위치 리셋
 function _doRefresh(e){
   if(e) e.preventDefault();
