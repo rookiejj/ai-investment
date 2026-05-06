@@ -247,7 +247,7 @@ async function solapiSendFriendtalk(opts: {
       bms: { targeting: "I" },  // I = 채널 친구만
       buttons: [{
         buttonType: "WL",
-        buttonName: "오늘의 브리핑 보러가기",
+        buttonName: "1분 브리핑 보러가기",
         linkMo: SITE_URL,
         linkPc: SITE_URL,
       }],
