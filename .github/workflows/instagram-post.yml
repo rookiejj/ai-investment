@@ -1,10 +1,19 @@
-name: Instagram Carousel Post
+name: Instagram Post
+
+# Cartoon Generate 워크플로 완료 후 트리거 — 시간차로 카툰이 안 만들어졌는데
+# 발행되는 사고 방지. cartoon-generate가 today.png를 Supabase에 올린 직후에만
+# Reels 모드가 그 결과물을 다운받아 사용한다.
+#
+# 모드 분기 (KST):
+#   - 05~12시: 캐러셀 모드 — Mad Magazine 1컷 만화 + 기존 CTA 슬라이드 = 2장
+#   - 13~23시: Reels 모드 — 홈페이지용 1950s 카툰 1장을 30초 Ken Burns 영상으로
+#   - 00~04시: all (예외 케이스, 운영자 수동 push 대비)
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Cartoon Generate"]
+    types: [completed]
     branches: [main]
-    paths:
-      - 'data/*-update.js'
   workflow_dispatch:
     inputs:
       mode:
@@ -36,48 +45,62 @@ env:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    # push 트리거는 자동 갱신 커밋(`데이터 자동 갱신 …` 또는 `데이터 정합성 강제 갱신 …`)에만 발행한다.
-    # 사람이 수동으로 데이터·코드 수정한 커밋이 의도하지 않은 시간대 발행으로 이어지지 않게 게이팅.
-    # 수동 발행이 필요하면 workflow_dispatch (Actions UI 또는 `gh workflow run`)으로 호출.
+    # workflow_run 트리거는 cartoon-generate가 push 이벤트로 성공 완료한 경우만.
+    # workflow_dispatch는 운영자 수동 호출로 항상 통과.
     if: |
       github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'push' && (startsWith(github.event.head_commit.message, '데이터 자동 갱신') || startsWith(github.event.head_commit.message, '데이터 정합성 강제 갱신')))
-    # publish.js retry 강화로 worst-case ~30분 대기 가능 → 50분으로 여유.
+      (github.event_name == 'workflow_run' &&
+       github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.event == 'push')
     timeout-minutes: 50
     steps:
-      - name: Checkout
+      - name: Checkout (트리거 커밋 SHA)
         uses: actions/checkout@v4
         with:
+          # workflow_run 트리거는 default branch 최신을 받는 게 기본 — 트리거 시점
+          # 커밋과 일치시키려면 head_sha 명시. workflow_dispatch는 그냥 latest.
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
           fetch-depth: 2
 
-      - name: 변경된 파일 확인 (jp만 수정 시 스킵)
-        id: filter
+      - name: 진행 여부 게이팅 (자동 갱신 커밋 + 비-JP 변경)
+        id: gate
         run: |
-          # push 이벤트일 때만 jp-only 변경을 걸러낸다. workflow_dispatch는 통과.
-          if [ "${{ github.event_name }}" != "push" ]; then
-            echo "skip=false" >> $GITHUB_OUTPUT
+          # workflow_dispatch는 운영자 수동 호출 — 항상 진행.
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "should_run=true" >> $GITHUB_OUTPUT
+            echo "workflow_dispatch — 게이팅 통과"
             exit 0
           fi
-          changed=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- 'data/*-update.js' | tr '\n' ' ')
+
+          # 1) 커밋 메시지 게이팅 — 자동 갱신 커밋만.
+          MSG=$(git log -1 --pretty=%s)
+          echo "commit: $MSG"
+          if [[ "$MSG" != 데이터\ 자동\ 갱신* ]] && [[ "$MSG" != 데이터\ 정합성\ 강제\ 갱신* ]]; then
+            echo "should_run=false" >> $GITHUB_OUTPUT
+            echo "::notice::사람 수동 편집 커밋 — IG 발행 skip"
+            exit 0
+          fi
+
+          # 2) JP-only 변경 필터 — 일본 데이터만 바뀐 경우 발행 안 함.
+          changed=$(git diff --name-only HEAD^ HEAD -- 'data/*-update.js' | tr '\n' ' ')
           echo "changed: $changed"
-          # data/*-update.js 변경분 중 비-jp이 하나라도 있는지
           non_jp=$(echo "$changed" | tr ' ' '\n' | grep -v 'jp-stocks-update.js' | grep -E 'data/.*-update.js' || true)
           if [ -z "$non_jp" ]; then
-            echo "skip=true" >> $GITHUB_OUTPUT
-            echo "JP만 변경된 푸시 — 게시 스킵."
+            echo "should_run=false" >> $GITHUB_OUTPUT
+            echo "::notice::JP만 변경된 푸시 — IG 발행 skip"
           else
-            echo "skip=false" >> $GITHUB_OUTPUT
+            echo "should_run=true" >> $GITHUB_OUTPUT
           fi
 
       - name: 발행 모드 결정 (KST 시간대 기반)
         id: mode
-        if: steps.filter.outputs.skip != 'true'
+        if: steps.gate.outputs.should_run == 'true'
         run: |
-          # workflow_dispatch는 사용자가 지정한 mode를 그대로 사용.
-          # push (자동 갱신 커밋)는 KST 시간대로 분기:
-          #   - 오전 시간(05~12시) → carousel만 (정적 게시물)
-          #   - 오후 시간(13~23시) → reels만 (영상)
-          #   - 새벽(00~04시) → all (운영자 수동 push 등 예외 케이스 대비)
+          # workflow_dispatch는 사용자 지정 mode 그대로.
+          # workflow_run은 KST 시간대 분기:
+          #   05~12시 → carousel (오전)
+          #   13~23시 → reels (오후)
+          #   00~04시 → all (예외)
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             MODE="${{ github.event.inputs.mode || 'all' }}"
             echo "workflow_dispatch — 사용자 지정 mode=$MODE"
@@ -90,51 +113,85 @@ jobs:
             else
               MODE="all"
             fi
-            echo "push 트리거 — KST ${HOUR}시 → mode=$MODE"
+            echo "workflow_run — KST ${HOUR}시 → mode=$MODE"
           fi
           echo "mode=$MODE" >> $GITHUB_OUTPUT
 
       - name: Setup Node
-        if: steps.filter.outputs.skip != 'true'
+        if: steps.gate.outputs.should_run == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
       - name: 한글·이모지 폰트 + ffmpeg 설치
-        if: steps.filter.outputs.skip != 'true'
+        if: steps.gate.outputs.should_run == 'true'
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq fonts-noto-cjk fonts-noto-color-emoji ffmpeg
           fc-cache -fv
 
       - name: npm 의존성 설치
-        if: steps.filter.outputs.skip != 'true'
+        if: steps.gate.outputs.should_run == 'true'
         run: npm install --no-audit --no-fund
 
       - name: Playwright Chromium 설치
-        if: steps.filter.outputs.skip != 'true'
+        if: steps.gate.outputs.should_run == 'true'
         run: npx playwright install --with-deps chromium
 
-      - name: 슬라이드 렌더
-        if: steps.filter.outputs.skip != 'true'
+      # render-slides.js는 두 모드 모두에서 실행. 이유:
+      #   - 캐러셀: 07.png(CTA) 필요 + meta.json
+      #   - Reels: meta.json만 필요 (publish.js의 buildCaption이 참조)
+      # render-slides는 7장 만들지만 Reels 모드에선 01~06.png는 사용 안 함.
+      # 한 가지 흐름으로 유지하는 단순함이 ~30s 추가 비용보다 가치 있음.
+      - name: 슬라이드·meta.json 렌더
+        if: steps.gate.outputs.should_run == 'true'
         env:
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
         run: node scripts/instagram/render-slides.js
 
-      - name: Reels 렌더
-        if: steps.filter.outputs.skip != 'true' && steps.mode.outputs.mode != 'carousel'
-        run: node scripts/instagram/render-reels.js
+      - name: Mad Magazine 카툰 생성 (캐러셀 1번 슬라이드)
+        if: steps.gate.outputs.should_run == 'true' && (steps.mode.outputs.mode == 'carousel' || steps.mode.outputs.mode == 'all')
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          node scripts/cartoon/generate.js \
+            --style mad-mag \
+            --no-open \
+            --no-latest \
+            --output scripts/instagram/out/cartoon-mad-mag.png
 
-      - name: 슬라이드·Reels 아티팩트 업로드 (디버깅용, 7일 보관)
-        if: steps.filter.outputs.skip != 'true'
+      - name: 1950s 카툰 다운로드 (Reels 영상 소스)
+        if: steps.gate.outputs.should_run == 'true' && (steps.mode.outputs.mode == 'reels' || steps.mode.outputs.mode == 'all')
+        run: |
+          # cartoon-generate 워크플로가 직전에 업로드한 today.png 받아오기.
+          # workflow_run 의존성으로 시간차는 보장됨 — cartoon이 성공 완료한 직후에만 이 단계 도달.
+          STAMP=$(date +%s)
+          curl -fsSL "https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/today.png?t=$STAMP" \
+            -o scripts/instagram/out/cartoon-1950s.png
+          if [ ! -s scripts/instagram/out/cartoon-1950s.png ]; then
+            echo "::error::cartoon today.png 다운로드 실패 — Supabase 업로드 미완료 가능성"
+            exit 1
+          fi
+          ls -la scripts/instagram/out/cartoon-1950s.png
+
+      - name: Reels 렌더 (단일 이미지 30초 Ken Burns)
+        if: steps.gate.outputs.should_run == 'true' && (steps.mode.outputs.mode == 'reels' || steps.mode.outputs.mode == 'all')
+        run: |
+          node scripts/instagram/render-reels.js \
+            --mode=single \
+            --duration 30 \
+            --input scripts/instagram/out/cartoon-1950s.png
+
+      - name: 출력물 아티팩트 업로드 (디버깅용, 7일 보관)
+        if: steps.gate.outputs.should_run == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: instagram-slides
+          name: instagram-output
           path: scripts/instagram/out/
           retention-days: 7
 
       - name: 인스타그램 게시
-        if: steps.filter.outputs.skip != 'true'
+        if: steps.gate.outputs.should_run == 'true'
         env:
           META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
           IG_BUSINESS_USER_ID: ${{ secrets.IG_BUSINESS_USER_ID }}
@@ -142,6 +199,7 @@ jobs:
           BRIEFICK_SUPABASE_SECRET_KEY: ${{ secrets.BRIEFICK_SUPABASE_SECRET_KEY }}
           IG_CAROUSEL_BUCKET: ${{ secrets.IG_CAROUSEL_BUCKET }}
           IG_DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '' }}
-          # 발행 모드 결정 step에서 산출된 값 사용.
           IG_MODE: ${{ steps.mode.outputs.mode }}
+          # 캐러셀 슬라이드는 Mad Mag 카툰 + 기존 CTA 두 장. Reels 모드에선 무시됨.
+          IG_SLIDES: cartoon-mad-mag.png,07.png
         run: node scripts/instagram/publish.js

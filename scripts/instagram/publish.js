@@ -27,7 +27,10 @@ const { createClient } = require('@supabase/supabase-js');
 const { buildCaption } = require('./caption');
 
 const OUT_DIR = path.join(__dirname, 'out');
-const SLIDE_FILES = ['01.png','02.png','03.png','04.png','05.png','06.png','07.png'];
+// IG_SLIDES env로 override 가능 (콤마 구분). 기본은 기존 7장.
+// 예: IG_SLIDES=cartoon.png,07.png  → cartoon.png + CTA만 2장 캐러셀
+const SLIDE_FILES = (process.env.IG_SLIDES || '01.png,02.png,03.png,04.png,05.png,06.png,07.png')
+  .split(',').map(s => s.trim()).filter(Boolean);
 const GRAPH_VERSION = 'v21.0';
 
 function reqEnv(name) {

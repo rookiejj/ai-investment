@@ -44,8 +44,8 @@ function todayKST() {
 function todayStamp() {
   const d = todayKST();
   const y = d.getUTCFullYear(), m = String(d.getUTCMonth() + 1).padStart(2, '0'), day = String(d.getUTCDate()).padStart(2, '0');
-  const hh = String(d.getUTCHours()).padStart(2, '0'), mm = String(d.getUTCMinutes()).padStart(2, '0');
-  return `${y}-${m}-${day}-${hh}${mm}`;
+  const hh = String(d.getUTCHours()).padStart(2, '0'), mm = String(d.getUTCMinutes()).padStart(2, '0'), ss = String(d.getUTCSeconds()).padStart(2, '0');
+  return `${y}-${m}-${day}-${hh}${mm}${ss}`;
 }
 
 // N번째 entry의 summary 모두 모아 헤드라인 (0 = 가장 최신)
@@ -75,9 +75,18 @@ function headlinesAt(index) {
 
 const todaysHeadlines = () => headlinesAt(0);
 
+// 화풍 프리셋 — --style 플래그로 선택. 사용처별로 다른 톤 적용 가능.
+const STYLES = {
+  '1950s': `1950s American newspaper political cartoon style, single panel. Heavy ink crosshatching, sepia-toned limited palette, exaggerated caricature in vintage editorial tradition, classic ink-wash shading, hand-lettered captions, mid-century WSJ/NYT op-ed page look. 1080×1080 square format.`,
+  'mad-mag': `Mad Magazine style satirical cartoon, single panel. Wildly exaggerated caricature with rubber-hose proportions, loud primary colors, busy chaotic composition with multiple gags happening at once, bold outlines, screaming faces, sound-effect text bursts. Garish 1970s magazine print look. 1080×1080 square format.`,
+  'ghibli': `Studio Ghibli inspired hand-painted watercolor illustration, single panel editorial scene. Warm soft tones, painterly clouds and atmospheric lighting, expressive but gentle character design, dreamlike composition with rich background detail. 1080×1080 square format.`,
+  'pixar': `Pixar-style 3D rendered editorial scene, single still frame. Clean polished CGI with cinematic lighting, optimistic tone, expressive but realistic character proportions, beautiful background detail with depth-of-field. 1080×1080 square format.`,
+  'k-webtoon': `Korean webtoon style illustration, single panel. Flat cel-shaded colors with crisp linework, expressive manhwa character faces, dynamic posing, vibrant accent colors against neutral backgrounds, modern digital art finish. 1080×1080 square format.`,
+};
+
 // 그날의 실제 헤드라인을 프롬프트에 직접 주입 — 모델이 매번 다른 장면 합성
-function buildPrompt(headlines) {
-  const baseStyle = `한국 풍자 만화 화풍의 디테일한 1컷 편집만화. 손그림 수채화·잉크 톤, 캐릭터 표정 풍부하고 과장됨, 다양한 등장인물·소품·말풍선이 한 화면에 빼곡하게 배치된 활기찬 구도. 따뜻한 어스 톤 위주, 한국 일러스트레이션 스타일. 1080×1080 정사각.`;
+function buildPrompt(headlines, styleKey) {
+  const baseStyle = STYLES[styleKey] || STYLES['1950s'];
 
   // 5개 탭 첫 줄을 그대로 모델에게 — 각 entry마다 다른 헤드라인이라 자연스레 다른 장면 도출
   const lines = [];
@@ -184,17 +193,21 @@ function parseArg(name, fallback) {
 async function main() {
   const promptOnly = process.argv.includes('--prompt-only');
   const noOpen = process.argv.includes('--no-open');
+  const noLatest = process.argv.includes('--no-latest');
   const upload = process.argv.includes('--upload');
   const index = Number(parseArg('--index', 0));
   const tag = parseArg('--tag', '');
+  const styleKey = parseArg('--style', '1950s');
+  const customOut = parseArg('--output', '');
   const headlines = headlinesAt(index);
   console.log(`[headlines] index=${index}${headlines.__dateRef ? ` (date=${headlines.__dateRef})` : ''}`);
   for (const [k, lines] of Object.entries(headlines)) {
     if (k.startsWith('__')) continue;
     if (lines.length) console.log(`  ${k}: ${lines[0]}`);
   }
+  console.log(`[style] ${styleKey}`);
 
-  const prompt = buildPrompt(headlines);
+  const prompt = buildPrompt(headlines, styleKey);
   console.log('\n[prompt]');
   console.log(prompt);
 
@@ -206,20 +219,24 @@ async function main() {
   console.log('\n[generating image...]');
   const buf = await callGemini(prompt);
   const stamp = todayStamp();
-  const suffix = tag ? `-${tag}` : (index > 0 ? `-idx${index}` : '');
-  const out = path.join(OUT_DIR, `${stamp}${suffix}.png`);
+  const idxPart = index > 0 ? `-idx${index}` : '';
+  const stylePart = styleKey !== '1950s' ? `-${styleKey}` : '';
+  const tagPart = tag ? `-${tag}` : '';
+  const out = customOut || path.join(OUT_DIR, `${stamp}${idxPart}${stylePart}${tagPart}.png`);
+  fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, buf);
   console.log(`[saved] ${out}  (${(buf.length / 1024).toFixed(1)} KB)`);
 
-  // 메인 페이지가 참조할 latest는 index=0(최신 헤드라인)일 때만 갱신
-  if (index === 0) {
+  // 메인 페이지(로컬)가 참조할 latest는 index=0(최신) 1950s 스타일에서만 갱신.
+  // --no-latest로 명시 회피 가능 (인스타용 cartoon 생성 시 사용).
+  if (index === 0 && styleKey === '1950s' && !noLatest) {
     const latest = path.join(OUT_DIR, 'latest.png');
     fs.writeFileSync(latest, buf);
     console.log(`[saved] ${latest}  (로컬 메인 페이지가 참조)`);
   }
 
-  // Supabase Storage 업로드 — production 메인 페이지가 fetch
-  if (upload && index === 0) {
+  // Supabase Storage 업로드 — production 메인 페이지가 fetch (1950s, index=0만)
+  if (upload && index === 0 && styleKey === '1950s') {
     try {
       const publicUrl = await uploadToSupabase(buf);
       console.log(`[uploaded] ${publicUrl}`);

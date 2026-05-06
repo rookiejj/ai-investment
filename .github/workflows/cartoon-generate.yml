@@ -60,6 +60,7 @@ jobs:
           SUPABASE_URL: https://ytvcgoldauysvnqckzze.supabase.co
         run: |
           node scripts/cartoon/generate.js \
+            --style 1950s \
             --index ${{ inputs.index || '0' }} \
             --upload \
             --no-open

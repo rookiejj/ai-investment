@@ -150,4 +150,81 @@ function main() {
   console.log(`✓ ${outPath} (${(stat.size / 1024 / 1024).toFixed(2)} MB)`);
 }
 
-main();
+// ─────────────────────────────────────────────────────────────
+// 단일 이미지 모드 — cartoon 1장으로 30초 Reels (Ken Burns 줌 + 음악)
+// ─────────────────────────────────────────────────────────────
+function parseArg(name, fallback) {
+  const i = process.argv.indexOf(name);
+  if (i < 0 || i + 1 >= process.argv.length) return fallback;
+  return process.argv[i + 1];
+}
+
+function mainSingle() {
+  const inputPath = parseArg('--input', '');
+  const duration = Number(parseArg('--duration', 30));
+  if (!inputPath || !fs.existsSync(inputPath)) {
+    throw new Error(`--input <path> 필요. 받은 값: ${inputPath}`);
+  }
+  console.log(`[single mode] input=${inputPath} duration=${duration}s`);
+
+  const fps = 30;
+  const totalFrames = duration * fps;
+  // zoompan: 1.0x → 1.15x over duration, 1080×1080 정사각 출력
+  // 그 후 split + 블러 BG로 1080×1920 letterbox
+  const filter = [
+    `[0:v]zoompan=z='min(zoom+0.000167\\,1.15)':d=${totalFrames}:s=${TARGET_W}x${TARGET_W}:fps=${fps},split=2[orig][bg]`,
+    `[bg]scale=${TARGET_W}:${TARGET_H}:force_original_aspect_ratio=increase,crop=${TARGET_W}:${TARGET_H},gblur=sigma=40,eq=brightness=-0.15[bgblur]`,
+    `[bgblur][orig]overlay=(W-w)/2:(H-h)/2:format=auto,setsar=1[vout]`,
+  ].join(';');
+
+  const outPath = path.join(OUT_DIR, 'reels.mp4');
+  const musicPath = findMusicTrack();
+
+  const args = ['-y', '-loop', '1', '-t', String(duration), '-i', inputPath];
+
+  if (musicPath) {
+    console.log(`음악 트랙: ${path.basename(musicPath)}`);
+    args.push('-i', musicPath);
+  } else {
+    console.log('음악 없음 — 무음');
+    args.push('-f', 'lavfi', '-t', String(duration),
+              '-i', 'anullsrc=channel_layout=stereo:sample_rate=44100');
+  }
+
+  args.push(
+    '-filter_complex', filter,
+    '-map', '[vout]',
+    '-map', '1:a',
+    '-shortest',
+  );
+
+  if (musicPath) {
+    args.push('-af', `afade=t=in:st=0:d=0.5,afade=t=out:st=${(duration - 1).toFixed(2)}:d=1.0`);
+  }
+
+  args.push(
+    '-c:a', 'aac',
+    '-b:a', '128k',
+    '-c:v', 'libx264',
+    '-preset', 'medium',
+    '-crf', '20',
+    '-pix_fmt', 'yuv420p',
+    '-r', String(fps),
+    '-t', String(duration),
+    '-movflags', '+faststart',
+    outPath,
+  );
+
+  fs.mkdirSync(OUT_DIR, { recursive: true });
+  run('ffmpeg', args);
+
+  const stat = fs.statSync(outPath);
+  console.log(`✓ ${outPath} (${(stat.size / 1024 / 1024).toFixed(2)} MB, ${duration}s)`);
+}
+
+// 모드 분기
+if (process.argv.includes('--mode=single') || process.argv.includes('--single')) {
+  mainSingle();
+} else {
+  main();
+}
