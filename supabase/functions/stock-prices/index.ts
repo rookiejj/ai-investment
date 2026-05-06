@@ -237,12 +237,23 @@ Deno.serve(async (req) => {
     for (const tk of us) {
       if (raw[tk]) prices[tk] = raw[tk];
     }
-    // 한국 — KS 우선, 없으면 KQ
+    // 한국 — KS·KQ 둘 다 fetch, 더 최신 데이터 쪽 사용
+    // Yahoo가 KOSDAQ 종목의 .KS 엔드포인트에 오래된 ghost data를 반환하는 경우 회피
     for (const tk of kr) {
       const ks = raw[`${tk}.KS`];
       const kq = raw[`${tk}.KQ`];
-      if (ks?.price != null) prices[tk] = { ...ks, exchange: "KS" };
-      else if (kq?.price != null) prices[tk] = { ...kq, exchange: "KQ" };
+      const ksOk = ks?.price != null;
+      const kqOk = kq?.price != null;
+      if (ksOk && kqOk) {
+        const ksTime = Number(ks.time ?? 0);
+        const kqTime = Number(kq.time ?? 0);
+        if (kqTime > ksTime) prices[tk] = { ...kq, exchange: "KQ" };
+        else prices[tk] = { ...ks, exchange: "KS" };
+      } else if (ksOk) {
+        prices[tk] = { ...ks, exchange: "KS" };
+      } else if (kqOk) {
+        prices[tk] = { ...kq, exchange: "KQ" };
+      }
     }
     // 원자재·크립토 — 원래 tk(BTC, GC 등)로 다시 매핑
     for (const [tk, yh] of Object.entries(comSymbolsMap)) {
