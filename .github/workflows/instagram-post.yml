@@ -2,11 +2,11 @@ name: Instagram Post
 
 # Cartoon Generate 워크플로 완료 후 트리거 — 시간차로 카툰이 안 만들어졌는데
 # 발행되는 사고 방지. cartoon-generate가 today.png를 Supabase에 올린 직후에만
-# Reels 모드가 그 결과물을 다운받아 사용한다.
+# Carousel 모드가 그 결과물을 다운받아 사용한다.
 #
 # 모드 분기 (KST):
-#   - 05~12시: 캐러셀 모드 — Mad Magazine 1컷 만화 + 기존 CTA 슬라이드 = 2장
-#   - 13~23시: Reels 모드 — 홈페이지용 1950s 카툰 1장을 30초 Ken Burns 영상으로
+#   - 05~12시: 캐러셀 모드 — 홈페이지 1950s today.png 재사용 + 기존 CTA = 2장
+#   - 13~23시: Reels 모드 — Mad Magazine 카툰 즉석 생성 → 30초 Ken Burns 영상
 #   - 00~04시: all (예외 케이스, 운영자 수동 push 대비)
 
 on:
@@ -149,22 +149,11 @@ jobs:
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
         run: node scripts/instagram/render-slides.js
 
-      - name: Mad Magazine 카툰 생성 (캐러셀 1번 슬라이드)
+      - name: 1950s 카툰 다운로드 (캐러셀 1번 슬라이드)
         if: steps.gate.outputs.should_run == 'true' && (steps.mode.outputs.mode == 'carousel' || steps.mode.outputs.mode == 'all')
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          node scripts/cartoon/generate.js \
-            --style mad-mag \
-            --no-open \
-            --no-latest \
-            --output scripts/instagram/out/cartoon-mad-mag.png
-
-      - name: 1950s 카툰 다운로드 (Reels 영상 소스)
-        if: steps.gate.outputs.should_run == 'true' && (steps.mode.outputs.mode == 'reels' || steps.mode.outputs.mode == 'all')
-        run: |
-          # cartoon-generate 워크플로가 직전에 업로드한 today.png 받아오기.
-          # workflow_run 의존성으로 시간차는 보장됨 — cartoon이 성공 완료한 직후에만 이 단계 도달.
+          # cartoon-generate 워크플로가 직전에 업로드한 today.png를 캐러셀 첫 장으로 그대로 사용.
+          # 홈페이지·캐러셀이 같은 1950s 1장을 공유 → 시각 일관성 확보.
           STAMP=$(date +%s)
           curl -fsSL "https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/today.png?t=$STAMP" \
             -o scripts/instagram/out/cartoon-1950s.png
@@ -174,13 +163,24 @@ jobs:
           fi
           ls -la scripts/instagram/out/cartoon-1950s.png
 
+      - name: Mad Magazine 카툰 생성 (Reels 영상 소스)
+        if: steps.gate.outputs.should_run == 'true' && (steps.mode.outputs.mode == 'reels' || steps.mode.outputs.mode == 'all')
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          node scripts/cartoon/generate.js \
+            --style mad-mag \
+            --no-open \
+            --no-latest \
+            --output scripts/instagram/out/cartoon-mad-mag.png
+
       - name: Reels 렌더 (단일 이미지 30초 Ken Burns)
         if: steps.gate.outputs.should_run == 'true' && (steps.mode.outputs.mode == 'reels' || steps.mode.outputs.mode == 'all')
         run: |
           node scripts/instagram/render-reels.js \
             --mode=single \
             --duration 30 \
-            --input scripts/instagram/out/cartoon-1950s.png
+            --input scripts/instagram/out/cartoon-mad-mag.png
 
       - name: 출력물 아티팩트 업로드 (디버깅용, 7일 보관)
         if: steps.gate.outputs.should_run == 'true'
@@ -200,6 +200,6 @@ jobs:
           IG_CAROUSEL_BUCKET: ${{ secrets.IG_CAROUSEL_BUCKET }}
           IG_DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '' }}
           IG_MODE: ${{ steps.mode.outputs.mode }}
-          # 캐러셀 슬라이드는 Mad Mag 카툰 + 기존 CTA 두 장. Reels 모드에선 무시됨.
-          IG_SLIDES: cartoon-mad-mag.png,07.png
+          # 캐러셀 슬라이드는 1950s today.png + 기존 CTA 두 장. Reels 모드에선 무시됨.
+          IG_SLIDES: cartoon-1950s.png,07.png
         run: node scripts/instagram/publish.js
