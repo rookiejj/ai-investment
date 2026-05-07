@@ -1,6 +1,18 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-05-07 19:35 KST",
+    summary: `True Anomaly $650M Series D - $2.2B 밸류·Pentagon Golden Dome 12개 컨트랙터 진입
+Eclipse·Riot 공동 주도, Paradigm·Atreides·G Squared·VanEck 신규·Stifel $50M 부채 포함
+누적 조달 $1B+·연말 직원 500명+·우주 자율비행체·궤도상 인터셉터 양산 가속
+우주 방산 카테고리 펀딩 사이클 - Anduril Series H $8B 협상 베이스에 추가 정량 입증`,
+    changes: [
+      { type: "정보 갱신", sector: "우주·모빌리티·방산",
+        detail: "Anduril 주변 우주 방산 펀딩 사이클. 4/28 True Anomaly Series D $650M·$2.2B 밸류 마감 - Eclipse·Riot 공동 주도, 신규 투자자 Paradigm·Atreides·G Squared·The Private Shares Fund·VanEck 동시 합류, 기존 Accel·Menlo·ACME·Space VC·Meritech·Narya·645 추가 참여. Stifel Bank $50M 부채 포함, 누적 조달 $1B+ (2022 창업 이후). 연말까지 직원 500명+ 확대·자율 비행체·고급 페이로드·미션 자율성·우주 인터셉터 양산 가속. Pentagon Golden Dome 프로그램 12개 컨트랙터로 선정된 베이스 - 美 우주군 Space Systems Command가 우주 기반 인터셉터 프로토타입 위탁. 우리 카테고리에서는 Anduril Series H 최대 $8B·$60B 밸류 협상이 단일 톱 라인을 차지하지만, True Anomaly의 $2.2B 밸류 D 라운드는 우주 방산 카테고리 전반 펀딩 사이클이 양산 자금 단계로 진입했음을 정량 입증 - Anduril의 Golden Dome $3.2B + 5/29 우주군 $1.8B 컨트랙트 베이스 강화.",
+        time: "2026-05-07 19:35 KST" },
+    ]
+  },
+  {
     date: "2026-05-06 07:25 KST",
     summary: `Anthropic $50B 라운드 $900B 밸류 5월 보드 미팅 결정 임박 - 한 기관 $5B 단일 수표
 SpaceX 증권신고서 정식 제출 5/15~5/22 윈도우·6/8 로드쇼·6/18~6/30 프라이싱 카운트다운

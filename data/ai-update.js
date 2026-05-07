@@ -6,6 +6,21 @@
  */
 const UPDATES = [
   {
+    date: "2026-05-07 19:30 KST",
+    summary: `Anthropic·Google $200B 5년 클라우드·칩 약정 - The Information 보도, Alphabet 백로그 40%+ 단독 차지
+4월 Google Broadcom 다중 기가와트 TPU 합의 후속 - 2027년 본격 가동 예정
+Anthropic은 동시에 CoreWeave 다년 계약 + AWS 약 1GW 칩 연말 확보 - 인프라 분산 가속
+Alphabet 주가 동조 강세·Anthropic IPO $900B 밸류 검토 베이스에 추가 정량 입증`,
+    changes: [
+      { type: "인프라", sector: "Anthropic",
+        detail: "Anthropic·Google 클라우드·칩 $200B 5년 약정. 5/5 The Information 단독 보도 - Anthropic이 Google Cloud에 향후 5년간 $200B를 지출하는 다년 합의. 4월에 발표한 Google·Broadcom 다중 기가와트 TPU 합의의 구체적 규모가 처음 정량화된 것으로, Alphabet이 투자자에게 공개한 매출 백로그 중 40%+ 비중을 Anthropic이 단독으로 차지하는 구조. 동시에 Anthropic은 CoreWeave 다년 인프라 계약 + AWS의 약 1GW 자체 칩 용량을 연말까지 확보 - 단일 공급망 리스크를 분산하면서 컴퓨트 약속을 누적. Alphabet 주가는 보도 후 동조 강세·Anthropic IPO $900B 밸류 검토 베이스에 매출 가속의 정량적 시그널 추가. TPU 캐파는 2027년부터 본격 가동 예정 - 앞서 4/23 Axios가 보도한 '컴퓨트 한도 타이트닝·주기적 아웃티지' 성장통이 그 시점까지 잔존하는 구도.",
+        time: "2026-05-07 19:30 KST" },
+      { type: "인프라", sector: "Google DeepMind",
+        detail: "Google Cloud·TPU 인프라. 5/5 The Information 보도로 Anthropic의 5년 $200B 약정이 정량화 - Alphabet 매출 백로그 $460B 중 40%+ 비중이 단일 고객(Anthropic)에서 발생함이 처음 공개. 4월 Cloud Next에서 발표한 Gemini 3.2와 별개로 외부 프론티어 모델 회사 향 TPU 공급이 Google Cloud의 단독 성장 동력으로 자리 - Q1 Google Cloud +63% 매출 가속의 후방 동력이 한 번 더 증명됐다. Pichai가 Q1 컨콜에서 '단기 컴퓨트 제약'을 명시한 만큼 TPU·Broadcom 캐파 빌드아웃 속도가 단일 분기점.",
+        time: "2026-05-07 19:30 KST" },
+    ]
+  },
+  {
     date: "2026-05-07 07:40 KST",
     summary: `NVIDIA·Corning 다년 광 인프라 파트너십 - $500M 워런트 + 최대 $3.2B 투자 권리
 Corning 美 광 연결 캐파 10배·광섬유 50%+ 확장 - NC·텍사스 공장 3곳, 3,000명 신규 고용
