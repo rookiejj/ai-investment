@@ -160,19 +160,40 @@ jobs:
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
         run: node scripts/instagram/render-slides.js
 
+      # 캐러셀 1번 슬라이드 — cartoon-generate가 업로드한 today-news.png(1080×1350 4:5) 사용.
+      # 홈페이지·캐러셀이 같은 1장을 공유 → 시각 일관성. CTA 슬라이드와 비율 동일해 letterbox 불필요.
+      # 신선도 체크: Reels 쪽과 대칭 — 1시간 이상 stale 또는 다운로드 실패 시 즉석 생성으로 폴백.
+      # 자동 흐름(cartoon-generate 직후 instagram-post 발사)에선 파일 나이 ~5분이라 항상 통과.
       - name: 1950s 뉴스 카툰 다운로드 (캐러셀 1번 슬라이드)
         if: steps.gate.outputs.should_run == 'true' && (steps.mode.outputs.mode == 'carousel' || steps.mode.outputs.mode == 'all')
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          # cartoon-generate 워크플로가 직전에 업로드한 today-news.png(1080×1350 4:5)를 캐러셀 첫 장으로 사용.
-          # 홈페이지·캐러셀이 같은 1장을 공유 → 시각 일관성. CTA 슬라이드와 비율 동일해 letterbox 불필요.
           STAMP=$(date +%s)
-          curl -fsSL "https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/today-news.png?t=$STAMP" \
-            -o scripts/instagram/out/cartoon-1950s.png
-          if [ ! -s scripts/instagram/out/cartoon-1950s.png ]; then
-            echo "::error::today-news.png 다운로드 실패 — cartoon-generate 워크플로 업로드 미완료 가능성"
-            exit 1
+          NEWS_URL="https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/today-news.png?t=$STAMP"
+          OUT=scripts/instagram/out/cartoon-1950s.png
+          THRESHOLD=3600
+
+          LAST_MOD=$(curl -sI "$NEWS_URL" | awk -F': ' 'tolower($1)=="last-modified"{print $2}' | tr -d '\r\n')
+          if [ -n "$LAST_MOD" ]; then
+            LAST_MOD_TS=$(date -d "$LAST_MOD" +%s 2>/dev/null || echo 0)
+            AGE=$(( $(date +%s) - LAST_MOD_TS ))
+          else
+            AGE=999999
           fi
-          ls -la scripts/instagram/out/cartoon-1950s.png
+          echo "[storage] today-news.png age=${AGE}s threshold=${THRESHOLD}s"
+
+          if [ "$AGE" -lt "$THRESHOLD" ] && curl -fsSL "$NEWS_URL" -o "$OUT" && [ -s "$OUT" ]; then
+            echo "[download] today-news.png 사용 (fresh)"
+          else
+            echo "::warning::today-news.png stale/누락 (age=${AGE}s) — 즉석 생성으로 폴백"
+            node scripts/cartoon/generate.js \
+              --style 1950s \
+              --no-open \
+              --no-latest \
+              --output "$OUT"
+          fi
+          ls -la "$OUT"
 
       # Reels 영상 소스 — cartoon-generate가 함께 업로드한 today-magazine.png 사용.
       # 신선도 체크: cartoon-generate의 mad-mag 단계가 continue-on-error라 실패해도
