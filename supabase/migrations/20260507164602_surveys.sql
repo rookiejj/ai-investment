@@ -47,6 +47,11 @@ create trigger trg_surveys_updated_at
   before update on public.surveys
   for each row execute function public.set_updated_at();
 
+-- RLS 활성화 — Edge Function이 service_role 키로 우회 접근. anon/auth 클라이언트의
+-- 직접 SELECT·INSERT는 정책 없으므로 자동 차단(default deny). 정책 추가는 불필요.
+alter table public.surveys enable row level security;
+alter table public.survey_responses enable row level security;
+
 -- 첫 설문 시드 — 가격 설문 (2026-05 첫 번째)
 insert into public.surveys (id, title, question, options, active) values (
   '202605-01',
