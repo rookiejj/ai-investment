@@ -1,6 +1,18 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-05-08 07:25 KST",
+    summary: `SpaceX Colossus 1 전체 컴퓨트 Anthropic 단독 임대 - IPO 직전 AI 인프라 매출 라인 정량 입증
+S-1 5/15~5/22 정식 제출·6/8 로드쇼·6/18~6/30 프라이싱 D-7~14 카운트다운 그대로
+다중 기가와트 궤도 AI 컴퓨트 SpaceX·Anthropic 공동 개발 의향 명시 - 우주 데이터센터 신규 라인업
+ARK·언더라이터 가격 정당화 자료에 추가 동력 - $1.75~2.0T 베이스 강화`,
+    changes: [
+      { type: "정보 갱신", sector: "우주·모빌리티·방산",
+        detail: "SpaceX(Colossus 1 전체 컴퓨트 Anthropic 단독 임대 계약·IPO 직전 AI 인프라 매출 라인 정량 입증). 5/6 공식 발표 - 테네시 Colossus 1 데이터센터 전체 컴퓨트 캐파(300MW+·NVIDIA H100/H200/GB200 220,000+ GPU)를 Anthropic에 단독 임대. 한 달 안에 즉시 가동 가능한 캐파로 SpaceX의 'AI 인프라 사업자' 포지셔닝을 IPO 직전 정량 입증 - 5/15~5/22 S-1 정식 제출·6/8 로드쇼·6/11 1,500명 리테일 투자자 투어·6/18~6/30 프라이싱 카운트다운 베이스에 ARK·언더라이터의 가격 정당화 자료를 추가 동력으로 보강. 추가로 Anthropic이 'SpaceX와 다중 기가와트 궤도 AI 컴퓨트 공동 개발' 의향을 공식 명시 - SpaceX의 발사 케이던스·재사용 2단 베이스로 우주 데이터센터의 '언제'의 영역으로 진입, IPO 스토리라인에 신규 사업 라인업 추가. xAI Colossus 2(1.5GW·100만 H100 등가)는 Grok 5 학습에 자체 캐파 집중 + Colossus 1 가용 캐파 매출화 구도 - 양사 자본 효율 우선의 비통상 라이벌 거래.",
+        time: "2026-05-08 07:25 KST" },
+    ]
+  },
+  {
     date: "2026-05-07 19:35 KST",
     summary: `True Anomaly $650M Series D - $2.2B 밸류·Pentagon Golden Dome 12개 컨트랙터 진입
 Eclipse·Riot 공동 주도, Paradigm·Atreides·G Squared·VanEck 신규·Stifel $50M 부채 포함

@@ -6,6 +6,22 @@
  */
 const UPDATES = [
   {
+    date: "2026-05-08 07:20 KST",
+    summary: `Anthropic·SpaceX Colossus 1 전체 컴퓨트 단독 임대 - 300MW·NVIDIA GPU 220,000개·H100/H200/GB200
+Claude Code 한도 전 유료 티어 2배 확대·Pro/Max 피크 시간대 한도 폐지·Opus API 한도 상향
+xAI 본사격 슈퍼클러스터를 라이벌이 임차 - Musk 'No one set off my evil detector' 코멘트
+다중 기가와트 궤도 AI 컴퓨트 공동 개발 의향 공식 명시 - 우주 데이터센터 진입
+SpaceX IPO 직전 AI 인프라 스토리라인 정량 입증·Anthropic IPO $900B 베이스에 추가 동력`,
+    changes: [
+      { type: "인프라", sector: "Anthropic",
+        detail: "Anthropic·SpaceX Colossus 1 컴퓨트 단독 임대 + Claude 사용량 한도 2배. 5/6 공식 발표 - SpaceX의 테네시 Colossus 1 데이터센터 전체 컴퓨트 캐파(300MW+·NVIDIA H100/H200/GB200 220,000+ GPU)를 단독 임대. 한 달 안에 즉시 가동 가능한 추가 캐파로 IPO $900B 밸류 베이스를 기술적으로 정량화. 즉시 사용량 한도 변화 - ①Claude Code 5시간 한도 Pro·Max·Team·Enterprise 전 유료 티어 2배 확대 ②Pro·Max 피크 시간대 한도 축소 폐지 ③Claude Opus 모델 API 한도 '상당폭' 상향. 4/23 Axios가 보도한 컴퓨트 한도 타이트닝·주기적 아웃티지 성장통의 단기 해소 라인. 추가로 Anthropic이 SpaceX와 '다중 기가와트 궤도 AI 컴퓨트' 공동 개발 의향을 공식 명시 - SpaceX의 발사 케이던스·재사용 2단 베이스로 우주 데이터센터 '언제'의 영역으로 진입. 컴퓨트 누적 라인 - Google TPU 5GW($200B 5년 약정) + AWS 1GW + CoreWeave 다년 + SpaceX Colossus 1 단독. CRWV가 동일 5/7 장후 Q1에서 NVDA 분기 중 $2B 추가 지분 매입 + 백로그 $99.4B를 정량 입증한 흐름과 결합돼 Anthropic 컴퓨트 채널 다변화 가속.",
+        time: "2026-05-08 07:20 KST" },
+      { type: "전략", sector: "xAI",
+        detail: "xAI Colossus 1 컴퓨트를 Anthropic에 임대. 5/6 합의 - SpaceX/xAI가 보유한 Colossus 1(테네시 200K+ NVIDIA GPU 슈퍼클러스터)을 라이벌 Anthropic에 단독 임차하는 비통상 구도 형성. xAI는 Memphis Colossus 2(1.5GW·100만 H100 등가)를 가동 중이며 Grok 5(6조 파라미터 MoE) 학습에 자체 캐파를 집중 배분, Colossus 1은 부분 활용 중인 가용 캐파를 임대 형태로 매출화. SpaceX는 $1.75T IPO 직전 AI 인프라 매출 라인을 정량 입증해 ARK·언더라이터 자료에 추가 동력. Musk는 'No one set off my evil detector' 코멘트로 거래의 정합성을 직접 시그널 - Anthropic·xAI 양사가 공식 라이벌 관계임에도 컴퓨트 자본 효율 우선 베이스. 동시에 SpaceX·Anthropic 다중 기가와트 궤도 AI 컴퓨트 공동 개발 의향 명시는 xAI의 우주 인프라 라인업과 직접 결합 가능성.",
+        time: "2026-05-08 07:20 KST" },
+    ]
+  },
+  {
     date: "2026-05-07 19:30 KST",
     summary: `Anthropic·Google $200B 5년 클라우드·칩 약정 - The Information 보도, Alphabet 백로그 40%+ 단독 차지
 4월 Google Broadcom 다중 기가와트 TPU 합의 후속 - 2027년 본격 가동 예정

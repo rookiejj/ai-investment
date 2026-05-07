@@ -32,7 +32,7 @@ const data = [
     title: "🚀 우주·모빌리티·방산",
     tag: "발사체·자율주행·자율무기·피지컬 AI",
     stocks: [
-      { nm:"SpaceX", rs:"S-1 5/15~5/22 정식 제출 예정·6/8 로드쇼 시작·6/11 1,500명 리테일 투자자 투어·6/18~6/30 IPO 프라이싱 윈도우·목표 밸류 $1.75~2.0T·$75B 조달·ARK 주요 분석 보고서로 가격 정당화 모멘텀", val:"$1.25T", round:"S-1 비밀 제출·리테일 30% 할당(UK·EU·호주·캐나다·일본·한국)", sector:"우주", ipo:"2026.06.18~30 프라이싱·$1.75T" },
+      { nm:"SpaceX", rs:"5/6 Colossus 1 전체 컴퓨트(300MW·NVIDIA GPU 220K) Anthropic 단독 임대 계약 - IPO 직전 AI 인프라 매출 라인 정량 입증·S-1 5/15~5/22 정식 제출·6/8 로드쇼·6/18~6/30 프라이싱·목표 $1.75~2.0T·$75B 조달", val:"$1.25T", round:"S-1 비밀 제출·리테일 30% 할당(UK·EU·호주·캐나다·일본·한국)", sector:"우주", ipo:"2026.06.18~30 프라이싱·$1.75T" },
       { nm:"Zipline", rs:"드론 배송·누적 200만 건", val:"$7.6B", round:"Series H ($800M)", sector:"드론·물류", ipo:"2027" },
       { nm:"Vast", rs:"민간 우주정거장·NASA 후보·$500M 조달", val:"$20B", round:"Series B ($500M, 2026-03)", sector:"우주 인프라", ipo:"미정" },
       { nm:"Relativity Space", rs:"Eric Schmidt CEO·Terran R 2026년 말 첫 발사 목표", val:"$4.2B", round:"Angel (Schmidt, 2025-01)", sector:"3D 프린트 로켓", ipo:"미정" },
