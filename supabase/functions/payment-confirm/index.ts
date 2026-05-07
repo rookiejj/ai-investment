@@ -71,9 +71,10 @@ async function sendPaymentAlimtalk(opts: {
     .replace("#{상품명}", PRODUCT_NAME)
     .replace("#{만료일}", opts.expiryDate);
 
-  // AC(채널 추가) 버튼 — 템플릿 등록 시 함께 승인된 버튼 구조
+  // AC(채널추가) 버튼 — 알리고 등록 템플릿(UH_6779)의 버튼 이름과 정확히 일치해야 노출.
+  // 공백 한 칸 차이라도 미일치 시 버튼이 사라지므로 등록 그대로 "채널추가" 사용.
   const button = {
-    button: [{ name: "채널 추가", linkType: "AC", linkTypeName: "채널추가" }],
+    button: [{ name: "채널추가", linkType: "AC", linkTypeName: "채널추가" }],
   };
 
   try {
