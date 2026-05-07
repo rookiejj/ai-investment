@@ -1132,15 +1132,33 @@ function fmtPriceKR(p){return '₩'+Math.round(Number(p)).toLocaleString('ko-KR'
 function fmtPriceFor(p, market){return market==='kr' ? fmtPriceKR(p) : fmtPriceUS(p)}
 function fmtChgPct(c){if(c==null||isNaN(c))return '';return (c>=0?'+':'')+Number(c).toFixed(2)+'%'}
 function pxClass(c){if(c==null||isNaN(c))return 'flat';return c>0?'up':(c<0?'down':'flat')}
-// 시세 시각이 오늘 KST가 아니면 stale (한국 종목 장 시작 전·휴장일 다음날 새벽 등)
+// 시세 stale 판정 — 두 케이스를 합쳐서 처리.
+// (1) 시세 시각이 오늘 KST가 아니면 stale (한국·미국 모두 다음 거래일 전까지)
+// (2) KR 종목인데 KST 정규장 외 시간대(평일 09:00 이전 / 15:30 이후 / 주말)면 stale
+//     - Yahoo가 동시호가·시간외·NXT 시간대 데이터를 부정확하게 반환하는 경우가 많음
+//     - 0% changePct 노이즈 방지 위해 단순 종가 표시로 폴백
+function pxIsKrAfterHours(px){
+  if(!px || px.time==null) return false;
+  if(px.exchange!=='KS' && px.exchange!=='KQ') return false;
+  const now=todayKST();
+  const day=now.getUTCDay(); // 0=일, 6=토
+  if(day===0 || day===6) return true;
+  const h=now.getUTCHours(), m=now.getUTCMinutes();
+  const inRegHours=(h>9 || (h===9 && m>=0)) && (h<15 || (h===15 && m<30));
+  return !inRegHours;
+}
 function pxIsStale(px){
   if(!px||px.time==null) return false;
   const kst=new Date((Number(px.time)+9*3600)*1000);
-  return fmtKSTDate(kst)!==fmtKSTDate(todayKST());
+  if(fmtKSTDate(kst)!==fmtKSTDate(todayKST())) return true;
+  if(pxIsKrAfterHours(px)) return true;
+  return false;
 }
 function pxStaleLabel(px){
   if(!pxIsStale(px)) return '';
   const kst=new Date((Number(px.time)+9*3600)*1000);
+  // KR 정규장 외 + 오늘 시각이면 단순 "장 마감"
+  if(pxIsKrAfterHours(px) && fmtKSTDate(kst)===fmtKSTDate(todayKST())) return '장 마감';
   return `${kst.getUTCMonth()+1}/${kst.getUTCDate()} 종가`;
 }
 
