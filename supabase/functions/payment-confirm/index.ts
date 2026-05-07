@@ -15,14 +15,22 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
 const PORTONE_API = "https://api.portone.io";
-const SOLAPI_API  = "https://api.solapi.com";
 const EXPECTED_AMOUNT_DEFAULT = 100;        // 월 구독 상품 가격 (원)
 const MONTH_DAYS = 30;                       // 1개월 = 30일로 단순 계산
 
-// 결제 완료 알림톡 템플릿
-const ALIMTALK_TEMPLATE_ID = "KA01TP260424050234328BFWH2f2vfrN";
 const SHOP_NAME    = "브리픽";
 const PRODUCT_NAME = "월간 구독";
+
+// 결제 완료 알림톡 본문 — 알리고 콘솔 등록 템플릿(UH_6779)과 동일한 문구.
+// 변수는 #{상점명}·#{상품명}·#{만료일} 자리에 실제 값 치환해 발송.
+const PAYMENT_TEMPLATE_BODY =
+`안녕하세요! #{상점명} 입니다.
+
+#{상품명} 결제가 완료되었습니다.
+
+내일부터 뉴스를 받아보실 수 있으며, 고객님의 서비스 제공 만료일은 #{만료일} 입니다.
+
+자동 결제가 되지 않는 상품으로, 만료일 전에 재결제가 필요합니다.`;
 
 function corsHeaders(origin: string) {
   return {
@@ -41,70 +49,52 @@ function json(body: unknown, init: ResponseInit & { cors: Record<string, string>
   });
 }
 
-// ═══ 솔라피 알림톡 ═════════════════════════════════════
-
-async function solapiAuthHeader(apiKey: string, apiSecret: string): Promise<string> {
-  const date = new Date().toISOString();
-  const salt = crypto.randomUUID().replace(/-/g, "");
-  const msg = date + salt;
-  const keyBytes = new TextEncoder().encode(apiSecret);
-  const dataBytes = new TextEncoder().encode(msg);
-  const cryptoKey = await crypto.subtle.importKey(
-    "raw", keyBytes,
-    { name: "HMAC", hash: "SHA-256" },
-    false, ["sign"],
-  );
-  const sigBuf = await crypto.subtle.sign("HMAC", cryptoKey, dataBytes);
-  const sig = Array.from(new Uint8Array(sigBuf))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-  return `HMAC-SHA256 apiKey=${apiKey}, date=${date}, salt=${salt}, signature=${sig}`;
-}
+// ═══ 알리고 알림톡 (VPS 프록시 경유) ═══════════════════
+// SOLAPI HMAC 인증 코드는 알리고 전환으로 제거.
+// 친구톡과 동일하게 동적 IP의 Edge Function이 알리고 IP 화이트리스트를 통과 못 해
+// VPS 프록시(briefick.duckdns.org/alimtalk/send)를 경유한다.
 
 async function sendPaymentAlimtalk(opts: {
   phone: string;
   expiryDate: string;   // YYYY-MM-DD
-}): Promise<{ ok: boolean; groupId?: string; error?: string }> {
-  const apiKey    = Deno.env.get("SOLAPI_API_KEY");
-  const apiSecret = Deno.env.get("SOLAPI_API_SECRET");
-  const pfId      = Deno.env.get("SOLAPI_PFID");
-  const sender    = Deno.env.get("SOLAPI_SENDER");
-  if (!apiKey || !apiSecret || !pfId || !sender) {
-    return { ok: false, error: "solapi env missing" };
+}): Promise<{ ok: boolean; mid?: string; error?: string }> {
+  const proxyUrl    = Deno.env.get("ALIGO_PROXY_ALIMTALK_URL");
+  const proxySecret = Deno.env.get("ALIGO_PROXY_SECRET");
+  const tplCode     = Deno.env.get("ALIGO_PAYMENT_TPL_CODE");
+  if (!proxyUrl || !proxySecret || !tplCode) {
+    return { ok: false, error: "aligo proxy env missing (ALIGO_PROXY_ALIMTALK_URL/ALIGO_PROXY_SECRET/ALIGO_PAYMENT_TPL_CODE)" };
   }
 
-  const auth = await solapiAuthHeader(apiKey, apiSecret);
-  const body = {
-    messages: [{
-      to: opts.phone,
-      from: sender,
-      type: "ATA",
-      kakaoOptions: {
-        pfId,
-        templateId: ALIMTALK_TEMPLATE_ID,
-        disableSms: true,
-        variables: {
-          "#{상점명}": SHOP_NAME,
-          "#{상품명}": PRODUCT_NAME,
-          "#{만료일}": opts.expiryDate,
-        },
-        // 템플릿에 승인된 '채널 추가' 버튼 — 솔라피는 승인된 버튼이어도 요청에 명시해야 노출됨
-        buttons: [{ buttonType: "AC", buttonName: "채널 추가" }],
-      },
-    }],
+  // 등록된 템플릿 본문에 변수 치환 — 알리고는 송신 메시지가 등록 템플릿과 일치해야 통과
+  const message = PAYMENT_TEMPLATE_BODY
+    .replace("#{상점명}", SHOP_NAME)
+    .replace("#{상품명}", PRODUCT_NAME)
+    .replace("#{만료일}", opts.expiryDate);
+
+  // AC(채널 추가) 버튼 — 템플릿 등록 시 함께 승인된 버튼 구조
+  const button = {
+    button: [{ name: "채널 추가", linkType: "AC", linkTypeName: "채널추가" }],
   };
 
   try {
-    const res = await fetch(`${SOLAPI_API}/messages/v4/send-many`, {
+    const res = await fetch(proxyUrl, {
       method: "POST",
-      headers: { "Authorization": auth, "Content-Type": "application/json" },
-      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+        "X-Proxy-Secret": proxySecret,
+      },
+      body: JSON.stringify({
+        phones: [opts.phone],
+        message,
+        tpl_code: tplCode,
+        button,
+      }),
     });
     const j = await res.json();
-    if (!res.ok) {
-      return { ok: false, error: `solapi ${res.status}: ${JSON.stringify(j).slice(0, 300)}` };
+    if (!res.ok || j.code !== 0) {
+      return { ok: false, error: `aligo proxy ${res.status} code=${j.code ?? "?"}: ${j.message ?? JSON.stringify(j).slice(0, 300)}` };
     }
-    return { ok: true, groupId: j.groupId };
+    return { ok: true, mid: j.info?.mid ? String(j.info.mid) : undefined };
   } catch (e) {
     return { ok: false, error: e instanceof Error ? e.message : String(e) };
   }
@@ -253,10 +243,10 @@ Deno.serve(async (req) => {
       status: alim.ok ? "success" : "fail",
       message_type: "alimtalk",
       template_code: "payment_complete",
-      provider: "solapi",
-      provider_code: alim.groupId ?? null,
+      provider: "aligo",
+      provider_code: alim.mid ?? null,
       provider_message: alim.ok ? "ok" : (alim.error ?? ""),
-      provider_msg_id: alim.groupId ?? null,
+      provider_msg_id: alim.mid ?? null,
     });
     if (!alim.ok) {
       console.error("[payment-confirm] alimtalk failed:", alim.error);

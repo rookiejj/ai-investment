@@ -80,54 +80,53 @@ async function getStoredHash(supabase: any, salt: string, envPassword: string): 
   return hash;
 }
 
-// ───── Solapi 직접 호출 (수동 발송용) ─────
+// ───── 알리고 수동 알림톡 (VPS 프록시 경유) ─────
+// SOLAPI에서 알리고로 전환 — IP 화이트리스트 강제 회피 위해 VPS 프록시 경유.
+// 등록된 템플릿(UH_6780)과 동일한 본문에 변수 치환해 발송.
 
-async function solapiAuthHeader(apiKey: string, apiSecret: string): Promise<string> {
-  const date = new Date().toISOString();
-  const salt = crypto.randomUUID().replace(/-/g, "");
-  const msg = date + salt;
-  const keyBytes = new TextEncoder().encode(apiSecret);
-  const dataBytes = new TextEncoder().encode(msg);
-  const cryptoKey = await crypto.subtle.importKey("raw", keyBytes, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
-  const sigBuf = await crypto.subtle.sign("HMAC", cryptoKey, dataBytes);
-  const sig = Array.from(new Uint8Array(sigBuf)).map((b) => b.toString(16).padStart(2, "0")).join("");
-  return `HMAC-SHA256 apiKey=${apiKey}, date=${date}, salt=${salt}, signature=${sig}`;
-}
+const MANUAL_TEMPLATE_BODY =
+`안녕하세요! #{상점명} 입니다.
 
-// 수동 발송: 알림톡(ATA). 친구톡 미도달 구독자(채널 미친구·광고 차단)도 도달
-// 템플릿: KA01TP260424060446377powJn1n8RGU — 변수 #{상점명}, WL 버튼 '문제 해결하기'(/help)
-const MANUAL_TEMPLATE_ID = "KA01TP260424060446377powJn1n8RGU";
+구독을 신청해 주셔서 감사합니다.
 
-async function solapiSendManualAlimtalk(phones: string[]) {
-  const apiKey    = Deno.env.get("SOLAPI_API_KEY")!;
-  const apiSecret = Deno.env.get("SOLAPI_API_SECRET")!;
-  const pfId      = Deno.env.get("SOLAPI_PFID")!;
-  const sender    = Deno.env.get("SOLAPI_SENDER")!;
-  const siteUrl   = Deno.env.get("SITE_URL") ?? "https://roysbriefing.vercel.app";
-  const shopName  = Deno.env.get("SHOP_NAME") ?? "브리픽";
-  const templateId = Deno.env.get("ALIMTALK_MANUAL_TEMPLATE_ID") ?? MANUAL_TEMPLATE_ID;
+뉴스를 받지 못하고 계시거나 다른 문제가 발생하는 경우, 아래 버튼을 통해 문제를 해결 해주세요.`;
+
+async function aligoSendManualAlimtalk(phones: string[]): Promise<{ ok: boolean; mid?: string; error?: string; raw?: unknown }> {
+  const proxyUrl    = Deno.env.get("ALIGO_PROXY_ALIMTALK_URL");
+  const proxySecret = Deno.env.get("ALIGO_PROXY_SECRET");
+  const tplCode     = Deno.env.get("ALIGO_MANUAL_TPL_CODE");
+  const siteUrl     = Deno.env.get("SITE_URL") ?? "https://roysbriefing.vercel.app";
+  const shopName    = Deno.env.get("SHOP_NAME") ?? "브리픽";
+  if (!proxyUrl || !proxySecret || !tplCode) {
+    return { ok: false, error: "aligo proxy env missing (ALIGO_PROXY_ALIMTALK_URL/ALIGO_PROXY_SECRET/ALIGO_MANUAL_TPL_CODE)" };
+  }
+
   const helpUrl = `${siteUrl.replace(/\/$/, "")}/help`;
+  const message = MANUAL_TEMPLATE_BODY.replace("#{상점명}", shopName);
+  const button = {
+    button: [{
+      name: "문제 해결하기",
+      linkType: "WL",
+      linkTypeName: "웹링크",
+      linkMo: helpUrl,
+      linkPc: helpUrl,
+    }],
+  };
 
-  const auth = await solapiAuthHeader(apiKey, apiSecret);
-  const messages = phones.map((phone) => ({
-    to: phone,
-    from: sender,
-    type: "ATA",
-    kakaoOptions: {
-      pfId,
-      templateId,
-      disableSms: true,
-      variables: { "#{상점명}": shopName },
-      buttons: [{ buttonType: "WL", buttonName: "문제 해결하기", linkMo: helpUrl, linkPc: helpUrl }],
-    },
-  }));
-
-  const res = await fetch("https://api.solapi.com/messages/v4/send-many", {
-    method: "POST",
-    headers: { "Authorization": auth, "Content-Type": "application/json" },
-    body: JSON.stringify({ messages }),
-  });
-  return { ok: res.ok, body: await res.json() };
+  try {
+    const res = await fetch(proxyUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-Proxy-Secret": proxySecret },
+      body: JSON.stringify({ phones, message, tpl_code: tplCode, button }),
+    });
+    const j = await res.json();
+    if (!res.ok || j.code !== 0) {
+      return { ok: false, error: `aligo proxy ${res.status} code=${j.code ?? "?"}: ${j.message ?? JSON.stringify(j).slice(0, 300)}`, raw: j };
+    }
+    return { ok: true, mid: j.info?.mid ? String(j.info.mid) : undefined, raw: j };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : String(e) };
+  }
 }
 
 // ───── Handler ─────
@@ -455,7 +454,7 @@ Deno.serve(async (req) => {
       if (!targets?.length) return json({ ok: false, error: "no target" }, { status: 400, cors });
 
       const phones = targets.map((t) => (t as { phone: string }).phone);
-      const result = await solapiSendManualAlimtalk(phones);
+      const result = await aligoSendManualAlimtalk(phones);
 
       // send_logs 기록 (알림톡 본문은 템플릿 고정이라 메시지 텍스트는 식별용)
       const batchId = crypto.randomUUID();
@@ -469,10 +468,10 @@ Deno.serve(async (req) => {
         status: ok ? "success" : "fail",
         message_type: "alimtalk",
         template_code: "manual",
-        provider: "solapi",
-        provider_code: ok ? ((result.body as { groupId?: string })?.groupId ?? null) : null,
-        provider_message: ok ? "ok" : JSON.stringify(result.body).slice(0, 400),
-        provider_msg_id: ok ? ((result.body as { groupId?: string })?.groupId ?? null) : null,
+        provider: "aligo",
+        provider_code: result.mid ?? null,
+        provider_message: ok ? "ok" : (result.error ?? "unknown"),
+        provider_msg_id: result.mid ?? null,
         batch_id: batchId,
       }));
       await supabase.from("send_logs").insert(rows);
@@ -482,7 +481,7 @@ Deno.serve(async (req) => {
         sent: ok ? phones.length : 0,
         failed: ok ? 0 : phones.length,
         batchId,
-        rawResponse: result.body,
+        rawResponse: result.raw,
       }, { cors });
     }
 
