@@ -1132,11 +1132,17 @@ function fmtPriceKR(p){return '₩'+Math.round(Number(p)).toLocaleString('ko-KR'
 function fmtPriceFor(p, market){return market==='kr' ? fmtPriceKR(p) : fmtPriceUS(p)}
 function fmtChgPct(c){if(c==null||isNaN(c))return '';return (c>=0?'+':'')+Number(c).toFixed(2)+'%'}
 function pxClass(c){if(c==null||isNaN(c))return 'flat';return c>0?'up':(c<0?'down':'flat')}
-// 시세 stale 판정 — 두 케이스를 합쳐서 처리.
-// (1) 시세 시각이 오늘 KST가 아니면 stale (한국·미국 모두 다음 거래일 전까지)
-// (2) KR 종목인데 KST 정규장 외 시간대(평일 09:00 이전 / 15:30 이후 / 주말)면 stale
-//     - Yahoo가 동시호가·시간외·NXT 시간대 데이터를 부정확하게 반환하는 경우가 많음
-//     - 0% changePct 노이즈 방지 위해 단순 종가 표시로 폴백
+// 시세의 거래 상태 판정 — 시장(KR/US)·시각·extended 플래그 종합 분석.
+// 반환: { badge: '...', hideChange: bool }
+//   badge — 'M/D 종가' | '장 마감' | '프리마켓' | '애프터' | '' (정규장 라이브)
+//   hideChange — true면 changePct 숨김 (Yahoo 데이터 noisy하거나 의미 없는 0%인 경우)
+//
+// 케이스:
+//   1) 시각이 오늘 KST가 아닌 거래일 → "M/D 종가" + change 숨김
+//   2) KR + 정규장 외 (평일 09:00-15:30 KST 외, 주말) → "장 마감" + change 숨김 (동시호가·시간외 노이즈 차단)
+//   3) US extended (프리/애프터마켓 시간대 데이터) → ET 시간 분석해 "프리마켓" or "애프터", change는 표시
+//   4) US 정규장 종료 후 idle (KST 09-17 winter / 10-18 DST 부근) → "장 마감", change는 표시 (오늘 종가 vs 어제 종가)
+//   5) US 정규장 라이브 → '' (배지 없음), change 표시
 function pxIsKrAfterHours(px){
   if(!px || px.time==null) return false;
   if(px.exchange!=='KS' && px.exchange!=='KQ') return false;
@@ -1147,20 +1153,50 @@ function pxIsKrAfterHours(px){
   const inRegHours=(h>9 || (h===9 && m>=0)) && (h<15 || (h===15 && m<30));
   return !inRegHours;
 }
-function pxIsStale(px){
-  if(!px||px.time==null) return false;
-  const kst=new Date((Number(px.time)+9*3600)*1000);
-  if(fmtKSTDate(kst)!==fmtKSTDate(todayKST())) return true;
-  if(pxIsKrAfterHours(px)) return true;
-  return false;
+function _etHourMin(ts){
+  // ts(초) → ET 시각의 hour·min
+  const s=new Date(ts*1000).toLocaleString('en-US',{timeZone:'America/New_York',hour12:false,hour:'2-digit',minute:'2-digit'});
+  const m=s.match(/(\d{1,2}):(\d{2})/);
+  return m?{h:Number(m[1])%24, m:Number(m[2])}:null;
 }
-function pxStaleLabel(px){
-  if(!pxIsStale(px)) return '';
-  const kst=new Date((Number(px.time)+9*3600)*1000);
-  // KR 정규장 외 + 오늘 시각이면 단순 "장 마감"
-  if(pxIsKrAfterHours(px) && fmtKSTDate(kst)===fmtKSTDate(todayKST())) return '장 마감';
-  return `${kst.getUTCMonth()+1}/${kst.getUTCDate()} 종가`;
+function pxStatus(px){
+  if(!px||px.time==null) return {badge:'', hideChange:false};
+  const ts=Number(px.time);
+  const kst=new Date((ts+9*3600)*1000);
+  const today=todayKST();
+  // 1) 시각이 오늘 KST 아님 → 과거 거래일 종가
+  if(fmtKSTDate(kst)!==fmtKSTDate(today)){
+    return {badge:`${kst.getUTCMonth()+1}/${kst.getUTCDate()} 종가`, hideChange:true};
+  }
+  // 2) KR 정규장 외
+  if(px.exchange==='KS'||px.exchange==='KQ'){
+    if(pxIsKrAfterHours(px)) return {badge:'장 마감', hideChange:true};
+    return {badge:'', hideChange:false};
+  }
+  // 3) US extended (프리/애프터)
+  if(px.extended){
+    const et=_etHourMin(ts);
+    if(et){
+      // ET 04:00-09:30 = 프리마켓, 16:00 이후 또는 04:00 이전 = 애프터
+      if(et.h>=4 && (et.h<9 || (et.h===9 && et.m<30))) return {badge:'프리마켓', hideChange:false};
+      return {badge:'애프터', hideChange:false};
+    }
+    return {badge:'장외', hideChange:false};
+  }
+  // 4) US 정규장 라이브 vs idle 판단 — 현재 ET 시간·요일 기준 (주말 자동 idle)
+  const nowEt=_etHourMin(Date.now()/1000);
+  const etDay=new Date().toLocaleString('en-US',{timeZone:'America/New_York',weekday:'short'});
+  const isWeekday=etDay!=='Sat' && etDay!=='Sun';
+  if(nowEt && isWeekday){
+    const nowMin=nowEt.h*60+nowEt.m;
+    // 09:30-16:00 ET 정규장 = 570-960
+    if(nowMin>=570 && nowMin<960) return {badge:'', hideChange:false};
+  }
+  return {badge:'장 마감', hideChange:false};
 }
+// 레거시 호환 wrapper (다른 호출 지점이 있을 수 있음)
+function pxIsStale(px){return pxStatus(px).hideChange;}
+function pxStaleLabel(px){return pxStatus(px).badge;}
 
 // 영문 티커 추출 stop list
 const TICKER_STOP=new Set(['AI','EPS','CEO','CFO','CPI','GDP','OPEC','FOMC','ETF','IPO','API','SEC','LLM','SUV','EV','EU','US','UK','KST','AH','CC','QoQ','YoY','YTD','GAAP','NM','NA','MAU','DAU','SaaS','GPU','TPU','TSV','SMR','DRAM','HBM','LNG','WTI','M&A','PMI','UTC','D','PT','ET','CT','PR','GAAP','IT','TV','UI','UX','PC','OS','RPO','ARR','LTM','FY','GM','OPM','PER','PBR','ESG','OECD','NATO','APAC','EMEA','LATAM','PG','VC','CDP','PE','VR','AR','BCG','IPO','ROE','ROI','PG','PT','ST','RD']);
@@ -1601,10 +1637,11 @@ function renderHealth(){
               ${(()=>{
                 const px=STATE.prices?.[s.tk];
                 const hasPx=px && px.price!=null;
+                const status=hasPx?pxStatus(px):null;
                 const pxStr=hasPx?fmtPriceFor(px.price, market):'';
-                const stale=hasPx?pxIsStale(px):false;
-                const chgPct=hasPx&&!stale?px.changePct:null;
-                const staleLbl=stale?pxStaleLabel(px):'';
+                const stale=status?status.hideChange:false;
+                const chgPct=hasPx&&status&&!status.hideChange?px.changePct:null;
+                const staleLbl=status?status.badge:'';
                 return `
                   <div class="exp-card" data-tk="${escapeHtml(s.tk)}" data-market="${market}">
                     <div class="exp-tk-row">
@@ -2146,9 +2183,10 @@ function openModal(tk,market,_peerSwap){
         ${(()=>{
           const px=STATE.prices?.[tk];
           if(!px || px.price==null) return '';
-          const stale=pxIsStale(px);
-          const chgPct=stale?null:px.changePct;
-          const staleLbl=stale?pxStaleLabel(px):'';
+          const status=pxStatus(px);
+          const stale=status.hideChange;
+          const chgPct=status.hideChange?null:px.changePct;
+          const staleLbl=status.badge;
           return `<div class="modal-px ${stale?'flat':pxClass(chgPct)}">
             <span class="modal-px-val">${escapeHtml(fmtPriceFor(px.price, market))}</span>
             ${chgPct!=null?`<span class="modal-px-chg">${escapeHtml(fmtChgPct(chgPct))}</span>`:''}
