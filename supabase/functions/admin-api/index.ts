@@ -84,6 +84,8 @@ async function getStoredHash(supabase: any, salt: string, envPassword: string): 
 // SOLAPI에서 알리고로 전환 — IP 화이트리스트 강제 회피 위해 VPS 프록시 경유.
 // 등록된 템플릿(UH_6780)과 동일한 본문에 변수 치환해 발송.
 
+// 알리고 콘솔에 등록된 템플릿(UH_6780) 본문과 정확히 일치해야 통과.
+// 변수 치환만 하고 공백·줄바꿈 임의 추가/삭제 금지.
 const MANUAL_TEMPLATE_BODY =
 `안녕하세요! #{상점명} 입니다.
 
@@ -105,7 +107,7 @@ async function aligoSendManualAlimtalk(phones: string[]): Promise<{ ok: boolean;
   const message = MANUAL_TEMPLATE_BODY.replace("#{상점명}", shopName);
   const button = {
     button: [{
-      name: "문제 해결하기",
+      name: "문제해결 도움받기",
       linkType: "WL",
       linkTypeName: "웹링크",
       linkMo: helpUrl,
