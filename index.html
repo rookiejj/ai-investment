@@ -1127,6 +1127,41 @@ const NAME_KO={
 };
 function displayName(nm){return (nm&&NAME_KO[nm])||nm||''}
 
+// 본문(summary·detail) 안의 영문 회사명을 한글로 치환 — 렌더 시점에만 적용,
+// 데이터 파일·update.js는 원본 그대로 유지. 친구톡·인스타 발송은 별도 경로라
+// 거기는 자동 갱신 에이전트가 처음부터 한글로 적도록 CLAUDE.md 메모로 강제.
+// 길이 내림차순으로 적용해 'Goldman Sachs' → 'Goldman' 부분 매칭 사고 방지.
+const COMPANY_KO = {
+  'Anthropic':'엔트로픽','Alphabet':'알파벳','CoreWeave':'코어위브','Anduril':'안두릴',
+  'Microsoft':'마이크로소프트','Amazon':'아마존','Meta':'메타','Apple':'애플','Tesla':'테슬라',
+  'Mistral':'미스트랄','DeepMind':'딥마인드','OpenAI':'OpenAI',
+  'Reflection':'리플렉션','SpaceX':'스페이스X','Palantir':'팔란티어','Reddit':'레딧',
+  'Goldman Sachs':'골드만삭스','Morgan Stanley':'모건스탠리','JPMorgan':'JP모건',
+  'Bank of America':'뱅크오브아메리카','Wells Fargo':'웰스파고','Citi':'씨티',
+  'Bain':'베인','Brookfield':'브룩필드','Blackstone':'블랙스톤','BlackRock':'블랙록',
+  'General Atlantic':'제너럴 애틀랜틱','Hellman&Friedman':'헬만&프리드먼',
+  'Dragoneer':'드래고니어','SoftBank':'소프트뱅크','TPG':'TPG','Advent':'어드벤트',
+  'Counterpoint':'카운터포인트','Reuters':'로이터','Bloomberg':'블룸버그','Axios':'액시오스',
+  'TechCrunch':'테크크런치','WSJ':'WSJ',
+  'Stargate':'스타게이트','PwC':'PwC','Deloitte':'딜로이트','KPMG':'KPMG','EY':'EY',
+  'Tata':'타타','Reliance':'릴라이언스','Infosys':'인포시스',
+  'Pentagon':'펜타곤','Federal Reserve':'연준','Treasury':'재무부',
+  'Boeing':'보잉','Airbus':'에어버스','Lockheed Martin':'록히드 마틴','Northrop':'노스럽',
+  'Tencent':'텐센트','Alibaba':'알리바바','Baidu':'바이두','ByteDance':'바이트댄스',
+  'Mercor':'머커','Cursor':'커서','Vercel':'버셀','GitHub':'깃허브',
+};
+const COMPANY_KO_PAIRS = Object.entries(COMPANY_KO).sort((a,b)=>b[0].length-a[0].length);
+function localizeText(text){
+  if(!text) return text;
+  let r=String(text);
+  for(const [en,ko] of COMPANY_KO_PAIRS){
+    const esc=en.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+    // 영문 알파벳·숫자에 인접하면 단어 경계로 둘러싸야 식별, 한글 인접은 그대로 매칭
+    r=r.replace(new RegExp('(?<![A-Za-z0-9])'+esc+'(?![A-Za-z0-9])','g'),ko);
+  }
+  return r;
+}
+
 function fmtPriceUS(p){return '$'+Number(p).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
 function fmtPriceKR(p){return '₩'+Math.round(Number(p)).toLocaleString('ko-KR')}
 function fmtPriceFor(p, market){return market==='kr' ? fmtPriceKR(p) : fmtPriceUS(p)}
@@ -1246,7 +1281,7 @@ function buildNarrative(){
   for(const t of tabs){
     const list=STATE.upd[t.key];
     if(!list||!list[0])continue;
-    const lines=(list[0].summary||'').split('\n').map(s=>s.trim()).filter(Boolean);
+    const lines=(list[0].summary||'').split('\n').map(s=>localizeText(s.trim())).filter(Boolean);
     if(!lines.length)continue;
     totalLines+=lines.length;
 
@@ -1820,7 +1855,8 @@ function extractHeadline(detail, sector){
 
 function buildChangeRows(changes, idPrefix){
   return (changes||[]).map((ch,idx)=>{
-    const head=extractHeadline(ch.detail||'', ch.sector||'');
+    const head=localizeText(extractHeadline(ch.detail||'', ch.sector||''));
+    const detail=localizeText(ch.detail||'');
     return `
       <div class="dom-change" data-id="${idPrefix}-${idx}">
         <div class="dom-change-row">
@@ -1831,7 +1867,7 @@ function buildChangeRows(changes, idPrefix){
           <span class="dom-change-chev">▸</span>
         </div>
         <div class="dom-change-detail">
-          <div class="dom-change-detail-body">${escapeHtml(ch.detail||'')}</div>
+          <div class="dom-change-detail-body">${escapeHtml(detail)}</div>
         </div>
       </div>
     `;
