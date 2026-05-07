@@ -565,6 +565,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
         <div class="section-title">설문 <span class="count" id="surveyCount"></span></div>
         <div class="section-subtitle">공지 친구톡으로 URL 보내 응답을 모읍니다. 익명·IP 해시 중복 차단. 응답이 1건이라도 있으면 옵션 변경은 잠금.</div>
         <div class="filter-bar" style="margin-top:8px">
+          <button class="btn primary" id="surveyNewBtn">+ 새 설문</button>
           <button class="btn ghost" id="surveyReloadBtn">새로고침</button>
         </div>
         <div id="surveyListWrap" style="margin-top:12px"></div>
@@ -1053,9 +1054,15 @@ $('sysCheckUpdateBtn').addEventListener('click', sysCheckUpdate);
 $('sysRetriggerUpdateBtn').addEventListener('click', sysRetriggerUpdate);
 $('sysCheckIgBtn').addEventListener('click', sysCheckIg);
 $('sysRetriggerIgBtn').addEventListener('click', sysRetriggerIg);
+// + 새 설문: 어떤 상태에서든 폼을 비워 새 설문 작성 모드로 리셋
+$('surveyNewBtn').addEventListener('click', ()=>{
+  surveyOpenEdit(null,false);
+  // 페이지 하단의 폼으로 스크롤 — 클릭 즉시 빈 폼이 보이도록
+  $('surveyEditSection').scrollIntoView({behavior:'smooth', block:'start'});
+});
 $('surveyReloadBtn').addEventListener('click', surveyLoadList);
 $('surveyEditSaveBtn').addEventListener('click', surveyEditSave);
-// 취소 = 폼 비우고 새 설문 모드로 리셋 (폼은 항상 보임)
+// 취소 = 폼 비우고 새 설문 모드로 리셋
 $('surveyEditCancelBtn').addEventListener('click', ()=>surveyOpenEdit(null,false));
 function reloadCurrentView(){
   loadedViews.delete(currentView);
