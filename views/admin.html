@@ -841,7 +841,7 @@ async function surveyLoadList(){
   });
 }
 async function surveyOpenDetail(id){
-  $('surveyEditSection').classList.add('hidden');
+  // 상세 패널만 표시. 편집 폼은 항상 노출 상태 유지(아래 surveyEditSection 손대지 않음).
   $('surveyDetailSection').classList.remove('hidden');
   $('surveyDetailTitle').textContent='설문 상세 — '+id;
   $('surveyDetailBody').innerHTML='<div class="loading" style="padding:14px;color:var(--mut)">결과 집계 중…</div>';
@@ -916,6 +916,7 @@ async function surveyOpenDetail(id){
 function surveyOpenEdit(survey, optionsLocked){
   // 편집 폼 자체는 항상 보임. survey 인자가 있으면 그 값으로 prefill (편집 모드),
   // null이면 폼을 비워 새 설문 모드로 리셋.
+  $('surveyEditSection').classList.remove('hidden');  // 방어적으로 항상 노출 보장
   $('surveyEditStatus').style.display='none';
   if(survey){
     $('surveyEditTitle').textContent='설문 편집 — '+survey.id;
