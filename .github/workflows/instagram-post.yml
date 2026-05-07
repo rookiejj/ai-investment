@@ -222,6 +222,6 @@ jobs:
           IG_CAROUSEL_BUCKET: ${{ secrets.IG_CAROUSEL_BUCKET }}
           IG_DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '' }}
           IG_MODE: ${{ steps.mode.outputs.mode }}
-          # 캐러셀 슬라이드는 1950s today.png + 기존 CTA 두 장. Reels 모드에선 무시됨.
+          # 캐러셀 슬라이드는 1950s today-news.png + 기존 CTA 두 장. Reels 모드에선 무시됨.
           IG_SLIDES: cartoon-1950s.png,07.png
         run: node scripts/instagram/publish.js
