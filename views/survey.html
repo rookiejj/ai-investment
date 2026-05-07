@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=no">
+<title>브리픽 설문</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<style>
+:root{
+  --bg:#fafafa; --panel:#fff; --fg:#0d0d0d; --fg2:#3a3a3a; --mut:#7a7a7a; --mut2:#9a9a9a;
+  --border:#e8e8e8; --border-md:#d4d4d4; --acc:#0d0d0d; --acc-deep:#000;
+  --err:#c83232; --ok:#2e8b57;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--fg2);
+  font:15px/1.55 'Pretendard Variable',Pretendard,-apple-system,system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;padding:20px;
+}
+.wrap{
+  width:100%;max-width:480px;background:var(--panel);
+  border-radius:20px;padding:32px 28px;
+  box-shadow:0 12px 40px rgba(0,0,0,0.06);
+}
+.brand{font:600 13px/1 'Inter',sans-serif;color:var(--mut);letter-spacing:0.4px;margin-bottom:6px;text-transform:uppercase}
+.title{font:700 22px/1.3 'Pretendard Variable',Pretendard,sans-serif;color:var(--fg);margin:0 0 18px;letter-spacing:-0.4px}
+.question{font:500 16px/1.5 'Pretendard Variable',Pretendard,sans-serif;color:var(--fg2);margin:0 0 18px;white-space:pre-line}
+.options{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.option{
+  display:flex;align-items:center;gap:12px;padding:14px 16px;
+  border:1px solid var(--border);border-radius:12px;cursor:pointer;
+  transition:all 0.15s ease;background:#fff;
+}
+.option:hover{border-color:var(--border-md);background:#fafafa}
+.option.selected{border-color:var(--acc);background:#f6f6f6}
+.option input[type="radio"]{margin:0;accent-color:var(--acc-deep);flex-shrink:0;width:18px;height:18px}
+.option-text{font-size:15px;color:var(--fg);flex:1}
+.option-num{font:600 13px/1 'Geist Mono',monospace;color:var(--mut);min-width:18px;text-align:center}
+.submit{
+  width:100%;padding:14px;border:none;border-radius:12px;
+  background:var(--acc);color:#fff;font:600 15px/1 'Pretendard Variable',sans-serif;
+  cursor:pointer;transition:background 0.15s;
+}
+.submit:hover:not(:disabled){background:var(--acc-deep)}
+.submit:disabled{background:var(--mut2);cursor:not-allowed}
+.status{margin-top:16px;padding:12px 14px;border-radius:10px;font-size:14px;display:none}
+.status.show{display:block}
+.status.error{background:#fdf0f0;color:var(--err);border:1px solid #f5d0d0}
+.status.success{background:#f0f8f3;color:var(--ok);border:1px solid #cfe6d8}
+.loading{text-align:center;color:var(--mut);font-size:14px;padding:20px 0}
+.done{text-align:center;padding:24px 0}
+.done-mark{
+  width:56px;height:56px;border-radius:50%;background:#f0f8f3;color:var(--ok);
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:28px;margin-bottom:12px;font-weight:600;
+}
+.done-msg{font:600 18px/1.4 'Pretendard Variable',sans-serif;color:var(--fg);margin-bottom:6px}
+.done-sub{font-size:14px;color:var(--mut)}
+.footer{text-align:center;margin-top:18px;font-size:12px;color:var(--mut2)}
+.footer a{color:var(--mut);text-decoration:none}
+.footer a:hover{color:var(--fg2);text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">Briefick · 브리픽 설문</div>
+  <div id="content">
+    <div class="loading">설문을 불러오는 중…</div>
+  </div>
+  <div class="footer">
+    <a href="/">briefick.com</a>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = "https://ytvcgoldauysvnqckzze.supabase.co";
+const FN = `${SUPABASE_URL}/functions/v1/survey-api`;
+
+function getId() {
+  // /survey/202605-01 또는 /survey?id=202605-01 둘 다 지원
+  const path = location.pathname.replace(/^\/+|\/+$/g, '').split('/');
+  if (path[0] === 'survey' && path[1]) return decodeURIComponent(path[1]);
+  const sp = new URLSearchParams(location.search);
+  return sp.get('id') || '';
+}
+
+function $(id) { return document.getElementById(id); }
+function escapeHtml(s) { return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
+
+async function api(action, body) {
+  const r = await fetch(FN, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action, ...body }),
+  });
+  return { status: r.status, json: await r.json().catch(() => ({})) };
+}
+
+let SURVEY = null;
+let SELECTED = null;
+
+async function load() {
+  const id = getId();
+  if (!id) {
+    $('content').innerHTML = `<div class="title">설문을 찾을 수 없음</div><div class="question">잘못된 주소입니다.</div>`;
+    return;
+  }
+  const r = await api('get', { id });
+  if (r.status === 404) {
+    $('content').innerHTML = `<div class="title">설문을 찾을 수 없음</div><div class="question">존재하지 않거나 삭제된 설문입니다.</div>`;
+    return;
+  }
+  if (r.status === 410) {
+    $('content').innerHTML = `<div class="title">설문 종료</div><div class="question">이 설문은 더 이상 응답을 받지 않습니다.</div>`;
+    return;
+  }
+  if (!r.json.ok) {
+    $('content').innerHTML = `<div class="title">오류</div><div class="question">${escapeHtml(r.json.error || '알 수 없는 오류')}</div>`;
+    return;
+  }
+  SURVEY = r.json.survey;
+  render();
+}
+
+function render() {
+  const opts = SURVEY.options || [];
+  const optsHtml = opts.map((opt, i) => `
+    <label class="option" data-idx="${i}">
+      <input type="radio" name="opt" value="${i}">
+      <span class="option-num">${i + 1}</span>
+      <span class="option-text">${escapeHtml(opt)}</span>
+    </label>
+  `).join('');
+  $('content').innerHTML = `
+    <h1 class="title">${escapeHtml(SURVEY.title)}</h1>
+    <p class="question">${escapeHtml(SURVEY.question)}</p>
+    <div class="options" id="options">${optsHtml}</div>
+    <button class="submit" id="submitBtn" disabled>제출하기</button>
+    <div class="status" id="status"></div>
+  `;
+  $('options').addEventListener('click', (e) => {
+    const lbl = e.target.closest('.option');
+    if (!lbl) return;
+    document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    lbl.classList.add('selected');
+    SELECTED = Number(lbl.dataset.idx);
+    $('submitBtn').disabled = false;
+  });
+  $('submitBtn').addEventListener('click', submit);
+}
+
+async function submit() {
+  if (SELECTED == null) return;
+  $('submitBtn').disabled = true;
+  $('submitBtn').textContent = '제출 중…';
+  const r = await api('submit', { id: SURVEY.id, selected_index: SELECTED });
+  if (r.json.ok) {
+    showDone();
+  } else if (r.status === 409) {
+    showError('이미 응답하신 설문입니다. 응답은 한 번만 가능합니다.');
+  } else if (r.status === 410) {
+    showError('이 설문은 종료되었습니다.');
+  } else {
+    showError(r.json.error || '제출에 실패했습니다. 잠시 후 다시 시도해 주세요.');
+    $('submitBtn').disabled = false;
+    $('submitBtn').textContent = '제출하기';
+  }
+}
+
+function showDone() {
+  $('content').innerHTML = `
+    <div class="done">
+      <div class="done-mark">✓</div>
+      <div class="done-msg">응답이 완료되었습니다</div>
+      <div class="done-sub">소중한 의견 감사합니다.</div>
+    </div>
+  `;
+}
+
+function showError(msg) {
+  const s = $('status');
+  s.className = 'status show error';
+  s.textContent = msg;
+}
+
+load();
+</script>
+</body>
+</html>

@@ -260,6 +260,22 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
   .pager{gap:4px;flex-wrap:wrap}
   .pager button{padding:5px 10px;font-size:12px}
 }
+
+/* 설문 결과 막대 그래프 */
+.surv-bars{display:flex;flex-direction:column;gap:8px}
+.surv-row{display:flex;align-items:center;gap:10px}
+.surv-row-label{flex:1;min-width:0;font-size:13px;color:var(--fg);display:flex;gap:8px;align-items:baseline}
+.surv-row-label .surv-num{font:600 11px/1 'Geist Mono',monospace;color:var(--mut2);min-width:14px;flex-shrink:0}
+.surv-row-bar{flex:2;min-width:80px;height:18px;background:#f3f4f6;border-radius:6px;overflow:hidden;position:relative}
+.surv-row-bar-fill{height:100%;background:linear-gradient(90deg,#0d0d0d,#404040);border-radius:6px;transition:width 0.4s ease}
+.surv-row-stat{font:500 12px/1 'Geist Mono',monospace;color:var(--mut);min-width:80px;text-align:right;flex-shrink:0}
+
+@media(max-width:600px){
+  .surv-row{flex-wrap:wrap}
+  .surv-row-label{flex:1 1 100%}
+  .surv-row-bar{flex:1 1 60%}
+  .surv-row-stat{flex:1 1 30%;text-align:right}
+}
 </style>
 </head>
 <body>
@@ -294,6 +310,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
       <button class="nav-item" data-view="payments"><span class="icon">💳</span>결제</button>
       <button class="nav-item" data-view="sends"><span class="icon">📬</span>발송</button>
       <button class="nav-item" data-view="notice"><span class="icon">📢</span>공지</button>
+      <button class="nav-item" data-view="surveys"><span class="icon">📊</span>설문</button>
       <button class="nav-item" data-view="system"><span class="icon">🛠️</span>시스템</button>
     </nav>
     <div class="sidebar-footer">
@@ -542,6 +559,50 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
       </div>
     </section>
 
+    <!-- ═══ 설문 ═══ -->
+    <section class="view hidden" data-view="surveys">
+      <div class="section">
+        <div class="section-title">설문 <span class="count" id="surveyCount"></span></div>
+        <div class="section-subtitle">공지 친구톡으로 URL 보내 응답을 모읍니다. 익명·IP 해시 중복 차단. 응답이 1건이라도 있으면 옵션 변경은 잠금.</div>
+        <div class="filter-bar" style="margin-top:8px">
+          <button class="btn primary" id="surveyNewBtn">+ 새 설문</button>
+          <button class="btn ghost" id="surveyReloadBtn">새로고침</button>
+        </div>
+        <div id="surveyListWrap" style="margin-top:12px"></div>
+      </div>
+
+      <!-- 설문 결과·관리 패널 (선택 시 표시) -->
+      <div class="section hidden" id="surveyDetailSection">
+        <div class="section-title" id="surveyDetailTitle">설문 상세</div>
+        <div id="surveyDetailBody"></div>
+      </div>
+
+      <!-- 신규/편집 폼 -->
+      <div class="section hidden" id="surveyEditSection">
+        <div class="section-title" id="surveyEditTitle">새 설문</div>
+        <div style="display:flex;flex-direction:column;gap:14px;margin-top:8px">
+          <div>
+            <label style="display:block;font:500 13px/1.4 'Inter',sans-serif;color:var(--fg2);margin-bottom:6px">제목</label>
+            <input type="text" id="surveyEditTitleInput" placeholder="예: 브리픽 구독 가격 설문" maxlength="100" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;font:400 14px/1.4 'Pretendard Variable',sans-serif;color:var(--fg);background:#fff">
+          </div>
+          <div>
+            <label style="display:block;font:500 13px/1.4 'Inter',sans-serif;color:var(--fg2);margin-bottom:6px">질문 본문</label>
+            <textarea id="surveyEditQuestion" placeholder="응답자에게 보여줄 질문" rows="3" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;font:400 14px/1.55 'Pretendard Variable',sans-serif;color:var(--fg);background:#fff;resize:vertical"></textarea>
+          </div>
+          <div>
+            <label style="display:block;font:500 13px/1.4 'Inter',sans-serif;color:var(--fg2);margin-bottom:6px">선택지 (각 줄에 하나씩, 최소 2개)</label>
+            <textarea id="surveyEditOptions" placeholder="무료여야 함&#10;월 1,000원 이하&#10;월 1,000~3,000원" rows="7" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;font:400 14px/1.55 'Pretendard Variable',sans-serif;color:var(--fg);background:#fff;resize:vertical"></textarea>
+            <div id="surveyEditOptionsHint" style="font-size:11px;color:var(--mut);margin-top:4px"></div>
+          </div>
+          <div class="filter-bar">
+            <button class="btn primary" id="surveyEditSaveBtn">저장</button>
+            <button class="btn ghost" id="surveyEditCancelBtn">취소</button>
+          </div>
+        </div>
+        <div id="surveyEditStatus" style="display:none;padding:10px 12px;border-radius:8px;font-size:13px;margin-top:10px"></div>
+      </div>
+    </section>
+
     <!-- ═══ 시스템 (운영 점검·재실행) ═══ -->
     <section class="view hidden" data-view="system">
       <div class="section">
@@ -588,10 +649,12 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 <script>
 (function(){
 const API = 'https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/admin-api';
+const SURVEY_API = 'https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/survey-api';
+const SITE_BASE = location.origin;
 const KEY_TOKEN = 'briefick_admin_token';
 const KEY_EXPIRES = 'briefick_admin_expires';
-const VIEWS = ['overview','subscribers','payments','sends','notice','system'];
-const TITLES = { overview:'대시보드', subscribers:'구독자', payments:'결제', sends:'발송', notice:'공지', system:'시스템' };
+const VIEWS = ['overview','subscribers','payments','sends','notice','surveys','system'];
+const TITLES = { overview:'대시보드', subscribers:'구독자', payments:'결제', sends:'발송', notice:'공지', surveys:'설문', system:'시스템' };
 
 const $ = (id)=>document.getElementById(id);
 const loginView = $('loginView');
@@ -630,6 +693,7 @@ async function api(action, payload={}){
 
 // ─── 공용 유틸 ───
 // 시각 표기는 모두 브라우저 시스템 시간 기준
+function escapeHtml(s){return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);}
 function fmtDateTime(iso){
   if(!iso) return '-';
   const d = new Date(iso);
@@ -707,6 +771,7 @@ function loadView(name){
   else if(name === 'payments'){ loadPaysStats(); loadExpiring(); loadPayments(); }
   else if(name === 'sends'){ loadSendsStats(); loadLogs(); loadManualTargets(); dsLoadTargets(); }
   else if(name === 'notice'){ noticeLoadTargets(); }
+  else if(name === 'surveys'){ surveyLoadList(); }
   else if(name === 'system'){ /* 버튼 클릭 시 lazy fetch — 즉시 fetch는 안 함 */ }
 }
 
@@ -727,6 +792,183 @@ function sysShowLoading(elId, msg){
   el.style.border='1px solid #eee';
   el.textContent=msg||'처리 중…';
 }
+// ─── 설문: list / create / update / delete / results ───
+async function surveyApi(action, body){
+  const r=await fetch(SURVEY_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,token:getToken(),...body})});
+  return await r.json().catch(()=>({ok:false,error:'parse error'}));
+}
+function surveyShowStatus(elId, ok, msg){
+  const el=$(elId); if(!el) return;
+  el.style.display='block';
+  el.style.background = ok ? '#e8fbf1' : '#fbeaea';
+  el.style.color = ok ? '#0fa76e' : '#d45656';
+  el.style.border = ok ? '1px solid #d4fae8' : '1px solid #f7c6c6';
+  el.textContent = msg;
+}
+async function surveyLoadList(){
+  $('surveyListWrap').innerHTML='<div class="loading" style="padding:20px;color:var(--mut);font-size:13px">불러오는 중…</div>';
+  $('surveyDetailSection').classList.add('hidden');
+  $('surveyEditSection').classList.add('hidden');
+  const r=await surveyApi('list',{});
+  if(!r.ok){
+    $('surveyListWrap').innerHTML=`<div class="loading" style="color:var(--err)">오류: ${r.error||'unknown'}</div>`;
+    return;
+  }
+  const rows=r.rows||[];
+  $('surveyCount').textContent=`총 ${rows.length}개`;
+  if(!rows.length){
+    $('surveyListWrap').innerHTML='<div class="loading" style="padding:20px;color:var(--mut);font-size:13px">아직 설문이 없습니다. [+ 새 설문]으로 만들어 보세요.</div>';
+    return;
+  }
+  const html=`
+    <div class="tbl-scroll">
+      <table class="tbl">
+        <thead><tr><th>ID</th><th>제목</th><th>응답</th><th>상태</th><th>생성</th><th>관리</th></tr></thead>
+        <tbody>
+          ${rows.map(s=>`
+            <tr>
+              <td class="c-phone">${s.id}</td>
+              <td>${escapeHtml(s.title)}</td>
+              <td>${s.response_count}</td>
+              <td><span class="badge ${s.active?'success':'fail'}">${s.active?'활성':'비활성'}</span></td>
+              <td>${s.created_at?fmtDateTime(s.created_at):''}</td>
+              <td><button class="btn ghost" data-act="open" data-id="${s.id}">열기</button></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>`;
+  $('surveyListWrap').innerHTML=html;
+  $('surveyListWrap').querySelectorAll('button[data-act="open"]').forEach(b=>{
+    b.addEventListener('click', ()=>surveyOpenDetail(b.dataset.id));
+  });
+}
+async function surveyOpenDetail(id){
+  $('surveyEditSection').classList.add('hidden');
+  $('surveyDetailSection').classList.remove('hidden');
+  $('surveyDetailTitle').textContent='설문 상세 — '+id;
+  $('surveyDetailBody').innerHTML='<div class="loading" style="padding:14px;color:var(--mut)">결과 집계 중…</div>';
+  const r=await surveyApi('results',{id});
+  if(!r.ok){ $('surveyDetailBody').innerHTML=`<div class="loading" style="color:var(--err)">${r.error}</div>`; return; }
+  const s=r.survey, counts=r.counts||[], total=r.total||0;
+  const opts=Array.isArray(s.options)?s.options:[];
+  const url=`${SITE_BASE}/survey/${s.id}`;
+  const max=Math.max(1,...counts);
+  const bars=opts.map((opt,i)=>{
+    const c=counts[i]||0;
+    const pct=total>0?(c/total*100):0;
+    const wRatio=Math.max(2, c/max*100);
+    return `
+      <div class="surv-row">
+        <div class="surv-row-label"><span class="surv-num">${i+1}</span> ${escapeHtml(opt)}</div>
+        <div class="surv-row-bar"><div class="surv-row-bar-fill" style="width:${wRatio}%"></div></div>
+        <div class="surv-row-stat">${c} (${pct.toFixed(1)}%)</div>
+      </div>`;
+  }).join('');
+  $('surveyDetailBody').innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:12px;flex-wrap:wrap">
+      <div style="flex:1;min-width:240px">
+        <div style="font:600 16px/1.4 'Pretendard Variable',sans-serif;color:var(--fg);margin-bottom:6px">${escapeHtml(s.title)}</div>
+        <div style="font-size:13px;color:var(--mut);white-space:pre-line">${escapeHtml(s.question)}</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font:600 22px/1 'Geist Mono',monospace;color:var(--fg)">${total}</div>
+        <div style="font-size:11px;color:var(--mut);margin-top:2px">총 응답</div>
+      </div>
+    </div>
+    <div class="surv-bars" style="margin:14px 0">${bars||'<div style="color:var(--mut);font-size:13px">옵션 없음</div>'}</div>
+    <div class="filter-bar" style="margin-top:14px;flex-wrap:wrap">
+      <input type="text" readonly value="${escapeHtml(url)}" id="surveyDetailUrl" style="flex:1;min-width:240px;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font:400 13px/1.4 'Geist Mono',monospace;background:#fafafa;color:var(--fg2)">
+      <button class="btn" data-act="copy">URL 복사</button>
+      <button class="btn ghost" data-act="toggle">${s.active?'비활성화':'활성화'}</button>
+      <button class="btn ghost" data-act="edit">제목·질문 편집</button>
+      <button class="btn ghost" data-act="delete" style="color:var(--err)">삭제</button>
+    </div>`;
+  // 옵션은 응답 0이면 편집 가능, 1+면 잠금. 표기로만 안내
+  if(total===0){
+    const note=document.createElement('div');
+    note.style.cssText='margin-top:8px;font-size:11px;color:var(--mut)';
+    note.textContent='응답 0건 — 옵션도 편집 가능합니다.';
+    $('surveyDetailBody').appendChild(note);
+  }else{
+    const note=document.createElement('div');
+    note.style.cssText='margin-top:8px;font-size:11px;color:var(--mut)';
+    note.textContent='응답 1건 이상 — 옵션 변경 잠금. 제목·질문만 편집 가능.';
+    $('surveyDetailBody').appendChild(note);
+  }
+  // 버튼 핸들러
+  $('surveyDetailBody').querySelector('button[data-act="copy"]').addEventListener('click', async ()=>{
+    try{ await navigator.clipboard.writeText(url); }catch{ /* fallback */ }
+    const inp=$('surveyDetailUrl'); inp.select(); document.execCommand('copy');
+    inp.style.background='#e8fbf1'; inp.style.borderColor='#0fa76e';
+    setTimeout(()=>{inp.style.background='#fafafa';inp.style.borderColor='var(--border)';},800);
+  });
+  $('surveyDetailBody').querySelector('button[data-act="toggle"]').addEventListener('click', async ()=>{
+    const r2=await surveyApi('update',{id:s.id, active:!s.active});
+    if(r2.ok) surveyOpenDetail(s.id);
+    else alert('상태 변경 실패: '+(r2.error||'unknown'));
+    surveyLoadList();
+  });
+  $('surveyDetailBody').querySelector('button[data-act="edit"]').addEventListener('click', ()=>surveyOpenEdit(s, total>0));
+  $('surveyDetailBody').querySelector('button[data-act="delete"]').addEventListener('click', async ()=>{
+    if(!confirm(`"${s.id}" 설문을 삭제합니다. 응답 ${total}건도 함께 삭제됩니다.\n진행할까요?`)) return;
+    const r2=await surveyApi('delete',{id:s.id});
+    if(r2.ok){ $('surveyDetailSection').classList.add('hidden'); surveyLoadList(); }
+    else alert('삭제 실패: '+(r2.error||'unknown'));
+  });
+}
+function surveyOpenEdit(survey, optionsLocked){
+  $('surveyDetailSection').classList.add('hidden');
+  $('surveyEditSection').classList.remove('hidden');
+  $('surveyEditStatus').style.display='none';
+  if(survey){
+    $('surveyEditTitle').textContent='설문 편집 — '+survey.id;
+    $('surveyEditTitleInput').value=survey.title||'';
+    $('surveyEditQuestion').value=survey.question||'';
+    $('surveyEditOptions').value=(survey.options||[]).join('\n');
+    $('surveyEditOptions').disabled=!!optionsLocked;
+    $('surveyEditOptionsHint').textContent = optionsLocked
+      ? '응답 1건 이상 존재 — 옵션은 잠금 상태입니다. 제목·질문만 변경 가능.'
+      : '한 줄에 하나씩 입력. 빈 줄은 무시. 최소 2개.';
+    $('surveyEditSaveBtn').dataset.editId = survey.id;
+  }else{
+    $('surveyEditTitle').textContent='새 설문';
+    $('surveyEditTitleInput').value='';
+    $('surveyEditQuestion').value='';
+    $('surveyEditOptions').value='';
+    $('surveyEditOptions').disabled=false;
+    $('surveyEditOptionsHint').textContent = '한 줄에 하나씩 입력. 빈 줄은 무시. 최소 2개.';
+    delete $('surveyEditSaveBtn').dataset.editId;
+  }
+}
+async function surveyEditSave(){
+  const editId=$('surveyEditSaveBtn').dataset.editId || '';
+  const title=$('surveyEditTitleInput').value.trim();
+  const question=$('surveyEditQuestion').value.trim();
+  const optionsText=$('surveyEditOptions').value;
+  const options=optionsText.split('\n').map(s=>s.trim()).filter(Boolean);
+  if(!title||!question){ surveyShowStatus('surveyEditStatus',false,'제목·질문 모두 입력 필요'); return; }
+  if(!$('surveyEditOptions').disabled && options.length<2){ surveyShowStatus('surveyEditStatus',false,'옵션 최소 2개 필요'); return; }
+  $('surveyEditSaveBtn').disabled=true;
+  let r;
+  if(editId){
+    const patch={id:editId, title, question};
+    if(!$('surveyEditOptions').disabled) patch.options=options;
+    r=await surveyApi('update', patch);
+  }else{
+    r=await surveyApi('create', {title, question, options});
+  }
+  $('surveyEditSaveBtn').disabled=false;
+  if(r.ok){
+    $('surveyEditSection').classList.add('hidden');
+    surveyLoadList();
+    if(r.id) setTimeout(()=>surveyOpenDetail(r.id), 200);
+    else if(editId) setTimeout(()=>surveyOpenDetail(editId), 200);
+  }else{
+    surveyShowStatus('surveyEditStatus', false, '실패: '+(r.error||'unknown'));
+  }
+}
+
 async function sysCheckUpdate(){
   sysShowLoading('sysUpdateResult','version.js 조회 중…');
   try{
@@ -818,6 +1060,12 @@ $('sysCheckUpdateBtn').addEventListener('click', sysCheckUpdate);
 $('sysRetriggerUpdateBtn').addEventListener('click', sysRetriggerUpdate);
 $('sysCheckIgBtn').addEventListener('click', sysCheckIg);
 $('sysRetriggerIgBtn').addEventListener('click', sysRetriggerIg);
+$('surveyNewBtn').addEventListener('click', ()=>surveyOpenEdit(null,false));
+$('surveyReloadBtn').addEventListener('click', surveyLoadList);
+$('surveyEditSaveBtn').addEventListener('click', surveyEditSave);
+$('surveyEditCancelBtn').addEventListener('click', ()=>{
+  $('surveyEditSection').classList.add('hidden');
+});
 function reloadCurrentView(){
   loadedViews.delete(currentView);
   loadView(currentView);

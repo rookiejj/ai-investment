@@ -6,6 +6,7 @@
     { "source": "/privacy", "destination": "/views/privacy.html" },
     { "source": "/refund",  "destination": "/views/refund.html" },
     { "source": "/help",    "destination": "/views/help.html" },
-    { "source": "/legacy",  "destination": "/views/legacy.html" }
+    { "source": "/legacy",  "destination": "/views/legacy.html" },
+    { "source": "/survey/:id",  "destination": "/views/survey.html?id=:id" }
   ]
 }
