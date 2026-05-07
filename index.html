@@ -1132,23 +1132,37 @@ function displayName(nm){return (nm&&NAME_KO[nm])||nm||''}
 // 거기는 자동 갱신 에이전트가 처음부터 한글로 적도록 CLAUDE.md 메모로 강제.
 // 길이 내림차순으로 적용해 'Goldman Sachs' → 'Goldman' 부분 매칭 사고 방지.
 const COMPANY_KO = {
+  // AI·유니콘
   'Anthropic':'엔트로픽','Alphabet':'알파벳','CoreWeave':'코어위브','Anduril':'안두릴',
-  'Microsoft':'마이크로소프트','Amazon':'아마존','Meta':'메타','Apple':'애플','Tesla':'테슬라',
-  'Mistral':'미스트랄','DeepMind':'딥마인드','OpenAI':'OpenAI',
+  'Mistral':'미스트랄','DeepMind':'딥마인드','OpenAI':'오픈ai',
   'Reflection':'리플렉션','SpaceX':'스페이스X','Palantir':'팔란티어','Reddit':'레딧',
+  // 빅테크
+  'Microsoft':'마이크로소프트','Amazon':'아마존','Meta':'메타','Apple':'애플','Tesla':'테슬라',
+  'Google':'구글','Broadcom':'브로드컴','Nvidia':'엔비디아','NVIDIA':'엔비디아',
+  // 금융
   'Goldman Sachs':'골드만삭스','Morgan Stanley':'모건스탠리','JPMorgan':'JP모건',
   'Bank of America':'뱅크오브아메리카','Wells Fargo':'웰스파고','Citi':'씨티',
   'Bain':'베인','Brookfield':'브룩필드','Blackstone':'블랙스톤','BlackRock':'블랙록',
   'General Atlantic':'제너럴 애틀랜틱','Hellman&Friedman':'헬만&프리드먼',
   'Dragoneer':'드래고니어','SoftBank':'소프트뱅크','TPG':'TPG','Advent':'어드벤트',
+  // 매체·기관
   'Counterpoint':'카운터포인트','Reuters':'로이터','Bloomberg':'블룸버그','Axios':'액시오스',
   'TechCrunch':'테크크런치','WSJ':'WSJ',
   'Stargate':'스타게이트','PwC':'PwC','Deloitte':'딜로이트','KPMG':'KPMG','EY':'EY',
   'Tata':'타타','Reliance':'릴라이언스','Infosys':'인포시스',
   'Pentagon':'펜타곤','Federal Reserve':'연준','Treasury':'재무부',
+  // 항공·방산
   'Boeing':'보잉','Airbus':'에어버스','Lockheed Martin':'록히드 마틴','Northrop':'노스럽',
+  // 중국
   'Tencent':'텐센트','Alibaba':'알리바바','Baidu':'바이두','ByteDance':'바이트댄스',
+  // 기타
   'Mercor':'머커','Cursor':'커서','Vercel':'버셀','GitHub':'깃허브',
+  // 티커 → 한글 (캘린더·본문 텍스트 안의 ticker도 한글로 노출)
+  'NVDA':'엔비디아','GOOGL':'구글','GOOG':'구글','AAPL':'애플','MSFT':'마이크로소프트',
+  'META':'메타','AMZN':'아마존','TSLA':'테슬라','AVGO':'브로드컴',
+  'PLTR':'팔란티어','UBER':'우버','CRWV':'코어위브','TTD':'더트레이드데스크','MCHP':'마이크로칩',
+  'NFLX':'넷플릭스','DIS':'디즈니','ORCL':'오라클','CRM':'세일즈포스','INTC':'인텔',
+  'AMD':'AMD','ASML':'ASML','TSM':'TSMC','QCOM':'퀄컴','MU':'마이크론',
 };
 const COMPANY_KO_PAIRS = Object.entries(COMPANY_KO).sort((a,b)=>b[0].length-a[0].length);
 function localizeText(text){
@@ -1461,7 +1475,10 @@ function renderCalendar(){
         ${dayEvents.length?`<span class="cal-count">${dayEvents.length}</span>`:''}
       </div>
       <div class="cal-events">
-        ${dayEvents.map(e=>`<div class="cal-event ${(e.impact||1)>=3?'high':''}" data-cat="${e.cat}" title="${escapeHtml(e.title)}"><span class="ev-tag"></span><span>${escapeHtml(e.title)}</span></div>`).join('')}
+        ${dayEvents.map(e=>{
+          const t=localizeText(e.title);
+          return `<div class="cal-event ${(e.impact||1)>=3?'high':''}" data-cat="${e.cat}" title="${escapeHtml(t)}"><span class="ev-tag"></span><span>${escapeHtml(t)}</span></div>`;
+        }).join('')}
       </div>
     `;
     if(dayEvents.length){
@@ -1582,12 +1599,16 @@ function openDayModal(dateKey, events){
                 <div class="day-event-row">
                   ${impactDots(ev.impact)}
                   <div class="day-event-text">
-                    <div class="day-event-title">${escapeHtml(ev.title)}</div>
-                    ${ev.desc?`<div class="day-event-desc">${escapeHtml(ev.desc)}</div>`:''}
+                    <div class="day-event-title">${escapeHtml(localizeText(ev.title))}</div>
+                    ${ev.desc?`<div class="day-event-desc">${escapeHtml(localizeText(ev.desc))}</div>`:''}
                     ${ev.source==='recurring'?'<div class="day-event-meta">정기 일정</div>':''}
                   </div>
                 </div>
-                ${tickers.length?`<div class="day-event-tickers">${tickers.map(t=>`<button class="day-ticker-btn" data-tk="${escapeHtml(t)}">${escapeHtml(t)} →</button>`).join('')}</div>`:''}
+                ${tickers.length?`<div class="day-event-tickers">${tickers.map(t=>{
+                  const ko=COMPANY_KO[t];
+                  const lbl=ko?ko:t;
+                  return `<button class="day-ticker-btn" data-tk="${escapeHtml(t)}">${escapeHtml(lbl)} →</button>`;
+                }).join('')}</div>`:''}
               </div>
             `;
           }).join('')}
