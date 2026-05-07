@@ -1,22 +1,20 @@
 /**
- * 브리픽 일일 카카오 친구톡 발송 Edge Function (솔라피 SOLAPI)
+ * 브리픽 일일 카카오 친구톡 발송 Edge Function (알리고 — VPS 프록시 경유)
  *
  * 1) GitHub Contents API로 data/*-update.js 6개 fetch
  * 2) 탭별 최신 2건(헤드라인 + 단어경계 축약)으로 메시지 조립
  * 3) subscribers WHERE status='active' AND paid_until > now() 조회
- * 4) 솔라피 친구톡(CTA) API로 발송 (500명 청크)
+ * 4) 알리고 친구톡 API를 VPS 프록시 경유로 호출 (500명 청크)
+ *    → 알리고가 IP 화이트리스트 강제라 동적 IP인 Edge Function에서 직접 호출 불가
+ *    → VPS(115.68.224.225)의 Node 프록시가 X-Proxy-Secret 인증 후 알리고 호출
  * 5) send_logs INSERT
  *
  * 필수 ENV (supabase secrets):
- *   SOLAPI_API_KEY
- *   SOLAPI_API_SECRET
- *   SOLAPI_PFID         (카카오 발신프로필 ID, KA01PF로 시작)
- *   SOLAPI_SENDER       (SMS 폴백용 발신번호 · 친구톡에는 미사용 가능)
+ *   ALIGO_PROXY_URL     (예: https://briefick.duckdns.org/friend/send)
+ *   ALIGO_PROXY_SECRET  (VPS .env의 PROXY_SHARED_SECRET와 동일 값)
  *   GITHUB_TOKEN        (private repo 접근)
  * 선택 ENV:
  *   GITHUB_OWNER / GITHUB_REPO / GITHUB_BRANCH
- *   SITE_URL
- *   DISABLE_SMS_FALLBACK=Y  (친구톡 실패 시 SMS 대체 발송 비활성화, 기본 활성)
  */
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
@@ -25,14 +23,10 @@ const GITHUB_OWNER  = Deno.env.get("GITHUB_OWNER")  ?? "rookiejj";
 const GITHUB_REPO   = Deno.env.get("GITHUB_REPO")   ?? "ai-investment";
 const GITHUB_BRANCH = Deno.env.get("GITHUB_BRANCH") ?? "main";
 const GITHUB_TOKEN  = Deno.env.get("GITHUB_TOKEN");
-const SITE_URL = Deno.env.get("SITE_URL")
-  ?? "https://roysbriefing.vercel.app";
-const DISABLE_SMS_FALLBACK = Deno.env.get("DISABLE_SMS_FALLBACK") === "Y";
 
 const LIMIT = 1000;
 const PER_TAB = 1;
 const BATCH_SIZE = 500;
-const SOLAPI_API = "https://api.solapi.com";
 
 type Tab = { file: string; var: string; emoji: string; label: string; };
 type Entry = { date: string; summary: string; };
@@ -199,78 +193,50 @@ function deriveDeliveryState(msg: string | null | undefined): string {
   return "unknown";
 }
 
-// ═══ SOLAPI HMAC auth ══════════════════════════════════
+// ═══ 알리고 프록시 호출 (VPS 경유) ══════════════════════
+// 알리고 API는 IP 화이트리스트가 강제라 동적 IP인 Edge Function에서 직접 호출 불가.
+// VPS(115.68.224.225)에 작은 Node 프록시를 띄워두고 Edge Function이 그쪽으로 호출.
+// 프록시는 X-Proxy-Secret 헤더로 인증, 알리고 API key·senderkey는 VPS .env에 보관.
 
-async function solapiAuthHeader(apiKey: string, apiSecret: string): Promise<string> {
-  const date = new Date().toISOString();
-  const salt = crypto.randomUUID().replace(/-/g, "");
-  const msg = date + salt;
-  const keyBytes = new TextEncoder().encode(apiSecret);
-  const dataBytes = new TextEncoder().encode(msg);
-  const cryptoKey = await crypto.subtle.importKey(
-    "raw", keyBytes,
-    { name: "HMAC", hash: "SHA-256" },
-    false, ["sign"],
-  );
-  const sigBuf = await crypto.subtle.sign("HMAC", cryptoKey, dataBytes);
-  const sig = Array.from(new Uint8Array(sigBuf))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-  return `HMAC-SHA256 apiKey=${apiKey}, date=${date}, salt=${salt}, signature=${sig}`;
-}
-
-type SolapiSendResult = {
-  groupId: string;
-  groupInfo: { count: { total: number; registeredFailed?: number } };
-  failedMessageList: Array<{ to: string; statusMessage: string }>;
+type AligoSendResult = {
+  code: number;
+  message: string;
+  info: {
+    type?: string;
+    mid?: number;
+    current?: string;
+    unit?: number;
+    total?: number;
+    scnt?: number;
+    fcnt?: number;
+  } | null;
   raw: unknown;
 };
 
-async function solapiSendFriendtalk(opts: {
-  apiKey: string;
-  apiSecret: string;
-  pfId: string;
-  sender: string;
+async function aligoSendFriendtalk(opts: {
+  proxyUrl: string;
+  proxySecret: string;
   receivers: Subscriber[];
   message: string;
-}): Promise<SolapiSendResult> {
-  const { apiKey, apiSecret, pfId, sender, receivers, message } = opts;
-
-  const messages = receivers.map((r) => ({
-    to: r.phone,
-    from: sender,
-    text: message,
-    type: "CTA",
-    kakaoOptions: {
-      pfId,
-      disableSms: DISABLE_SMS_FALLBACK,
-      bms: { targeting: "I" },  // I = 채널 친구만
-      buttons: [{
-        buttonType: "WL",
-        buttonName: "1분 브리핑 보러가기",
-        linkMo: SITE_URL,
-        linkPc: SITE_URL,
-      }],
-    },
-  }));
-
-  const auth = await solapiAuthHeader(apiKey, apiSecret);
-  const res = await fetch(`${SOLAPI_API}/messages/v4/send-many`, {
+}): Promise<AligoSendResult> {
+  const { proxyUrl, proxySecret, receivers, message } = opts;
+  const phones = receivers.map((r) => r.phone);
+  const res = await fetch(proxyUrl, {
     method: "POST",
     headers: {
-      "Authorization": auth,
       "Content-Type": "application/json",
+      "X-Proxy-Secret": proxySecret,
     },
-    body: JSON.stringify({ messages }),
+    body: JSON.stringify({ phones, message }),
   });
   const json = await res.json();
   if (!res.ok) {
-    throw new Error(`solapi ${res.status}: ${JSON.stringify(json).slice(0, 400)}`);
+    throw new Error(`aligo proxy ${res.status}: ${JSON.stringify(json).slice(0, 400)}`);
   }
   return {
-    groupId: json.groupId,
-    groupInfo: json.groupInfo,
-    failedMessageList: json.failedMessageList ?? [],
+    code: Number(json.code ?? -1),
+    message: typeof json.message === "string" ? json.message : "",
+    info: json.info ?? null,
     raw: json,
   };
 }
@@ -379,13 +345,11 @@ Deno.serve(async (req) => {
       return Response.json({ ok: true, sent: 0, note: "no active subscribers", charCount: message.length });
     }
 
-    // 3) 솔라피 발송
-    const apiKey    = Deno.env.get("SOLAPI_API_KEY")!;
-    const apiSecret = Deno.env.get("SOLAPI_API_SECRET")!;
-    const pfId      = Deno.env.get("SOLAPI_PFID")!;
-    const sender    = Deno.env.get("SOLAPI_SENDER")!;
-    if (!apiKey || !apiSecret || !pfId || !sender) {
-      return Response.json({ ok: false, error: "solapi env missing" }, { status: 500 });
+    // 3) 알리고 프록시 발송 (VPS 경유)
+    const proxyUrl    = Deno.env.get("ALIGO_PROXY_URL")!;
+    const proxySecret = Deno.env.get("ALIGO_PROXY_SECRET")!;
+    if (!proxyUrl || !proxySecret) {
+      return Response.json({ ok: false, error: "aligo proxy env missing" }, { status: 500 });
     }
 
     const batchId = crypto.randomUUID();
@@ -395,26 +359,32 @@ Deno.serve(async (req) => {
 
     for (let i = 0; i < subs.length; i += BATCH_SIZE) {
       const batch = subs.slice(i, i + BATCH_SIZE);
-      let result: SolapiSendResult | null = null;
+      let result: AligoSendResult | null = null;
       let errMsg: string | null = null;
       try {
-        result = await solapiSendFriendtalk({
-          apiKey, apiSecret, pfId, sender,
+        result = await aligoSendFriendtalk({
+          proxyUrl, proxySecret,
           receivers: batch, message,
         });
+        if (result.code !== 0) {
+          errMsg = `aligo code=${result.code}: ${result.message}`;
+        }
       } catch (e) {
         errMsg = e instanceof Error ? e.message : String(e);
       }
 
-      const failedMap = new Map<string, string>();
-      for (const f of result?.failedMessageList ?? []) {
-        failedMap.set(f.to, f.statusMessage ?? "");
-      }
+      // 알리고는 per-phone 실패 정보를 안 줌 — 부분 실패면 어느 폰이 실패했는지 모름.
+      // - 전체 실패(errMsg): 모두 fail + deriveDeliveryState로 상태 추정
+      // - 부분 실패(fcnt > 0): 폰별 결과 모르므로 모두 unknown 처리 (delivery_state 갱신 skip)
+      // - 전체 성공: 모두 ok
+      const fcnt = result?.info?.fcnt ?? 0;
+      const total = result?.info?.total ?? batch.length;
+      const partialFailed = !errMsg && fcnt > 0;
+      const groupId = result?.info?.mid ? String(result.info.mid) : null;
 
       for (const s of batch) {
-        const failedMsg = failedMap.get(s.phone);
-        const failed = !!errMsg || failedMap.has(s.phone);
-        const providerMsg = errMsg ?? (failed ? (failedMsg || "solapi failedMessageList") : "ok");
+        const failed = !!errMsg;
+        const providerMsg = errMsg ?? (partialFailed ? `partial: ${fcnt}/${total} failed` : "ok");
         logs.push({
           subscriber_id: s.id,
           phone: s.phone,
@@ -423,13 +393,15 @@ Deno.serve(async (req) => {
           status: failed ? "fail" : "success",
           message_type: "friendtalk",
           template_code: templateCode,
-          provider: "solapi",
-          provider_code: result?.groupId ?? null,
+          provider: "aligo",
+          provider_code: groupId,
           provider_message: providerMsg,
-          provider_msg_id: result?.groupId ?? null,
+          provider_msg_id: groupId,
           batch_id: batchId,
         });
-        const state = failed ? deriveDeliveryState(providerMsg) : "ok";
+        const state = failed
+          ? deriveDeliveryState(providerMsg)
+          : (partialFailed ? "unknown" : "ok");
         stateGroups[state].push(s.id);
       }
 
