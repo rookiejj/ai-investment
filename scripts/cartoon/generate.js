@@ -110,13 +110,20 @@ ${situation}
 - 화면 우하단 모서리에 작게 "오늘의 브리픽" 워터마크.`;
 }
 
-// Supabase Storage 업로드 — public bucket 'cartoon'에 today.png로 갱신
-async function uploadToSupabase(buf) {
+// 화풍 → Supabase Storage 파일명 매핑.
+// 모든 화풍을 같은 흐름으로 저장하고 사용처(홈페이지·인스타)에서 분기.
+// 추후 새 화풍 추가 시 이 객체에 한 줄만 추가.
+const STYLE_STORAGE = {
+  '1950s': 'today-news.png',       // 홈페이지 + 오전 캐러셀
+  'mad-mag': 'today-magazine.png', // 저녁 Reels (현재) + 추후 오전 캐러셀 옵션
+};
+
+// Supabase Storage 업로드 — public bucket 'cartoon'에 화풍별 파일로 갱신
+async function uploadToSupabase(buf, file) {
   const url = process.env.SUPABASE_URL || 'https://ytvcgoldauysvnqckzze.supabase.co';
   const key = process.env.BRIEFICK_SUPABASE_SECRET_KEY || process.env.SUPABASE_SECRET_KEY;
   if (!key) throw new Error('BRIEFICK_SUPABASE_SECRET_KEY 환경변수 필요 (Supabase secret key)');
   const bucket = 'cartoon';
-  const file = 'today.png';
 
   // 버킷 생성 (이미 있으면 무시) — POST bucket
   const bucketUrl = `${url}/storage/v1/bucket`;
@@ -235,14 +242,20 @@ async function main() {
     console.log(`[saved] ${latest}  (로컬 메인 페이지가 참조)`);
   }
 
-  // Supabase Storage 업로드 — production 메인 페이지가 fetch (1950s, index=0만)
-  if (upload && index === 0 && styleKey === '1950s') {
-    try {
-      const publicUrl = await uploadToSupabase(buf);
-      console.log(`[uploaded] ${publicUrl}`);
-    } catch (e) {
-      console.error(`[upload failed] ${e.message}`);
-      process.exit(1);
+  // Supabase Storage 업로드 — index=0(최신) + STYLE_STORAGE에 매핑된 화풍만 업로드
+  // 매핑 없는 화풍(pixar·k-webtoon 등)은 로컬 파일만 저장하고 Storage 갱신 skip
+  if (upload && index === 0) {
+    const storageFile = STYLE_STORAGE[styleKey];
+    if (storageFile) {
+      try {
+        const publicUrl = await uploadToSupabase(buf, storageFile);
+        console.log(`[uploaded] ${publicUrl}`);
+      } catch (e) {
+        console.error(`[upload failed] ${e.message}`);
+        process.exit(1);
+      }
+    } else {
+      console.log(`[skip upload] style=${styleKey}는 Storage 매핑 없음 — 로컬 저장만`);
     }
   }
 

@@ -52,7 +52,8 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Generate cartoon and upload
+      # 1950s 뉴스 카툰 — 홈페이지 + 오전 캐러셀에서 사용. 실패 시 워크플로 fail.
+      - name: Generate 1950s news cartoon (today-news.png)
         if: github.event_name == 'workflow_dispatch' || steps.gate.outputs.should_run == 'true'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -64,3 +65,20 @@ jobs:
             --index ${{ inputs.index || '0' }} \
             --upload \
             --no-open
+
+      # Mad Magazine 카툰 — 저녁 Reels에서 사용. 추후 오전에도 활용 가능하게 함께 생성.
+      # 실패해도 1950s 결과·후속 인스타 발행은 막지 않도록 continue-on-error.
+      - name: Generate Mad Magazine cartoon (today-magazine.png)
+        if: github.event_name == 'workflow_dispatch' || steps.gate.outputs.should_run == 'true'
+        continue-on-error: true
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          BRIEFICK_SUPABASE_SECRET_KEY: ${{ secrets.BRIEFICK_SUPABASE_SECRET_KEY }}
+          SUPABASE_URL: https://ytvcgoldauysvnqckzze.supabase.co
+        run: |
+          node scripts/cartoon/generate.js \
+            --style mad-mag \
+            --index ${{ inputs.index || '0' }} \
+            --upload \
+            --no-open \
+            --no-latest
