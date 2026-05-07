@@ -765,7 +765,7 @@ function sysRetriggerUpdate(){
   sysShowResult('sysUpdateResult', true,
     '<strong>새 탭으로 routine 페이지 열림</strong>' +
     '<div style="margin-top:8px">claude.ai 로그인 후 "<strong>Run now</strong>" 버튼 클릭 → 5~10분 내 새 커밋 + 인스타 발행까지 자동 진행.</div>' +
-    '<div style="margin-top:8px;font-size:11px;color:#888">URL: <a href="'+url+'" target="_blank" style="color:inherit;text-decoration:underline">'+url+'</a></div>'
+    '<div style="margin-top:8px;font-size:11px;color:#888;word-break:break-all">URL: <a href="'+url+'" target="_blank" style="color:inherit;text-decoration:underline">'+url+'</a></div>'
   );
 }
 async function sysCheckIg(){
@@ -1396,8 +1396,10 @@ async function loadLogs(){
     message_type: $('fType').value || undefined,
     template_code: $('fTemplate').value || undefined,
     phone: $('fPhone').value.replace(/[^0-9]/g,'') || undefined,
-    from: $('fFrom').value ? new Date($('fFrom').value).toISOString() : undefined,
-    to: $('fTo').value ? new Date(new Date($('fTo').value).getTime() + 86400000 - 1).toISOString() : undefined,
+    // <input type="date">는 YYYY-MM-DD를 주는데 new Date(...)로 바로 ISO 변환하면 UTC 자정으로 해석됨.
+    // 사용자는 KST 기준 하루를 기대하므로 명시적으로 +09:00 타임존 붙여 KST 자정 경계로 변환.
+    from: $('fFrom').value ? new Date($('fFrom').value + 'T00:00:00+09:00').toISOString() : undefined,
+    to:   $('fTo').value   ? new Date($('fTo').value   + 'T23:59:59.999+09:00').toISOString() : undefined,
     limit: LOGS_LIMIT,
     offset: logsOffset,
   };
