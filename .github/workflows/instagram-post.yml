@@ -175,7 +175,10 @@ jobs:
           ls -la scripts/instagram/out/cartoon-1950s.png
 
       # Reels 영상 소스 — cartoon-generate가 함께 업로드한 today-magazine.png 사용.
-      # 다운로드 실패 시(예: cartoon-generate에서 mad-mag만 실패한 경우) 즉석 생성으로 폴백.
+      # 신선도 체크: cartoon-generate의 mad-mag 단계가 continue-on-error라 실패해도
+      # 워크플로 자체는 통과되므로, 어제 today-magazine.png가 그대로 남아 있을 수 있음.
+      # Last-Modified 1시간 이상이면 stale로 간주하고 즉석 생성으로 폴백.
+      # 정상 흐름(cartoon-generate 직후 instagram-post 발사)에선 파일 나이 ~5분이라 통과.
       - name: Mad Magazine 카툰 다운로드 (Reels 영상 소스)
         if: steps.gate.outputs.should_run == 'true' && (steps.mode.outputs.mode == 'reels' || steps.mode.outputs.mode == 'all')
         env:
@@ -184,10 +187,21 @@ jobs:
           STAMP=$(date +%s)
           MAG_URL="https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/today-magazine.png?t=$STAMP"
           OUT=scripts/instagram/out/cartoon-mad-mag.png
-          if curl -fsSL "$MAG_URL" -o "$OUT" && [ -s "$OUT" ]; then
-            echo "[download] today-magazine.png 사용"
+          THRESHOLD=3600
+
+          LAST_MOD=$(curl -sI "$MAG_URL" | awk -F': ' 'tolower($1)=="last-modified"{print $2}' | tr -d '\r\n')
+          if [ -n "$LAST_MOD" ]; then
+            LAST_MOD_TS=$(date -d "$LAST_MOD" +%s 2>/dev/null || echo 0)
+            AGE=$(( $(date +%s) - LAST_MOD_TS ))
           else
-            echo "::warning::today-magazine.png 다운로드 실패 — 즉석 생성으로 폴백"
+            AGE=999999
+          fi
+          echo "[storage] today-magazine.png age=${AGE}s threshold=${THRESHOLD}s"
+
+          if [ "$AGE" -lt "$THRESHOLD" ] && curl -fsSL "$MAG_URL" -o "$OUT" && [ -s "$OUT" ]; then
+            echo "[download] today-magazine.png 사용 (fresh)"
+          else
+            echo "::warning::today-magazine.png stale/누락 (age=${AGE}s) — 즉석 생성으로 폴백"
             node scripts/cartoon/generate.js \
               --style mad-mag \
               --no-open \
