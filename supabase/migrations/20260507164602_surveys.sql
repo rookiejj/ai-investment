@@ -53,10 +53,11 @@ alter table public.surveys enable row level security;
 alter table public.survey_responses enable row level security;
 
 -- 첫 설문 시드 — 가격 설문 (2026-05 첫 번째)
+-- title이 곧 질문 역할 (관리자 폼에서 분리 입력 받지 않음)
 insert into public.surveys (id, title, question, options, active) values (
   '202605-01',
-  '브리픽 구독 가격 설문',
-  '브리픽의 매일 카톡 서비스를 구독한다면, 한 달에 얼마가 적당하다고 생각하시나요?',
+  '매일 카톡 서비스를 구독한다면, 한 달에 얼마가 적당하다고 생각하시나요?',
+  '매일 카톡 서비스를 구독한다면, 한 달에 얼마가 적당하다고 생각하시나요?',
   '["무료여야 함", "월 1,000원 이하", "월 1,000~3,000원", "월 3,000~5,000원", "월 5,000~9,900원", "월 9,900~19,900원", "월 19,900원 이상"]'::jsonb,
   true
 )

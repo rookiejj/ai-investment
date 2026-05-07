@@ -186,10 +186,11 @@ Deno.serve(async (req) => {
 
     if (action === "create") {
       const title = String(body.title ?? "").trim();
-      const question = String(body.question ?? "").trim();
+      // question 필드는 더 이상 별도 입력 받지 않음 — title이 곧 질문 (DB 호환 위해 동일 값 저장)
+      const question = typeof body.question === "string" && body.question.trim() ? body.question.trim() : title;
       const options = Array.isArray(body.options) ? body.options.map((o: unknown) => String(o)).filter((s: string) => s.trim()) : [];
-      if (!title || !question || options.length < 2) {
-        return json({ ok: false, error: "title, question, options(>=2) required" }, { status: 400, cors });
+      if (!title || options.length < 2) {
+        return json({ ok: false, error: "title, options(>=2) required" }, { status: 400, cors });
       }
       const id = await nextSurveyId(supabase);
       const { error } = await supabase.from("surveys").insert({ id, title, question, options, active: true });
@@ -202,7 +203,11 @@ Deno.serve(async (req) => {
       if (!id) return json({ ok: false, error: "id required" }, { status: 400, cors });
 
       const patch: Record<string, unknown> = {};
-      if (typeof body.title === "string") patch.title = body.title.trim();
+      if (typeof body.title === "string") {
+        patch.title = body.title.trim();
+        // title 변경 시 question도 동일하게 sync (UI는 title만 받음)
+        patch.question = body.title.trim();
+      }
       if (typeof body.question === "string") patch.question = body.question.trim();
       if (typeof body.active === "boolean") patch.active = body.active;
       if (Array.isArray(body.options)) {

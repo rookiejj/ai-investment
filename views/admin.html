@@ -582,12 +582,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
         <div class="section-title" id="surveyEditTitle">새 설문</div>
         <div style="display:flex;flex-direction:column;gap:14px;margin-top:8px">
           <div>
-            <label style="display:block;font:500 13px/1.4 'Inter',sans-serif;color:var(--fg2);margin-bottom:6px">제목</label>
-            <input type="text" id="surveyEditTitleInput" placeholder="예: 브리픽 구독 가격 설문" maxlength="100" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;font:400 14px/1.4 'Pretendard Variable',sans-serif;color:var(--fg);background:#fff">
-          </div>
-          <div>
-            <label style="display:block;font:500 13px/1.4 'Inter',sans-serif;color:var(--fg2);margin-bottom:6px">질문 본문</label>
-            <textarea id="surveyEditQuestion" placeholder="응답자에게 보여줄 질문" rows="3" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;font:400 14px/1.55 'Pretendard Variable',sans-serif;color:var(--fg);background:#fff;resize:vertical"></textarea>
+            <label style="display:block;font:500 13px/1.4 'Inter',sans-serif;color:var(--fg2);margin-bottom:6px">질문 (응답자에게 그대로 노출)</label>
+            <textarea id="surveyEditTitleInput" placeholder="예: 한 달에 얼마가 적당하다고 생각하시나요?" maxlength="200" rows="2" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;font:400 14px/1.55 'Pretendard Variable',sans-serif;color:var(--fg);background:#fff;resize:vertical"></textarea>
           </div>
           <div>
             <label style="display:block;font:500 13px/1.4 'Inter',sans-serif;color:var(--fg2);margin-bottom:6px">선택지 (각 줄에 하나씩, 최소 2개)</label>
@@ -868,8 +864,7 @@ async function surveyOpenDetail(id){
   $('surveyDetailBody').innerHTML=`
     <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:12px;flex-wrap:wrap">
       <div style="flex:1;min-width:240px">
-        <div style="font:600 16px/1.4 'Pretendard Variable',sans-serif;color:var(--fg);margin-bottom:6px">${escapeHtml(s.title)}</div>
-        <div style="font-size:13px;color:var(--mut);white-space:pre-line">${escapeHtml(s.question)}</div>
+        <div style="font:600 16px/1.4 'Pretendard Variable',sans-serif;color:var(--fg);white-space:pre-line">${escapeHtml(s.title)}</div>
       </div>
       <div style="text-align:right">
         <div style="font:600 22px/1 'Geist Mono',monospace;color:var(--fg)">${total}</div>
@@ -924,7 +919,6 @@ function surveyOpenEdit(survey, optionsLocked){
   if(survey){
     $('surveyEditTitle').textContent='설문 편집 — '+survey.id;
     $('surveyEditTitleInput').value=survey.title||'';
-    $('surveyEditQuestion').value=survey.question||'';
     $('surveyEditOptions').value=(survey.options||[]).join('\n');
     $('surveyEditOptions').disabled=!!optionsLocked;
     $('surveyEditOptionsHint').textContent = optionsLocked
@@ -934,7 +928,6 @@ function surveyOpenEdit(survey, optionsLocked){
   }else{
     $('surveyEditTitle').textContent='새 설문';
     $('surveyEditTitleInput').value='';
-    $('surveyEditQuestion').value='';
     $('surveyEditOptions').value='';
     $('surveyEditOptions').disabled=false;
     $('surveyEditOptionsHint').textContent = '한 줄에 하나씩 입력. 빈 줄은 무시. 최소 2개.';
@@ -944,19 +937,18 @@ function surveyOpenEdit(survey, optionsLocked){
 async function surveyEditSave(){
   const editId=$('surveyEditSaveBtn').dataset.editId || '';
   const title=$('surveyEditTitleInput').value.trim();
-  const question=$('surveyEditQuestion').value.trim();
   const optionsText=$('surveyEditOptions').value;
   const options=optionsText.split('\n').map(s=>s.trim()).filter(Boolean);
-  if(!title||!question){ surveyShowStatus('surveyEditStatus',false,'제목·질문 모두 입력 필요'); return; }
+  if(!title){ surveyShowStatus('surveyEditStatus',false,'질문 입력 필요'); return; }
   if(!$('surveyEditOptions').disabled && options.length<2){ surveyShowStatus('surveyEditStatus',false,'옵션 최소 2개 필요'); return; }
   $('surveyEditSaveBtn').disabled=true;
   let r;
   if(editId){
-    const patch={id:editId, title, question};
+    const patch={id:editId, title};
     if(!$('surveyEditOptions').disabled) patch.options=options;
     r=await surveyApi('update', patch);
   }else{
-    r=await surveyApi('create', {title, question, options});
+    r=await surveyApi('create', {title, options});
   }
   $('surveyEditSaveBtn').disabled=false;
   if(r.ok){
