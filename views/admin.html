@@ -549,7 +549,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
         <div class="section-subtitle">데이터 자동 갱신 트리거 점검·재실행. 체크는 Vercel 배포 사이트의 version.js를 읽어 마지막 갱신 시각 확인.</div>
         <div class="filter-bar" style="margin-top:8px">
           <button class="btn" id="sysCheckUpdateBtn">자동 갱신 체크</button>
-          <button class="btn ghost" id="sysRetriggerUpdateBtn">자동 갱신 재실행 (claude.ai 이동)</button>
+          <button class="btn ghost" id="sysRetriggerUpdateBtn">자동 갱신 재실행 (routine 열기)</button>
         </div>
         <div id="sysUpdateResult" style="margin-top:12px;padding:12px 14px;border-radius:8px;font-size:13px;display:none"></div>
       </div>
@@ -758,16 +758,14 @@ async function sysCheckUpdate(){
   }
 }
 function sysRetriggerUpdate(){
-  // claude.ai의 트리거 페이지 직접 URL이 없거나 자주 바뀌어 안내 텍스트로 처리.
-  // 가장 안정적: Claude 앱에서 자연어로 트리거 실행 요청.
+  // claude.ai의 routine 페이지 직접 URL로 이동 — 거기서 "Run now" 클릭해 트리거 실행.
+  // 폰 클로드 앱은 RemoteTrigger 도구가 노출되지 않아 자연어 호출이 안 됨 — 웹 페이지가 가장 확실.
+  const url = 'https://claude.ai/code/routines/trig_016nvC9rVppRnQ9nFZeDjnP8';
+  window.open(url, '_blank');
   sysShowResult('sysUpdateResult', true,
-    '<strong>자동 갱신 재실행 방법 (둘 중 하나)</strong>' +
-    '<div style="margin-top:8px"><strong>방법 1 — Claude 앱 (권장)</strong><br>' +
-    '폰의 Claude 앱 열고 "<code>브리핑 데이터 자동 갱신 트리거 실행해줘</code>" 한 마디.<br>' +
-    'Claude가 RemoteTrigger 호출 → 5~10분 내 새 커밋 + 인스타 발행까지 자동 진행.</div>' +
-    '<div style="margin-top:8px"><strong>방법 2 — claude.ai 웹 (Settings 메뉴)</strong><br>' +
-    '<a href="https://claude.ai" target="_blank" style="color:inherit;text-decoration:underline">claude.ai</a> 접속 → 좌측 사이드바·설정에서 "Automations"·"Routines"·"Triggers" 메뉴 찾아 진입 → "브리핑 데이터 자동 갱신" 옆 "Run now" 클릭.</div>' +
-    '<div style="margin-top:8px;font-size:11px;color:#888">트리거 ID: <code>trig_016nvC9rVppRnQ9nFZeDjnP8</code></div>'
+    '<strong>새 탭으로 routine 페이지 열림</strong>' +
+    '<div style="margin-top:8px">claude.ai 로그인 후 "<strong>Run now</strong>" 버튼 클릭 → 5~10분 내 새 커밋 + 인스타 발행까지 자동 진행.</div>' +
+    '<div style="margin-top:8px;font-size:11px;color:#888">URL: <a href="'+url+'" target="_blank" style="color:inherit;text-decoration:underline">'+url+'</a></div>'
   );
 }
 async function sysCheckIg(){
