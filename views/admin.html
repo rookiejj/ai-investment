@@ -77,7 +77,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 
 /* 뷰 토글 */
 .view{display:flex;flex-direction:column;gap:20px}
-.view.hidden{display:none}
+.view.hidden,.section.hidden{display:none}
 
 /* ─────── 카드·섹션 ─────── */
 .section{background:var(--panel);border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.03)}
@@ -565,7 +565,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
         <div class="section-title">설문 <span class="count" id="surveyCount"></span></div>
         <div class="section-subtitle">공지 친구톡으로 URL 보내 응답을 모읍니다. 익명·IP 해시 중복 차단. 응답이 1건이라도 있으면 옵션 변경은 잠금.</div>
         <div class="filter-bar" style="margin-top:8px">
-          <button class="btn primary" id="surveyNewBtn">+ 새 설문</button>
           <button class="btn ghost" id="surveyReloadBtn">새로고침</button>
         </div>
         <div id="surveyListWrap" style="margin-top:12px"></div>
@@ -577,8 +576,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
         <div id="surveyDetailBody"></div>
       </div>
 
-      <!-- 신규/편집 폼 -->
-      <div class="section hidden" id="surveyEditSection">
+      <!-- 항상 보이는 신규/편집 폼 (편집 모드 진입 시 제목·내용 morph) -->
+      <div class="section" id="surveyEditSection">
         <div class="section-title" id="surveyEditTitle">새 설문</div>
         <div style="display:flex;flex-direction:column;gap:14px;margin-top:8px">
           <div>
@@ -804,7 +803,8 @@ function surveyShowStatus(elId, ok, msg){
 async function surveyLoadList(){
   $('surveyListWrap').innerHTML='<div class="loading" style="padding:20px;color:var(--mut);font-size:13px">불러오는 중…</div>';
   $('surveyDetailSection').classList.add('hidden');
-  $('surveyEditSection').classList.add('hidden');
+  // 편집 폼은 항상 보이지만 새로고침 시 비워서 새 설문 모드로 리셋
+  surveyOpenEdit(null,false);
   const r=await surveyApi('list',{});
   if(!r.ok){
     $('surveyListWrap').innerHTML=`<div class="loading" style="color:var(--err)">오류: ${r.error||'unknown'}</div>`;
@@ -913,8 +913,8 @@ async function surveyOpenDetail(id){
   });
 }
 function surveyOpenEdit(survey, optionsLocked){
-  $('surveyDetailSection').classList.add('hidden');
-  $('surveyEditSection').classList.remove('hidden');
+  // 편집 폼 자체는 항상 보임. survey 인자가 있으면 그 값으로 prefill (편집 모드),
+  // null이면 폼을 비워 새 설문 모드로 리셋.
   $('surveyEditStatus').style.display='none';
   if(survey){
     $('surveyEditTitle').textContent='설문 편집 — '+survey.id;
@@ -952,7 +952,8 @@ async function surveyEditSave(){
   }
   $('surveyEditSaveBtn').disabled=false;
   if(r.ok){
-    $('surveyEditSection').classList.add('hidden');
+    // 저장 후 폼 비우고 목록 새로고침 + 방금 만든/편집한 설문 상세 자동 열기
+    surveyOpenEdit(null,false);
     surveyLoadList();
     if(r.id) setTimeout(()=>surveyOpenDetail(r.id), 200);
     else if(editId) setTimeout(()=>surveyOpenDetail(editId), 200);
@@ -1052,12 +1053,10 @@ $('sysCheckUpdateBtn').addEventListener('click', sysCheckUpdate);
 $('sysRetriggerUpdateBtn').addEventListener('click', sysRetriggerUpdate);
 $('sysCheckIgBtn').addEventListener('click', sysCheckIg);
 $('sysRetriggerIgBtn').addEventListener('click', sysRetriggerIg);
-$('surveyNewBtn').addEventListener('click', ()=>surveyOpenEdit(null,false));
 $('surveyReloadBtn').addEventListener('click', surveyLoadList);
 $('surveyEditSaveBtn').addEventListener('click', surveyEditSave);
-$('surveyEditCancelBtn').addEventListener('click', ()=>{
-  $('surveyEditSection').classList.add('hidden');
-});
+// 취소 = 폼 비우고 새 설문 모드로 리셋 (폼은 항상 보임)
+$('surveyEditCancelBtn').addEventListener('click', ()=>surveyOpenEdit(null,false));
 function reloadCurrentView(){
   loadedViews.delete(currentView);
   loadView(currentView);
