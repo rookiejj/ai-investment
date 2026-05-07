@@ -1102,7 +1102,7 @@ const NAME_KO={
   'ExxonMobil':'엑손모빌','Chevron':'셰브런','Cheniere':'셰니어','Schlumberger':'슐럼버거',
   'ConocoPhillips':'코노코필립스','Kinder Morgan':'킨더 모건','EOG Resources':'EOG 리소시스',
   'First Solar':'퍼스트 솔라','Enphase':'엔페이즈','Albemarle':'앨버말','Bloom Energy':'블룸 에너지',
-  'Linde':'린데','Air Products':'에어 프로덕츠','Sunrun':'선런',
+  'Linde':'린데','Air Products':'에어 프로덕츠','Sunrun':'썬런',
   'Tesla':'테슬라','Toyota':'토요타','General Motors':'GM','Rivian':'리비안',
   'Mobileye':'모빌아이','Uber':'우버','Ford':'포드',
   'Lockheed Martin':'록히드 마틴','RTX Corp':'RTX','Northrop Grumman':'노스럽 그러먼',
@@ -1165,7 +1165,7 @@ const COMPANY_KO = {
   'ExxonMobil':'엑손모빌','Chevron':'셰브런','ConocoPhillips':'코노코필립스',
   'Schlumberger':'슐럼버거','Halliburton':'핼리버튼','Cheniere':'셰니어',
   'Kinder Morgan':'킨더 모건','Enbridge':'엔브리지','Linde':'린데','Air Products':'에어 프로덕츠',
-  'First Solar':'퍼스트 솔라','Enphase':'엔페이즈','Sunrun':'선런','Bloom Energy':'블룸 에너지',
+  'First Solar':'퍼스트 솔라','Enphase':'엔페이즈','Sunrun':'썬런','Bloom Energy':'블룸 에너지',
   // ─── 자동차·모빌리티 ───
   'Toyota':'토요타','Ford':'포드','General Motors':'GM','Stellantis':'스텔란티스',
   'Honda':'혼다','Rivian':'리비안','Lucid':'루시드','NIO':'니오','XPeng':'샤오펑',
@@ -1216,6 +1216,8 @@ const COMPANY_KO = {
   // ─── 중국 ───
   'Tencent':'텐센트','Alibaba':'알리바바','Baidu':'바이두','ByteDance':'바이트댄스',
   'JD.com':'JD','Pinduoduo':'핀둬둬','BYD':'BYD','Xiaomi':'샤오미',
+  // ─── 일반어 (단어 경계 매칭이라 'Cloudflare'·'iCloud'엔 안 닿음) ───
+  'Cloud':'클라우드','cloud':'클라우드',
   // ─── 티커 → 한글 (본문·캘린더 텍스트의 ticker 형태) ───
   // 빅테크
   'NVDA':'엔비디아','GOOGL':'구글','GOOG':'구글','AAPL':'애플','MSFT':'마이크로소프트',
@@ -1231,6 +1233,8 @@ const COMPANY_KO = {
   // 자동차·모빌리티 — 단일 글자 티커(F, V, C, S 등)는 false positive 위험으로 제외, 풀네임만 매핑
   'UBER':'우버','RIVN':'리비안','LCID':'루시드','NIO':'니오','XPEV':'샤오펑','LI':'리오토',
   'TM':'토요타','HMC':'혼다',
+  // 태양광·청정에너지 — BE(Bloom Energy)는 'be' 영어동사와 충돌해 풀네임만 매핑
+  'RUN':'썬런','FSLR':'퍼스트 솔라','ENPH':'엔페이즈',
   // 미디어·소비
   'NFLX':'넷플릭스','DIS':'디즈니','SBUX':'스타벅스','MCD':'맥도날드','NKE':'나이키',
   'WMT':'월마트','COST':'코스트코','HD':'홈디포','LOW':'로위스','TGT':'타겟',
