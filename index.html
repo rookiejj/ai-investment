@@ -2625,6 +2625,8 @@ boot();
 
     document.getElementById('subscribeModal').classList.add('show');
     document.body.classList.add('sub-modal-open');
+    document.body.style.overflow='hidden';
+    document.documentElement.style.overflow='hidden';
     const s=document.getElementById('subStatus');
     const sub=document.getElementById('subSubmit');
     const phoneEl=document.getElementById('subPhone');
@@ -2719,6 +2721,8 @@ boot();
     modal.classList.add('show');
     modal.setAttribute('aria-hidden','false');
     document.body.classList.add('sub-modal-open');
+    document.body.style.overflow='hidden';
+    document.documentElement.style.overflow='hidden';
     form.reset();
     phoneEl.disabled=false;consent.disabled=false;
     resetToInput();
@@ -2727,6 +2731,8 @@ boot();
     modal.classList.remove('show');
     modal.setAttribute('aria-hidden','true');
     document.body.classList.remove('sub-modal-open');
+    document.body.style.overflow='';
+    document.documentElement.style.overflow='';
     resetStatus();
   }
   cancel.addEventListener('click',()=>{phoneEl.disabled=false;consent.disabled=false;resetToInput()});

@@ -1082,12 +1082,14 @@ function fsOpen(){
   _fs.el.classList.add('show');
   _fs.el.setAttribute('aria-hidden','false');
   document.body.style.overflow='hidden';
+  document.documentElement.style.overflow='hidden';
 }
 function fsClose(){
   _fs.back.classList.remove('show');
   _fs.el.classList.remove('show');
   _fs.el.setAttribute('aria-hidden','true');
   document.body.style.overflow='';
+  document.documentElement.style.overflow='';
 }
 document.getElementById('filterSheetOpen').addEventListener('click',fsOpen);
 document.getElementById('fsClose').addEventListener('click',fsClose);
@@ -1422,6 +1424,8 @@ function switchTab(id,dir){
     modal.classList.add('show');
     modal.setAttribute('aria-hidden','false');
     document.body.classList.add('modal-open');
+    document.body.style.overflow='hidden';
+    document.documentElement.style.overflow='hidden';
     form.reset();
     phoneEl.disabled=false;
     consent.disabled=false;
@@ -1437,6 +1441,8 @@ function switchTab(id,dir){
     modal.classList.remove('show');
     modal.setAttribute('aria-hidden','true');
     document.body.classList.remove('modal-open');
+    document.body.style.overflow='';
+    document.documentElement.style.overflow='';
     resetStatus();
   }
   function resetStatus(){
