@@ -2900,6 +2900,9 @@ boot();
     _sm.classList.remove('processing');
     resetStatus();
   }
+  // 사용자 액션(✕·Esc·배경 클릭·취소)은 history.back으로 한 단계 뒤로 → popstate 핸들러가 일관 처리.
+  // Android 백키·브라우저 뒤로가기도 같은 popstate 핸들러로 흐름 통일.
+  let _subOpenedViaHistory=false;
   function openSubModal(){
     modal.classList.add('show');
     modal.setAttribute('aria-hidden','false');
@@ -2908,23 +2911,76 @@ boot();
     document.documentElement.style.overflow='hidden';
     form.reset();
     phoneEl.disabled=false;consent.disabled=false;
-    // form.reset() 후 첫 라디오가 다시 checked. 시각 동기화.
     syncPlanSelectedClass();
     resetToInput();
+    // 백키 처리용 history 엔트리 추가 — 뒤로가기 한 번이 sub-modal 닫기에 매핑
+    history.pushState({briefickSubModal:1},'');
+    _subOpenedViaHistory=true;
   }
-  function closeSubModal(){
+  function closeSubModal(fromPopState){
+    if(!fromPopState && _subOpenedViaHistory){
+      // 사용자 액션이면 history.back → popstate 핸들러가 closeSubModal(true) 호출
+      history.back();
+      return;
+    }
+    _subOpenedViaHistory=false;
     modal.classList.remove('show');
     modal.setAttribute('aria-hidden','true');
     document.body.classList.remove('sub-modal-open');
     document.body.style.overflow='';
     document.documentElement.style.overflow='';
+    modal.style.transform='';
     resetStatus();
   }
   cancel.addEventListener('click',()=>{phoneEl.disabled=false;consent.disabled=false;resetToInput()});
   openBtn.addEventListener('click',openSubModal);
-  closeBtn.addEventListener('click',closeSubModal);
+  closeBtn.addEventListener('click',()=>closeSubModal());
   modal.addEventListener('click',e=>{if(e.target===modal)closeSubModal()});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('show'))closeSubModal()});
+
+  // Android 물리 백키 / 브라우저 뒤로가기 — sub-modal 떠있으면 닫기
+  window.addEventListener('popstate',()=>{
+    if(modal.classList.contains('show')){
+      closeSubModal(true);
+    }
+  });
+
+  // 모바일 바텀시트 스와이프-다운 닫기 (sub-modal 자체 스크롤 0일 때만)
+  (function(){
+    const sm=document.querySelector('#subscribeModal .sub-modal');
+    if(!sm) return;
+    let startY=0,curY=0,dragging=false,startScrollTop=0;
+    const THRESHOLD=80;
+    sm.addEventListener('touchstart',e=>{
+      if(window.innerWidth>=768) return;
+      startY=e.touches[0].clientY; curY=startY;
+      startScrollTop=sm.scrollTop;
+      dragging=true;
+      sm.style.transition='';
+    },{passive:true});
+    sm.addEventListener('touchmove',e=>{
+      if(!dragging) return;
+      curY=e.touches[0].clientY;
+      const dy=curY-startY;
+      if(dy>0 && startScrollTop<=0){
+        sm.style.transform=`translateY(${dy}px)`;
+      }
+    },{passive:true});
+    sm.addEventListener('touchend',()=>{
+      if(!dragging) return;
+      dragging=false;
+      const dy=curY-startY;
+      if(dy>THRESHOLD && startScrollTop<=0){
+        sm.style.transition='transform .2s ease-out';
+        sm.style.transform='translateY(100%)';
+        setTimeout(()=>{ closeSubModal(); sm.style.transition=''; sm.style.transform=''; },200);
+      }else{
+        sm.style.transition='transform .2s ease-out';
+        sm.style.transform='';
+        setTimeout(()=>{ sm.style.transition='' },200);
+      }
+    });
+  })();
 
   // 플랜 선택 — 라디오 change 시 .selected 클래스 동기화 + submit 라벨 갱신
   document.querySelectorAll('input[name="plan"]').forEach(r=>{
