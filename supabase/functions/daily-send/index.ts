@@ -41,6 +41,45 @@ const TABS: Tab[] = [
   { file: "unicorn-update.js",   var: "updates", emoji: "🦄", label: "유니콘" },
 ];
 
+// ═══ 영문 회사명·티커 → 한글 치환 ═════════════════════
+// data/company-ko.js를 GitHub raw로 fetch해 친구톡 본문 한글화.
+// index.html의 localizeText와 동일 룰: 길이 내림차순 + 영문 알파벳·숫자 단어 경계.
+
+let _companyKoPairs: Array<[string, string]> = [];
+
+async function loadCompanyKoMap(): Promise<void> {
+  try {
+    const url = GITHUB_TOKEN
+      ? `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/data/company-ko.js?ref=${GITHUB_BRANCH}`
+      : `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/data/company-ko.js`;
+    const headers: Record<string, string> = {};
+    if (GITHUB_TOKEN) {
+      headers["Authorization"] = `token ${GITHUB_TOKEN}`;
+      headers["Accept"] = "application/vnd.github.raw";
+    }
+    const res = await fetch(url, { headers });
+    if (!res.ok) throw new Error(`status=${res.status}`);
+    const src = await res.text();
+    const map = new Function(
+      `${src};return typeof COMPANY_KO!=="undefined"?COMPANY_KO:{};`
+    )() as Record<string, string>;
+    _companyKoPairs = Object.entries(map).sort((a, b) => b[0].length - a[0].length);
+  } catch (e) {
+    console.warn("[warn] company-ko load failed, fallback empty map", e);
+    _companyKoPairs = [];
+  }
+}
+
+function localizeText(text: string): string {
+  if (!text) return text;
+  let r = String(text);
+  for (const [en, ko] of _companyKoPairs) {
+    const esc = en.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    r = r.replace(new RegExp("(?<![A-Za-z0-9])" + esc + "(?![A-Za-z0-9])", "g"), ko);
+  }
+  return r;
+}
+
 // ═══ GitHub fetch ═══════════════════════════════════════
 
 async function fetchTabEntries(tab: Tab): Promise<Entry[]> {
@@ -68,7 +107,8 @@ async function fetchTabEntries(tab: Tab): Promise<Entry[]> {
       !!e && typeof (e as { summary?: string }).summary === "string")
     .map((e) => ({
       date: (e.date ?? "").toString(),
-      summary: String(e.summary ?? "").trim(),
+      // summary 전체를 미리 localize — 이후 fitToLimit의 길이 계산이 한글 기준으로 정확.
+      summary: localizeText(String(e.summary ?? "").trim()),
     }));
 }
 
@@ -287,6 +327,8 @@ Deno.serve(async (req) => {
       message = customMessage;
       rawMessage = customMessage;
     } else {
+      // 한글 매핑 먼저 로드 — fetchTabEntries에서 summary localize 시 사용
+      await loadCompanyKoMap();
       const tabs: TabWithEntries[] = [];
       for (const t of TABS) {
         const entries = await fetchTabEntries(t);
