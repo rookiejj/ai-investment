@@ -27,7 +27,7 @@ const PHONE = process.env.TEST_PHONE.replace(/[^0-9]/g, '');
 const MESSAGE = process.env.TEST_MESSAGE
   || `[브리픽] 알리고 친구톡 테스트입니다.\n이 메시지가 도착하면 발송 채널이 정상입니다.\n시간: ${new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })}`;
 const TEST_MODE = process.env.TEST_MODE === 'Y' ? 'Y' : 'N';
-const SITE_URL = 'https://roysbriefing.vercel.app';
+const SITE_URL = 'https://briefick.com';
 
 // 친구톡 본문 + CTA 버튼 1개
 const button = {

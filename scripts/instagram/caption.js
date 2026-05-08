@@ -13,7 +13,7 @@
  */
 
 const HANDLE = 'briefick';
-const SITE_URL = 'https://roysbriefing.vercel.app';
+const SITE_URL = 'https://briefick.com';
 
 // 절대 빠지지 않아야 하는 브랜드 해시태그. 가변 태그가 30개 제한에 걸려도
 // 이 두 개는 결과 맨 앞에서 무조건 보존된다.

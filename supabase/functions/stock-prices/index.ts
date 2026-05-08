@@ -18,7 +18,7 @@
 
 import { createClient } from "supabase";
 
-const SITE_URL = Deno.env.get("BRIEFING_SITE_URL") ?? "https://roysbriefing.vercel.app";
+const SITE_URL = Deno.env.get("BRIEFING_SITE_URL") ?? "https://briefick.com";
 const BUCKET = "prices";
 const FILE = "latest.json";
 

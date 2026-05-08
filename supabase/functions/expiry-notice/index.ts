@@ -17,13 +17,13 @@
  * 필수 ENV:
  *   ALIGO_PROXY_URL · ALIGO_PROXY_SECRET · CRON_SECRET
  * 선택:
- *   SITE_URL (기본: https://roysbriefing.vercel.app)
+ *   SITE_URL (기본: https://briefick.com)
  *   SHOP_NAME (기본: 브리픽)
  */
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
-const SITE_URL = Deno.env.get("SITE_URL") ?? "https://roysbriefing.vercel.app";
+const SITE_URL = Deno.env.get("SITE_URL") ?? "https://briefick.com";
 const SHOP_NAME = Deno.env.get("SHOP_NAME") ?? "브리픽";
 
 type Target = { id: string; phone: string; name: string | null; paid_until: string };

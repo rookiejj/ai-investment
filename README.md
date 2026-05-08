@@ -2,7 +2,7 @@
 
 한국·미국 주식, AI 기업, 유니콘, 원자재·크립토 시장의 오늘 핵심 헤드라인을 한눈에 보여주는 투자 대시보드, 그리고 매일 카카오 친구톡으로 동일 콘텐츠를 발송하는 **유료 구독 서비스**. (일본 주식은 UI에서 제외, 데이터 파일만 보존)
 
-- **웹 대시보드**: https://roysbriefing.vercel.app
+- **웹 대시보드**: https://briefick.com
 - **카카오 채널**: https://pf.kakao.com/_lpxkCX
 - **친구톡 발송**: 평일(월~금) 오전 8시 KST · 만료 임박 안내 매일 오후 8시 KST
 - **운영 대시보드**: `/admin` (비밀번호 보호)
@@ -292,6 +292,13 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-08 (3)**: **호스팅 Vercel → Cloudflare Pages 이전 + 도메인 briefick.com 등록**.
+  - **Cloudflare Pages 배포** — `briefick.pages.dev`로 GitHub repo 자동 배포 연결. 빌드 명령 없음(정적), 출력 디렉토리 `/`. Vercel Hobby 무료 플랜이 비상업적 용도 한정이라 결제 도입 시점에 Pro($20/월) 강제 — Cloudflare Pages는 무료 플랜에 상업 사용 명시적 허용 + 무제한 대역폭 + DDoS 보호 보너스.
+  - **`_redirects` 파일 추가** — vercel.json rewrites와 동일한 매핑(`/admin`·`/renew`·`/help`·`/terms`·`/privacy`·`/refund`·`/legacy`·`/survey/:id`)을 Cloudflare 형식으로 변환. 두 파일 공존(Vercel은 `_redirects` 무시, CF는 vercel.json 무시) → 양쪽 동시 배포.
+  - **도메인 briefick.com** — Cloudflare Registrar에서 직접 구매(레지스트라 마진 0). DNS 레코드 자동 생성(apex CNAME briefick.com → briefick.pages.dev + www CNAME), 양쪽 모두 프록시 + SSL 자동 발급. 기존 `roysbriefing.vercel.app`는 백업으로 유지(자동 배포 계속 받음).
+  - **코드 URL 일괄 변경** — `https://roysbriefing.vercel.app` → `https://briefick.com` (8군데): Edge Functions(`stock-prices`·`admin-api`·`expiry-notice`) fallback default + scripts(`generate-message`·`instagram/caption`·`instagram/render-slides`·`instagram/template.html`·`test-aligo-friendtalk`) 하드코딩값. supabase secrets엔 `SITE_URL` 미설정이라 fallback default가 권위 — 환경변수 손 안 대고 코드만 수정. Edge Functions 3개 재배포 완료.
+  - **PortOne 결제 도메인** — V2 storeId/channelKey 방식 + 갈락시아 테스트 채널은 도메인 화이트리스트 없음. briefick.com·vercel.app 양쪽에서 결제 시뮬 가능. 라이브 PG 채널 발급 시점에 PG사(갈락시아) 콘솔에서 도메인 등록 필요.
+  - **유지**: `vercel.json`(백업 배포 계속 동작용), `docs/friendtalk-dispatch-runbook.md`(SOLAPI 시대 historical 문서로 보존).
 - **2026-05-08 (2)**: **결제 모달 디자인 개편 — 3단 가격 플랜 + 바텀시트 슬라이드업 + plan-aware 결제 검증**.
   - **가격 플랜 3종 도입** — 30일 ₩2,900 / 6개월 ₩13,800(월 ₩2,300, 21% 할인) / 12개월 ₩22,800(월 ₩1,900, 34% 할인 · 12,000원 절약). `index.html`·`views/renew.html`·`payment-confirm` Edge Function에 `PRICE_PLANS` 단일 매핑 — `{days, amount, testAmount, label, orderName}` 구조로 클라·서버 동기화. `payment-confirm`은 클라가 보낸 `plan` 키를 권위 매핑으로 검증 후 `extendMs = plan.days * 1d`로 정확히 연장(이전 `MONTH_DAYS=30` 고정 제거). 6개월 가격은 초기 `34% 할인 = 11,400` 으로 잡았다가 운영 결정으로 `월 2,300원 = 13,800` 으로 변경.
   - **모달 UI 개편** — 종목 deep-dive 모달과 동일하게 화면 하단에서 슬라이드업(`translateY(40px)→0`), 모바일은 풀-너비 + 둥근 상단 모서리, 데스크톱은 가운데 정렬 + 440px max-width. 헤더(h2 + ✕)는 `.sub-modal-header` div로 묶어 `position:sticky;top:0` + 모달 컨테이너 풀-블리드 좌우(`margin:0 -24px`) — 세로 스크롤 시 헤더 고정. 드래그 핸들(36×4px) `::before` 모바일에서만 노출. 헤더 컴팩트(h2 20px·padding 14px 24px)로 위 빈 공간 제거.

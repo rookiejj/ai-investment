@@ -15,7 +15,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
-const SITE_URL = 'https://roysbriefing.vercel.app';
+const SITE_URL = 'https://briefick.com';
 const LIMIT = 1000;
 const PER_TAB = 1;
 

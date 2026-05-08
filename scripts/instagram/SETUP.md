@@ -99,7 +99,7 @@ curl -s "https://graph.facebook.com/v21.0/oauth/access_token" \
 | 04 | AI | 🤖 ai-update.js |
 | 05 | 원자재 | 🛢️ commodity-update.js |
 | 06 | 유니콘 | 🦄 unicorn-update.js |
-| 07 | CTA | 도메인(roysbriefing.vercel.app) · @briefick |
+| 07 | CTA | 도메인(briefick.com) · @briefick |
 
 ## 7. 캡션 구조
 
@@ -113,7 +113,7 @@ curl -s "https://graph.facebook.com/v21.0/oauth/access_token" \
 🛢️ 원자재·크립토 — <탭 1번 불릿>
 🦄 유니콘 — <탭 1번 불릿>
 
-매일 아침 https://roysbriefing.vercel.app
+매일 아침 https://briefick.com
 인스타 @briefick
 
 #브리픽 #briefick ... (고정 + 가변 티커·키워드)

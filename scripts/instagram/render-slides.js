@@ -20,7 +20,7 @@ const { fetchImageDataUri } = require('./image-source');
 const ROOT = path.resolve(__dirname, '..', '..');
 const OUT_DIR = path.join(__dirname, 'out');
 const TEMPLATE = path.join(__dirname, 'template.html');
-const SITE_URL = 'https://roysbriefing.vercel.app';
+const SITE_URL = 'https://briefick.com';
 const HANDLE = 'briefick';
 
 const TABS = [

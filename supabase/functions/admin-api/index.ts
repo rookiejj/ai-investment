@@ -97,7 +97,7 @@ async function aligoSendManualAlimtalk(phones: string[]): Promise<{ ok: boolean;
   const proxyUrl    = Deno.env.get("ALIGO_PROXY_ALIMTALK_URL");
   const proxySecret = Deno.env.get("ALIGO_PROXY_SECRET");
   const tplCode     = Deno.env.get("ALIGO_MANUAL_TPL_CODE");
-  const siteUrl     = Deno.env.get("SITE_URL") ?? "https://roysbriefing.vercel.app";
+  const siteUrl     = Deno.env.get("SITE_URL") ?? "https://briefick.com";
   const shopName    = Deno.env.get("SHOP_NAME") ?? "브리픽";
   if (!proxyUrl || !proxySecret || !tplCode) {
     return { ok: false, error: "aligo proxy env missing (ALIGO_PROXY_ALIMTALK_URL/ALIGO_PROXY_SECRET/ALIGO_MANUAL_TPL_CODE)" };
