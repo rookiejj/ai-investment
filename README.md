@@ -219,7 +219,7 @@ pg_cron → Vault X-Cron-Secret → expiry-notice
 | 법정 문서 | `terms.html` / `privacy.html` / `refund.html` |
 | 매일 뉴스 친구톡 본문 | `supabase/functions/daily-send/index.ts` ↔ `scripts/generate-message.js` (동기화) |
 | 재구독 안내 친구톡 본문 | `supabase/functions/expiry-notice/index.ts`의 `buildExpiryMessage` |
-| 구독료·상품명 | `index.html` 내 `SUBSCRIPTION_PRICE`·`SUBSCRIPTION_ORDER_NAME` 상수 |
+| 구독료·상품명 (3단 가격 플랜) | `index.html`·`views/renew.html`의 `PRICE_PLANS` + `supabase/functions/payment-confirm/index.ts`의 `PRICE_PLANS` (단일 소스 — 동기화 필수). plan 키: `1m`·`6m`·`12m`. `TEST_MODE` 토글로 testAmount(₩100) ↔ amount(정가) 전환 |
 | 발송 스케줄 | `supabase/schedule.sql` (뉴스) · `schedule-expiry.sql` (만료 임박) — cron 표현식은 UTC |
 | 결제 완료 알림톡 템플릿 | `supabase/functions/payment-confirm/index.ts`의 `ALIMTALK_TEMPLATE_ID` |
 | 미수신자 안내 알림톡 템플릿 | `supabase/functions/admin-api/index.ts`의 `MANUAL_TEMPLATE_ID` (env `ALIMTALK_MANUAL_TEMPLATE_ID`로 오버라이드) |
@@ -292,6 +292,15 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-08 (2)**: **결제 모달 디자인 개편 — 3단 가격 플랜 + 바텀시트 슬라이드업 + plan-aware 결제 검증**.
+  - **가격 플랜 3종 도입** — 30일 ₩2,900 / 6개월 ₩13,800(월 ₩2,300, 21% 할인) / 12개월 ₩22,800(월 ₩1,900, 34% 할인 · 12,000원 절약). `index.html`·`views/renew.html`·`payment-confirm` Edge Function에 `PRICE_PLANS` 단일 매핑 — `{days, amount, testAmount, label, orderName}` 구조로 클라·서버 동기화. `payment-confirm`은 클라가 보낸 `plan` 키를 권위 매핑으로 검증 후 `extendMs = plan.days * 1d`로 정확히 연장(이전 `MONTH_DAYS=30` 고정 제거). 6개월 가격은 초기 `34% 할인 = 11,400` 으로 잡았다가 운영 결정으로 `월 2,300원 = 13,800` 으로 변경.
+  - **모달 UI 개편** — 종목 deep-dive 모달과 동일하게 화면 하단에서 슬라이드업(`translateY(40px)→0`), 모바일은 풀-너비 + 둥근 상단 모서리, 데스크톱은 가운데 정렬 + 440px max-width. 헤더(h2 + ✕)는 `.sub-modal-header` div로 묶어 `position:sticky;top:0` + 모달 컨테이너 풀-블리드 좌우(`margin:0 -24px`) — 세로 스크롤 시 헤더 고정. 드래그 핸들(36×4px) `::before` 모바일에서만 노출. 헤더 컴팩트(h2 20px·padding 14px 24px)로 위 빈 공간 제거.
+  - **plan 카드 디자인** — 라디오 인풋 hidden + label 클릭 시 `.selected` 테두리·그림자. 카드별: 기간 라벨(좌) + 정가(strike) + 할인가(굵게) + 월 단가 + 할인 뱃지. 6개월 노란 뱃지 `21% 할인`, 12개월 검정 뱃지 `최대 할인 · 12,000원 절약`.
+  - **3단계 UX 흐름** — (1) plan 선택 + 전화번호 입력 → "X원 결제하기" (2) 1단계 제출 → "기존 구독 확인 중…" → 자동으로 모달 끝까지 스크롤(`requestAnimationFrame` + `scrollTo`) + plan/전화번호/동의 모두 disabled(폰 회색 처리) + confirm 박스: 신규는 "이 번호로 매일 오전 8시 발송"·연장은 정렬된 두 줄 표("현재 만료 → 결제 시 만료") + 버튼 "X개월 X원 연장 결제하기" (3) PortOne 결제창 → 복귀 시 `.processing` 클래스 — plan/폰/동의 박스 모두 hide, 큰 status 박스 하나만 표시("결제 처리 중…"). 결제 검증 성공 시 `.completed` 클래스로 전환, plan 카드도 hide.
+  - **모달 스크롤 차단 강화** — `body.style.overflow=hidden` + `documentElement.style.overflow=hidden` 양쪽 잠금(html이 메인 스크롤러인 데스크톱·일부 모바일 케이스 대응). `body.sub-modal-open{overflow:hidden}` 클래스만으론 부족했음. legacy.html `fsOpen/Close`·`openModal/Close`도 동일 패턴.
+  - **/renew 페이지 동일 형식 포팅** — 만료 임박 친구톡의 "재구독 하러가기" 버튼이 연결되는 페이지. 모달 아니라 단일 카드 페이지지만 plan 카드·extend 표 디자인·processing/completed 상태·plan 비활성화·페이지 끝 자동 스크롤 모두 동일.
+  - **expiry-notice 친구톡에 WL 버튼** — 본문에서 `▶ 재구독: <URL>` 텍스트 인라인 제거하고 `재구독 하러가기` WL 버튼으로 분리. `aligoSendFriendtalk`에 `buttonName`·`buttonUrl` 옵션 받아 알리고 `/akv10/friend/send/` `button_1` JSON 형식으로 forward(VPS 프록시가 button 필드 통과). cron 매뉴얼 트리거 검증 통과(`mid=1337573614`).
+  - **TEST_MODE off** — 클라(`index.html`·`views/renew.html`) + 서버(`payment-confirm`) 모두 `TEST_MODE=false`로 전환. 갤럭시아 테스트 채널은 어차피 실청구 안 됨 — 정가로 결제 흐름 검증, 라이브 채널 전환 시에도 그대로 정가 적용.
 - **2026-05-08**: **한글 매핑 단일 소스화 + expiry-notice 알리고 마이그 + SOLAPI 잔재 정리 + 발송 상태 분류 단순화**.
   - **한글 매핑 단일 소스화** — `data/company-ko.js`로 분리, 친구톡 본문에도 적용. 헤드라인은 한글화 잘 되는데 친구톡은 영문 그대로 나가던 사고 해결. 매핑 인라인이 `index.html`에만 있어 `daily-send` Edge Function 경로엔 미적용이었음. `data/company-ko.js` 신설(403개 매핑 — AI·유니콘·빅테크·반도체·바이오 등 섹터별 그룹 + 티커 형태 + 일반어 `Cloud`/`cloud`), 양쪽이 같은 파일을 fetch. `index.html`은 부팅 시 `_setCompanyKo()`로 로드, `daily-send`는 GitHub raw로 fetch 후 `localizeText()`를 `fetchTabEntries`에서 미리 적용(이후 `fitToLimit` 길이 계산이 한글 변환 후 텍스트 기준으로 정확). `Sunrun` 표기 교정(`선런` → `썬런`). 단일 글자·짧은 약어 티커(F·V·C·S·MS·MA·BE)는 일반 단어와 충돌해 풀네임만 매핑. CLAUDE.md에 단일 소스 룰 명문화.
   - **expiry-notice 알리고 마이그** — 5/7 마이그 시 누락된 마지막 함수. SOLAPI HMAC 호출 → VPS 프록시 경유 알리고 친구톡으로 교체. 알리고 친구톡 API의 버튼(WL) 파라미터는 VPS 프록시가 아직 미지원이라 본문에 `▶ 재구독: <URL>` 텍스트 인라인(친구톡은 URL 자동 클릭 가능 링크로 파싱). cron `daily-expiry-notice`(20:00 KST) 그대로 동작.

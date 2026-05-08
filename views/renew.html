@@ -9,9 +9,9 @@
 <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
 <style>
 :root{
-  --bg:#ffffff;--panel:#ffffff;--fg:#0d0d0d;--fg2:#333;--mut:#666;--placeholder:#999;
+  --bg:#ffffff;--panel:#ffffff;--fg:#0d0d0d;--fg2:#333;--mut:#666;--mut2:#999;--placeholder:#999;
   --border:rgba(0,0,0,0.05);--border-md:rgba(0,0,0,0.08);
-  --acc:#18E299;--acc-light:#d4fae8;--acc-deep:#0fa76e;--new:#d45656;
+  --acc:#18E299;--acc-light:#d4fae8;--acc-deep:#0fa76e;--err:#c83232;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#fafafa;color:var(--fg2);font:15px/1.5 Pretendard,-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
@@ -26,20 +26,52 @@ input,textarea{font:inherit;outline:none}
 
 .wrap{min-height:calc(100vh - 48px);display:flex;align-items:flex-start;justify-content:center;padding:20px 20px 60px}
 .card{
-  background:var(--panel);border-radius:20px;padding:32px;width:100%;max-width:440px;
+  background:var(--panel);border-radius:20px;padding:32px 28px 28px;width:100%;max-width:440px;
   box-shadow:0 8px 28px rgba(0,0,0,0.06);position:relative;
 }
 .card .brand{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .card .brand img{width:36px;height:36px;border-radius:50%;object-fit:cover}
 .card .brand span{font:700 18px/1 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.3px}
-.card h1{font:600 22px/1.3 Pretendard,sans-serif;color:var(--fg);margin-bottom:8px;letter-spacing:-0.44px}
-.card .sub{color:var(--mut);font-size:14px;line-height:1.5;margin-bottom:16px}
+.card h1{font:600 22px/1.3 Pretendard,sans-serif;color:var(--fg);margin-bottom:6px;letter-spacing:-0.44px}
+.card .sub{color:var(--mut);font-size:14px;line-height:1.5;margin-bottom:18px}
+.extend-note{display:inline-block;margin-top:4px;font-size:12px;color:var(--err);font-weight:500}
 
 .test-banner{
   margin:0 0 14px;padding:8px 12px;border-radius:8px;
-  background:#fde8e8;color:var(--new);border:1px solid #f7c6c6;
+  background:#fde8e8;color:var(--err);border:1px solid #f7c6c6;
   font:500 12px/1.5 Pretendard,sans-serif;text-align:center;letter-spacing:-0.1px;
 }
+
+/* ── 가격 플랜 선택 ── */
+.plans{
+  display:grid;grid-template-columns:1fr;gap:8px;margin:0 0 18px;
+}
+.plan{
+  position:relative;display:block;cursor:pointer;
+  padding:14px 16px;border:1.5px solid var(--border);border-radius:12px;
+  background:#fafafa;transition:border-color .15s ease, background .15s ease;
+}
+.plan:hover{border-color:var(--border-md)}
+.plan.selected{
+  border-color:var(--fg);background:#fff;
+  box-shadow:0 2px 10px rgba(0,0,0,.06);
+}
+.plan input[type="radio"]{position:absolute;opacity:0;pointer-events:none}
+.plan-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.plan-period{font:600 15px/1.2 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.3px}
+.plan-prices{display:flex;align-items:baseline;gap:6px}
+.plan-price-orig{font:500 13px/1.2 Pretendard,sans-serif;color:var(--mut);text-decoration:line-through;text-decoration-thickness:1px}
+.plan-price-now{font:700 17px/1.2 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.3px}
+.plan-meta{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  margin-top:6px;font:500 12px/1.3 Pretendard,sans-serif;color:var(--mut);
+}
+.plan-badge{
+  display:inline-block;padding:3px 7px;border-radius:5px;
+  font:600 11px/1 Pretendard,sans-serif;letter-spacing:0.2px;
+  background:#fff4d6;color:#8a5400;
+}
+.plan-badge.primary{background:var(--fg);color:#fff}
 
 .field{margin-bottom:14px}
 .field label{display:block;font:500 13px/1.4 Pretendard,sans-serif;color:var(--fg2);margin-bottom:6px}
@@ -49,6 +81,10 @@ input,textarea{font:inherit;outline:none}
   font:400 15px/1.4 Pretendard,sans-serif;color:var(--fg);transition:border-color .2s;
 }
 .field input:focus{border-color:var(--acc)}
+.field input:disabled{
+  background:#f0f0f0;color:var(--mut2);border-color:var(--border);
+  cursor:not-allowed;
+}
 
 .consent{
   display:flex;align-items:flex-start;gap:10px;padding:14px;
@@ -66,6 +102,9 @@ input,textarea{font:inherit;outline:none}
 .confirm-box .confirm-label{display:block;font:500 12px/1.3 Pretendard,sans-serif;color:var(--acc-deep);letter-spacing:0.4px;text-transform:uppercase}
 .confirm-box .confirm-num{display:block;margin:6px 0;font:600 26px/1.2 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.5px}
 .confirm-box .confirm-note{display:block;font:500 13px/1.5 Pretendard,sans-serif;color:var(--fg2)}
+.confirm-ext{display:flex;flex-direction:column;gap:4px;max-width:240px;margin:6px auto 0}
+.confirm-ext > div{display:flex;justify-content:space-between;font:500 13px/1.5 Pretendard,sans-serif;color:var(--fg2)}
+.confirm-ext > div > b{font-weight:600;color:var(--fg);font-variant-numeric:tabular-nums}
 
 .submit-btn{
   width:100%;padding:14px;background:var(--fg);color:#fff;border-radius:10px;
@@ -85,7 +124,7 @@ input,textarea{font:inherit;outline:none}
 .status.show{display:block}
 .status.success{background:#fff4e5;color:#a35a00}
 .status.success .until-date{display:inline-block;margin-top:4px;font-size:13px;font-weight:500;opacity:0.85}
-.status.error{background:#fde8e8;color:var(--new)}
+.status.error{background:#fde8e8;color:var(--err)}
 .status.info{background:#fff4e5;color:#a35a00}
 
 .success-actions{margin-top:16px;display:flex;flex-direction:column;gap:10px}
@@ -107,17 +146,32 @@ input,textarea{font:inherit;outline:none}
 .complete-notice .notice-sub{display:block;font-weight:500;font-size:13px;color:var(--acc-deep);margin-top:6px}
 @keyframes pulseNotice{0%,100%{box-shadow:0 0 0 0 rgba(24,226,153,0.45)}50%{box-shadow:0 0 0 10px rgba(24,226,153,0)}}
 
-/* 결제 완료 상태: 폼·헤더 숨기고 완료 화면만 표시 */
+/* 결제 처리 중 / 완료 — 폼·plan·폰·동의 박스 모두 숨겨 깔끔하게 */
 .card.completed .test-banner,
-.card.completed h1,
 .card.completed > .sub,
+.card.completed .plans,
 .card.completed .field,
 .card.completed .consent,
 .card.completed .honeypot,
 .card.completed .confirm-box,
 .card.completed #subSubmit,
-.card.completed #subCancel{display:none !important}
+.card.completed #subCancel,
+.card.processing .test-banner,
+.card.processing > .sub,
+.card.processing .plans,
+.card.processing .field,
+.card.processing .consent,
+.card.processing .honeypot,
+.card.processing .confirm-box,
+.card.processing #subSubmit,
+.card.processing #subCancel{display:none !important}
+
 .card.completed .status{margin-top:8px;padding:16px;font-size:15px;font-weight:500;border-radius:12px;text-align:center}
+.card.processing .status{
+  margin:24px 0;padding:32px 18px;font-size:15px;font-weight:500;
+  border-radius:12px;text-align:center;min-height:80px;
+  display:flex !important;align-items:center;justify-content:center;
+}
 .card.completed .success-actions{margin-top:14px}
 .card.completed .kakao-link{padding:18px 16px;font-size:16px;font-weight:700}
 </style>
@@ -133,9 +187,53 @@ input,textarea{font:inherit;outline:none}
     </div>
     <h1>재구독</h1>
     <div class="test-banner">본 결제는 테스트용으로, 실제로는 결제되지 않습니다.</div>
-    <p class="sub">매일 아침 8시, 최신 경제 뉴스를 카카오톡으로 받아보세요.<br><b>월 100원 · 1회 결제당 30일 이용</b></p>
+    <p class="sub">매일 아침 8시, 최신 경제 뉴스를 카카오톡으로 받아보세요.<br><span class="extend-note">이미 구독 중이신 분들은 기간이 연장됩니다.</span></p>
 
     <form id="subscribeForm" novalidate autocomplete="off">
+      <div class="plans" role="radiogroup" aria-label="구독 기간 선택">
+        <label class="plan" data-plan="1m">
+          <input type="radio" name="plan" value="1m" checked>
+          <div class="plan-row">
+            <span class="plan-period">30일</span>
+            <span class="plan-prices">
+              <span class="plan-price-now">2,900원</span>
+            </span>
+          </div>
+          <div class="plan-meta">
+            <span>월 2,900원</span>
+            <span></span>
+          </div>
+        </label>
+        <label class="plan" data-plan="6m">
+          <input type="radio" name="plan" value="6m">
+          <div class="plan-row">
+            <span class="plan-period">6개월</span>
+            <span class="plan-prices">
+              <span class="plan-price-orig">17,400원</span>
+              <span class="plan-price-now">13,800원</span>
+            </span>
+          </div>
+          <div class="plan-meta">
+            <span>월 2,300원</span>
+            <span class="plan-badge">21% 할인</span>
+          </div>
+        </label>
+        <label class="plan" data-plan="12m">
+          <input type="radio" name="plan" value="12m">
+          <div class="plan-row">
+            <span class="plan-period">12개월</span>
+            <span class="plan-prices">
+              <span class="plan-price-orig">34,800원</span>
+              <span class="plan-price-now">22,800원</span>
+            </span>
+          </div>
+          <div class="plan-meta">
+            <span>월 1,900원</span>
+            <span class="plan-badge primary">최대 할인 · 12,000원 절약</span>
+          </div>
+        </label>
+      </div>
+
       <div class="field">
         <label for="subPhone">전화번호 (하이픈 없이)</label>
         <input id="subPhone" name="phone" type="tel" inputmode="numeric" pattern="01[016789][0-9]{7,8}" maxlength="11" placeholder="01012345678" required>
@@ -146,7 +244,7 @@ input,textarea{font:inherit;outline:none}
         <span>카카오 친구톡을 통한 <b>광고성 정보 수신</b>에 동의합니다. 매일 오전 8시 발송되며, 언제든지 해지 요청으로 수신을 중단할 수 있습니다.</span>
       </label>
       <div class="confirm-box" id="subConfirm"></div>
-      <button class="submit-btn" id="subSubmit" type="submit">결제하고 재구독 시작</button>
+      <button class="submit-btn" id="subSubmit" type="submit">2,900원 결제하기</button>
       <button class="cancel-btn" id="subCancel" type="button">취소</button>
       <div class="status" id="subStatus"></div>
       <div class="success-actions" id="subSuccess">
@@ -167,9 +265,26 @@ input,textarea{font:inherit;outline:none}
   const BRIEFICK_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_BRlDRwvdanR1sLX2b_Iagg_AtLA8Wyf';
   const PORTONE_STORE_ID = 'store-94ded677-c4c2-45a7-adc2-eb735d601a52';
   const PORTONE_CHANNEL_KEY = 'channel-key-e32b9dbf-38c1-43a0-a080-1e208f22ab40';
-  const SUBSCRIPTION_PRICE = 100;
-  const SUBSCRIPTION_ORDER_NAME = '브리픽 월간 재구독 (테스트)';
   const PENDING_KEY = 'briefickRenewPendingPayment';
+
+  // 가격 플랜 — 메인 모달(index.html PRICE_PLANS) 및 서버(payment-confirm)와 동기화 필수.
+  const PRICE_PLANS = {
+    '1m':  { days:30,  amount:2900,  testAmount:100, label:'30일',   orderName:'브리픽 30일 재구독' },
+    '6m':  { days:180, amount:13800, testAmount:100, label:'6개월',  orderName:'브리픽 6개월 재구독 (할인가)' },
+    '12m': { days:365, amount:22800, testAmount:100, label:'12개월', orderName:'브리픽 12개월 재구독 (할인가)' },
+  };
+  const TEST_MODE = false;
+  function planAmount(key){ const p=PRICE_PLANS[key]||PRICE_PLANS['1m']; return TEST_MODE?p.testAmount:p.amount; }
+  function getSelectedPlan(){
+    const r=document.querySelector('input[name="plan"]:checked');
+    return r?r.value:'1m';
+  }
+  function submitLabelFor(planKey, mode){
+    const p=PRICE_PLANS[planKey]||PRICE_PLANS['1m'];
+    const won=p.amount.toLocaleString('ko-KR')+'원';
+    if(mode==='extend') return `${p.label} ${won} 연장 결제하기`;
+    return `${won} 결제하기`;
+  }
 
   const card = document.getElementById('card');
   const form = document.getElementById('subscribeForm');
@@ -191,18 +306,34 @@ input,textarea{font:inherit;outline:none}
   function resetStatus(){ status.className='status'; status.textContent=''; }
   function showStatus(type,msg){ status.className='status show '+type; status.textContent=msg; }
 
+  function syncPlanSelectedClass(){
+    const sel=getSelectedPlan();
+    document.querySelectorAll('.plan').forEach(el=>{
+      el.classList.toggle('selected', el.getAttribute('data-plan')===sel);
+    });
+  }
+  function setPlanInputsDisabled(disabled){
+    document.querySelectorAll('input[name="plan"]').forEach(el=>{ el.disabled=disabled });
+    document.querySelectorAll('.plan').forEach(el=>{
+      el.style.pointerEvents=disabled?'none':'';
+      el.style.opacity=disabled?'0.6':'';
+    });
+  }
+
   // 상태: null | 'number' | 'extend'
   let confirmState = null;
 
   function resetToInput(){
     confirmState=null;
     submit.disabled=false;
-    submit.textContent='결제하고 재구독 시작';
+    submit.textContent=submitLabelFor(getSelectedPlan(), null);
     cancel.classList.remove('show');
+    setPlanInputsDisabled(false);
     hideConfirmBox();
     document.getElementById('subCompleteNotice').classList.remove('show');
     document.getElementById('subKakaoLink').classList.remove('emphasis');
     card.classList.remove('completed');
+    card.classList.remove('processing');
     phoneEl.disabled=false;
     consent.disabled=false;
     resetStatus();
@@ -212,6 +343,31 @@ input,textarea{font:inherit;outline:none}
     consent.disabled=false;
     resetToInput();
   });
+
+  // 플랜 선택 — 라디오 change 시 .selected 클래스 동기화 + submit 라벨 갱신
+  document.querySelectorAll('input[name="plan"]').forEach(r=>{
+    r.addEventListener('change',()=>{
+      syncPlanSelectedClass();
+      if(confirmState===null){ submit.textContent=submitLabelFor(getSelectedPlan(), null) }
+    });
+  });
+  syncPlanSelectedClass();
+
+  function markComplete(j){
+    const msgMap={ registered:'재구독 완료!', extended:'구독 연장 완료!' };
+    const mainMsg = msgMap[j.status] || '완료!';
+    const untilHtml = j.paid_until ? '<br><span class="until-date">('+j.paid_until.slice(0,10)+' 까지)</span>' : '';
+    status.className='status show success';
+    status.innerHTML = mainMsg + untilHtml;
+    document.getElementById('subCompleteNotice').classList.add('show');
+    document.getElementById('subKakaoLink').classList.add('emphasis');
+    card.classList.remove('processing');
+    card.classList.add('completed');
+    phoneEl.disabled=true;
+    consent.disabled=true;
+    submit.disabled=true;submit.textContent='구독 완료됨';
+    cancel.classList.remove('show');
+  }
 
   // 포트원 모바일 REDIRECTION 복귀 처리
   async function handlePortoneReturn(){
@@ -227,7 +383,6 @@ input,textarea{font:inherit;outline:none}
     // 결제창 거쳐온 값 복원 (placeholder만 보이는 어색함 방지)
     phoneEl.value = pending.phone || '';
     consent.checked = true;
-    // 복귀 시점에 즉시 입력·액션 잠금
     phoneEl.disabled = true;
     consent.disabled = true;
     submit.disabled = true;
@@ -236,49 +391,37 @@ input,textarea{font:inherit;outline:none}
     if(code){
       showStatus('error','결제 실패: '+(params.get('message')||code));
       phoneEl.disabled=false; consent.disabled=false;
-      submit.disabled=false; submit.textContent='결제하고 재구독 시작';
+      submit.disabled=false; submit.textContent=submitLabelFor(pending.plan||'1m','number');
       return true;
     }
     status.className='status show info';
-    status.textContent='결제 확인 중...';
+    status.textContent='결제 처리 중…';
+    card.classList.add('processing');
     submit.style.display='none';
     try{
       const res = await fetch(SUPABASE_URL+'/functions/v1/payment-confirm',{
         method:'POST',
         headers:{'Content-Type':'application/json','Authorization':'Bearer '+BRIEFICK_SUPABASE_PUBLISHABLE_KEY,'apikey':BRIEFICK_SUPABASE_PUBLISHABLE_KEY},
-        body:JSON.stringify({paymentId,phone:pending.phone,ad_consent:true,expected_amount:SUBSCRIPTION_PRICE}),
+        body:JSON.stringify({paymentId,phone:pending.phone,ad_consent:true,plan:pending.plan||'1m',expected_amount:planAmount(pending.plan||'1m')}),
       });
       const j = await res.json();
       if(!res.ok||!j.ok){
+        card.classList.remove('processing');
         showStatus('error', j.error||'결제 검증 오류');
         phoneEl.disabled=false; consent.disabled=false;
-        submit.style.display=''; submit.disabled=false; submit.textContent='결제하고 재구독 시작';
+        submit.style.display=''; submit.disabled=false; submit.textContent=submitLabelFor(pending.plan||'1m','number');
       }else{
         markComplete(j);
       }
     }catch(err){
+      card.classList.remove('processing');
       showStatus('error','네트워크 오류: '+err.message);
       phoneEl.disabled=false; consent.disabled=false;
-      submit.style.display=''; submit.disabled=false; submit.textContent='결제하고 재구독 시작';
+      submit.style.display=''; submit.disabled=false; submit.textContent=submitLabelFor(pending.plan||'1m','number');
     }
     return true;
   }
   handlePortoneReturn();
-
-  function markComplete(j){
-    const msgMap={ registered:'재구독 완료!', extended:'구독 연장 완료!' };
-    const mainMsg = msgMap[j.status] || '완료!';
-    const untilHtml = j.paid_until ? '<br><span class="until-date">('+j.paid_until.slice(0,10)+' 까지)</span>' : '';
-    status.className='status show success';
-    status.innerHTML = mainMsg + untilHtml;
-    document.getElementById('subCompleteNotice').classList.add('show');
-    document.getElementById('subKakaoLink').classList.add('emphasis');
-    card.classList.add('completed');
-    phoneEl.disabled=true;
-    consent.disabled=true;
-    submit.disabled=true;submit.textContent='구독 완료됨';
-    cancel.classList.remove('show');
-  }
 
   form.addEventListener('submit', async e=>{
     e.preventDefault();
@@ -298,7 +441,9 @@ input,textarea{font:inherit;outline:none}
 
     // 1단계: 구독 상태 조회 후 확인 단계로 전환
     if(confirmState===null){
-      submit.disabled=true;submit.textContent='확인 중...';
+      submit.disabled=true;submit.textContent='기존 구독 확인 중…';
+      const planKey=getSelectedPlan();
+      const planDays=PRICE_PLANS[planKey].days;
       let isActive=false, paidUntilStr='', extStr='', daysLeft=0;
       try{
         const checkRes = await fetch(SUPABASE_URL+'/functions/v1/check-subscription',{
@@ -312,67 +457,85 @@ input,textarea{font:inherit;outline:none}
           const until = new Date(chk.paid_until);
           const now = new Date();
           daysLeft = Math.max(0, Math.ceil((until - now) / 86400000));
-          const extended = new Date(until.getTime() + 30 * 86400000);
+          const extended = new Date(until.getTime() + planDays * 86400000);
           paidUntilStr = until.toISOString().slice(0,10);
           extStr = extended.toISOString().slice(0,10);
         }
       }catch(_e){}
 
       if(isActive){
-        showConfirmBox('이 번호로 발송', fmtPhone(phone),
-          paidUntilStr+'까지 구독 중 (남은 '+daysLeft+'일). 지금 결제하면 '+extStr+'까지 연장');
-        submit.textContent='확인하고 연장 결제';
+        const planLabel=PRICE_PLANS[planKey].label;
+        const extHtml=
+          '<div class="confirm-ext">'+
+            '<div><span>현재 만료</span><b>'+paidUntilStr+'</b></div>'+
+            '<div><span>'+planLabel+' 결제 시</span><b>'+extStr+'</b></div>'+
+          '</div>';
+        showConfirmBox('이 번호로 발송', fmtPhone(phone), extHtml);
+        submit.textContent=submitLabelFor(planKey,'extend');
         confirmState='extend';
       }else{
         showConfirmBox('이 번호로 매일 오전 8시 발송', fmtPhone(phone), '번호가 맞으신가요?');
-        submit.textContent='맞습니다, 결제하기';
+        submit.textContent=submitLabelFor(planKey,'number');
         confirmState='number';
       }
       phoneEl.disabled=true;
       consent.disabled=true;
+      setPlanInputsDisabled(true);
       submit.disabled=false;
       cancel.classList.add('show');
+      // 2단계 진입 — confirm 박스·결제 버튼 viewport에 들어오도록 페이지 끝까지 스크롤
+      requestAnimationFrame(()=>{
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      });
       return;
     }
 
+    const planKey=getSelectedPlan();
+    const plan=PRICE_PLANS[planKey];
+    const amount=planAmount(planKey);
     const paymentId = 'briefick'+Date.now()+Math.random().toString(36).slice(2,8);
-    submit.disabled=true;submit.textContent='결제창 여는 중...';
-    try{ sessionStorage.setItem(PENDING_KEY, JSON.stringify({ phone, paymentId })); }catch(_e){}
+    submit.disabled=true;submit.textContent='결제창 여는 중…';
+    let completed=false;
+    try{ sessionStorage.setItem(PENDING_KEY, JSON.stringify({ phone, paymentId, plan: planKey })); }catch(_e){}
     try{
       const pay = await PortOne.requestPayment({
         storeId: PORTONE_STORE_ID,
         channelKey: PORTONE_CHANNEL_KEY,
         paymentId,
-        orderName: SUBSCRIPTION_ORDER_NAME,
-        totalAmount: SUBSCRIPTION_PRICE,
+        orderName: plan.orderName + (TEST_MODE ? ' (테스트)' : ''),
+        totalAmount: amount,
         currency: 'KRW',
         payMethod: 'CARD',
         customer: { customerId: phone, phoneNumber: phone },
         windowType: { pc: 'IFRAME', mobile: 'REDIRECTION' },
         redirectUrl: location.origin + location.pathname,
-        bypass: { galaxia: { ITEM_CODE: 'BRIEFICK1M' } },
+        bypass: { galaxia: { ITEM_CODE: 'BRIEFICK_'+planKey.toUpperCase() } },
       });
       if(pay.code){
         showStatus('error','결제 실패: '+(pay.message||pay.code));
-        submit.disabled=false;submit.textContent='결제하고 재구독 시작';
         return;
       }
-      submit.textContent='결제 확인 중...';
+      status.className='status show info';
+      status.textContent='결제 처리 중…';
+      card.classList.add('processing');
       const res = await fetch(SUPABASE_URL+'/functions/v1/payment-confirm',{
         method:'POST',
         headers:{'Content-Type':'application/json','Authorization':'Bearer '+BRIEFICK_SUPABASE_PUBLISHABLE_KEY,'apikey':BRIEFICK_SUPABASE_PUBLISHABLE_KEY},
-        body:JSON.stringify({paymentId,phone,ad_consent:true,expected_amount:SUBSCRIPTION_PRICE}),
+        body:JSON.stringify({paymentId,phone,ad_consent:true,plan:planKey,expected_amount:amount}),
       });
       const j = await res.json();
       if(!res.ok||!j.ok){
+        card.classList.remove('processing');
         showStatus('error', j.error||'결제 검증 중 오류가 발생했습니다.');
-        submit.disabled=false;submit.textContent='결제하고 재구독 시작';
       }else{
         markComplete(j);
+        completed=true;
       }
     }catch(err){
+      card.classList.remove('processing');
       showStatus('error','오류: '+err.message);
-      submit.disabled=false;submit.textContent='결제하고 재구독 시작';
+    }finally{
+      if(!completed){submit.disabled=false;submit.textContent=submitLabelFor(planKey,confirmState||null)}
     }
   });
 })();

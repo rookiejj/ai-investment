@@ -47,14 +47,14 @@ function tomorrowKstBounds(now: Date): { startIso: string; endIso: string; dateL
 }
 
 // ═══ 본문 ═══
-function buildExpiryMessage(expiryDate: string, renewUrl: string): string {
+function buildExpiryMessage(expiryDate: string): string {
   return `안녕하세요! ${SHOP_NAME}입니다.
 
 구독 중이신 서비스가 내일(${expiryDate}) 종료될 예정입니다.
 
 ${SHOP_NAME}은 자동 결제가 없는 상품으로, 만료 전 재결제하셔야 끊김 없이 뉴스를 받으실 수 있습니다.
 
-▶ 재구독: ${renewUrl}`;
+아래 버튼을 눌러 재구독을 진행해주세요.`;
 }
 
 // ═══ 알리고 프록시 호출 (VPS 경유) ═══
@@ -78,16 +78,29 @@ async function aligoSendFriendtalk(opts: {
   proxySecret: string;
   receivers: Target[];
   message: string;
+  buttonName?: string;
+  buttonUrl?: string;
 }): Promise<AligoSendResult> {
-  const { proxyUrl, proxySecret, receivers, message } = opts;
+  const { proxyUrl, proxySecret, receivers, message, buttonName, buttonUrl } = opts;
   const phones = receivers.map((r) => r.phone);
+  // 친구톡 버튼 — 알리고 /akv10/friend/send/ button_1 JSON 형식.
+  // VPS 프록시가 button 필드를 받아 알리고 API에 그대로 forward 한다고 가정.
+  const button = (buttonName && buttonUrl) ? {
+    button: [{
+      name: buttonName,
+      linkType: "WL",
+      linkTypeName: "웹링크",
+      linkMo: buttonUrl,
+      linkPc: buttonUrl,
+    }],
+  } : undefined;
   const res = await fetch(proxyUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "X-Proxy-Secret": proxySecret,
     },
-    body: JSON.stringify({ phones, message }),
+    body: JSON.stringify({ phones, message, ...(button ? { button } : {}) }),
   });
   const json = await res.json();
   if (!res.ok) {
@@ -145,7 +158,7 @@ Deno.serve(async (req) => {
     const list = (targets ?? []) as Target[];
 
     const renewUrl = `${SITE_URL.replace(/\/$/, "")}/renew`;
-    const message = buildExpiryMessage(dateLabel, renewUrl);
+    const message = buildExpiryMessage(dateLabel);
 
     if (dryRun) {
       return new Response(JSON.stringify({
@@ -164,7 +177,11 @@ Deno.serve(async (req) => {
     let result: AligoSendResult | null = null;
     let errMsg: string | null = null;
     try {
-      result = await aligoSendFriendtalk({ proxyUrl, proxySecret, receivers: list, message });
+      result = await aligoSendFriendtalk({
+        proxyUrl, proxySecret, receivers: list, message,
+        buttonName: "재구독 하러가기",
+        buttonUrl: renewUrl,
+      });
       if (result.code !== 0) errMsg = `aligo code=${result.code}: ${result.message}`;
     } catch (e) {
       errMsg = e instanceof Error ? e.message : String(e);

@@ -15,11 +15,23 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
 const PORTONE_API = "https://api.portone.io";
-const EXPECTED_AMOUNT_DEFAULT = 100;        // 월 구독 상품 가격 (원)
-const MONTH_DAYS = 30;                       // 1개월 = 30일로 단순 계산
+
+// 가격 플랜 — 클라이언트(index.html PRICE_PLANS)와 동기화 필수.
+// 갤럭시아 테스트 채널은 실제 청구 안 됨 — 정가로 결제 흐름 검증.
+// 라이브 채널 전환 시에도 그대로 정가 적용.
+const TEST_MODE = false;
+const PRICE_PLANS: Record<string, { days: number; amount: number; testAmount: number; productName: string }> = {
+  "1m":  { days: 30,  amount: 2900,  testAmount: 100, productName: "30일 구독" },
+  "6m":  { days: 180, amount: 13800, testAmount: 100, productName: "6개월 구독" },
+  "12m": { days: 365, amount: 22800, testAmount: 100, productName: "12개월 구독" },
+};
+const DEFAULT_PLAN = "1m";
+function planExpectedAmount(key: string): number {
+  const p = PRICE_PLANS[key] ?? PRICE_PLANS[DEFAULT_PLAN];
+  return TEST_MODE ? p.testAmount : p.amount;
+}
 
 const SHOP_NAME    = "브리픽";
-const PRODUCT_NAME = "월간 구독";
 
 // 결제 완료 알림톡 본문 — 알리고 콘솔 등록 템플릿(UH_6779)과 동일한 문구.
 // 변수는 #{상점명}·#{상품명}·#{만료일} 자리에 실제 값 치환해 발송.
@@ -57,6 +69,7 @@ function json(body: unknown, init: ResponseInit & { cors: Record<string, string>
 async function sendPaymentAlimtalk(opts: {
   phone: string;
   expiryDate: string;   // YYYY-MM-DD
+  productName: string;
 }): Promise<{ ok: boolean; mid?: string; error?: string }> {
   const proxyUrl    = Deno.env.get("ALIGO_PROXY_ALIMTALK_URL");
   const proxySecret = Deno.env.get("ALIGO_PROXY_SECRET");
@@ -68,7 +81,7 @@ async function sendPaymentAlimtalk(opts: {
   // 등록된 템플릿 본문에 변수 치환 — 알리고는 송신 메시지가 등록 템플릿과 일치해야 통과
   const message = PAYMENT_TEMPLATE_BODY
     .replace("#{상점명}", SHOP_NAME)
-    .replace("#{상품명}", PRODUCT_NAME)
+    .replace("#{상품명}", opts.productName)
     .replace("#{만료일}", opts.expiryDate);
 
   // AC(채널추가) 버튼 — 알리고 등록 템플릿(UH_6779)의 버튼 이름과 정확히 일치해야 노출.
@@ -115,9 +128,10 @@ Deno.serve(async (req) => {
     const paymentId      = typeof body.paymentId === "string" ? body.paymentId : "";
     const phone          = typeof body.phone === "string" ? body.phone : "";
     const adConsent      = body.ad_consent === true;
-    const expectedAmount = typeof body.expected_amount === "number"
-      ? body.expected_amount
-      : EXPECTED_AMOUNT_DEFAULT;
+    const planKey        = typeof body.plan === "string" && PRICE_PLANS[body.plan] ? body.plan : DEFAULT_PLAN;
+    const plan           = PRICE_PLANS[planKey];
+    // 클라이언트가 보낸 expected_amount는 참고용. 권위는 서버 PRICE_PLANS.
+    const expectedAmount = planExpectedAmount(planKey);
 
     if (!paymentId) return json({ ok: false, error: "paymentId 누락" }, { status: 400, cors });
     if (!adConsent) return json({ ok: false, error: "광고 수신 동의가 필요합니다." }, { status: 400, cors });
@@ -159,7 +173,7 @@ Deno.serve(async (req) => {
     );
 
     const nowMs = Date.now();
-    const extendMs = MONTH_DAYS * 24 * 3600 * 1000;
+    const extendMs = plan.days * 24 * 3600 * 1000;
     const nowIso = new Date(nowMs).toISOString();
 
     const { data: existing, error: selErr } = await supabase
@@ -235,11 +249,11 @@ Deno.serve(async (req) => {
 
     // 5) 결제 완료 알림톡 발송 (실패해도 결제 자체는 성공 처리)
     const expiryDate = newPaidUntil.toISOString().slice(0, 10);
-    const alim = await sendPaymentAlimtalk({ phone: cleaned, expiryDate });
+    const alim = await sendPaymentAlimtalk({ phone: cleaned, expiryDate, productName: plan.productName });
     await supabase.from("send_logs").insert({
       subscriber_id: subscriberId,
       phone: cleaned,
-      message: `결제 완료 알림 (${PRODUCT_NAME}, 만료일 ${expiryDate})`,
+      message: `결제 완료 알림 (${plan.productName}, 만료일 ${expiryDate})`,
       char_count: 0,
       status: alim.ok ? "success" : "fail",
       message_type: "alimtalk",

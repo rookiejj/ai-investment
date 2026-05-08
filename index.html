@@ -593,27 +593,93 @@ section:first-of-type{padding-top:48px;border-top:0}
 /* ═══ SUBSCRIBE MODAL (legacy 포팅, sub- 프리픽스로 deep-dive 모달과 격리) ═══ */
 .sub-modal-bg{
   position:fixed;inset:0;background:rgba(13,13,13,0.45);backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;
-  z-index:1000;padding:20px;
+  -webkit-backdrop-filter:blur(8px);display:none;align-items:flex-end;justify-content:center;
+  z-index:1000;padding:0;
   overscroll-behavior:contain;touch-action:none;
 }
 .sub-modal-bg.show{display:flex}
 body.sub-modal-open{overflow:hidden}
 .sub-modal{
-  background:var(--panel);border-radius:20px;padding:32px;width:100%;max-width:440px;
-  box-shadow:0 24px 60px rgba(0,0,0,0.18);position:relative;
+  background:var(--panel);border-radius:24px 24px 0 0;padding:0 24px 24px;width:100%;
+  box-shadow:0 -8px 30px rgba(0,0,0,0.12);position:relative;
   animation:subModalIn .25s cubic-bezier(.4,0,.2,1);
-  max-height:calc(100vh - 40px);overflow-y:auto;-webkit-overflow-scrolling:touch;
+  max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch;
   overscroll-behavior:contain;touch-action:pan-y;
 }
-@keyframes subModalIn{from{opacity:0;transform:translateY(12px) scale(0.98)}to{opacity:1;transform:none}}
-.sub-modal h2{font:600 22px/1.3 'Pretendard Variable',Pretendard,sans-serif;letter-spacing:-0.44px;margin:0 0 8px;color:var(--fg)}
-.sub-modal p.sub-modal-sub{color:var(--mut);font-size:14px;line-height:1.5;margin:0 0 20px}
+@media(min-width:768px){
+  .sub-modal-bg{align-items:center;padding:24px}
+  .sub-modal{
+    border-radius:20px;max-width:440px;max-height:88vh;
+    box-shadow:0 24px 60px rgba(0,0,0,0.18);
+  }
+}
+@keyframes subModalIn{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+
+/* 헤더 — sticky로 모달 상단 고정. 좌우 패딩은 음수 마진으로 풀-블리드 */
+.sub-modal-header{
+  position:sticky;top:0;z-index:5;background:var(--panel);
+  margin:0 -24px 14px;padding:14px 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  border-bottom:1px solid var(--border);
+}
+/* 모바일 드래그 핸들 — 헤더 안으로 이동 */
+.sub-modal-header::before{
+  content:'';display:block;position:absolute;top:6px;left:50%;transform:translateX(-50%);
+  width:36px;height:4px;border-radius:2px;background:var(--border-md);
+}
+@media(min-width:768px){
+  .sub-modal-header{padding:16px 24px}
+  .sub-modal-header::before{display:none}
+}
+.sub-modal h2{font:600 20px/1.3 'Pretendard Variable',Pretendard,sans-serif;letter-spacing:-0.4px;margin:0;color:var(--fg);flex:1;min-width:0}
+.sub-modal p.sub-modal-sub{color:var(--mut);font-size:14px;line-height:1.5;margin:0 0 16px}
+.sub-modal-extend-note{display:inline-block;margin-top:4px;font-size:12px;color:var(--err);font-weight:500}
+
+/* ── 가격 플랜 선택 ── */
+.sub-modal-plans{
+  display:grid;grid-template-columns:1fr;gap:8px;margin:0 0 18px;
+}
+.sub-modal-plan{
+  position:relative;display:block;cursor:pointer;
+  padding:14px 16px;border:1.5px solid var(--border);border-radius:12px;
+  background:var(--bg);transition:border-color .15s ease, background .15s ease, transform .15s ease;
+}
+.sub-modal-plan:hover{border-color:var(--border-md)}
+.sub-modal-plan.selected{
+  border-color:var(--fg);background:#fff;
+  box-shadow:0 2px 10px rgba(0,0,0,.06);
+}
+.sub-modal-plan input[type="radio"]{position:absolute;opacity:0;pointer-events:none}
+.plan-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.plan-period{
+  font:600 15px/1.2 'Pretendard Variable',Pretendard,sans-serif;
+  color:var(--fg);letter-spacing:-0.3px;
+}
+.plan-prices{display:flex;align-items:baseline;gap:6px}
+.plan-price-orig{
+  font:500 13px/1.2 'Inter',sans-serif;color:var(--mut);
+  text-decoration:line-through;text-decoration-thickness:1px;
+}
+.plan-price-now{
+  font:700 17px/1.2 'Pretendard Variable',Pretendard,sans-serif;
+  color:var(--fg);letter-spacing:-0.3px;
+}
+.plan-meta{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  margin-top:6px;font:500 12px/1.3 'Inter',sans-serif;color:var(--mut);
+}
+.plan-meta .plan-permonth{color:var(--mut)}
+.plan-badge{
+  display:inline-block;padding:3px 7px;border-radius:5px;
+  font:600 11px/1 'Inter',sans-serif;letter-spacing:0.2px;
+  background:#fff4d6;color:#8a5400;
+}
+.plan-badge.primary{background:var(--fg);color:#fff}
 .sub-modal-close{
-  position:absolute;top:16px;right:16px;width:32px;height:32px;
+  width:32px;height:32px;flex-shrink:0;
   border:none;background:var(--border-md);border-radius:50%;cursor:pointer;
   display:flex;align-items:center;justify-content:center;color:var(--fg);
-  font-size:18px;line-height:1;transition:background .2s;
+  font-size:18px;line-height:1;transition:background .2s;padding:0;
 }
 .sub-modal-close:hover{background:var(--fg);color:#fff}
 .sub-modal-field{margin-bottom:14px}
@@ -624,6 +690,10 @@ body.sub-modal-open{overflow:hidden}
   font:400 15px/1.4 'Inter',sans-serif;color:var(--fg);transition:border-color .2s;
 }
 .sub-modal-field input[type="tel"]:focus{outline:none;border-color:var(--acc)}
+.sub-modal-field input[type="tel"]:disabled{
+  background:#f0f0f0;color:var(--mut2);border-color:var(--border);
+  cursor:not-allowed;
+}
 .sub-modal-consent{
   display:flex;align-items:flex-start;gap:10px;padding:14px;
   background:var(--acc-light);border-radius:10px;margin:16px 0 20px;
@@ -666,6 +736,17 @@ body.sub-modal-open{overflow:hidden}
 .sub-confirm-box .sub-confirm-note{
   display:block;font:500 13px/1.5 'Inter',sans-serif;color:var(--fg2);
 }
+.sub-confirm-ext{
+  display:flex;flex-direction:column;gap:4px;
+  max-width:240px;margin:6px auto 0;
+}
+.sub-confirm-ext > div{
+  display:flex;justify-content:space-between;
+  font:500 13px/1.5 'Inter',sans-serif;color:var(--fg2);
+}
+.sub-confirm-ext > div > b{
+  font-weight:600;color:var(--fg);font-variant-numeric:tabular-nums;
+}
 .sub-modal-success-actions{margin-top:16px;display:flex;flex-direction:column;gap:10px}
 .sub-modal-success-actions .sub-kakao-link{
   display:block;padding:12px;background:#FEE500;color:#3c1e1e;text-decoration:none;
@@ -697,14 +778,31 @@ body.sub-modal-open{overflow:hidden}
   text-align:center;letter-spacing:-0.1px;
 }
 .sub-modal.completed > .sub-modal-test-banner,
-.sub-modal.completed > h2,
 .sub-modal.completed > p.sub-modal-sub,
+.sub-modal.completed .sub-modal-plans,
 .sub-modal.completed .sub-modal-field,
 .sub-modal.completed .sub-modal-consent,
 .sub-modal.completed .sub-modal-honeypot,
 .sub-modal.completed .sub-confirm-box,
 .sub-modal.completed #subSubmit,
 .sub-modal.completed #subCancel{display:none !important}
+
+/* 결제 완료 후 서버 검증 중 — plan·전화번호·동의·confirm 박스 모두 숨겨 깔끔하게.
+   .processing은 결제 진행 중 임시 상태. .completed로 전환되면 자동으로 풀림. */
+.sub-modal.processing > .sub-modal-test-banner,
+.sub-modal.processing > p.sub-modal-sub,
+.sub-modal.processing .sub-modal-plans,
+.sub-modal.processing .sub-modal-field,
+.sub-modal.processing .sub-modal-consent,
+.sub-modal.processing .sub-modal-honeypot,
+.sub-modal.processing .sub-confirm-box,
+.sub-modal.processing #subSubmit,
+.sub-modal.processing #subCancel{display:none !important}
+.sub-modal.processing .sub-modal-status{
+  margin:24px 0;padding:32px 18px;font-size:15px;font-weight:500;
+  border-radius:12px;text-align:center;min-height:80px;
+  display:flex !important;align-items:center;justify-content:center;
+}
 .sub-modal.completed .sub-modal-status{
   margin-top:8px;padding:16px;font-size:15px;font-weight:500;
   border-radius:12px;text-align:center;
@@ -954,11 +1052,56 @@ body.sub-modal-open{overflow:hidden}
 <!-- Subscribe Modal -->
 <div class="sub-modal-bg" id="subscribeModal" aria-hidden="true" role="dialog" aria-labelledby="subscribeTitle">
   <div class="sub-modal">
-    <button class="sub-modal-close" type="button" aria-label="닫기" id="subscribeClose">✕</button>
-    <h2 id="subscribeTitle">브리픽 구독하기</h2>
+    <div class="sub-modal-header">
+      <h2 id="subscribeTitle">브리픽 구독하기</h2>
+      <button class="sub-modal-close" type="button" aria-label="닫기" id="subscribeClose">✕</button>
+    </div>
     <div class="sub-modal-test-banner">본 결제는 테스트용으로, 실제로는 결제되지 않습니다.</div>
-    <p class="sub-modal-sub">매일 아침 8시, 최신 경제 뉴스를 카카오톡으로 받아보세요.<br><b>월 100원 · 1회 결제당 30일 이용</b></p>
+    <p class="sub-modal-sub">매일 아침 8시, 최신 경제 뉴스를 카카오톡으로 받아보세요.<br><span class="sub-modal-extend-note">이미 구독 중이신 분들은 기간이 연장됩니다.</span></p>
     <form id="subscribeForm" novalidate autocomplete="off">
+      <div class="sub-modal-plans" role="radiogroup" aria-label="구독 기간 선택">
+        <label class="sub-modal-plan" data-plan="1m">
+          <input type="radio" name="plan" value="1m" checked>
+          <div class="plan-row">
+            <span class="plan-period">30일</span>
+            <span class="plan-prices">
+              <span class="plan-price-now">2,900원</span>
+            </span>
+          </div>
+          <div class="plan-meta">
+            <span class="plan-permonth">월 2,900원</span>
+            <span></span>
+          </div>
+        </label>
+        <label class="sub-modal-plan" data-plan="6m">
+          <input type="radio" name="plan" value="6m">
+          <div class="plan-row">
+            <span class="plan-period">6개월</span>
+            <span class="plan-prices">
+              <span class="plan-price-orig">17,400원</span>
+              <span class="plan-price-now">13,800원</span>
+            </span>
+          </div>
+          <div class="plan-meta">
+            <span class="plan-permonth">월 2,300원</span>
+            <span class="plan-badge">21% 할인</span>
+          </div>
+        </label>
+        <label class="sub-modal-plan" data-plan="12m">
+          <input type="radio" name="plan" value="12m">
+          <div class="plan-row">
+            <span class="plan-period">12개월</span>
+            <span class="plan-prices">
+              <span class="plan-price-orig">34,800원</span>
+              <span class="plan-price-now">22,800원</span>
+            </span>
+          </div>
+          <div class="plan-meta">
+            <span class="plan-permonth">월 1,900원</span>
+            <span class="plan-badge primary">최대 할인 · 12,000원 절약</span>
+          </div>
+        </label>
+      </div>
       <div class="sub-modal-field">
         <label for="subPhone">전화번호 (하이픈 없이)</label>
         <input id="subPhone" name="phone" type="tel" inputmode="numeric" pattern="01[016789][0-9]{7,8}" maxlength="11" placeholder="01012345678" required>
@@ -969,7 +1112,7 @@ body.sub-modal-open{overflow:hidden}
         <span>카카오 친구톡을 통한 <b>광고성 정보 수신</b>에 동의합니다. 매일 오전 8시 발송되며, 언제든지 해지 요청으로 수신을 중단할 수 있습니다.</span>
       </label>
       <div class="sub-confirm-box" id="subConfirm"></div>
-      <button class="sub-modal-submit" id="subSubmit" type="submit">결제하고 구독 시작</button>
+      <button class="sub-modal-submit" id="subSubmit" type="submit">2,900원 결제하기</button>
       <button class="sub-modal-cancel" id="subCancel" type="button">취소</button>
       <div class="sub-modal-status" id="subStatus"></div>
       <div class="sub-modal-success-actions" id="subSuccess">
@@ -2609,8 +2752,25 @@ boot();
   const BRIEFICK_SUPABASE_PUBLISHABLE_KEY='sb_publishable_BRlDRwvdanR1sLX2b_Iagg_AtLA8Wyf';
   const PORTONE_STORE_ID='store-94ded677-c4c2-45a7-adc2-eb735d601a52';
   const PORTONE_CHANNEL_KEY='channel-key-e32b9dbf-38c1-43a0-a080-1e208f22ab40';
-  const SUBSCRIPTION_PRICE=100;
-  const SUBSCRIPTION_ORDER_NAME='브리픽 월간 구독 (테스트)';
+  // 가격 플랜. 서버(payment-confirm)도 동일 매핑을 권위로 들고 있어야 함 — plan key·amount·days 동기화 필수.
+  // 라이브 전환 시 amount 적용, 베타 단계에선 testAmount(₩100)로 결제 통과.
+  const PRICE_PLANS={
+    '1m': { days:30,  amount:2900,  testAmount:100, label:'30일',   orderName:'브리픽 30일 구독' },
+    '6m': { days:180, amount:13800, testAmount:100, label:'6개월',  orderName:'브리픽 6개월 구독 (할인가)' },
+    '12m':{ days:365, amount:22800, testAmount:100, label:'12개월', orderName:'브리픽 12개월 구독 (할인가)' },
+  };
+  const TEST_MODE=false;  // false면 plan 정가로 결제. 갤럭시아 테스트 채널은 어차피 실청구 안 됨.
+  function planAmount(key){ const p=PRICE_PLANS[key]; return TEST_MODE?p.testAmount:p.amount; }
+  function getSelectedPlan(){
+    const r=document.querySelector('input[name="plan"]:checked');
+    return r?r.value:'1m';
+  }
+  function submitLabelFor(planKey, mode){
+    const p=PRICE_PLANS[planKey]||PRICE_PLANS['1m'];
+    const won=p.amount.toLocaleString('ko-KR')+'원';
+    if(mode==='extend') return `${p.label} ${won} 연장 결제하기`;
+    return `${won} 결제하기`;
+  }
 
   // 포트원 모바일 REDIRECTION 복귀 처리
   async function handlePortoneReturn(){
@@ -2643,24 +2803,27 @@ boot();
       s.className='sub-modal-status show error';
       s.textContent='결제 실패: '+(params.get('message')||code);
       phoneEl.disabled=false;consent.disabled=false;
-      sub.disabled=false;sub.textContent='결제하고 구독 시작';
+      sub.disabled=false;sub.textContent=submitLabelFor(pending.plan||'1m','number');
       return true;
     }
+    const subModalEl=document.querySelector('#subscribeModal .sub-modal');
     s.className='sub-modal-status show info';
-    s.textContent='결제 확인 중...';
+    s.textContent='결제 처리 중…';
+    subModalEl.classList.add('processing');
     sub.style.display='none';
     try{
       const res=await fetch(SUPABASE_URL+'/functions/v1/payment-confirm',{
         method:'POST',
         headers:{'Content-Type':'application/json','Authorization':'Bearer '+BRIEFICK_SUPABASE_PUBLISHABLE_KEY,'apikey':BRIEFICK_SUPABASE_PUBLISHABLE_KEY},
-        body:JSON.stringify({paymentId,phone:pending.phone,ad_consent:true,expected_amount:SUBSCRIPTION_PRICE}),
+        body:JSON.stringify({paymentId,phone:pending.phone,ad_consent:true,plan:pending.plan||'1m',expected_amount:planAmount(pending.plan||'1m')}),
       });
       const j=await res.json();
       if(!res.ok||!j.ok){
+        subModalEl.classList.remove('processing');
         s.className='sub-modal-status show error';
         s.textContent=j.error||'결제 검증 오류';
         phoneEl.disabled=false;consent.disabled=false;
-        sub.style.display='';sub.disabled=false;sub.textContent='결제하고 구독 시작';
+        sub.style.display='';sub.disabled=false;sub.textContent=submitLabelFor(pending.plan||'1m','number');
       }else{
         const msgMap={registered:'구독 완료!',extended:'구독 연장 완료!'};
         const mainMsg=msgMap[j.status]||'완료!';
@@ -2669,17 +2832,19 @@ boot();
         s.innerHTML=mainMsg+untilHtml;
         document.getElementById('subCompleteNotice').classList.add('show');
         document.getElementById('subKakaoLink').classList.add('emphasis');
-        document.querySelector('#subscribeModal .sub-modal').classList.add('completed');
+        subModalEl.classList.remove('processing');
+        subModalEl.classList.add('completed');
         document.getElementById('subPhone').disabled=true;
         document.getElementById('subConsent').disabled=true;
         sub.disabled=true;sub.textContent='구독 완료됨';
         document.getElementById('subCancel').classList.remove('show');
       }
     }catch(err){
+      subModalEl.classList.remove('processing');
       s.className='sub-modal-status show error';
       s.textContent='네트워크 오류: '+err.message;
       phoneEl.disabled=false;consent.disabled=false;
-      sub.style.display='';sub.disabled=false;sub.textContent='결제하고 구독 시작';
+      sub.style.display='';sub.disabled=false;sub.textContent=submitLabelFor(pending.plan||'1m','number');
     }
     return true;
   }
@@ -2707,14 +2872,30 @@ boot();
   let confirmState=null;
   function resetStatus(){status.className='sub-modal-status';status.textContent=''}
   function showStatus(type,msg){status.className='sub-modal-status show '+type;status.textContent=msg}
+  function syncPlanSelectedClass(){
+    const sel=getSelectedPlan();
+    document.querySelectorAll('.sub-modal-plan').forEach(el=>{
+      el.classList.toggle('selected', el.getAttribute('data-plan')===sel);
+    });
+  }
+  function setPlanInputsDisabled(disabled){
+    document.querySelectorAll('input[name="plan"]').forEach(el=>{ el.disabled=disabled });
+    document.querySelectorAll('.sub-modal-plan').forEach(el=>{
+      el.style.pointerEvents=disabled?'none':'';
+      el.style.opacity=disabled?'0.6':'';
+    });
+  }
   function resetToInput(){
     confirmState=null;
-    submit.disabled=false;submit.textContent='결제하고 구독 시작';
+    submit.disabled=false;submit.textContent=submitLabelFor(getSelectedPlan(),null);
     cancel.classList.remove('show');
+    setPlanInputsDisabled(false);
     hideConfirmBox();
     document.getElementById('subCompleteNotice').classList.remove('show');
     document.getElementById('subKakaoLink').classList.remove('emphasis');
-    document.querySelector('#subscribeModal .sub-modal').classList.remove('completed');
+    const _sm=document.querySelector('#subscribeModal .sub-modal');
+    _sm.classList.remove('completed');
+    _sm.classList.remove('processing');
     resetStatus();
   }
   function openSubModal(){
@@ -2725,6 +2906,8 @@ boot();
     document.documentElement.style.overflow='hidden';
     form.reset();
     phoneEl.disabled=false;consent.disabled=false;
+    // form.reset() 후 첫 라디오가 다시 checked. 시각 동기화.
+    syncPlanSelectedClass();
     resetToInput();
   }
   function closeSubModal(){
@@ -2740,6 +2923,16 @@ boot();
   closeBtn.addEventListener('click',closeSubModal);
   modal.addEventListener('click',e=>{if(e.target===modal)closeSubModal()});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('show'))closeSubModal()});
+
+  // 플랜 선택 — 라디오 change 시 .selected 클래스 동기화 + submit 라벨 갱신
+  document.querySelectorAll('input[name="plan"]').forEach(r=>{
+    r.addEventListener('change',()=>{
+      syncPlanSelectedClass();
+      // 입력 단계(confirmState===null)에서만 submit 라벨 갱신
+      if(confirmState===null){ submit.textContent=submitLabelFor(getSelectedPlan(),null) }
+    });
+  });
+  syncPlanSelectedClass();
 
   form.addEventListener('submit',async e=>{
     e.preventDefault();
@@ -2758,7 +2951,9 @@ boot();
     }
 
     if(confirmState===null){
-      submit.disabled=true;submit.textContent='확인 중...';
+      submit.disabled=true;submit.textContent='기존 구독 확인 중…';
+      const planKey=getSelectedPlan();
+      const planDays=PRICE_PLANS[planKey].days;
       let isActive=false,paidUntilStr='',extStr='',daysLeft=0;
       try{
         const checkRes=await fetch(SUPABASE_URL+'/functions/v1/check-subscription',{
@@ -2772,57 +2967,75 @@ boot();
           const until=new Date(chk.paid_until);
           const nowDate=new Date();
           daysLeft=Math.max(0,Math.ceil((until-nowDate)/86400000));
-          const extended=new Date(until.getTime()+30*86400000);
+          const extended=new Date(until.getTime()+planDays*86400000);
           paidUntilStr=until.toISOString().slice(0,10);
           extStr=extended.toISOString().slice(0,10);
         }
       }catch(_){/* 체크 실패 시 번호 확인 단계로 진행 */}
 
       if(isActive){
-        showConfirmBox('이 번호로 발송',fmtPhone(phone),
-          paidUntilStr+'까지 구독 중 (남은 '+daysLeft+'일). 지금 결제하면 '+extStr+'까지 연장');
-        submit.textContent='확인하고 연장 결제';
+        const planLabel=PRICE_PLANS[planKey].label;
+        const extHtml=
+          '<div class="sub-confirm-ext">'+
+            '<div><span>현재 만료</span><b>'+paidUntilStr+'</b></div>'+
+            '<div><span>'+planLabel+' 결제 시</span><b>'+extStr+'</b></div>'+
+          '</div>';
+        showConfirmBox('이 번호로 발송',fmtPhone(phone),extHtml);
+        submit.textContent=submitLabelFor(planKey,'extend');
         confirmState='extend';
       }else{
         showConfirmBox('이 번호로 매일 오전 8시 발송',fmtPhone(phone),'번호가 맞으신가요?');
-        submit.textContent='맞습니다, 결제하기';
+        submit.textContent=submitLabelFor(planKey,'number');
         confirmState='number';
       }
       phoneEl.disabled=true;consent.disabled=true;
+      setPlanInputsDisabled(true);
       submit.disabled=false;
       cancel.classList.add('show');
+      // 2단계 진입 — 결제 버튼·confirm 박스가 viewport에 보이도록 모달 끝까지 스크롤
+      requestAnimationFrame(()=>{
+        const sm=document.querySelector('#subscribeModal .sub-modal');
+        if(sm) sm.scrollTo({top:sm.scrollHeight,behavior:'smooth'});
+      });
       return;
     }
 
+    const planKey=getSelectedPlan();
+    const plan=PRICE_PLANS[planKey];
+    const amount=planAmount(planKey);
     const paymentId='briefick'+Date.now()+Math.random().toString(36).slice(2,8);
     submit.disabled=true;submit.textContent='결제창 여는 중...';
     let completed=false;
-    try{sessionStorage.setItem('briefickPendingPayment',JSON.stringify({phone,paymentId}))}catch(_){}
+    try{sessionStorage.setItem('briefickPendingPayment',JSON.stringify({phone,paymentId,plan:planKey}))}catch(_){}
     try{
       const pay=await PortOne.requestPayment({
         storeId:PORTONE_STORE_ID,
         channelKey:PORTONE_CHANNEL_KEY,
         paymentId,
-        orderName:SUBSCRIPTION_ORDER_NAME,
-        totalAmount:SUBSCRIPTION_PRICE,
+        orderName:plan.orderName+(TEST_MODE?' (테스트)':''),
+        totalAmount:amount,
         currency:'KRW',
         payMethod:'CARD',
         customer:{customerId:phone,phoneNumber:phone},
         windowType:{pc:'IFRAME',mobile:'REDIRECTION'},
         redirectUrl:location.origin+location.pathname,
-        bypass:{galaxia:{ITEM_CODE:'BRIEFICK1M'}},
+        bypass:{galaxia:{ITEM_CODE:'BRIEFICK_'+planKey.toUpperCase()}},
       });
       if(pay.code){
         showStatus('error','결제 실패: '+(pay.message||pay.code));return;
       }
-      submit.textContent='결제 확인 중...';
+      const subModalEl=document.querySelector('#subscribeModal .sub-modal');
+      status.className='sub-modal-status show info';
+      status.textContent='결제 처리 중…';
+      subModalEl.classList.add('processing');
       const res=await fetch(SUPABASE_URL+'/functions/v1/payment-confirm',{
         method:'POST',
         headers:{'Content-Type':'application/json','Authorization':'Bearer '+BRIEFICK_SUPABASE_PUBLISHABLE_KEY,'apikey':BRIEFICK_SUPABASE_PUBLISHABLE_KEY},
-        body:JSON.stringify({paymentId,phone,ad_consent:true,expected_amount:SUBSCRIPTION_PRICE}),
+        body:JSON.stringify({paymentId,phone,ad_consent:true,plan:planKey,expected_amount:amount}),
       });
       const j=await res.json();
       if(!res.ok||!j.ok){
+        subModalEl.classList.remove('processing');
         showStatus('error',j.error||'결제 검증 중 오류가 발생했습니다.');
       }else{
         const msgMap={registered:'구독 완료!',extended:'구독 연장 완료!'};
@@ -2832,16 +3045,19 @@ boot();
         status.innerHTML=mainMsg+untilHtml;
         document.getElementById('subCompleteNotice').classList.add('show');
         document.getElementById('subKakaoLink').classList.add('emphasis');
-        document.querySelector('#subscribeModal .sub-modal').classList.add('completed');
+        subModalEl.classList.remove('processing');
+        subModalEl.classList.add('completed');
         phoneEl.disabled=true;consent.disabled=true;
         submit.textContent='구독 완료됨';
         cancel.classList.remove('show');
         completed=true;
       }
     }catch(err){
+      const subModalEl=document.querySelector('#subscribeModal .sub-modal');
+      subModalEl.classList.remove('processing');
       showStatus('error','오류: '+err.message);
     }finally{
-      if(!completed){submit.disabled=false;submit.textContent='결제하고 구독 시작'}
+      if(!completed){submit.disabled=false;submit.textContent=submitLabelFor(planKey,confirmState||null)}
     }
   });
 })();
