@@ -249,12 +249,16 @@ async function main() {
 
   // Supabase Storage 업로드 — index=0(최신) + STYLE_STORAGE에 매핑된 화풍만 업로드
   // 매핑 없는 화풍(pixar·k-webtoon 등)은 로컬 파일만 저장하고 Storage 갱신 skip
+  // today-latest.png에도 함께 업로드 — 홈페이지는 이 파일만 읽어 항상 가장 최근 카툰 노출
+  // (시각 기반 분기 폐기, 화풍별 파일은 인스타 워크플로용으로 유지).
   if (upload && index === 0) {
     const storageFile = STYLE_STORAGE[styleKey];
     if (storageFile) {
       try {
         const publicUrl = await uploadToSupabase(buf, storageFile);
         console.log(`[uploaded] ${publicUrl}`);
+        const latestUrl = await uploadToSupabase(buf, 'today-latest.png');
+        console.log(`[uploaded] ${latestUrl}`);
       } catch (e) {
         console.error(`[upload failed] ${e.message}`);
         process.exit(1);
