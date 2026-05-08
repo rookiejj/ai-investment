@@ -20,10 +20,10 @@ const PORTONE_API = "https://api.portone.io";
 // 갤럭시아 테스트 채널은 실제 청구 안 됨 — 정가로 결제 흐름 검증.
 // 라이브 채널 전환 시에도 그대로 정가 적용.
 const TEST_MODE = false;
-const PRICE_PLANS: Record<string, { days: number; amount: number; testAmount: number; productName: string }> = {
-  "1m":  { days: 30,  amount: 2900,  testAmount: 100, productName: "30일 구독" },
-  "6m":  { days: 180, amount: 13800, testAmount: 100, productName: "6개월 구독" },
-  "12m": { days: 365, amount: 22800, testAmount: 100, productName: "12개월 구독" },
+const PRICE_PLANS: Record<string, { months: number; amount: number; testAmount: number; productName: string }> = {
+  "1m":  { months: 1,  amount: 2900,  testAmount: 100, productName: "30일 구독" },
+  "6m":  { months: 6,  amount: 13800, testAmount: 100, productName: "6개월 구독" },
+  "12m": { months: 12, amount: 22800, testAmount: 100, productName: "12개월 구독" },
 };
 const DEFAULT_PLAN = "1m";
 function planExpectedAmount(key: string): number {
@@ -173,8 +173,13 @@ Deno.serve(async (req) => {
     );
 
     const nowMs = Date.now();
-    const extendMs = plan.days * 24 * 3600 * 1000;
     const nowIso = new Date(nowMs).toISOString();
+    // 캘린더 기준 월 단위 연장 — Date.setMonth 사용. 30일 단위 단순 곱셈은 6개월=180일로 캘린더와 어긋남.
+    function addMonths(date: Date, months: number): Date {
+      const d = new Date(date);
+      d.setMonth(d.getMonth() + months);
+      return d;
+    }
 
     const { data: existing, error: selErr } = await supabase
       .from("subscribers")
@@ -188,11 +193,11 @@ Deno.serve(async (req) => {
     let newPaidUntil: Date;
 
     if (existing) {
-      // 기존 만료일이 미래면 그 위에 더하고, 과거면 지금부터 1개월
-      const base = existing.paid_until && new Date(existing.paid_until).getTime() > nowMs
-        ? new Date(existing.paid_until).getTime()
-        : nowMs;
-      newPaidUntil = new Date(base + extendMs);
+      // 기존 만료일이 미래면 그 위에 더하고, 과거면 지금부터
+      const baseDate = existing.paid_until && new Date(existing.paid_until).getTime() > nowMs
+        ? new Date(existing.paid_until)
+        : new Date(nowMs);
+      newPaidUntil = addMonths(baseDate, plan.months);
 
       const { error: updErr } = await supabase
         .from("subscribers")
@@ -212,7 +217,7 @@ Deno.serve(async (req) => {
       subscriberId = existing.id;
       status = "extended";
     } else {
-      newPaidUntil = new Date(nowMs + extendMs);
+      newPaidUntil = addMonths(new Date(nowMs), plan.months);
       const { data: inserted, error: insErr } = await supabase
         .from("subscribers")
         .insert({

@@ -269,9 +269,9 @@ input,textarea{font:inherit;outline:none}
 
   // 가격 플랜 — 메인 모달(index.html PRICE_PLANS) 및 서버(payment-confirm)와 동기화 필수.
   const PRICE_PLANS = {
-    '1m':  { days:30,  amount:2900,  testAmount:100, label:'30일',   orderName:'브리픽 30일 재구독' },
-    '6m':  { days:180, amount:13800, testAmount:100, label:'6개월',  orderName:'브리픽 6개월 재구독 (할인가)' },
-    '12m': { days:365, amount:22800, testAmount:100, label:'12개월', orderName:'브리픽 12개월 재구독 (할인가)' },
+    '1m':  { months:1,  amount:2900,  testAmount:100, label:'30일',   orderName:'브리픽 30일 재구독' },
+    '6m':  { months:6,  amount:13800, testAmount:100, label:'6개월',  orderName:'브리픽 6개월 재구독 (할인가)' },
+    '12m': { months:12, amount:22800, testAmount:100, label:'12개월', orderName:'브리픽 12개월 재구독 (할인가)' },
   };
   const TEST_MODE = false;
   function planAmount(key){ const p=PRICE_PLANS[key]||PRICE_PLANS['1m']; return TEST_MODE?p.testAmount:p.amount; }
@@ -443,7 +443,7 @@ input,textarea{font:inherit;outline:none}
     if(confirmState===null){
       submit.disabled=true;submit.textContent='기존 구독 확인 중…';
       const planKey=getSelectedPlan();
-      const planDays=PRICE_PLANS[planKey].days;
+      const planMonths=PRICE_PLANS[planKey].months;
       let isActive=false, paidUntilStr='', extStr='', daysLeft=0;
       try{
         const checkRes = await fetch(SUPABASE_URL+'/functions/v1/check-subscription',{
@@ -457,7 +457,8 @@ input,textarea{font:inherit;outline:none}
           const until = new Date(chk.paid_until);
           const now = new Date();
           daysLeft = Math.max(0, Math.ceil((until - now) / 86400000));
-          const extended = new Date(until.getTime() + planDays * 86400000);
+          const extended = new Date(until);
+          extended.setMonth(extended.getMonth() + planMonths);
           paidUntilStr = until.toISOString().slice(0,10);
           extStr = extended.toISOString().slice(0,10);
         }
