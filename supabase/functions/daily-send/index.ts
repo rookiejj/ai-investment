@@ -217,21 +217,12 @@ function fitToLimit(tabs: TabWithEntries[], max: number): string {
   return buildMessage(trimmedTabs);
 }
 
-// 솔라피 실패 메시지를 구독자 수신 상태로 정규화
-// SOLAPI/카카오 결과 코드 우선 매칭, 그 외는 텍스트 키워드로 폴백
-function deriveDeliveryState(msg: string | null | undefined): string {
-  if (!msg) return "unknown";
-  const m = msg.toLowerCase();
-  // 결과 코드 우선
-  if (/\b3050\b/.test(m)) return "not_friend";              // 친구가 아님
-  if (/\b3120\b/.test(m)) return "paused_ad";               // 광고성 메시지 수신 거부
-  if (/\b(3130|3140|3160)\b/.test(m)) return "blocked";     // 차단
-  // 텍스트 폴백
-  if (m.includes("friend") || m.includes("친구") || m.includes("수신거부 친구")) return "not_friend";
-  if (m.includes("block") || m.includes("차단")) return "blocked";
-  if (m.includes("광고") || m.includes("수신거부") || m.includes("ad ") || m.includes("ad_") || m.includes("marketing")) return "paused_ad";
-  return "unknown";
-}
+// 알리고는 SOLAPI와 달리 표준화된 실패 사유 코드를 제공하지 않음 (rslt_message 자연어만).
+// 사유별 분류는 의미 없는 키워드 매칭이라 ok/fail/unknown 3단계로만 구분.
+// - ok: 발송 성공
+// - fail: 그룹 전체 실패 (errMsg 있음)
+// - unknown: 부분 실패 (폰별 결과 모름)
+// 자연어 사유는 send_logs.provider_message에 그대로 보관 — 필요 시 관리자가 직접 확인.
 
 // ═══ 알리고 프록시 호출 (VPS 경유) ══════════════════════
 // 알리고 API는 IP 화이트리스트가 강제라 동적 IP인 Edge Function에서 직접 호출 불가.
@@ -397,7 +388,7 @@ Deno.serve(async (req) => {
     const batchId = crypto.randomUUID();
     const logs: Array<Record<string, unknown>> = [];
     // 상태별 id 집합 — 발송 후 subscribers.delivery_state 일괄 갱신
-    const stateGroups: Record<string, string[]> = { ok: [], not_friend: [], blocked: [], paused_ad: [], unknown: [] };
+    const stateGroups: Record<string, string[]> = { ok: [], fail: [], unknown: [] };
 
     for (let i = 0; i < subs.length; i += BATCH_SIZE) {
       const batch = subs.slice(i, i + BATCH_SIZE);
@@ -416,8 +407,8 @@ Deno.serve(async (req) => {
       }
 
       // 알리고는 per-phone 실패 정보를 안 줌 — 부분 실패면 어느 폰이 실패했는지 모름.
-      // - 전체 실패(errMsg): 모두 fail + deriveDeliveryState로 상태 추정
-      // - 부분 실패(fcnt > 0): 폰별 결과 모르므로 모두 unknown 처리 (delivery_state 갱신 skip)
+      // - 전체 실패(errMsg): 모두 status=fail · delivery_state=fail
+      // - 부분 실패(fcnt > 0): 폰별 결과 모르므로 status=success(그룹 전송 자체는 성공) + delivery_state=unknown (갱신 skip)
       // - 전체 성공: 모두 ok
       const fcnt = result?.info?.fcnt ?? 0;
       const total = result?.info?.total ?? batch.length;
@@ -441,9 +432,7 @@ Deno.serve(async (req) => {
           provider_msg_id: groupId,
           batch_id: batchId,
         });
-        const state = failed
-          ? deriveDeliveryState(providerMsg)
-          : (partialFailed ? "unknown" : "ok");
+        const state = failed ? "fail" : (partialFailed ? "unknown" : "ok");
         stateGroups[state].push(s.id);
       }
 

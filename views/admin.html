@@ -122,9 +122,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 /* 배지 */
 .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.2px;text-transform:uppercase}
 .badge.success,.badge.active,.badge.ok,.badge.paid{background:#d4fae8;color:#0a7a50}
-.badge.fail,.badge.cancelled,.badge.blocked,.badge.failed{background:#fde8e8;color:var(--danger)}
+.badge.fail,.badge.cancelled,.badge.failed{background:#fde8e8;color:var(--danger)}
 .badge.skipped,.badge.expired,.badge.unknown,.badge.refunded{background:#f2f2f2;color:var(--mut)}
-.badge.paused,.badge.not_friend,.badge.paused_ad{background:#fff4e5;color:#a35a00}
+.badge.paused{background:#fff4e5;color:#a35a00}
 .badge.friendtalk{background:#e8f4ff;color:#0a6abf}
 .badge.alimtalk{background:#f3e8ff;color:#6a0dad}
 .badge.sms{background:#f2f2f2;color:var(--mut)}
@@ -385,12 +385,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
             <option value="">상태 전체</option>
           </select>
           <select id="sDelivery">
-            <option value="">구독 상태 전체</option>
+            <option value="">발송 상태 전체</option>
             <option value="ok">ok (정상 수신)</option>
-            <option value="not_friend">not_friend (채널 미가입)</option>
-            <option value="blocked">blocked (차단)</option>
-            <option value="paused_ad">paused_ad (광고 거부)</option>
-            <option value="unknown">unknown (기타)</option>
+            <option value="fail">fail (발송 실패)</option>
+            <option value="unknown">unknown (미확인)</option>
           </select>
           <button class="btn" id="sApply">조회</button>
         </div>
@@ -470,13 +468,11 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 
       <div class="section manual-send">
         <div class="section-title">수동 발송 <span class="count">알림톡</span></div>
-        <div class="section-subtitle">친구톡이 도달하지 못하는 구독자(광고 수신 거부·채널 미친구 등)에게 알림톡으로 안내합니다. 본문은 검수 승인된 템플릿 고정이며 '문제해결 도움받기' 버튼으로 /help 페이지에 연결됩니다.</div>
+        <div class="section-subtitle">친구톡이 도달하지 못한 구독자에게 알림톡으로 안내합니다. 본문은 검수 승인된 템플릿 고정이며 '문제해결 도움받기' 버튼으로 /help 페이지에 연결됩니다. (알리고는 실패 사유 코드를 표준화 제공하지 않아 단순 성공·실패로만 구분)</div>
         <div class="filter-bar">
           <select id="mFilter">
-            <option value="not_friend">not_friend (채널 미가입)</option>
-            <option value="blocked">blocked (차단)</option>
-            <option value="paused_ad">paused_ad (광고 수신 거부)</option>
-            <option value="unknown">unknown (기타 실패)</option>
+            <option value="fail">fail (발송 실패)</option>
+            <option value="ok">ok (정상 수신)</option>
             <option value="all">전체 활성 구독자</option>
           </select>
           <button class="btn" id="mReload">목록 새로고침</button>
@@ -1115,7 +1111,7 @@ async function loadOverview(){
       { label:'7일 매출', value:Math.round((pay.revenue7d||0)/10000), unit:'만원', hint:`${pay.payCount7d||0}건 결제`, cls:'accent' },
       { label:'14일 발송 성공률', value:rate, unit:'%', hint:`${sn.success14d||0}/${total}건`, cls:rate>=95 ? 'accent' : (rate>=80 ? 'warn' : 'danger') },
       { label:'만료 임박 (7일)', value:pay.expiringWithin7d||0, unit:'명', hint:'재구독 안내 필요', cls:(pay.expiringWithin7d||0) ? 'warn' : '' },
-      { label:'채널 미가입', value:dlv.not_friend||0, unit:'명', hint:'수동 발송 대상', cls:(dlv.not_friend||0) ? 'warn' : '' },
+      { label:'발송 실패', value:dlv.fail||0, unit:'명', hint:'수동 발송 대상', cls:(dlv.fail||0) ? 'warn' : '' },
       { label:'30일 결제 실패', value:pay.payFailed30d||0, unit:'건', cls:(pay.payFailed30d||0) ? 'danger' : '' },
     ];
     $('overviewStatsGrid').innerHTML = cards.map(renderStatCard).join('');
@@ -1145,7 +1141,7 @@ async function loadOverview(){
     // 구독 상태 도넛
     const stateLabels = Object.keys(dlv);
     const stateData = stateLabels.map(k => dlv[k]);
-    const colorMap = { ok:'#18E299', not_friend:'#f59e0b', blocked:'#d45656', paused_ad:'#ff9f6b', unknown:'#999' };
+    const colorMap = { ok:'#18E299', fail:'#d45656', unknown:'#999' };
     const stateColors = stateLabels.map(k => colorMap[k] || '#666');
     if(overviewStateChart) overviewStateChart.destroy();
     if(stateLabels.length){
@@ -1216,13 +1212,13 @@ async function loadSubsStats(){
       { label:'만료', value:sub.expired||0, unit:'명', cls:'warn' },
       { label:'해지', value:sub.cancelled||0, unit:'명' },
       { label:'정상 수신 (ok)', value:dlv.ok||0, unit:'명', cls:'accent' },
-      { label:'채널 미가입', value:dlv.not_friend||0, unit:'명', hint:'수동 발송 필요', cls:'warn' },
+      { label:'발송 실패', value:dlv.fail||0, unit:'명', hint:'수동 발송 대상', cls:'warn' },
     ];
     $('subsStatsGrid').innerHTML = cards.map(renderStatCard).join('');
 
     const stateLabels = Object.keys(dlv);
     const stateData = stateLabels.map(k => dlv[k]);
-    const colorMap = { ok:'#18E299', not_friend:'#f59e0b', blocked:'#d45656', paused_ad:'#ff9f6b', unknown:'#999' };
+    const colorMap = { ok:'#18E299', fail:'#d45656', unknown:'#999' };
     const stateColors = stateLabels.map(k => colorMap[k] || '#666');
     if(stateChart) stateChart.destroy();
     if(stateLabels.length){
