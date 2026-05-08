@@ -160,9 +160,10 @@ async function callGemini(prompt) {
   if (!apiKey) {
     throw new Error('GEMINI_API_KEY 환경변수 누락 — .env에 추가하거나 export 필요');
   }
-  // nano-banana-pro-preview — 한국어 텍스트 렌더링 가장 안정적인 신규 모델
-  // 대안: gemini-3-pro-image-preview / gemini-2.5-flash-image
-  const model = process.env.GEMINI_IMAGE_MODEL || 'nano-banana-pro-preview';
+  // gemini-2.5-flash-image ($0.04/장) — Nano Banana Pro($0.13/장)에서 다운그레이드.
+  // 비용 1/3 수준이고 한국어 렌더링·풍자 만화 표현력 충분. GitHub Actions도 동일 모델.
+  // 더 비싼 옵션이 필요하면 env로 nano-banana-pro-preview / gemini-3-pro-image-preview 넘김.
+  const model = process.env.GEMINI_IMAGE_MODEL || 'gemini-2.5-flash-image';
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
   // 모든 화풍을 4:5 portrait로 통일 — 홈페이지 카툰 슬롯이 같은 비율로 렌더링되도록.
   // 프롬프트의 "1080×1350" 문구만으로는 모델이 가끔 1:1 정사각을 뱉어 화풍별 불일치 발생.
