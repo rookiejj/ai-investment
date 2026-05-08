@@ -168,6 +168,7 @@ jobs:
         if: steps.gate.outputs.should_run == 'true' && (steps.mode.outputs.mode == 'carousel' || steps.mode.outputs.mode == 'all')
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_IMAGE_MODEL: gemini-2.5-flash-image
         run: |
           STAMP=$(date +%s)
           NEWS_URL="https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/today-news.png?t=$STAMP"
@@ -204,6 +205,7 @@ jobs:
         if: steps.gate.outputs.should_run == 'true' && (steps.mode.outputs.mode == 'reels' || steps.mode.outputs.mode == 'all')
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_IMAGE_MODEL: gemini-2.5-flash-image
         run: |
           STAMP=$(date +%s)
           MAG_URL="https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/today-magazine.png?t=$STAMP"

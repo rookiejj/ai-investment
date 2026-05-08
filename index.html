@@ -1452,12 +1452,13 @@ function buildNarrative(){
   }
 
   const remainingCount=totalLines-tldrRows.length;
-  // 1컷 만화: Supabase Storage cartoon/today-news.png (1950s 뉴스 화풍).
-  // 데이터 갱신 시 GH Actions의 cartoon-generate 워크플로가 자동 재생성·업로드.
-  // 같은 워크플로가 today-magazine.png(mad-mag 화풍)도 함께 업로드 — 인스타 Reels에서 사용.
-  // 로컬 개발 시 `node scripts/cartoon/generate.js --upload` 수동 갱신 가능.
-  // 없으면 onerror로 자동 숨김. 캐시 우회용 timestamp.
-  const cartoonSrc=`https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/today-news.png?_=${Date.now()}`;
+  // 1컷 만화 — Supabase Storage cartoon/today-news.png(1950s) · today-magazine.png(mad-mag).
+  // 비용 절감으로 매 갱신 1장만 생성 — KST 오전(<12)은 news, 오후(≥12)는 magazine.
+  // 인스타 캐러셀(오전)·Reels(오후)도 동일 파일 사용. 데이터 갱신 시 cartoon-generate 워크플로가
+  // 시간대 보고 한 장만 재생성·업로드. 없으면 onerror로 자동 숨김. 캐시 우회용 timestamp.
+  const _kstHour=new Date(Date.now()+9*3600000).getUTCHours();
+  const _cartoonName=_kstHour<12?'today-news':'today-magazine';
+  const cartoonSrc=`https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/${_cartoonName}.png?_=${Date.now()}`;
   body.innerHTML=`
     <div class="narrative-flex">
       <div class="narrative-cartoon" id="narrativeCartoon">
