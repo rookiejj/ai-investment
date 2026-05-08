@@ -244,6 +244,11 @@ type AligoSendResult = {
   raw: unknown;
 };
 
+// VPS 프록시가 button 미전달 시 기본 버튼(name: '1분 브리핑 보러가기',
+// URL: vercel.app)을 자동 추가하는 동작이 있어, 매번 명시 전달해 덮어씀.
+const DAILY_BUTTON_NAME = "오늘의 브리핑 보러가기";
+const DAILY_BUTTON_URL  = "https://briefick.com";
+
 async function aligoSendFriendtalk(opts: {
   proxyUrl: string;
   proxySecret: string;
@@ -252,13 +257,22 @@ async function aligoSendFriendtalk(opts: {
 }): Promise<AligoSendResult> {
   const { proxyUrl, proxySecret, receivers, message } = opts;
   const phones = receivers.map((r) => r.phone);
+  const button = {
+    button: [{
+      name: DAILY_BUTTON_NAME,
+      linkType: "WL",
+      linkTypeName: "웹링크",
+      linkMo: DAILY_BUTTON_URL,
+      linkPc: DAILY_BUTTON_URL,
+    }],
+  };
   const res = await fetch(proxyUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "X-Proxy-Secret": proxySecret,
     },
-    body: JSON.stringify({ phones, message }),
+    body: JSON.stringify({ phones, message, button }),
   });
   const json = await res.json();
   if (!res.ok) {
