@@ -29,7 +29,7 @@ const MESSAGE = process.env.TEST_MESSAGE
 const TEST_MODE = process.env.TEST_MODE === 'Y' ? 'Y' : 'N';
 const SITE_URL = 'https://roysbriefing.vercel.app';
 
-// 친구톡 본문 + CTA 버튼 1개 (현재 SOLAPI 발송과 동일 구조)
+// 친구톡 본문 + CTA 버튼 1개
 const button = {
   button: [
     {

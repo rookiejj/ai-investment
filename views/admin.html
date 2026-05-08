@@ -1442,10 +1442,10 @@ $('dsPreviewBtn').addEventListener('click', async ()=>{
       warns.push(`⚠ 오늘 이미 매일 뉴스가 발송됐습니다${t}. 재발송 시 중복 도달.`);
     }
     if(r.isAdRestrictedHour){
-      warns.push('⚠ 야간(KST 21:00~08:00)은 카카오 광고성 친구톡 발송 금지 시간 — SOLAPI가 차단할 수 있음.');
+      warns.push('⚠ 야간(KST 21:00~08:00)은 카카오 광고성 친구톡 발송 금지 시간 — 알리고가 차단할 수 있음.');
     }
     if(p.overflow){
-      warns.push(`⚠ 메시지 ${p.charCount}자가 한도 ${p.limit}자를 초과 — SOLAPI가 거부할 수 있음.`);
+      warns.push(`⚠ 메시지 ${p.charCount}자가 한도 ${p.limit}자를 초과 — 알리고가 거부할 수 있음.`);
     }
     if(warns.length){
       $('dsWarn').classList.remove('info');

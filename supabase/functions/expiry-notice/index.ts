@@ -2,17 +2,20 @@
  * 만료 임박 안내 발송 Edge Function (D-1, KST 20:00 크론)
  *
  * 1) 내일(KST 기준) 안에 만료되는 active 구독자 조회
- * 2) 솔라피 친구톡(CTA) 발송 — 본문에 만료일 자동 삽입 + /renew 링크 버튼
+ * 2) 알리고 친구톡 발송 (VPS 프록시 경유) — 본문에 만료일·재구독 URL 인라인
  * 3) send_logs INSERT (template_code='expiry_notice', message_type='friendtalk')
  *
  * ⚠ 친구톡 사용 이유:
  *   - 알림톡 검수에서 '재구매 유도' 표현이 거절됨
- *   - 친구톡은 자유 텍스트 + 버튼 가능, 검수 없음
+ *   - 친구톡은 자유 텍스트, 검수 없음
  *   - 단점: 채널 미친구·광고 수신 거부자에겐 미도달 (해결: /help 안내)
  *
+ * ⚠ 알리고는 IP 화이트리스트 강제라 VPS 프록시(briefick.duckdns.org) 경유.
+ *   알리고 친구톡 API의 버튼(WL) 파라미터는 VPS 프록시가 현재 미지원이라
+ *   본문에 URL 텍스트로 박음 — 친구톡은 URL을 자동 클릭 가능 링크로 파싱.
+ *
  * 필수 ENV:
- *   SOLAPI_API_KEY · SOLAPI_API_SECRET · SOLAPI_PFID · SOLAPI_SENDER
- *   CRON_SECRET
+ *   ALIGO_PROXY_URL · ALIGO_PROXY_SECRET · CRON_SECRET
  * 선택:
  *   SITE_URL (기본: https://roysbriefing.vercel.app)
  *   SHOP_NAME (기본: 브리픽)
@@ -20,27 +23,10 @@
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
-const SOLAPI_API = "https://api.solapi.com";
 const SITE_URL = Deno.env.get("SITE_URL") ?? "https://roysbriefing.vercel.app";
 const SHOP_NAME = Deno.env.get("SHOP_NAME") ?? "브리픽";
 
 type Target = { id: string; phone: string; name: string | null; paid_until: string };
-
-// ═══ 솔라피 HMAC 인증 ═══
-async function solapiAuthHeader(apiKey: string, apiSecret: string): Promise<string> {
-  const date = new Date().toISOString();
-  const salt = crypto.randomUUID().replace(/-/g, "");
-  const msg = date + salt;
-  const keyBytes = new TextEncoder().encode(apiSecret);
-  const dataBytes = new TextEncoder().encode(msg);
-  const cryptoKey = await crypto.subtle.importKey(
-    "raw", keyBytes, { name: "HMAC", hash: "SHA-256" }, false, ["sign"],
-  );
-  const sigBuf = await crypto.subtle.sign("HMAC", cryptoKey, dataBytes);
-  const sig = Array.from(new Uint8Array(sigBuf))
-    .map((b) => b.toString(16).padStart(2, "0")).join("");
-  return `HMAC-SHA256 apiKey=${apiKey}, date=${date}, salt=${salt}, signature=${sig}`;
-}
 
 // ═══ KST 기준 내일 날짜 범위 ═══
 function tomorrowKstBounds(now: Date): { startIso: string; endIso: string; dateLabel: string } {
@@ -61,70 +47,58 @@ function tomorrowKstBounds(now: Date): { startIso: string; endIso: string; dateL
 }
 
 // ═══ 본문 ═══
-function buildExpiryMessage(expiryDate: string): string {
+function buildExpiryMessage(expiryDate: string, renewUrl: string): string {
   return `안녕하세요! ${SHOP_NAME}입니다.
 
 구독 중이신 서비스가 내일(${expiryDate}) 종료될 예정입니다.
 
 ${SHOP_NAME}은 자동 결제가 없는 상품으로, 만료 전 재결제하셔야 끊김 없이 뉴스를 받으실 수 있습니다.
 
-아래 버튼을 눌러 재구독을 진행해주세요.`;
+▶ 재구독: ${renewUrl}`;
 }
 
-// ═══ 솔라피 친구톡 발송 ═══
-async function solapiSendExpiryFriendtalk(opts: {
-  apiKey: string;
-  apiSecret: string;
-  pfId: string;
-  sender: string;
-  targets: Target[];
+// ═══ 알리고 프록시 호출 (VPS 경유) ═══
+type AligoSendResult = {
+  code: number;
   message: string;
-  renewUrl: string;
-}): Promise<{ ok: boolean; groupId?: string; raw: unknown; error?: string; failedMessageList: Array<{ to: string; statusMessage: string }> }> {
-  const { apiKey, apiSecret, pfId, sender, targets, message, renewUrl } = opts;
-  const messages = targets.map((t) => ({
-    to: t.phone,
-    from: sender,
-    text: message,
-    type: "CTA",
-    kakaoOptions: {
-      pfId,
-      disableSms: true,
-      bms: { targeting: "I" },  // I = 채널 친구만
-      buttons: [{
-        buttonType: "WL",
-        buttonName: "재구독 신청하기",
-        linkMo: renewUrl,
-        linkPc: renewUrl,
-      }],
+  info: {
+    type?: string;
+    mid?: number;
+    current?: string;
+    unit?: number;
+    total?: number;
+    scnt?: number;
+    fcnt?: number;
+  } | null;
+  raw: unknown;
+};
+
+async function aligoSendFriendtalk(opts: {
+  proxyUrl: string;
+  proxySecret: string;
+  receivers: Target[];
+  message: string;
+}): Promise<AligoSendResult> {
+  const { proxyUrl, proxySecret, receivers, message } = opts;
+  const phones = receivers.map((r) => r.phone);
+  const res = await fetch(proxyUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Proxy-Secret": proxySecret,
     },
-  }));
-  const auth = await solapiAuthHeader(apiKey, apiSecret);
-  try {
-    const res = await fetch(`${SOLAPI_API}/messages/v4/send-many`, {
-      method: "POST",
-      headers: { "Authorization": auth, "Content-Type": "application/json" },
-      body: JSON.stringify({ messages }),
-    });
-    const j = await res.json();
-    if (!res.ok) {
-      return {
-        ok: false, raw: j, failedMessageList: [],
-        error: `solapi ${res.status}: ${JSON.stringify(j).slice(0, 400)}`,
-      };
-    }
-    return {
-      ok: true,
-      groupId: j.groupId,
-      raw: j,
-      failedMessageList: j.failedMessageList ?? [],
-    };
-  } catch (e) {
-    return {
-      ok: false, raw: null, failedMessageList: [],
-      error: e instanceof Error ? e.message : String(e),
-    };
+    body: JSON.stringify({ phones, message }),
+  });
+  const json = await res.json();
+  if (!res.ok) {
+    throw new Error(`aligo proxy ${res.status}: ${JSON.stringify(json).slice(0, 400)}`);
   }
+  return {
+    code: Number(json.code ?? -1),
+    message: typeof json.message === "string" ? json.message : "",
+    info: json.info ?? null,
+    raw: json,
+  };
 }
 
 // ═══ Handler ═══
@@ -140,13 +114,10 @@ Deno.serve(async (req) => {
       });
     }
 
-    const apiKey    = Deno.env.get("SOLAPI_API_KEY");
-    const apiSecret = Deno.env.get("SOLAPI_API_SECRET");
-    const pfId      = Deno.env.get("SOLAPI_PFID");
-    const sender    = Deno.env.get("SOLAPI_SENDER");
-
-    if (!apiKey || !apiSecret || !pfId || !sender) {
-      return new Response(JSON.stringify({ ok: false, error: "solapi env missing" }), {
+    const proxyUrl    = Deno.env.get("ALIGO_PROXY_URL");
+    const proxySecret = Deno.env.get("ALIGO_PROXY_SECRET");
+    if (!proxyUrl || !proxySecret) {
+      return new Response(JSON.stringify({ ok: false, error: "aligo proxy env missing" }), {
         status: 500, headers: { "Content-Type": "application/json" },
       });
     }
@@ -173,7 +144,8 @@ Deno.serve(async (req) => {
     if (selErr) throw selErr;
     const list = (targets ?? []) as Target[];
 
-    const message = buildExpiryMessage(dateLabel);
+    const renewUrl = `${SITE_URL.replace(/\/$/, "")}/renew`;
+    const message = buildExpiryMessage(dateLabel, renewUrl);
 
     if (dryRun) {
       return new Response(JSON.stringify({
@@ -189,21 +161,27 @@ Deno.serve(async (req) => {
       });
     }
 
-    const renewUrl = `${SITE_URL.replace(/\/$/, "")}/renew`;
-    const result = await solapiSendExpiryFriendtalk({
-      apiKey, apiSecret, pfId, sender,
-      targets: list, message, renewUrl,
-    });
+    let result: AligoSendResult | null = null;
+    let errMsg: string | null = null;
+    try {
+      result = await aligoSendFriendtalk({ proxyUrl, proxySecret, receivers: list, message });
+      if (result.code !== 0) errMsg = `aligo code=${result.code}: ${result.message}`;
+    } catch (e) {
+      errMsg = e instanceof Error ? e.message : String(e);
+    }
 
-    // 부분 실패 처리
-    const failedMap = new Map<string, string>();
-    for (const f of result.failedMessageList) failedMap.set(f.to, f.statusMessage ?? "");
+    // 알리고는 per-phone 실패 정보를 안 줌 — 부분 실패면 어느 폰이 실패했는지 모름.
+    // - 전체 실패(errMsg): 모두 status=fail · delivery_state=fail
+    // - 부분 실패(fcnt > 0): status=success(그룹 전송 자체는 성공) + delivery_state=unknown
+    // - 전체 성공: 모두 ok
+    const fcnt = result?.info?.fcnt ?? 0;
+    const total = result?.info?.total ?? list.length;
+    const partialFailed = !errMsg && fcnt > 0;
+    const groupId = result?.info?.mid ? String(result.info.mid) : null;
 
     const batchId = crypto.randomUUID();
-    const apiOk = result.ok;
     const rows = list.map((t) => {
-      const partialFail = failedMap.get(t.phone);
-      const failed = !apiOk || partialFail !== undefined;
+      const failed = !!errMsg;
       return {
         subscriber_id: t.id,
         phone: t.phone,
@@ -212,29 +190,41 @@ Deno.serve(async (req) => {
         status: failed ? "fail" : "success",
         message_type: "friendtalk",
         template_code: "expiry_notice",
-        provider: "solapi",
-        provider_code: apiOk ? (result.groupId ?? null) : null,
-        provider_message: failed
-          ? (partialFail ?? result.error ?? "send failed")
-          : "ok",
-        provider_msg_id: apiOk ? (result.groupId ?? null) : null,
+        provider: "aligo",
+        provider_code: groupId,
+        provider_message: errMsg ?? (partialFailed ? `partial: ${fcnt}/${total} failed` : "ok"),
+        provider_msg_id: groupId,
         batch_id: batchId,
       };
     });
     const { error: logErr } = await supabase.from("send_logs").insert(rows);
     if (logErr) console.error("[expiry-notice] send_logs insert failed", logErr);
 
+    // delivery_state 일괄 갱신 (unknown은 갱신 skip)
+    if (!errMsg && !partialFailed) {
+      await supabase
+        .from("subscribers")
+        .update({ delivery_state: "ok" })
+        .in("id", list.map((t) => t.id));
+    } else if (errMsg) {
+      await supabase
+        .from("subscribers")
+        .update({ delivery_state: "fail" })
+        .in("id", list.map((t) => t.id));
+    }
+
     const sent = rows.filter((r) => r.status === "success").length;
     const failedCount = rows.length - sent;
 
     return new Response(JSON.stringify({
-      ok: apiOk,
+      ok: !errMsg,
       dateLabel,
       count: list.length,
       sent,
       failed: failedCount,
+      partial: partialFailed ? fcnt : 0,
       batchId,
-      groupId: result.groupId ?? null,
+      groupId,
     }), { headers: { "Content-Type": "application/json" } });
   } catch (err) {
     console.error("[expiry-notice]", err);

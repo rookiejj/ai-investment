@@ -59,8 +59,8 @@ ai-investment/
 │   │   ├── payment-confirm/      ← 포트원 결제 검증 + 구독 연장 + 결제완료 알림톡(ATA)
 │   │   ├── daily-send/           ← 매일 뉴스 친구톡 발송 (평일 cron 트리거)
 │   │   ├── expiry-notice/        ← D-1 만료 임박 재구독 안내 친구톡 (매일 20:00 cron)
-│   │   ├── solapi-webhook/       ← 솔라피 발송 결과 수신 (실시간 상태 갱신)
 │   │   ├── stock-prices/         ← Yahoo Finance 15분 지연 시세 fetch + Storage `prices/latest.json` 갱신 (15분 cron)
+│   │   ├── survey-api/           ← 설문 시스템 (공개 응답 + 관리자 CRUD)
 │   │   └── admin-api/            ← 운영 대시보드용 (login / change_password / stats / logs / subscribers / payments / expiring_soon / manual_send[알림톡] / daily_send_preview / daily_send_now / notice_send[공지 친구톡])
 │   ├── schedule.sql              ← 매일 뉴스 cron (평일 08:00 KST)
 │   ├── schedule-expiry.sql       ← 만료 임박 cron (매일 20:00 KST)
@@ -184,7 +184,7 @@ pg_cron(또는 admin-api 프록시) → Vault X-Cron-Secret → daily-send
     ├ 1000자 한도 초과 시 fitToLimit (모든 탭 보존하며 균등 줄 단위 cut)
     ├ 만료 구독자 expired 전환 (paid_until 과거)
     ├ 활성 구독자 조회 (body.subscriberIds 있으면 그 ID만)
-    ├ 솔라피 친구톡 발송 (bms.targeting='I', disableSms=Y, 배치 500)
+    ├ 알리고 친구톡 발송 (VPS 프록시 경유, 배치 500)
     └ send_logs INSERT (template_code='daily_news' · 공지면 'notice')
 ```
 
@@ -195,24 +195,20 @@ pg_cron(또는 admin-api 프록시) → Vault X-Cron-Secret → daily-send
 pg_cron → Vault X-Cron-Secret → expiry-notice
     ├ 내일(KST) 안에 만료 예정 active 구독자 조회
     ├ 본문에 만료일 자동 삽입 + WL '재구독 신청하기' 버튼 → /renew
-    ├ 솔라피 친구톡 발송 (bms.targeting='I', disableSms=true)
+    ├ 알리고 친구톡 발송 (VPS 프록시 경유) — 본문에 만료일·재구독 URL 인라인
     └ send_logs INSERT (template_code='expiry_notice')
 ```
 
-### 솔라피 webhook (비동기, 발송 확정)
-```
-솔라피 → solapi-webhook
-    ├ send_logs 덮어쓰기 (provider_message='4000: 수신 완료' 등)
-    └ subscribers.delivery_state 재계산
-```
+### 발송 결과 추적 (알리고 환경 한계)
 
-**SOLAPI 결과 코드 매핑** (solapi-webhook · daily-send 공용)
-- `3050` → `not_friend` (채널 친구 아님)
-- `3120` → `paused_ad` (광고 수신 거부)
-- `3130 / 3140 / 3160` → `blocked` (차단)
-- 그 외 → 텍스트 키워드 폴백 (friend/차단/광고 등)
+알리고는 SOLAPI와 달리 **표준화된 실패 사유 코드를 제공하지 않음** (rslt_message 자연어만). per-recipient webhook push도 미지원, polling만 가능 (`/akv10/history/detail/`).
 
-> **`unknown` 분류 처리**: 시간대 제약(`3108`)·메시지 길이 초과(`MessagesNotFound`) 같은 시스템·운영 이슈로 실패하면 unknown으로 분류되는데, 이 경우엔 `subscribers.delivery_state`를 영속 갱신하지 **않음** (수신자 본인 책임이 아니므로 기존 상태 유지). `send_logs`엔 fail로 그대로 기록.
+현재 구현은 polling 미적용 — daily-send·expiry-notice가 알리고 응답의 `code`/`fcnt`만 보고 분류:
+- 그룹 전체 실패: `delivery_state='fail'` · `status='fail'`
+- 부분 실패(`fcnt > 0`): `status='success'`(그룹 전송은 성공) + `delivery_state='unknown'`(폰별 식별 불가)
+- 전체 성공: `delivery_state='ok'`
+
+알리고 어드민 콘솔에 더 상세한 발송 결과가 노출되니 운영상 필요하면 그쪽 참조. 자동 polling이 필요해지면 VPS 프록시에 `/friend/history/detail` 추가하고 admin-api에 `refresh_send_results` 액션 신설하는 구조로 확장 가능.
 
 ## 업데이트 워크플로우
 
@@ -239,7 +235,7 @@ pg_cron → Vault X-Cron-Secret → expiry-notice
 | 호스팅 | **Vercel** · `vercel.json` rewrites로 `/admin`·`/renew`·`/terms`·`/privacy`·`/refund` → `views/` 매핑 |
 | 백엔드 | **Supabase Pro** (Postgres + Edge Functions + Vault + pg_cron + pg_net) |
 | 결제 | **포트원 V2** (galaxia 테스트 채널 · `windowType.mobile: REDIRECTION`) |
-| 메시지 | **솔라피(SOLAPI)** — 친구톡·알림톡, HMAC-SHA256 인증 · 발송 결과 webhook |
+| 메시지 | **알리고(Aligo)** — 카카오 친구톡·알림톡 · IP 화이트리스트 회피 위해 iwinv VPS(`briefick.duckdns.org`)에 Node 프록시 + Caddy HTTPS · `X-Proxy-Secret` 헤더 인증 |
 | 카카오 | 채널 `_lpxkCX` · 발신프로필 `KA01PF...` · 알림톡 템플릿 `KA01TP...` |
 | 자동 콘텐츠 갱신 | Claude Opus 4.7 원격 에이전트 |
 
@@ -249,7 +245,7 @@ pg_cron → Vault X-Cron-Secret → expiry-notice
   - **변수명 `BRIEFICK_SUPABASE_SECRET_KEY`** — Supabase 예약 namespace(`SUPABASE_*`) 충돌 회피용 프로젝트 prefix
   - Supabase Edge Function Secrets와 GitHub Secrets 양쪽에 동일 이름·값 등록
 - pg_cron ↔ daily-send / expiry-notice: 자체 `X-Cron-Secret` (Vault 저장 · 함수 env와 동기화 필수)
-- 솔라피 ↔ solapi-webhook: `?s=<SOLAPI_WEBHOOK_SECRET>` 쿼리 파라미터 인증
+- Edge Function ↔ VPS 알리고 프록시: `X-Proxy-Secret` 헤더 (양쪽 env에 동일 값)
 - 관리자 ↔ admin-api: 비밀번호 해시 기반 세션 토큰
 - 모든 Edge Function은 `--no-verify-jwt`로 배포 (자체 인증 사용)
 
@@ -285,18 +281,22 @@ admin_settings (단일 행, id=1)
 
 ## 운영 메모
 
-- **솔라피 잔액**: 친구톡 약 15원/건, 알림톡 약 8원/건. 잔액 고갈 시 `send_logs.status=fail` + `provider_message="NotEnoughBalance"`.
+- **알리고 잔액**: 친구톡 ₩19.9/건, 알림톡 ₩8/건. 잔액 부족 시 `send_logs.status=fail` + `provider_message`에 알리고 자연어 사유. 알리고 어드민 콘솔에서 직접 충전.
+- **알리고 IP 화이트리스트**: 알리고 API는 발신 IP 등록 필수 — Edge Function 동적 IP 호출 불가. 우회용 VPS 프록시(`briefick.duckdns.org`)에 알리고 API 키·sender key 보관. VPS IP(`115.68.224.225`) 1개만 알리고 어드민에 등록.
 - **포트원 라이브 전환**: 테스트 채널 키 → 라이브 키로 교체. `ITEM_CODE` 등 bypass 필드는 PG별로 재검토.
-- **카카오 채널 미가입자**: 솔라피가 `bms.targeting:"I"`로 필터링하며, webhook이 결과를 `delivery_state='not_friend'`로 자동 반영. 이들에겐 친구톡 도달 불가 → 운영자가 `manual_send`(알림톡)로 `/help` 안내 발송.
-- **광고 수신 거부자(`paused_ad`)**: 친구톡 도달 불가, 알림톡(payment-confirm/manual_send)은 정상 도달.
-- **카카오 알림톡에 승인된 버튼 노출**: SOLAPI는 템플릿에 승인된 버튼이어도 `kakaoOptions.buttons`에 명시해야 렌더링됨 (AC/WL 모두 동일).
+- **친구톡 도달 불가 케이스**: 채널 미가입·광고 수신 거부·차단 등은 알리고 응답에선 분류 안 됨(자연어 사유만). 운영자가 `manual_send`(알림톡)로 `/help` 안내 발송 — 알림톡은 광고성 거부와 무관하게 정상 도달.
+- **카카오 알림톡에 승인된 버튼 노출**: 알리고는 템플릿 등록 시 정의한 버튼을 자동 렌더 — 발송 호출엔 별도 명시 불필요. AC `채널추가` 버튼은 이미 채널 친구인 수신자에겐 자동 숨김(추가 대상 없으므로) — 본인 폰 테스트로는 영원히 검증 불가.
 - **AC '채널 추가' 버튼 표시 조건**: 이미 채널 친구인 수신자에게는 자동 숨김 (추가할 대상이 없으므로). 새 가입자에게만 노출.
 - **관리자 비밀번호 로테이션**: 대시보드 헤더 "비밀번호 변경"으로 바로 변경(최소 4자). env `ADMIN_PASSWORD`는 최초 초기화용이며, 이후 실 비교는 `admin_settings.password_hash` 기준.
 - **스케줄 변경**: `cron.schedule` 표현식은 UTC 기준 (KST = UTC+9). 평일 한정은 UTC dow `0-4` 사용 (KST 월~금 = UTC 일~목).
 
 ## Changelog
 
-- **2026-05-08**: **한글 매핑 단일 소스화 — `data/company-ko.js`로 분리, 친구톡 본문에도 적용**. 헤드라인은 한글화 잘 되는데 친구톡은 영문 그대로 나가던 사고 해결. 매핑 인라인이 `index.html`에만 있어 `daily-send` Edge Function 경로엔 미적용이었음. `data/company-ko.js` 신설(403개 매핑 — AI·유니콘·빅테크·반도체·바이오 등 섹터별 그룹 + 티커 형태 + 일반어 `Cloud`/`cloud`), 양쪽이 같은 파일을 fetch. `index.html`은 부팅 시 `_setCompanyKo()`로 로드, `daily-send`는 GitHub raw로 fetch 후 `localizeText()`를 `fetchTabEntries`에서 미리 적용(이후 `fitToLimit` 길이 계산이 한글 변환 후 텍스트 기준으로 정확). **`Sunrun` 표기 교정** — `선런` → `썬런`(한국 매체 통용). **단어 경계 룰 보강** — 단일 글자·짧은 약어 티커(F·V·C·S·MS·MA·BE 등)는 일반 단어와 충돌해 풀네임만 매핑, ticker 형태 제외. CLAUDE.md에 단일 소스 룰 명문화(매핑 추가·수정 시 `data/company-ko.js` 한 곳만 수정, 재인라인 금지).
+- **2026-05-08**: **한글 매핑 단일 소스화 + expiry-notice 알리고 마이그 + SOLAPI 잔재 정리 + 발송 상태 분류 단순화**.
+  - **한글 매핑 단일 소스화** — `data/company-ko.js`로 분리, 친구톡 본문에도 적용. 헤드라인은 한글화 잘 되는데 친구톡은 영문 그대로 나가던 사고 해결. 매핑 인라인이 `index.html`에만 있어 `daily-send` Edge Function 경로엔 미적용이었음. `data/company-ko.js` 신설(403개 매핑 — AI·유니콘·빅테크·반도체·바이오 등 섹터별 그룹 + 티커 형태 + 일반어 `Cloud`/`cloud`), 양쪽이 같은 파일을 fetch. `index.html`은 부팅 시 `_setCompanyKo()`로 로드, `daily-send`는 GitHub raw로 fetch 후 `localizeText()`를 `fetchTabEntries`에서 미리 적용(이후 `fitToLimit` 길이 계산이 한글 변환 후 텍스트 기준으로 정확). `Sunrun` 표기 교정(`선런` → `썬런`). 단일 글자·짧은 약어 티커(F·V·C·S·MS·MA·BE)는 일반 단어와 충돌해 풀네임만 매핑. CLAUDE.md에 단일 소스 룰 명문화.
+  - **expiry-notice 알리고 마이그** — 5/7 마이그 시 누락된 마지막 함수. SOLAPI HMAC 호출 → VPS 프록시 경유 알리고 친구톡으로 교체. 알리고 친구톡 API의 버튼(WL) 파라미터는 VPS 프록시가 아직 미지원이라 본문에 `▶ 재구독: <URL>` 텍스트 인라인(친구톡은 URL 자동 클릭 가능 링크로 파싱). cron `daily-expiry-notice`(20:00 KST) 그대로 동작.
+  - **SOLAPI 환경 정리** — supabase secrets에서 `SOLAPI_API_KEY`·`SOLAPI_API_SECRET`·`SOLAPI_PFID`·`SOLAPI_SENDER`·`SOLAPI_WEBHOOK_SECRET` unset, `solapi-webhook` Edge Function 삭제, 로컬 디렉토리 제거. README·CLAUDE.md·admin.html 경고 문구의 SOLAPI 잔재 일괄 sweep(알리고로 갱신). docs/friendtalk-dispatch-runbook.md는 SOLAPI 기준 historical 문서로 유지(별도 갱신 없이 기록용).
+  - **발송 상태 분류 단순화** — 알리고는 SOLAPI와 달리 표준화된 실패 사유 코드(3050·3120·3130 등)를 제공하지 않아 not_friend/paused_ad/blocked 분류 의미 없음. 구독자 조회·수동 발송 필터를 5단계 → 3단계(`ok`/`fail`/`unknown`)로 단순화. `daily-send`의 `deriveDeliveryState` 키워드 매칭 제거, 그룹 전체 실패 = `fail`, 부분 실패 = `unknown`(폰별 식별 불가), 성공 = `ok`. 자연어 사유는 `send_logs.provider_message`에 그대로 보관 — 발송 이력 사유 컬럼에 노출. 통계 카드 `채널 미가입` → `발송 실패` 라벨 변경, 배지 CSS·colorMap 잔재 제거. 향후 알리고 polling(`/akv10/history/detail/`) 도입하면 per-recipient 결과 추적 가능, 현재는 미적용.
 - **2026-05-07**: **SOLAPI → 알리고 마이그레이션 + VPS 프록시 + 카툰·시세·설문 다축 개편**. 발송 단가 절감(친구톡 ₩110 → ₩19.9, ~82%) 위해 친구톡·알림톡 양쪽을 알리고로 전환. 알리고는 IP 화이트리스트가 강제라 동적 IP인 Edge Function에서 직접 호출 불가 → iwinv VPS(`115.68.224.225`, `briefick.duckdns.org`)에 Node 프록시 띄우고 Caddy + Let's Encrypt로 HTTPS 종단, `X-Proxy-Secret` 헤더 인증으로 `daily-send`·`expiry-notice`·`payment-confirm`·`admin-api` 모두 프록시 경유. 알리고 친구톡 API(`/akv10/friend/send`)·알림톡 API(`/akv10/alimtalk/send`) 호출, 키·sender key는 VPS `.env`에 보관. **알림톡 템플릿 재승인** — 결제완료 `UH_6779`(채널추가 WL 버튼), 수동 문제해결 `UH_7008`(이전 `UH_6780`에서 줄바꿈 변경 위해 재검수, 버튼명 `문제해결 도움받기`로 등록 템플릿과 일치). 카카오 채널추가 띠는 알리고 자동 노출 + 이미 채널 친구인 수신자에겐 숨김(본인 폰 테스트로 영원히 검증 불가). **카툰 생성 통일** — 1950s 화풍(뉴스 캐러셀용)·mad-mag 화풍(Reels용) 두 스타일을 자동 갱신마다 동시 생성, `today-news.png`·`today-magazine.png` 두 파일로 Storage 저장. `cartoon-generate.yml` 워크플로에 두 step(1950s strict + mad-mag continue-on-error). **인스타 신선도 체크** — `instagram-post.yml`이 두 파일 download 시 Last-Modified 1시간 freshness 검증, stale 파일이면 fallback 재생성. 캐러셀(1950s)도 Reels와 대칭으로 동일 게이팅. **시세 상태 배지 대칭** — KR `장 마감`·`동시호가` stale 처리(`pxIsKrAfterHours` 정규장 외 시간대 `changePct` 숨기고 종가 표시 폴백)에 이어 US도 동일 패턴(`프리마켓`/`애프터`/`장 마감`/`M/D 종가` 4단 배지). 정규장 직후 yahooChartOne의 직전 거래일 종가 잡힘 버그 수정(`regularMarketTime` 우선). **시세 cron 5분 통일** — 기존 시간대별 다른 주기를 단일 `*/5 * * * *`로. **영문 회사명 한글 자동 치환** — index.html에 `COMPANY_KO`(처음 인라인) + `localizeText()` 도입, 렌더 시점에만 적용해 데이터 파일·update.js는 원본 보존. 헤드라인 TL;DR·캘린더 이벤트 타이틀·종목 deep-dive·대안 자산 모두 적용. 5/7 하루 동안 매핑 ~30 → ~200+로 확장(엔트로픽·알파벳·코어위브·안두릴·미스트랄·딥마인드·OpenAI 등 자주 등장하는 회사명·티커). **설문 시스템 신설** — `surveys`·`survey_responses` 테이블 + `survey-api` Edge Function(get/submit 공개 + list/create/update/delete/results 관리자), `/survey/{id}` 공개 응답 페이지(IP 해시 dedup), 관리자 대시보드 `📋 설문` 메뉴(목록·생성·편집·결과 차트). title=question 단순화(질문 본문 입력 제거), 브리픽 브랜드·푸터 생략(채팅 썸네일 타이틀 `설문조사`). RLS 활성화(no policies → default deny, service_role bypass). **`sector-pool.js` 분류 정정** — 한화에어로 우주 제외(매출 압도적으로 방산), 키움증권 통신·인터넷 → 금융, 한국전력 금융 → 전력·에너지, 카카오뱅크/카카오페이 통신 → 금융, 현대차 엔터·콘텐츠 → 자동차, NHN 게임 → IT·전자, 한전KPS 통신 → 전력·에너지 등 15+ 건 일괄 정정. dual-list 처리(한화시스템·한국항공우주 방산·우주 / 켄코아에어로스페이스 우주·항공). **`KR_NAME_OVERRIDE` 한글명 lookup 강화** — `scripts/lint-finmap-pool.js`로 풀 ticker 형식·한글명 매핑·dead override 검증, CLAUDE.md 커밋 전 lint 체크리스트에 추가. **관리자 발송 버튼 스타일 통일** — 친구톡 즉시 발송·공지 발송 모두 `btn ghost`(처음 친구톡을 primary로 맞췄다가 반대 방향 통일로 재교정). **관리자 발송 이력 날짜 필터 KST 경계 수정** — `fFrom` ISO 변환에 `T00:00:00+09:00` 명시, 서버 UTC 변환에서 한국 자정 경계 어긋나던 문제 해소. 자동 갱신 재실행 버튼 안내 URL overflow `word-break:break-all`. **구독 모달 스크롤 전파 차단** — `.sub-modal-bg`·`.sub-modal`에 `overscroll-behavior:contain` 추가, 만료 임박 모달에서 스크롤 시 뒤편 메인이 따라 움직이던 문제 해소. **결제 알림톡 채널추가 버튼명 정정** — `채널 추가` → `채널추가`(공백 없이) 등록 템플릿과 일치. **터미널 사용자 노트** — VPS 셋업 중 long line wrap·smart quotes 문제로 nano 편집기 사용·파일 기반 curl payload·heredoc 회피 패턴 학습.
 - **2026-05-06**: **시장 한눈에 — 시총 기반 섹터 핀맵 추가**. 메인 페이지 5번째 섹션으로 신설(`섹터 성장 단계` 다음, `대안 자산` 직전). 18 섹터 그리드(데스크톱 3열 / 1024px↓ 2열 / 640px↓ 1열), 섹터 표시 순서는 `돈버는 섹터` 섹션과 동일(FY26E 매출 성장률 중앙값 내림차순). 종목 선별·셀 크기는 시총 기준 — 섹터별 풀(`data/sector-pool.js`)에서 시총 상위 7 동적 선별, 셀 크기 sqrt(시총) 비례, 색상 등락률 5단계(±0.5/1.5/3/5%). 셀 클릭 → deep-dive 모달, 풀-only 종목은 합성 stock 객체로 모달 띄움. 모서리 직각·검정 0.5px 반투명 테두리·시장 마감 시 회색 대신 직전 등락 색 유지. **시총 fetch** — `stock-prices` Edge Function이 Yahoo crumb 인증으로 `v7/finance/quote` 엔드포인트 호출(50개 배치, 401 시 crumb 자동 재발급). 한국 종목은 KS·KQ 둘 다 시도, 더 큰 시총 쪽 사용(거래소 자동 결정). **풀 데이터 구조** — `data/sector-pool.js`에 SECTOR_POOL(섹터→ticker)·KR_NAME_OVERRIDE(풀-only 한국 한글명)·US_NAME_OVERRIDE(풀-only 미국 한글명) 노출, Edge Function·프론트 공통 사용. 큐레이션 7종목 + 후보 5~10개씩 풀 ~13~17/섹터. 종목명 lookup 체인: 큐레이션 nm → cross-sector 큐레이션 → KR/US_OVERRIDE → Yahoo longName → ticker. **lint 자동화** — `scripts/lint-finmap-pool.js`로 ticker 형식·한글명 매핑·dead override 검증, CLAUDE.md 커밋 전 체크리스트에 추가. **표시 라벨 변경** — `섹터 성장 단계` → `돈버는 섹터` (UI 친숙성). **모바일 UX 개선** — (a) `todayKST()` 타임존 오프셋 중복 적용 잠복 버그 수정(매일 자정~09시 캘린더 dow 어제로 표시) (b) 섹터 펼침 시 자동 스크롤 제거, 위 섹터 닫힘 시 시선 보정 scrollBy로 펼친 행 viewport 위치 고정 (c) 캘린더 → 일자별 모달 → 종목 모달 백키 한 단계씩 복원 모달 스택 도입 (peer 클릭은 stack top 교체로 무한 chain 방지) (d) 한국 종목 정규장 직후 직전 거래일 종가 잡히던 yahooChartOne 버그 수정(regularMarketTime 우선) + KS·KQ ghost data 회피(time 비교) (e) 시세 시각 오늘 KST 아닌 경우 chgPct 숨기고 stale 배지 ("M/D 종가"). **친구톡 버튼명** — "오늘의 브리핑" → "오늘의 브리핑 보러가기". **데이터 정정** — 삼성엔지니어링 → 삼성E&A 표기, 트레이더 은어 비트·미스·ATH·우호 톤 일괄 sweep(컨센 상회/하회/사상 최고/우호 흐름).
 - **2026-05-05 (2)**: **실시간 시세 표시 (Yahoo Finance 15분 지연)**. `supabase/functions/stock-prices/` 신설 — v8 chart endpoint(`includePrePost=true`)로 미국·한국(.KS/.KQ 자동 매칭)·원자재·크립토 시세 fetch, Supabase Storage `prices/latest.json`에 저장. pg_cron `stock-prices-refresh`(매 15분)이 사용자 접속 무관 항상 최신화. `index.html`이 Storage public URL을 직접 fetch + 5분 폴링(`document.hidden` 시 skip). 종목 카드·deep-dive 모달에 `$가격 +N%` / `₩가격 +N%` 형식 노출, 등락 색상 적용. 프리/애프터마켓 시간대 baseline `previousClose` 대신 `regularMarketPrice` 사용해 Yahoo 표시값 일치. 섹터 단계 헤더 안내 문구 "수치·종목 구성 매일 2회 갱신" → "시세는 15분 지연 (Yahoo Finance)"로 교체. **표시 순서 룰 정립** — 선점 순서(자동 갱신 dedup, `kr→stocks→ai→unicorn→commodity`)와 표시 순서(사용자 노출, `kr→stocks→ai→commodity→unicorn`)를 별도 룰로 분리, CLAUDE.md 명문화. 헤드라인 TL;DR / 친구톡 발송(`daily-send`) / 인스타 슬라이드(`render-slides`) / 메시지 생성(`generate-message`) / 대안 자산(`DOMAINS`) 모두 표시 순서로 통일. 대안 자산은 commodity가 원자재·크립토로 분리되므로 `ai→commodity→crypto→unicorn`(공통 데이터 출처 인접). **인스타 릴스 BGM 랜덤 픽** — 첫 트랙 고정 → `Math.random()` 풀 픽으로 변경, 트랙 추가 시 자동 확장. **미국마켓 헤드라인 첫 줄 룰 위반 정정** — 5/5 19:15 엔트리가 시장 지수 일상 라인을 첫 줄에 둬 임팩트 큰 단일 사건(AMD·MSTR Q1 D-Day) 우선 룰 위반, 라인 재정렬·유가는 미국 정유 마진 관점으로 강등(commodity 탭과 슬롯 중복 회피).
