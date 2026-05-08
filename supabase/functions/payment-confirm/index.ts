@@ -21,7 +21,7 @@ const PORTONE_API = "https://api.portone.io";
 // 라이브 채널 전환 시에도 그대로 정가 적용.
 const TEST_MODE = false;
 const PRICE_PLANS: Record<string, { months: number; amount: number; testAmount: number; productName: string }> = {
-  "1m":  { months: 1,  amount: 2900,  testAmount: 100, productName: "30일 구독" },
+  "1m":  { months: 1,  amount: 2900,  testAmount: 100, productName: "1개월 구독" },
   "6m":  { months: 6,  amount: 13800, testAmount: 100, productName: "6개월 구독" },
   "12m": { months: 12, amount: 22800, testAmount: 100, productName: "12개월 구독" },
 };

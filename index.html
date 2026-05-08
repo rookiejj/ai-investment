@@ -1065,7 +1065,7 @@ body.sub-modal-open{overflow:hidden}
         <label class="sub-modal-plan" data-plan="1m">
           <input type="radio" name="plan" value="1m" checked>
           <div class="plan-row">
-            <span class="plan-period">30일</span>
+            <span class="plan-period">1개월</span>
             <span class="plan-prices">
               <span class="plan-price-now">2,900원</span>
             </span>
@@ -2757,7 +2757,7 @@ boot();
   // 가격 플랜. 서버(payment-confirm)도 동일 매핑을 권위로 들고 있어야 함 — plan key·amount·days 동기화 필수.
   // 라이브 전환 시 amount 적용, 베타 단계에선 testAmount(₩100)로 결제 통과.
   const PRICE_PLANS={
-    '1m': { months:1,  amount:2900,  testAmount:100, label:'30일',   orderName:'브리픽 30일 구독' },
+    '1m': { months:1,  amount:2900,  testAmount:100, label:'1개월',  orderName:'브리픽 1개월 구독' },
     '6m': { months:6,  amount:13800, testAmount:100, label:'6개월',  orderName:'브리픽 6개월 구독 (할인가)' },
     '12m':{ months:12, amount:22800, testAmount:100, label:'12개월', orderName:'브리픽 12개월 구독 (할인가)' },
   };
