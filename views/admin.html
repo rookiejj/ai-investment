@@ -447,7 +447,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
       </div>
 
       <div class="section daily-send-box">
-        <div class="section-title">매일 뉴스 친구톡 즉시 발송</div>
+        <div class="section-title">매일 뉴스 친구톡 수동 발송</div>
         <div class="section-subtitle">평일 KST 08:00 자동 발송이 표준입니다. 발송 누락·재발송 등 예외 상황에서만 사용하세요. 대상 구독자를 선택하고 미리보기로 본문 확인 후 발송하세요.</div>
         <div class="ds-grid">
           <div class="filter-bar ds-toolbar">
@@ -467,7 +467,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
       </div>
 
       <div class="section manual-send">
-        <div class="section-title">수동 발송 <span class="count">알림톡</span></div>
+        <div class="section-title">문제 해결안내 알림톡 즉시 발송</div>
         <div class="section-subtitle">친구톡이 도달하지 못한 구독자에게 알림톡으로 안내합니다. 본문은 검수 승인된 템플릿 고정이며 '문제해결 도움받기' 버튼으로 /help 페이지에 연결됩니다. (알리고는 실패 사유 코드를 표준화 제공하지 않아 단순 성공·실패로만 구분)</div>
         <div class="filter-bar">
           <select id="mFilter">
@@ -484,9 +484,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 구독을 신청해 주셔서 감사합니다.
 
 뉴스를 받지 못하고 계시거나 다른 문제가 발생하는 경우, 아래 버튼을 통해 문제를 해결 해주세요.<div style="margin-top:10px;padding:8px 12px;background:#fff;border:1px solid var(--border-md);border-radius:8px;text-align:center;font-weight:600;color:var(--fg)">문제해결 도움받기</div></div>
-        <div class="actions">
-          <button class="primary" id="mSendBtn" disabled>선택한 구독자에게 알림톡 발송</button>
-          <span id="mSelectedCount" style="color:var(--mut);font-size:13px"></span>
+        <div class="filter-bar" style="margin-top:4px">
+          <button class="btn ghost" id="mSendBtn" disabled>지금 발송</button>
+          <span id="mSelectedCount" style="color:var(--mut);font-size:13px;align-self:center">선택된 구독자 없음</span>
         </div>
         <div class="status" id="mStatus"></div>
       </div>
@@ -542,14 +542,14 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
           <div class="targets" id="noticeTargets"><div class="loading">활성 구독자 로딩 중…</div></div>
           <div style="display:flex;flex-direction:column;gap:8px">
             <textarea id="noticeBody" placeholder="공지 본문을 입력하세요. 카카오 친구톡 1000자 한도. 줄바꿈은 그대로 적용됩니다." style="width:100%;min-height:240px;padding:14px;border:1px solid var(--border);border-radius:10px;font:400 14px/1.6 'Inter','Pretendard Variable',sans-serif;color:var(--fg);background:#fff;resize:vertical"></textarea>
-            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--mut)">
+            <div style="font-size:12px;color:var(--mut)">
               <span id="noticeCharCount">0 / 1000자</span>
-              <span id="noticeTargetCount">선택된 구독자 없음</span>
             </div>
           </div>
         </div>
         <div class="filter-bar" style="margin-top:4px">
           <button class="btn ghost" id="noticeSendBtn" disabled>지금 발송</button>
+          <span id="noticeTargetCount" style="color:var(--mut);font-size:13px;align-self:center">선택된 구독자 없음</span>
         </div>
         <div id="noticeStatus" style="display:none;padding:10px 12px;border-radius:8px;font-size:13px"></div>
       </div>
@@ -1729,7 +1729,7 @@ function selectedIds(){
 }
 function updateSelectedCount(){
   const n = selectedIds().length;
-  $('mSelectedCount').textContent = n ? `선택 ${n}명` : '';
+  $('mSelectedCount').textContent = n ? `선택 ${n}명` : '선택된 구독자 없음';
   $('mSendBtn').disabled = n===0;
 }
 $('mReload').addEventListener('click', loadManualTargets);
