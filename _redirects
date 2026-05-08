@@ -1,8 +1,8 @@
-/admin       /views/admin.html         200
-/renew       /views/renew.html         200
-/terms       /views/terms.html         200
-/privacy     /views/privacy.html       200
-/refund      /views/refund.html        200
-/help        /views/help.html          200
-/legacy      /views/legacy.html        200
-/survey/*    /views/survey.html        200
+/admin       /views/admin    200
+/renew       /views/renew    200
+/terms       /views/terms    200
+/privacy     /views/privacy  200
+/refund      /views/refund   200
+/help        /views/help     200
+/legacy      /views/legacy   200
+/survey/*    /views/survey   200
