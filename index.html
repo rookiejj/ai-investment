@@ -2904,6 +2904,8 @@ boot();
   // Android 백키·브라우저 뒤로가기도 같은 popstate 핸들러로 흐름 통일.
   let _subOpenedViaHistory=false;
   function openSubModal(){
+    const sm=document.querySelector('#subscribeModal .sub-modal');
+    if(sm) sm.style.transform='';
     modal.classList.add('show');
     modal.setAttribute('aria-hidden','false');
     document.body.classList.add('sub-modal-open');
@@ -2913,6 +2915,9 @@ boot();
     phoneEl.disabled=false;consent.disabled=false;
     syncPlanSelectedClass();
     resetToInput();
+    // display:none → flex 전환 직후엔 layout 안 잡혀 scrollTop 적용이 일관되지 않음.
+    // 다음 프레임에서 리셋 (종목 모달과 동일 패턴).
+    if(sm) requestAnimationFrame(()=>{ sm.scrollTop=0; });
     // 백키 처리용 history 엔트리 추가 — 뒤로가기 한 번이 sub-modal 닫기에 매핑
     history.pushState({briefickSubModal:1},'');
     _subOpenedViaHistory=true;
