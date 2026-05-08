@@ -103,8 +103,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 /* ─────── 필터/테이블 ─────── */
 .filter-bar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
 .filter-bar input,.filter-bar select{min-width:120px;padding:6px 10px;font-size:13px}
-.filter-bar .btn{padding:6px 14px;border-radius:8px;background:var(--fg);color:#fff;font-size:13px;font-weight:500}
-.filter-bar .btn:hover{background:#000}
+.filter-bar .btn{padding:6px 14px;border-radius:8px;background:transparent;color:var(--fg2);border:1px solid var(--border-md);font-size:13px;font-weight:500}
+.filter-bar .btn:hover{background:#eee}
+.filter-bar .btn.primary{background:var(--fg);color:#fff;border-color:var(--fg)}
+.filter-bar .btn.primary:hover{background:#000;border-color:#000}
 .filter-bar .btn.ghost{background:transparent;color:var(--mut);border:1px solid var(--border-md)}
 .filter-bar .btn.ghost:hover{background:#eee}
 
