@@ -30,7 +30,8 @@ ai-investment/
 │   ├── ai-data.js              / ai-update.js
 │   ├── commodity-data.js       / commodity-update.js
 │   ├── unicorn-data.js         / unicorn-update.js
-│   └── calendar-events.js      ← 차세대 대시보드(/preview) 전용 캘린더 데이터
+│   ├── calendar-events.js      ← 차세대 대시보드(/preview) 전용 캘린더 데이터
+│   └── company-ko.js           ← 영문 회사명·티커 → 한글 매핑 (index.html·daily-send 공용)
 └── README.md
 ```
 
@@ -170,6 +171,27 @@ ai-investment/
 
 - **update.js 파일들** — 일반 사용자 대상. 어떤 기업/종목의 무엇이 왜 변경됐는지를 전문적 톤으로 기록. 기술적 세부사항 제외.
 - **README.md** — 개발자 대상. 소스코드 구조·파일 추가/삭제·UI 로직 수정 등 기술적 변경만.
+
+### 한글 매핑 단일 소스 (data/company-ko.js)
+
+영문 회사명·티커 → 한글 표기 매핑은 **`data/company-ko.js` 한 곳에만 둔다.**
+
+**왜 단일 소스인가**: 같은 데이터가 두 채널로 흐름.
+- **렌더 경로**: `index.html`이 부팅 시 fetch → `_setCompanyKo()` → `localizeText()`로 헤드라인·캘린더·종목 텍스트 한글화
+- **발송 경로**: `supabase/functions/daily-send`가 GitHub raw로 fetch → 같은 `localizeText()`로 친구톡 본문 한글화
+
+매핑이 두 곳에 흩어지면 한쪽만 갱신돼 표류 발생 — 실제로 분리 전엔 헤드라인은 한글화 잘 되는데 친구톡만 영문 그대로 나가는 사고가 있었다.
+
+**🔴 매핑 추가·수정 시 이것만 따른다 (엄수)**:
+- 회사명·티커·일반어를 추가하거나 표기를 바꿀 때 **`data/company-ko.js` 한 파일만** 수정.
+- `index.html`이나 `supabase/functions/daily-send/index.ts`에 매핑 리터럴을 다시 인라인하지 말 것 — 분리 의미가 사라진다.
+- 새 항목 추가 시 단어 경계 룰 고려: 단일 글자·짧은 약어 티커(F·V·C·S·MS·MA·BE 등)는 일반 단어와 충돌하므로 풀네임만 매핑하고 ticker는 빼기. 새 충돌 후보 발견 시 같은 패턴 따르기.
+- `NAME_KO`(index.html 인라인, 종목 카드 라벨용)는 별개 — 본문 치환이 아니라 카드 nm 표시용이라 `displayName()`이 직접 룩업. `COMPANY_KO`와 역할 다르니 통합하지 말 것.
+
+**검증 방법**: 매핑 추가 후 로컬에서 `node` 한 줄로 단위 검증 가능.
+```bash
+node -e "const fs=require('fs');const src=fs.readFileSync('data/company-ko.js','utf8');const m=new Function(src+';return COMPANY_KO;')();console.log('총',Object.keys(m).length,'개')"
+```
 
 ### update.js 사용자향 문체 규칙 (절대 지킬 것)
 
