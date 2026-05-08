@@ -12,6 +12,7 @@ const COMPANY_KO = {
   // ─── AI·유니콘 ───
   'Anthropic':'엔트로픽','Alphabet':'알파벳','CoreWeave':'코어위브','Anduril':'안두릴',
   'Mistral':'미스트랄','DeepMind':'딥마인드','OpenAI':'오픈ai',
+  'Claude Code':'클로드 코드','Claude':'클로드','Musk':'머스크',
   'Reflection':'리플렉션','SpaceX':'스페이스X','Palantir':'팔란티어','Reddit':'레딧',
   'Stripe':'스트라이프','Databricks':'데이터브릭스','xAI':'xAI','Cohere':'코히어',
   'Mercor':'머커','Cursor':'커서','Vercel':'버셀','Figma':'피그마','Notion':'노션',
@@ -71,7 +72,7 @@ const COMPANY_KO = {
   // ─── 금융·은행 ───
   'JPMorgan':'JP모건','Goldman Sachs':'골드만삭스','Morgan Stanley':'모건스탠리',
   'Bank of America':'뱅크오브아메리카','Charles Schwab':'찰스 슈왑','BlackRock':'블랙록',
-  'Wells Fargo':'웰스파고','Citi':'씨티','Citigroup':'씨티','Bain':'베인',
+  'Wells Fargo':'웰스파고','Citigroup':'씨티그룹','Citi':'씨티','Bain':'베인',
   'Brookfield':'브룩필드','Blackstone':'블랙스톤','KKR':'KKR',
   'General Atlantic':'제너럴 애틀랜틱','Hellman&Friedman':'헬만&프리드먼',
   'Dragoneer':'드래고니어','SoftBank':'소프트뱅크','TPG':'TPG','Advent':'어드벤트',

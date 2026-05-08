@@ -191,6 +191,7 @@ const US_NAME_OVERRIDE = {
   "GPN": "글로벌 페이먼츠", "TOST": "토스트", "MQ": "마퀘타",
   "DLO": "DLO", "SOFI": "소파이", "AFRM": "어펌",
   // 금융·은행
+  "C": "씨티그룹",
   "USB": "US 뱅코프", "PNC": "PNC", "TFC": "트루이스트",
   "BX": "블랙스톤", "KKR": "KKR", "BAP": "크레디코프",
   // 로봇·자동화
