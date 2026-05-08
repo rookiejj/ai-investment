@@ -164,8 +164,11 @@ async function callGemini(prompt) {
   // 대안: gemini-3-pro-image-preview / gemini-2.5-flash-image
   const model = process.env.GEMINI_IMAGE_MODEL || 'nano-banana-pro-preview';
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+  // 모든 화풍을 4:5 portrait로 통일 — 홈페이지 카툰 슬롯이 같은 비율로 렌더링되도록.
+  // 프롬프트의 "1080×1350" 문구만으로는 모델이 가끔 1:1 정사각을 뱉어 화풍별 불일치 발생.
   const body = {
     contents: [{ parts: [{ text: prompt }] }],
+    generationConfig: { imageConfig: { aspectRatio: '4:5' } },
   };
   console.log(`[fetch] Gemini API ${model}`);
   const r = await fetch(url, {
