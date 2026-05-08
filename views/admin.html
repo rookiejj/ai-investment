@@ -847,7 +847,9 @@ async function surveyOpenDetail(id){
   if(!r.ok){ $('surveyDetailBody').innerHTML=`<div class="loading" style="color:var(--err)">${r.error}</div>`; return; }
   const s=r.survey, counts=r.counts||[], total=r.total||0;
   const opts=Array.isArray(s.options)?s.options:[];
-  const url=`${SITE_BASE}/survey/${s.id}`;
+  // CF Pages _redirects의 path placeholder rewrite 동작이 일관되지 않아 query-based URL로 통일.
+  // survey.html의 getId()는 path/query 둘 다 지원하므로 호환.
+  const url=`${SITE_BASE}/views/survey.html?id=${s.id}`;
   const max=Math.max(1,...counts);
   const bars=opts.map((opt,i)=>{
     const c=counts[i]||0;
