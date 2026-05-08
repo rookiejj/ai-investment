@@ -4,7 +4,7 @@
 
 - **웹 대시보드**: https://briefick.com
 - **카카오 채널**: https://pf.kakao.com/_lpxkCX
-- **친구톡 발송**: 평일(월~금) 오전 8시 KST · 만료 임박 안내 매일 오후 8시 KST
+- **친구톡 발송**: 월~토 오전 8시 KST · 만료 임박 안내 매일 오후 8시 KST
 - **운영 대시보드**: `/admin` (비밀번호 보호)
 - **수신 문제 안내**: `/help` (`#friend` 채널 친구 추가 / `#ad` 광고 수신 켜기)
 
@@ -169,7 +169,7 @@ ai-investment/
 
 | jobname | schedule | KST 변환 | 호출 함수 |
 |---|---|---|---|
-| `daily-friendtalk-send` | `0 23 * * 0-4` | 평일 08:00 | `daily-send` |
+| `daily-friendtalk-send` | `0 23 * * 0-5` | 월~토 08:00 | `daily-send` |
 | `daily-expiry-notice` | `0 11 * * *` | 매일 20:00 | `expiry-notice` |
 | `stock-prices-refresh` | `*/15 * * * *` | 매 15분 | `stock-prices` |
 
@@ -288,7 +288,7 @@ admin_settings (단일 행, id=1)
 - **카카오 알림톡에 승인된 버튼 노출**: 알리고는 템플릿 등록 시 정의한 버튼을 자동 렌더 — 발송 호출엔 별도 명시 불필요. AC `채널추가` 버튼은 이미 채널 친구인 수신자에겐 자동 숨김(추가 대상 없으므로) — 본인 폰 테스트로는 영원히 검증 불가.
 - **AC '채널 추가' 버튼 표시 조건**: 이미 채널 친구인 수신자에게는 자동 숨김 (추가할 대상이 없으므로). 새 가입자에게만 노출.
 - **관리자 비밀번호 로테이션**: 대시보드 헤더 "비밀번호 변경"으로 바로 변경(최소 4자). env `ADMIN_PASSWORD`는 최초 초기화용이며, 이후 실 비교는 `admin_settings.password_hash` 기준.
-- **스케줄 변경**: `cron.schedule` 표현식은 UTC 기준 (KST = UTC+9). 평일 한정은 UTC dow `0-4` 사용 (KST 월~금 = UTC 일~목).
+- **스케줄 변경**: `cron.schedule` 표현식은 UTC 기준 (KST = UTC+9). 월~토 한정은 UTC dow `0-5` 사용 (KST 월~토 = UTC 일~금). 평일만이면 `0-4`(KST 월~금).
 
 ## Changelog
 

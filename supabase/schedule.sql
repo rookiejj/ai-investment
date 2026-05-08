@@ -37,8 +37,9 @@ select name, description, updated_at from vault.secrets where name = 'cron_secre
 -- STEP 2 : cron 등록
 --   ⚠ 야간 광고 친구톡은 법적 금지(KST 21:00~08:00). 카카오가 차단.
 --     테스트 모드 : '0 23,0-11 * * *' (UTC) = KST 08~20시 매시 정각
---     운영 모드  : '0 23 * * 0-4'     (UTC) = KST 평일(월~금) 08:00 1회
---     ※ KST 08:00 = UTC 23:00(전날)이므로 UTC dow는 일~목(0~4)이 평일에 해당
+--     운영 모드  : '0 23 * * 0-5'     (UTC) = KST 월~토 08:00 1회 (일요일 제외)
+--     ※ KST 08:00 = UTC 23:00(전날)이므로 UTC dow 0~5 = KST 월~토에 해당
+--     ※ 일요일(KST)에 해당하는 UTC dow=6(토)은 제외 — 주말 휴식 1일 유지
 -- ───────────────────────────────────────────────
 create extension if not exists pg_cron with schema extensions;
 create extension if not exists pg_net  with schema extensions;
@@ -52,7 +53,7 @@ end $$;
 
 select cron.schedule(
   'daily-friendtalk-send',
-  '0 23 * * 0-4',  -- UTC 기준 = KST 평일(월~금) 08:00 1회
+  '0 23 * * 0-5',  -- UTC 기준 = KST 월~토 08:00 1회 (일요일 제외)
   $CRON$
     select net.http_post(
       url := 'https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/daily-send',
