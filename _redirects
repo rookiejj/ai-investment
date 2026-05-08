@@ -1,0 +1,8 @@
+/admin       /views/admin.html         200
+/renew       /views/renew.html         200
+/terms       /views/terms.html         200
+/privacy     /views/privacy.html       200
+/refund      /views/refund.html        200
+/help        /views/help.html          200
+/legacy      /views/legacy.html        200
+/survey/:id  /views/survey.html?id=:id 200
