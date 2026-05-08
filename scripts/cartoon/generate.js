@@ -160,10 +160,11 @@ async function callGemini(prompt) {
   if (!apiKey) {
     throw new Error('GEMINI_API_KEY 환경변수 누락 — .env에 추가하거나 export 필요');
   }
-  // gemini-2.5-flash-image ($0.04/장) — Nano Banana Pro($0.13/장)에서 다운그레이드.
-  // 비용 1/3 수준이고 한국어 렌더링·풍자 만화 표현력 충분. GitHub Actions도 동일 모델.
-  // 더 비싼 옵션이 필요하면 env로 nano-banana-pro-preview / gemini-3-pro-image-preview 넘김.
-  const model = process.env.GEMINI_IMAGE_MODEL || 'gemini-2.5-flash-image';
+  // nano-banana-pro-preview ($0.13/장) — 한국어 렌더링 정확도 때문에 복귀.
+  // gemini-2.5-flash-image($0.04/장)로 다운그레이드 시도했으나 한글 자모 hallucination이 심해
+  // 워터마크·말풍선 글자가 깨짐("오늘"→"오들" 등). 비용 3배지만 품질 우선.
+  // KST 시간대 분기로 매 실행 1장만 생성해 일일 비용은 ~$0.26 수준.
+  const model = process.env.GEMINI_IMAGE_MODEL || 'nano-banana-pro-preview';
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
   // 모든 화풍을 4:5 portrait로 통일 — 홈페이지 카툰 슬롯이 같은 비율로 렌더링되도록.
   // 프롬프트의 "1080×1350" 문구만으로는 모델이 가끔 1:1 정사각을 뱉어 화풍별 불일치 발생.
