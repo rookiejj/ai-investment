@@ -5,4 +5,4 @@
 /refund      /views/refund.html        200
 /help        /views/help.html          200
 /legacy      /views/legacy.html        200
-/survey/:id  /views/survey.html?id=:id 200
+/survey/*    /views/survey.html        200
