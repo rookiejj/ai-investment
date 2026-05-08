@@ -153,7 +153,7 @@ def cover_slide(prs):
     itf = info.text_frame
     ip = itf.paragraphs[0]
     irun = ip.add_run()
-    irun.text = "https://roysbriefing.vercel.app    ·    로이소프트    ·    사업자 737-42-01455"
+    irun.text = "https://briefick.com    ·    로이소프트    ·    사업자 737-42-01455"
     irun.font.size = Pt(12)
     irun.font.color.rgb = TEXT_MUT
     irun.font.name = "Pretendard"
@@ -202,7 +202,7 @@ def main():
     # 슬라이드 정의 (인덱스, 제목, 부제, 스크린샷 키)
     plan = [
         ("1", "메인 화면",
-         "https://roysbriefing.vercel.app — 일반 인증 결제 진입점 (헤더 우측 '구독하기' 버튼)",
+         "https://briefick.com — 일반 인증 결제 진입점 (헤더 우측 '구독하기' 버튼)",
          "main"),
         ("2", "홈페이지 하단 정보",
          "사업자번호 · 상호 · 대표자 · 주소 · 일반전화번호 · 이메일 노출",
@@ -242,7 +242,7 @@ def main():
     btf.word_wrap = True
     items = [
         "• 매월 자동 결제 미운영. 매 월 만료일 전 사용자가 직접 재결제하는 구조.",
-        "• 만료 D-1 카카오 친구톡으로 재구독 안내 발송 (https://roysbriefing.vercel.app/renew 링크 포함).",
+        "• 만료 D-1 카카오 친구톡으로 재구독 안내 발송 (https://briefick.com/renew 링크 포함).",
         "• 재구독 페이지의 결제 흐름은 위 3~7단계와 100% 동일 (구독 모달 → 번호 확인 → PG사 결제창 → 카드사 인증 → 결제 완료).",
         "• 결제 1건당 30일 이용권 부여, 다음 결제 없이는 만료 후 자동 비활성화.",
     ]
