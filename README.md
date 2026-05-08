@@ -292,6 +292,10 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-08 (4)**: **카툰 생성 비율·모델 안정화 + 한글 매핑 누락분 보강**.
+  - **카툰 4:5 비율 강제** — `scripts/cartoon/generate.js`의 Gemini API 호출 body에 `generationConfig.imageConfig.aspectRatio: '4:5'` 추가. 프롬프트의 "1080×1350" 문구만으로는 모델이 가끔 1:1 정사각을 뱉어 화풍별 출력 비율이 어긋남(today-news 928×1152, today-magazine 1024×1024). 홈페이지 카툰 슬롯이 KST 시간대(오전=뉴스 / 오후=매거진)로 분기되는데 비율 다르면 시각 일관성 깨짐.
+  - **카툰 모델 nano-banana-pro-preview로 복귀** — 5/7에 비용 절감 위해 `gemini-2.5-flash-image`($0.04/장)로 다운그레이드 시도했으나 한국어 자모 hallucination 심각("오늘"→"오들", "시장"→"시작"). 워터마크·말풍선 글자가 깨져 사용자 신뢰도 직격이라 품질 우선 복귀. 비용 3배($0.13/장)지만 KST 시간대 분기로 매 실행 1장만 생성하므로 일일 ~$0.26 수준. `scripts/cartoon/generate.js` 기본값 + `cartoon-generate.yml` env + `instagram-post.yml` env(캐러셀·Reels 폴백 2곳) 4곳 동기화.
+  - **한글 매핑 누락분 보강** — `data/company-ko.js`에 4건 추가/정정. **Claude Code → 클로드 코드** + **Claude → 클로드**(헤드라인·대안자산 본문에서 영문 그대로 노출되던 케이스, 길이 우선 적용으로 Claude Code가 Claude 단독보다 먼저 매칭). **Musk → 머스크**. **Citigroup '씨티' → '씨티그룹'**(정확한 회사명). `data/sector-pool.js` US_NAME_OVERRIDE에 **`"C": "씨티그룹"`** 추가 — 단일글자 티커는 COMPANY_KO 단어경계 룰로 보호 안 돼서 본문 치환 대상이 아니고, 히트맵은 별도로 ticker→한글 매핑(US_NAME_OVERRIDE)을 쓰는 구조라 양쪽에 따로 박아야 함(역할 다름, 통합 불가).
 - **2026-05-08 (3)**: **호스팅 Vercel → Cloudflare Pages 이전 + 도메인 briefick.com 등록**.
   - **Cloudflare Pages 배포** — `briefick.pages.dev`로 GitHub repo 자동 배포 연결. 빌드 명령 없음(정적), 출력 디렉토리 `/`. Vercel Hobby 무료 플랜이 비상업적 용도 한정이라 결제 도입 시점에 Pro($20/월) 강제 — Cloudflare Pages는 무료 플랜에 상업 사용 명시적 허용 + 무제한 대역폭 + DDoS 보호 보너스.
   - **`_redirects` 파일 추가** — vercel.json rewrites와 동일한 매핑(`/admin`·`/renew`·`/help`·`/terms`·`/privacy`·`/refund`·`/legacy`·`/survey/:id`)을 Cloudflare 형식으로 변환. 두 파일 공존(Vercel은 `_redirects` 무시, CF는 vercel.json 무시) → 양쪽 동시 배포.
