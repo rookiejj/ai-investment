@@ -243,6 +243,25 @@ node scripts/lint-finmap-pool.js   # 핀맵 풀 종목 형식·한글명 lookup 
 
 **왜 lint 한 번 더 돌리나** — 모델이 긴 detail 본문 작성 중 무의식적으로 한국 증권가 통용 표현을 흘려넣음. CLAUDE.md를 읽고 인지하더라도 본문 작성 시점엔 잊을 수 있어, 기계적 검증 한 단계가 가장 확실하다. lint가 false positive를 잡으면 (예: "변동성을 반영해" 같은 시장 인과 자연어) 사람이 판단해 패스, 패턴 자체가 너무 광범위하면 `scripts/lint-jargon.sh`의 PATTERNS·EXCLUDE 좁히기.
 
+### update.js 트리밍 — 커밋 직전 40KB 한도 강제 (자동 갱신 필수 단계)
+
+자동 갱신 트리거 sandbox는 직접 `git push`가 아웃바운드 프록시에서 403으로 차단되고, 우회 경로인 MCP `push_files` API는 JSON body 사이즈 한계(~50KB 부근)가 있어 큰 *-update.js를 GitHub로 못 되돌린다. 5/9 오전·오후 두 번 *-data.js만 푸시되고 *-update.js는 못 푸시되며 헤드라인이 5/8 그대로 머무는 사고 발생.
+
+**룰**: update.js 이력 prepend 후 커밋 직전에 다음 명령 실행:
+
+```bash
+node scripts/trim-update-logs.js   # 모든 *-update.js를 40KB 이하로 자동 트리밍
+```
+
+- 가장 최근 entry부터 byte 한도 안까지만 유지, 옛 entry는 잘려나감
+- 잘려나간 entry는 git history에 영원히 남으니 정보 자체는 보존
+- 보통 10~16개 entry가 남음 (~1.5~2주치). 화면 노출 영역(TL;DR=entry[0], 모달 mentions=12건)은 모두 커버
+- 결과 항상 멱등 — 이미 한도 이하면 skip
+
+**왜 한도 40KB인가**: push_files 한계는 ~50KB지만, 자동 갱신 세션이 새 entry(~2-3KB) prepend **후** trim하므로 prepend 시점에 한도 초과하면 push 실패. 40KB로 깎아두면 prepend 후 ~42-43KB로 한도 안에 머묾. 50KB 한도 시 5/9 두 번 push 사고 후 40KB로 강화한 이력.
+
+**왜 매번 자동으로 돌리나**: 매일 갱신마다 prepend되니 한 달이면 한도 초과. 사람이 매번 의식적으로 잘라내는 룰은 거의 지켜지지 않으므로 기계적 트리밍이 가장 확실하다. trim-update-logs.js는 syntax 보존하면서 byte만 안전하게 깎는다 (UTF-8 한글 char 1=byte 3 정확히 측정).
+
 ### update.js 동일 날짜 이력 누적 원칙
 
 **공통 스키마** (AI 탭은 sector=기업명, 다른 탭은 sector=데이터 카테고리)
