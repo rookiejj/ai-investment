@@ -6,6 +6,18 @@
  */
 const UPDATES = [
   {
+    date: "2026-05-09 19:10 KST",
+    summary: `Anthropic·Akamai $1.8B 7년 인퍼런스 클라우드 - Akamai 사상 최대 단일 계약
+AKAM 5/8 정규장 +27% $149.05 - 22년 만의 최대 단일일 강세, 풀 램프 시 단일 고객 매출 6%
+Anthropic 컴퓨트 공급사 7곳 분산 - SpaceX·Google·AWS·CoreWeave·NVIDIA·Broadcom·Akamai
+인퍼런스 엣지 레이턴시 본업 정렬 - 중앙화 학습 캐파에 글로벌 분산 추론 레이어 신규 추가`,
+    changes: [
+      { type: "인프라", sector: "Anthropic",
+        detail: "Anthropic·Akamai $1.8B 7년 클라우드 약정. 5/8 Akamai 1분기 결산 8-K에서 '미국 프론티어 모델 회사'와 7년 $1.8B 계약을 공시 - Bloomberg가 고객을 Anthropic으로 특정. 연 평균 약 $257M·Akamai 사상 최대 단일 계약·연 매출 가이던스 $4.5B 중간값 대비 풀 램프 시 단일 고객 6% 비중. AKAM 5/8 정규장 +27% $149.05 마감으로 22년 만의 최대 단일일 강세. 거래 본업은 인퍼런스 측 - Akamai의 글로벌 분산 엣지 푸트프린트가 Claude 사용자 다지역 저레이턴시 인퍼런스 처리에 정렬. 컴퓨트 누적 라인업 - SpaceX Colossus 1(300MW·NVIDIA 220K GPU) 단독 임대 + Google TPU $200B 5년 + AWS Trainium 2 약 1GW + CoreWeave 다년 + NVIDIA·Broadcom 커스텀 실리콘 공급 + Akamai 인퍼런스 엣지 7년으로 최소 7개 공급사 분산. 5/8 Code with Claude Q1 매출·사용량 80배 가속 정량 베이스에 인프라 다층화가 후방 시그널 - $50B $900B 5월 보드 결정 + 10월 IPO $400~500B 카운트다운 라인업 강화.",
+        time: "2026-05-09 19:10 KST" },
+    ]
+  },
+  {
     date: "2026-05-09 11:30 KST",
     summary: `Anthropic 5/8 Code with Claude 컨퍼런스(SF) - Dario 'Q1 80배 매출·사용량 가속' 정량 공개
 Memory 정식·멀티에이전트 오케스트레이션 신규 - 엔터프라이즈 에이전트 운영 미싱 피스 충족
@@ -171,6 +183,9 @@ QCOM 12월 데이터센터 추론 칩 첫 출하 가이던스 공식 - 멀티 AS
       { type: "인프라", sector: "NVIDIA",
         detail: "NVIDIA(QCOM 데이터센터 진입 시그널). 4/29 장후 Qualcomm Q2 2026 컨콜에서 Cristiano Amon CEO가 '12월 대형 하이퍼스케일러向 데이터센터 칩 첫 출하' 가이던스를 공식화. AI200(2026)·AI250(2027) 추론 가속기 라인업이 Broadcom MTIA·Google TPU 8t/8i와 결합돼 NVIDIA 데이터센터 단일 공급 구조에서 멀티 ASIC 경쟁 구도로 본격 분기. 4/29 Alphabet Cloud +63% 백로그 $460B + 4/29 Meta CapEx $125~145B 상향과 같은 라인에서 GPU·TPU·MTIA·QCOM AI200까지 다중 칩 동시 가속 - NVIDIA의 절대 점유율은 한동안 유지되나 추론 영역에서 비중 침식 압력은 분기 단위로 가시화. 자동차 매출 연 $5B 첫 돌파도 동반.",
         time: "2026-05-01 07:30 KST" },
+      { type: "마일스톤", sector: "OpenAI",
+        detail: "OpenAI(매출 부진 보도 후폭풍·Friar IPO 연기 주장). 4/28 WSJ가 OpenAI Q1 매출이 컨센을 하회했고 CFO Friar가 IPO 일정을 2026년 너머로 연기해야 한다고 이사회에 주장한 정황을 보도. 동일 보도에서 Altman은 $600B 컴퓨트 약속을 그대로 가져가는 그림을 고수하면서 두 주장 사이 간극이 IPO 펀더멘털 신뢰 변수의 핵심 변수로 부상. 1월 내부 목표였던 ChatGPT 주간 활성 10억 명은 2월 9억 명에서 멈춘 상태로 다시 확인. SoftBank ADR -10%·CoreWeave -6%·Oracle -4%·NVDA -2.9%로 AI 인프라 매도가 누적된 흐름이 4/29 시간외에서 일부 회복되며 메가캡 슈퍼위크 실적 흐름이 다음 분기점.",
+        time: "2026-05-01 19:45 KST" },
     ]
   },
   {
