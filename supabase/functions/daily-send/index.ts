@@ -10,7 +10,7 @@
  * 5) send_logs INSERT
  *
  * 필수 ENV (supabase secrets):
- *   ALIGO_PROXY_URL     (예: https://briefick.duckdns.org/friend/send)
+ *   ALIGO_PROXY_URL     (예: https://proxy.briefick.com/friend/send)
  *   ALIGO_PROXY_SECRET  (VPS .env의 PROXY_SHARED_SECRET와 동일 값)
  *   GITHUB_TOKEN        (private repo 접근)
  * 선택 ENV:

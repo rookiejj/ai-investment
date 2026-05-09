@@ -235,7 +235,7 @@ pg_cron → Vault X-Cron-Secret → expiry-notice
 | 호스팅 | **Vercel** · `vercel.json` rewrites로 `/admin`·`/renew`·`/terms`·`/privacy`·`/refund` → `views/` 매핑 |
 | 백엔드 | **Supabase Pro** (Postgres + Edge Functions + Vault + pg_cron + pg_net) |
 | 결제 | **포트원 V2** (galaxia 테스트 채널 · `windowType.mobile: REDIRECTION`) |
-| 메시지 | **알리고(Aligo)** — 카카오 친구톡·알림톡 · IP 화이트리스트 회피 위해 iwinv VPS(`briefick.duckdns.org`)에 Node 프록시 + Caddy HTTPS · `X-Proxy-Secret` 헤더 인증 |
+| 메시지 | **알리고(Aligo)** — 카카오 친구톡·알림톡 · IP 화이트리스트 회피 위해 iwinv VPS(`proxy.briefick.com`, `115.68.224.225`)에 Node 프록시 + Caddy HTTPS · `X-Proxy-Secret` 헤더 인증 |
 | 카카오 | 채널 `_lpxkCX` · 발신프로필 `KA01PF...` · 알림톡 템플릿 `KA01TP...` |
 | 자동 콘텐츠 갱신 | Claude Opus 4.7 원격 에이전트 |
 
@@ -282,7 +282,7 @@ admin_settings (단일 행, id=1)
 ## 운영 메모
 
 - **알리고 잔액**: 친구톡 ₩19.9/건, 알림톡 ₩8/건. 잔액 부족 시 `send_logs.status=fail` + `provider_message`에 알리고 자연어 사유. 알리고 어드민 콘솔에서 직접 충전.
-- **알리고 IP 화이트리스트**: 알리고 API는 발신 IP 등록 필수 — Edge Function 동적 IP 호출 불가. 우회용 VPS 프록시(`briefick.duckdns.org`)에 알리고 API 키·sender key 보관. VPS IP(`115.68.224.225`) 1개만 알리고 어드민에 등록.
+- **알리고 IP 화이트리스트**: 알리고 API는 발신 IP 등록 필수 — Edge Function 동적 IP 호출 불가. 우회용 VPS 프록시(`proxy.briefick.com` = `115.68.224.225`)에 알리고 API 키·sender key 보관. VPS IP(`115.68.224.225`) 1개만 알리고 어드민에 등록. (이전 `briefick.duckdns.org`는 무료 dynamic DNS 안정성 이슈로 5/9 Cloudflare 서브도메인으로 이전, IP는 변경 없음.)
 - **포트원 라이브 전환**: 테스트 채널 키 → 라이브 키로 교체. `ITEM_CODE` 등 bypass 필드는 PG별로 재검토.
 - **친구톡 도달 불가 케이스**: 채널 미가입·광고 수신 거부·차단 등은 알리고 응답에선 분류 안 됨(자연어 사유만). 운영자가 `manual_send`(알림톡)로 `/help` 안내 발송 — 알림톡은 광고성 거부와 무관하게 정상 도달.
 - **카카오 알림톡에 승인된 버튼 노출**: 알리고는 템플릿 등록 시 정의한 버튼을 자동 렌더 — 발송 호출엔 별도 명시 불필요. AC `채널추가` 버튼은 이미 채널 친구인 수신자에겐 자동 숨김(추가 대상 없으므로) — 본인 폰 테스트로는 영원히 검증 불가.
@@ -292,6 +292,7 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-09**: **VPS 프록시 도메인 DuckDNS → Cloudflare 서브도메인 이전**. `briefick.duckdns.org` → **`proxy.briefick.com`** (Cloudflare DNS, A 레코드 DNS-only로 origin IP `115.68.224.225` 그대로 노출). 이전 사유: 5/9 오전 친구톡 발송 시 Supabase Edge Function의 Deno Deploy DNS resolver가 duckdns.org 풀이 실패(`No address associated with hostname`) — DuckDNS 무료 dynamic DNS 글로벌 propagation 가끔 흔들림이 알려진 이슈. Cloudflare DNS는 anycast·SLA 100% 가까이 유지하는 인프라라 동급 사고는 자릿수 단위로 드묾. **VPS IP 변경 없음** — Aligo IP 화이트리스트 그대로 유효 (outgoing은 항상 VPS IP `115.68.224.225`라 도메인 무관). DNS only(회색 구름) 강제 — orange cloud 켜면 Cloudflare가 중계하면서 cert 검증·SNI 흐름 복잡해져 굳이 안 함. 작업 단계: (1) Cloudflare DNS A 레코드 추가 (2) VPS Caddyfile에 `proxy.briefick.com` 블록 추가, 기존 duckdns 블록은 페이드아웃 안전망으로 한동안 유지 (3) Supabase secrets `ALIGO_PROXY_URL`·`ALIGO_PROXY_ALIMTALK_URL` 호스트 교체 (4) Edge Functions 4개(daily-send·expiry-notice·payment-confirm·admin-api) 주석·문서 갱신.
 - **2026-05-08 (4)**: **카툰 생성 비율·모델 안정화 + 한글 매핑 누락분 보강**.
   - **카툰 4:5 비율 강제** — `scripts/cartoon/generate.js`의 Gemini API 호출 body에 `generationConfig.imageConfig.aspectRatio: '4:5'` 추가. 프롬프트의 "1080×1350" 문구만으로는 모델이 가끔 1:1 정사각을 뱉어 화풍별 출력 비율이 어긋남(today-news 928×1152, today-magazine 1024×1024). 홈페이지 카툰 슬롯이 KST 시간대(오전=뉴스 / 오후=매거진)로 분기되는데 비율 다르면 시각 일관성 깨짐.
   - **카툰 모델 nano-banana-pro-preview로 복귀** — 5/7에 비용 절감 위해 `gemini-2.5-flash-image`($0.04/장)로 다운그레이드 시도했으나 한국어 자모 hallucination 심각("오늘"→"오들", "시장"→"시작"). 워터마크·말풍선 글자가 깨져 사용자 신뢰도 직격이라 품질 우선 복귀. 비용 3배($0.13/장)지만 KST 시간대 분기로 매 실행 1장만 생성하므로 일일 ~$0.26 수준. `scripts/cartoon/generate.js` 기본값 + `cartoon-generate.yml` env + `instagram-post.yml` env(캐러셀·Reels 폴백 2곳) 4곳 동기화.

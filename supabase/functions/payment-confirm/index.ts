@@ -64,7 +64,7 @@ function json(body: unknown, init: ResponseInit & { cors: Record<string, string>
 // ═══ 알리고 알림톡 (VPS 프록시 경유) ═══════════════════
 // SOLAPI HMAC 인증 코드는 알리고 전환으로 제거.
 // 친구톡과 동일하게 동적 IP의 Edge Function이 알리고 IP 화이트리스트를 통과 못 해
-// VPS 프록시(briefick.duckdns.org/alimtalk/send)를 경유한다.
+// VPS 프록시(proxy.briefick.com/alimtalk/send, 115.68.224.225)를 경유한다.
 
 async function sendPaymentAlimtalk(opts: {
   phone: string;
