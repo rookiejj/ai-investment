@@ -1,8 +1,8 @@
-// Calendar Events — 캘린더 전용 알려진 이벤트 / 정기 매크로 / 어닝·IPO·컨퍼런스
+// Calendar Events — 캘린더 전용 알려진 이벤트 / 정기 매크로 / 어닝·IPO·컴퍼런스
 //
 // 데이터 분류:
 //   - recurring: 정기 패턴 (매주, 월N번째요일 등) → preview.html에서 다음 발생일 자동 계산
-//   - fixed:     구체 날짜 1회성 이벤트 (어닝·IPO·컨퍼런스 등 일정 알려진 것)
+//   - fixed:     구체 날짜 1회성 이벤트 (어닝·IPO·컴퍼런스 등 일정 알려진 것)
 //
 // 다일 윈도우 이벤트는 시작·종료일을 별도 fixed 항목 두 개로 등록할 것
 // (예: 'X 윈도우 시작' + 'X 마감'). 윈도우 안 모든 날짜에 채우는 dateRanges는
@@ -46,9 +46,11 @@ const fixed = [
   { cat:'policy', impact:3, title:'美·이란 14개항 양해각서 응답 마감', date:'2026-05-08', desc:'5/6 백악관 보도 48시간 윈도우·호르무즈 통항 정상화 단일 분기점' },
   { cat:'macro', impact:3, title:'미국 4월 NFP 비농업 고용', date:'2026-05-08', desc:'4월 고용 시그널·5/14 CPI 직전 매크로' },
   { cat:'macro', impact:2, title:'중국 4월 CPI·PPI', date:'2026-05-11', desc:'주말 시프트로 월요일 발표' },
-  { cat:'macro', impact:3, title:'미국 4월 CPI', date:'2026-05-13', desc:'근원 CPI YoY 컨센 +3.0%' },
-  { cat:'macro', impact:2, title:'미국 4월 PPI', date:'2026-05-14' },
+  { cat:'macro', impact:3, title:'미국 4월 CPI', date:'2026-05-12', desc:'BLS 8:30 ET·근원 CPI MoM 컨센 +0.3%·헤드라인 YoY +3.7% 추정' },
+  { cat:'macro', impact:2, title:'미국 4월 PPI', date:'2026-05-13', desc:'근원 PPI 동반 발표' },
   { cat:'macro', impact:2, title:'유로존 1Q GDP 1차', date:'2026-05-14' },
+  { cat:'earnings', impact:2, title:'BABA Q4 FY26 실적', date:'2026-05-14', desc:'알리바바 클라우드 AI 모멘텀', tickers:['BABA'] },
+  { cat:'earnings', impact:2, title:'AMAT Q2 FY26 실적', date:'2026-05-14', desc:'장후 발표·반도체 장비 사이클·HBM 수요', tickers:['AMAT'] },
   { cat:'macro', impact:2, title:'미국 4월 소매판매', date:'2026-05-15', desc:'소비 모멘텀 핵심 지표' },
   { cat:'macro', impact:1, title:'미국 4월 산업생산', date:'2026-05-15' },
   { cat:'macro', impact:1, title:'미국 5월 미시간대 소비자심리 1차', date:'2026-05-16' },
@@ -56,7 +58,7 @@ const fixed = [
   { cat:'macro', impact:2, title:'일본 1Q GDP 1차 추정', date:'2026-05-18', desc:'BOJ 6월 회의 가이드 후방 지표' },
   { cat:'macro', impact:3, title:'4/29-30 FOMC 의사록 공개', date:'2026-05-21', desc:'5월 회의 톤·6월 회의 가이드' },
   { cat:'macro', impact:2, title:'미국 4월 신규주택판매', date:'2026-05-26' },
-  { cat:'macro', impact:1, title:'미국 5월 컨퍼런스 보드 소비자신뢰지수', date:'2026-05-27' },
+  { cat:'macro', impact:1, title:'미국 5월 컴퍼런스 보드 소비자신뢰지수', date:'2026-05-27' },
   { cat:'macro', impact:2, title:'한국 BOK 5월 금융통화위원회', date:'2026-05-28', desc:'기준금리 결정' },
   { cat:'macro', impact:3, title:'미국 1Q GDP 2차 추정', date:'2026-05-29' },
   { cat:'macro', impact:3, title:'미국 4월 PCE 물가', date:'2026-05-30', desc:'Fed 선호 인플레 지표' },
@@ -99,7 +101,7 @@ const fixed = [
   { cat:'ipo', impact:3, title:'Anthropic $40~50B 라운드 마감 추정', date:'2026-05-14', desc:'$850~900B 밸류, 5월 보드 미팅' },
   { cat:'ipo', impact:2, title:'Cerebras IPO 프라이싱 추정', date:'2026-05-22', desc:'CBRS, $35B+ 밸류, $3B+ 조달', tickers:['CBRS'] },
 
-  // === 컨퍼런스·신제품 ===
+  // === 컴퍼런스·신제품 ===
   { cat:'conf', impact:3, title:'OpenAI Dev Day 2026 (예상)', date:'2026-05-15', desc:'GPT-5.5 라인업·Codex 확장' },
   { cat:'conf', impact:3, title:'Microsoft Build 2026', date:'2026-05-19', desc:'Azure AI·Copilot·Foundry' },
   { cat:'conf', impact:3, title:'Google I/O 2026', date:'2026-05-20', desc:'Gemini·Android·TPU 8세대' },
