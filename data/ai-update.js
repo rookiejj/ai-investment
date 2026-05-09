@@ -6,6 +6,21 @@
  */
 const UPDATES = [
   {
+    date: "2026-05-09 11:30 KST",
+    summary: `Anthropic 5/8 Code with Claude 컨퍼런스(SF) - Dario 'Q1 80배 매출·사용량 가속' 정량 공개
+Memory 정식·멀티에이전트 오케스트레이션 신규 - 엔터프라이즈 에이전트 운영 미싱 피스 충족
+NVIDIA·IREN 다년 5GW DSX 인프라 - $3.4B 매니지드 GPU 클라우드 + $2.1B 워런트 투자 권리
+IREN 5/8 종가 $61.20 +7.65% - Bitcoin 마이닝에서 AI 클라우드 캐파 채널 전환 정량 입증`,
+    changes: [
+      { type: "마일스톤", sector: "Anthropic",
+        detail: "Anthropic. 5/8 샌프란시스코 Code with Claude 개발자 컨퍼런스 - Dario Amodei 키노트에서 'Q1 매출·사용량이 연환산 기준 80배 가속(전망 10배 대비 8배 초과)' 정량 공개. SpaceX Colossus 1 단독 임대(300MW+·NVIDIA 220K+ GPU)가 단일 캐파 라인업, 5/4 Blackstone·Goldman·H&F $1.5B 합작벤처 + 5/5 금융 서비스 에이전트 10종 + Microsoft 365 네이티브 통합이 최근 2주 누적 채널. 신규 발표 - ①Memory 기능 정식(세션 간 장기 컨텍스트·선호 파일시스템 영구 저장·감사 로그) ②멀티에이전트 오케스트레이션(복수 매니지드 에이전트가 단일 작업 분담·중간 결과 공유) ③Claude Opus 4.7의 금융 본업 특화 성능 강조. $900B 라운드 5월 보드 결정 + 10월 IPO $400~500B 카운트다운 베이스에 매출 가속 단일 정량 입증.",
+        time: "2026-05-09 11:30 KST" },
+      { type: "인프라", sector: "NVIDIA",
+        detail: "NVIDIA·IREN 다년 5GW DSX AI 인프라 파트너십. 5/7 공식 발표 - IREN의 글로벌 데이터센터 파이프라인에 NVIDIA DSX 정렬 인프라 최대 5GW 배치 가속. ①IREN이 NVIDIA에 30M주 보통주 5년 매수권($70 행사가, 최대 $2.1B 투자 권리, 규제 승인 조건) 부여 ②NVIDIA가 IREN으로부터 매니지드 GPU 클라우드 5년 $3.4B 약정 - 내부 AI·연구 워크로드용. 플래그십 배치는 텍사스 Sweetwater 캠퍼스(2GW)로 DSX 아키텍처 첫 대형 레퍼런스. IREN 5/8 종가 $61.20 +7.65% - Bitcoin 마이닝에서 AI 클라우드로 전환한 캐파 채널이 NVDA의 워런트 + 캡티브 클라우드 라인업으로 정량 입증. 5/6 Corning $500M·5/8 IREN $5.5B 라인을 결합해 NVDA 5/20 1분기 FY27 컨센 $78.8B 발표 직전 인프라 채널 다변화 시그널 누적.",
+        time: "2026-05-09 11:30 KST" },
+    ]
+  },
+  {
     date: "2026-05-08 07:20 KST",
     summary: `Anthropic·SpaceX Colossus 1 전체 컴퓨트 단독 임대 - 300MW·NVIDIA GPU 220,000개·H100/H200/GB200
 Claude Code 한도 전 유료 티어 2배 확대·Pro/Max 피크 시간대 한도 폐지·Opus API 한도 상향
@@ -199,22 +214,6 @@ GPT-5.5 + 엔터·바이오 라인업 vs OpenAI CFO 컴퓨트 자금조달 우�
       { type: "마일스톤", sector: "Anthropic",
         detail: "Anthropic($1T 마일스톤 공식 확인). 4/28 The Currency·NAI500이 Jupiter 프리IPO 플랫폼에서 Anthropic이 시초 $1T 밸류에 도달했다고 동시 보도 - Forge에서도 비슷한 가격·Hiive는 약 $851B로 매겨져 지표 간 일관성 확보. 2월 시리즈G $380B → 4/24 Alphabet $40B 합의 $380B 시점에서 두 달 만에 약 2.6배 추가 상향. 동일자 Sacra 추산 연환산 매출 3월 기준 $300억(YoY +1,400%)이 OpenAI($250억)를 추월한 가운데, OpenAI WSJ 매출 컨센 하회 보도가 'Anthropic이 코딩·엔터프라이즈에서 점유율을 빼앗아갔다'는 명시적 진술과 결합되며 IPO 10월 $400~500B 타겟의 외부 검증 시그널을 한 단계 더 강화. 4/24 Alphabet $40B + AWS $25B + 5GW TPU·$100B 컴퓨트 약정의 24시간 누적 $65B+ 유입과 같은 라인에 정렬.",
         time: "2026-04-29 13:05 KST" },
-    ]
-  },
-  {
-    date: "2026-04-29 07:30 KST",
-    summary: `OpenAI WSJ 매출 컨센 하회 보도 - 월별 목표 연속 미달·주간활성 10억 미달·Anthropic에 코딩 영역 점유 양도
-CFO Sarah Friar 사내 우려 - 매출 가속 없으면 향후 컴퓨트 계약 자금조달 어려워질 수 있음
-Oracle -4%·AVGO -4%·AMD -3%·SoftBank ADR -10%·NVDA -2.9% AI 인프라 매도 동조
-OpenAI: '말도 안 됨·총력 컴퓨트 매입' 반박·Oracle '신규 5.5 모델 모멘텀' 적극 방어
-Anthropic - IPO 직전 OpenAI 약점 노출이 코딩 우위 내러티브에 반사 이익`,
-    changes: [
-      { type: "마일스톤", sector: "OpenAI",
-        detail: "OpenAI(IPO 직전 매출 컨센 하회 노출). 4/28 Wall Street Journal이 OpenAI가 자체 월별 매출 목표를 연초부터 연속 미달했고 ChatGPT 주간 활성 10억 도달 목표도 미달, 코딩·엔터프라이즈 영역에서 Anthropic에 시장을 내준 정황을 보도. CFO Sarah Friar가 사내 회의에서 '매출 가속이 없으면 향후 컴퓨트 계약 자금조달이 어려워질 수 있다'는 우려를 직원들에게 전달한 사실까지 함께 공개. Altman·Friar는 Reuters 성명에서 'This is ridiculous·총력으로 컴퓨트 매입 작업을 함께 하고 있다'고 반박. AI 인프라 펀딩 신뢰가 흔들리며 4/28 Oracle -4%(5년 $300B 컴퓨트 공급계약 직격), Broadcom -4%(자체 ASIC 협력 의구심), AMD -3%, SoftBank ADR -10% 동시 약세. NVDA도 사상 최고 후 첫 조정 -2.9%. Oracle은 'OpenAI 신규 5.5 모델 모멘텀과 채택 가속을 직접 목격 중'이라며 적극 방어 성명을 발표. IPO 2026년 말 검토를 앞둔 시점에 컴퓨트 자금조달 능력을 둘러싼 펀더멘털 의구심이 가장 큰 리스크 요인으로 부상.",
-        time: "2026-04-29 07:30 KST" },
-      { type: "마일스톤", sector: "Anthropic",
-        detail: "Anthropic(반사이익). 4/28 WSJ이 OpenAI가 코딩·엔터프라이즈 시장에서 Anthropic에 점유율을 내주고 있다고 명시 보도. Claude Code의 엔터프라이즈 AI 코딩 50%+ 점유, 4/16 Opus 4.7 SWE-bench Pro 64.3%(GPT-5.4 57.7% 상회) 우위, 4/24 NEC 30,000명 전사 배포·Alphabet 최대 $40B 추가 투자·5GW TPU 5년 전담 공급, 4/20 Amazon $25B 추가 + AWS 10년 $100B+ 약정, 세컨더리 밸류 $1T·연환산 매출 $300억(OpenAI 추월) 마일스톤이 외부 일관성 확보. 4/27 'Claude 광고 영구 배제' 공식화로 신뢰·프라이버시 차별화까지 명문화돼 OpenAI 매출 컨센 하회 보도가 코딩 우위 내러티브의 외부 검증으로 작동, IPO 10월 $400~500B 타겟의 펀더멘털 강화 시그널.",
-        time: "2026-04-29 07:30 KST" },
     ]
   }
 ];
