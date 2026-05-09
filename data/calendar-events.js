@@ -53,6 +53,7 @@ const fixed = [
   { cat:'macro', impact:1, title:'미국 4월 산업생산', date:'2026-05-15' },
   { cat:'macro', impact:1, title:'미국 5월 미시간대 소비자심리 1차', date:'2026-05-16' },
   { cat:'macro', impact:2, title:'미국 4월 주택착공·건축허가', date:'2026-05-19' },
+  { cat:'macro', impact:2, title:'일본 1Q GDP 1차 추정', date:'2026-05-18', desc:'BOJ 6월 회의 가이드 후방 지표' },
   { cat:'macro', impact:3, title:'4/29-30 FOMC 의사록 공개', date:'2026-05-21', desc:'5월 회의 톤·6월 회의 가이드' },
   { cat:'macro', impact:2, title:'미국 4월 신규주택판매', date:'2026-05-26' },
   { cat:'macro', impact:1, title:'미국 5월 컨퍼런스 보드 소비자신뢰지수', date:'2026-05-27' },
