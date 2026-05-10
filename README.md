@@ -293,6 +293,12 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-11**: **카툰 트리거 schedule cron → 마커 commit push로 회귀**. 5/10 schedule cron 단일화의 첫 슬롯(5/11 08:00 KST)이 발화 안 됨 — GitHub Actions 측 새 cron 등록 지연으로 추정(첫 슬롯 미발화는 알려진 동작). schedule은 데이터 갱신과 비동기라 사고 발생 시 폴백이 없는 구조적 문제도 동반. **사용자 제안으로 "마커 commit" 트리거로 전환**: 자동 갱신 sandbox가 데이터 push 끝낸 후 별도 commit으로 `data/.cartoon-marker` 갱신·push, 그 push가 카툰·인스타 발화 시그널.
+  - **cartoon-generate.yml 트리거 변경** — `on: schedule '0 23,11 * * *'` → `on: push (paths: data/.cartoon-marker)`. Freshness guard·Skip if stale step 제거 (마커 push 자체가 fresh 시그널). workflow_dispatch는 유지.
+  - **RemoteTrigger prompt 갱신** — 5탭 완료 후 단계 5에 "마커 commit·push (필수)" 추가. 커밋·푸시 블록 마지막에 `echo > data/.cartoon-marker → commit → push` 한 사이클 추가. 데이터 변경 없음 케이스에선 마커도 push 안 함.
+  - **사라진 위험**: schedule 첫 슬롯 미발화, schedule 등록 지연, schedule cron과 데이터 갱신 시간 sync 불일치. 시간 buffer 추정 모두 폐기.
+  - **남은 위험**: sandbox가 데이터 push만 하고 마커 push를 빠뜨리면 발행 0건 → prompt에 "🔴 절대 생략 금지"로 명시. 매뉴얼 데이터 갱신 시 카툰 원할 시 GitHub Actions UI workflow_dispatch 또는 `data/.cartoon-marker` 수동 push.
+  - **부수 사고 정리**: 5/10 19:15·19:10 자동 갱신에서 stocks·commodity 헤드라인이 호르무즈·CPI 사건을 동일 톤으로 중복 기재 (선점 우선 원칙 위반). update.js 정리로 호르무즈는 commodity·CPI는 stocks로 분리. 사용자 지적 후 5/11 자동 갱신에서도 같은 패턴 재발 — RemoteTrigger prompt에 선점 원칙은 이미 명시(CLAUDE.md 참조)되나 본문 작성 시점 실수 잔존.
 - **2026-05-10**: **카툰·인스타 트리거 시간 분리 — chain 종속성 폐기 + Rube Goldberg 단순화**. 5/10 새벽 자동 갱신이 분할 commit push로 IG 3번 발행한 사고 + 저녁 마커 commit이 JP 필터 false positive로 IG 미발행한 사고가 같은 날 두 차례 발생. 근본 원인: cartoon→IG chain이 push 이벤트와 commit 구조에 의존하는 다층 게이트(메시지 매칭·JP 필터·60분 쿨다운·idle wait·Stage 1/2 마커) 누적, 모델 자율(트리거 세션의 push_files batch 결정)에 의존도 큼. 사용자 제안으로 **시간 트리거 단일화**.
   - **cartoon-generate.yml 트리거 변경** — `on: push (paths: data/version.js)` → `on: schedule '0 23,11 * * *'` (KST 08:00·20:00). 데이터 갱신(07:00·19:00 KST) 후 1시간 buffer로 모든 push 도착 보장. **Freshness guard** 추가: 마지막 commit이 12시간 이상 오래되면 트리거 push 실패로 보고 skip + warning. 이전 marker commit·idle wait·메시지 게이트·timeout-minutes 12 → 5 모두 정리.
   - **instagram-post.yml 게이트 단순화** — workflow_run conclusion=success만 통과, `event=='push'` 제한 해제(schedule도 통과). 메시지 게이트·JP 필터·60분 쿨다운 모두 삭제. cartoon-generate가 schedule 단일 트리거로 1번만 도니 chain abuse 방지 장치 불필요. 기존 게이트 step 자체 제거 후 mode 결정 step만 남김.

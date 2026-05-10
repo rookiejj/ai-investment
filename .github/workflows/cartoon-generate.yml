@@ -1,7 +1,7 @@
 name: Cartoon Generate
 
-# 데이터(헤드라인) 갱신 푸시 시 1컷 만화 자동 재생성·Supabase Storage 업로드.
-# 자동 갱신 커밋(데이터 자동 갱신/데이터 정합성 강제 갱신)에서만 실행 — 사람 수동 편집은 skip.
+# 자동 갱신 sandbox의 마커 commit push 시 1컷 만화 자동 재생성·Supabase Storage 업로드.
+# 사람이 .cartoon-marker를 안 만지는 한 발화 안 됨 — 컨트롤 단순화.
 #
 # 화풍 분기 (KST 시간대):
 #   - 00:00 ~ 11:59 → 1950s 뉴스 화풍 (today-news.png) — 홈 + 인스타 캐러셀에서 사용
@@ -9,12 +9,16 @@ name: Cartoon Generate
 # 매 실행 1장만 생성 (이전엔 매번 두 장 → Gemini 단가 절감 위해 시간대별 1장으로 축소)
 
 on:
-  # 시간 트리거 — 데이터 갱신(07:00·19:00 KST)과 분리된 별개 cron.
-  # KST 08:00·20:00 = UTC 23:00·11:00. 데이터 갱신 후 1시간 buffer로 모든 batch 도착 보장.
-  # push 트리거 폐기 — Stage 1/2 분리 룰·marker commit·heuristic idle wait 모두 불필요.
-  # 모델 자율(트리거 세션 commit 구조)에 의존 0, deterministic.
-  schedule:
-    - cron: '0 23,11 * * *'
+  # 마커 commit 트리거 — 자동 갱신 sandbox가 모든 데이터 push 완료 후 마지막 단계로
+  # data/.cartoon-marker 파일에 epoch timestamp를 박은 별도 commit을 push한다.
+  # 이 마커 push가 곧 "데이터 갱신 완료" 시그널 → 카툰 발화. mid-state 위험 0
+  # (마커는 항상 맨 마지막 commit), schedule 등록 지연 0, 시간 buffer 추정 0.
+  # 이전(5/10) schedule cron 방식은 GitHub 측 schedule 등록 지연으로 첫 슬롯(5/11 08:00)
+  # 미발화 회귀 발생 — 데이터 갱신 완료 시그널을 직접 받는 구조로 회귀.
+  push:
+    branches: [main]
+    paths:
+      - 'data/.cartoon-marker'
   workflow_dispatch:
     inputs:
       index:
@@ -43,36 +47,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Freshness 가드 — 데이터가 12시간 이상 안 바뀌었으면 트리거 push 실패로 보고 skip.
-      # 정상 케이스(07:00·19:00 KST 자동 갱신)에선 직전 push가 1시간 이내라 항상 통과.
-      - name: Freshness guard (schedule only)
-        if: github.event_name == 'schedule'
-        id: gate
-        run: |
-          LAST_TS=$(git log -1 --format=%ct)
-          NOW=$(date +%s)
-          AGE_H=$(( (NOW - LAST_TS) / 3600 ))
-          echo "[freshness] last commit ${AGE_H}h ago"
-          if [ $AGE_H -gt 12 ]; then
-            echo "should_run=false" >> $GITHUB_OUTPUT
-            echo "::warning::데이터 ${AGE_H}h 오래됨 — 트리거 push 실패 추정, 카툰 생성 skip"
-          else
-            echo "should_run=true" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Skip if stale
-        if: github.event_name == 'schedule' && steps.gate.outputs.should_run != 'true'
-        run: exit 0
-
       - name: Setup Node
-        if: github.event_name == 'workflow_dispatch' || steps.gate.outputs.should_run == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
       # KST 시간대 기반 화풍 결정. workflow_dispatch에서 style 입력했으면 그대로 사용.
       - name: Determine cartoon style
-        if: github.event_name == 'workflow_dispatch' || steps.gate.outputs.should_run == 'true'
         id: style
         run: |
           INPUT_STYLE='${{ inputs.style }}'
@@ -92,7 +73,6 @@ jobs:
           echo "style=$STYLE" >> $GITHUB_OUTPUT
 
       - name: Generate cartoon
-        if: github.event_name == 'workflow_dispatch' || steps.gate.outputs.should_run == 'true'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           # Nano Banana Pro($0.13/장) — Gemini 2.5 Flash Image($0.04/장) 다운그레이드 시도했으나
