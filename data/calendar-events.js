@@ -49,6 +49,8 @@ const fixed = [
   { cat:'macro', impact:3, title:'미국 4월 CPI', date:'2026-05-12', desc:'BLS 8:30 ET·근원 CPI MoM 컨센 +0.3%·헤드라인 YoY +3.7% 추정' },
   { cat:'macro', impact:2, title:'미국 4월 PPI', date:'2026-05-13', desc:'근원 PPI 동반 발표' },
   { cat:'macro', impact:2, title:'유로존 1Q GDP 1차', date:'2026-05-14' },
+  { cat:'policy', impact:3, title:'트럼프-시진핑 베이징 정상회담 (1일차)', date:'2026-05-14', desc:'이란·호르무즈 단일 의제·관세·희토류 후순위' },
+  { cat:'policy', impact:3, title:'트럼프-시진핑 베이징 정상회담 (2일차)', date:'2026-05-15', desc:'AI 리스크·안전 프레임 첫 등장 가능성' },
   { cat:'earnings', impact:2, title:'BABA Q4 FY26 실적', date:'2026-05-14', desc:'알리바바 클라우드 AI 모멘텀', tickers:['BABA'] },
   { cat:'earnings', impact:2, title:'AMAT Q2 FY26 실적', date:'2026-05-14', desc:'장후 발표·반도체 장비 사이클·HBM 수요', tickers:['AMAT'] },
   { cat:'macro', impact:2, title:'미국 4월 소매판매', date:'2026-05-15', desc:'소비 모멘텀 핵심 지표' },
