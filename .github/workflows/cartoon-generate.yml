@@ -9,15 +9,12 @@ name: Cartoon Generate
 # 매 실행 1장만 생성 (이전엔 매번 두 장 → Gemini 단가 절감 위해 시간대별 1장으로 축소)
 
 on:
-  # data/version.js 갱신을 트리거 시그널로 사용 (마커 방식).
-  # 트리거 sandbox가 *-update.js를 분할 commit push할 때 첫 commit엔 일부 update.js만 들어
-  # 있어 그 시점에 카툰 그리면 mixed-date가 되는 문제 차단. version.js는 모든 데이터·update.js
-  # batch가 push된 후 마지막에 푸시되도록 트리거 prompt에 명시 — 이때만 카툰 발동.
-  # 매뉴얼 편집 시 version.js를 의도적으로 안 건드리면 카툰 트리거 안 됨 (제어 가능).
-  push:
-    branches: [main]
-    paths:
-      - 'data/version.js'
+  # 시간 트리거 — 데이터 갱신(07:00·19:00 KST)과 분리된 별개 cron.
+  # KST 08:00·20:00 = UTC 23:00·11:00. 데이터 갱신 후 1시간 buffer로 모든 batch 도착 보장.
+  # push 트리거 폐기 — Stage 1/2 분리 룰·marker commit·heuristic idle wait 모두 불필요.
+  # 모델 자율(트리거 세션 commit 구조)에 의존 0, deterministic.
+  schedule:
+    - cron: '0 23,11 * * *'
   workflow_dispatch:
     inputs:
       index:
@@ -46,24 +43,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Trigger gating (push only)
-        if: github.event_name == 'push'
+      # Freshness 가드 — 데이터가 12시간 이상 안 바뀌었으면 트리거 push 실패로 보고 skip.
+      # 정상 케이스(07:00·19:00 KST 자동 갱신)에선 직전 push가 1시간 이내라 항상 통과.
+      - name: Freshness guard (schedule only)
+        if: github.event_name == 'schedule'
         id: gate
         run: |
-          MSG=$(git log -1 --pretty=%s)
-          echo "commit message: $MSG"
-          if [[ "$MSG" == 데이터\ 자동\ 갱신* ]] || [[ "$MSG" == 데이터\ 정합성\ 강제\ 갱신* ]]; then
-            echo "should_run=true" >> $GITHUB_OUTPUT
-          else
+          LAST_TS=$(git log -1 --format=%ct)
+          NOW=$(date +%s)
+          AGE_H=$(( (NOW - LAST_TS) / 3600 ))
+          echo "[freshness] last commit ${AGE_H}h ago"
+          if [ $AGE_H -gt 12 ]; then
             echo "should_run=false" >> $GITHUB_OUTPUT
-            echo "사람 수동 편집 커밋 — cartoon 생성 skip"
+            echo "::warning::데이터 ${AGE_H}h 오래됨 — 트리거 push 실패 추정, 카툰 생성 skip"
+          else
+            echo "should_run=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: Skip if not auto-update
-        if: github.event_name == 'push' && steps.gate.outputs.should_run != 'true'
-        run: |
-          echo "::notice::trigger gating fail — cartoon 생성 skip"
-          exit 0
+      - name: Skip if stale
+        if: github.event_name == 'schedule' && steps.gate.outputs.should_run != 'true'
+        run: exit 0
 
       - name: Setup Node
         if: github.event_name == 'workflow_dispatch' || steps.gate.outputs.should_run == 'true'

@@ -45,70 +45,23 @@ env:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    # workflow_run 트리거는 cartoon-generate가 push 이벤트로 성공 완료한 경우만.
+    # cartoon-generate가 schedule(KST 08·20시)로 발동되어 success 완료한 경우 chain.
+    # 시간 트리거 단일화 후 push commit 메시지·JP 필터·60분 쿨다운 모두 불필요해 제거.
     # workflow_dispatch는 운영자 수동 호출로 항상 통과.
     if: |
       github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'workflow_run' &&
-       github.event.workflow_run.conclusion == 'success' &&
-       github.event.workflow_run.event == 'push')
+       github.event.workflow_run.conclusion == 'success')
     timeout-minutes: 50
     steps:
-      - name: Checkout (트리거 커밋 SHA)
+      - name: Checkout
         uses: actions/checkout@v4
         with:
-          # workflow_run 트리거는 default branch 최신을 받는 게 기본 — 트리거 시점
-          # 커밋과 일치시키려면 head_sha 명시. workflow_dispatch는 그냥 latest.
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
           fetch-depth: 2
 
-      - name: 진행 여부 게이팅 (자동 갱신 커밋 + 비-JP 변경 + 60분 쿨다운)
-        id: gate
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          # workflow_dispatch는 운영자 수동 호출 — 모든 게이팅 건너뜀.
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "should_run=true" >> $GITHUB_OUTPUT
-            echo "workflow_dispatch — 게이팅 통과"
-            exit 0
-          fi
-
-          # 1) 커밋 메시지 게이팅 — 자동 갱신 커밋만.
-          MSG=$(git log -1 --pretty=%s)
-          echo "commit: $MSG"
-          if [[ "$MSG" != 데이터\ 자동\ 갱신* ]] && [[ "$MSG" != 데이터\ 정합성\ 강제\ 갱신* ]]; then
-            echo "should_run=false" >> $GITHUB_OUTPUT
-            echo "::notice::사람 수동 편집 커밋 — IG 발행 skip"
-            exit 0
-          fi
-
-          # 2) JP-only 필터 제거 — RemoteTrigger가 5탭(일본 제외)만 건드리는 룰이라
-          # JP-only commit은 매뉴얼 편집 외엔 발생 불가. 매뉴얼 편집 시엔 커밋 메시지가
-          # 자동 갱신 프리픽스가 아니라 1단계 게이트에서 이미 차단됨.
-          # 이전 paths: data/*-update.js 시절엔 의미 있었으나, marker(version.js) 트리거로
-          # 변경된 후엔 commit diff에 update.js가 없어 false positive로 IG 발행 막던 사고
-          # (2026-05-10 19:38 trigger 사고) 후 제거.
-
-          # 3) 60분 쿨다운 — 직전 60분 내 success run 있으면 skip.
-          # 트리거 sandbox가 push_files 한도 회피로 *-update.js를 분할 커밋 push할 때
-          # cartoon-generate가 매 commit마다 success로 끝나며 instagram-post를 다중 트리거하는 문제 차단.
-          # 자동 갱신은 12시간 간격(07/19시 KST)이라 60분 쿨다운이 정상 발행에 영향 없음.
-          # 5/10 새벽 KST 07:24~07:31 사이 같은 일자 데이터 갱신 commit 3개로 IG 3번 발행 사고 후 도입.
-          CUTOFF=$(date -u -d '60 minutes ago' '+%Y-%m-%dT%H:%M:%SZ')
-          recent=$(gh api "/repos/${{ github.repository }}/actions/workflows/instagram-post.yml/runs?status=success&per_page=10" \
-                   --jq ".workflow_runs[] | select(.id != ${{ github.run_id }}) | select(.updated_at > \"$CUTOFF\") | .id" \
-                   2>/dev/null | head -1 || true)
-          if [ -n "$recent" ]; then
-            echo "should_run=false" >> $GITHUB_OUTPUT
-            echo "::notice::직전 60분 내 success run #$recent — 중복 발행 차단 skip"
-          else
-            echo "should_run=true" >> $GITHUB_OUTPUT
-          fi
-
       - name: 발행 모드 결정 (KST 시간대 기반)
         id: mode
-        if: steps.gate.outputs.should_run == 'true'
         run: |
           # workflow_dispatch는 사용자 지정 mode 그대로.
           # workflow_run은 KST 시간대 분기:
@@ -132,13 +85,11 @@ jobs:
           echo "mode=$MODE" >> $GITHUB_OUTPUT
 
       - name: Setup Node
-        if: steps.gate.outputs.should_run == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
       - name: 한글·이모지 폰트 + ffmpeg 설치
-        if: steps.gate.outputs.should_run == 'true'
         timeout-minutes: 2
         run: |
           # apt-get 기본 동작에 HTTP timeout 45초 + 재시도 2회 명시.
@@ -156,11 +107,9 @@ jobs:
           fc-cache -fv
 
       - name: npm 의존성 설치
-        if: steps.gate.outputs.should_run == 'true'
         run: npm install --no-audit --no-fund
 
       - name: Playwright Chromium 설치
-        if: steps.gate.outputs.should_run == 'true'
         run: npx playwright install --with-deps chromium
 
       # render-slides.js는 두 모드 모두에서 실행. 이유:
@@ -169,7 +118,6 @@ jobs:
       # render-slides는 7장 만들지만 Reels 모드에선 01~06.png는 사용 안 함.
       # 한 가지 흐름으로 유지하는 단순함이 ~30s 추가 비용보다 가치 있음.
       - name: 슬라이드·meta.json 렌더
-        if: steps.gate.outputs.should_run == 'true'
         env:
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
         run: node scripts/instagram/render-slides.js
@@ -179,7 +127,7 @@ jobs:
       # 신선도 체크: Reels 쪽과 대칭 — 1시간 이상 stale 또는 다운로드 실패 시 즉석 생성으로 폴백.
       # 자동 흐름(cartoon-generate 직후 instagram-post 발사)에선 파일 나이 ~5분이라 항상 통과.
       - name: 1950s 뉴스 카툰 다운로드 (캐러셀 1번 슬라이드)
-        if: steps.gate.outputs.should_run == 'true' && (steps.mode.outputs.mode == 'carousel' || steps.mode.outputs.mode == 'all')
+        if: (steps.mode.outputs.mode == 'carousel' || steps.mode.outputs.mode == 'all')
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_IMAGE_MODEL: nano-banana-pro-preview
@@ -216,7 +164,7 @@ jobs:
       # Last-Modified 1시간 이상이면 stale로 간주하고 즉석 생성으로 폴백.
       # 정상 흐름(cartoon-generate 직후 instagram-post 발사)에선 파일 나이 ~5분이라 통과.
       - name: Mad Magazine 카툰 다운로드 (Reels 영상 소스)
-        if: steps.gate.outputs.should_run == 'true' && (steps.mode.outputs.mode == 'reels' || steps.mode.outputs.mode == 'all')
+        if: (steps.mode.outputs.mode == 'reels' || steps.mode.outputs.mode == 'all')
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_IMAGE_MODEL: nano-banana-pro-preview
@@ -248,7 +196,7 @@ jobs:
           ls -la "$OUT"
 
       - name: Reels 렌더 (단일 이미지 30초 Ken Burns)
-        if: steps.gate.outputs.should_run == 'true' && (steps.mode.outputs.mode == 'reels' || steps.mode.outputs.mode == 'all')
+        if: (steps.mode.outputs.mode == 'reels' || steps.mode.outputs.mode == 'all')
         run: |
           node scripts/instagram/render-reels.js \
             --mode=single \
@@ -256,7 +204,6 @@ jobs:
             --input scripts/instagram/out/cartoon-mad-mag.png
 
       - name: 출력물 아티팩트 업로드 (디버깅용, 7일 보관)
-        if: steps.gate.outputs.should_run == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: instagram-output
@@ -264,7 +211,6 @@ jobs:
           retention-days: 7
 
       - name: 인스타그램 게시
-        if: steps.gate.outputs.should_run == 'true'
         env:
           META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
           IG_BUSINESS_USER_ID: ${{ secrets.IG_BUSINESS_USER_ID }}
