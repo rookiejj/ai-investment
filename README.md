@@ -50,7 +50,8 @@ ai-investment/
 │       ├── music/                ← Reels 배경음악 (royalty-free mp3)
 │       └── SETUP.md              ← 시크릿·버킷 셋업 가이드
 ├── .github/workflows/
-│   └── instagram-post.yml        ← data/*-update.js 푸시 시 자동 게시 (jp 변경 제외)
+│   ├── cartoon-generate.yml      ← KST 08·20시 schedule cron (시간 트리거, push 무관)
+│   └── instagram-post.yml        ← cartoon-generate workflow_run chain (캐러셀 오전 / Reels 오후)
 ├── supabase/
 │   ├── migrations/               ← 스키마 이력 (init / payment / message_type / delivery_state / admin_settings / template_code)
 │   ├── functions/
@@ -292,6 +293,13 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-10**: **카툰·인스타 트리거 시간 분리 — chain 종속성 폐기 + Rube Goldberg 단순화**. 5/10 새벽 자동 갱신이 분할 commit push로 IG 3번 발행한 사고 + 저녁 마커 commit이 JP 필터 false positive로 IG 미발행한 사고가 같은 날 두 차례 발생. 근본 원인: cartoon→IG chain이 push 이벤트와 commit 구조에 의존하는 다층 게이트(메시지 매칭·JP 필터·60분 쿨다운·idle wait·Stage 1/2 마커) 누적, 모델 자율(트리거 세션의 push_files batch 결정)에 의존도 큼. 사용자 제안으로 **시간 트리거 단일화**.
+  - **cartoon-generate.yml 트리거 변경** — `on: push (paths: data/version.js)` → `on: schedule '0 23,11 * * *'` (KST 08:00·20:00). 데이터 갱신(07:00·19:00 KST) 후 1시간 buffer로 모든 push 도착 보장. **Freshness guard** 추가: 마지막 commit이 12시간 이상 오래되면 트리거 push 실패로 보고 skip + warning. 이전 marker commit·idle wait·메시지 게이트·timeout-minutes 12 → 5 모두 정리.
+  - **instagram-post.yml 게이트 단순화** — workflow_run conclusion=success만 통과, `event=='push'` 제한 해제(schedule도 통과). 메시지 게이트·JP 필터·60분 쿨다운 모두 삭제. cartoon-generate가 schedule 단일 트리거로 1번만 도니 chain abuse 방지 장치 불필요. 기존 게이트 step 자체 제거 후 mode 결정 step만 남김.
+  - **RemoteTrigger prompt 단순화** — Stage 1/2 분리 룰("version.js를 마지막 별개 commit으로") 삭제, 단일 `git add -A && git commit && git push` 흐름으로 회귀. trim·lint·version.js bump는 유지. push 구조 자유 — push만 정상 완료하면 됨, cartoon·인스타는 별개 cron이 깨움.
+  - **JP 필터 사고 별도 수정** — marker(version.js) 트리거 도입 직후 5/10 19:38 cartoon-generate가 정상 success였지만 instagram-post가 git diff에서 *-update.js 변경 0건(version.js만)을 보고 "JP만 변경"으로 잘못 판정해 IG 발행 skip. RemoteTrigger가 5탭(일본 제외)만 건드리는 룰이라 JP-only commit 자체가 매뉴얼 외엔 발생 불가 → 필터 자체 제거.
+  - **사라진 위험**: Stage 1/2 룰 위반 mixed-date 카툰, marker commit 누락, 분할 push 다중 IG, JP 필터 false positive, idle wait heuristic, 60분 쿨다운. 이전 layered 방어 6종 → 1종(freshness guard)으로 압축.
+  - **남은 위험**: 트리거 07:00 push 자체 실패(freshness guard로 차단). 매뉴얼 데이터 갱신 즉시 카툰 원할 시 GitHub Actions UI workflow_dispatch.
 - **2026-05-09**: **자동 갱신 push 한계 영구 해결 + VPS 프록시 도메인 이전 + 친구톡 토요일 추가 + 홈피 카툰 단일 소스화**. 하루에 인프라·데이터 흐름 5건 동시 정리.
   - **자동 갱신 push 사고 + update.js 트리밍 시스템 도입** — 5/9 오전·오후 두 차례 자동 갱신 트리거 세션이 *-data.js만 푸시되고 *-update.js가 누락돼 홈피 헤드라인이 5/8 그대로 머무는 사고. 원인: 트리거 sandbox는 직접 `git push`가 아웃바운드 프록시 403으로 차단되고 우회 경로인 MCP `push_files` API는 JSON body 사이즈 한계(~50KB)가 있는데 *-update.js는 매일 entry prepend로 누적돼 80~210KB까지 비대화. 해결: **`scripts/trim-update-logs.js` 신설** — byte 기준 멱등 트리밍, brace-depth 추적으로 syntax 안전 보존, `Buffer.byteLength`로 UTF-8 한글(char 1=byte 3) 정확히 측정. 처음 50KB 한도로 적용했으나 세션이 새 entry(~2-3KB) prepend 후 다시 한도 초과해 push 실패 → **40KB로 강화**(prepend 후 ~42KB로 한도 안 머묾). 최종 결과: 654KB → 199KB (10~16개 entry/탭, ~1.5~2주치). 화면 노출(TL;DR=entry[0], 모달 mentions=12건)은 모두 커버, 잘려나간 옛 entry는 git history 보존. 사고 정리: 9개 partial 5/9 커밋 revert + force push로 깨끗한 베이스라인 복구 후 재발사 → *-update.js 5개 모두 `9/9` 배치로 통과 → cartoon → instagram 도미노 자동 동작.
   - **RemoteTrigger prompt 개선** — 자동 갱신 트리거의 prompt에 (1) 5탭 완료 후 첫 단계로 `node scripts/trim-update-logs.js` 명시 (2) lint 2종 통과 검증 (3) version.js 갱신 (4) 커밋·푸시 순서 엄수. 부수 정리: stale 표현 "07:00/13:00/19:00 KST 3회"→"07:00·19:00 KST 2회" (실제 cron `0 22,10`과 일치), "대상 탭 6개 — 일본 임시 제외"→"5개 — 일본·ETF 제외" + ETF 항목 삭제 (4/29 제거됨), "원자재·매크로"→"원자재·크립토".
