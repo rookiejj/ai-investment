@@ -83,15 +83,12 @@ jobs:
             exit 0
           fi
 
-          # 2) JP-only 변경 필터 — 일본 데이터만 바뀐 경우 발행 안 함.
-          changed=$(git diff --name-only HEAD^ HEAD -- 'data/*-update.js' | tr '\n' ' ')
-          echo "changed: $changed"
-          non_jp=$(echo "$changed" | tr ' ' '\n' | grep -v 'jp-stocks-update.js' | grep -E 'data/.*-update.js' || true)
-          if [ -z "$non_jp" ]; then
-            echo "should_run=false" >> $GITHUB_OUTPUT
-            echo "::notice::JP만 변경된 푸시 — IG 발행 skip"
-            exit 0
-          fi
+          # 2) JP-only 필터 제거 — RemoteTrigger가 5탭(일본 제외)만 건드리는 룰이라
+          # JP-only commit은 매뉴얼 편집 외엔 발생 불가. 매뉴얼 편집 시엔 커밋 메시지가
+          # 자동 갱신 프리픽스가 아니라 1단계 게이트에서 이미 차단됨.
+          # 이전 paths: data/*-update.js 시절엔 의미 있었으나, marker(version.js) 트리거로
+          # 변경된 후엔 commit diff에 update.js가 없어 false positive로 IG 발행 막던 사고
+          # (2026-05-10 19:38 trigger 사고) 후 제거.
 
           # 3) 60분 쿨다운 — 직전 60분 내 success run 있으면 skip.
           # 트리거 sandbox가 push_files 한도 회피로 *-update.js를 분할 커밋 push할 때
