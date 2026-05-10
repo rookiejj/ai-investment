@@ -51,7 +51,9 @@ const fixed = [
   { cat:'macro', impact:2, title:'유로존 1Q GDP 1차', date:'2026-05-14' },
   { cat:'policy', impact:3, title:'트럼프-시진핑 베이징 정상회담 (1일차)', date:'2026-05-14', desc:'이란·호르무즈 단일 의제·관세·희토류 후순위' },
   { cat:'policy', impact:3, title:'트럼프-시진핑 베이징 정상회담 (2일차)', date:'2026-05-15', desc:'AI 리스크·안전 프레임 첫 등장 가능성' },
-  { cat:'earnings', impact:2, title:'BABA Q4 FY26 실적', date:'2026-05-14', desc:'알리바바 클라우드 AI 모멘텀', tickers:['BABA'] },
+  { cat:'earnings', impact:2, title:'BABA Q4 FY26 실적', date:'2026-05-13', desc:'장전 발표·알리바바 클라우드 AI 모멘텀', tickers:['BABA'] },
+  { cat:'policy', impact:2, title:'트럼프 이란 평화 응답 거부', date:'2026-05-10', desc:'5/7 14개항 안 응답에 \'TOTALLY UNACCEPTABLE\' - 호르무즈 의제 정상회담 톱 부상' },
+  { cat:'macro', impact:2, title:'아람코 Q1 실적·CEO 공급 차질 경고', date:'2026-05-10', desc:'나세르 \'수 주 이상 차질 시 2027년까지 정상화 불가\' 단일 경고' },
   { cat:'earnings', impact:2, title:'AMAT Q2 FY26 실적', date:'2026-05-14', desc:'장후 발표·반도체 장비 사이클·HBM 수요', tickers:['AMAT'] },
   { cat:'macro', impact:2, title:'미국 4월 소매판매', date:'2026-05-15', desc:'소비 모멘텀 핵심 지표' },
   { cat:'macro', impact:1, title:'미국 4월 산업생산', date:'2026-05-15' },
@@ -83,7 +85,7 @@ const fixed = [
   { cat:'earnings', impact:2, title:'WMT Q1 FY27 실적', date:'2026-05-15', desc:'관세 영향·소비 건전성 점검대', tickers:['WMT'] },
   { cat:'earnings', impact:2, title:'HD Q1 2026 실적', date:'2026-05-19', tickers:['HD'] },
   { cat:'earnings', impact:1, title:'TGT Q1 2026 실적', date:'2026-05-21', tickers:['TGT'] },
-  { cat:'earnings', impact:3, title:'NVDA Q1 FY27 실적', date:'2026-05-20', desc:'장후 D-Day·컨센 매출 $78.5B +78% YoY·Rubin 풀프로덕션', tickers:['NVDA'] },
+  { cat:'earnings', impact:3, title:'NVDA Q1 FY27 실적', date:'2026-05-20', desc:'장후 D-Day·컨센 매출 $78.5B +78% YoY·Rubin 풌프로덕션', tickers:['NVDA'] },
   { cat:'earnings', impact:1, title:'CRM Q1 FY27 실적', date:'2026-05-28', tickers:['CRM'] },
   { cat:'earnings', impact:1, title:'COST Q3 FY26 실적', date:'2026-05-29', tickers:['COST'] },
   { cat:'earnings', impact:2, title:'Cisco Q3 FY26 실적', date:'2026-05-13', desc:'장후 발표·AI 네트워킹 모멘텀', tickers:['CSCO'] },
@@ -97,9 +99,9 @@ const fixed = [
   { cat:'earnings', impact:1, title:'삼성SDI Q1 실적', date:'2026-05-12', tickers:['006400'] },
 
   // === IPO·펀딩 ===
-  { cat:'ipo', impact:3, title:'SpaceX S-1 정식 제출 윈도우 시작', date:'2026-05-15', desc:'5/15~5/22, 6/8 로드쇼' },
+  { cat:'ipo', impact:3, title:'SpaceX S-1 정식 제출 윈도우 시작', date:'2026-05-15', desc:'5/15~5/22, 6/8 로드솼' },
   { cat:'ipo', impact:3, title:'SpaceX S-1 제출 마감', date:'2026-05-22' },
-  { cat:'ipo', impact:3, title:'SpaceX 로드쇼 시작', date:'2026-06-08', desc:'6/11 리테일 투어, 6/18~30 프라이싱' },
+  { cat:'ipo', impact:3, title:'SpaceX 로드솼 시작', date:'2026-06-08', desc:'6/11 리테일 투어, 6/18~30 프라이싱' },
   { cat:'ipo', impact:3, title:'Anthropic $40~50B 라운드 마감 추정', date:'2026-05-14', desc:'$850~900B 밸류, 5월 보드 미팅' },
   { cat:'ipo', impact:2, title:'Cerebras IPO 프라이싱 추정', date:'2026-05-22', desc:'CBRS, $35B+ 밸류, $3B+ 조달', tickers:['CBRS'] },
 
