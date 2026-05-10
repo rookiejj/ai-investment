@@ -36,7 +36,7 @@ concurrency:
 jobs:
   generate:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 12
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -58,6 +58,39 @@ jobs:
         if: github.event_name == 'push' && steps.gate.outputs.should_run != 'true'
         run: |
           echo "::notice::trigger gating fail — cartoon 생성 skip"
+
+      # 트리거 sandbox가 push_files 한도 회피로 *-update.js를 분할 push할 때
+      # 첫 commit엔 1개 update.js만 들어 있고 나머지 4개는 이전 날짜라 mixed-date 데이터.
+      # 그 시점에 카툰 그리면 일부 탭만 갱신된 상태로 만들어짐.
+      # 해결: 마지막 commit 이후 N초 idle 시까지 polling 대기 → 모든 batch 도착 확정 후 진행.
+      # concurrency.cancel-in-progress: true와 결합 — wait 도중 새 commit 도착 시 이 run 취소되고
+      # 새 run이 idle 다시 측정. 결과 마지막 batch 후 N초 뒤 1회만 정상 진행.
+      - name: Wait for batch to settle (분할 push 도달 완료 대기)
+        if: github.event_name == 'push' && steps.gate.outputs.should_run == 'true'
+        run: |
+          IDLE_SEC=120   # 2 min idle = 분할 batch 도착 완료 판정
+          POLL_SEC=20
+          MAX_WAIT=420   # 7 min 안에 안 끝나면 강제 진행 (방어)
+          START=$(date +%s)
+          while true; do
+            git fetch origin main --quiet
+            LAST=$(git log -1 origin/main --format=%ct)
+            NOW=$(date +%s)
+            DIFF=$((NOW - LAST))
+            ELAPSED=$((NOW - START))
+            if [ $DIFF -ge $IDLE_SEC ]; then
+              echo "[wait] last commit ${DIFF}s ago (>= ${IDLE_SEC}s idle) — settled"
+              break
+            fi
+            if [ $ELAPSED -ge $MAX_WAIT ]; then
+              echo "::warning::wait ${ELAPSED}s 초과 — 강제 진행 (last commit ${DIFF}s ago)"
+              break
+            fi
+            echo "[wait] last commit ${DIFF}s ago — sleep ${POLL_SEC}s..."
+            sleep $POLL_SEC
+          done
+          # 최신 origin/main으로 working tree 갱신 — 분할 push의 마지막 상태 반영
+          git reset --hard origin/main
           exit 0
 
       - name: Setup Node
