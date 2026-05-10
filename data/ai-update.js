@@ -6,6 +6,22 @@
  */
 const UPDATES = [
   {
+    date: "2026-05-11 07:35 KST",
+    summary: `5/14~15 트럼프-시진핑 베이징 정상회담 D-3~4 - 트럼프 이란 응답 거부로 호르무즈 단일 톱 부상
+AI 리스크·안전 프레임 후순위 가능성 - 양국 모델 가드레일·수출 통제 양 측 의제 잔존
+Anthropic Project Glasswing 美 정부 라인 견지 - 트럼프 행정부 블랙리스트 잔존 baseline
+Microsoft·Google·xAI CAISI 정부 모델 검증 동의·OpenAI·Anthropic은 2024년 합의 갱신
+5/19 Microsoft Build·5/20 NVDA Q1 FY27·5/21 Google I/O 메가 캘린더 - 모델·인프라 사이클`,
+    changes: [
+      { type: "거버넌스", sector: "OpenAI",
+        detail: "OpenAI·Anthropic·Google DeepMind·Microsoft·xAI 美 정부 모델 사전 검증 합의 - Center for AI Standards and Innovation(CAISI)가 5/5 Microsoft·Google·xAI와 모델 공개 前 정부 평가 합의 체결, OpenAI·Anthropic 2024 기존 합의는 CAISI 지침 반영해 갱신. 5/14~15 트럼프-시진핑 베이징 정상회담 D-3~4 카운트다운 베이스 - 트럼프 5/10 이란 응답 거부로 호르무즈 의제가 단일 톱 부상, AI 리스크·안전 프레임은 후순위 가능성 잔존. 미국 측 의제 - 對中 AI 칩 수출 가이던스 + 모델 가드레일 표준화 + 사이버 자율 공격 위협 평가 라인. 중국 측 의제 - DeepSeek·Qwen·Kimi 등 자국 모델 美 시장 접근 + 반도체 수출 통제 완화 잔존.",
+        time: "2026-05-11 07:35 KST" },
+      { type: "거버넌스", sector: "Anthropic",
+        detail: "Anthropic 정부 라인 양 측 균형 - 5/1 美 국방부 8사 AI 계약(SpaceX·OpenAI·Google·Microsoft·NVIDIA·AWS·Oracle·Reflection)에서 단독 배제 잔존 + 트럼프 행정부 블랙리스트 베이스 그대로. 한편 Project Glasswing 컨소시엄(AWS·Apple·Cisco·CrowdStrike·Google·JPMorgan·Linux Foundation·Microsoft·NVIDIA·Palo Alto Networks)에 Claude Mythos Preview 제한 배포 + $100M 크레딧 제공으로 美 기업·정부 인프라 사이버 방어 라인업은 견고. 5/14~15 베이징 정상회담 결과 後 정부 정책 변동 가능성 - 안전 가드레일 견지가 사용된 협상 카드가 되는지 사이드 변수. 토큰화 IPO 함의 $1.2T·OpenAI 시간외 $852B 첫 추월 + 5월 보드 $50B/$900B 라운드 결정 베이스 잔존.",
+        time: "2026-05-11 07:35 KST" },
+    ]
+  },
+  {
     date: "2026-05-10 19:25 KST",
     summary: `Anthropic 온체인 IPO 함의가 $1.2T 도달 - OpenAI 시간외 시세 첫 추월·1주일 +20%
 Jupiter Prestocks·Ventuals 토큰화 SPV 거래량 급증 - 7개월 누적 +900%
@@ -201,34 +217,6 @@ QCOM 12월 데이터센터 추론 칩 첫 출하 가이던스 공식 - 멀티 AS
       { type: "마일스톤", sector: "OpenAI",
         detail: "OpenAI(매출 부진 보도 후폭풍·Friar IPO 연기 주장). 4/28 WSJ가 OpenAI Q1 매출이 컨센을 하회했고 CFO Friar가 IPO 일정을 2026년 너머로 연기해야 한다고 이사회에 주장한 정황을 보도. 동일 보도에서 Altman은 $600B 컴퓨트 약속을 그대로 가져가는 그림을 고수하면서 두 주장 사이 간극이 IPO 펀더멘털 신뢰 변수의 핵심 변수로 부상. 1월 내부 목표였던 ChatGPT 주간 활성 10억 명은 2월 9억 명에서 멈춘 상태로 다시 확인. SoftBank ADR -10%·CoreWeave -6%·Oracle -4%·NVDA -2.9%로 AI 인프라 매도가 누적된 흐름이 4/29 시간외에서 일부 회복되며 메가캡 슈퍼위크 실적 흐름이 다음 분기점.",
         time: "2026-05-01 19:45 KST" },
-    ]
-  },
-  {
-    date: "2026-04-30 07:20 KST",
-    summary: `Microsoft Q1 FY26 매출 $77.7B +18%·Azure $21.5B +38%·OpenAI 지분손실 -$0.41 EPS 정량화
-Alphabet Q1 매출 $109.9B +22%·Cloud $20.03B +63%·백로그 $460B QoQ 두 배·CapEx $180~190B
-Meta Q1 매출 $56.31B +33%·CapEx $125~145B 상향·DAP 컨센 하회로 AH -6%
-Amazon Q1 매출 $181.5B +17%·AWS $37.59B +28% 3년 만 최고 성장률·CapEx $200B 유지
-4사 일제 컨센 상회로 AI 인프라 수요·CapEx 가속 재확인 - OpenAI 매출 부진發 의구심 부분 상쇄`,
-    changes: [
-      { type: "마일스톤", sector: "Microsoft",
-        detail: "Microsoft(Q1 FY26 결과). 4/29 장후 매출 $77.7B +18%·EPS $4.13 컨센 상회, Azure $21.5B +38% CC. Hood CFO가 컨콜에서 '용량 한계로 +40%까지 잠재'라고 명시하며 OpenAI 매출 부진 우려를 자체 펀더멘털로 정면 반박. 다만 OpenAI 지분손실이 EPS -$0.41로 처음 정량화 반영돼 GAAP $3.72(+13%)로 둔화 - Microsoft 자체는 견조하나 OpenAI 손실 확대 트렌드가 공식 자료로 노출. FY26 CapEx 증가율 FY25 초과 가이던스로 '가속 수요'를 명시. 4/27 OpenAI 파트너십 전면 개편 후 Anthropic·자체 모델 자립 동시 추구 노선 유지.",
-        time: "2026-04-30 07:20 KST" },
-      { type: "마일스톤", sector: "Google DeepMind",
-        detail: "Alphabet(Q1 결과·Cloud 폭증). 4/29 장후 매출 $109.9B +22% 컨센 $107.1B 상회, EPS $5.11이 컨센 $2.62를 압도. Google Cloud $20.03B +63% 컨센 $18.4B 상회, 백로그 $460B QoQ 두 배 폭증. Pichai 컨콜 첫 마디로 '단기 컴퓨트 제약'을 직접 시인 - 수요가 공급을 초과해 Cloud 매출이 더 클 수 있었음을 명시. CapEx $180~190B로 상향($175~185B에서). Gemini Enterprise 유료 MAU QoQ +40%, 자사 모델 분당 160억 토큰 처리 +60% QoQ. Apple Foundation Models 차세대 Gemini 기반 + Anthropic 최대 $40B 투자·5GW TPU 전담 공급의 이중 베팅이 실적으로 외부 검증.",
-        time: "2026-04-30 07:20 KST" },
-      { type: "마일스톤", sector: "Meta AI",
-        detail: "Meta(Q1 결과·CapEx 상향). 4/29 장후 매출 $56.31B +33% 컨센 $55.45B 상회, EPS $10.44(세제혜택 $8B 포함, 조정 $7.31), 영업이익률 41% 유지. CapEx 가이던스 $125~145B로 상향($115~135B에서) → 시간외 -6%. Susan Li CFO '슈퍼인텔리전스 베팅·자체 칩·NVIDIA GPU 동시 가속' 명시, 4/23 8,000명 감원과 결합된 'payroll → AI capex' 구조 전환 본격화. DAP 3.56B 컨센 3.62B 하회, Q2 가이던스 $58~61B. AI 광고 추천엔진은 +33% 광고 성장으로 가속 입증, Muse Spark 엔진 교체 + MTIA 자체 칩 4세대 로드맵 가시화 흐름과 직결.",
-        time: "2026-04-30 07:20 KST" },
-      { type: "마일스톤", sector: "Amazon AWS",
-        detail: "Amazon(Q1 결과·AWS 가속). 4/29 장후 매출 $181.5B +17%, AWS $37.59B +28%로 3년 만 최고 성장률, 컨센 +26% 상회. AWS 영업익 $14.2B 사상 최대. EPS $2.78. Q2 가이던스 매출 $194~199B(+16~19%)·영업익 $20~24B. 연간 CapEx $200B 가이던스 유지하며 회수율 우려를 Q1 실적으로 일축. 4/27 Microsoft 독점 종료로 OpenAI 모델 Bedrock 직접 호스팅이 가능해진 상황과 결합돼 Bedrock의 멀티 모델 허브 입지가 추가 강화. Trainium3 / Trn3 UltraServer 거의 완판 + 서드파티 랙 직접 판매 검토 흐름이 NVIDIA 직접 경쟁 시그널.",
-        time: "2026-04-30 07:20 KST" },
-      { type: "마일스톤", sector: "OpenAI",
-        detail: "OpenAI(Microsoft 자료로 손실 노출). Microsoft Q1 FY26에서 OpenAI 지분 손실이 EPS -$0.41로 처음 정량화 반영돼 GAAP $3.72(+13%)로 둔화. Microsoft 자체 펀더멘털은 견조하나 OpenAI 손실 확대 트렌드가 공식 회계 자료로 노출되며 4/28 WSJ 매출 부진·CFO Friar 우려와 결합돼 IPO 일정·매출 가속 압박이 외부적으로 가중. Altman·Friar는 'totally aligned'를 재확인하나 컴퓨트 자금조달 능력 의구심은 5월 5.5 추가 배포·OpenAI Trusted Access for Cyber 파일럿 진척 등 후속 수익화 트리거가 구체화되기 전까지 잔존.",
-        time: "2026-04-30 07:20 KST" },
-      { type: "제품 출시", sector: "Apple",
-        detail: "Apple(Q2 FY26 발표 임박). 4/30 장후 Q2 결과 발표 - 컨센 매출 $109.7B(+15%)·EPS $1.95(+18%), iPhone 컨센 $56.5B·서비스 컨센 $30B(GM 70%+). Cook의 마지막 분기 발표·9/1 Ternus 승계 직전 가이던스 기조이 시장 반응 핵심. iPhone 17 슈퍼사이클 + 신 Siri Gemini 기반 일정(iOS 26.5→27 연기) + WKA AI 검색 확장이 차기 분기 점검대.",
-        time: "2026-04-30 07:20 KST" },
     ]
   }
 ];
