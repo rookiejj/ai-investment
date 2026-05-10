@@ -3,15 +3,21 @@
 
 const updates = [
   {
-    date: "2026-05-10 07:10 KST",
-    summary: `美 5/8 주간 마감 - S&P 7,398.93·나스닥 26,247.08 6주 연속 사상 최고 + 4월 NFP 골디락스
-다음 주 분기점 - 5/12 4월 CPI 8:30 ET·헤드라인 +3.7% YoY·근원 +0.3% MoM 컨센
-5/13 PPI + CSCO 장후 Q1·5/14 BABA·AMAT 동반 실적 - 반도체 장비 HBM 사이클 점검대
-5/15 4월 소매판매·WMT Q1 발표 - 관세 영향·소비 건전성 단일 분기점
-5/19 MSFT Build·NVIDIA Computex 키노트·5/20 NVDA Q1 FY27·5/21 GOOGL I/O - 메가 캘린더 진입`,
+    date: "2026-05-10 19:15 KST",
+    summary: `5/20 NVDA Q1 FY27 D-10 - 컨센 매출 $78.3B·EPS $1.74·골드만 $80B·$1.86 추정 상향
+5/13 CSCO Q3 FY26 가이던스 매출 $15.4~15.6B·EPS $1.02~1.04 - AI 주문 $5B+ 라인 점검
+5/12 4월 CPI 단일 톱 분기점·5/15 WMT Q1 + 4월 소매판매 - 소비 건전성 점검
+주말 美·이란 호르무즈 화력 교환 - 트럼프 'love tap' 휴전 유지·정유 wartime 마진 잔존
+6주 연속 사상 최고 베이스 - CPI·NVDA·CSCO 3대 분기점 vs 차익실현 양측 변동성 결정`,
     changes: [
+      { type: "정보 갱신", sector: "반도체",
+        detail: "NVIDIA(NVDA). 5/20 장후 Q1 FY27 D-10 카운트다운 - 컨센 매출 $78.3B(+78% YoY)·EPS $1.74(+115% YoY) 베이스에 골드만삭스 James Schneider 매출 $80.05B·EPS $1.86 'beat-and-raise' 추정으로 컨센 +$2B·EPS +7% 상향 시그널. 가이던스 $78B는 중국 데이터센터 매출 전량 제외(황 회장 추정 시장 $50B), 美·이란 호르무즈 변수와 5/14~15 트럼프-시진핑 베이징 정상회담發 對中 수출 가이던스가 사이드 분기점. Blackwell 캐파 풀가동·Rubin 풀프로덕션 카운트다운 + 5/19 Computex 키노트 + 5/8 IREN $5.5B 5GW DSX 워런트 + 5/6 Corning $500M 광 인프라 라인업 강화. 순현금 $51.1B·LTM 영업이익률 60.4% 베이스. 5/9 Anthropic·Akamai $1.8B 7년 인퍼런스 클라우드 발표가 컴퓨트 채널 다변화 시그널 - NVDA 본업 후방 동력은 그대로.",
+        time: "2026-05-10 19:15 KST" },
+      { type: "정보 갱신", sector: "AI 플랫폼",
+        detail: "Cisco(CSCO). 5/13 장후(미 동부 16:30 ET) Q3 FY26 발표 - 자체 가이던스 매출 $15.4~15.6B·non-GAAP EPS $1.02~1.04로 컨센 $15.2B·$0.95 상회 시그널. 단일 분기점은 AI 인프라 주문 - Q2 $2.1B 베이스에 FY26 통산 $5B+ 가이던스 상향분 중 약 $3B가 하이퍼스케일러 매출 전환 라인. Silicon One G300 스위칭 102.4Tbps 신규 아키텍처(Q2 누적 1백만 칩 출하) + Splunk 통합 H1 신규 로고 500개·연말 1,000개 가이던스가 후방. AI 플랫폼 카테고리 후방 - AI 네트워킹 사이클 정량 입증대. 옵션 시장 ±5% 변동성 가격 베이스.",
+        time: "2026-05-10 19:15 KST" },
       { type: "정보 갱신", sector: "시장",
-        detail: "美 5/11~15 주간 분기점. 5/12(화) 4월 CPI BLS 8:30 ET가 단일 톱 분기점 - 헤드라인 YoY 컨센 +3.7%(에너지 가격 호르무즈 변수 유입 기대)·근원 MoM +0.3%·근원 YoY +2.7% 추정. 5/13(수) PPI + Cisco 장후 Q1 FY26(AI 네트워킹 모멘텀 점검대). 5/14(목) Alibaba Q4 FY26 + Applied Materials 장후 Q2 FY26 - 반도체 장비 사이클·HBM 수요 후방 시그널. 5/15(금) 4월 소매판매·산업생산·Walmart Q1 FY27 - 관세 영향·소비 건전성 단일 분기점. 다음 주 후반 - 5/19 Microsoft Build 컨퍼런스(Azure AI·Copilot·Foundry)·NVIDIA Computex 키노트·5/20 NVDA Q1 FY27 컨센 매출 $78.8B 카운트다운·5/21 Google I/O(Gemini·TPU 8세대). 6주 연속 사상 최고 베이스에서 CPI·NVDA 양 분기점이 추가 상향 vs 차익실현 양측 변동성 결정.",
+        detail: "美 5/11~15 주간 분기점. 5/12(화) 4월 CPI BLS 8:30 ET가 단일 톱 - 헤드라인 YoY 컨센 +3.7%(에너지 가격 호르무즈 변수 유입 기대)·근원 MoM +0.3%·근원 YoY +2.7% 추정. 5/13(수) PPI + Cisco 장후 Q1 FY26(AI 네트워킹 모멘텀 점검대). 5/14(목) Alibaba Q4 FY26 + Applied Materials 장후 Q2 FY26 - 반도체 장비 사이클·HBM 수요 후방. 5/15(금) 4월 소매판매·산업생산·Walmart Q1 FY27 - 관세 영향·소비 건전성 단일 분기점. 다음 주 후반 - 5/19 Microsoft Build·NVIDIA Computex 키노트·5/20 NVDA Q1 FY27·5/21 Google I/O 메가 캘린더. 6주 연속 사상 최고 베이스에서 CPI·NVDA 양 분기점이 추가 상향 vs 차익실현 양측 변동성 결정.",
         time: "2026-05-10 07:10 KST" },
       { type: "정보 갱신", sector: "반도체",
         detail: "Applied Materials(AMAT, 본 카테고리 미수록). 5/14 장후 Q2 FY26 발표 카운트다운 - 컨센 매출 $7.2B 영역·non-GAAP EPS $2.34 추정. HBM4 양산 램프·TSMC N2 노드 진입·삼성·SK하이닉스 메모리 캐파 확장 후방 수요가 단일 동력. 본 카테고리 LRCX 동조 시그널 - HBM·NAND 장비 사이클 정량 입증대. ASML(€36~40B 2026 가이던스)·LRCX·AMAT 3사 동반 결과로 반도체 장비 후방 사이클 상태 점검 가능.",
