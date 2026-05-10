@@ -62,10 +62,12 @@ jobs:
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
           fetch-depth: 2
 
-      - name: 진행 여부 게이팅 (자동 갱신 커밋 + 비-JP 변경)
+      - name: 진행 여부 게이팅 (자동 갱신 커밋 + 비-JP 변경 + 60분 쿨다운)
         id: gate
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          # workflow_dispatch는 운영자 수동 호출 — 항상 진행.
+          # workflow_dispatch는 운영자 수동 호출 — 모든 게이팅 건너뜀.
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "should_run=true" >> $GITHUB_OUTPUT
             echo "workflow_dispatch — 게이팅 통과"
@@ -88,6 +90,21 @@ jobs:
           if [ -z "$non_jp" ]; then
             echo "should_run=false" >> $GITHUB_OUTPUT
             echo "::notice::JP만 변경된 푸시 — IG 발행 skip"
+            exit 0
+          fi
+
+          # 3) 60분 쿨다운 — 직전 60분 내 success run 있으면 skip.
+          # 트리거 sandbox가 push_files 한도 회피로 *-update.js를 분할 커밋 push할 때
+          # cartoon-generate가 매 commit마다 success로 끝나며 instagram-post를 다중 트리거하는 문제 차단.
+          # 자동 갱신은 12시간 간격(07/19시 KST)이라 60분 쿨다운이 정상 발행에 영향 없음.
+          # 5/10 새벽 KST 07:24~07:31 사이 같은 일자 데이터 갱신 commit 3개로 IG 3번 발행 사고 후 도입.
+          CUTOFF=$(date -u -d '60 minutes ago' '+%Y-%m-%dT%H:%M:%SZ')
+          recent=$(gh api "/repos/${{ github.repository }}/actions/workflows/instagram-post.yml/runs?status=success&per_page=10" \
+                   --jq ".workflow_runs[] | select(.id != ${{ github.run_id }}) | select(.updated_at > \"$CUTOFF\") | .id" \
+                   2>/dev/null | head -1 || true)
+          if [ -n "$recent" ]; then
+            echo "should_run=false" >> $GITHUB_OUTPUT
+            echo "::notice::직전 60분 내 success run #$recent — 중복 발행 차단 skip"
           else
             echo "should_run=true" >> $GITHUB_OUTPUT
           fi
