@@ -1,6 +1,21 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-05-10 19:30 KST",
+    summary: `SpaceX 정식 S-1 제출 5/15~22 윈도우 D-5~12 - 6/8 로드쇼·$1.75T 베이스 카운트다운 진입
+$75B 조달 美 IPO 사상 최대·X·xAI 동시 상장 구도 - Musk 30% 리테일 할당 직접 시그널
+Boston Dynamics 上場 6월 결정 임박 - SoftBank 9.5% 풋옵션 6월 만료·$28B 가치 추정
+Q1 2026 글로벌 유니콘 딜 가치 $245.6B 사상 최고 베이스 잔존 - 35개 카테고리 자본 우호`,
+    changes: [
+      { type: "정보 갱신", sector: "우주·모빌리티·방산",
+        detail: "SpaceX(정식 S-1 제출 5/15~22 윈도우 D-5~12 카운트다운). 5/3 Motley Fool 종합 - 6/8 로드쇼 시작·6/11 1,500명 리테일 투자자 투어·6/18~30 프라이싱 윈도우 그대로. 목표 밸류 $1.75T·조달 $75B로 美 IPO 사상 최대 라인업, Musk가 30% 리테일 할당을 직접 명시. X·xAI를 동시 상장에 포함시키는 라인업이 5/9 CNBC Cramer가 'Linde 같은 산업가스 후방 수혜주'를 추가 시그널로 평가. 펀더멘털 - 5/6 Anthropic Colossus 1 단독 임대(300MW·NVIDIA 220K GPU)發 AI 인프라 매출 라인 정량 입증·연 매출 가이던스 4번째 사업 라인 추가. 5/14~15 트럼프-시진핑 베이징 정상회담 결과 後 韓 30% 리테일 할당 정책 라인이 사이드 분기점. ARK·Stableton 가격 정당화 자료 누적 - $1.75~2.0T 베이스 강화.",
+        time: "2026-05-10 19:30 KST" },
+      { type: "정보 갱신", sector: "우주·모빌리티·방산",
+        detail: "Boston Dynamics(현대차그룹 자회사·美 나스닥 상장 6월 결정 임박). SoftBank 9.5% 잔여 지분 풋옵션이 6월 만료 단일 분기점 - 2021년 인수 당시 4년 IPO 공약(2025년 6월 도래) 후속이라 시장 카운트다운 가속. 추정 가치 30~40조원($21~28B) - 5/5 양산형 Atlas 핸드스탠드·L-sit 시연 + 2028 조지아 부품 시퀀싱·연 3만대 양산 가이던스 베이스에 휴머노이드 카테고리 자본 베이스라인 확장. Tesla Optimus·Figure AI($100B 시도)·Apptronik 후방 - 카테고리 우주·모빌리티·방산 본 슬롯 후방 시그널이지만 IPO 직전 단일 펀딩 라인은 아니므로 본 카테고리 신규 편입은 IPO 확정 後로 보류.",
+        time: "2026-05-10 19:30 KST" },
+    ]
+  },
+  {
     date: "2026-05-09 11:40 KST",
     summary: `Q1 2026 글로벌 유니콘 딜 가치 $245.6B 사상 최고 - 거래 227건·$297B 스타트업 펀딩 +150% YoY
 글로벌 유니콘 1,680개·합산 밸류 $8.6T 도달 - SpaceX·OpenAI 양 톱 라인 베이스 강화
@@ -226,16 +241,6 @@ SpaceX·OpenAI·Anthropic 3대 IPO 합산 $240B+ 시장 흡수 부담`,
         detail: "Anthropic·NEC. 4/24 Anthropic이 일본 NEC Corporation과 글로벌 전략 파트너십을 체결, NEC가 Anthropic의 일본 첫 글로벌 파트너로 지정. 약 30,000명 NEC 그룹 직원이 Claude·Claude Code·Claude Cowork를 전사 배포 받으며 NEC는 자체 'AI-Native Engineering Center of Excellence'를 신설해 Anthropic으로부터 직접 기술 지원·교육을 받는다. 양사는 금융·제조·지방정부를 시작으로 일본 산업별 보안 AI 제품 공동 개발, NEC의 'Client Zero' 전략(자사를 첫 고객으로 배포 후 외부 고객 제공) 위에 Cowork를 사내 운영 자동화에 확대. 발표 직후 NEC 주가 +5.2% 점프, 일본 빅테크 자체 AI 개발 노선에서 Claude 라이선스+생태계 파트너 모델로 전환되는 구조적 변곡점. Alphabet $40B·Amazon $25B 컴퓨트와 별도로 일본 시장 진입 인프라까지 확보하면서 10월 IPO $400~500B 펀더 추가 보강.", time: "2026-04-27 13:30 KST" },
       { type: "거버넌스", sector: "AI·ML",
         detail: "Anthropic(Claude Mythos Preview). 4/21~23 Bloomberg·TechCrunch·Fortune·Tom's Hardware 동시 보도 - 너무 위험해 공개 배포를 보류한 사이버보안 프론티어 모델 Mythos Preview에 외부 그룹이 무단 접근 중인 사실이 드러났다. 침해 그룹은 데이터 라벨링 스타트업 Mercor 유출 사건에서 입수한 Anthropic 명명 규칙 정보를 기반으로 Mythos의 API 엔드포인트 URL을 추론·맞췄고, 모델 출시 당일부터 상시 접근을 유지해 왔다. 그룹 멤버 중 한 명은 Anthropic의 제3자 컨트랙터로 확인. Anthropic 측은 'Mythos Preview에 대한 무단 접근 보고를 조사 중'이라고 공식 인정. Mythos는 Apple·AWS·Cisco·JPMorgan·NSA 등 52개 검증 조직에만 제한 배포되며 Project Glasswing으로 방어자에게 $1억 크레딧을 제공해 온 모델. 비공개 전제로 설계된 프론티어 모델의 첫 외부 노출 사례로 IPO 앞 거버넌스 리스크가 증폭, OpenAI는 동일 시점에 'Trusted Access for Cyber' 파일럿(GPT-5.3-Codex 기반)을 소수 파트너에만 제한 배포하며 차별화 신호.", time: "2026-04-27 13:30 KST" },
-    ]
-  },
-  {
-    date: "2026-04-27 08:00 KST",
-    summary: "Anduril 4/24 美 우주군 Golden Dome 우주기반 요격체 프로토타입 12개사 $3.2B 수주 SpaceX·Lockheed·RTX·Northrop·General Dynamics와 동시 선정·2028 실증 목표·Anthropic Claude Code 단독 ARR $25억 확인·OpenAI ChatGPT for Clinicians 99.6% safe & accurate 검증",
-    changes: [
-      { type: "정보 갱신", sector: "우주·모빌리티·방산",
-        detail: "Anduril. 4/24 美 우주군이 트럼프의 Golden Dome 미사일 방어 계획에 따라 우주기반 요격체(space-based interceptor) 프로토타입을 개발할 12개 기업에 최대 $3.2B 규모 'Other Transaction Authority' 계약을 수여하며 Anduril을 정식 선정. 동시 선정 기업은 SpaceX·Lockheed Martin·Northrop Grumman·RTX(Raytheon)·General Dynamics·Booz Allen Hamilton·GITAI USA·Quindar·Sci-Tec·True Anomaly로, 다수 디자인을 병렬 개발하는 구조에서 Anduril은 Lattice OS 기반 자율 위성·드론·요격 통합 노드를 강점으로 부각. 2028년 실증 목표로 단계적 마일스톤 자금 집행. 차세대 방산 AI 유니콘이 전통 프라임과 동등 입찰권을 확보한 첫 대형 케이스로, Series H $8B 협상 가속 및 2차시장 $73B+ 밸류의 펀더 강화.", time: "2026-04-27 08:00 KST" },
-      { type: "정보 갱신", sector: "AI·ML",
-        detail: "Anthropic. 4/26 후속 보도 - Claude Code 단독 연환산 매출이 $25억(annualized)을 돌파한 것으로 확인되며 전체 ARR $300억의 약 8.3%가 단일 코딩 제품에서 나오는 구조 정형화. $1M+ 엔터프라이즈 고객이 1,000+로 두 달 만에 두 배 늘었고 매출의 80%가 B2B에서 발생, OpenAI($250억 ARR·소비자 비중 큰 편)와의 매출 믹스 차별화가 IPO 밸류 방어 핵심 논거. 10월 IPO $400~500B 타겟 + 세컨더리 $1T라는 '2가지 가격표' 구도가 다음 주 4/29 메가캡 슈퍼위크 직후 추가 세컨더리 거래에서 검증대 통과 예상.", time: "2026-04-27 08:00 KST" },
     ]
   }
 ];
