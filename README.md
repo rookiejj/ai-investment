@@ -28,18 +28,27 @@ ai-investment/
 │   └── roysoft_profile.jpg       ← 푸터 로이소프트 브랜드
 ├── data/
 │   ├── version.js                ← 데이터 버전
-│   ├── stocks-{data,update}.js   ← 미국 주식 (18 × 7 = 108)
-│   ├── kr-stocks-{data,update}.js← 한국 주식 (18 × 7 = 108)
-│   ├── jp-stocks-{data,update}.js← 일본 주식 (UI·자동 갱신 제외, 데이터 보존)
-│   ├── ai-{data,update}.js       ← AI 기업 10사
-│   ├── commodity-{data,update}.js← 원자재·크립토 (6 × 4 = 24)
-│   ├── unicorn-{data,update}.js  ← 유니콘 (5 × 7 = 35, AI 전업 기업 제외)
+│   ├── .cartoon-marker           ← sandbox 마지막 단계 push로 카툰·인스타 발화 시그널
+│   ├── stocks-{data,update,update-archive}.js   ← 미국 주식 (18 × 7 = 108)
+│   ├── kr-stocks-{data,update,update-archive}.js← 한국 주식 (18 × 7 = 108)
+│   ├── jp-stocks-{data,update}.js               ← 일본 주식 (UI·자동 갱신 제외, 데이터 보존)
+│   ├── ai-{data,update,update-archive}.js       ← AI 기업 10사
+│   ├── commodity-{data,update,update-archive}.js← 원자재·크립토 (6 × 4 = 24)
+│   ├── unicorn-{data,update,update-archive}.js  ← 유니콘 (5 × 7 = 35, AI 전업 기업 제외)
+│   ├── *-update.js               ← 화면 노출(TL;DR·캐러셀·친구톡)용. 최대 5건(약 1주일치) 유지
+│   ├── *-update-archive.js       ← 종목 모달 mentions용. 30일 cutoff. archive-rotate.yml이 자동 갱신
 │   ├── calendar-events.js        ← 메인 14일 이벤트 캘린더용 (recurring 패턴 + fixed 알려진 일정)
 │   └── company-ko.js             ← 영문 회사명·티커 → 한글 매핑 (index.html·daily-send 단일 소스)
 ├── scripts/
 │   ├── generate-message.js       ← 로컬 친구톡 메시지 미리보기
 │   ├── send-friendtalk.js        ← 로컬 수동 발송 (디버깅)
+│   ├── trim-update-logs.js       ← *-update.js 최대 5건 트리밍 (sandbox 커밋 직전 필수)
+│   ├── rotate-archive.js         ← main entries를 archive로 mirror, 30일 cutoff (archive-rotate.yml에서 호출)
+│   ├── lint-jargon.sh            ← 트레이더 은어·편집자 메타 표현 lint
+│   ├── lint-finmap-pool.js       ← sector-pool 한글명 lookup·dual-list lint
 │   ├── subscribers.example.json
+│   ├── cartoon/
+│   │   └── generate.js           ← Gemini nano-banana-pro 1950s 카툰 생성·Supabase 업로드
 │   └── instagram/                ← 인스타그램 캐러셀·Reels 자동 게시
 │       ├── template.html         ← 1080×1350 슬라이드 HTML 템플릿 (다크 + 사진 BG)
 │       ├── render-slides.js      ← Playwright로 5탭 최신 summary → PNG 7장 렌더
