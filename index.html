@@ -1308,14 +1308,14 @@ function pxClass(c){if(c==null||isNaN(c))return 'flat';return c>0?'up':(c<0?'dow
 // 시세의 거래 상태 판정 — 시장(KR/US)·시각·extended 플래그 종합 분석.
 // 반환: { badge: '...', hideChange: bool }
 //   badge — 'M/D 종가' | '장 마감' | '프리마켓' | '애프터' | '' (정규장 라이브)
-//   hideChange — true면 changePct 숨김 (Yahoo 데이터 noisy하거나 의미 없는 0%인 경우)
+//   hideChange — 항상 false. 등락폭은 장 마감·과거 종가 케이스에서도 마지막 거래일 대비 변동률로 의미 있음.
 //
 // 케이스:
-//   1) 시각이 오늘 KST가 아닌 거래일 → "M/D 종가" + change 숨김
-//   2) KR + 정규장 외 (평일 09:00-15:30 KST 외, 주말) → "장 마감" + change 숨김 (동시호가·시간외 노이즈 차단)
-//   3) US extended (프리/애프터마켓 시간대 데이터) → ET 시간 분석해 "프리마켓" or "애프터", change는 표시
-//   4) US 정규장 종료 후 idle (KST 09-17 winter / 10-18 DST 부근) → "장 마감", change는 표시 (오늘 종가 vs 어제 종가)
-//   5) US 정규장 라이브 → '' (배지 없음), change 표시
+//   1) 시각이 오늘 KST가 아닌 거래일 → "M/D 종가" (변동률 = 그 거래일 종가 대비 전일 종가)
+//   2) KR + 정규장 외 → "장 마감"
+//   3) US extended (프리/애프터마켓 시간대 데이터) → ET 시간 분석해 "프리마켓" or "애프터"
+//   4) US 정규장 종료 후 idle → "장 마감"
+//   5) US 정규장 라이브 → '' (배지 없음)
 function pxIsKrAfterHours(px){
   if(!px || px.time==null) return false;
   if(px.exchange!=='KS' && px.exchange!=='KQ') return false;
@@ -1337,13 +1337,13 @@ function pxStatus(px){
   const ts=Number(px.time);
   const kst=new Date((ts+9*3600)*1000);
   const today=todayKST();
-  // 1) 시각이 오늘 KST 아님 → 과거 거래일 종가
+  // 1) 시각이 오늘 KST 아님 → 과거 거래일 종가 (변동률 그대로 표시)
   if(fmtKSTDate(kst)!==fmtKSTDate(today)){
-    return {badge:`${kst.getUTCMonth()+1}/${kst.getUTCDate()} 종가`, hideChange:true};
+    return {badge:`${kst.getUTCMonth()+1}/${kst.getUTCDate()} 종가`, hideChange:false};
   }
-  // 2) KR 정규장 외
+  // 2) KR 정규장 외 (변동률 그대로 표시)
   if(px.exchange==='KS'||px.exchange==='KQ'){
-    if(pxIsKrAfterHours(px)) return {badge:'장 마감', hideChange:true};
+    if(pxIsKrAfterHours(px)) return {badge:'장 마감', hideChange:false};
     return {badge:'', hideChange:false};
   }
   // 3) US extended (프리/애프터)

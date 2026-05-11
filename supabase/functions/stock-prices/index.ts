@@ -35,7 +35,7 @@ const COMMODITY_YH: Record<string, string> = {
   // 귀금속
   "GC": "GC=F",   // 금
   "SI": "SI=F",   // 은
-  "PL": "PL=F",   // 백금
+  "XPT": "PL=F",  // 백금 (PL은 stocks-data.js의 Planet Labs와 충돌 → ISO 코드 XPT로 분리)
   "PA": "PA=F",   // 팔라듐
   // 에너지
   "CL": "CL=F",   // WTI
