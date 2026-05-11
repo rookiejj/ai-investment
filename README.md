@@ -65,7 +65,7 @@ ai-investment/
 │   │   └── admin-api/            ← 운영 대시보드용 (login / change_password / stats / logs / subscribers / payments / expiring_soon / manual_send[알림톡] / daily_send_preview / daily_send_now / notice_send[공지 친구톡])
 │   ├── schedule.sql              ← 매일 뉴스 cron (평일 08:00 KST)
 │   ├── schedule-expiry.sql       ← 만료 임박 cron (매일 20:00 KST)
-│   ├── schedule-prices.sql       ← 시세 갱신 cron (매 15분)
+│   ├── schedule-prices.sql       ← 시세 갱신 cron (매 5분)
 │   ├── queries.sql               ← 운영 조회·상태 변경 템플릿
 │   └── README.md                 ← Supabase 세팅 가이드
 ├── docs/
@@ -135,7 +135,7 @@ ai-investment/
 
 ### 실시간 시세 (15분 지연)
 - **`stock-prices` Edge Function** — Yahoo Finance v8 chart endpoint(`includePrePost=true`)로 미국·한국·원자재·크립토 시세 fetch. 한국은 `.KS`/`.KQ` 둘 다 시도 매칭, 원자재·크립토는 `COMMODITY_YH` 매핑 테이블(`BTC→BTC-USD`·`GC→GC=F` 등). 결과를 Supabase Storage `prices/latest.json`에 저장.
-- **15분 갱신** — pg_cron `stock-prices-refresh`가 매 15분 함수 호출. 사용자 접속 무관 항상 최신 유지.
+- **5분 갱신** — pg_cron `stock-prices-refresh`가 매 5분 함수 호출. 사용자 접속 무관 항상 최신 유지. 단 Yahoo Finance 자체가 15분 지연 + 장 시작 직후 ~25분은 거래 안정화로 어제 종가 노출(시스템 정상).
 - **클라이언트 5분 폴링** — `index.html`이 Storage public URL을 직접 fetch, 5분마다 자동 재로드(`document.hidden`이면 skip). STATE.prices 갱신 시 섹터 단계·deep-dive 모달 시세 라벨 즉시 재렌더.
 - **표시** — 종목 카드 우측에 `$216.57 +4.0%`(미국) / `₩78,500 +1.2%`(한국) 형식, 등락 색상(상승 녹·하락 적). 모달 헤더에도 동일 노출. 프리/애프터마켓 시간대엔 baseline을 `regularMarketPrice`로 보정해 Yahoo 표시값과 일치 (정규세션은 `previousClose` 기준).
 - **표기 안내** — 섹터 단계 섹션 헤더에 "시세는 15분 지연 (Yahoo Finance)" 명시.
@@ -172,7 +172,7 @@ ai-investment/
 |---|---|---|---|
 | `daily-friendtalk-send` | `0 23 * * 0-5` | 월~토 08:00 | `daily-send` |
 | `daily-expiry-notice` | `0 11 * * *` | 매일 20:00 | `expiry-notice` |
-| `stock-prices-refresh` | `*/15 * * * *` | 매 15분 | `stock-prices` |
+| `stock-prices-refresh` | `*/5 * * * *` | 매 5분 | `stock-prices` |
 
 > KST 08:00 = UTC 23:00(전날). UTC 기준 dow 0~4가 한국 평일에 해당.
 
@@ -293,6 +293,7 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-11 (5)**: **시세 안내 강화 + 로드쇼 hallucination 일괄 정정 + README cron 주기 stale 정정**. 사용자 보고: 한국 장 9시 시작인데 9:30 가까이 돼서야 시세 보임. 원인 분석 — Yahoo Finance 공식 15분 지연 + 장 시작 직후 거래 안정화 5~10분 누적이라 ~25분 갭은 정상(pg_cron은 5분 주기로 이미 최선). 두 곳의 sec-desc 안내에 "장 시작 후 ~25분간 어제 종가 표시" 명시. README의 "매 15분" 표기 3곳 정정 (실제는 5/8경 5분 강화됐는데 문서 따라가지 않음). 자동 갱신 에이전트가 만든 "로드솼"(로드쇼 hallucination) `data/calendar-events.js` 2건·`data/unicorn-update.js` 25건 일괄 치환. lint-jargon.sh PATTERNS에 `솼` 단독 글자 추가로 재발 차단(한국어 표준 음절 아니라 false positive 0).
 - **2026-05-11 (4)**: **인스타 Reels도 7장 슬라이드쇼로 복원 — 캐러셀과 동일 구성**. 단일 카툰 30초 Ken Burns 영상 → 7장(카툰 + 5탭 + CTA) 슬라이드쇼 9:16 mp4. render-reels.js의 디폴트 흐름(01.png~07.png를 ffmpeg xfade로 합치는, 슬라이드당 6초·crossfade 0.5초·BGM 합성)이 그대로 살아있어 `--mode=single` 제거 + `cp cartoon.png → 01.png` 한 줄로 즉시 복원. 결과 ~42초 영상. 캐러셀·Reels 모두 같은 7장 슬라이드를 공유하는 단순 구조.
 - **2026-05-11 (3)**: **인스타 캐러셀 7장 복원 — 카툰(표지) + 5탭 불릿 + CTA**. 5/8에 `IG_SLIDES: cartoon-X.png,07.png`로 잘라내며 카툰+CTA 2장만 게시했으나 정보 밀도가 너무 빈약. render-slides.js의 7장 생성 로직과 template.html 5탭 슬라이드는 그대로 살아있어 `IG_SLIDES` 한 줄만 교체로 즉시 복원. 카툰을 표지 대체로 사용해 01.png(텍스트 표지) 자리에 카툰을 박는 형태 → 시각적 hook은 카툰, 정보는 5탭 불릿이 담당. Reels 모드는 그대로 today.png 30초 영상.
 - **2026-05-11 (2)**: **카툰 화풍·파일 단일화 — 1950s + today.png 한 장으로 통일**. 이전: 시간대 분기로 오전 1950s(`today-news.png`)·오후 mad-mag(`today-magazine.png`) 2 화풍 + 홈피용 단일 소스(`today-latest.png`)로 파일 3개 운영. 발행 폴백이 Supabase 동기화 안 해 홈피·인스타 어긋남 사고(5/11 아침 매뉴얼 발행 시 홈피=5/10 저녁 mad-mag, 인스타=5/11 즉석 1950s) 발생.
