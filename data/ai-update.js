@@ -6,6 +6,21 @@
  */
 const UPDATES = [
   {
+    date: "2026-05-11 19:25 KST",
+    summary: `Anthropic Claude 'Dreaming' 리서치 프리뷰 정식 공개 - 에이전트 세션 사이 자동 회상·재정리
+법률 AI Harvey 도입 후 태스크 완료율 6배 가속 - 첫 정량 사례 입증
+Memory(4/24) + Dreaming(5/6) + 멀티에이전트 오케스트레이션(5/8) - 매니지드 에이전트 장기 학습 완성
+xAI 'SpaceXAI' 통합 본격화 - Musk 'xAI는 SpaceXAI AI 부문으로 존속' 공식화`,
+    changes: [
+      { type: "제품 출시", sector: "Anthropic",
+        detail: "Anthropic 'Dreaming' 기능 리서치 프리뷰 공개. 5/6 Code with Claude 컨퍼런스 발표 - Claude 매니지드 에이전트가 세션 사이 비활성 시간에 과거 트랜스크립트(최대 100건)를 자동 리뷰하고 반복 패턴·실수·팀 공통 선호를 추출해 메모리 스토어를 재정리하는 스케줄드 프로세스. 원본 세션 데이터는 건드리지 않고 중복 병합·모순 제거·신규 인사이트만 추출, 매 에이전트가 단독으로는 볼 수 없는 패턴을 표면화. 법률 AI Harvey가 도입 후 태스크 완료율 6배 가속을 정량 보고 - 첫 외부 정량 사례. 4/24 Memory 베타 + 5/8 멀티에이전트 오케스트레이션 라인업과 결합돼 엔터프라이즈 매니지드 에이전트의 장기 학습 레이어 완성. 5/4 Blackstone·Goldman·H&F $1.5B 합작벤처 + 5/5 금융 서비스 에이전트 10종·MS 365 통합 누적 베이스에 직접 시너지 라인.",
+        time: "2026-05-11 19:25 KST" },
+      { type: "전략", sector: "xAI",
+        detail: "xAI 'SpaceXAI' 단일 법인 통합. 5월 초 Musk X 게시물 - xAI는 더 이상 별도 회사로 존재하지 않고 새로 명명된 SpaceXAI의 AI 부문으로 단순 통합. SpaceXAI는 IPO를 연내 추진, 목표 조달 $1.75~2T로 단일 사상 최대 IPO 베팅. xAI 본사이자 라이벌 Anthropic이 5/6 단독 임대한 Colossus 1 컴퓨트(300MW·220K GPU)는 SpaceXAI 자산으로 귀속 - 'xAI 본사 라이벌 임대' 구도가 모회사 차원의 자본 회수 라인으로 해석 가능. Grok 5(6T MoE)·Cursor $60B 인수 옵션·SpaceX Colossus 2(1.5GW)·Grok 4.3 Beta(1T) 라인업이 IPO 직전 정량 입증 채널. 5/14~15 트럼프-시진핑 베이징 정상회담 의제에 AI 모델 가드레일·수출 통제가 사이드 분기점.",
+        time: "2026-05-11 19:25 KST" },
+    ]
+  },
+  {
     date: "2026-05-11 07:35 KST",
     summary: `5/14~15 트럼프-시진핑 베이징 정상회담 D-3~4 - 트럼프 이란 응답 거부로 호르무즈 단일 톱 부상
 AI 리스크·안전 프레임 후순위 가능성 - 양국 모델 가드레일·수출 통제 양 측 의제 잔존
