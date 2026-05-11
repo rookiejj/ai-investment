@@ -1183,6 +1183,15 @@ const UPD_URLS={
   commodity: {url:'/data/commodity-update.js', var:'updates'},
   unicorn:   {url:'/data/unicorn-update.js',   var:'updates'},
 };
+// archive — main 트리밍으로 잘린 옛 entries(~30일 cutoff). mentions 깊이 확장용.
+// archive-rotate.yml 워크플로가 main push 시마다 갱신. 클라는 boot 직후 비차단 fetch.
+const ARCHIVE_URLS={
+  stocks:    '/data/stocks-update-archive.js',
+  kr:        '/data/kr-stocks-update-archive.js',
+  ai:        '/data/ai-update-archive.js',
+  commodity: '/data/commodity-update-archive.js',
+  unicorn:   '/data/unicorn-update-archive.js',
+};
 const CALENDAR_URL='/data/calendar-events.js';
 const PRICES_URL='https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/prices/latest.json';
 
@@ -2292,26 +2301,42 @@ function findStock(tk){
 // ═══════════════════════════════════════════════════════════
 // Modal — deep dive
 // ═══════════════════════════════════════════════════════════
+// mentions 검색 — main + archive 두 소스 순회. archive는 30일 cutoff 보존 (한 달치 깊이).
+// dedup 키: date + changes[0].time + detail 첫 40자. main↔archive 중복 entry 한 번만 노출.
 function findMentions(tk){
   const out=[];
-  for(const tab of Object.keys(UPD_URLS)){
-    const list=STATE.upd[tab];
-    if(!list)continue;
-    for(const entry of list){
-      const dateStr=(entry.date||'').slice(0,10);
-      const detailTexts=(entry.changes||[]).map(c=>c.detail).filter(d=>new RegExp(`\\b${tk}\\b`).test(d));
-      const entryTexts=(entry.entries||[]).map(e=>e.text||'').filter(t=>new RegExp(`\\b${tk}\\b`).test(t));
-      const summaryHas=new RegExp(`\\b${tk}\\b`).test(entry.summary||'');
-      if(detailTexts.length){
-        for(const d of detailTexts.slice(0,3))out.push({tab,date:dateStr,text:d});
-      } else if(entryTexts.length){
-        for(const t of entryTexts.slice(0,3))out.push({tab,date:dateStr,text:t});
-      } else if(summaryHas){
-        const lines=(entry.summary||'').split('\n').filter(l=>new RegExp(`\\b${tk}\\b`).test(l));
-        for(const l of lines.slice(0,2))out.push({tab,date:dateStr,text:l.trim()});
-      }
-      if(out.length>=12)break;
+  const seenEntry=new Set();
+  function dedupKey(entry){
+    const date=entry.date||'';
+    const firstTime=(entry.changes&&entry.changes[0]&&entry.changes[0].time)||'';
+    const snippet=((entry.changes&&entry.changes[0]&&entry.changes[0].detail)||(entry.entries&&entry.entries[0]&&entry.entries[0].text)||entry.summary||'').slice(0,40);
+    return `${date}|${firstTime}|${snippet}`;
+  }
+  function processEntry(tab,entry){
+    if(out.length>=12)return false;
+    const k=dedupKey(entry);
+    if(seenEntry.has(k))return true;
+    seenEntry.add(k);
+    const dateStr=(entry.date||'').slice(0,10);
+    const detailTexts=(entry.changes||[]).map(c=>c.detail).filter(d=>new RegExp(`\\b${tk}\\b`).test(d));
+    const entryTexts=(entry.entries||[]).map(e=>e.text||'').filter(t=>new RegExp(`\\b${tk}\\b`).test(t));
+    const summaryHas=new RegExp(`\\b${tk}\\b`).test(entry.summary||'');
+    if(detailTexts.length){
+      for(const d of detailTexts.slice(0,3)){if(out.length>=12)return false;out.push({tab,date:dateStr,text:d});}
+    } else if(entryTexts.length){
+      for(const t of entryTexts.slice(0,3)){if(out.length>=12)return false;out.push({tab,date:dateStr,text:t});}
+    } else if(summaryHas){
+      const lines=(entry.summary||'').split('\n').filter(l=>new RegExp(`\\b${tk}\\b`).test(l));
+      for(const l of lines.slice(0,2)){if(out.length>=12)return false;out.push({tab,date:dateStr,text:l.trim()});}
     }
+    return true;
+  }
+  for(const tab of Object.keys(UPD_URLS)){
+    const main=STATE.upd[tab]||[];
+    const archive=(STATE.updArchive&&STATE.updArchive[tab])||[];
+    for(const entry of main){if(!processEntry(tab,entry))break;}
+    if(out.length>=12)break;
+    for(const entry of archive){if(!processEntry(tab,entry))break;}
     if(out.length>=12)break;
   }
   return out.slice(0,12);
@@ -2658,6 +2683,25 @@ async function loadPrices(){
   }
 }
 
+// archive lazy fetch — main 도착 후 비차단으로 호출. 도착하면 STATE.updArchive에 저장,
+// 다음 모달 열기부터 mentions 깊이가 ~30일로 확장. 도착 전엔 main만으로 mentions 작동(자연 폴백).
+async function loadArchives(){
+  const tabs=Object.entries(ARCHIVE_URLS);
+  const out={};
+  await Promise.all(tabs.map(async([tab,url])=>{
+    try{
+      const r=await fetch(url+'?_='+Date.now());
+      if(!r.ok){out[tab]=[];return;}
+      const t=await r.text();
+      out[tab]=new Function(t+';return typeof updatesArchive!=="undefined"?updatesArchive:[];')();
+    }catch(e){
+      console.warn(`archive ${tab} 로드 실패:`,e);
+      out[tab]=[];
+    }
+  }));
+  STATE.updArchive=out;
+}
+
 // 페이지 오래 열어둘 때 stale 방지 — 5분마다 백그라운드 갱신 + 카드 재렌더
 const PRICE_REFRESH_MS=5*60*1000;
 function startPricePolling(){
@@ -2685,6 +2729,8 @@ document.querySelectorAll('[data-fmap-market]').forEach(b=>{
 async function boot(){
   // 시세는 비차단 — 백그라운드에서 받아와 도착 시 재렌더
   const pricesPromise=loadPrices();
+  // archive도 비차단 — 모달 mentions 깊이 ~30일 확장. 도착 전엔 main만으로 자연 폴백
+  loadArchives().catch(e=>console.warn('archive 로딩 실패:',e));
 
   try{
     const [stocks,kr,ai,commodity,unicorn,pool,calendar,companyKo]=await Promise.all([

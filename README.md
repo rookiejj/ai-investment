@@ -51,7 +51,8 @@ ai-investment/
 │       └── SETUP.md              ← 시크릿·버킷 셋업 가이드
 ├── .github/workflows/
 │   ├── cartoon-generate.yml      ← `data/.cartoon-marker` push 트리거 (자동 갱신 sandbox가 마지막 단계로 마커 push)
-│   └── instagram-post.yml        ← cartoon-generate workflow_run chain (캐러셀 오전 / Reels 오후, 모두 7장 슬라이드 공유)
+│   ├── instagram-post.yml        ← cartoon-generate workflow_run chain (캐러셀 오전 / Reels 오후, 모두 7장 슬라이드 공유)
+│   └── archive-rotate.yml        ← main *-update.js push 시 archive 30일 cutoff 갱신 (mentions 깊이 확장)
 ├── supabase/
 │   ├── migrations/               ← 스키마 이력 (init / payment / message_type / delivery_state / admin_settings / template_code)
 │   ├── functions/
@@ -299,6 +300,13 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-11 (7)**: **mentions 깊이 확장 — archive 인프라 도입(30일 보존)**. 사용자 보고: 종목 모달의 "최근 사건" mentions가 update.js 40KB 트리밍으로 짧으면 4일치(kr·commodity)만 보임. 옵션 A(git archive.js, sandbox push 한계 회피)로 main↔archive 분리.
+  - **`scripts/rotate-archive.js` 신설** — main update.js 5탭 entries를 archive에 mirror, 30일 cutoff 적용, dedup(date + changes[0].time + detail 첫 40자) 후 date desc 정렬해 archive 파일 재작성. 멱등.
+  - **`.github/workflows/archive-rotate.yml` 신설** — main 5개 파일 paths 매치 시 발화(archive 파일 자체 변경엔 안 발화로 무한 루프 차단). Node 22로 스크립트 실행 → syntax 검증(`new Function(src)`) → git pull --rebase + 3회 재시도 push.
+  - **5탭 archive 파일 초기 생성** — `data/*-update-archive.js` (변수명 `updatesArchive`). 첫 로컬 실행 결과: stocks 7건·kr 4건·ai 13건·unicorn 16건·commodity 4건 = 총 44 entries 보존 (모두 30일 내).
+  - **index.html mentions 확장** — `ARCHIVE_URLS` 매핑 + `loadArchives()` 비차단 호출 (boot에서 await 안 함 — 도착 전엔 main만으로 자연 폴백). `findMentions`에 dedup 키 추가, main 먼저 순회 후 archive 순회로 시간 순서 유지. 결과 mentions 깊이 4~14일 → ~30일 확장.
+  - **sandbox push 한계 회피**: sandbox는 main만 만지고(~40KB), archive는 GH Actions가 별개 push(~90KB×5탭, git push 자유). paths 분리로 cartoon-generate·archive-rotate 워크플로 병렬 실행 가능.
+  - **클라 트래픽**: archive 5개 ~120KB gzip 추가, 모달 첫 열기 시 lazy fetch ~50~150ms. 첫 페이지 로딩 영향 0.
 - **2026-05-11 (6)**: **PL 티커 충돌 해소(백금 → XPT) + 등락폭 hideChange 정책 폐기**. 사용자 보고: 장 마감 시 미국 종목 등락폭이 안 보이는데 Planet Labs(PL)만 보임. 원인: `supabase/functions/stock-prices/index.ts`의 COMMODITY_YH 매핑 `"PL": "PL=F"`가 stocks-data.js의 Planet Labs(NYSE: PL)와 같은 키 충돌 — Edge Function이 commodity 처리 단계에서 미국 PL 데이터를 백금 선물($2,042/oz, 24/7 거래)로 덮어씀. commodity-data.js 백금 `tk:"PL"` → `"XPT"`(ISO platinum currency code), Edge Function 매핑도 동시 갱신. 추가: `pxStatus` 함수의 `hideChange:true` 케이스 2종(시세 시각이 오늘 아님·KR 정규장 외) 모두 `false`로 변경 — 사용자 의도는 "장 마감이든 언제든 등락폭은 항상 표시" (마지막 거래일 vs 전일 종가 변동률은 정보 가치 있음).
 - **2026-05-11 (5)**: **시세 안내 강화 + 로드쇼 hallucination 일괄 정정 + README cron 주기 stale 정정**. 사용자 보고: 한국 장 9시 시작인데 9:30 가까이 돼서야 시세 보임. 원인 분석 — Yahoo Finance 공식 15분 지연 + 장 시작 직후 거래 안정화 5~10분 누적이라 ~25분 갭은 정상(pg_cron은 5분 주기로 이미 최선). 두 곳의 sec-desc 안내에 "장 시작 후 ~25분간 어제 종가 표시" 명시. README의 "매 15분" 표기 3곳 정정 (실제는 5/8경 5분 강화됐는데 문서 따라가지 않음). 자동 갱신 에이전트가 만든 "로드솼"(로드쇼 hallucination) `data/calendar-events.js` 2건·`data/unicorn-update.js` 25건 일괄 치환. lint-jargon.sh PATTERNS에 `솼` 단독 글자 추가로 재발 차단(한국어 표준 음절 아니라 false positive 0).
 - **2026-05-11 (4)**: **인스타 Reels도 7장 슬라이드쇼로 복원 — 캐러셀과 동일 구성**. 단일 카툰 30초 Ken Burns 영상 → 7장(카툰 + 5탭 + CTA) 슬라이드쇼 9:16 mp4. render-reels.js의 디폴트 흐름(01.png~07.png를 ffmpeg xfade로 합치는, 슬라이드당 6초·crossfade 0.5초·BGM 합성)이 그대로 살아있어 `--mode=single` 제거 + `cp cartoon.png → 01.png` 한 줄로 즉시 복원. 결과 ~42초 영상. 캐러셀·Reels 모두 같은 7장 슬라이드를 공유하는 단순 구조.
