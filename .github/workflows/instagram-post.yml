@@ -184,6 +184,7 @@ jobs:
           IG_CAROUSEL_BUCKET: ${{ secrets.IG_CAROUSEL_BUCKET }}
           IG_DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '' }}
           IG_MODE: ${{ steps.mode.outputs.mode }}
-          # 캐러셀 슬라이드는 today.png + 기존 CTA 두 장. Reels 모드에선 무시됨.
-          IG_SLIDES: cartoon.png,07.png
+          # 캐러셀 슬라이드 = 카툰(표지) + 5탭 불릿(02~06) + CTA(07) = 7장. Reels 모드에선 무시됨.
+          # render-slides.js는 01.png(텍스트 표지)도 만들지만 카툰이 표지 역할이라 02부터 사용.
+          IG_SLIDES: cartoon.png,02.png,03.png,04.png,05.png,06.png,07.png
         run: node scripts/instagram/publish.js
