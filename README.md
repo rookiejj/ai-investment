@@ -300,6 +300,7 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-11 (8)**: **main update.js 트리밍 기준 변경 — byte 40KB → entries 5건 한도**. 5/11 (7)에서 archive 인프라가 30일 mentions 깊이를 담당하니, main은 화면 노출(`entries[0]`) + archive 사고 시 폴백만 담당하면 충분. byte 한도 → 명시적 entries 5건 한도로 단순화. 짧은 탭(kr·commodity 4건)은 상한 미만이라 그대로 유지(강제 5건 채우기 X). `scripts/trim-update-logs.js`·CLAUDE.md 룰·RemoteTrigger prompt 동시 갱신. 첫 실행 결과 5탭 합 150KB → 76KB(절반), sandbox push 한계(~50KB) 여유 대폭 증가. archive에 잘려나간 entries 49건 흡수 완료 — mentions 깊이 영향 0.
 - **2026-05-11 (7)**: **mentions 깊이 확장 — archive 인프라 도입(30일 보존)**. 사용자 보고: 종목 모달의 "최근 사건" mentions가 update.js 40KB 트리밍으로 짧으면 4일치(kr·commodity)만 보임. 옵션 A(git archive.js, sandbox push 한계 회피)로 main↔archive 분리.
   - **`scripts/rotate-archive.js` 신설** — main update.js 5탭 entries를 archive에 mirror, 30일 cutoff 적용, dedup(date + changes[0].time + detail 첫 40자) 후 date desc 정렬해 archive 파일 재작성. 멱등.
   - **`.github/workflows/archive-rotate.yml` 신설** — main 5개 파일 paths 매치 시 발화(archive 파일 자체 변경엔 안 발화로 무한 루프 차단). Node 22로 스크립트 실행 → syntax 검증(`new Function(src)`) → git pull --rebase + 3회 재시도 push.

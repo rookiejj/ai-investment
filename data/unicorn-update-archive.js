@@ -3,6 +3,30 @@
 // 직접 편집 금지 — main(*-update.js)에서 사고가 흡수돼 결국 덮어 쓰임.
 const updatesArchive = [
   {
+    "date": "2026-05-11 19:30 KST",
+    "summary": "Databricks $134B 베이스 IPO 카운트다운 - 매출 $5.4B 연환산·S-1 Q3 2026 윈도우 라인업\nStripe $100B 누적 도달 - 2025 $65B → 2026 +50% 단일 사이클·하반기 IPO 윈도우 잔존\nAnthropic 토큰화 IPO 함의 $1.2T 잔존 - 5월 보드 $900B 라운드 결정 임박\nSpaceX S-1 제출 5/15~22 윈도우 D-4~11 - 6/8 로드쇼 카운트다운 그대로\n유니콘 합산 밸류 $8.6T - 1.4T IPO 웨이브 2H 2026 단일 톱 시즌 카운트다운",
+    "changes": [
+      {
+        "type": "정보 갱신",
+        "sector": "엔터프라이즈 SW",
+        "detail": "Databricks($134B 베이스). 5/11 종합 - 작년 12월 Series L $4B 라운드 후속으로 매출 런레이트 $5.4B 연환산·전년 +65% 성장·고객 20,000사 베이스 강화. 추가로 $1.8B 부채 펀딩 5월 마무리 단계로 IPO 직전 워킹 캐피털 강화. S-1 비밀 제출 Q3 2026 윈도우, 상장 Q4 2026 또는 Q1 2027 타겟. IPO 목표 시가총액 $150~180B로 $134B 사적 밸류 대비 모디스트 프리미엄 라인 - 매출 멀티플은 $14B+ 연환산 매출 가속 시 자연스럽게 흡수. SaaStr·20VC가 'SpaceX·Anthropic·Databricks 3사 합산 $1.4T IPO 웨이브'로 2H 2026 단일 톱 시즌 명명. 본 카테고리 7종 Canva·Perplexity·Notion 등과 묶여 엔터프라이즈 SW 자본 흡수 단일 동력.",
+        "time": "2026-05-11 19:30 KST"
+      },
+      {
+        "type": "정보 갱신",
+        "sector": "핀테크",
+        "detail": "Stripe($100B+ 누적 도달). 5/11 종합 - 2025 텐더오퍼 $65B 베이스에서 2026 단일 사이클 +50% 가속해 $100B 영역 도달. Tempo L1 메인넷 가동·Visa·Zodia 첫 외부 밸리데이터·결제 인프라 1위·TPV $1.9T 라인업이 후방 베이스, 2026 H2 IPO 윈도우 잔존 평가. SaaStr·20VC 'SpaceX·Anthropic·Databricks·Stripe 합산 $1.4T IPO 웨이브' 라인업에 후순위 후보로 포지셔닝. Stripe·SpaceX·Databricks 3사가 'traditional IPO의 종말'로 평가받는 새 자본 발견 채널(텐더·세컨더리·토큰화 SPV)을 표준화 - 1차 시장 IPO 직전 가격 발견 효율화.",
+        "time": "2026-05-11 19:30 KST"
+      },
+      {
+        "type": "정보 갱신",
+        "sector": "엔터프라이즈 SW",
+        "detail": "Anthropic 토큰화 IPO 함의 $1.2T 잔존. 5/8 Code with Claude 컨퍼런스 매출 80배 가속 정량 + 5/6 SpaceX Colossus 1 단독 임대 + 5/6 Dreaming 리서치 프리뷰 베이스에 5월 보드 미팅의 $50B/$900B 라운드 결정 임박 카운트다운. OpenAI 시간외 함의 $852B 첫 추월 베이스 잔존. 10월 IPO $400~500B 카운트다운 - SpaceX 6월·Anthropic 10월·Databricks Q4·Stripe 2H가 순차 라인업으로 2H 2026 단일 톱 IPO 시즌 형성.",
+        "time": "2026-05-11 19:30 KST"
+      }
+    ]
+  },
+  {
     "date": "2026-05-11 07:40 KST",
     "summary": "SpaceX 정식 S-1 제출 5/15~22 윈도우 D-4~11 - 카운트다운 진입·6/8 로드쇼·$1.75T 베이스\n트럼프 5/10 이란 응답 거부로 호르무즈 의제 톱 부상 - SpaceX-Starshield 위성 군사 인프라 후방 동력\n$75B 조달 美 IPO 사상 최대 라인업 - X·xAI 동시 상장·30% 리테일 할당 직접 시그널\nBoston Dynamics 美 상장 6월 결정 임박 - SoftBank 9.5% 풋옵션 6월 만료 단일 분기점\n글로벌 유니콘 1,680개·합산 밸류 $8.6T - Q1 2026 딜 가치 $245.6B 사상 최고 베이스 잔존",
     "changes": [
