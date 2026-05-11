@@ -293,6 +293,7 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-11 (4)**: **인스타 Reels도 7장 슬라이드쇼로 복원 — 캐러셀과 동일 구성**. 단일 카툰 30초 Ken Burns 영상 → 7장(카툰 + 5탭 + CTA) 슬라이드쇼 9:16 mp4. render-reels.js의 디폴트 흐름(01.png~07.png를 ffmpeg xfade로 합치는, 슬라이드당 6초·crossfade 0.5초·BGM 합성)이 그대로 살아있어 `--mode=single` 제거 + `cp cartoon.png → 01.png` 한 줄로 즉시 복원. 결과 ~42초 영상. 캐러셀·Reels 모두 같은 7장 슬라이드를 공유하는 단순 구조.
 - **2026-05-11 (3)**: **인스타 캐러셀 7장 복원 — 카툰(표지) + 5탭 불릿 + CTA**. 5/8에 `IG_SLIDES: cartoon-X.png,07.png`로 잘라내며 카툰+CTA 2장만 게시했으나 정보 밀도가 너무 빈약. render-slides.js의 7장 생성 로직과 template.html 5탭 슬라이드는 그대로 살아있어 `IG_SLIDES` 한 줄만 교체로 즉시 복원. 카툰을 표지 대체로 사용해 01.png(텍스트 표지) 자리에 카툰을 박는 형태 → 시각적 hook은 카툰, 정보는 5탭 불릿이 담당. Reels 모드는 그대로 today.png 30초 영상.
 - **2026-05-11 (2)**: **카툰 화풍·파일 단일화 — 1950s + today.png 한 장으로 통일**. 이전: 시간대 분기로 오전 1950s(`today-news.png`)·오후 mad-mag(`today-magazine.png`) 2 화풍 + 홈피용 단일 소스(`today-latest.png`)로 파일 3개 운영. 발행 폴백이 Supabase 동기화 안 해 홈피·인스타 어긋남 사고(5/11 아침 매뉴얼 발행 시 홈피=5/10 저녁 mad-mag, 인스타=5/11 즉석 1950s) 발생.
   - **scripts/cartoon/generate.js** — `STYLE_STORAGE = { '1950s': 'today.png' }` 단일 매핑, `today-latest.png` 동시 업로드 코드 제거.

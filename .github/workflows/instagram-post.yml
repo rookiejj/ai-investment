@@ -4,9 +4,9 @@ name: Instagram Post
 # Supabase에 올린 직후에 모드별로 분기 게시.
 #
 # 5/11 단일화: 화풍·소스 파일 통일(1950s + today.png). 캐러셀/Reels는 발행 포맷만 다르고
-# 소스 카툰은 같은 today.png. 모드 분기 (KST):
-#   - 05~12시: 캐러셀 — today.png + CTA = 2장
-#   - 13~23시: Reels — today.png 30초 Ken Burns 영상 (다운로드 실패 시 즉석 생성 폴백)
+# 소스 슬라이드 구성은 동일(카툰 + 5탭 불릿 + CTA = 7장). 모드 분기 (KST):
+#   - 05~12시: 캐러셀 — 7장 슬라이드(IG_SLIDES로 선택)
+#   - 13~23시: Reels — 같은 7장을 9:16 mp4로 슬라이드쇼 (~42초, BGM 합성)
 #   - 00~04시: all (예외 케이스, 운영자 수동 push 대비)
 
 on:
@@ -160,13 +160,15 @@ jobs:
           fi
           ls -la "$OUT"
 
-      - name: Reels 렌더 (단일 이미지 30초 Ken Burns)
+      # Reels 렌더 — 캐러셀과 동일 7장(카툰 + 5탭 + CTA)을 9:16 mp4로.
+      # render-reels.js는 01.png~07.png를 디폴트로 받으므로 cartoon.png를 01.png 자리에
+      # 박아 텍스트 표지(render-slides가 만든 원래 01.png)를 카툰으로 대체.
+      # SLIDE_SEC=6 × 7장 ≈ 42초 - crossfade. BGM은 music/track.mp3 있으면 자동 합성.
+      - name: Reels 렌더 (7장 슬라이드쇼 9:16)
         if: (steps.mode.outputs.mode == 'reels' || steps.mode.outputs.mode == 'all')
         run: |
-          node scripts/instagram/render-reels.js \
-            --mode=single \
-            --duration 30 \
-            --input scripts/instagram/out/cartoon.png
+          cp scripts/instagram/out/cartoon.png scripts/instagram/out/01.png
+          node scripts/instagram/render-reels.js
 
       - name: 출력물 아티팩트 업로드 (디버깅용, 7일 보관)
         uses: actions/upload-artifact@v4
