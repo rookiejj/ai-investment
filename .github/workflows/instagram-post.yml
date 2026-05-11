@@ -1,12 +1,12 @@
 name: Instagram Post
 
-# Cartoon Generate 워크플로 완료 후 트리거 — 시간차로 카툰이 안 만들어졌는데
-# 발행되는 사고 방지. cartoon-generate가 today-news.png(1950s) + today-magazine.png(mad-mag)
-# 두 화풍을 Supabase에 올린 직후에 사용처별로 분기 다운로드한다.
+# Cartoon Generate 워크플로 완료 후 트리거 — cartoon-generate가 today.png 단일 카툰을
+# Supabase에 올린 직후에 모드별로 분기 게시.
 #
-# 모드 분기 (KST):
-#   - 05~12시: 캐러셀 모드 — today-news.png + 기존 CTA = 2장
-#   - 13~23시: Reels 모드 — today-magazine.png 다운로드 → 30초 Ken Burns 영상 (다운로드 실패 시 즉석 생성 폴백)
+# 5/11 단일화: 화풍·소스 파일 통일(1950s + today.png). 캐러셀/Reels는 발행 포맷만 다르고
+# 소스 카툰은 같은 today.png. 모드 분기 (KST):
+#   - 05~12시: 캐러셀 — today.png + CTA = 2장
+#   - 13~23시: Reels — today.png 30초 Ken Burns 영상 (다운로드 실패 시 즉석 생성 폴백)
 #   - 00~04시: all (예외 케이스, 운영자 수동 push 대비)
 
 on:
@@ -122,75 +122,40 @@ jobs:
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
         run: node scripts/instagram/render-slides.js
 
-      # 캐러셀 1번 슬라이드 — cartoon-generate가 업로드한 today-news.png(1080×1350 4:5) 사용.
-      # 홈페이지·캐러셀이 같은 1장을 공유 → 시각 일관성. CTA 슬라이드와 비율 동일해 letterbox 불필요.
-      # 신선도 체크: Reels 쪽과 대칭 — 1시간 이상 stale 또는 다운로드 실패 시 즉석 생성으로 폴백.
+      # 오늘의 카툰 다운로드 — cartoon-generate가 업로드한 today.png(1080×1350 4:5) 사용.
+      # 홈페이지·캐러셀·Reels가 같은 1장을 공유 → 시각 일관성.
+      # 신선도 체크: 1시간 이상 stale 또는 다운로드 실패 시 즉석 생성으로 폴백 (Supabase에도 갱신).
       # 자동 흐름(cartoon-generate 직후 instagram-post 발사)에선 파일 나이 ~5분이라 항상 통과.
-      - name: 1950s 뉴스 카툰 다운로드 (캐러셀 1번 슬라이드)
-        if: (steps.mode.outputs.mode == 'carousel' || steps.mode.outputs.mode == 'all')
+      - name: 오늘의 카툰 다운로드 (캐러셀·Reels 공용 소스)
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_IMAGE_MODEL: nano-banana-pro-preview
+          BRIEFICK_SUPABASE_SECRET_KEY: ${{ secrets.BRIEFICK_SUPABASE_SECRET_KEY }}
+          SUPABASE_URL: https://ytvcgoldauysvnqckzze.supabase.co
         run: |
           STAMP=$(date +%s)
-          NEWS_URL="https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/today-news.png?t=$STAMP"
-          OUT=scripts/instagram/out/cartoon-1950s.png
+          CARTOON_URL="https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/today.png?t=$STAMP"
+          OUT=scripts/instagram/out/cartoon.png
           THRESHOLD=3600
 
-          LAST_MOD=$(curl -sI "$NEWS_URL" | awk -F': ' 'tolower($1)=="last-modified"{print $2}' | tr -d '\r\n')
+          LAST_MOD=$(curl -sI "$CARTOON_URL" | awk -F': ' 'tolower($1)=="last-modified"{print $2}' | tr -d '\r\n')
           if [ -n "$LAST_MOD" ]; then
             LAST_MOD_TS=$(date -d "$LAST_MOD" +%s 2>/dev/null || echo 0)
             AGE=$(( $(date +%s) - LAST_MOD_TS ))
           else
             AGE=999999
           fi
-          echo "[storage] today-news.png age=${AGE}s threshold=${THRESHOLD}s"
+          echo "[storage] today.png age=${AGE}s threshold=${THRESHOLD}s"
 
-          if [ "$AGE" -lt "$THRESHOLD" ] && curl -fsSL "$NEWS_URL" -o "$OUT" && [ -s "$OUT" ]; then
-            echo "[download] today-news.png 사용 (fresh)"
+          if [ "$AGE" -lt "$THRESHOLD" ] && curl -fsSL "$CARTOON_URL" -o "$OUT" && [ -s "$OUT" ]; then
+            echo "[download] today.png 사용 (fresh)"
           else
-            echo "::warning::today-news.png stale/누락 (age=${AGE}s) — 즉석 생성으로 폴백"
+            echo "::warning::today.png stale/누락 (age=${AGE}s) — 즉석 생성 + Supabase 동기화"
+            # --upload로 today.png에 동시 업로드 — 홈피·인스타 어긋남 방지.
             node scripts/cartoon/generate.js \
               --style 1950s \
               --no-open \
-              --no-latest \
-              --output "$OUT"
-          fi
-          ls -la "$OUT"
-
-      # Reels 영상 소스 — cartoon-generate가 함께 업로드한 today-magazine.png 사용.
-      # 신선도 체크: cartoon-generate의 mad-mag 단계가 continue-on-error라 실패해도
-      # 워크플로 자체는 통과되므로, 어제 today-magazine.png가 그대로 남아 있을 수 있음.
-      # Last-Modified 1시간 이상이면 stale로 간주하고 즉석 생성으로 폴백.
-      # 정상 흐름(cartoon-generate 직후 instagram-post 발사)에선 파일 나이 ~5분이라 통과.
-      - name: Mad Magazine 카툰 다운로드 (Reels 영상 소스)
-        if: (steps.mode.outputs.mode == 'reels' || steps.mode.outputs.mode == 'all')
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_IMAGE_MODEL: nano-banana-pro-preview
-        run: |
-          STAMP=$(date +%s)
-          MAG_URL="https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/today-magazine.png?t=$STAMP"
-          OUT=scripts/instagram/out/cartoon-mad-mag.png
-          THRESHOLD=3600
-
-          LAST_MOD=$(curl -sI "$MAG_URL" | awk -F': ' 'tolower($1)=="last-modified"{print $2}' | tr -d '\r\n')
-          if [ -n "$LAST_MOD" ]; then
-            LAST_MOD_TS=$(date -d "$LAST_MOD" +%s 2>/dev/null || echo 0)
-            AGE=$(( $(date +%s) - LAST_MOD_TS ))
-          else
-            AGE=999999
-          fi
-          echo "[storage] today-magazine.png age=${AGE}s threshold=${THRESHOLD}s"
-
-          if [ "$AGE" -lt "$THRESHOLD" ] && curl -fsSL "$MAG_URL" -o "$OUT" && [ -s "$OUT" ]; then
-            echo "[download] today-magazine.png 사용 (fresh)"
-          else
-            echo "::warning::today-magazine.png stale/누락 (age=${AGE}s) — 즉석 생성으로 폴백"
-            node scripts/cartoon/generate.js \
-              --style mad-mag \
-              --no-open \
-              --no-latest \
+              --upload \
               --output "$OUT"
           fi
           ls -la "$OUT"
@@ -201,7 +166,7 @@ jobs:
           node scripts/instagram/render-reels.js \
             --mode=single \
             --duration 30 \
-            --input scripts/instagram/out/cartoon-mad-mag.png
+            --input scripts/instagram/out/cartoon.png
 
       - name: 출력물 아티팩트 업로드 (디버깅용, 7일 보관)
         uses: actions/upload-artifact@v4
@@ -219,6 +184,6 @@ jobs:
           IG_CAROUSEL_BUCKET: ${{ secrets.IG_CAROUSEL_BUCKET }}
           IG_DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '' }}
           IG_MODE: ${{ steps.mode.outputs.mode }}
-          # 캐러셀 슬라이드는 1950s today-news.png + 기존 CTA 두 장. Reels 모드에선 무시됨.
-          IG_SLIDES: cartoon-1950s.png,07.png
+          # 캐러셀 슬라이드는 today.png + 기존 CTA 두 장. Reels 모드에선 무시됨.
+          IG_SLIDES: cartoon.png,07.png
         run: node scripts/instagram/publish.js

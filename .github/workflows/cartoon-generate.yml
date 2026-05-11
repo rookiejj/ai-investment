@@ -3,10 +3,8 @@ name: Cartoon Generate
 # 자동 갱신 sandbox의 마커 commit push 시 1컷 만화 자동 재생성·Supabase Storage 업로드.
 # 사람이 .cartoon-marker를 안 만지는 한 발화 안 됨 — 컨트롤 단순화.
 #
-# 화풍 분기 (KST 시간대):
-#   - 00:00 ~ 11:59 → 1950s 뉴스 화풍 (today-news.png) — 홈 + 인스타 캐러셀에서 사용
-#   - 12:00 ~ 23:59 → Mad Magazine 화풍 (today-magazine.png) — 홈 + 인스타 Reels에서 사용
-# 매 실행 1장만 생성 (이전엔 매번 두 장 → Gemini 단가 절감 위해 시간대별 1장으로 축소)
+# 화풍·파일 단일화 (5/11): 1950s 뉴스 화풍 하나로 통일, Storage 파일도 today.png 단일.
+# 홈피·인스타 캐러셀·인스타 Reels 모두 같은 today.png를 소스로 씀. Gemini 단가 ~$0.13/장.
 
 on:
   # 마커 commit 트리거 — 자동 갱신 sandbox가 모든 데이터 push 완료 후 마지막 단계로
@@ -25,15 +23,6 @@ on:
         description: '몇 번째 entry 사용 (0=최신)'
         required: false
         default: '0'
-      style:
-        description: '강제 화풍 (자동=KST 시간대 기반 / 1950s / mad-mag)'
-        required: false
-        default: 'auto'
-        type: choice
-        options:
-          - 'auto'
-          - '1950s'
-          - 'mad-mag'
 
 concurrency:
   group: cartoon-generate
@@ -52,38 +41,17 @@ jobs:
         with:
           node-version: '22'
 
-      # KST 시간대 기반 화풍 결정. workflow_dispatch에서 style 입력했으면 그대로 사용.
-      - name: Determine cartoon style
-        id: style
-        run: |
-          INPUT_STYLE='${{ inputs.style }}'
-          if [ "$INPUT_STYLE" = "1950s" ] || [ "$INPUT_STYLE" = "mad-mag" ]; then
-            STYLE="$INPUT_STYLE"
-            echo "style=$STYLE (수동 입력)"
-          else
-            KST_HOUR=$(TZ=Asia/Seoul date +%H)
-            if [ "$KST_HOUR" -lt 12 ]; then
-              STYLE="1950s"
-              echo "KST ${KST_HOUR}시 (오전) → 1950s 뉴스 화풍 → today-news.png"
-            else
-              STYLE="mad-mag"
-              echo "KST ${KST_HOUR}시 (오후) → Mad Magazine 화풍 → today-magazine.png"
-            fi
-          fi
-          echo "style=$STYLE" >> $GITHUB_OUTPUT
-
       - name: Generate cartoon
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           # Nano Banana Pro($0.13/장) — Gemini 2.5 Flash Image($0.04/장) 다운그레이드 시도했으나
           # 한국어 자모 hallucination("오늘"→"오들" 등)으로 워터마크·말풍선 깨짐. 품질 우선 복귀.
-          # KST 시간대 분기로 매 실행 1장만 생성 — 일일 ~$0.26 수준.
           GEMINI_IMAGE_MODEL: nano-banana-pro-preview
           BRIEFICK_SUPABASE_SECRET_KEY: ${{ secrets.BRIEFICK_SUPABASE_SECRET_KEY }}
           SUPABASE_URL: https://ytvcgoldauysvnqckzze.supabase.co
         run: |
           node scripts/cartoon/generate.js \
-            --style ${{ steps.style.outputs.style }} \
+            --style 1950s \
             --index ${{ inputs.index || '0' }} \
             --upload \
             --no-open

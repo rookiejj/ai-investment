@@ -293,6 +293,13 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-11 (2)**: **카툰 화풍·파일 단일화 — 1950s + today.png 한 장으로 통일**. 이전: 시간대 분기로 오전 1950s(`today-news.png`)·오후 mad-mag(`today-magazine.png`) 2 화풍 + 홈피용 단일 소스(`today-latest.png`)로 파일 3개 운영. 발행 폴백이 Supabase 동기화 안 해 홈피·인스타 어긋남 사고(5/11 아침 매뉴얼 발행 시 홈피=5/10 저녁 mad-mag, 인스타=5/11 즉석 1950s) 발생.
+  - **scripts/cartoon/generate.js** — `STYLE_STORAGE = { '1950s': 'today.png' }` 단일 매핑, `today-latest.png` 동시 업로드 코드 제거.
+  - **cartoon-generate.yml** — KST 시간대 화풍 분기 step 제거, 항상 `--style 1950s` 호출. workflow_dispatch의 `style` input 제거.
+  - **instagram-post.yml** — 캐러셀(1950s)·Reels(mad-mag) 2 다운로드 step → 단일 step "오늘의 카툰 다운로드"로 통합, 모드 분기는 발행 형식만 유지. 즉석 폴백에 `--upload` 추가 + `--no-latest` 제거 — 폴백 결과가 Supabase `today.png`도 동시 갱신해 홈피·인스타 어긋남 차단. `IG_SLIDES: cartoon.png,07.png`, Reels input `cartoon.png`로 통일.
+  - **index.html** — 카툰 src `today-latest.png` → `today.png`, onerror 폴백 체인(`today-magazine` → `today-news`) 제거(단일 파일이라 무의미, 누락 시 .empty 클래스만).
+  - **Supabase Storage 사후 정리**: `cartoon` 버킷에서 `today-news.png`·`today-magazine.png`·`today-latest.png` 삭제, `today.png` 신규 업로드(다음 cartoon-generate 발화로 자동). 사용자가 Supabase Studio에서 직접 정리.
+  - **인스타 카툰 호스팅 위치 명시**: `cartoon` 버킷은 cartoon-generate의 마스터 저장소, `instagram-carousel` 버킷의 `posts/YYYY-MM-DD/cartoon.png`는 publish.js가 게시 시 image_url로 전달할 영구 아카이브. 두 버킷 분리는 의도된 설계.
 - **2026-05-11**: **카툰 트리거 schedule cron → 마커 commit push로 회귀**. 5/10 schedule cron 단일화의 첫 슬롯(5/11 08:00 KST)이 발화 안 됨 — GitHub Actions 측 새 cron 등록 지연으로 추정(첫 슬롯 미발화는 알려진 동작). schedule은 데이터 갱신과 비동기라 사고 발생 시 폴백이 없는 구조적 문제도 동반. **사용자 제안으로 "마커 commit" 트리거로 전환**: 자동 갱신 sandbox가 데이터 push 끝낸 후 별도 commit으로 `data/.cartoon-marker` 갱신·push, 그 push가 카툰·인스타 발화 시그널.
   - **cartoon-generate.yml 트리거 변경** — `on: schedule '0 23,11 * * *'` → `on: push (paths: data/.cartoon-marker)`. Freshness guard·Skip if stale step 제거 (마커 push 자체가 fresh 시그널). workflow_dispatch는 유지.
   - **RemoteTrigger prompt 갱신** — 5탭 완료 후 단계 5에 "마커 commit·push (필수)" 추가. 커밋·푸시 블록 마지막에 `echo > data/.cartoon-marker → commit → push` 한 사이클 추가. 데이터 변경 없음 케이스에선 마커도 push 안 함.

@@ -111,11 +111,9 @@ ${situation}
 }
 
 // 화풍 → Supabase Storage 파일명 매핑.
-// 모든 화풍을 같은 흐름으로 저장하고 사용처(홈페이지·인스타)에서 분기.
-// 추후 새 화풍 추가 시 이 객체에 한 줄만 추가.
+// 5/11 단일화: 1950s 하나로 통일, 단일 파일 today.png. 매핑 없는 화풍은 로컬 저장만.
 const STYLE_STORAGE = {
-  '1950s': 'today-news.png',       // 홈페이지 + 오전 캐러셀
-  'mad-mag': 'today-magazine.png', // 저녁 Reels (현재) + 추후 오전 캐러셀 옵션
+  '1950s': 'today.png', // 홈페이지·인스타 캐러셀·Reels 모두 공용
 };
 
 // Supabase Storage 업로드 — public bucket 'cartoon'에 화풍별 파일로 갱신
@@ -247,18 +245,14 @@ async function main() {
     console.log(`[saved] ${latest}  (로컬 메인 페이지가 참조)`);
   }
 
-  // Supabase Storage 업로드 — index=0(최신) + STYLE_STORAGE에 매핑된 화풍만 업로드
-  // 매핑 없는 화풍(pixar·k-webtoon 등)은 로컬 파일만 저장하고 Storage 갱신 skip
-  // today-latest.png에도 함께 업로드 — 홈페이지는 이 파일만 읽어 항상 가장 최근 카툰 노출
-  // (시각 기반 분기 폐기, 화풍별 파일은 인스타 워크플로용으로 유지).
+  // Supabase Storage 업로드 — index=0(최신) + STYLE_STORAGE에 매핑된 화풍만 업로드.
+  // 매핑 없는 화풍(pixar·k-webtoon·mad-mag 등 실험용)은 로컬 파일만 저장하고 skip.
   if (upload && index === 0) {
     const storageFile = STYLE_STORAGE[styleKey];
     if (storageFile) {
       try {
         const publicUrl = await uploadToSupabase(buf, storageFile);
         console.log(`[uploaded] ${publicUrl}`);
-        const latestUrl = await uploadToSupabase(buf, 'today-latest.png');
-        console.log(`[uploaded] ${latestUrl}`);
       } catch (e) {
         console.error(`[upload failed] ${e.message}`);
         process.exit(1);

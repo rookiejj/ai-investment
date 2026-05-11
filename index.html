@@ -1452,15 +1452,13 @@ function buildNarrative(){
   }
 
   const remainingCount=totalLines-tldrRows.length;
-  // 1컷 만화 — Supabase Storage cartoon/today-latest.png. 매 갱신마다 최근 화풍 한 장으로 덮어씀.
-  // 시각 기반 분기 폐기 — 자정에 칼같이 뉴스로 바뀌어 "저녁인데 뉴스" 사고 발생.
-  // 생성 시각이 곧 화풍(오전 트리거=뉴스, 저녁 트리거=매거진)이라 latest를 그대로 노출하면
-  // 자연스럽게 그 시간대 스타일이 보임. 인스타 워크플로는 today-news/today-magazine 별도 사용.
-  const cartoonSrc=`https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/today-latest.png?_=${Date.now()}`;
+  // 1컷 만화 — Supabase Storage cartoon/today.png. 화풍·파일 단일화(5/11): 1950s 한 화풍·today.png 한 파일.
+  // 홈피·인스타 캐러셀·인스타 Reels 모두 같은 today.png를 소스로 씀.
+  const cartoonSrc=`https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/today.png?_=${Date.now()}`;
   body.innerHTML=`
     <div class="narrative-flex">
       <div class="narrative-cartoon" id="narrativeCartoon">
-        <img src="${cartoonSrc}" alt="오늘의 1컷" data-fb="0" onerror="(function(el){const u=['today-magazine','today-news'];const i=Number(el.dataset.fb||0);if(i<u.length){el.dataset.fb=i+1;el.src='https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/'+u[i]+'.png?_='+Date.now();}else{document.getElementById('narrativeCartoon').classList.add('empty');}})(this)">
+        <img src="${cartoonSrc}" alt="오늘의 1컷" onerror="document.getElementById('narrativeCartoon').classList.add('empty');this.removeAttribute('src');">
       </div>
       <div class="narrative-text">
         <div class="tldr-list">${tldrRows.join('')}</div>
