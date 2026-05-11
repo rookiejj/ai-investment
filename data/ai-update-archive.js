@@ -3,6 +3,24 @@
 // 직접 편집 금지 — main(*-update.js)에서 사고가 흡수돼 결국 덮어 쓰임.
 const updatesArchive = [
   {
+    "date": "2026-05-12 07:35 KST",
+    "summary": "OpenAI EU에 GPT-5.5 Cyber 접근 허용 - Anthropic Mythos는 EU 협상 보류 잔존\n폴리마켓 Anthropic 먼저 IPO 확률 68% - OpenAI CFO 2027 연기 시그널·내부 의견 충돌\n트럼프 5/13 베이징행 CEO 동행 - Musk·Cook·Fink·Huang 보도, AI 거버넌스 의제 직접 라인\n5/14~15 정상회담 AI 리스크·안전 프레임 첫 등장 가능성 - 對中 모델 가드레일 사이드 변수",
+    "changes": [
+      {
+        "type": "거버넌스",
+        "sector": "OpenAI",
+        "detail": "OpenAI EU 모델 접근 채널 우선 확보. 5/11 EU 집행위 발표 - OpenAI가 GPT-5.5 Cyber를 EU 회원국·ENISA 검증팀에 단계 배포 합의, 5/5 CAISI 美 정부 사전 검증 합의에 이은 EU 채널 확장. Brussels는 동일 모델을 Anthropic Mythos와 비교 - Anthropic은 동일 4~5회 미팅에도 EU 접근 약속 미체결 잔존, '銀행·기업 사이버 회복성 테스트 활용' 압박 강화. 폴리마켓 트레이더 컨센 - Anthropic 먼저 IPO 확률 68%, OpenAI CFO Sarah Friar 컴퓨트 $100B+ 약정·매출 갭에 2027년 연기 시그널과 결합. ARR $25B·시간외 함의 $852B 베이스에 5/14~15 베이징 정상회담 의제로 'AI 리스크·안전 프레임' 첫 등장 가능성 - Huang·Cook 등 CEO 동행이 對中 모델 가드레일 표준화 협상 직접 채널.",
+        "time": "2026-05-12 07:35 KST"
+      },
+      {
+        "type": "거버넌스",
+        "sector": "Anthropic",
+        "detail": "Anthropic Mythos EU 접근 보류 잔존. 5/11 EU 집행위 종합 - 4~5회 협상에도 Anthropic이 Mythos Preview 모델 접근 약속 미체결, 5/6 ENISA·EU 의회 리스크 평가가 사실상 압박 라인. Mythos Preview는 Project Glasswing 컨소시엄(AWS·Apple·Cisco·CrowdStrike·Google·JPMorgan·Linux Foundation·Microsoft·NVIDIA·Palo Alto Networks) + $100M 크레딧으로 美 기업·정부 사이버 방어 라인업 우선 - EU 채널은 모델 거버넌스 vs 기업 통제 균형 잔존. 5/1 美 국방부 8사 AI 계약 단독 배제 베이스 그대로, 트럼프 행정부 블랙리스트 + 폴리마켓 IPO 먼저 확률 68% + 토큰화 IPO 함의 $1.2T·5월 보드 $50B/$900B 결정 임박이 모순 라인 - 안전 가드레일 견지가 매출·밸류 가속과 동시 작동.",
+        "time": "2026-05-12 07:35 KST"
+      }
+    ]
+  },
+  {
     "date": "2026-05-11 19:25 KST",
     "summary": "Anthropic Claude 'Dreaming' 리서치 프리뷰 정식 공개 - 에이전트 세션 사이 자동 회상·재정리\n법률 AI Harvey 도입 후 태스크 완료율 6배 가속 - 첫 정량 사례 입증\nMemory(4/24) + Dreaming(5/6) + 멀티에이전트 오케스트레이션(5/8) - 매니지드 에이전트 장기 학습 완성\nxAI 'SpaceXAI' 통합 본격화 - Musk 'xAI는 SpaceXAI AI 부문으로 존속' 공식화",
     "changes": [

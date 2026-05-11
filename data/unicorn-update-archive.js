@@ -3,6 +3,24 @@
 // 직접 편집 금지 — main(*-update.js)에서 사고가 흡수돼 결국 덮어 쓰임.
 const updatesArchive = [
   {
+    "date": "2026-05-12 07:45 KST",
+    "summary": "SpaceX S-1 정식 제출 5/15~22 윈도우 D-3~10 - Bloomberg '$2T+ 상향 보도'·6/8 로드쇼 카운트다운\nMusk 트럼프 5/13 베이징 동행 발표 - SpaceX·X·xAI 외교 라인 IPO 직전 직접 채널 정량 입증\nDatabricks $5B 신규 라운드 $134B 밸류 협상 중 - 매출 런레이트 $5.4B·고객 20,000사 베이스\n폴리마켓 Anthropic 먼저 IPO 확률 68% - $1.2T 토큰화 함의·OpenAI 2027 연기 시그널 후방",
+    "changes": [
+      {
+        "type": "정보 갱신",
+        "sector": "우주·모빌리티·방산",
+        "detail": "SpaceX(정식 S-1 제출 5/15~22 윈도우 D-3~10 카운트다운). Bloomberg 5/11 종합 - 목표 밸류 $1.75T 베이스에서 $2.0T+ 상향 보도, 조달 $75B로 美 IPO 사상 최대 라인업 그대로. 6/8 로드쇼 시작·6/11 1,500명 리테일 투자자 투어·6/18~30 프라이싱 윈도우 일정 잔존, 주관 21개사(Morgan Stanley·BofA·Citi·JPM·Goldman 5사 톱 리드). Musk 5/13 트럼프 베이징 출국 동행 발표 - Tim Cook(애플)·Larry Fink(블랙록)·Jensen Huang 등 메가캡 CEO 동행단으로 SpaceX·X·xAI 외교 라인 IPO 직전 정량 입증. Starshield 위성·美 국방부 8사 AI 계약·Anthropic Colossus 1 단독 임대(300MW·NVIDIA 220K GPU)·Falcon 9·Starship·Starlink 4개 사업 라인 동시 가격 발견 구도.",
+        "time": "2026-05-12 07:45 KST"
+      },
+      {
+        "type": "정보 갱신",
+        "sector": "엔터프라이즈 SW",
+        "detail": "Databricks($134B 밸류·$5B 신규 라운드 협상 중). 5/11 Inc·Fortune 종합 - Series L $4B(2025/12) 후속으로 신규 $5B 라운드를 $134B 사적 밸류로 협상 중, IPO 직전 워킹 캐피털 강화 + 매출 가속 자본 흡수 라인. 매출 런레이트 $5.4B 연환산·전년 +65% 성장·고객 20,000사 베이스. CEO Ali Ghodsi 'IPO 2026년 배제 안 함'·CFO 'ready when company decides' 그대로, S-1 비밀 제출 Q3 2026 윈도우·상장 Q4 2026 또는 Q1 2027 타겟. IPO 목표 $150~180B로 모디스트 프리미엄 라인. SaaStr·20VC 'SpaceX·Anthropic·Databricks·Stripe 합산 $1.4T IPO 웨이브' 2H 2026 단일 톱 시즌 명명 잔존.",
+        "time": "2026-05-12 07:45 KST"
+      }
+    ]
+  },
+  {
     "date": "2026-05-11 19:30 KST",
     "summary": "Databricks $134B 베이스 IPO 카운트다운 - 매출 $5.4B 연환산·S-1 Q3 2026 윈도우 라인업\nStripe $100B 누적 도달 - 2025 $65B → 2026 +50% 단일 사이클·하반기 IPO 윈도우 잔존\nAnthropic 토큰화 IPO 함의 $1.2T 잔존 - 5월 보드 $900B 라운드 결정 임박\nSpaceX S-1 제출 5/15~22 윈도우 D-4~11 - 6/8 로드쇼 카운트다운 그대로\n유니콘 합산 밸류 $8.6T - 1.4T IPO 웨이브 2H 2026 단일 톱 시즌 카운트다운",
     "changes": [
