@@ -1,6 +1,21 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-05-12 07:45 KST",
+    summary: `SpaceX S-1 정식 제출 5/15~22 윈도우 D-3~10 - Bloomberg '$2T+ 상향 보도'·6/8 로드쇼 카운트다운
+Musk 트럼프 5/13 베이징 동행 발표 - SpaceX·X·xAI 외교 라인 IPO 직전 직접 채널 정량 입증
+Databricks $5B 신규 라운드 $134B 밸류 협상 중 - 매출 런레이트 $5.4B·고객 20,000사 베이스
+폴리마켓 Anthropic 먼저 IPO 확률 68% - $1.2T 토큰화 함의·OpenAI 2027 연기 시그널 후방`,
+    changes: [
+      { type: "정보 갱신", sector: "우주·모빌리티·방산",
+        detail: "SpaceX(정식 S-1 제출 5/15~22 윈도우 D-3~10 카운트다운). Bloomberg 5/11 종합 - 목표 밸류 $1.75T 베이스에서 $2.0T+ 상향 보도, 조달 $75B로 美 IPO 사상 최대 라인업 그대로. 6/8 로드쇼 시작·6/11 1,500명 리테일 투자자 투어·6/18~30 프라이싱 윈도우 일정 잔존, 주관 21개사(Morgan Stanley·BofA·Citi·JPM·Goldman 5사 톱 리드). Musk 5/13 트럼프 베이징 출국 동행 발표 - Tim Cook(애플)·Larry Fink(블랙록)·Jensen Huang 등 메가캡 CEO 동행단으로 SpaceX·X·xAI 외교 라인 IPO 직전 정량 입증. Starshield 위성·美 국방부 8사 AI 계약·Anthropic Colossus 1 단독 임대(300MW·NVIDIA 220K GPU)·Falcon 9·Starship·Starlink 4개 사업 라인 동시 가격 발견 구도.",
+        time: "2026-05-12 07:45 KST" },
+      { type: "정보 갱신", sector: "엔터프라이즈 SW",
+        detail: "Databricks($134B 밸류·$5B 신규 라운드 협상 중). 5/11 Inc·Fortune 종합 - Series L $4B(2025/12) 후속으로 신규 $5B 라운드를 $134B 사적 밸류로 협상 중, IPO 직전 워킹 캐피털 강화 + 매출 가속 자본 흡수 라인. 매출 런레이트 $5.4B 연환산·전년 +65% 성장·고객 20,000사 베이스. CEO Ali Ghodsi 'IPO 2026년 배제 안 함'·CFO 'ready when company decides' 그대로, S-1 비밀 제출 Q3 2026 윈도우·상장 Q4 2026 또는 Q1 2027 타겟. IPO 목표 $150~180B로 모디스트 프리미엄 라인. SaaStr·20VC 'SpaceX·Anthropic·Databricks·Stripe 합산 $1.4T IPO 웨이브' 2H 2026 단일 톱 시즌 명명 잔존.",
+        time: "2026-05-12 07:45 KST" },
+    ]
+  },
+  {
     date: "2026-05-11 19:30 KST",
     summary: `Databricks $134B 베이스 IPO 카운트다운 - 매출 $5.4B 연환산·S-1 Q3 2026 윈도우 라인업
 Stripe $100B 누적 도달 - 2025 $65B → 2026 +50% 단일 사이클·하반기 IPO 윈도우 잔존
@@ -63,18 +78,6 @@ ARK·Stableton·언더라이터 가격 정당화 자료 누적 - $1.75~2.0T 베�
       { type: "정보 갱신", sector: "우주·모빌리티·방산",
         detail: "SpaceX(S-1 정식 제출 5/18~22 윈도우·6/8 로드쇼 카운트다운 D-9~13). 5/9 시점 4/1 비밀 S-1 제출 베이스에서 정식 공개 제출까지 D-9~13 진입 - 6/8 로드쇼 시작·6/11 1,500명 리테일 투자자 투어·6/18~6/30 프라이싱 윈도우 일정 그대로. 목표 밸류 $1.75~2.0T·조달 $75B·영국·EU·호주·캐나다·일본·한국 리테일 30% 할당 베이스 잔존. ARK·Stableton 등 주요 분석 보고서 가격 정당화 모멘텀 누적. SpaceX-xAI 합병 베이스 + Cursor $60B 옵션 + Grok 코딩 팀 재건 + Colossus 2 슈퍼클러스터 1.5GW 가동 펀더멘털 라인업이 IPO 직전 단일 분기점.",
         time: "2026-05-09 11:40 KST" },
-    ]
-  },
-  {
-    date: "2026-05-08 07:25 KST",
-    summary: `SpaceX Colossus 1 전체 컴퓨트 Anthropic 단독 임대 - IPO 직전 AI 인프라 매출 라인 정량 입증
-S-1 5/15~5/22 정식 제출·6/8 로드쇼·6/18~6/30 프라이싱 D-7~14 카운트다운 그대로
-다중 기가와트 궤도 AI 컴퓨트 SpaceX·Anthropic 공동 개발 의향 명시 - 우주 데이터센터 신규 라인업
-ARK·언더라이터 가격 정당화 자료에 추가 동력 - $1.75~2.0T 베이스 강화`,
-    changes: [
-      { type: "정보 갱신", sector: "우주·모빌리티·방산",
-        detail: "SpaceX(Colossus 1 전체 컴퓨트 Anthropic 단독 임대 계약·IPO 직전 AI 인프라 매출 라인 정량 입증). 5/6 공식 발표 - 테네시 Colossus 1 데이터센터 전체 컴퓨트 캐파(300MW+·NVIDIA H100/H200/GB200 220,000+ GPU)를 Anthropic에 단독 임대. 한 달 안에 즉시 가동 가능한 캐파로 SpaceX의 'AI 인프라 사업자' 포지셔닝을 IPO 직전 정량 입증 - 5/15~5/22 S-1 정식 제출·6/8 로드쇼·6/11 1,500명 리테일 투자자 투어·6/18~6/30 프라이싱 카운트다운 베이스에 ARK·언더라이터의 가격 정당화 자료를 추가 동력으로 보강. 추가로 Anthropic이 'SpaceX와 다중 기가와트 궤도 AI 컴퓨트 공동 개발' 의향을 공식 명시 - SpaceX의 발사 케이던스·재사용 2단 베이스로 우주 데이터센터의 '언제'의 영역으로 진입, IPO 스토리라인에 신규 사업 라인업 추가. xAI Colossus 2(1.5GW·100만 H100 등가)는 Grok 5 학습에 자체 캐파 집중 + Colossus 1 가용 캐파 매출화 구도 - 양사 자본 효율 우선의 비통상 라이벌 거래.",
-        time: "2026-05-08 07:25 KST" },
     ]
   }
 ];

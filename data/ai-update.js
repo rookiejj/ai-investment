@@ -6,6 +6,21 @@
  */
 const UPDATES = [
   {
+    date: "2026-05-12 07:35 KST",
+    summary: `OpenAI EU에 GPT-5.5 Cyber 접근 허용 - Anthropic Mythos는 EU 협상 보류 잔존
+폴리마켓 Anthropic 먼저 IPO 확률 68% - OpenAI CFO 2027 연기 시그널·내부 의견 충돌
+트럼프 5/13 베이징행 CEO 동행 - Musk·Cook·Fink·Huang 보도, AI 거버넌스 의제 직접 라인
+5/14~15 정상회담 AI 리스크·안전 프레임 첫 등장 가능성 - 對中 모델 가드레일 사이드 변수`,
+    changes: [
+      { type: "거버넌스", sector: "OpenAI",
+        detail: "OpenAI EU 모델 접근 채널 우선 확보. 5/11 EU 집행위 발표 - OpenAI가 GPT-5.5 Cyber를 EU 회원국·ENISA 검증팀에 단계 배포 합의, 5/5 CAISI 美 정부 사전 검증 합의에 이은 EU 채널 확장. Brussels는 동일 모델을 Anthropic Mythos와 비교 - Anthropic은 동일 4~5회 미팅에도 EU 접근 약속 미체결 잔존, '銀행·기업 사이버 회복성 테스트 활용' 압박 강화. 폴리마켓 트레이더 컨센 - Anthropic 먼저 IPO 확률 68%, OpenAI CFO Sarah Friar 컴퓨트 $100B+ 약정·매출 갭에 2027년 연기 시그널과 결합. ARR $25B·시간외 함의 $852B 베이스에 5/14~15 베이징 정상회담 의제로 'AI 리스크·안전 프레임' 첫 등장 가능성 - Huang·Cook 등 CEO 동행이 對中 모델 가드레일 표준화 협상 직접 채널.",
+        time: "2026-05-12 07:35 KST" },
+      { type: "거버넌스", sector: "Anthropic",
+        detail: "Anthropic Mythos EU 접근 보류 잔존. 5/11 EU 집행위 종합 - 4~5회 협상에도 Anthropic이 Mythos Preview 모델 접근 약속 미체결, 5/6 ENISA·EU 의회 리스크 평가가 사실상 압박 라인. Mythos Preview는 Project Glasswing 컨소시엄(AWS·Apple·Cisco·CrowdStrike·Google·JPMorgan·Linux Foundation·Microsoft·NVIDIA·Palo Alto Networks) + $100M 크레딧으로 美 기업·정부 사이버 방어 라인업 우선 - EU 채널은 모델 거버넌스 vs 기업 통제 균형 잔존. 5/1 美 국방부 8사 AI 계약 단독 배제 베이스 그대로, 트럼프 행정부 블랙리스트 + 폴리마켓 IPO 먼저 확률 68% + 토큰화 IPO 함의 $1.2T·5월 보드 $50B/$900B 결정 임박이 모순 라인 - 안전 가드레일 견지가 매출·밸류 가속과 동시 작동.",
+        time: "2026-05-12 07:35 KST" },
+    ]
+  },
+  {
     date: "2026-05-11 19:25 KST",
     summary: `Anthropic Claude 'Dreaming' 리서치 프리뷰 정식 공개 - 에이전트 세션 사이 자동 회상·재정리
 법률 AI Harvey 도입 후 태스크 완료율 6배 가속 - 첫 정량 사례 입증
@@ -61,21 +76,6 @@ Anthropic 컴퓨트 공급사 7곳 분산 - SpaceX·Google·AWS·CoreWeave·NVID
       { type: "인프라", sector: "Anthropic",
         detail: "Anthropic·Akamai $1.8B 7년 클라우드 약정. 5/8 Akamai 1분기 결산 8-K에서 '미국 프론티어 모델 회사'와 7년 $1.8B 계약을 공시 - Bloomberg가 고객을 Anthropic으로 특정. 연 평균 약 $257M·Akamai 사상 최대 단일 계약·연 매출 가이던스 $4.5B 중간값 대비 풀 램프 시 단일 고객 6% 비중. AKAM 5/8 정규장 +27% $149.05 마감으로 22년 만의 최대 단일일 강세. 거래 본업은 인퍼런스 측 - Akamai의 글로벌 분산 엣지 푸트프린트가 Claude 사용자 다지역 저레이턴시 인퍼런스 처리에 정렬. 컴퓨트 누적 라인업 - SpaceX Colossus 1(300MW·NVIDIA 220K GPU) 단독 임대 + Google TPU $200B 5년 + AWS Trainium 2 약 1GW + CoreWeave 다년 + NVIDIA·Broadcom 커스텀 실리콘 공급 + Akamai 인퍼런스 엣지 7년으로 최소 7개 공급사 분산. 5/8 Code with Claude Q1 매출·사용량 80배 가속 정량 베이스에 인프라 다층화가 후방 시그널 - $50B $900B 5월 보드 결정 + 10월 IPO $400~500B 카운트다운 라인업 강화.",
         time: "2026-05-09 19:10 KST" },
-    ]
-  },
-  {
-    date: "2026-05-09 11:30 KST",
-    summary: `Anthropic 5/8 Code with Claude 컨퍼런스(SF) - Dario 'Q1 80배 매출·사용량 가속' 정량 공개
-Memory 정식·멀티에이전트 오케스트레이션 신규 - 엔터프라이즈 에이전트 운영 미싱 피스 충족
-NVIDIA·IREN 다년 5GW DSX 인프라 - $3.4B 매니지드 GPU 클라우드 + $2.1B 워런트 투자 권리
-IREN 5/8 종가 $61.20 +7.65% - Bitcoin 마이닝에서 AI 클라우드 캐파 채널 전환 정량 입증`,
-    changes: [
-      { type: "마일스톤", sector: "Anthropic",
-        detail: "Anthropic. 5/8 샌프란시스코 Code with Claude 개발자 컨퍼런스 - Dario Amodei 키노트에서 'Q1 매출·사용량이 연환산 기준 80배 가속(전망 10배 대비 8배 초과)' 정량 공개. SpaceX Colossus 1 단독 임대(300MW+·NVIDIA 220K+ GPU)가 단일 캐파 라인업, 5/4 Blackstone·Goldman·H&F $1.5B 합작벤처 + 5/5 금융 서비스 에이전트 10종 + Microsoft 365 네이티브 통합이 최근 2주 누적 채널. 신규 발표 - ①Memory 기능 정식(세션 간 장기 컨텍스트·선호 파일시스템 영구 저장·감사 로그) ②멀티에이전트 오케스트레이션(복수 매니지드 에이전트가 단일 작업 분담·중간 결과 공유) ③Claude Opus 4.7의 금융 본업 특화 성능 강조. $900B 라운드 5월 보드 결정 + 10월 IPO $400~500B 카운트다운 베이스에 매출 가속 단일 정량 입증.",
-        time: "2026-05-09 11:30 KST" },
-      { type: "인프라", sector: "NVIDIA",
-        detail: "NVIDIA·IREN 다년 5GW DSX AI 인프라 파트너십. 5/7 공식 발표 - IREN의 글로벌 데이터센터 파이프라인에 NVIDIA DSX 정렬 인프라 최대 5GW 배치 가속. ①IREN이 NVIDIA에 30M주 보통주 5년 매수권($70 행사가, 최대 $2.1B 투자 권리, 규제 승인 조건) 부여 ②NVIDIA가 IREN으로부터 매니지드 GPU 클라우드 5년 $3.4B 약정 - 내부 AI·연구 워크로드용. 플래그십 배치는 텍사스 Sweetwater 캠퍼스(2GW)로 DSX 아키텍처 첫 대형 레퍼런스. IREN 5/8 종가 $61.20 +7.65% - Bitcoin 마이닝에서 AI 클라우드로 전환한 캐파 채널이 NVDA의 워런트 + 캡티브 클라우드 라인업으로 정량 입증. 5/6 Corning $500M·5/8 IREN $5.5B 라인을 결합해 NVDA 5/20 1분기 FY27 컨센 $78.8B 발표 직전 인프라 채널 다변화 시그널 누적.",
-        time: "2026-05-09 11:30 KST" },
     ]
   }
 ];
