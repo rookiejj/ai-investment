@@ -50,8 +50,8 @@ ai-investment/
 │       ├── music/                ← Reels 배경음악 (royalty-free mp3)
 │       └── SETUP.md              ← 시크릿·버킷 셋업 가이드
 ├── .github/workflows/
-│   ├── cartoon-generate.yml      ← KST 08·20시 schedule cron (시간 트리거, push 무관)
-│   └── instagram-post.yml        ← cartoon-generate workflow_run chain (캐러셀 오전 / Reels 오후)
+│   ├── cartoon-generate.yml      ← `data/.cartoon-marker` push 트리거 (자동 갱신 sandbox가 마지막 단계로 마커 push)
+│   └── instagram-post.yml        ← cartoon-generate workflow_run chain (캐러셀 오전 / Reels 오후, 모두 7장 슬라이드 공유)
 ├── supabase/
 │   ├── migrations/               ← 스키마 이력 (init / payment / message_type / delivery_state / admin_settings / template_code)
 │   ├── functions/
@@ -60,7 +60,7 @@ ai-investment/
 │   │   ├── payment-confirm/      ← 포트원 결제 검증 + 구독 연장 + 결제완료 알림톡(ATA)
 │   │   ├── daily-send/           ← 매일 뉴스 친구톡 발송 (평일 cron 트리거)
 │   │   ├── expiry-notice/        ← D-1 만료 임박 재구독 안내 친구톡 (매일 20:00 cron)
-│   │   ├── stock-prices/         ← Yahoo Finance 15분 지연 시세 fetch + Storage `prices/latest.json` 갱신 (15분 cron)
+│   │   ├── stock-prices/         ← Yahoo Finance 15분 지연 시세 fetch + Storage `prices/latest.json` 갱신 (5분 cron)
 │   │   ├── survey-api/           ← 설문 시스템 (공개 응답 + 관리자 CRUD)
 │   │   └── admin-api/            ← 운영 대시보드용 (login / change_password / stats / logs / subscribers / payments / expiring_soon / manual_send[알림톡] / daily_send_preview / daily_send_now / notice_send[공지 친구톡])
 │   ├── schedule.sql              ← 매일 뉴스 cron (평일 08:00 KST)
@@ -138,31 +138,37 @@ ai-investment/
 - **5분 갱신** — pg_cron `stock-prices-refresh`가 매 5분 함수 호출. 사용자 접속 무관 항상 최신 유지. 단 Yahoo Finance 자체가 15분 지연 + 장 시작 직후 ~25분은 거래 안정화로 어제 종가 노출(시스템 정상).
 - **클라이언트 5분 폴링** — `index.html`이 Storage public URL을 직접 fetch, 5분마다 자동 재로드(`document.hidden`이면 skip). STATE.prices 갱신 시 섹터 단계·deep-dive 모달 시세 라벨 즉시 재렌더.
 - **표시** — 종목 카드 우측에 `$216.57 +4.0%`(미국) / `₩78,500 +1.2%`(한국) 형식, 등락 색상(상승 녹·하락 적). 모달 헤더에도 동일 노출. 프리/애프터마켓 시간대엔 baseline을 `regularMarketPrice`로 보정해 Yahoo 표시값과 일치 (정규세션은 `previousClose` 기준).
-- **표기 안내** — 섹터 단계 섹션 헤더에 "시세는 15분 지연 (Yahoo Finance)" 명시.
+- **표기 안내** — 섹터 단계·핀맵 섹션 헤더에 "Yahoo Finance 15분 지연 · 장 시작 후 ~25분간 어제 종가 표시" 명시. 등락폭은 장 마감·과거 종가 케이스에도 항상 노출(마지막 거래일 vs 전일 종가 변동률로 정보 가치 있음).
 
 ### 인스타그램 자동 게시 (`@briefick`)
-- **시간대별 포맷 분기** (push 트리거 한정, 자동 갱신 커밋에만 발행):
-  - **오전 자동 갱신(07시)** → 캐러셀(정적 게시물)만
-  - **오후 자동 갱신(19시)** → Reels(영상)만
-  - 알고리즘 최적 cadence(하루 1~2개)에 맞춰 4개/일 → 2개/일로 분리
-- **트리거 게이팅**: 커밋 메시지가 `데이터 자동 갱신 …` 또는 `데이터 정합성 강제 갱신 …`으로 시작할 때만 발행. 사람이 수동 편집한 커밋은 발행 안 됨 (의도하지 않은 시간대 발행 방지). `jp-stocks-update.js` 단독 변경도 스킵.
+- **시간대별 포맷 분기** (KST 기준, instagram-post.yml의 모드 결정 step):
+  - **05~12시** → 캐러셀(정적 게시물 7장)
+  - **13~23시** → Reels(영상 7장 슬라이드쇼)
+  - **00~04시** → all (운영자 수동 push 예외)
+  - 자동 갱신 슬롯이 07:00·19:00 KST라 일상에선 캐러셀·Reels 1회씩 = 2개/일
+- **트리거**: 자동 갱신 sandbox(`trig_016nvC9rVppRnQ9nFZeDjnP8`)가 데이터 push 완료 후 별도 commit으로 `data/.cartoon-marker` 갱신·push → cartoon-generate가 paths 매치로 발화 → success 시 workflow_run chain으로 instagram-post 발화. 마커 push 누락 시 발행 0건이라 RemoteTrigger prompt에 "🔴 절대 생략 금지"로 명시.
 - **수동 발행**: `/publish [mode] [dry]` 슬래시 명령 또는 Actions UI → Run workflow.
   - mode: `all`(default) / `carousel` / `reels`
   - 예: `/publish reels`, `/publish carousel dry`, `/publish dry`
-- **캐러셀 흐름** (~3~5분):
+- **공통 슬라이드 (7장)** — 캐러셀·Reels 같은 소스 공유:
   1. 5탭 최신 `summary` 줄 단위 파싱 → 첫 불릿 키워드로 Unsplash 검색
   2. 인물 사진 필터(태그에 person/face/man 등) + 중복 방지(같은 게시물 내 photo.id 공유)
-  3. Playwright로 1080×1350 PNG 7장 렌더 (표지 1 + 5탭 + CTA, 다크 + 사진 BG)
-  4. Supabase Storage(`instagram-carousel/posts/YYYY-MM-DD/HHMMSS/`)에 업로드 — CDN 캐시 회피용 시각 경로
-  5. Instagram Graph API 3-step (children 컨테이너 → CAROUSEL parent → media_publish), transient 에러 시 자동 재시도
+  3. Playwright로 1080×1350 PNG 7장 렌더 (`01.png` 텍스트 표지 + `02~06.png` 5탭 + `07.png` CTA, 다크 + 사진 BG)
+  4. cartoon-generate가 만든 `today.png`(1950s 화풍)를 1번 슬라이드로 사용
+- **캐러셀 흐름** (~3~5분):
+  1. 위 공통 7장 렌더 후 `IG_SLIDES: cartoon.png,02~06.png,07.png` 7장 선택(텍스트 표지 `01.png`는 카툰으로 대체)
+  2. Supabase Storage(`instagram-carousel/posts/YYYY-MM-DD/HHMMSS/`)에 업로드 — CDN 캐시 회피용 시각 경로
+  3. Instagram Graph API 3-step (children 컨테이너 → CAROUSEL parent → media_publish), transient 에러 시 자동 재시도
 - **Reels 흐름** (~5~8분):
-  1. 캐러셀과 동일하게 PNG 7장 먼저 렌더 (소스로 재사용)
-  2. ffmpeg `xfade` 필터로 슬라이드당 6초 + 0.5초 crossfade로 1080×1920 mp4 생성. 9:16 캔버스의 위·아래 빈 공간은 같은 이미지를 블러 처리한 BG로 채워 letterbox 회피. 총 길이 ~39초.
-  3. `scripts/instagram/music/` 하위 mp3 풀에서 **랜덤 픽**, 페이드인/아웃 합성 (없으면 무음 트랙 부착) — 트랙 다양성 위해 폴더에 mp3 더 떨어뜨리면 자동으로 풀 확장
+  1. 공통 7장 렌더 후 `cp cartoon.png 01.png`로 텍스트 표지 자리에 카툰 박음
+  2. ffmpeg `xfade` 필터로 슬라이드당 6초 + 0.5초 crossfade로 1080×1920 mp4 생성. 9:16 캔버스의 위·아래 빈 공간은 같은 이미지를 블러 처리한 BG로 채워 letterbox 회피. 총 길이 ~42초.
+  3. `scripts/instagram/music/` 하위 mp3 풀에서 **랜덤 픽**, 페이드인/아웃 합성 (없으면 무음 트랙 부착)
   4. Supabase Storage 업로드 (`Content-Type: video/mp4`)
   5. Graph API REELS 컨테이너 생성(`media_type=REELS`, `share_to_feed=true`) → FINISHED 대기(최대 5분) → publish
+- **카툰 (`cartoon-generate.yml`)**: 자동 갱신 sandbox의 마커 push 시 발화. `--style 1950s` 한 화풍, Gemini nano-banana-pro-preview로 1080×1350 4:5 1장 생성 → Supabase `cartoon/today.png` 업로드. 홈피·캐러셀·Reels 모두 같은 `today.png` 소스 공유. 비용 ~$0.13/장 × 2회/일.
 - **캡션**: 캐러셀·Reels 동일. 헤더(날짜·브랜드) + 프로필 링크 유도 CTA + 가변 해시태그(티커·키워드 자동 추출, `#브리픽 #briefick` 항상 보존, 30개 한도)
 - **수동 점검**: `/publish dry` 또는 Actions UI에서 `dry_run=true`로 아티팩트(PNG·mp4·캡션)만 검수, 게시는 X
+- **버킷 분리**: `cartoon` 버킷은 cartoon-generate가 쓰는 마스터 저장소(`today.png` 1장), `instagram-carousel` 버킷은 publish.js가 게시 시 image_url로 Meta API에 전달할 영구 아카이브(`posts/YYYY-MM-DD/HHMMSS/`)
 
 ## 발송·상태 동기화 파이프라인
 
