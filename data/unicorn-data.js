@@ -6,7 +6,7 @@ const data = [
     title: "💳 핀테크",
     tag: "결제·뱅킹·HR·SMB",
     stocks: [
-      { nm:"Stripe", rs:"Tempo L1 메인넷 가동·Visa·Zodia 첫 외부 밸리데이터·결제 인프라 1위·TPV $1.9T", val:"$159B", round:"2/26 텐더오퍼", sector:"결제", ipo:"IPO 비우선" },
+      { nm:"Stripe", rs:"5/11 함의 $100B+ 도달 - 2025 텐더 $65B 베이스 +50% 단일 사이클·Tempo L1 메인넷 가동·Visa·Zodia 첫 외부 밸리데이터·결제 인프라 1위·TPV $1.9T·2H 2026 IPO 윈도우 잔존", val:"$159B", round:"2/26 텐더오퍼", sector:"결제", ipo:"2H 2026 윈도우" },
       { nm:"Revolut", rs:"CEO Storonsky 4/20 IPO 2028+ 연기 공식화·2026 매출 $9B·순익 $3.5B 목표", val:"$75B", round:"세컨더리 $100B 추진", sector:"네오뱅크", ipo:"2028+ 연기" },
       { nm:"Ramp", rs:"법인카드·지출관리·ARR $1B+", val:"$32B", round:"Series F ($300M)", sector:"법인 핀테크", ipo:"미정" },
       { nm:"Plaid", rs:"금융 데이터 API·오픈뱅킹", val:"$8B", round:"텐더오퍼 (업라운드)", sector:"핀테크 인프라", ipo:"2026 H2" },

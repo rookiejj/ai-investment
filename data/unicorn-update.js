@@ -1,6 +1,25 @@
 // Unicorn & Pre-IPO - Update Log
 const updates = [
   {
+    date: "2026-05-11 19:30 KST",
+    summary: `Databricks $134B 베이스 IPO 카운트다운 - 매출 $5.4B 연환산·S-1 Q3 2026 윈도우 라인업
+Stripe $100B 누적 도달 - 2025 $65B → 2026 +50% 단일 사이클·하반기 IPO 윈도우 잔존
+Anthropic 토큰화 IPO 함의 $1.2T 잔존 - 5월 보드 $900B 라운드 결정 임박
+SpaceX S-1 제출 5/15~22 윈도우 D-4~11 - 6/8 로드쇼 카운트다운 그대로
+유니콘 합산 밸류 $8.6T - 1.4T IPO 웨이브 2H 2026 단일 톱 시즌 카운트다운`,
+    changes: [
+      { type: "정보 갱신", sector: "엔터프라이즈 SW",
+        detail: "Databricks($134B 베이스). 5/11 종합 - 작년 12월 Series L $4B 라운드 후속으로 매출 런레이트 $5.4B 연환산·전년 +65% 성장·고객 20,000사 베이스 강화. 추가로 $1.8B 부채 펀딩 5월 마무리 단계로 IPO 직전 워킹 캐피털 강화. S-1 비밀 제출 Q3 2026 윈도우, 상장 Q4 2026 또는 Q1 2027 타겟. IPO 목표 시가총액 $150~180B로 $134B 사적 밸류 대비 모디스트 프리미엄 라인 - 매출 멀티플은 $14B+ 연환산 매출 가속 시 자연스럽게 흡수. SaaStr·20VC가 'SpaceX·Anthropic·Databricks 3사 합산 $1.4T IPO 웨이브'로 2H 2026 단일 톱 시즌 명명. 본 카테고리 7종 Canva·Perplexity·Notion 등과 묶여 엔터프라이즈 SW 자본 흡수 단일 동력.",
+        time: "2026-05-11 19:30 KST" },
+      { type: "정보 갱신", sector: "핀테크",
+        detail: "Stripe($100B+ 누적 도달). 5/11 종합 - 2025 텐더오퍼 $65B 베이스에서 2026 단일 사이클 +50% 가속해 $100B 영역 도달. Tempo L1 메인넷 가동·Visa·Zodia 첫 외부 밸리데이터·결제 인프라 1위·TPV $1.9T 라인업이 후방 베이스, 2026 H2 IPO 윈도우 잔존 평가. SaaStr·20VC 'SpaceX·Anthropic·Databricks·Stripe 합산 $1.4T IPO 웨이브' 라인업에 후순위 후보로 포지셔닝. Stripe·SpaceX·Databricks 3사가 'traditional IPO의 종말'로 평가받는 새 자본 발견 채널(텐더·세컨더리·토큰화 SPV)을 표준화 - 1차 시장 IPO 직전 가격 발견 효율화.",
+        time: "2026-05-11 19:30 KST" },
+      { type: "정보 갱신", sector: "엔터프라이즈 SW",
+        detail: "Anthropic 토큰화 IPO 함의 $1.2T 잔존. 5/8 Code with Claude 컨퍼런스 매출 80배 가속 정량 + 5/6 SpaceX Colossus 1 단독 임대 + 5/6 Dreaming 리서치 프리뷰 베이스에 5월 보드 미팅의 $50B/$900B 라운드 결정 임박 카운트다운. OpenAI 시간외 함의 $852B 첫 추월 베이스 잔존. 10월 IPO $400~500B 카운트다운 - SpaceX 6월·Anthropic 10월·Databricks Q4·Stripe 2H가 순차 라인업으로 2H 2026 단일 톱 IPO 시즌 형성.",
+        time: "2026-05-11 19:30 KST" },
+    ]
+  },
+  {
     date: "2026-05-11 07:40 KST",
     summary: `SpaceX 정식 S-1 제출 5/15~22 윈도우 D-4~11 - 카운트다운 진입·6/8 로드쇼·$1.75T 베이스
 트럼프 5/10 이란 응답 거부로 호르무즈 의제 톱 부상 - SpaceX-Starshield 위성 군사 인프라 후방 동력
@@ -237,16 +256,6 @@ SpaceX·OpenAI·Anthropic 3대 IPO 합산 $240B+ 시장 흡수 부담`,
         detail: "Anthropic. 4/27 자사 블로그에 'Claude는 광고 없이 운영된다'는 입장을 공식화 - 광고 인센티브가 '진정으로 도움이 되는 AI 어시스턴트'와 양립할 수 없다는 논리를 IPO를 앞두고 명문화. 구독·B2B API·엔터프라이즈 시트만으로 매출을 확장하는 모델로 OpenAI(소비자 비중 큰 ChatGPT 광고 도입 가능성 보도 반복)와의 차별화 포지션 강화. 4/24 Alphabet $40B + 4/20 Amazon $25B + NEC 30,000명 + 세컨더리 $1T + ARR $300억 돌파에 이어 'IPO 내러티브의 핵심 자산'으로 신뢰성·프라이버시를 추가, 10월 IPO $400~500B 타겟의 펀더멘털 보강.", time: "2026-04-28 13:00 KST" },
       { type: "마일스톤", sector: "우주·모빌리티·방산",
         detail: "SpaceX. 4/22~23 Starbase 1일차 125명 애널리스트·Tennessee 2일차 21개 주관사 투어 완료 후 6월 로드쇼 프라이싱 페이스 진입 확정. 타겟 밸류 $1.75T·조달 규모 $75B로 사상 최대 IPO 기록(2019 사우디 아람코 $29B의 약 2.6배)을 노린다. Starlink 가입자 9백만 명 돌파·2026 매출 $160억 가까이 도달이 펀더멘털을 받친다. 같은 6개월 윈도우 내 OpenAI($1T 타겟·Q4) + Anthropic($400~500B·10월) IPO와 합산 $240B+ 자본 조달이 단일 IPO 사이클에 집중되며 시장 흡수 부담이 가시화 - Bitcoin·소형주 유동성 흡수 우려 동반.", time: "2026-04-28 13:00 KST" },
-    ]
-  },
-  {
-    date: "2026-04-28 07:24 KST",
-    summary: "OpenAI·Microsoft 7년 파트너십 전면 개편 4/27 발표·MS 독점 라이선스 종료·AGI 판정 조항 폐기·OpenAI는 AWS·GCP·Oracle 직접 호스팅 가능·IPO 최대 법적 장애물 해소·Musk vs OpenAI 비영리 환원 소송 오클랜드 개시·OpenAI·QCOM·MediaTek·Luxshare 4사 2028 AI 스마트폰 칩 보도",
-    changes: [
-      { type: "전략", sector: "AI·ML",
-        detail: "OpenAI·Microsoft. 4/27 양사가 7년 파트너십을 전면 재구성한 'Next Phase' 합의를 발표 - Microsoft 독점 라이선스가 종료되고 비독점 형태로 2032년까지 연장, OpenAI는 모든 제품을 모든 클라우드에서 직접 제공 가능. 'AGI 도달 여부를 MS가 판정' 조항이 완전 삭제돼 비영리 → for-profit 재구조화·IPO의 가장 큰 법적 걸림돌이 해소. 매출 셰어 구조도 한도(cap) 적용 후 2030년까지 단계 종료. AWS Andy Jassy는 같은 날 '곧 Bedrock에 OpenAI 모델 도입'을 명시 - AWS·GCP·Oracle도 직접 호스팅 가능. IPO 검토 중인 OpenAI에는 컴퓨트 다변화·B2B 확장·Anthropic 추격 가속의 가장 큰 트리거가 동시 작동. 4/27 Musk vs OpenAI 비영리 환원 소송도 같은 날 오클랜드 연방법원에서 본안 시작, OpenAI는 2017년 Musk가 보낸 'AGI 만들면 SpaceX·Tesla로 이전' 합의서 초안을 증거로 제출하며 방어 라인 공식화.", time: "2026-04-28 07:24 KST" },
-      { type: "생태계", sector: "AI·ML",
-        detail: "OpenAI·Qualcomm·MediaTek·Luxshare. 4/27 Ming-Chi Kuo가 X에 4사 AI 스마트폰 칩 공동개발 사실을 공개 - QCOM이 SoC 코디자인, MediaTek가 모뛀·BB, Luxshare가 시스템 코디자인·EMS 전담, 2028 mass-market AI-native 디바이스 양산 목표. Jony Ive 디자인 디바이스 팀 전략의 가장 구체적인 칩셋 라인업으로 평가. 같은 날 QCOM 주가 +11~12% 동반 점프, NVIDIA는 시총 $5.3T 사상 최고 갱신해 AI 컴퓨트 무대가 데이터센터에서 모바일 엣지로 확장되는 첫 메인스트림 시그널. OpenAI는 컴퓨트 자립(Stargate $400B + Cerebras $20B + Broadcom)에 이어 디바이스 생태계까지 수직 통합하는 단계 진입.", time: "2026-04-28 07:24 KST" },
     ]
   }
 ];
