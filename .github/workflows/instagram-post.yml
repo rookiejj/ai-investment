@@ -147,8 +147,6 @@ jobs:
       # render-slides는 7장 만들지만 Reels 모드에선 01~06.png는 사용 안 함.
       # 한 가지 흐름으로 유지하는 단순함이 ~30s 추가 비용보다 가치 있음.
       - name: 슬라이드·meta.json 렌더
-        env:
-          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
         run: node scripts/instagram/render-slides.js
 
       # 오늘의 카툰 다운로드 — cartoon-generate가 업로드한 today.png(1080×1350 4:5) 사용.

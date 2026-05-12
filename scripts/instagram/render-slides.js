@@ -15,7 +15,9 @@
 const fs = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
-const { fetchImageDataUri } = require('./image-source');
+// Unsplash 사진 BG 폐기 (5/12) — 모든 슬라이드를 7번 CTA와 같은 단조·트렌디한 그라데이션
+// 고정. 사진 키워드 매칭 노이즈 + Unsplash 의존 제거. 코드는 dead로 남겨 두지 않고 미사용.
+// const { fetchImageDataUri } = require('./image-source');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 const OUT_DIR = path.join(__dirname, 'out');
@@ -115,13 +117,8 @@ function singleSlideCss(which) {
   return `<style>.slide[data-slide]{display:none!important}.slide[data-slide="${which}"]{display:flex!important}</style>`;
 }
 
-// 슬라이드 root에 BG 이미지 인젝션. dataUri 없으면 no-photo 그대로.
-function applyBg(html, slideClass, dataUri) {
-  if (!dataUri) return html;
-  const target = `class="slide ${slideClass} no-photo"`;
-  const replacement = `class="slide ${slideClass} has-photo" style="--bg-image: url('${dataUri}')"`;
-  return html.replace(target, replacement);
-}
+// applyBg 폐기 (5/12) — 모든 탭 슬라이드가 CTA와 같은 단조 그라데이션 BG로 고정.
+// template.html의 .slide.no-photo 클래스가 자연 적용됨.
 
 async function renderSlide(browser, html, outPath) {
   const page = await browser.newPage({ viewport: { width: 1080, height: 1350 }, deviceScaleFactor: 1 });
@@ -138,16 +135,6 @@ async function main() {
   const baseTemplate = fs.readFileSync(TEMPLATE, 'utf8');
   const d = kstNow();
   const dateLabel = tabFooterDate(d);
-  const accessKey = process.env.UNSPLASH_ACCESS_KEY || '';
-
-  if (!accessKey) {
-    console.warn('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    console.warn('⚠⚠⚠  UNSPLASH_ACCESS_KEY 미설정  ⚠⚠⚠');
-    console.warn('   → 사진 BG 없이 다크 단색으로 렌더됩니다 (모든 슬라이드 까만 배경).');
-    console.warn('   → GitHub Settings → Secrets에 UNSPLASH_ACCESS_KEY 등록 후 다시 실행.');
-    console.warn('   → 키 발급: https://unsplash.com/developers (무료 가입)');
-    console.warn('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-  }
 
   // 1) 데이터 로드
   const tabPayloads = TABS.map(t => {
@@ -156,25 +143,7 @@ async function main() {
     return { ...t, bullets };
   });
 
-  // 2) 이미지 사전 페치 — 같은 게시물 내 중복 방지를 위해 순차 호출 + usedIds 공유
-  console.log('이미지 페치 시작 (Unsplash, 중복 방지 모드) …');
-  const allFirstBullets = tabPayloads.map(t => t.bullets[0]).filter(Boolean);
-  const coverBullets = [allFirstBullets[0] || '', allFirstBullets[1] || ''];
-  const usedIds = new Set();
-
-  const coverImg = await fetchImageDataUri({ tabKey: 'cover', bullets: coverBullets, accessKey, usedIds });
-  if (coverImg) console.log(`  ✓ cover: query="${coverImg.query}" id=${coverImg.photo?.id}`);
-  else          console.log(`  · cover: 이미지 없음 (다크 폴백)`);
-
-  const imgByTab = {};
-  for (const t of tabPayloads) {
-    const r = await fetchImageDataUri({ tabKey: t.key, bullets: t.bullets, accessKey, usedIds });
-    imgByTab[t.key] = r || null;
-    if (r) console.log(`  ✓ ${t.key}: query="${r.query}" matched=${r.matched || '(default)'} id=${r.photo?.id}`);
-    else   console.log(`  · ${t.key}: 이미지 없음 (다크 폴백)`);
-  }
-
-  // 3) Playwright 시작
+  // 2) Playwright 시작 — 모든 슬라이드가 단조 그라데이션 BG(.no-photo)로 고정
   const browser = await chromium.launch();
 
   try {
@@ -183,19 +152,17 @@ async function main() {
       let html = baseTemplate
         .replace('</head>', `${singleSlideCss('cover')}</head>`)
         .replace(/data-bind="cover\.dateLabel">[^<]*</, `data-bind="cover.dateLabel">${escapeHtml(coverDateLabel(d))}<`);
-      html = applyBg(html, 'cover', coverImg?.dataUri || null);
       await renderSlide(browser, html, path.join(OUT_DIR, '01.png'));
-      console.log('✓ 01.png (cover)');
+      console.log('✓ 01.png (cover, 다크 그라데이션 BG)');
     }
 
-    // SLIDE 2~6 — 탭별 (5불릿 그대로, 사진 BG)
+    // SLIDE 2~6 — 탭별 (5불릿, 단조 그라데이션 BG 고정)
     for (let i = 0; i < tabPayloads.length; i++) {
       const t = tabPayloads[i];
       const bulletsHtml = buildBulletsHtml(t.bullets);
-      let html = buildTabSlideHtml(baseTemplate, {
+      const html = buildTabSlideHtml(baseTemplate, {
         emoji: t.emoji, label: t.label, bulletsHtml, dateLabel,
       }).replace('</head>', `${singleSlideCss('tab')}</head>`);
-      html = applyBg(html, 'tab', imgByTab[t.key]?.dataUri || null);
 
       const outName = `0${i+2}.png`;
       await renderSlide(browser, html, path.join(OUT_DIR, outName));
@@ -214,23 +181,10 @@ async function main() {
     await browser.close();
   }
 
-  // 캡션·어트리뷰션용 메타파일
-  const photoMeta = (img) => img ? {
-    query: img.query,
-    matched: img.matched,
-    photoId: img.photo?.id || null,
-    photographer: img.photo?.user?.name || null,
-    photographerUrl: img.photo?.user?.links?.html || null,
-    sourceUrl: img.photo?.links?.html || null,
-  } : null;
-
+  // 캡션·어트리뷰션용 메타파일 (사진 BG 폐기 후 photos 필드 제거)
   const meta = {
     date: `${d.year}-${String(d.month).padStart(2,'0')}-${String(d.day).padStart(2,'0')}`,
     dow: d.dow,
-    photos: {
-      cover: photoMeta(coverImg),
-      tabs:  Object.fromEntries(Object.entries(imgByTab).map(([k,v]) => [k, photoMeta(v)])),
-    },
     tabs: tabPayloads.map(t => ({ key: t.key, emoji: t.emoji, label: t.label, bullets: t.bullets })),
   };
   fs.writeFileSync(path.join(OUT_DIR, 'meta.json'), JSON.stringify(meta, null, 2), 'utf8');

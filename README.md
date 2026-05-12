@@ -309,6 +309,11 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-12 (4)**: **인스타 캐러셀 사진 BG 폐기 — 단조 그라데이션으로 통일**. Unsplash API 키워드 매칭 사진 BG가 노이즈(부정확한 매칭·매번 다른 톤) 누적. 5탭 슬라이드(02~06)를 7번 CTA와 같은 다크+녹색 글로우 그라데이션으로 고정. cover(01)는 cartoon-generate의 today.png가 1번 슬라이드를 대체하므로 BG 영향 없음.
+  - `render-slides.js`: Unsplash fetch·`applyBg`·`fetchImageDataUri` import 제거. meta.json의 `photos` 필드 제거.
+  - `instagram-post.yml`: `UNSPLASH_ACCESS_KEY` env 제거.
+  - `caption.js`의 `hasAnyPhoto`는 meta.photos 없으면 false 반환이라 자연 처리(이미지 크레딧 한 줄 자동 제외).
+  - `image-source.js`는 dead code로 유지 (사진 BG 복귀 가능성 대비).
 - **2026-05-12 (3)**: **텔레그램 알림 시스템 신설 — cron·워크플로 시작/종료 실시간 보고**. 운영자가 모든 자동화 실행을 텔레그램으로 모니터링. 단일 진입점 `notify-telegram` Edge Function이 token을 한 곳에 보관, 호출 측은 NOTIFY_SECRET 헤더로 인증.
   - **`supabase/functions/notify-telegram/index.ts` 신설** — POST `{source, status: 'start'|'success'|'failure'|'unknown', detail?}` → Telegram Bot API. 배포 시 `--no-verify-jwt`.
   - **`supabase/functions/_shared/notify.ts`** — Edge Function 공통 helper. best-effort silent fail (알림 실패가 본 작업 망치지 않게).
