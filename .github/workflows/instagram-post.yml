@@ -104,22 +104,27 @@ jobs:
           sudo mv /tmp/ffmpeg-*-amd64-static/ffprobe /usr/local/bin/ffprobe
           ffmpeg -version | head -1
 
-      - name: 한글·이모지 폰트 설치 (apt, 실패 시 영상 텍스트만 깨짐)
+      # 한글 폰트도 apt 의존 제거 — Google Noto GitHub release에서 직접 다운로드.
+      # 폰트 fail 시 Playwright 슬라이드 렌더에서 한글이 □□□로 깨진 채 인스타에 올라가는
+      # 더 큰 사고 발생. apt 의존 0 + continue-on-error 제거로 발행 안정성·정합성 둘 다.
+      - name: Noto CJK + Color Emoji 폰트 다운로드
         timeout-minutes: 3
-        continue-on-error: true
         run: |
           set -e
-          APT_OPTS='-o Acquire::http::Timeout=45 -o Acquire::https::Timeout=45 -o Acquire::Retries=2'
-          for attempt in 1 2 3; do
-            if sudo apt-get update -qq $APT_OPTS && \
-               sudo apt-get install -y -qq $APT_OPTS fonts-noto-cjk fonts-noto-color-emoji; then
-              fc-cache -fv
-              exit 0
-            fi
-            echo "apt attempt $attempt failed, retrying in 5s..."
-            sleep 5
-          done
-          echo "::warning::폰트 설치 실패 — 한글·이모지 영상에 fallback 글꼴 노출"
+          mkdir -p ~/.fonts
+          # Noto Sans CJK (한·중·일 통합, ~20MB) — Sans-Bold·Sans-Regular 두 weight
+          curl -L --retry 3 --max-time 90 \
+            https://github.com/notofonts/noto-cjk/raw/main/Sans/OTC/NotoSansCJK-Regular.ttc \
+            -o ~/.fonts/NotoSansCJK-Regular.ttc
+          curl -L --retry 3 --max-time 90 \
+            https://github.com/notofonts/noto-cjk/raw/main/Sans/OTC/NotoSansCJK-Bold.ttc \
+            -o ~/.fonts/NotoSansCJK-Bold.ttc
+          # Noto Color Emoji
+          curl -L --retry 3 --max-time 60 \
+            https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf \
+            -o ~/.fonts/NotoColorEmoji.ttf
+          fc-cache -fv
+          fc-list :lang=ko | head -3
 
       - name: npm 의존성 설치
         run: npm install --no-audit --no-fund
