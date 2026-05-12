@@ -3,6 +3,24 @@
 // 직접 편집 금지 — main(*-update.js)에서 사고가 흡수돼 결국 덮어 쓰임.
 const updatesArchive = [
   {
+    "date": "2026-05-13 07:25 KST",
+    "summary": "SpaceX S-1 정식 제출 5/15~22 윈도우 D-2~9 카운트다운 - Bloomberg '$2T+ 상향'·6/8 로드쇼 임박\n나스닥 'Fast Entry' 룰 5/1 시행 - 대형 IPO 최대 1년 대기 우회 나스닥100 즉시 편입 가능\n2026 IPO 파이프라인 합산 밸류 $3.12T - 12개 중 8개가 AI·AI인접 기업으로 사상 최대 집중도\nNyobolt 영국 배터리 유니콘 진입 - Symbotic 주도 $60M Series C로 누적 펀딩 $160M\nQ1 2026 시드·얼리 47개 유니콘 동시 진입 - 'momentous year' 신규 코호트 사상 최대 페이스",
+    "changes": [
+      {
+        "type": "정보 갱신",
+        "sector": "우주·모빌리티·방산",
+        "detail": "SpaceX(정식 S-1 제출 5/15~22 윈도우 D-2~9 카운트다운). Bloomberg 5/12 종합 - 4/1 SEC 비밀 제출(Reuters·Bloomberg 확인) 베이스에서 6/8 로드쇼 D-Day 위해 5/22 이전 S-1 공개 의무(SEC 15일 룰), 5/19~22 단일 윈도우로 좁힘. 목표 밸류 $1.75T 베이스에서 $2.0T+ 상향 보도 그대로, 조달 $75B로 美 IPO 사상 최대 라인업. 5/12 美 4월 CPI 핫 데이터(헤드라인 +3.8%·핵심 +2.8% 동반 컨센 상회) + 시장 후퇴 환경에도 SpaceX IPO 스토리는 견조. 5/12 저녁 Falcon 9 CRS-34 Dragon 화물선 Cape Canaveral 발사 - 발사 캐파 정량 입증 그대로. Musk 5/13 트럼프 베이징 출국 동행 - SpaceX·X·xAI 외교 라인 IPO 직전 직접 채널. Starshield 위성·美 국방부 8사 AI 계약·Anthropic Colossus 1 단독 임대(300MW·NVIDIA 220K GPU)·Falcon 9·Starship·Starlink 4개 사업 라인 동시 가격 발견 구도.",
+        "time": "2026-05-13 07:25 KST"
+      },
+      {
+        "type": "정보 갱신",
+        "sector": "엔터프라이즈 SW",
+        "detail": "Databricks($134B 밸류·$5B 신규 라운드 협상 중)·Anthropic($300~900B 베이스)·Stripe($100B+ 누적). 5/12 종합 - 2026 IPO 파이프라인 12개 합산 밸류 $3.12T 사상 최대, 12개 중 8개가 AI·AI인접 기업으로 'AI 가장 집중된 IPO 연도' 명명. Databricks - 매출 런레이트 $5.4B 연환산·전년 +65% 성장·고객 20,000사 + Goldman Sachs·Morgan Stanley 주관, S-1 비밀 제출 Q3 2026 윈도우·상장 Q4 2026 또는 Q1 2027 타겟·IPO 시가총액 목표 $150~180B. Anthropic - 폴리마켓 IPO 먼저 확률 68% + $1.2T 토큰화 함의·OpenAI 시간외 $852B 첫 추월·5월 보드 미팅 $50B/$900B 라운드 결정 임박. Stripe - 2025 텐더오퍼 $65B 베이스에서 2026 단일 사이클 +50% 가속해 $100B 누적, IPO 윈도우 2H 2026 잔존. 5/1 나스닥 'Fast Entry' 룰 시행 - 대형 IPO 최대 1년 대기 우회·나스닥100 즉시 편입 가능으로 IPO 후 패시브 자금 즉시 유입 라인업 단일 가속.",
+        "time": "2026-05-13 07:25 KST"
+      }
+    ]
+  },
+  {
     "date": "2026-05-12 07:45 KST",
     "summary": "SpaceX S-1 정식 제출 5/15~22 윈도우 D-3~10 - Bloomberg '$2T+ 상향 보도'·6/8 로드쇼 카운트다운\nMusk 트럼프 5/13 베이징 동행 발표 - SpaceX·X·xAI 외교 라인 IPO 직전 직접 채널 정량 입증\nDatabricks $5B 신규 라운드 $134B 밸류 협상 중 - 매출 런레이트 $5.4B·고객 20,000사 베이스\n폴리마켓 Anthropic 먼저 IPO 확률 68% - $1.2T 토큰화 함의·OpenAI 2027 연기 시그널 후방",
     "changes": [
