@@ -51,12 +51,10 @@ function buildVfChain() {
   // 같은 이미지의 블러된 확대 버전으로 채운다.
   // [main]: 원본 그대로. [bg]: 1080×1920로 crop+scale 후 강한 블러 → background.
   // overlay로 main을 bg 위에 가운데 배치.
-  // ⚠ xfade는 입력이 CFR(constant frame rate)이어야 함 — 그래서 끝에 fps=30,format=yuv420p.
-  //   없으면 "current rate of 1/0 is invalid" 에러로 빈 mp4 출력.
   return [
     'split=2[orig][bg]',
     `[bg]scale=${TARGET_W}:${TARGET_H}:force_original_aspect_ratio=increase,crop=${TARGET_W}:${TARGET_H},gblur=sigma=40,eq=brightness=-0.15[bgblur]`,
-    `[bgblur][orig]overlay=(W-w)/2:(H-h)/2:format=auto,setsar=1,fps=30,format=yuv420p`,
+    `[bgblur][orig]overlay=(W-w)/2:(H-h)/2:format=auto,setsar=1`,
   ].join(',');
 }
 
@@ -65,9 +63,13 @@ function buildXfadeGraph(n, slideSec, fadeSec) {
   const dur = slideSec;
   const fade = fadeSec;
   const lines = [];
-  // 각 입력을 9:16 캔버스로 변환 + duration 강제
+  // 각 입력을 9:16 캔버스로 변환 + duration 강제.
+  // ⚠ xfade는 입력이 CFR(constant frame rate) + 공통 timebase여야 함.
+  //   -framerate 30 / -loop 1 PNG는 ffmpeg가 1/0 framerate로 잡아서 그냥 두면
+  //   "current rate of 1/0 is invalid" 에러로 빈 mp4. trim,setpts는 framerate를
+  //   복구 못 함 → setpts 다음에 fps=30,settb=AVTB,format=yuv420p로 명시적 강제.
   for (let i = 0; i < n; i++) {
-    lines.push(`[${i}:v]${buildVfChain()},trim=duration=${dur},setpts=PTS-STARTPTS[v${i}]`);
+    lines.push(`[${i}:v]${buildVfChain()},trim=duration=${dur},setpts=PTS-STARTPTS,fps=30,settb=AVTB,format=yuv420p[v${i}]`);
   }
   // crossfade 체인: v0+v1 → x1, x1+v2 → x2, ...
   let prev = 'v0';
