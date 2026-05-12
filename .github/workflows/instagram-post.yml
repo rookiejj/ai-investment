@@ -89,22 +89,37 @@ jobs:
         with:
           node-version: '22'
 
-      - name: 한글·이모지 폰트 + ffmpeg 설치
+      # ffmpeg는 johnvansickle CDN의 static binary로 받는다 — Azure apt 미러 의존 0.
+      # 5/8에 5→2분 timeout으로 줄였으나 미러 hang이 2분 넘는 케이스로 5/12 두 슬롯 연속
+      # 발행 fail. apt 의존 제거로 근본 해결. 폰트는 apt 유지(없어도 영상 자체는 됨).
+      - name: ffmpeg static binary 다운로드
         timeout-minutes: 2
         run: |
-          # apt-get 기본 동작에 HTTP timeout 45초 + 재시도 2회 명시.
-          # 평소 30~60초 끝나는 작업이라 step 전체 2분 timeout으로 hang 빠른 cut.
+          set -e
+          curl -L --retry 3 --max-time 60 \
+            https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz \
+            -o /tmp/ffmpeg.tar.xz
+          tar -xJf /tmp/ffmpeg.tar.xz -C /tmp/
+          sudo mv /tmp/ffmpeg-*-amd64-static/ffmpeg /usr/local/bin/ffmpeg
+          sudo mv /tmp/ffmpeg-*-amd64-static/ffprobe /usr/local/bin/ffprobe
+          ffmpeg -version | head -1
+
+      - name: 한글·이모지 폰트 설치 (apt, 실패 시 영상 텍스트만 깨짐)
+        timeout-minutes: 3
+        continue-on-error: true
+        run: |
           set -e
           APT_OPTS='-o Acquire::http::Timeout=45 -o Acquire::https::Timeout=45 -o Acquire::Retries=2'
-          for attempt in 1 2; do
-            if sudo apt-get update -qq $APT_OPTS; then
-              break
+          for attempt in 1 2 3; do
+            if sudo apt-get update -qq $APT_OPTS && \
+               sudo apt-get install -y -qq $APT_OPTS fonts-noto-cjk fonts-noto-color-emoji; then
+              fc-cache -fv
+              exit 0
             fi
-            echo "apt-get update attempt $attempt failed, retrying in 3s..."
-            sleep 3
+            echo "apt attempt $attempt failed, retrying in 5s..."
+            sleep 5
           done
-          sudo apt-get install -y -qq $APT_OPTS fonts-noto-cjk fonts-noto-color-emoji ffmpeg
-          fc-cache -fv
+          echo "::warning::폰트 설치 실패 — 한글·이모지 영상에 fallback 글꼴 노출"
 
       - name: npm 의존성 설치
         run: npm install --no-audit --no-fund

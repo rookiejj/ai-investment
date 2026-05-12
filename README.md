@@ -309,6 +309,7 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-12 (2)**: **인스타 ffmpeg 설치를 apt → static binary로 — apt 미러 hang 사고 근본 해결**. 5/12 오전·저녁 두 슬롯 연속 instagram-post fail (ffmpeg apt install 2분 timeout). 원인: Azure apt 미러 일시 hang이 GitHub Actions 자체 known issue, 5/8에 5→2분 timeout으로 빠른 cut했으나 미러 hang이 2분 넘는 케이스 누적. 해결: ffmpeg를 johnvansickle CDN static binary로 받음(~15초, apt 미러 의존 0). 폰트만 apt 유지하되 `continue-on-error: true`로 실패해도 워크플로 진행(영상 자체는 됨, 한글 텍스트만 fallback 글꼴). 5/12 두 슬롯 발행 손실 — 다음 cron부터 안정.
 - **2026-05-12**: **수동 문제해결 알림톡 템플릿 재승인 (UH_7376)**. 버튼 링크 변경으로 알리고 콘솔에서 재검수, 새 템플릿 ID 발급. `admin-api/index.ts:85,87` 주석의 UH_6780 → UH_7376 정정. 실제 동작 ID는 `ALIGO_MANUAL_TPL_CODE` Supabase secret으로 주입되므로 운영자가 `supabase secrets set ALIGO_MANUAL_TPL_CODE=UH_7376` 실행 필요. 본문·버튼명은 그대로(MANUAL_TEMPLATE_BODY·"문제해결 도움받기" 유지).
 - **2026-05-11 (8)**: **main update.js 트리밍 기준 변경 — byte 40KB → entries 5건 한도**. 5/11 (7)에서 archive 인프라가 30일 mentions 깊이를 담당하니, main은 화면 노출(`entries[0]`) + archive 사고 시 폴백만 담당하면 충분. byte 한도 → 명시적 entries 5건 한도로 단순화. 짧은 탭(kr·commodity 4건)은 상한 미만이라 그대로 유지(강제 5건 채우기 X). `scripts/trim-update-logs.js`·CLAUDE.md 룰·RemoteTrigger prompt 동시 갱신. 첫 실행 결과 5탭 합 150KB → 76KB(절반), sandbox push 한계(~50KB) 여유 대폭 증가. archive에 잘려나간 entries 49건 흡수 완료 — mentions 깊이 영향 0.
 - **2026-05-11 (7)**: **mentions 깊이 확장 — archive 인프라 도입(30일 보존)**. 사용자 보고: 종목 모달의 "최근 사건" mentions가 update.js 40KB 트리밍으로 짧으면 4일치(kr·commodity)만 보임. 옵션 A(git archive.js, sandbox push 한계 회피)로 main↔archive 분리.
