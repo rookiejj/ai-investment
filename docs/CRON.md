@@ -161,6 +161,37 @@ pg_cron expiry-notice (매일 20:00 KST)
 
 ---
 
+## 텔레그램 알림 (실시간 운영 모니터링)
+
+모든 cron·워크플로의 시작/종료를 텔레그램으로 보고. 단일 진입점 `notify-telegram` Edge Function — token은 한 곳(Supabase secret)에만.
+
+**알림 대상**:
+- GitHub Actions: Archive Rotate · Cartoon Generate · Instagram Post (시작·종료)
+- Edge Function: Daily Send · Expiry Notice (cron 호출만, 매뉴얼 발송 skip)
+- RemoteTrigger sandbox: 시작 알림 추가 여부는 운영자 결정 (prompt에 NOTIFY_SECRET 평문 박는 보안 trade-off)
+
+**알림 형식**:
+```
+🟡 [Cartoon Generate] 시작 (5/12 19:47 KST)
+✅ [Cartoon Generate] 성공 (5/12 19:48 KST)
+❌ [Instagram Post] 실패 (5/12 07:33 KST) — mode=carousel
+❓ [Daily Send] 모름 (timeout 또는 hang)
+```
+
+**시작은 있는데 끝이 없음** = 무한 루프·timeout·hang. 운영자가 즉시 인지.
+
+**필요 Secrets**:
+| 위치 | Secret | 값 |
+|------|--------|-----|
+| Supabase | `TELEGRAM_BOT_TOKEN` | BotFather 토큰 |
+| Supabase | `TELEGRAM_CHAT_ID` | 수신자 chat_id |
+| Supabase | `NOTIFY_SECRET` | 호출 인증용 랜덤 문자열 |
+| GitHub Actions | `NOTIFY_SECRET` | 위와 동일 값 |
+
+**배포**: `supabase functions deploy notify-telegram --no-verify-jwt`
+
+---
+
 ## 참고 문서
 
 - `CLAUDE.md` — 데이터 유지보수 룰·트리밍 정책·문체 규칙

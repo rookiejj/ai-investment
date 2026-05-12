@@ -54,6 +54,15 @@ jobs:
        github.event.workflow_run.conclusion == 'success')
     timeout-minutes: 50
     steps:
+      - name: 시작 알림
+        run: |
+          MODE_HINT=$(TZ=Asia/Seoul date '+%H' | awk '{h=$1+0; if(h>=5 && h<=12) print "carousel"; else if(h>=13 && h<=23) print "reels"; else print "all"}')
+          curl -s -o /dev/null -X POST \
+            "https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/notify-telegram" \
+            -H "X-Notify-Secret: ${{ secrets.NOTIFY_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"source\":\"Instagram Post\",\"status\":\"start\",\"detail\":\"mode=$MODE_HINT\"}" || true
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -210,3 +219,19 @@ jobs:
           # render-slides.js는 01.png(텍스트 표지)도 만들지만 카툰이 표지 역할이라 02부터 사용.
           IG_SLIDES: cartoon.png,02.png,03.png,04.png,05.png,06.png,07.png
         run: node scripts/instagram/publish.js
+
+      - name: 종료 알림 (항상 실행)
+        if: always()
+        run: |
+          case "${{ job.status }}" in
+            success) STATUS="success" ;;
+            failure) STATUS="failure" ;;
+            cancelled) STATUS="failure" ;;
+            *) STATUS="unknown" ;;
+          esac
+          MODE="${{ steps.mode.outputs.mode || 'unknown' }}"
+          curl -s -o /dev/null -X POST \
+            "https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/notify-telegram" \
+            -H "X-Notify-Secret: ${{ secrets.NOTIFY_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"source\":\"Instagram Post\",\"status\":\"$STATUS\",\"detail\":\"mode=$MODE\"}" || true

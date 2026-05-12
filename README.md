@@ -309,6 +309,15 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-12 (3)**: **텔레그램 알림 시스템 신설 — cron·워크플로 시작/종료 실시간 보고**. 운영자가 모든 자동화 실행을 텔레그램으로 모니터링. 단일 진입점 `notify-telegram` Edge Function이 token을 한 곳에 보관, 호출 측은 NOTIFY_SECRET 헤더로 인증.
+  - **`supabase/functions/notify-telegram/index.ts` 신설** — POST `{source, status: 'start'|'success'|'failure'|'unknown', detail?}` → Telegram Bot API. 배포 시 `--no-verify-jwt`.
+  - **`supabase/functions/_shared/notify.ts`** — Edge Function 공통 helper. best-effort silent fail (알림 실패가 본 작업 망치지 않게).
+  - **GH Actions 3개 워크플로** (archive-rotate · cartoon-generate · instagram-post) — 첫 step에 시작 알림, 마지막 step에 종료 알림(`if: always()`로 success/failure/cancelled/unknown 분기).
+  - **Edge Function 2개** (daily-send · expiry-notice) — 진입 시 시작, 정상 완료/catch에서 종료 알림. 매뉴얼 호출(subscriberIds·customMessage)은 알림 skip — cron만 보고.
+  - **알림 형식**: `🟡/✅/❌/❓ [Source] 상태 (M/D HH:MM KST) — detail`. 시작은 있는데 끝이 없으면 hang·timeout 인지.
+  - **필요 secrets**: Supabase에 `TELEGRAM_BOT_TOKEN`·`TELEGRAM_CHAT_ID`·`NOTIFY_SECRET` / GitHub Actions에 `NOTIFY_SECRET` (동일 값). 운영자가 1회 등록.
+  - **RemoteTrigger sandbox 알림**: prompt에 NOTIFY_SECRET 평문 박혀야 하는 보안 trade-off라 운영자 결정 후 추후 추가. 현재는 archive-rotate 시작 알림이 sandbox push 시그널로 간접 작동.
+  - `docs/CRON.md` 갱신 — 알림 시스템 항목 추가.
 - **2026-05-12 (2)**: **인스타 ffmpeg 설치를 apt → static binary로 — apt 미러 hang 사고 근본 해결**. 5/12 오전·저녁 두 슬롯 연속 instagram-post fail (ffmpeg apt install 2분 timeout). 원인: Azure apt 미러 일시 hang이 GitHub Actions 자체 known issue, 5/8에 5→2분 timeout으로 빠른 cut했으나 미러 hang이 2분 넘는 케이스 누적. 해결: ffmpeg를 johnvansickle CDN static binary로 받음(~15초, apt 미러 의존 0). 폰트만 apt 유지하되 `continue-on-error: true`로 실패해도 워크플로 진행(영상 자체는 됨, 한글 텍스트만 fallback 글꼴). 5/12 두 슬롯 발행 손실 — 다음 cron부터 안정.
 - **2026-05-12**: **수동 문제해결 알림톡 템플릿 재승인 (UH_7376)**. 버튼 링크 변경으로 알리고 콘솔에서 재검수, 새 템플릿 ID 발급. `admin-api/index.ts:85,87` 주석의 UH_6780 → UH_7376 정정. 실제 동작 ID는 `ALIGO_MANUAL_TPL_CODE` Supabase secret으로 주입되므로 운영자가 `supabase secrets set ALIGO_MANUAL_TPL_CODE=UH_7376` 실행 필요. 본문·버튼명은 그대로(MANUAL_TEMPLATE_BODY·"문제해결 도움받기" 유지).
 - **2026-05-11 (8)**: **main update.js 트리밍 기준 변경 — byte 40KB → entries 5건 한도**. 5/11 (7)에서 archive 인프라가 30일 mentions 깊이를 담당하니, main은 화면 노출(`entries[0]`) + archive 사고 시 폴백만 담당하면 충분. byte 한도 → 명시적 entries 5건 한도로 단순화. 짧은 탭(kr·commodity 4건)은 상한 미만이라 그대로 유지(강제 5건 채우기 X). `scripts/trim-update-logs.js`·CLAUDE.md 룰·RemoteTrigger prompt 동시 갱신. 첫 실행 결과 5탭 합 150KB → 76KB(절반), sandbox push 한계(~50KB) 여유 대폭 증가. archive에 잘려나간 entries 49건 흡수 완료 — mentions 깊이 영향 0.

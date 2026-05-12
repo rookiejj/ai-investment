@@ -28,6 +28,14 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: 시작 알림
+        run: |
+          curl -s -o /dev/null -X POST \
+            "https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/notify-telegram" \
+            -H "X-Notify-Secret: ${{ secrets.NOTIFY_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -d '{"source":"Archive Rotate","status":"start"}' || true
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -64,3 +72,18 @@ jobs:
           done
           echo "::error::git push 3회 실패"
           exit 1
+
+      - name: 종료 알림 (항상 실행)
+        if: always()
+        run: |
+          case "${{ job.status }}" in
+            success) STATUS="success" ;;
+            failure) STATUS="failure" ;;
+            cancelled) STATUS="failure" ;;
+            *) STATUS="unknown" ;;
+          esac
+          curl -s -o /dev/null -X POST \
+            "https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/notify-telegram" \
+            -H "X-Notify-Secret: ${{ secrets.NOTIFY_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"source\":\"Archive Rotate\",\"status\":\"$STATUS\"}" || true

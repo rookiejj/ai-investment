@@ -33,6 +33,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+      - name: 시작 알림
+        run: |
+          curl -s -o /dev/null -X POST \
+            "https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/notify-telegram" \
+            -H "X-Notify-Secret: ${{ secrets.NOTIFY_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -d '{"source":"Cartoon Generate","status":"start"}' || true
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -55,3 +63,18 @@ jobs:
             --index ${{ inputs.index || '0' }} \
             --upload \
             --no-open
+
+      - name: 종료 알림 (항상 실행)
+        if: always()
+        run: |
+          case "${{ job.status }}" in
+            success) STATUS="success" ;;
+            failure) STATUS="failure" ;;
+            cancelled) STATUS="failure" ;;
+            *) STATUS="unknown" ;;
+          esac
+          curl -s -o /dev/null -X POST \
+            "https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/notify-telegram" \
+            -H "X-Notify-Secret: ${{ secrets.NOTIFY_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"source\":\"Cartoon Generate\",\"status\":\"$STATUS\"}" || true

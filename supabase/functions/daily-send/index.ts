@@ -24,6 +24,8 @@ const GITHUB_REPO   = Deno.env.get("GITHUB_REPO")   ?? "ai-investment";
 const GITHUB_BRANCH = Deno.env.get("GITHUB_BRANCH") ?? "main";
 const GITHUB_TOKEN  = Deno.env.get("GITHUB_TOKEN");
 
+import { notify } from "../_shared/notify.ts";
+
 const LIMIT = 1000;
 const PER_TAB = 1;
 const BATCH_SIZE = 500;
@@ -290,6 +292,7 @@ async function aligoSendFriendtalk(opts: {
 
 Deno.serve(async (req) => {
   const startedAt = Date.now();
+  let isManual = false;
   try {
     // verify_jwt=false로 배포되므로 자체 인증 필수
     const cronSecret = Deno.env.get("CRON_SECRET");
@@ -317,6 +320,12 @@ Deno.serve(async (req) => {
     const customMessage = typeof customMessageRaw === "string" && customMessageRaw.trim().length > 0
       ? customMessageRaw
       : null;
+
+    // 매뉴얼 호출(공지·선택 발송)은 알림 skip. 매일 cron만 알림.
+    isManual = Boolean(subscriberIds || customMessage);
+    if (!isManual && !dryRun) {
+      await notify("Daily Send", "start");
+    }
 
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL")!,
@@ -474,6 +483,14 @@ Deno.serve(async (req) => {
     const success = logs.filter((l) => l.status === "success").length;
     const fail = logs.filter((l) => l.status === "fail").length;
 
+    if (!isManual) {
+      await notify(
+        "Daily Send",
+        fail === 0 ? "success" : "failure",
+        `발송 ${success}건 / 실패 ${fail}건`,
+      );
+    }
+
     return Response.json({
       ok: fail === 0,
       sent: success, failed: fail,
@@ -483,6 +500,13 @@ Deno.serve(async (req) => {
     });
   } catch (err) {
     console.error("[fatal]", err);
+    if (!isManual) {
+      await notify(
+        "Daily Send",
+        "failure",
+        err instanceof Error ? err.message.slice(0, 200) : String(err).slice(0, 200),
+      );
+    }
     return Response.json(
       { ok: false, error: err instanceof Error ? err.message : String(err) },
       { status: 500 },

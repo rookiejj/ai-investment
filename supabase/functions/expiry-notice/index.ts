@@ -22,6 +22,7 @@
  */
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { notify } from "../_shared/notify.ts";
 
 const SITE_URL = Deno.env.get("SITE_URL") ?? "https://briefick.com";
 const SHOP_NAME = Deno.env.get("SHOP_NAME") ?? "브리픽";
@@ -126,6 +127,8 @@ Deno.serve(async (req) => {
         status: 401, headers: { "Content-Type": "application/json" },
       });
     }
+
+    await notify("Expiry Notice", "start");
 
     const proxyUrl    = Deno.env.get("ALIGO_PROXY_URL");
     const proxySecret = Deno.env.get("ALIGO_PROXY_SECRET");
@@ -233,6 +236,12 @@ Deno.serve(async (req) => {
     const sent = rows.filter((r) => r.status === "success").length;
     const failedCount = rows.length - sent;
 
+    await notify(
+      "Expiry Notice",
+      failedCount === 0 && !errMsg ? "success" : "failure",
+      `대상 ${list.length}명 · 발송 ${sent}건 · 실패 ${failedCount}건`,
+    );
+
     return new Response(JSON.stringify({
       ok: !errMsg,
       dateLabel,
@@ -245,6 +254,11 @@ Deno.serve(async (req) => {
     }), { headers: { "Content-Type": "application/json" } });
   } catch (err) {
     console.error("[expiry-notice]", err);
+    await notify(
+      "Expiry Notice",
+      "failure",
+      err instanceof Error ? err.message.slice(0, 200) : String(err).slice(0, 200),
+    );
     return new Response(JSON.stringify({
       ok: false, error: err instanceof Error ? err.message : String(err),
     }), { status: 500, headers: { "Content-Type": "application/json" } });
