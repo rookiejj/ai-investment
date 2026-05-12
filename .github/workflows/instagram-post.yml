@@ -195,6 +195,14 @@ jobs:
           fi
           echo "[verify] cartoon.png OK (${SIZE}B)"
 
+          # 카툰 1080×1350 강제 리사이즈 — Gemini가 prompt·aspectRatio 명시에도 928×1152
+          # 처럼 더 작게 뱉는 케이스 보정. Reels 1080×1920에서 가로 양옆 블러가 두꺼워
+          # 카툰이 작아 보이는 사고(5/12 사용자 보고) 해결. 캐러셀(1080×1350)도 일관.
+          ffmpeg -y -i "$OUT" -vf "scale=1080:1350:flags=lanczos" "${OUT}.resized.png" >/dev/null 2>&1
+          mv "${OUT}.resized.png" "$OUT"
+          DIM=$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 "$OUT")
+          echo "[resize] cartoon.png → ${DIM}"
+
       # Reels 렌더 — 캐러셀과 동일 7장(카툰 + 5탭 + CTA)을 9:16 mp4로.
       # render-reels.js는 01.png~07.png를 디폴트로 받으므로 cartoon.png를 01.png 자리에
       # 박아 텍스트 표지(render-slides가 만든 원래 01.png)를 카툰으로 대체.
