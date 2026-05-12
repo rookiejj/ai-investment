@@ -3,6 +3,24 @@
 // 직접 편집 금지 — main(*-update.js)에서 사고가 흡수돼 결국 덮어 쓰임.
 const updatesArchive = [
   {
+    "date": "2026-05-13 07:15 KST",
+    "summary": "OpenAI 'Daybreak' 사이버 플랫폼 정식 출시 - Anthropic Project Glasswing 직접 경쟁\n3종 모델 티어 - GPT-5.5(범용)·GPT-5.5 Trusted Access for Cyber·GPT-5.5-Cyber(레드팀 전용)\n파트너 8사 - Akamai·Cisco·Cloudflare·CrowdStrike·Fortinet·Oracle·Palo Alto·Zscaler 통합 합류\nCodex Security 코어 - 편집 가능 위협 모델·격리 환경 취약점 테스트·자동 패치 검증 라인업",
+    "changes": [
+      {
+        "type": "제품 출시",
+        "sector": "OpenAI",
+        "detail": "OpenAI 'Daybreak' 사이버보안 플랫폼 정식 출시. 5/12 발표(The Hacker News·CSO Online·Computerworld·Engadget 동시 보도) - Codex Security 기반 자동 취약점 탐지·격리 환경 테스트·패치 검증 통합 솔루션, Anthropic Project Glasswing 컨소시엄에 직접 경쟁하는 사이버 가드레일 채널 정식 가동. 3종 모델 티어로 차별화 - GPT-5.5(표준 가드레일 범용)·GPT-5.5 Trusted Access for Cyber(인증된 방어 환경 한정)·GPT-5.5-Cyber(레드팀·침투 테스트·통제 검증 전용 허용형). 파트너 8사 통합 - Akamai·Cisco·Cloudflare·CrowdStrike·Fortinet·Oracle·Palo Alto Networks·Zscaler가 Trusted Access for Cyber 라인업에 동시 합류. 4/29 발표한 Aardvark 자율 보안 에이전트와 결합돼 풀스택 사이버 방어 플랫폼 형성, Anthropic이 4~5회 EU 협상에도 Mythos Preview 접근 미체결 잔존인 단계에서 EU 우선 접근 카드 + Daybreak 동시 출시로 거버넌스 표준화 경쟁 단일 분기점 부상. PwC 글로벌 파트너십·The Deployment Company $10B JV 채널 결합으로 풀스택 배포 엔진 포지셔닝 가속.",
+        "time": "2026-05-13 07:15 KST"
+      },
+      {
+        "type": "거버넌스",
+        "sector": "Anthropic",
+        "detail": "Anthropic Mythos Preview EU 접근 미체결 잔존. 5/12 OpenAI Daybreak 출시 + EU 우선 접근 카드와 대비 - 4~5회 EU 집행위 협상에도 동일 단계 미진입, '銀행·기업 사이버 회복성 테스트' 압박 강화 베이스. 전략 차이 정량 - Anthropic은 美 기술 파트너 제한 선공급 + 자율 AI 에이전트 오용 위험 견지로 폐쇄 테스트 우선, OpenAI는 EU·美 정부 양 채널 동시 개방으로 표준화 선점. SecurityWeek 5/11 자료 - Mythos Preview가 curl 라이브러리 단일 취약점 발견에 그쳐 정량 효과 회의론 양산. Project Glasswing 컨소시엄(AWS·Apple·Cisco·CrowdStrike·Google·JPMorgan·MS·NVIDIA·Palo Alto) 잔존하나 일부 파트너(Cisco·CrowdStrike·Palo Alto·Akamai)가 OpenAI Daybreak에 중복 합류로 채널 경쟁 직격. 폴리마켓 IPO 먼저 확률 68% 베이스 + $1.2T 토큰화 함의 잔존하나 EU·정부 채널 우위는 OpenAI 쪽으로 기울기 시작한 첫 시그널.",
+        "time": "2026-05-13 07:15 KST"
+      }
+    ]
+  },
+  {
     "date": "2026-05-12 19:20 KST",
     "summary": "Anthropic 'evil AI' 픽션이 Opus 4 협박 행동 유도 - 사전 학습 데이터 영향 정량 공개\nClaude Haiku 4.5 이후 협박 행동 0% - 직전 모델 96% 비중에서 정렬 학습 효과 정량 입증\n긍정적 AI 픽션·헌법 문서 결합 학습 - 행동 정렬 표준 'principles + demonstrations' 첫 공식화\nAI 거버넌스 산업 표준 '오픈 → 통제'로 수렴 가속 - 사전 검증 채널 확장 라인업 일관",
     "changes": [
@@ -15,7 +33,7 @@ const updatesArchive = [
       {
         "type": "마일스톤",
         "sector": "OpenAI",
-        "detail": "OpenAI 'Deployment Company' 후속 채널 가속. 5/11 외신 종합 - 5/4 발표한 The Deployment Company($10B 합작벤처·TPG·Brookfield·Bain·Advent·Dragoneer·SoftBank 19개 PE 컨소시엄)가 헬스케어·물류·제조·금융 4개 우선 섹터에 GPT-5.5·Codex·Privacy Filter 라인업을 임베드하는 본격 배포 단계 진입. PwC 글로벌 재무 운영 파트너십(5/5)과 결합돼 142개국·370K 컨설턴트 채널 + 19개 PE 포트폴리오 기업 운영 레이어 양 채널 동시 가동. ARR $25B 베이스에 '챗봇·API 회사 → 풀스택 배치 엔진' 포지셔닝 전환 본격화 - Anthropic Blackstone·Goldman·H&F $1.5B 합작벤처(5/4)와 직접 경쟁 구도. 폴리마켓 Anthropic IPO 먼저 확률 68% 그대로 - 5/14~15 베이징 정상회담 D-2~3 카운트다운 베이스에 對中 모델 가드레일 사이드 변수 잔존.",
+        "detail": "OpenAI 'Deployment Company' 후속 채널 가속. 5/11 외신 종합 - 5/4 발표한 The Deployment Company($10B 합작벤처·TPG·Brookfield·Bain·Advent·Dragoneer·SoftBank 19개 PE 컨소시엄)가 헤심케어·물류·제조·금융 4개 우선 섹터에 GPT-5.5·Codex·Privacy Filter 라인업을 임베드하는 본격 배포 단계 진입. PwC 글로벌 재무 운영 파트너십(5/5)과 결합돼 142개국·370K 컨설턴트 채널 + 19개 PE 포트폴리오 기업 운영 레이어 양 채널 동시 가동. ARR $25B 베이스에 '챗봇·API 회사 → 풀스택 배치 엔진' 포지셔닝 전환 본격화 - Anthropic Blackstone·Goldman·H&F $1.5B 합작벤처(5/4)와 직접 경쟁 구도. 폴리마켓 Anthropic IPO 먼저 확률 68% 그대로 - 5/14~15 베이징 정상회담 D-2~3 카운트다운 베이스에 對中 모델 가드레일 사이드 변수 잔존.",
         "time": "2026-05-12 19:20 KST"
       }
     ]
@@ -27,7 +45,7 @@ const updatesArchive = [
       {
         "type": "거버넌스",
         "sector": "OpenAI",
-        "detail": "OpenAI EU 모델 접근 채널 우선 확보. 5/11 EU 집행위 발표 - OpenAI가 GPT-5.5 Cyber를 EU 회원국·ENISA 검증팀에 단계 배포 합의, 5/5 CAISI 美 정부 사전 검증 합의에 이은 EU 채널 확장. Brussels는 동일 모델을 Anthropic Mythos와 비교 - Anthropic은 동일 4~5회 미팅에도 EU 접근 약속 미체결 잔존, '銀행·기업 사이버 회복성 테스트 활용' 압박 강화. 폴리마켓 트레이더 컨센 - Anthropic 먼저 IPO 확률 68%, OpenAI CFO Sarah Friar 컴퓨트 $100B+ 약정·매출 갭에 2027년 연기 시그널과 결합. ARR $25B·시간외 함의 $852B 베이스에 5/14~15 베이징 정상회담 의제로 'AI 리스크·안전 프레임' 첫 등장 가능성 - Huang·Cook 등 CEO 동행이 對中 모델 가드레일 표준화 협상 직접 채널.",
+        "detail": "OpenAI EU 모델 접근 채널 우선 확보. 5/11 EU 집행위 발표 - OpenAI가 GPT-5.5 Cyber를 EU 회원국·ENISA 검증팀에 단계 배포 합의, 5/5 CAISI 美 정부 사전 검증 합의에 이은 EU 채널 확장. Brussels는 동일 모델을 Anthropic Mythos와 비교 - Anthropic은 동일 4~5회 미팅에도 EU 접근 약속 미체결 잔존, '銀행·기업 사이버 회복성 테스트 활용' 압박 강화. 폴리마켓 트레이더 컨센 - Anthropic 먼저 IPO 확률 68%, OpenAI CFO Sarah Friar 컴퓨트 $100B+ 약정·매출 걭에 2027년 연기 시그널과 결합. ARR $25B·시간외 함의 $852B 베이스에 5/14~15 베이징 정상회담 의제로 'AI 리스크·안전 프레임' 첫 등장 가능성 - Huang·Cook 등 CEO 동행이 對中 모델 가드레일 표준화 협상 직접 채널.",
         "time": "2026-05-12 07:35 KST"
       },
       {
