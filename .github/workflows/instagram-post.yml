@@ -186,6 +186,14 @@ jobs:
               --output "$OUT"
           fi
           ls -la "$OUT"
+          # 카툰 파일 명시적 검증 — 50KB 미만이면 깨진 파일이라 즉시 fail.
+          # 첫 슬라이드가 옛 텍스트 cover로 발행되는 silent failure 차단.
+          SIZE=$(stat -c%s "$OUT" 2>/dev/null || stat -f%z "$OUT")
+          if [ "$SIZE" -lt 50000 ]; then
+            echo "::error::cartoon.png 사이즈 ${SIZE}B (50KB 미만, 깨진 파일)"
+            exit 1
+          fi
+          echo "[verify] cartoon.png OK (${SIZE}B)"
 
       # Reels 렌더 — 캐러셀과 동일 7장(카툰 + 5탭 + CTA)을 9:16 mp4로.
       # render-reels.js는 01.png~07.png를 디폴트로 받으므로 cartoon.png를 01.png 자리에
@@ -196,6 +204,32 @@ jobs:
         run: |
           cp scripts/instagram/out/cartoon.png scripts/instagram/out/01.png
           node scripts/instagram/render-reels.js
+
+      # Reels mp4 검증 — 5/12 사용자 보고 "릴스 발행했는데 이미지만 나왔음" 재발 방지.
+      # ffprobe로 duration·해상도·codec 확인. 1초 미만이거나 해상도 어긋나면 즉시 fail.
+      - name: Reels mp4 검증
+        if: (steps.mode.outputs.mode == 'reels' || steps.mode.outputs.mode == 'all')
+        run: |
+          set -e
+          MP4=scripts/instagram/out/reels.mp4
+          if [ ! -f "$MP4" ]; then
+            echo "::error::reels.mp4 미생성"
+            exit 1
+          fi
+          SIZE=$(stat -c%s "$MP4" 2>/dev/null || stat -f%z "$MP4")
+          DUR=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$MP4")
+          WH=$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height,codec_name -of csv=p=0 "$MP4")
+          echo "[reels] size=${SIZE}B duration=${DUR}s stream=${WH}"
+          DUR_INT=$(printf '%.0f' "$DUR")
+          if [ "$DUR_INT" -lt 10 ]; then
+            echo "::error::Reels duration ${DUR}s — 10초 미만은 정적 이미지로 의심"
+            exit 1
+          fi
+          echo "$WH" | grep -q '^h264,1080,1920$' || {
+            echo "::error::Reels 스트림 비정상 (기대: h264,1080,1920) — ${WH}"
+            exit 1
+          }
+          echo "[verify] reels.mp4 OK (${DUR_INT}s, h264 1080x1920)"
 
       - name: 출력물 아티팩트 업로드 (디버깅용, 7일 보관)
         uses: actions/upload-artifact@v4

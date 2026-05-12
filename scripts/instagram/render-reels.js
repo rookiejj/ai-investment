@@ -51,10 +51,12 @@ function buildVfChain() {
   // 같은 이미지의 블러된 확대 버전으로 채운다.
   // [main]: 원본 그대로. [bg]: 1080×1920로 crop+scale 후 강한 블러 → background.
   // overlay로 main을 bg 위에 가운데 배치.
+  // ⚠ xfade는 입력이 CFR(constant frame rate)이어야 함 — 그래서 끝에 fps=30,format=yuv420p.
+  //   없으면 "current rate of 1/0 is invalid" 에러로 빈 mp4 출력.
   return [
     'split=2[orig][bg]',
     `[bg]scale=${TARGET_W}:${TARGET_H}:force_original_aspect_ratio=increase,crop=${TARGET_W}:${TARGET_H},gblur=sigma=40,eq=brightness=-0.15[bgblur]`,
-    `[bgblur][orig]overlay=(W-w)/2:(H-h)/2:format=auto,setsar=1`,
+    `[bgblur][orig]overlay=(W-w)/2:(H-h)/2:format=auto,setsar=1,fps=30,format=yuv420p`,
   ].join(',');
 }
 
@@ -104,9 +106,10 @@ function main() {
   // 모든 -i 입력을 -filter_complex 앞에 모아둔다 (ffmpeg 인자 순서 요구사항)
   const args = ['-y'];
 
-  // 입력 0~6: PNG 슬라이드
+  // 입력 0~6: PNG 슬라이드 — `-framerate 30`을 -loop 앞에 박아 입력 자체를 CFR로 강제.
+  //  (-loop 1 PNG는 기본적으로 framerate가 미정 → xfade 그래프 구성 시 실패. 5/12 사고 원인.)
   for (let i = 1; i <= SLIDE_COUNT; i++) {
-    args.push('-loop', '1', '-t', String(SLIDE_SEC), '-i',
+    args.push('-framerate', '30', '-loop', '1', '-t', String(SLIDE_SEC), '-i',
               path.join(OUT_DIR, String(i).padStart(2, '0') + '.png'));
   }
 

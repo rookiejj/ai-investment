@@ -8,22 +8,24 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --black: #0d0d0d;
-    --white: #ffffff;
+    --cream: #fdfbf4;
+    --cream-deep: #f6f1e3;
+    --paper: #ffffff;
+    --ink: #0d0d0d;
     --green: #18E299;
     --green-deep: #0fa76e;
-    --text: #ffffff;
-    --text-mid: rgba(255,255,255,0.78);
-    --text-mute: rgba(255,255,255,0.55);
-    --line: rgba(255,255,255,0.12);
-    --line-strong: rgba(255,255,255,0.20);
+    --text: #0d0d0d;
+    --text-mid: rgba(13,13,13,0.72);
+    --text-mute: rgba(13,13,13,0.50);
+    --line: rgba(13,13,13,0.10);
+    --line-strong: rgba(13,13,13,0.18);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body {
     width: 1080px; height: 1350px;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     color: var(--text);
-    background: var(--black);
+    background: var(--cream);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -36,27 +38,15 @@
     flex-direction: column;
     color: var(--text);
   }
-  /* 사진 BG가 있는 슬라이드 공통 — 사진을 더 밝게 보이도록 오버레이 강도 완화.
-     상단·중단은 사진 본연의 컬러가 살게, 하단은 footer 텍스트 가독성을 위해 일부 유지. */
-  .slide.has-photo {
-    background-color: var(--black);
-    background-image:
-      linear-gradient(180deg, rgba(13,13,13,0.08) 0%, rgba(13,13,13,0.18) 35%, rgba(13,13,13,0.42) 70%, rgba(13,13,13,0.62) 100%),
-      var(--bg-image, none);
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-  }
-  /* 사진 없을 때 다크 단색 폴백 — 녹색 글로우 살짝 강화로 분위기 유지 */
+  /* 모든 텍스트 슬라이드(표지·5탭·CTA) 공통 — warm 크림 base + 우상단 녹색 글로우.
+     매거진 톤. 카툰 슬라이드만 시각적 break. */
   .slide.no-photo {
     background:
-      radial-gradient(ellipse at top, rgba(24,226,153,0.14) 0%, rgba(13,13,13,0) 55%),
-      var(--black);
+      radial-gradient(ellipse at top right, rgba(24,226,153,0.18) 0%, rgba(253,251,244,0) 55%),
+      linear-gradient(180deg, var(--cream) 0%, var(--paper) 100%);
   }
-  /* 텍스트 가독성 보조 — 약한 글로우/섀도 */
-  .text-on-photo {
-    text-shadow: 0 2px 16px rgba(0,0,0,0.6);
-  }
+  /* legacy text-on-photo — bright bg 전환 후 그림자 불필요. 클래스는 호환 위해 유지하되 효과 0. */
+  .text-on-photo { text-shadow: none; }
 
   /* === Cover (slide 1) === */
   .cover {
@@ -65,7 +55,7 @@
   .cover-top { display: flex; justify-content: space-between; align-items: center; }
   .brand-mark {
     font-size: 40px; font-weight: 600; letter-spacing: -0.6px;
-    color: var(--white);
+    color: var(--ink);
   }
   .brand-mark .dot { color: var(--green); }
   /* CTA mid의 헤드라인 시작 y와 정렬되도록 동일한 padding-top 적용 */
@@ -73,15 +63,15 @@
   .cover-date {
     font-family: 'Geist Mono', ui-monospace, monospace;
     font-size: 28px; font-weight: 600;
-    color: var(--green);
+    color: var(--green-deep);
     text-transform: uppercase; letter-spacing: 1.4px;
   }
   .cover-headline {
     font-size: 110px; font-weight: 700; line-height: 1.05;
     letter-spacing: -2.5px;
-    color: var(--white);
+    color: var(--ink);
   }
-  .cover-headline .accent { color: var(--green); }
+  .cover-headline .accent { color: var(--green-deep); }
   .cover-bottom {
     display: flex; justify-content: center; align-items: flex-end;
     padding-top: 36px;
@@ -96,7 +86,7 @@
     border: 1px solid var(--line-strong);
     border-radius: 9999px;
     color: var(--text-mid);
-    background: rgba(255,255,255,0.06);
+    background: rgba(13,13,13,0.04);
     backdrop-filter: blur(4px);
     white-space: nowrap;
   }
@@ -108,11 +98,11 @@
   .tab-title-row { display: flex; align-items: center; gap: 18px; }
   .tab-emoji {
     font-size: 56px; line-height: 1;
-    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+    filter: drop-shadow(0 2px 6px rgba(13,13,13,0.10));
   }
   .tab-title {
     font-size: 48px; font-weight: 700; letter-spacing: -1.0px;
-    color: var(--white);
+    color: var(--ink);
   }
   /* 헤더 아래 가는 구분선 */
   .tab-divider {
@@ -134,16 +124,16 @@
     margin-top: 16px;
     width: 12px; height: 12px;
     border-radius: 9999px;
-    background: var(--green);
-    box-shadow: 0 0 14px rgba(24,226,153,0.7);
+    background: var(--green-deep);
+    box-shadow: 0 0 12px rgba(24,226,153,0.45);
   }
   .bullet-text {
     flex: 1;
     font-size: 36px; font-weight: 600; line-height: 1.42;
     letter-spacing: -0.5px;
-    color: var(--white);
+    color: var(--ink);
   }
-  .bullet-text .num { color: var(--green); font-weight: 700; }
+  .bullet-text .num { color: var(--green-deep); font-weight: 700; }
   .tab-footer {
     display: flex; justify-content: space-between; align-items: center;
     margin-top: 24px;
@@ -161,27 +151,28 @@
     color: var(--text-mid);
     letter-spacing: -0.3px;
   }
-  .tab-footer-right .handle { color: var(--green); }
+  .tab-footer-right .handle { color: var(--green-deep); }
 
   /* === CTA (slide 7) === */
+  /* .cta는 .no-photo와 동일 base 위에 우하단 글로우를 한 번 더 강조해 마무리감. */
   .cta {
     background:
-      radial-gradient(ellipse at bottom right, rgba(24,226,153,0.18) 0%, rgba(13,13,13,0) 55%),
-      var(--black);
-    color: var(--white);
+      radial-gradient(ellipse at bottom right, rgba(24,226,153,0.22) 0%, rgba(253,251,244,0) 55%),
+      linear-gradient(180deg, var(--cream) 0%, var(--paper) 100%);
+    color: var(--ink);
     justify-content: space-between;
   }
   .cta-top { display: flex; justify-content: space-between; align-items: center; }
-  .cta-brand { font-size: 40px; font-weight: 600; letter-spacing: -0.6px; color: var(--white); }
+  .cta-brand { font-size: 40px; font-weight: 600; letter-spacing: -0.6px; color: var(--ink); }
   .cta-brand .dot { color: var(--green); }
   /* cover-mid와 동일한 시작 y 보장 */
   .cta-mid { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; padding-top: 160px; gap: 36px; }
   .cta-headline {
     font-size: 92px; font-weight: 700; line-height: 1.08;
     letter-spacing: -2.0px;
-    color: var(--white);
+    color: var(--ink);
   }
-  .cta-headline .accent { color: var(--green); }
+  .cta-headline .accent { color: var(--green-deep); }
   .cta-sub {
     font-size: 36px; font-weight: 600; line-height: 1.45;
     letter-spacing: -0.4px;
@@ -195,24 +186,24 @@
   .cta-action-row {
     display: flex; align-items: center; gap: 20px;
     font-size: 30px; font-weight: 500;
-    color: rgba(255,255,255,0.95);
+    color: rgba(13,13,13,0.92);
   }
   .cta-action-row .icon-box {
     width: 64px; height: 64px;
     border-radius: 14px;
-    background: rgba(255,255,255,0.10);
+    background: rgba(13,13,13,0.06);
     display: flex; align-items: center; justify-content: center;
     font-size: 30px;
     flex-shrink: 0;
   }
   .cta-action-row .label {
     font-family: 'Geist Mono', ui-monospace, monospace;
-    font-size: 24px; color: var(--white);
+    font-size: 24px; color: var(--ink);
     text-transform: uppercase; letter-spacing: 0.8px;
     min-width: 130px;
   }
   .cta-action-row .value {
-    color: var(--green);
+    color: var(--green-deep);
     font-weight: 600;
   }
 </style>
