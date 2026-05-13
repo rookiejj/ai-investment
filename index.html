@@ -179,12 +179,10 @@ section:first-of-type{padding-top:48px;border-top:0}
 .narrative-expand.open .chev{transform:rotate(180deg)}
 .narrative-full{display:none;margin-top:18px;padding-top:18px;border-top:1px solid var(--border)}
 .narrative-full.open{display:block}
-/* 모바일: 더보기 버튼 숨기고 전체 헤드라인 처음부터 펼침 — 한 화면 스크롤로 흐름.
-   TLDR 한 줄씩 영역(narrative-text)도 숨기고 narrative-full에 첫 줄 포함해 통합 표시. */
+/* 모바일: 더보기 버튼 숨기고 전체 헤드라인 처음부터 펼침 — 한 화면 스크롤로 흐름 */
 @media (max-width:640px){
   .narrative-expand{display:none}
   .narrative-full{display:block}
-  .narrative-text{display:none}
 }
 .updates-section{padding-top:18px;margin-top:18px;border-top:1px solid var(--border)}
 .updates-section:first-child{padding-top:0;margin-top:0;border-top:0}
@@ -1429,8 +1427,6 @@ function buildNarrative(){
     {key:'unicorn',  flag:'🦄',  label:'유니콘·프리IPO'},
   ];
 
-  // 모바일에선 TL;DR 영역 숨기고 narrative-full에 첫 줄까지 포함 — 한 흐름으로 통합
-  const isMobile=typeof window!=='undefined' && window.matchMedia && window.matchMedia('(max-width:640px)').matches;
   const tldrRows=[];
   const fullSections=[];
   let totalLines=0;
@@ -1441,7 +1437,7 @@ function buildNarrative(){
     if(!lines.length)continue;
     totalLines+=lines.length;
 
-    // TL;DR 한 줄: 첫 줄 = 그날 가장 중요 가정 (데스크탑용, 모바일에선 CSS로 숨김)
+    // TL;DR 한 줄: 첫 줄 = 그날 가장 중요 가정
     tldrRows.push(`
       <div class="tldr-row">
         <span class="tldr-tag">${t.flag} ${escapeHtml(t.label)}</span>
@@ -1449,9 +1445,8 @@ function buildNarrative(){
       </div>
     `);
 
-    // 데스크탑: 두 번째 줄부터 풀 리스트로 (첫 줄은 TLDR이 담당)
-    // 모바일: 첫 줄까지 포함해 시장 헤더 아래 전체 불릿으로 통합
-    const rest=isMobile?lines:lines.slice(1);
+    // 두 번째 줄부터는 풀 리스트로
+    const rest=lines.slice(1);
     if(rest.length){
       fullSections.push(`
         <div class="updates-section">
