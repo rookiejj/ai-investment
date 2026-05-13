@@ -309,6 +309,15 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-13 (3)**: **OG / Twitter Card 메타태그 추가 — 링크 공유 카드 설명 노출**. 기존 `meta name="description"`만 있어 카카오톡·Slack·iMessage·페이스북·X에서 설명 비어 보이던 회귀 해결. `index.html` `<head>`에 og:type·og:title·og:description·og:url·og:site_name·og:locale·og:image·og:image:width·og:image:height·og:image:alt + twitter:card(summary)·twitter:title·twitter:description·twitter:image 풀세트. og:image는 매일 갱신되는 1컷 카툰 supabase URL(`cartoon/today.png`, 1080×1350 4:5)·twitter:card는 정사각 썸네일과 호환되는 `summary`. 이미 공유된 채팅방 갱신은 페이스북 디버거(developers.facebook.com/tools/debug)·X validator 등으로 강제 재크롤링 필요(카카오톡은 별도 도구 없어 URL에 query suffix 붙이거나 1~2주 자동 만료 대기).
+- **2026-05-13 (2)**: **모바일 헤드라인 narrative TLDR 통합 — CSS + JS 분기 + CF Pages 비결정적 500 사고**. 모바일(≤640px)에서 narrative-text(TLDR 5줄)을 CSS `display:none`으로 숨기고 JS `isMobile=matchMedia(640px)` 분기로 narrative-full에 첫 줄까지 포함. 시장별 헤더(🇰🇷 한국 마켓 등) + 1~5번째 줄 통합 표시. 데스크탑은 그대로(카툰 옆 TLDR 5줄 + 더보기로 펼침).
+  - **사고**: 첫 시도(`353d30e`, CSS+JS 한 commit)가 CF Pages 빌드 "성공" 표시인데 deploy URL이 500. 정적 파일(/data/*.js)·routing 경로(/terms 등)는 200, /·/preview·/views/index.html만 500. vercel.app 미러(`roysbriefing.vercel.app`)는 200으로 git 코드 결백 확인 → CF Pages 서빙 단의 비결정적 fail로 추정. 빌드 로그는 깨끗("No build command specified")이었음.
+  - **회복**: 대시보드에서 직전 정상 deploy(`54e4f5e`) 수동 promote → 1~2초 내 briefick.com 200 회복 → revert push(`d66a304`)로 git 정리 → CSS만(`5e617a0`)·JS 분기만(`6240422`) 별도 commit으로 쪼개 재push 둘 다 200.
+  - **확정된 우회 패턴**: 같은 의도의 변경을 한 commit으로 묶으면 비결정적 500 위험, 2~3 commit으로 쪼개면 안전. 데이터 자동 갱신은 이미 탭별로 쪼개져 있어 영향 없음.
+  - **검증 자동화**: `curl briefick.pages.dev | grep <새 코드 흔적>` until-loop polling으로 빌드 success/fail 1~2분 내 판정. Bash `run_in_background: true` + 4분 timeout 권장.
+- **2026-05-13 (1)**: **인스타 슬라이드 배경 그라데이션 강화 + 모바일 narrative 자동 펼침**. 5/12 변경에서 인스타 슬라이드 배경의 단일 글로우(alpha 0.14·면적 55%)가 거의 안 보이게 묻혔던 회귀를 사용자 피드백으로 복구.
+  - **`scripts/instagram/template.html`** — `.slide.no-photo`(cover·5탭)·`.cta`(7번) 두 블록을 상하 2중 녹색 글로우(상단 alpha 0.28·하단 0.22) + 살짝 녹색 기조 base(`#0c1a14 → #0a1410 → #0c1a14`)로 통일. 텍스트 가독성 유지 + 분위기 화사.
+  - **`index.html`** — 모바일(≤640px) 미디어쿼리에 `.narrative-expand{display:none}` + `.narrative-full{display:block}` 추가. 더보기 버튼 없이 처음부터 펼친 상태. 데스크탑 동작은 그대로.
 - **2026-05-12 (4)**: **인스타 캐러셀 사진 BG 폐기 — 단조 그라데이션으로 통일**. Unsplash API 키워드 매칭 사진 BG가 노이즈(부정확한 매칭·매번 다른 톤) 누적. 5탭 슬라이드(02~06)를 7번 CTA와 같은 다크+녹색 글로우 그라데이션으로 고정. cover(01)는 cartoon-generate의 today.png가 1번 슬라이드를 대체하므로 BG 영향 없음.
   - `render-slides.js`: Unsplash fetch·`applyBg`·`fetchImageDataUri` import 제거. meta.json의 `photos` 필드 제거.
   - `instagram-post.yml`: `UNSPLASH_ACCESS_KEY` env 제거.
