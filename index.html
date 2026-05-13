@@ -1429,6 +1429,8 @@ function buildNarrative(){
     {key:'unicorn',  flag:'🦄',  label:'유니콘·프리IPO'},
   ];
 
+  // 모바일에선 TLDR 영역이 CSS로 숨겨져 보이지 않으므로 narrative-full에 첫 줄까지 포함
+  const isMobile=window.matchMedia && window.matchMedia('(max-width:640px)').matches;
   const tldrRows=[];
   const fullSections=[];
   let totalLines=0;
@@ -1439,7 +1441,7 @@ function buildNarrative(){
     if(!lines.length)continue;
     totalLines+=lines.length;
 
-    // TL;DR 한 줄: 첫 줄 = 그날 가장 중요 가정
+    // TL;DR 한 줄: 첫 줄 = 그날 가장 중요 가정 (모바일에선 CSS로 숨김)
     tldrRows.push(`
       <div class="tldr-row">
         <span class="tldr-tag">${t.flag} ${escapeHtml(t.label)}</span>
@@ -1447,8 +1449,8 @@ function buildNarrative(){
       </div>
     `);
 
-    // 두 번째 줄부터는 풀 리스트로
-    const rest=lines.slice(1);
+    // 데스크탑: 두 번째 줄부터 풀 리스트. 모바일: 첫 줄까지 포함해 통합 표시
+    const rest=isMobile?lines:lines.slice(1);
     if(rest.length){
       fullSections.push(`
         <div class="updates-section">
