@@ -47,11 +47,13 @@
     background-position: center center;
     background-repeat: no-repeat;
   }
-  /* 사진 없을 때 다크 단색 폴백 — 녹색 글로우 살짝 강화로 분위기 유지 */
+  /* 사진 없을 때 다크 단색 폴백 — 상하 2중 녹색 글로우 + 살짝 녹색 기조 base.
+     단일 글로우(alpha 0.14)는 거의 안 보였던 회귀(5/13) 해결. cover·5탭 슬라이드 공용. */
   .slide.no-photo {
     background:
-      radial-gradient(ellipse at top, rgba(24,226,153,0.14) 0%, rgba(13,13,13,0) 55%),
-      var(--black);
+      radial-gradient(ellipse 90% 50% at 50% 0%, rgba(24,226,153,0.28) 0%, rgba(13,30,22,0) 65%),
+      radial-gradient(ellipse 100% 45% at 50% 100%, rgba(15,167,110,0.22) 0%, rgba(13,30,22,0) 68%),
+      linear-gradient(180deg, #0c1a14 0%, #0a1410 50%, #0c1a14 100%);
   }
   /* 텍스트 가독성 보조 — 약한 글로우/섀도 */
   .text-on-photo {
@@ -164,10 +166,12 @@
   .tab-footer-right .handle { color: var(--green); }
 
   /* === CTA (slide 7) === */
+  /* .no-photo와 동일한 상하 2중 글로우로 톤 통일 — 시리즈 끝장도 같은 분위기로 마감 */
   .cta {
     background:
-      radial-gradient(ellipse at bottom right, rgba(24,226,153,0.18) 0%, rgba(13,13,13,0) 55%),
-      var(--black);
+      radial-gradient(ellipse 90% 50% at 50% 0%, rgba(24,226,153,0.28) 0%, rgba(13,30,22,0) 65%),
+      radial-gradient(ellipse 100% 45% at 50% 100%, rgba(15,167,110,0.22) 0%, rgba(13,30,22,0) 68%),
+      linear-gradient(180deg, #0c1a14 0%, #0a1410 50%, #0c1a14 100%);
     color: var(--white);
     justify-content: space-between;
   }

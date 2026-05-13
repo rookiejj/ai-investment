@@ -179,6 +179,11 @@ section:first-of-type{padding-top:48px;border-top:0}
 .narrative-expand.open .chev{transform:rotate(180deg)}
 .narrative-full{display:none;margin-top:18px;padding-top:18px;border-top:1px solid var(--border)}
 .narrative-full.open{display:block}
+/* 모바일: 더보기 버튼 숨기고 전체 헤드라인 처음부터 펼침 — 한 화면 스크롤로 흐름 */
+@media (max-width:640px){
+  .narrative-expand{display:none}
+  .narrative-full{display:block}
+}
 .updates-section{padding-top:18px;margin-top:18px;border-top:1px solid var(--border)}
 .updates-section:first-child{padding-top:0;margin-top:0;border-top:0}
 .updates-tab-head{
