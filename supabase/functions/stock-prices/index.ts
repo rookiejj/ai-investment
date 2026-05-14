@@ -221,6 +221,62 @@ async function fetchTickers(): Promise<{ us: string[]; kr: string[]; commodity: 
   return { us, kr, commodity, usPool: pool.us, krPool: pool.kr };
 }
 
+// ─── 4 지수 3개월 일별 시계열 (캘린더 위 sparkline용) ───────────────
+const INDICES: Array<{ key: string; name: string; symbol: string }> = [
+  { key: "kospi",  name: "코스피",   symbol: "^KS11" },
+  { key: "kosdaq", name: "코스닥",   symbol: "^KQ11" },
+  { key: "sp500",  name: "S&P 500", symbol: "^GSPC" },
+  { key: "nasdaq", name: "나스닥",   symbol: "^IXIC" },
+];
+
+async function fetchIndexSeries(symbol: string): Promise<any | null> {
+  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=3mo&interval=1d`;
+  try {
+    const r = await fetch(url, { headers: { "User-Agent": UA, "Accept": "application/json" } });
+    if (!r.ok) return null;
+    const j = await r.json();
+    const result = j?.chart?.result?.[0];
+    const meta = result?.meta;
+    if (!meta) return null;
+    const ts: number[] = result?.timestamp ?? [];
+    const closes: (number | null)[] = result?.indicators?.quote?.[0]?.close ?? [];
+    const series: Array<{ t: number; c: number }> = [];
+    for (let i = 0; i < ts.length; i++) {
+      const c = closes[i];
+      if (c != null && Number.isFinite(c)) series.push({ t: ts[i], c: Number(c) });
+    }
+    const current = meta.regularMarketPrice ?? (series.at(-1)?.c ?? null);
+    const prev = meta.previousClose ?? meta.chartPreviousClose ?? (series.at(-2)?.c ?? null);
+    const changePct = current != null && prev != null && prev !== 0
+      ? ((current - prev) / prev) * 100 : null;
+    return {
+      symbol,
+      current,
+      previousClose: prev,
+      changePct,
+      currency: meta.currency || null,
+      time: meta.regularMarketTime ?? null,
+      series,
+    };
+  } catch {
+    return null;
+  }
+}
+
+async function buildIndicesPayload() {
+  const out: Record<string, any> = {};
+  await Promise.all(INDICES.map(async (idx) => {
+    const data = await fetchIndexSeries(idx.symbol);
+    if (data) out[idx.key] = { name: idx.name, ...data };
+  }));
+  return {
+    updatedAt: new Date().toISOString(),
+    range: "3mo",
+    interval: "1d",
+    indices: out,
+  };
+}
+
 async function yahooChartOne(symbol: string, attempt = 1): Promise<Price | null> {
   // 15분봉 + prePost 포함으로 정규세션 + 프리·애프터마켓 + 24h 자산 모두 커버
   const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=15m&range=1d&includePrePost=true`;
@@ -536,6 +592,19 @@ Deno.serve(async (req) => {
       .from(BUCKET)
       .upload(FILE, new Blob([json], { type: "application/json" }), { upsert: true });
     if (upErr) console.warn("[stock-prices] storage upload failed:", upErr.message);
+
+    // 4 지수 3개월 시계열 (캘린더 위 sparkline용) — 별도 파일
+    try {
+      const indicesBody = await buildIndicesPayload();
+      const indicesJson = JSON.stringify(indicesBody);
+      const { error: idxErr } = await supabase.storage
+        .from(BUCKET)
+        .upload("indices.json", new Blob([indicesJson], { type: "application/json" }), { upsert: true });
+      if (idxErr) console.warn("[stock-prices] indices upload failed:", idxErr.message);
+      else console.log(`[indices] ${Object.keys(indicesBody.indices).length}개 지수 시계열 갱신`);
+    } catch (e) {
+      console.warn("[stock-prices] indices fetch failed:", e instanceof Error ? e.message : String(e));
+    }
 
     return new Response(json, {
       status: 200,
