@@ -222,6 +222,37 @@ section:first-of-type{padding-top:48px;border-top:0}
   width:4px;height:4px;border-radius:50%;background:var(--mut2);
 }
 
+/* Index Widget — 캘린더 상단 4 지수 (한국·미국 묶음, 낮/밤 배경 + 장 상태 라벨) */
+.idx-widget{margin-bottom:24px}
+.idx-head{display:flex;justify-content:space-between;align-items:baseline;padding:0 4px 12px;gap:12px;flex-wrap:wrap}
+.idx-head .idx-ttl{font:600 12px/1.5 'Geist Mono',monospace;text-transform:uppercase;letter-spacing:0.6px;color:var(--acc-deep)}
+.idx-head .idx-meta{font:500 12px/1 'Geist Mono',monospace;color:var(--mut)}
+.idx-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:720px){.idx-row{grid-template-columns:1fr}}
+.idx-group{border-radius:14px;overflow:hidden;position:relative;box-shadow:var(--shadow-card)}
+.idx-group.day{background:#fff;border:1px solid rgba(0,0,0,.08)}
+.idx-group.night{background:#e2e2e5;border:1px solid rgba(0,0,0,.14)}
+.idx-group-head{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;font:600 11px/1 'Inter',sans-serif;letter-spacing:.6px;text-transform:uppercase;color:var(--fg2)}
+.idx-group.day .idx-group-head{border-bottom:1px solid rgba(0,0,0,.08)}
+.idx-group.night .idx-group-head{border-bottom:1px solid rgba(0,0,0,.14)}
+.idx-group-head .idx-region{display:flex;align-items:baseline;gap:8px}
+.idx-group-head .idx-delay{font:500 10px/1 'Geist Mono',monospace;color:var(--mut);letter-spacing:.3px;text-transform:none}
+.idx-status{font:500 10px/1 'Geist Mono',monospace;padding:4px 10px;border-radius:999px;letter-spacing:.4px}
+.idx-group.day .idx-status{background:rgba(0,0,0,.05);color:#666}
+.idx-group.night .idx-status{background:rgba(0,0,0,.10);color:#444}
+.idx-status:empty{display:none}
+.idx-cards{display:grid;grid-template-columns:1fr 1fr}
+.idx-card{padding:14px 18px 16px}
+.idx-group.day .idx-card{border-right:1px solid rgba(0,0,0,.08)}
+.idx-group.night .idx-card{border-right:1px solid rgba(0,0,0,.14)}
+.idx-group .idx-card:last-child{border-right:none}
+.idx-card .idx-card-row{display:flex;justify-content:space-between;align-items:baseline}
+.idx-card .idx-label{font:600 12px/1 'Inter',sans-serif;color:var(--mut);letter-spacing:.4px;text-transform:uppercase}
+.idx-card .idx-delta{font:600 13px/1 'Geist Mono',monospace;color:var(--acc-deep)}
+.idx-card .idx-delta.neg{color:var(--err)}
+.idx-card .idx-value{font:600 22px/1.1 'Geist Mono',monospace;color:var(--fg);margin-top:6px}
+.idx-card svg{display:block;width:100%;height:50px;margin-top:8px}
+
 /* Event Calendar */
 .cal-dow-row{
   display:grid;grid-template-columns:repeat(7,1fr);
@@ -964,6 +995,34 @@ body.sub-modal-open{overflow:hidden}
       <h2 class="sec-title">이벤트 캘린더 · 2주</h2>
     </div>
   </div>
+  <div class="idx-widget" id="idxWidget" hidden>
+    <div class="idx-head">
+      <div class="idx-ttl">오늘의 마켓 펄스 · 3개월</div>
+      <div class="idx-meta" id="idxMeta">불러오는 중…</div>
+    </div>
+    <div class="idx-row">
+      <div class="idx-group" data-region="kr">
+        <div class="idx-group-head">
+          <span class="idx-region">🇰🇷 한국 <span class="idx-delay">· 15분 지연</span></span>
+          <span class="idx-status" id="idxKrStatus"></span>
+        </div>
+        <div class="idx-cards">
+          <div class="idx-card" data-key="kospi"></div>
+          <div class="idx-card" data-key="kosdaq"></div>
+        </div>
+      </div>
+      <div class="idx-group" data-region="us">
+        <div class="idx-group-head">
+          <span class="idx-region">🇺🇸 미국 <span class="idx-delay">· 15분 지연</span></span>
+          <span class="idx-status" id="idxUsStatus"></span>
+        </div>
+        <div class="idx-cards">
+          <div class="idx-card" data-key="sp500"></div>
+          <div class="idx-card" data-key="nasdaq"></div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="cal-dow-row">
     <div class="sun">일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div class="sat">토</div>
   </div>
@@ -1202,6 +1261,7 @@ const URLS={
 };
 const CALENDAR_URL='/data/calendar-events.js';
 const PRICES_URL='https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/prices/latest.json';
+const INDICES_URL='https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/prices/indices.json';
 
 async function loadJS(url){
   const r=await fetch(url+'?_='+Date.now());
@@ -2705,6 +2765,67 @@ async function loadPrices(){
   }
 }
 
+// 4 지수 3개월 일별 시계열 (캘린더 상단 위젯) — stock-prices가 같이 갱신
+async function loadIndices(){
+  try{
+    const r=await fetch(INDICES_URL+'?_='+Date.now());
+    if(!r.ok) throw new Error('indices '+r.status);
+    return await r.json();
+  }catch(e){
+    console.warn('지수 로드 실패:',e);
+    return null;
+  }
+}
+function _idxFmt(n,cur){if(n==null)return'—';return (cur==='USD'?'$':'')+n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+function _idxSpark(s,w,h){if(!s||s.length<2)return'';const v=s.map(p=>p.c);const mn=Math.min(...v),mx=Math.max(...v),rg=mx-mn||1,dx=w/(s.length-1);return s.map((p,i)=>{const x=i*dx,y=h-((p.c-mn)/rg)*h;return(i===0?'M':'L')+x.toFixed(1)+','+y.toFixed(1);}).join(' ');}
+function _idxPartsIn(tz){
+  const s=new Date().toLocaleString('en-US',{timeZone:tz,hour12:false,hour:'2-digit',minute:'2-digit',weekday:'short'});
+  const hm=s.match(/(\d{2}):(\d{2})/), dow=s.match(/^([A-Za-z]+)/);
+  return {h:hm?+hm[1]:0, m:hm?+hm[2]:0, dow:dow?dow[1]:''};
+}
+function _krStatus(p){if(p.dow==='Sat'||p.dow==='Sun')return'휴장';const min=p.h*60+p.m;return(min>=540&&min<930)?'':'장 마감';}
+function _usStatus(p){
+  if(p.dow==='Sat'||p.dow==='Sun')return'장 마감';
+  const min=p.h*60+p.m;
+  if(min>=570&&min<960)return'';
+  if(min>=240&&min<570)return'프리마켓';
+  if(min>=960&&min<1200)return'애프터';
+  return'장 마감';
+}
+const _IDX_LABELS={kospi:'KOSPI',kosdaq:'KOSDAQ',sp500:'S&P 500',nasdaq:'NASDAQ'};
+function renderIndexWidget(data){
+  const el=document.getElementById('idxWidget');
+  if(!el||!data||!data.indices)return;
+  // 낮/밤 + 장 상태
+  const krP=_idxPartsIn('Asia/Seoul'), usP=_idxPartsIn('America/New_York');
+  const krNode=el.querySelector('[data-region="kr"]');
+  const usNode=el.querySelector('[data-region="us"]');
+  krNode.classList.remove('day','night'); krNode.classList.add(krP.h>=6&&krP.h<18?'day':'night');
+  usNode.classList.remove('day','night'); usNode.classList.add(usP.h>=6&&usP.h<18?'day':'night');
+  document.getElementById('idxKrStatus').textContent=_krStatus(krP);
+  document.getElementById('idxUsStatus').textContent=_usStatus(usP);
+  // 카드
+  const UP='#0fa76e', DN='#d45656';
+  for(const c of el.querySelectorAll('.idx-card')){
+    const k=c.dataset.key, d=data.indices[k];
+    if(!d){c.innerHTML=`<div class="idx-label">${_IDX_LABELS[k]||k}</div><div class="idx-value">—</div>`;continue;}
+    const up=(d.changePct??0)>=0, col=up?UP:DN;
+    const p=_idxSpark(d.series,200,50), pf=p+' L 200 50 L 0 50 Z';
+    const gid='idxG_'+k;
+    c.innerHTML=`
+      <div class="idx-card-row"><span class="idx-label">${_IDX_LABELS[k]||k}</span><span class="idx-delta ${up?'':'neg'}">${up?'+':''}${d.changePct?.toFixed(2)}%</span></div>
+      <div class="idx-value">${_idxFmt(d.current,d.currency)}</div>
+      <svg viewBox="0 0 200 50" preserveAspectRatio="none">
+        <defs><linearGradient id="${gid}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity=".16"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>
+        <path d="${pf}" fill="url(#${gid})"/><path d="${p}" stroke="${col}" stroke-width="1.6" fill="none"/>
+      </svg>`;
+  }
+  // 메타
+  const t=new Date(data.updatedAt);
+  document.getElementById('idxMeta').textContent=`${t.toLocaleString('ko-KR',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Seoul'})} KST 갱신`;
+  el.hidden=false;
+}
+
 // archive lazy fetch — main 도착 후 비차단으로 호출. 도착하면 STATE.updArchive에 저장,
 // 다음 모달 열기부터 mentions 깊이가 ~30일로 확장. 도착 전엔 main만으로 mentions 작동(자연 폴백).
 async function loadArchives(){
@@ -2717,12 +2838,13 @@ const PRICE_REFRESH_MS=5*60*1000;
 function startPricePolling(){
   setInterval(async ()=>{
     if(document.hidden)return; // 백그라운드 탭은 skip
-    const fresh=await loadPrices();
+    const [fresh, freshIdx]=await Promise.all([loadPrices(), loadIndices()]);
     if(Object.keys(fresh).length){
       STATE.prices=fresh;
       if(STATE.data[STATE.healthMarket]) renderHealth();
       renderFinmap();
     }
+    if(freshIdx) renderIndexWidget(freshIdx);
   }, PRICE_REFRESH_MS);
 }
 
@@ -2739,6 +2861,8 @@ document.querySelectorAll('[data-fmap-market]').forEach(b=>{
 async function boot(){
   // 시세는 비차단 — 백그라운드에서 받아와 도착 시 재렌더
   const pricesPromise=loadPrices();
+  // 4 지수 시계열도 비차단 — 도착 시 캘린더 상단 위젯 렌더
+  loadIndices().then(idx=>{ if(idx) renderIndexWidget(idx); }).catch(()=>{});
   // archive도 비차단 — 모달 mentions 깊이 ~30일 확장. 도착 전엔 main만으로 자연 폴백
   loadArchives().catch(e=>console.warn('archive 로딩 실패:',e));
 
