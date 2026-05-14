@@ -169,10 +169,10 @@ const data = [
       },
       {
         "nm": "Anduril",
-        "rs": "4/29 美 우주군 $1.8B 별도 우주 배치 컨트랙트 추가 진입 — Golden Dome $3.2B + 신규 $1.8B 누적 수주·Series H 최대 $8B 협상 $60B 밸류 Thrive·a16z 공동 주도·9개월 만 밸류 더블 트랙",
+        "rs": "5/13 Series H $5B 조달 확정 $61B 밸류 도달 - 9개월 만 30.5→61B 더블·Thrive Capital·a16z 공동 주도·누적 펀딩 $11.4B·Golden Dome $3.2B + 美 우주군 $1.8B + 美 육군 10년 $20B 한도 계약 누적 수주",
         "ipo": "단기 아님(Luckey)",
-        "val": "$60B",
-        "round": "Series H 협상 ($8B)",
+        "val": "$61B",
+        "round": "Series H $5B (2026-05)",
         "sector": "방산 AI"
       },
       {
