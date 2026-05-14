@@ -56,7 +56,7 @@ jobs:
     steps:
       - name: 시작 알림
         run: |
-          MODE_HINT=$(TZ=Asia/Seoul date '+%H' | awk '{h=$1+0; if(h>=5 && h<=12) print "carousel"; else if(h>=13 && h<=23) print "reels"; else print "all"}')
+          MODE_HINT=$(TZ=Asia/Seoul date '+%H' | awk '{h=$1+0; if(h>=7 && h<19) print "carousel"; else print "reels"}')
           curl -s -o /dev/null -X POST \
             "https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/notify-telegram" \
             -H "X-Notify-Secret: ${{ secrets.NOTIFY_SECRET }}" \
@@ -74,20 +74,17 @@ jobs:
         run: |
           # workflow_dispatch는 사용자 지정 mode 그대로.
           # workflow_run은 KST 시간대 분기:
-          #   05~12시 → carousel (오전)
-          #   13~23시 → reels (오후)
-          #   00~04시 → all (예외)
+          #   07~18시 → carousel (낮)
+          #   그 외 (19~23, 0~6) → reels
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             MODE="${{ github.event.inputs.mode || 'all' }}"
             echo "workflow_dispatch — 사용자 지정 mode=$MODE"
           else
             HOUR=$(TZ=Asia/Seoul date '+%H')
-            if [ "$HOUR" -ge 5 ] && [ "$HOUR" -le 12 ]; then
+            if [ "$HOUR" -ge 7 ] && [ "$HOUR" -lt 19 ]; then
               MODE="carousel"
-            elif [ "$HOUR" -ge 13 ] && [ "$HOUR" -le 23 ]; then
-              MODE="reels"
             else
-              MODE="all"
+              MODE="reels"
             fi
             echo "workflow_run — KST ${HOUR}시 → mode=$MODE"
           fi
