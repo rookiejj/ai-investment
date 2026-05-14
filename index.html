@@ -222,11 +222,8 @@ section:first-of-type{padding-top:48px;border-top:0}
   width:4px;height:4px;border-radius:50%;background:var(--mut2);
 }
 
-/* Index Widget — 캘린더 상단 4 지수 (한국·미국 묶음, 낮/밤 배경 + 장 상태 라벨) */
-.idx-widget{margin-bottom:24px}
-.idx-head{display:flex;justify-content:space-between;align-items:baseline;padding:0 4px 12px;gap:12px;flex-wrap:wrap}
-.idx-head .idx-ttl{font:600 12px/1.5 'Geist Mono',monospace;text-transform:uppercase;letter-spacing:0.6px;color:var(--acc-deep)}
-.idx-head .idx-meta{font:500 12px/1 'Geist Mono',monospace;color:var(--mut)}
+/* Index Widget — 별도 섹션, 한국·미국 묶음, 낮/밤 배경 + 장 상태 라벨 */
+.idx-meta{font:500 12px/1 'Geist Mono',monospace;color:var(--mut)}
 .idx-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media (max-width:720px){.idx-row{grid-template-columns:1fr}}
 .idx-group{border-radius:14px;overflow:hidden;position:relative;box-shadow:var(--shadow-card)}
@@ -994,19 +991,16 @@ body.sub-modal-open{overflow:hidden}
   </div>
 </section>
 
-<!-- Event Calendar -->
+<!-- Market Pulse — 4 indices, KOSPI·KOSDAQ·S&P·NASDAQ 3-month sparkline -->
 <section>
   <div class="sec-head">
     <div>
-      <div class="sec-label">Forward-looking events</div>
-      <h2 class="sec-title">이벤트 캘린더 · 2주</h2>
+      <div class="sec-label">Market Pulse · 3M</div>
+      <h2 class="sec-title">오늘의 마켓 펄스</h2>
     </div>
+    <div class="idx-meta" id="idxMeta">불러오는 중…</div>
   </div>
   <div class="idx-widget" id="idxWidget" hidden>
-    <div class="idx-head">
-      <div class="idx-ttl">오늘의 마켓 펄스 · 3개월</div>
-      <div class="idx-meta" id="idxMeta">불러오는 중…</div>
-    </div>
     <div class="idx-row">
       <div class="idx-group" data-region="kr">
         <div class="idx-group-head">
@@ -1028,6 +1022,16 @@ body.sub-modal-open{overflow:hidden}
           <div class="idx-card" data-key="nasdaq"></div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- Event Calendar -->
+<section>
+  <div class="sec-head">
+    <div>
+      <div class="sec-label">Forward-looking events</div>
+      <h2 class="sec-title">이벤트 캘린더 · 2주</h2>
     </div>
   </div>
   <div class="cal-dow-row">
