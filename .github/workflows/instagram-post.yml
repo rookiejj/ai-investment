@@ -159,9 +159,8 @@ jobs:
         run: |
           STAMP=$(date +%s)
           BASE="https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon"
-          # 5/15~ latest.txt에 dated 파일명 적힘 (cache 우회). 실패 시 today.png(legacy) fallback.
-          LATEST=$(curl -fsSL "$BASE/latest.txt?t=$STAMP" | tr -d '\r\n' || echo "today.png")
-          [ -z "$LATEST" ] && LATEST="today.png"
+          # 5/15~ latest.txt에 dated 파일명. fetch 실패 시 즉석 재생성 단계로 빠짐 (AGE 999999 처리).
+          LATEST=$(curl -fsSL "$BASE/latest.txt?t=$STAMP" | tr -d '\r\n' || true)
           CARTOON_URL="$BASE/$LATEST?t=$STAMP"
           OUT=scripts/instagram/out/cartoon.png
           THRESHOLD=3600

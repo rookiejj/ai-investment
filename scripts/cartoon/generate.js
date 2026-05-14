@@ -171,17 +171,15 @@ async function main() {
 
   const shouldUpload = forceUpload || (!noUpload && SECRET);
   if (shouldUpload) {
-    // 캐시 우회 위해 dated 파일명 + today.png(OG·legacy 호환) + latest.txt(frontend·인스타가 참조)
+    // dated 파일명으로 캐시 영구 우회. latest.txt에 최신 파일명 기록.
     const pad = (n) => String(n).padStart(2, '0');
     const stamp = `${KST.getUTCFullYear()}${pad(KST.getUTCMonth() + 1)}${pad(KST.getUTCDate())}-${pad(KST.getUTCHours())}${pad(KST.getUTCMinutes())}`;
     const datedFile = `today-${stamp}.png`;
     const png = fs.readFileSync(OUT_PNG);
-    console.log(`[newspaper] 3. Supabase Storage 업로드 (${datedFile} + today.png + latest.txt)`);
+    console.log(`[newspaper] 3. Supabase Storage 업로드 (${datedFile} + latest.txt)`);
     const datedUrl = await uploadToSupabase(png, datedFile);
-    const legacyUrl = await uploadToSupabase(png, 'today.png');
     await uploadText(datedFile, 'latest.txt');
     console.log(`  ✓ ${datedUrl}`);
-    console.log(`  ✓ ${legacyUrl}  (OG·legacy 호환)`);
     console.log(`  ✓ latest.txt → ${datedFile}`);
   } else if (!SECRET) {
     console.log('[newspaper] 3. 업로드 skip (BRIEFICK_SUPABASE_SECRET_KEY 없음)');

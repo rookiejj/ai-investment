@@ -1547,26 +1547,28 @@ function buildNarrative(){
     return;
   }
 
-  // 신문 1면 hero — Supabase Storage cartoon/today-YYYYMMDD-HHmm.png. 5/15~ dated 파일명으로 캐시 우회.
-  // latest.txt에 최신 파일명 적힘. fetch 실패 시 today.png(legacy) fallback.
-  let cartoonSrc=`https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/today.png?_=${Date.now()}`;
-  fetch(`https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/latest.txt?_=${Date.now()}`)
-    .then(r => r.ok ? r.text() : Promise.reject(r.status))
-    .then(name => {
-      const file = name.trim();
-      if (!file) return;
-      const img = document.querySelector('#narrativeCartoon img');
-      if (img) img.src = `https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/${file}`;
-    })
-    .catch(() => {}); // fallback: today.png 그대로
+  // 신문 1면 hero — cartoon/today-YYYYMMDD-HHmm.png (dated 파일명, 캐시 영구 우회).
   body.innerHTML=`
     <div class="narrative-flex">
-      <div class="narrative-cartoon" id="narrativeCartoon">
-        <img src="${cartoonSrc}" alt="오늘의 1컷" onerror="document.getElementById('narrativeCartoon').classList.add('empty');this.removeAttribute('src');">
+      <div class="narrative-cartoon empty" id="narrativeCartoon">
+        <img alt="오늘의 1컷" onerror="document.getElementById('narrativeCartoon').classList.add('empty');this.removeAttribute('src');">
       </div>
       ${fullSections.length?`<div class="narrative-full" id="narrativeFull">${fullSections.join('')}</div>`:''}
     </div>
   `;
+  // latest.txt에서 dated 파일명 받아 img.src 셋. 실패 시 .empty 그대로 ('1컷 만화 준비 중' 노출).
+  fetch(`https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/latest.txt?_=${Date.now()}`)
+    .then(r => r.ok ? r.text() : Promise.reject(r.status))
+    .then(name => {
+      const file = name.trim();
+      if (!file) throw new Error('empty latest.txt');
+      const img = document.querySelector('#narrativeCartoon img');
+      if (img) {
+        img.src = `https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/${file}`;
+        document.getElementById('narrativeCartoon')?.classList.remove('empty');
+      }
+    })
+    .catch(() => { /* .empty 그대로 */ });
 }
 
 // ═══════════════════════════════════════════════════════════
