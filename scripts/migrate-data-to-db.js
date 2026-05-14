@@ -73,14 +73,19 @@ function entryHash(tabId, entry) {
   return sha(tabId + '|' + (entry.date || '') + '|' + (entry.summary || '').slice(0, 200));
 }
 
-async function supabaseRequest(method, pathSegment, body) {
+async function supabaseRequest(method, pathSegment, body, opts = {}) {
+  // tab_updates archive INSERT는 ignore-duplicates — 이미 main에 있는 entry를
+  // archive로 덮어쓰지 않게. merge는 tab_data UPSERT 전용.
+  const prefer = opts.ignoreDuplicates
+    ? 'resolution=ignore-duplicates,return=minimal'
+    : 'resolution=merge-duplicates,return=minimal';
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${pathSegment}`, {
     method,
     headers: {
       'apikey': SECRET_KEY,
       'Authorization': `Bearer ${SECRET_KEY}`,
       'Content-Type': 'application/json',
-      'Prefer': 'resolution=merge-duplicates,return=minimal',
+      'Prefer': prefer,
     },
     body: body ? JSON.stringify(body) : undefined,
   });
@@ -123,10 +128,16 @@ async function upsertEntries(tabId, entries, isArchive) {
     })
     .filter(Boolean);
 
-  // chunk 100건씩
+  // chunk 100건씩. archive INSERT는 main entries 위 덮어쓰지 않도록 ignore-duplicates.
+  // main INSERT(false)는 merge라 같은 source_hash row 갱신(version 변경 시 메타 갱신).
   for (let i = 0; i < rows.length; i += 100) {
     const chunk = rows.slice(i, i + 100);
-    await supabaseRequest('POST', 'tab_updates?on_conflict=tab_id,source_hash', chunk);
+    await supabaseRequest(
+      'POST',
+      'tab_updates?on_conflict=tab_id,source_hash',
+      chunk,
+      { ignoreDuplicates: isArchive },
+    );
   }
   console.log(`  [updates] ${tabId} ${isArchive ? 'archive' : 'main'} ${rows.length}건`);
   return rows.length;
