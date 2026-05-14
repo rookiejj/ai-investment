@@ -1,18 +1,17 @@
 #!/usr/bin/env node
 /**
- * *-update.js entries 2건 한도 트림.
+ * *-update.js entries 1건 한도 트림.
  *
  * 룰 (2026-05-14~): git의 *-update.js는 sandbox 작업 컨텍스트라 깊이 필요 없음.
- * 옛 entries 1건(중복 회피용 직전 cron 결과) + 새 entry 1건만 유지.
- * 더 깊은 dedup은 DB source_hash가 자동 처리.
+ * 가장 최근 entry 1건만 유지. dedup·history는 DB source_hash가 자동 처리.
  *
- * 멱등 — 이미 2건 이하면 skip.
+ * 멱등 — 이미 1건 이하면 skip.
  */
 
 const fs = require('fs');
 const path = require('path');
 
-const LIMIT = 2;
+const LIMIT = 1;
 const DATA_DIR = path.resolve(__dirname, '..', 'data');
 
 const FILES = [
