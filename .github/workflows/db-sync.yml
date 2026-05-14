@@ -1,0 +1,72 @@
+name: DB Sync
+
+# 5탭 *-data.js·*-update.js 변경 시 자동 Supabase DB 동기화.
+# RemoteTrigger sandbox는 proxy가 Supabase 차단이라 직접 sync 불가 →
+# GitHub Actions runner가 받아서 처리. runner는 Supabase 호스트 차단 없음.
+#
+# sandbox 측 prompt에선 fetch-from-db·sync-to-db 호출 제거됨 (호출해도 403).
+# sandbox는 git에 있는 데이터 파일을 작업 공간으로 쓰고 단일 commit으로 push만.
+# 이 workflow가 그 push를 감지해 DB UPSERT 실행.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/stocks-data.js'
+      - 'data/stocks-update.js'
+      - 'data/kr-stocks-data.js'
+      - 'data/kr-stocks-update.js'
+      - 'data/ai-data.js'
+      - 'data/ai-update.js'
+      - 'data/commodity-data.js'
+      - 'data/commodity-update.js'
+      - 'data/unicorn-data.js'
+      - 'data/unicorn-update.js'
+  workflow_dispatch:
+
+concurrency:
+  group: db-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 시작 알림
+        run: |
+          curl -s -o /dev/null -X POST \
+            "https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/notify-telegram" \
+            -H "X-Notify-Secret: ${{ secrets.NOTIFY_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -d '{"source":"DB Sync","status":"start"}' || true
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: sync-to-db 실행
+        env:
+          SUPABASE_URL: https://ytvcgoldauysvnqckzze.supabase.co
+          BRIEFICK_WRITE_SECRET: ${{ secrets.BRIEFICK_WRITE_SECRET }}
+        run: |
+          node scripts/sync-to-db.js
+
+      - name: 종료 알림 (항상 실행)
+        if: always()
+        run: |
+          case "${{ job.status }}" in
+            success) STATUS="success" ;;
+            failure) STATUS="failure" ;;
+            cancelled) STATUS="failure" ;;
+            *) STATUS="unknown" ;;
+          esac
+          curl -s -o /dev/null -X POST \
+            "https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/notify-telegram" \
+            -H "X-Notify-Secret: ${{ secrets.NOTIFY_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"source\":\"DB Sync\",\"status\":\"$STATUS\"}" || true

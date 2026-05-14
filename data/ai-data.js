@@ -1,0 +1,1024 @@
+const META = {
+  "year": "2026",
+  "month": "5"
+};
+
+const BL = {
+  "hw": "하드웨어",
+  "ui": "UI 디자인",
+  "agt": "에이전트",
+  "img": "이미지",
+  "llm": "LLM",
+  "sci": "과학AI",
+  "vid": "비디오",
+  "code": "코딩"
+};
+
+const data = [
+  {
+    "url": "https://openai.com",
+    "name": "OpenAI",
+    "rank": 1,
+    "type": "AI 전문 기업",
+    "focus": "범용 AGI 개발",
+    "products": [
+      {
+        "url": "https://openai.com/index/introducing-gpt-5-5/",
+        "desc": "4/23 정식 출시. 내부 코드명 'Spud' — 3/24 프리트레이닝 완료 이후 4주 만의 배포. Terminal-Bench 2.0 82.7%(Opus 4.7 69.4%·Gemini 3.1 Pro 68.5% 대비 SOTA) 복잡 커맨드라인 워크플로우에서 업계 최고. SWE-Bench Pro 58.6%로 싱글패스 GitHub 이슈 해결 신고점, FrontierMath Tier1-3 51.7%(Opus 4.7 43.8%), GDPval 84.9%로 44개 직업 지식노동 테스트 강화. Consumer 3계층(기본·Thinking·Pro) + ChatGPT·Codex 즉시 활성, API는 수일 내. OpenAI가 'GPT-6'가 아닌 '5.5'로 명명 택해 Anthropic Mythos·Claude Opus 4.7에 반격.",
+        "name": "GPT-5.5 / GPT-5.5 Thinking / Pro",
+        "isNew": true,
+        "badges": [
+          "llm",
+          "agt",
+          "code"
+        ]
+      },
+      {
+        "url": "https://openai.com/chatgpt/",
+        "desc": "이전 플래그십. Standard·Thinking·Pro 3단계. 100만 토큰 컨텍스트, OSWorld-V 75%(인간 72.4% 초과). GDPVal 83%. Artificial Analysis Index 공동 1위(57점). GPT-5.5 공개로 레거시화, 가격·지연 우위로 병행 운영.",
+        "name": "GPT-5.4 / GPT-5.4 Pro",
+        "isNew": false,
+        "badges": [
+          "llm",
+          "agt"
+        ]
+      },
+      {
+        "url": "https://openai.com/chatgpt/",
+        "desc": "Free·Go 사용자 대상 'Thinking' 기능으로 제공. 유료 사용자의 사용량 초과 시 폴백 모델. nano는 초경량 버전. GPT-5.3 Instant Mini도 병행 운영 중.",
+        "name": "GPT-5.4 mini / nano",
+        "isNew": false,
+        "badges": [
+          "llm"
+        ]
+      },
+      {
+        "url": "https://openai.com/index/codex-for-almost-everything/",
+        "desc": "4/16 'Codex for (almost) everything' 대규모 업데이트. 데스크톱 컴퓨터 제어(Computer Use) 탑재 — macOS에서 자체 커서로 모든 앱을 보고·클릭·입력 가능, 다수 에이전트 병렬 실행. 메모리(preview) 신규 — 개인 선호·과거 작업 기억해 맥락·품질 누적. 90+ 플러그인·앱내 브라우저·이미지 생성 내장, 멀티 에이전트 워크플로우로 Claude Code 정면 도전. 주간 개발자 300만 명 규모. 종량제 과금(4/2) 유지.",
+        "name": "Codex (에이전틱 코딩)",
+        "isNew": true,
+        "badges": [
+          "code",
+          "agt"
+        ]
+      },
+      {
+        "url": "https://openai.com/news/",
+        "desc": "5/4 공식 발표 - OpenAI가 TPG·Brookfield·Bain·Advent·Dragoneer·SoftBank 등 19개 사모펀드와 합작벤처 'The Deployment Company'를 $10B 밸류로 마감, 외부 투자자 $4B+·OpenAI 자체 $1.5B 출자로 OpenAI가 과반 지배. 사업 모델은 PE 컨소시엄이 보유한 포트폴리오 기업의 운영 레이어에 OpenAI 엔지니어를 직접 배치(Palantir의 forward-deployed engineer 패턴 차용), 헬스케어·물류·제조·금융 4개 우선 섹터에 GPT-5.5·Codex·Privacy Filter 라인업을 임베드. 동일 5/4 Anthropic이 Blackstone·Goldman·Hellman&Friedman과 $1.5B 합작벤처를 마무리한 직후 발표돼 양사가 PE 채널을 동시 선점하는 구도 - IPO 직전 매출 가속과 'high-margin 엔터프라이즈 트랙션' 두 마리 토끼를 노리는 전략. 챗봇·API 회사에서 풀스택 배치 엔진으로 포지셔닝 전환 본격화.",
+        "name": "The Deployment Company ($10B PE 합작벤처)",
+        "isNew": true,
+        "badges": [
+          "agt"
+        ]
+      },
+      {
+        "url": "https://openai.com/news/",
+        "desc": "5/5 공식 발표 - OpenAI가 PwC와 글로벌 전략 파트너십 체결, '재무 운영의 핵심 리듬'에 특화한 AI 에이전트 공동 개발. 예측·계획·보고·조달·결제·재무 관리 등 기업 재무 본업 전반에 GPT-5.5 + Codex + Privacy Filter 라인업을 임베드, PwC의 142개국·370,000명 컨설턴트 채널이 직접 배치 채널로 가동. 5/4 The Deployment Company($10B PE 합작벤처) 발표에 이어 24h 내 '전문서비스 → 재무특화' 채널을 추가 선점한 구도 - Anthropic이 동일 5/5 금융 서비스 전용 에이전트 10종을 출시한 것에 대한 직접 대응. India 시장 동시 진출(5/5)과 결합돼 엔터프라이즈 채널 글로벌 확장 가속. PwC는 Big4 중 OpenAI 채널 단독 선점 - Deloitte·EY·KPMG는 Anthropic·Google·Microsoft 채널로 분산되는 구도.",
+        "name": "OpenAI x PwC 글로벌 재무 운영 파트너십",
+        "isNew": true,
+        "badges": [
+          "agt"
+        ]
+      },
+      {
+        "url": "https://openai.com/news/",
+        "desc": "5/5 공식 출시 - 인도 엔터프라이즈·연구 협업 타겟. ChatGPT Enterprise·API·Codex·Privacy Filter 라인업 인도 데이터센터 호스팅, 인도 정부·교육기관·대형 기업 직접 채널 가동. Anthropic도 동일 5/5 인도 시장 동시 진출로 양사가 14억 인구 시장을 동시 선점하는 구도. 인도는 글로벌 IT 서비스 본업·1.4M 개발자·연 30B 코드 커밋 규모로 코딩 모델·엔터프라이즈 자동화 양 영역 직접 수요 - OpenAI는 인도 정부·Tata·Reliance·Infosys 채널, Anthropic은 글로벌 컨설팅·금융 채널로 차별화 시도. 미국·EU·일본·한국에 이은 4번째 글로벌 거점 시장 확정.",
+        "name": "OpenAI India 진출",
+        "isNew": true,
+        "badges": [
+          "agt"
+        ]
+      },
+      {
+        "url": "https://chatgpt.com",
+        "desc": "4/28 Wall Street Journal 보도로 IPO 직전 펀더멘털 약점 노출 — 연초부터 자체 월별 매출 목표 연속 미달, ChatGPT 주간 활성 10억 도달 목표도 2월 9억에서 정체, 코딩·엔터프라이즈 영역에서 Anthropic에 시장을 내준 정황 공개. CFO Sarah Friar가 이사회에 '수천억 달러 컴퓨트·데이터센터 계약을 매출 가속 없이는 이행하기 어렵다'며 IPO를 2026년 너머로 연기해야 한다는 우려를 제기, Altman은 $600B 약속을 그대로 가져가는 입장으로 내부 의견 충돌이 부각. OpenAI는 'prime clickbait·firing on all cylinders'로 정식 반박. 4/29 Microsoft Q1 FY26에서 OpenAI 지분 손실이 EPS -$0.41로 처음 정량화 반영 — Microsoft 자체 펀더멘털은 견조하나 OpenAI 손실 확대 트렌드 공식 자료로 노출, IPO 일정·매출 가속 압박 가중. 4/28 SoftBank ADR -10%·CoreWeave -6%·Oracle -4%·AVGO -4%·AMD -3%·NVDA -2.9% AI 인프라 매도세 촉발. 주간 활성 9억 명·연환산 매출 $240억·기업가치 $8,400억. 3월 $1,220억 펀딩. IPO 2026년 말 검토. 4/27 Musk vs OpenAI 비영리 환원 소송 오클랜드 연방법원 개시.",
+        "name": "ChatGPT 플랫폼",
+        "isNew": true,
+        "badges": [
+          "agt"
+        ]
+      },
+      {
+        "url": "https://openai.com/sora/",
+        "desc": "독립 Sora 앱 2026년 초 종료 — DAU 50만 미만, 분당 $15,000 추산 컴퓨팅 비용 대비 누적 매출 $210만. Disney $10억 파트너십도 해소. 동영상 생성 기능은 ChatGPT 메인 플랫폼으로 통합 이전.",
+        "name": "Sora → ChatGPT 통합",
+        "isNew": false,
+        "badges": [
+          "vid"
+        ]
+      },
+      {
+        "url": "https://openai.com/news/",
+        "desc": "5/12 정식 출시 - Codex Security 기반 자동 취약점 탐지·격리 환경 테스트·자동 패치 검증 통합 솔루션, Anthropic Project Glasswing/Mythos에 직접 경쟁하는 사이버 가드레일 채널. 3종 모델 티어로 차별화 - ①GPT-5.5(표준 가드레일 범용) ②GPT-5.5 Trusted Access for Cyber(인증된 방어 환경 한정) ③GPT-5.5-Cyber(레드팀·침투 테스트·통제 검증 전용 허용형). 파트너 8사 통합 - Akamai·Cisco·Cloudflare·CrowdStrike·Fortinet·Oracle·Palo Alto Networks·Zscaler가 Trusted Access for Cyber 라인업에 동시 합류, Anthropic Project Glasswing 컨소시엄 일부 파트너(Cisco·CrowdStrike·Palo Alto·Akamai)와 중복 - 채널 경쟁 직격. 핵심 기능: 편집 가능 위협 모델(repository 단위 현실적 공격 경로·고임팩트 코드 식별), 격리 환경 자율 검증, 자동 패치 제안. EU 우선 접근 카드 + 4/29 Aardvark 자율 보안 에이전트와 결합돼 풀스택 사이버 방어 플랫폼 형성. Anthropic이 4~5회 EU 협상에도 Mythos Preview 접근 미체결 잔존인 단계에서 출시 - 거버넌스 표준화 경쟁 단일 분기점.",
+        "name": "Daybreak (사이버보안 플랫폼)",
+        "isNew": true,
+        "badges": [
+          "agt",
+          "code",
+          "sci"
+        ]
+      },
+      {
+        "url": "https://openai.com/news/",
+        "desc": "4/30 공식 발표 — GPT-5.5 Cyber를 'critical cyber defenders' 한정으로만 단계 배포 결정. Altman이 4/7 Anthropic Mythos 비공개 정책을 '공포 기반 마케팅'으로 비판한 지 3주 만에 동일한 차단형 접근으로 선회 — 사실상 Anthropic Project Glasswing 모델을 모방. Trusted Access for Cyber 파일럿(소수 파트너 한정)·GPT-5.3-Codex 기반 고급 취약점 탐지·익스플로잇 역량의 위험 통제. 동시에 OpenAI는 'Our commitment to community safety' 별도 성명을 4/30 게시하며 Cyber·Bio·Chemical·Persuasion 카테고리 전반에 동일한 사전 통제 프레임워크 적용 의사 시사. 5/12 Daybreak 출시로 본 라인업이 풀스택 사이버 가드레일 플랫폼으로 통합.",
+        "name": "GPT-5.5 Cyber + Trusted Access",
+        "isNew": false,
+        "badges": [
+          "agt",
+          "code"
+        ]
+      },
+      {
+        "url": "https://openai.com/news/",
+        "desc": "4/23 오픈웨이트로 공개. 텍스트 내 개인식별정보(이름·주소·주민번호·계좌번호·의료기록) 탐지·자동 레댁션 전용 소형 모델, 로컬·온디바이스 파이프라인에 통합. '안전을 인프라로 제공한다'는 OpenAI의 전환 — 상용 프론티어 모델과 별개로 커뮤니티·규제 대응 툴킷을 무상 개방. Anthropic이 오픈소스를 기피하는 틈새 공략, EU AI Act·HIPAA 컴플라이언스 현장 채택 가속.",
+        "name": "Privacy Filter (오픈웨이트 PII 탐지)",
+        "isNew": true,
+        "badges": [
+          "agt",
+          "sci"
+        ]
+      },
+      {
+        "url": "https://openai.com/index/announcing-the-stargate-project/",
+        "desc": "MS·Oracle·SoftBank와의 $5,000억 AI 인프라 합작. Amazon과 별도 $1,000억 컴퓨팅 협약. NVIDIA Vera Rubin 수백만 개 탑재 목표.",
+        "name": "Project Stargate",
+        "isNew": false,
+        "badges": [
+          "hw"
+        ]
+      },
+      {
+        "url": "https://openai.com/news/",
+        "desc": "4/17 Cerebras가 Nasdaq IPO S-1 제출 — 티커 CBRS, $35B+ 밸류에 $3B+ 조달 목표(2월 시리즈H $23B 대비 +60%). 2025년 매출 $510M·순익 $87.9M, RPO $24.6B. OpenAI는 3년간 $20B+ 서버 용량 계약, 총 지출 $30B 도달 시 최대 10% Cerebras 지분 취득 워런트 보유·$1B 데이터센터 건설 자금 추가 지원. 3/13 AWS가 Cerebras CS-3를 Bedrock에 배치 결정한 것도 함께 탄력 공급. Stargate($400B)·Amazon($100B) 트랙과 별개 NVIDIA 의존도 축소축.",
+        "name": "Cerebras $20B 다년 컴퓨트 + CBRS IPO",
+        "isNew": true,
+        "badges": [
+          "hw"
+        ]
+      },
+      {
+        "url": "https://openai.com/index/introducing-gpt-rosalind/",
+        "desc": "4/16 출시. 로잘린드 프랭클린의 이름을 딴 첫 라이프사이언스 전용 프론티어 추론 모델. 유전체·단백질 엔지니어링·화학 전반에 파인튜닝, 증거 합성·생물학 가설 생성·실험 설계 자동화. BixBench 공개 SOTA, LABBench2 11개 과제 중 6개에서 GPT-5.4 상회(CloningQA에서 격차 최대). Trusted Access 전용 리서치 프리뷰 — 미국 엔터프라이즈 한정, Amgen·Moderna·Allen Institute·Thermo Fisher 파트너 투입. Anthropic Coefficient Bio 인수에 이은 OpenAI의 바이오 AI 전선 확대.",
+        "name": "GPT-Rosalind (라이프사이언스)",
+        "isNew": true,
+        "badges": [
+          "sci",
+          "agt"
+        ]
+      },
+      {
+        "url": "https://openai.com/index/making-chatgpt-better-for-clinicians/",
+        "desc": "4/23 출시. 미국 면허 의사·NP·PA·약사·심리학자 대상 무료 임상 전용 ChatGPT 워크스페이스, NPI(National Provider Identifier)로 신원 검증. GPT-5.4 기반이지만 본 워크스페이스 응답이 베이스 GPT-5.4·타사 모델·인간 의사 임상 태스크에서 일제 상회, 임상 안전성 검증에서 약 7,000건 응답 중 99.6%가 'safe & accurate' 판정. 동료심사 출처 실시간 인용 클리니컬 서치, CME 자동 추적, 사전승인·차트 정리 등 워크플로우 스킬 커스터마이즈 지원. Better Evidence Network와 협력해 향후 미국 외 클리니션으로 확대 예정 — Anthropic Coefficient Bio·GPT-Rosalind에 이은 의료 AI 전선 본격 확장.",
+        "name": "ChatGPT for Clinicians",
+        "isNew": true,
+        "badges": [
+          "sci",
+          "agt"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://anthropic.com",
+    "name": "Anthropic",
+    "rank": 2,
+    "type": "AI 안전 전문 기업",
+    "focus": "안전·신뢰 기반 엔터프라이즈 AI",
+    "products": [
+      {
+        "url": "https://www.anthropic.com/news",
+        "desc": "5/8 샌프란시스코 Code with Claude 개발자 컨퍼런스 - Dario Amodei 키노트에서 'Q1 매출·사용량이 연환산 기준 80배 가속(전망 10배 대비 8배 초과)' 명시적 정량 공개. SpaceX Colossus 1 컴퓨트 단독 임대(300MW+·NVIDIA H100/H200/GB200 220K+ GPU)가 단일 캐파 라인업, 5/4 Blackstone·Goldman·H&F $1.5B 합작벤처 + 5/5 금융 서비스 에이전트 10종(피치북·KYC·신용 분석·M&A 듀딜·재무제표·리스크 모델링·포트폴리오 모니터링·규제 컴플라이언스) + Microsoft 365 네이티브 통합이 최근 2주 누적 채널. 신규 발표 - ①Memory 기능 정식(세션 간 장기 컨텍스트·선호 파일시스템 영구 저장·감사 로그) ②멀티에이전트 오케스트레이션(복수 매니지드 에이전트가 단일 작업 분담·중간 결과 공유) ③Claude Opus 4.7의 금융 본업 특화 성능 강조(SWE-Bench Pro 64.3% + 회계·M&A 도메인 벤치 1위). $900B 라운드 5월 보드 결정 + 10월 IPO $400~500B 카운트다운 베이스에 매출 가속 단일 정량 입증.",
+        "name": "5/8 Code with Claude Dev Conference (SF) - 80배 매출 가속·Memory·멀티에이전트 오케스트레이션",
+        "isNew": true,
+        "badges": [
+          "llm",
+          "agt",
+          "code"
+        ]
+      },
+      {
+        "url": "https://www.anthropic.com/news/higher-limits-spacex",
+        "desc": "5/6 공식 발표 - Anthropic이 SpaceX의 테네시 Colossus 1 데이터센터 전체 컴퓨트 캐파(300MW+·NVIDIA H100/H200/GB200 220,000+ GPU)를 단독 임대. 한 달 안에 즉시 가동 가능한 추가 캐파로 IPO $900B 밸류 베이스를 기술적으로 정량화. 동시에 ①Claude Code 5시간 한도 Pro·Max·Team·Enterprise 전 유료 티어 2배 확대 ②Pro·Max 피크 시간대 한도 축소 폐지 ③Claude Opus 모델 API 한도 '상당폭' 상향. 4/23 Axios가 보도한 컴퓨트 한도 타이트닝·주기적 아웃티지 성장통의 단기 해소 라인. 추가로 Anthropic이 SpaceX와 '다중 기가와트 궤도 AI 컴퓨트' 공동 개발 의향을 공식 명시 - 우주 데이터센터 '언제'의 영역으로 진입. xAI 본사 격인 Colossus를 라이벌이 임차하는 구도로 Musk는 'No one set off my evil detector' 코멘트. SpaceX는 IPO 직전 AI 인프라 스토리라인을 정량 입증, Anthropic은 Google TPU 5GW + AWS 1GW + CoreWeave 다년 + Colossus 1 단독으로 컴퓨트 다변화 누적.",
+        "name": "SpaceX Colossus 1 컴퓨트 인수 + Claude 사용량 한도 2배 확대",
+        "isNew": true,
+        "badges": [
+          "agt",
+          "hw"
+        ]
+      },
+      {
+        "url": "https://red.anthropic.com/2026/mythos-preview/",
+        "desc": "4/7 공개 — 역대 가장 강력한 모델이나 공개 배포 없음. 17개/18개 벤치마크 1위. CyberGym 취약점 재현 83.1%(Opus 4.6 66.6%). 17년 된 FreeBSD 원격 코드 실행 취약점(CVE-2026-4747) 완전 자율 발견·익스플로잇. 'Opus 위의 새로운 티어(코드명 Capybara)'. Project Glasswing으로 사이버보안 방어 기업 40여 곳·NSA·Apple·AWS·Cisco·JPMorgan 등 52개 검증 조직에 제한 배포, 방어자에게 $1억 크레딧 제공. 4/21~22 미공개 침해 사건 보도 — 외부 그룹이 Anthropic 명명 규칙 추론으로 API URL을 맞춰 출시 당일부터 접속 유지, 제3자 벤더(Mercor 데이터 유출에서 파생) 환경 통한 접근으로 확인. Anthropic은 공식 조사 착수를 인정. 사용은 공격이 아닌 탐색 수준이지만 '너무 위험해 비공개'한 모델의 첫 외부 노출 사례로 AI 보안 거버넌스 전반에 경종.",
+        "name": "Claude Mythos Preview + Project Glasswing",
+        "isNew": true,
+        "badges": [
+          "llm",
+          "code",
+          "sci"
+        ]
+      },
+      {
+        "url": "https://www.anthropic.com/news/claude-opus-4-7",
+        "desc": "4/16 정식 출시. SWE-bench Pro 64.3%(GPT-5.4 57.7% 상회)·코딩 벤치 +13%·에이전틱 추론 +14%·툴 에러 1/3 감소. 3.75MP 고해상도 비전(Opus 4.6 1.15MP 대비 3배). 새 xhigh effort 레벨·장시간 에이전트 메모리 개선·사이버보안 자동 차단 최초 탑재. API·claude.ai·Bedrock·Vertex·Foundry 동시 공개, Opus 4.6과 동일 가격.",
+        "name": "Claude Opus 4.7",
+        "isNew": true,
+        "badges": [
+          "llm",
+          "code",
+          "agt"
+        ]
+      },
+      {
+        "url": "https://www.anthropic.com/news",
+        "desc": "5/4 WSJ·Reuters 보도 - Anthropic·Blackstone·Hellman&Friedman 각 약 $300M + Goldman Sachs 약 $150M + General Atlantic 등이 합산 $1.5B 합작벤처를 마무리 단계, 사모펀드 보유 기업에 Anthropic AI를 도입하는 컨설팅 합작사 형태. 4/30 TechCrunch '$900B 라운드 최대 2주 내 마감 가능' 후속 - 신규 $50B 펀딩 라운드를 $900B 밸류로 검토 중, 5월 보드 미팅 결정 임박, 한 기관이 $5B 단일 수표를 제안했으나 CFO Krishna Rao 미팅조차 못 잡을 정도의 수요 압축. 매출 런레이트 3월 기준 $39B 연환산, OpenAI $24~25B 컨센 $14B 손실 베이스 대비 마진 우위. 5/1 Counterpoint Research 데이터로 Q1 글로벌 LLM 매출 점유율 31.4%로 OpenAI 29% 추월 - 매출 단독 1위 첫 기록. 5/1 Alphabet Q1 GAAP 순익 $62.6B 중 약 $28.7B가 Anthropic 등 사적 지분 평가익에서 발생함이 외부 정량화 - Alphabet·Amazon 빅테크 GAAP 실적의 회계 채널 전이 가시화. 다만 5/1 美 국방부 7사 AI 계약(SpaceX·OpenAI·Google·MSFT·NVIDIA·AWS·Reflection)에서 단독 배제 - 안전 가드레일 견지로 트럼프 행정부 블랙리스트 잔존, 백악관 재논의 진행 중. 성사 시 OpenAI($852B) 추월·사상 가장 비싼 AI 스타트업. 4/24 Alphabet 최대 $40B + Amazon $25B + AWS 10년 $100B+ + NEC 30,000명 배포 누적. 10월 IPO $400~500B 타겟. Goldman·JPM 주관, $1M+ 엔터 1,000+, 매출 80% B2B.",
+        "name": "매출·인프라·밸류 마일스톤",
+        "isNew": true,
+        "badges": [
+          "llm",
+          "agt"
+        ]
+      },
+      {
+        "url": "https://www.anthropic.com/news",
+        "desc": "5/5 공식 출시 - 금융 서비스 전용 AI 에이전트 10종을 동시 데뷔. 피치북 자동 생성·KYC(고객 신원 확인) 검증·신용 분석·시장 리서치·포트폴리오 모니터링·규제 컴플라이언스 점검·M&A 듀딜리전스·재무제표 분석·리스크 모델링·고객 응대 자동화 등 'time-consuming' 금융 본업 전반을 커버. 동시에 Claude가 Microsoft Excel·PowerPoint 등 MS 365 비즈니스 제품에 네이티브 통합 - Office Side Pane에서 직접 호출, MS Copilot과 실질 경쟁 구도 진입. Dun & Bradstreet·Verisk·Moody's 등 금융 데이터 플랫폼과 추가 파트너십 동시 발표. 5/4 Blackstone·Goldman·H&F $1.5B 합작벤처 라인 + 5/5 Big4·금융 데이터 양 채널 선점 = OpenAI x PwC 채널 대응. India 시장 동시 진출(5/5)과 결합돼 글로벌 엔터프라이즈 채널 가속, IPO $900B 밸류 베이스에 직접 정량 입증 라인.",
+        "name": "Claude Financial Services Agents (10종) + Microsoft 365 통합",
+        "isNew": true,
+        "badges": [
+          "agt",
+          "code"
+        ]
+      },
+      {
+        "url": "https://www.anthropic.com/news",
+        "desc": "4/2 약 $40억 규모 주식 인수 — 라이프사이언스 R&D 파이프라인 진입. 2025년 12월 Bun(JS 런타임, Claude Code 인프라), 2026년 2월 Vercept(컴퓨터 사용 에이전트)에 이은 세 번째 전략 인수. Anthropic의 과학·생명공학 AI 확장 본격화.",
+        "name": "Coefficient Bio 인수",
+        "isNew": false,
+        "badges": [
+          "sci",
+          "agt"
+        ]
+      },
+      {
+        "url": "https://claude.ai",
+        "desc": "Claude.ai 기본 무료 모델. API $3/$15(100만 토큰). 엔터프라이즈 코딩 시장 점유율 50% 기여. 4/4 OpenClaw 등 서드파티 에이전틱 하네스로의 구독 사용 제한 — 추론 용량을 고가치 엔터프라이즈 고객에 집중.",
+        "name": "Claude Sonnet 4.6",
+        "isNew": false,
+        "badges": [
+          "llm",
+          "code"
+        ]
+      },
+      {
+        "url": "https://www.axios.com/2026/04/23/anthropic-openai-showdown",
+        "desc": "4/23 Axios 보도 — $800B 밸류 IPO를 앞두고 복합적 난제 부각. ①Opus 4.6 성능 저하 루머로 일부 개발자 '조용한 다운그레이드' 의혹 제기, Anthropic은 의도적 조정 없음을 재확인. ②폭발적 수요로 컴퓨트 한도 타이트닝·주기적 아웃티지 발생, Google·Broadcom 3.5GW TPU와 AWS $100B 약정이 본격 가동되는 2027년 전까지 성장통 불가피. ③Claude Code가 $20/월 Pro 플랜에서 제외된 사실을 일부 사용자가 발견·대규모 반발 후 '소수 A/B 테스트'라고 해명. 동시에 OpenAI CRO Denise Dresser의 내부 메모가 Anthropic을 '엘리트주의'로 공격하고 매출 런레이트 $10억 과대 계상 의혹 제기, Altman은 팟캐스트에서 '공포 기반 마케팅' 비판. 경쟁·공급·브랜드 3중 압박 구간.",
+        "name": "IPO 앞둔 공급·신뢰 성장통",
+        "isNew": true,
+        "badges": [
+          "agt"
+        ]
+      },
+      {
+        "url": "https://claude.ai",
+        "desc": "4/16 Opus 4.7과 동시 공개. 자연어 프롬프트로 웹사이트·랜딩 페이지·프레젠테이션을 자동 생성. Figma 연동(AI 코드→편집 가능 디자인 변환)·Word·PPT 통합. Adobe·Wix·Figma 주가 -2%+ 하락 유발. 비개발자도 사용 가능한 프로덕트로 Anthropic의 순수 모델 회사 탈피 신호.",
+        "name": "AI 디자인 도구 (웹·프레젠테이션)",
+        "isNew": true,
+        "badges": [
+          "ui",
+          "code"
+        ]
+      },
+      {
+        "url": "https://docs.anthropic.com/en/docs/claude-code/overview",
+        "desc": "4/14 Mac·Windows 데스크탑 앱 전면 리디자인 + 'Routines' 리서치 프리뷰 공개. 멀티 세션 사이드바(Mission Control)·드래그앤드롭 레이아웃·통합 터미널·인앱 파일 에디터·HTML/PDF 프리뷰. Routines는 클라우드에서 실행되는 스케줄링·API 트리거·GitHub 이벤트 기반 반복 자동화 — Mac 오프라인 상태에서도 가동, Pro 5건/일·Max 15건·Team/Enterprise 25건. 엔터프라이즈 AI 코딩 50%+ 점유 유지.",
+        "name": "Claude Code 데스크탑 + Routines",
+        "isNew": true,
+        "badges": [
+          "code",
+          "agt"
+        ]
+      },
+      {
+        "url": "https://modelcontextprotocol.io",
+        "desc": "AI 에이전트 간 통신 표준 프로토콜. Linux Foundation 오픈 거버넌스 이관. 3월 누적 설치 9,700만 건 돌파. 4/6 OpenAI·Google과 Frontier Model Forum 통해 대중국 적대적 증류(distillation) 공동 대응 — DeepSeek·Moonshot·MiniMax 등 3개사 2.4만 가짜 계정, 1,600만 건 추출 적발. 업계 최초 위협 인텔리전스 공유.",
+        "name": "MCP (Model Context Protocol)",
+        "isNew": false,
+        "badges": [
+          "agt"
+        ]
+      },
+      {
+        "url": "https://claude.ai",
+        "desc": "3월 전체 사용자 롤아웃. 대화 간 컨텍스트·선호도 기억 유지. 엔터프라이즈 커스터마이저블 플러그인: 기업 소프트웨어 내 태스크 자율 실행.",
+        "name": "메모리 기능 + 엔터프라이즈 플러그인",
+        "isNew": false,
+        "badges": [
+          "agt"
+        ]
+      },
+      {
+        "url": "https://www.anthropic.com/news",
+        "desc": "4/24 퍼블릭 베타. 매니지드 에이전트가 세션 간 학습 내용을 파일시스템에 영구 저장하고 다른 에이전트와 공유. Bash·코드 실행 권한 활용해 장기 작업 누적, 모든 메모리 변경은 감사 로그로 추적·롤백·삭제 가능. Netflix·Rakuten·Wisedocs·Ando 등이 워크플로우 자동화에 조기 도입 — 엔터프라이즈 에이전트 운영의 핵심 미싱 피스 충족.",
+        "name": "Memory for Claude Managed Agents",
+        "isNew": true,
+        "badges": [
+          "agt",
+          "code"
+        ]
+      },
+      {
+        "url": "https://www.anthropic.com/news",
+        "desc": "5/6 Code with Claude 컨퍼런스 공개. Claude 에이전트가 세션 사이 비활성 시간에 과거 100건까지의 트랜스크립트를 자동 리뷰하고 반복 패턴·실수·팀 공통 선호를 추출해 메모리 스토어를 재정리하는 스케줄드 프로세스 - 원본 세션 데이터는 건드리지 않고 중복 병합·모순 제거·신규 인사이트만 추출. 'Single agent가 자신의 관점으로는 볼 수 없는 패턴을 표면화한다'고 Anthropic이 정의. 법률 AI Harvey가 도입 후 태스크 완료율 6배 가속을 정량 보고. 리서치 프리뷰 단계로 개발자 사전 신청 후 단계 배포. 4/24 Memory 베타 + 5/8 멀티에이전트 오케스트레이션 라인업과 결합돼 매니지드 에이전트의 장기 학습 레이어 완성.",
+        "name": "Claude 'Dreaming' (리서치 프리뷰)",
+        "isNew": true,
+        "badges": [
+          "agt",
+          "sci"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://deepmind.google",
+    "name": "Google DeepMind",
+    "rank": 3,
+    "type": "AI 연구 + 빅테크",
+    "focus": "멀티모달·과학 AI 통합",
+    "products": [
+      {
+        "url": "https://gemini.google.com",
+        "desc": "2026년 가장 의미 있는 Gemini 릴리즈. 200만 토큰 컨텍스트(공개 모델 최대), 텍스트·이미지·오디오·비디오 네이티브 동시 추론 — 전사 단계 없이 직접 처리. Advanced 플랜·AI Studio·API에서 순차 롤아웃. Google Search AI Overviews 통합 심화. Gemini 월간 사용자 7.5억 명 돌파.",
+        "name": "Gemini 3.1 Ultra",
+        "isNew": false,
+        "badges": [
+          "llm",
+          "agt",
+          "vid"
+        ]
+      },
+      {
+        "url": "https://gemini.google.com",
+        "desc": "4/29 장후 Alphabet Q1 매출 $109.9B +22% 컨센 $107.1B 상회, EPS $5.11 컨센 $2.62 압도. Google Cloud $20.03B +63% 컨센 $18.4B 상회, 백로그 $460B QoQ 두 배 폭증. Pichai 컨콜 '단기 컴퓨트 제약' 직접 명시 — 수요가 공급 초과. Gemini Enterprise 유료 MAU QoQ +40%, 자사 모델 분당 160억 토큰 처리 +60% QoQ. CapEx $180~190B로 상향($175~185B에서). 16개 주요 벤치마크 중 13개 1위, ARC-AGI-2 77.1%·GPQA Diamond 94.3%. 4/22 Cloud Next에서 Gemini 3.2 공식 발표 임박. Apple이 Google을 선호 클라우드 파트너로 선정. 4/24 Anthropic 최대 $40B 투자·5GW TPU 전담 공급 공식화. Gemini 월 사용자 7.5억 돌파.",
+        "name": "Gemini 3.1 Pro / 3.2 발표",
+        "isNew": true,
+        "badges": [
+          "llm",
+          "agt"
+        ]
+      },
+      {
+        "url": "https://ai.google.dev/gemini-api/docs/models",
+        "desc": "Flash-Lite: 입력 100만 토큰당 $0.25. Flash: 구글 검색 전 세계 롤아웃 완료. Samsung Galaxy와 협력해 멀티스텝 모바일 AI 에이전트 시연.",
+        "name": "Gemini 3.1 Flash / Flash-Lite",
+        "isNew": false,
+        "badges": [
+          "llm"
+        ]
+      },
+      {
+        "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-tts/",
+        "desc": "4/15 퍼블릭 프리뷰 출시. 70+ 언어·30개 음성·네이티브 멀티스피커 다이얼로그 지원, 200+ 오디오 태그로 감정·페이싱·억양·포맷 템플릿 네이티브 제어. $0.50/1M 글자, AI Studio 무료 프로토타이핑·Vertex AI 엔터프라이즈. Artificial Analysis TTS 리더보드 Elo 1,211 종합 2위(1위 ElevenLabs), OpenAI·Amazon Polly 상회. xAI Grok Speech(4/17)·ElevenLabs와 정면 경쟁 구도.",
+        "name": "Gemini 3.1 Flash TTS",
+        "isNew": true,
+        "badges": [
+          "agt",
+          "sci"
+        ]
+      },
+      {
+        "url": "https://ai.google.dev/gemma",
+        "desc": "4월 2일 Apache 2.0 라이선스로 출시. 모바일 ~ 워크스테이션 4가지 사이즈. 네이티브 비전·오디오·140개 이상 언어 지원. Gemini 3.1 Pro 동일 연구 기반. 상업적 제한 없음. Gemma 계열 누계 다운로드 4억 회 돌파. 하드웨어 요건이 낮아 개발자·스타트업 접근성 최고.",
+        "name": "Gemma 4 (오픈소스)",
+        "isNew": false,
+        "badges": [
+          "llm"
+        ]
+      },
+      {
+        "url": "https://deepmind.google/technologies/gemini-robotics/",
+        "desc": "4/14 공개. 공간 추론·다뷰 성공 감지·'에이전틱 비전' 강화 — 고정밀 산업 태스크용. Boston Dynamics와 공동 개발로 Atlas·Spot이 아날로그 게이지·온도계·디지털 판독값을 시설 점검 중 해석 가능. Gemini API·AI Studio에서 배포. Orbit 소프트웨어 AIVI 시스템 통합.",
+        "name": "Gemini Robotics-ER 1.6",
+        "isNew": true,
+        "badges": [
+          "agt",
+          "sci"
+        ]
+      },
+      {
+        "url": "https://cloud.google.com/gemini",
+        "desc": "4/22 Cloud Next 키노트 공개. Vertex AI를 Gemini Enterprise Agent Platform으로 리브랜딩, Agentspace를 흡수해 단일 Gemini Enterprise 제품으로 통합. Workspace Studio는 Gmail·Docs·Sheets·Drive·Meet·Chat 전반에서 자연어 프롬프트로 AI 에이전트를 빌드·배포하는 노코드 플랫폼. Agent Designer(비주얼 플로우 캔버스) 프리뷰, Agent Engine Sessions·Memory Bank GA로 지속 컨텍스트 관리. 2,000개 엔터프라이즈 고객 공개 사례, GE Appliances·Deutsche Bank 대형 계약 발표.",
+        "name": "Gemini Enterprise + Workspace Studio",
+        "isNew": true,
+        "badges": [
+          "agt",
+          "code",
+          "ui"
+        ]
+      },
+      {
+        "url": "https://cloud.google.com/tpu",
+        "desc": "4/22 Cloud Next 공개. 8세대 커스텀 AI 칩을 목적별로 분리 — 8t는 트레이닝 전용, 8i는 인퍼런스 전용. 동시에 NVIDIA 기반 시스템이 Google Cloud에서 더 효율적으로 작동하도록 네트워킹 공동 엔지니어링 협업 발표(경쟁과 협력 병행). Anthropic 3.5GW TPU 딜과 Apple Foundation Models 트레이닝 수요가 수요 기반.",
+        "name": "TPU 8세대 (8t / 8i)",
+        "isNew": true,
+        "badges": [
+          "hw"
+        ]
+      },
+      {
+        "url": "https://stitch.withgoogle.com",
+        "desc": "3월 19일 대규모 리디자인 공개. 자연어·음성·이미지·코드 → 고품질 UI 자동 생성. AI 네이티브 무한 캔버스 + 디자인 에이전트. Claude Code·Cursor·Gemini CLI와 MCP 서버 연동. Figma 주가 8% 급락. 월 350회 무료.",
+        "name": "Stitch (AI UI 디자인 캔버스)",
+        "isNew": false,
+        "badges": [
+          "ui",
+          "code",
+          "agt"
+        ]
+      },
+      {
+        "url": "https://deepmind.google/technologies/veo/",
+        "desc": "최상위 동영상 생성 모델. 텍스트/이미지→고품질 동영상. 현실적 물리 법칙 시뮬레이션. OpenAI Sora 단독 앱 종료로 사실상 비디오 AI 1위 포지션 강화.",
+        "name": "Veo 3",
+        "isNew": false,
+        "badges": [
+          "vid"
+        ]
+      },
+      {
+        "url": "https://deepmind.google/technologies/imagen-3/",
+        "desc": "Gemini 3 기반 최상위 이미지 생성·편집. 캐릭터 일관성 유지, 고정밀 편집 특화.",
+        "name": "Imagen / Nano Banana 2",
+        "isNew": false,
+        "badges": [
+          "img"
+        ]
+      },
+      {
+        "url": "https://alphafold.ebi.ac.uk",
+        "desc": "AlphaFold 3: 단백질·DNA·소분자 상호작용 예측. AlphaEvolve: Gemini 기반 알고리즘 발견. NVIDIA와 MuJoCo-Warp 공동 개발: 로보틱스 ML 70배 가속. Intrinsic(산업 로보틱스) DeepMind 편입.",
+        "name": "AlphaFold 3 / AlphaEvolve",
+        "isNew": false,
+        "badges": [
+          "sci"
+        ]
+      },
+      {
+        "url": "https://cloud.google.com/vertex-ai",
+        "desc": "Gemini CLI: 개발자용 오픈소스 AI 에이전트. Vertex AI: 엔터프라이즈 맞춤 모델 구축. Google Cloud AI 매출 $150억+(2025년).",
+        "name": "Gemini CLI / Vertex AI",
+        "isNew": false,
+        "badges": [
+          "code",
+          "agt"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://x.ai",
+    "name": "xAI",
+    "rank": 4,
+    "type": "AI 전문 기업 (Elon Musk)",
+    "focus": "추론 특화 + 피지컬 AI 확장",
+    "products": [
+      {
+        "url": "https://x.com",
+        "desc": "4/17 iOS 정식 출시. 암호화 메신저·음성·영상통화·대형 그룹·파일 공유를 전화번호 없이 지원, 46개 언어·X 계정 로그인. Grok 엔진 네이티브 탑재로 채팅 내 문서 요약·질문 응답·일정 계획 실행. WeChat·WhatsApp 대항마 포지셔닝, X Money 결제·Grok Computer 확장 예정. Android는 이후 출시 예고. Musk의 'Everything App' 전환 첫 실체화 단계.",
+        "name": "XChat (슈퍼앱 + Grok 통합)",
+        "isNew": true,
+        "badges": [
+          "agt",
+          "llm"
+        ]
+      },
+      {
+        "url": "https://x.ai/grok",
+        "desc": "2월 출시, 3/3 Beta 2 업데이트로 지시 따르기·환각 감소·LaTeX 강화. 업계 최초 네이티브 멀티에이전트 추론 구조 — 복잡한 쿼리마다 4개 전문 에이전트(Grok·Harper·Benjamin·Lucas)가 병렬 실행, 실시간 토론 후 단일 답변 생성. Alpha Arena 실거래 AI 투자 경쟁에서 유일하게 수익 달성. X 플랫폼 실시간 데이터 접근. API 공개.",
+        "name": "Grok 4.20 (멀티에이전트 아키텍처)",
+        "isNew": false,
+        "badges": [
+          "llm",
+          "agt"
+        ]
+      },
+      {
+        "url": "https://x.ai/grok",
+        "desc": "Q2 2026 목표. 6조 파라미터 MoE 아키텍처 — 역대 공개 발표 모델 중 최대 규모. Colossus 2 슈퍼클러스터(1.5GW 풀 가동)에서 훈련 중. 스케일 베팅: '가장 큰 모델이 가장 강하다'는 가정 검증 예정.",
+        "name": "Grok 5 (출시 예정)",
+        "isNew": true,
+        "badges": [
+          "llm"
+        ]
+      },
+      {
+        "url": "https://x.ai/grok",
+        "desc": "4/17 iOS·Android·웹 얼리 액세스 — SuperGrok Heavy($300/월) 전용. 0.5T 파라미터 체크포인트 라이브, 1T 버전 훈련 최종 5일 앞. 네이티브 PDF·PPT·스프레드시트 생성과 비디오 인풋 추가, 롱컨텍스트·멀티모달 비디오 이해 집중 강화. Musk는 'SpaceXAI 모델 팩토리' 가동으로 2주마다 베이스 모델 갱신·일일 개선 방침 명시. 공식 블로그·모델카드 미공개로 소프트 런치 형태.",
+        "name": "Grok 4.3 Beta",
+        "isNew": true,
+        "badges": [
+          "llm",
+          "vid",
+          "agt"
+        ]
+      },
+      {
+        "url": "https://x.ai/grok",
+        "desc": "Grok 4.1: LMArena Text Arena 1위(Elo 1483). ARC-AGI v2 15.9% SOTA, Humanity's Last Exam 25.4%. 'Think'·'Big Brain' 고급 추론 모드.",
+        "name": "Grok 4.1 / Grok 4 시리즈",
+        "isNew": false,
+        "badges": [
+          "llm"
+        ]
+      },
+      {
+        "url": "https://x.ai",
+        "desc": "2/2 출시. 15초 720p 영상+동기화 오디오·배경음악·효과음 생성. 4/3 Speed/Quality 듀얼 모드 추가 — Quality 모드는 고해상도 4장, Speed 모드는 초고속 생성. 음성 프롬프트·키즈 세이프 모드 지원. Imagine 2.0(표정·오디오 일관성 대폭 강화) 수주 내 출시 예정. Pro 모드도 4월 중 공개 예고.",
+        "name": "Grok Imagine (비디오 생성)",
+        "isNew": false,
+        "badges": [
+          "vid"
+        ]
+      },
+      {
+        "url": "https://x.ai/news/grok-stt-and-tts-apis",
+        "desc": "4/17 출시. Grok Voice·Tesla 차량·Starlink 고객지원을 구동하는 스택을 엔터프라이즈 개발자용 독립 API로 공개. STT는 25+ 언어·단어별 타임스탬프·스피커 다이어라이제이션·멀티채널·배치 $0.10/시간·스트리밍 $0.20/시간. TTS는 [laugh]·[sigh]·[whisper] 등 감정 태그 지원, 5개 음성·20+ 언어·$4.20/1M 글자. 전화 통화 엔티티 인식 오류율 5.0%로 ElevenLabs(12%)·Deepgram(13.5%)·AssemblyAI(21.3%) 대비 우위 주장. ElevenLabs·Deepgram 정면 경쟁 포지셔닝.",
+        "name": "Grok Speech STT/TTS API",
+        "isNew": true,
+        "badges": [
+          "agt",
+          "llm"
+        ]
+      },
+      {
+        "url": "https://x.ai",
+        "desc": "2/2 사상 최대 합병 완료: SpaceX $1T + xAI $250B = $1.25T. 4/10 CFO Armstrong 퇴임, SpaceX Starlink VP Michael Nicholls가 xAI 사장 취임. Grok-Sat 프로토타입 LEO 테스트 확인. Colossus 2 슈퍼클러스터(1.5GW). SpaceX $1.75T IPO 추진 중.",
+        "name": "xAI-SpaceX 합병 ($1.25T)",
+        "isNew": false,
+        "badges": [
+          "hw",
+          "sci"
+        ]
+      },
+      {
+        "url": "https://x.ai",
+        "desc": "4/21~22 SpaceX가 Cursor 모회사 Anysphere와 하반기 내 $60B에 전량 인수할 수 있는 옵션 계약 체결, 합병 불발 시 양사 공동 작업 대가로 $10B 브레이크업 수수료 지급. SpaceX는 $1.75T IPO를 앞두고 $60B 인수 클로징을 지연시키는 선제 락업 구조 선택, Microsoft도 사전에 Cursor 인수를 타진했으나 SpaceX가 선점. 4월 Grok 코딩 역량이 Claude Code·Codex 대비 열세로 판정되며 Musk 직권으로 대규모 구조조정·재건 지시, 4/12 Grok 트레이너 500명 감원·공동창업자 9명째 이탈(잔존 2명). 4/14 Cursor 제품엔지니어링 리더 Andrew Milich·Jason Ginsberg 영입에 이어 옵션 행사 시 Anysphere의 엔지니어 전량·분포 채널·ARR을 xAI/SpaceX로 흡수, Colossus 2의 100만 H100 등가 슈퍼클러스터와 결합한 '세계 최강 코딩 모델' 구축이 목표.",
+        "name": "Grok 코딩 팀 재건 + SpaceX $60B Cursor 인수 옵션",
+        "isNew": true,
+        "badges": [
+          "code",
+          "agt"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://ai.meta.com",
+    "name": "Meta AI",
+    "rank": 5,
+    "type": "빅테크 (AI 재건 전략)",
+    "focus": "슈퍼인텔리전스 연구 + 광고 AI 통합",
+    "products": [
+      {
+        "url": "https://meta.ai",
+        "desc": "4/29 장후 Meta Q1 매출 $56.31B +33% 컨센 $55.45B 상회, 광고 +33%로 AI 광고 추천엔진 가속 입증. CapEx $125~145B로 상향($115~135B에서) — Susan Li CFO '슈퍼인텔리전스 베팅·자체 칩·NVIDIA GPU 동시 가속' 명시, 인건비 8,000명 감원으로 'payroll → AI capex' 구조 전환 본격화. 영업이익률 41% 유지. DAP 3.56B 컨센 3.62B 하회로 AH -6%. 4/8 Muse Spark는 전직 Scale AI CEO Alexandr Wang 주도 Meta Superintelligence Labs 첫 모델(Avocado). Artificial Analysis Intelligence Index 4위(52점), 10배 적은 컴퓨팅으로 Opus급 성능 주장. meta.ai 및 Meta AI 앱 제공. 사설 API 프리뷰 선별 파트너.",
+        "name": "Muse Spark (Meta Superintelligence Labs)",
+        "isNew": true,
+        "badges": [
+          "llm",
+          "agt"
+        ]
+      },
+      {
+        "url": "https://llama.meta.com",
+        "desc": "멀티모달 오픈소스. Scout: 경량, Maverick: 400B 파라미터, 1,000만 토큰 컨텍스트 윈도우. Hugging Face 누계 3.5억+ 다운로드. Muse Spark 등장으로 Meta의 오픈소스 플래그십 역할로 재포지셔닝.",
+        "name": "Llama 4 (Scout / Maverick)",
+        "isNew": false,
+        "badges": [
+          "llm",
+          "agt"
+        ]
+      },
+      {
+        "url": "https://meta.ai",
+        "desc": "Instagram·WhatsApp·Facebook·Messenger 통합. 5억 사용자 돌파. 곧 Muse Spark로 엔진 교체 예정. Ray-Ban Meta 스마트 글라스 'Hear Better' AI 기능 탑재.",
+        "name": "Meta AI (소비자 어시스턴트)",
+        "isNew": false,
+        "badges": [
+          "agt"
+        ]
+      },
+      {
+        "url": "https://ai.meta.com/blog/",
+        "desc": "2025년 말 인수. Ads Manager에 네이티브 통합. 시장 조사·보고서 작성·캠페인 분석 등 멀티스텝 태스크 자율 실행.",
+        "name": "Manus AI (자율 에이전트)",
+        "isNew": false,
+        "badges": [
+          "agt"
+        ]
+      },
+      {
+        "url": "https://ai.meta.com",
+        "desc": "4/17 공개. 4세대 커스텀 실리콘 로드맵을 2027년까지 단계 배포 — Broadcom 공동설계, 학습·추론 분리 가속기 포함. Broadcom과 1GW 이상 컴퓨트 다년 파트너십 확장(2029년까지). 연 $1,200억 AI CapEx 방어를 위한 NVIDIA 의존도 축소 본격화. Llama·Muse Spark 차세대 훈련에 투입 예정.",
+        "name": "MTIA 300/400/450/500 (자체 AI 칩)",
+        "isNew": true,
+        "badges": [
+          "hw"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://microsoft.com/en-us/ai",
+    "name": "Microsoft",
+    "rank": 6,
+    "type": "빅테크 (AI 통합 전략)",
+    "focus": "생산성 AI 전면 통합",
+    "products": [
+      {
+        "url": "https://copilot.microsoft.com",
+        "desc": "4/29 장후 Q1 FY26 매출 $77.7B +18% EPS $4.13 컨센 상회, Azure $21.5B +38% CC — Hood CFO '용량 한계로 +40% 잠재' 발언. OpenAI 지분손실 -$0.41 EPS로 GAAP $3.72(+13%)로 둔화, Microsoft 자체 자본은 견조. FY26 CapEx 증가율 FY25 초과 가이던스 — '가속 수요' 명시. 4/27 OpenAI 파트너십 전면 개편으로 Anthropic·자체 모델 자립 동시 추구. Word·Excel·Outlook·Teams·Windows 전제품 AI화, M365 Copilot 유료 시트 1월 1,500만(+160% YoY). 4/23 51년 첫 자발적 바이아웃 8,750명 美 인력 5월 신청 마감 — 'payroll → AI capex' 전환 가속.",
+        "name": "Microsoft Copilot (M365 통합)",
+        "isNew": false,
+        "badges": [
+          "agt",
+          "code"
+        ]
+      },
+      {
+        "url": "https://www.microsoft.com/en-us/microsoft-365/blog/2026/03/30/copilot-cowork-now-available-in-frontier/",
+        "desc": "3/30 Frontier 프로그램 GA. 단순 프롬프트-응답을 넘어 다단계 장기 실행 태스크를 M365 내에서 자율 수행. Work IQ로 전체 업무 맥락 파악, 진행 중 사용자 개입 가능. Anthropic Claude 협업 개발. M365 보안·거버넌스·감사 경계 내 운영. 기존 Copilot Tasks를 대체하는 실행 레이어.",
+        "name": "Copilot Cowork",
+        "isNew": false,
+        "badges": [
+          "agt"
+        ]
+      },
+      {
+        "url": "https://azure.microsoft.com/en-us/products/ai-services/openai-service",
+        "desc": "OpenAI 최신 모델을 기업 환경에서 안전하게 활용하는 완전관리형 플랫폼. 대기업 AI 채택의 핵심 채널. Anthropic 모델도 Azure에서 제공.",
+        "name": "Azure OpenAI Service",
+        "isNew": false,
+        "badges": [
+          "llm",
+          "agt"
+        ]
+      },
+      {
+        "url": "https://microsoft.com/en-us/ai",
+        "desc": "Microsoft 슈퍼인텔리전스 팀 개발 자체 텍스트→이미지 모델. 현실감·조명·텍스트 렌더링 대폭 개선. 포스터·인포그래픽 실무 최적화.",
+        "name": "MAI-Image-2",
+        "isNew": false,
+        "badges": [
+          "img"
+        ]
+      },
+      {
+        "url": "https://azure.microsoft.com/en-us/products/phi",
+        "desc": "Phi-4: 3.8B~5.6B 경량 멀티모달. Fara-7B: 브라우저 에이전트·컴퓨터 제어 특화 소형 모델(오픈소스). 엣지·온프레미스 배포 특화.",
+        "name": "Phi-4 / Phi-4 Multimodal / Fara-7B",
+        "isNew": false,
+        "badges": [
+          "llm"
+        ]
+      },
+      {
+        "url": "https://microsoft.com/en-us/research/project/health-futures/",
+        "desc": "복잡 의료 케이스 정확도 85.5%(경험 많은 의사 20% 대비). Bing·Copilot 하루 5천만 건 건강 Q&A 처리.",
+        "name": "MAI-DxO (의료 진단 AI)",
+        "isNew": false,
+        "badges": [
+          "sci"
+        ]
+      },
+      {
+        "url": "https://github.com/features/copilot",
+        "desc": "월간 PR 4,300만 건(+23% YoY), 연간 커밋 10억 건(+25%). Repository Intelligence: 코드 관계·히스토리·전체 맥락 이해. 오류 조기 감지·자동 수정.",
+        "name": "GitHub Copilot / Repository Intelligence",
+        "isNew": false,
+        "badges": [
+          "code"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://www.nvidia.com/en-us/ai",
+    "name": "NVIDIA",
+    "rank": 7,
+    "type": "AI 인프라 기업",
+    "focus": "AI 컴퓨팅 + 피지컬 AI 인프라",
+    "products": [
+      {
+        "url": "https://nvidianews.nvidia.com/news/nvidia-and-iren-announce-strategic-partnership-to-accelerate-deployment-of-up-to-5-gigawatts-of-ai-infrastructure",
+        "desc": "5/7 공식 발표 - NVIDIA·IREN 다년 전략 파트너십으로 IREN 글로벌 데이터센터 파이프라인에 NVIDIA DSX 정렬 AI 인프라 최대 5GW 배치 가속. 핵심 조건 - ①IREN이 NVIDIA에 30M주 보통주 5년 매수권($70 행사가, 최대 $2.1B 투자 권리, 규제 승인 조건) 부여 ②NVIDIA가 IREN으로부터 매니지드 GPU 클라우드 5년 $3.4B 약정 - 내부 AI·연구 워크로드용. 플래그십 배치는 텍사스 Sweetwater 캠퍼스(2GW) - DSX 아키텍처의 첫 대형 레퍼런스 사이트. IREN 5/8 종가 $61.20 +7.65% - Bitcoin 마이닝에서 AI 클라우드로 전환한 캐파 채널이 NVDA의 워런트 + 캡티브 클라우드 라인업으로 정량 입증. 5/6 Corning $500M·5/8 IREN $5.5B 라인을 결합해 NVDA의 5/20 1분기 FY27 컨센 $78.8B 발표 직전 인프라 채널 다변화 시그널 누적.",
+        "name": "IREN 다년 5GW DSX AI 인프라 파트너십",
+        "isNew": true,
+        "badges": [
+          "hw"
+        ]
+      },
+      {
+        "url": "https://nvidianews.nvidia.com/news/nvidia-and-corning-announce-long-term-partnership-to-strengthen-us-manufacturing-for-ai-infrastructure",
+        "desc": "5/6 공식 발표 - NVIDIA가 Corning 주식 워런트 $500M 선매입(현재가 미만 행사권) + 최대 $3.2B 추가 투자 권리 확보. Corning은 美 광 연결 캐파 10배·광섬유 캐파 50%+ 확장에 합의 - 노스캐롤라이나·텍사스 신규 첨단 제조 공장 3곳 + 3,000명 신규 고용 동반. 'AI 팩토리' 빌드아웃 가속을 위해 광섬유·트랜시버 병목을 단일 파트너로 락업하는 구조 - GLW 주가 5/6 정규장 +14~20% 동반 급등으로 광섬유·DC 인프라 카테고리 전반 모멘텀 확장. NVDA는 +5% $206.46 도달, 5/20 1분기 FY27 컨센 $78B·Rubin 풀프로덕션 카운트다운에 추가 후방 시그널. AI 인프라 수직 통합의 다음 레이어 - GPU·HBM·전력에 이어 광 연결까지 직접 자본 락업.",
+        "name": "Corning $500M 워런트 + 최대 $3.2B 광 인프라 파트너십",
+        "isNew": true,
+        "badges": [
+          "hw"
+        ]
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/",
+        "desc": "현 주력 GPU. 전 세대 대비 2.5배 빠르고 25배 에너지 효율. 클라우드 GPU 완판 지속. 시가총액 $5조 돌파.",
+        "name": "Blackwell Ultra (B300)",
+        "isNew": false,
+        "badges": [
+          "hw"
+        ]
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/data-center/vera-rubin/",
+        "desc": "4월 풀 프로덕션 진입 — GTC 2026에서 6개 신규 칩 + Rubin CPX 'massive-context inference' GPU 추가 공개. Meta·CoreWeave 대형 딜 확정. Blackwell 대비 추론 토큰 비용 10배↓·MoE 훈련 GPU 수 4배↓. 하반기 AWS·GCP·Azure·OCI·CoreWeave Rubin 인스턴스 첫 배포.",
+        "name": "Vera Rubin (차세대 슈퍼칩)",
+        "isNew": false,
+        "badges": [
+          "hw"
+        ]
+      },
+      {
+        "url": "https://developer.nvidia.com/isaac/gr00t",
+        "desc": "GTC 2026(3/18) 발표. 세계 최초 오픈 휴머노이드 로봇 파운데이션 모델. N1.7: 상업 라이선스 얼리 액세스. N2(2026년 말 예정): 새로운 태스크 성공률 2배 이상. Agility·Figure·Boston Dynamics·1X 등 채택.",
+        "name": "Isaac GR00T N1.7 / GR00T N2",
+        "isNew": false,
+        "badges": [
+          "agt",
+          "sci"
+        ]
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/solutions/quantum-computing/ising/",
+        "desc": "4/14 공개 — 양자 컴퓨팅 보정·오류정정용 세계 최초 오픈 AI 모델 패밀리. Ising Calibration(비전-언어 모델, 캘리브레이션 일 단위→시간 단위 단축)과 Ising Decoding(3D CNN 2종, 양자 오류정정 디코딩 2.5배 빠르고 3배 높은 정확도). Academia Sinica·Fermilab·Harvard·IQM·Infleqtion·LBNL Advanced Quantum Testbed·UK NPL 등 양자 선도 기관이 도입. NVIDIA의 하이브리드 양자-고전 인프라 지배력 본격 확장, 4/14 NVDA +3.78%(10거래일 연속 상승·2년 최장).",
+        "name": "Ising (오픈 양자 AI)",
+        "isNew": true,
+        "badges": [
+          "sci",
+          "hw"
+        ]
+      },
+      {
+        "url": "https://developer.nvidia.com/isaac/sim",
+        "desc": "Cosmos: 물리 세계 시뮬레이션 AI — 실제 장면 하나에서 수천 개 합성 훈련 데이터 자동 생성. Isaac Sim/Lab 3.0: 디지털 트윈 환경에서 로봇 병렬 학습. ABB·FANUC·KUKA 채택.",
+        "name": "Cosmos 월드 모델 / Isaac Sim 3.0",
+        "isNew": false,
+        "badges": [
+          "agt",
+          "sci"
+        ]
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/products/workstations/dgx-spark/",
+        "desc": "개발자가 로컬에서 대형 모델을 파인튜닝·배포하는 개인용 AI 슈퍼컴퓨터. 클라우드 비용 없이 온프레미스 AI 개발 가능.",
+        "name": "DGX Spark (개인용 AI 슈퍼컴퓨터)",
+        "isNew": false,
+        "badges": [
+          "hw"
+        ]
+      },
+      {
+        "url": "https://developer.nvidia.com/nemotron",
+        "desc": "Nemotron 3 Super: 120B 파라미터 MoE(활성 12B), SWE-Bench 60.47%(오픈소스 최고). NemoClaw: 정책 엔진·가드레일·프라이버시 라우팅 통합 에이전트 배포 스택.",
+        "name": "Nemotron 3 Super / NemoClaw / OpenClaw",
+        "isNew": false,
+        "badges": [
+          "llm",
+          "agt"
+        ]
+      },
+      {
+        "url": "https://www.nvidia.com/en-us/ai-data-science/products/nim-microservices/",
+        "desc": "BioNeMo: 생물학·화학 AI 파운데이션. Earth-2: 날씨·기후 예측 AI. NIM: AI 모델 실서비스 배포 마이크로서비스 플랫폼.",
+        "name": "BioNeMo / Earth-2 / NVIDIA NIM",
+        "isNew": false,
+        "badges": [
+          "sci",
+          "agt"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://aws.amazon.com/ai",
+    "name": "Amazon AWS",
+    "rank": 8,
+    "type": "빅테크 (클라우드 AI)",
+    "focus": "엔터프라이즈 클라우드 AI",
+    "products": [
+      {
+        "url": "https://aws.amazon.com/bedrock/",
+        "desc": "4/29 장후 Amazon Q1 매출 $181.5B +17%, AWS $37.59B +28%로 3년 만 최고 성장률·컨센 +26% 상회. AWS 영업익 $14.2B 사상 최대. Q2 가이던스 $194~199B(+16~19%). 연간 CapEx $200B 유지 — 회수율 우려 Q1 실적으로 일축. Claude·Llama·Nova 등 다수 모델을 단일 API로 제공. Kiro 자율 코딩 에이전트·DevOps Agent·Security Agent 운영. OpenAI와 $1,000억 컴퓨팅 파트너십. 4/27 Microsoft 독점 종료로 OpenAI 모델 Bedrock에 직접 호스팅 가능 — Jassy '곧 도입' 코멘트.",
+        "name": "Amazon Bedrock",
+        "isNew": false,
+        "badges": [
+          "llm",
+          "agt"
+        ]
+      },
+      {
+        "url": "https://aws.amazon.com/machine-learning/trainium/",
+        "desc": "Trainium3 칩 144개 탑재. Trainium2 대비 성능 4배·에너지 효율 40% 개선. Trainium 사업 연환산 $20B 돌파(Jassy 4/9 서한). Trainium2 전량 소진, Trn3도 거의 완판. 서드파티 랙 직접 판매 검토 — NVIDIA 직접 경쟁 시사.",
+        "name": "Trainium3 / Trn3 UltraServer",
+        "isNew": false,
+        "badges": [
+          "hw"
+        ]
+      },
+      {
+        "url": "https://aws.amazon.com/ai/generative-ai/nova/",
+        "desc": "AWS 자체 파운데이션 모델. Micro~Pro 다단계 라인업. 텍스트·이미지·비디오 멀티모달 지원.",
+        "name": "Amazon Nova 모델 패밀리",
+        "isNew": false,
+        "badges": [
+          "llm",
+          "img"
+        ]
+      },
+      {
+        "url": "https://aws.amazon.com/ai/infrastructure/",
+        "desc": "2026년 설비투자 $2,000억(대부분 AI). 데이터센터 용량 2배(850MW→1.7GW). 전체 하이퍼스케일러 capex $4,700억 예상.",
+        "name": "AWS 인프라 투자",
+        "isNew": false,
+        "badges": [
+          "hw"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://apple.com/apple-intelligence",
+    "name": "Apple",
+    "rank": 9,
+    "type": "빅테크 (온디바이스 AI)",
+    "focus": "하드웨어-소프트웨어 AI 완전 통합",
+    "products": [
+      {
+        "url": "https://www.apple.com/newsroom/2026/04/tim-cook-to-become-apple-executive-chairman-john-ternus-to-become-apple-ceo/",
+        "desc": "4/20 발표·이사회 만장일치 승인. 2011년 잡스 타계 이후 15년 만의 CEO 교체, 9/1부로 하드웨어 엔지니어링 SVP John Ternus(51)가 CEO 취임하고 Cook은 Executive Chairman 전환. Ternus는 2001년 제품디자인팀 입사해 iPad·iPhone·Apple Silicon 개발 주도, 특허 공동 출원 3,500건+. 최우선 과제는 AI 전략 재정비 — MS·Google·Amazon·Meta 합산 연 CapEx 수천억 달러 경쟁에서 Apple은 자체 LLM 없이 Private Cloud Compute·파트너십으로 버텨왔음. Gemini 기반 신 Siri·WKA 검색·AI 웨어러블 3종(스마트글래스·펜던트·카메라 AirPods) 일정 가속이 취임 전후 최대 시험대.",
+        "name": "Tim Cook → John Ternus 경영승계 (9/1)",
+        "isNew": true,
+        "badges": [
+          "hw",
+          "agt"
+        ]
+      },
+      {
+        "url": "https://apple.com/apple-intelligence",
+        "desc": "4/30 장후 Q2 FY26 결과 — 매출 $111.18B 컨센 $108.92B 상회(+17% YoY), EPS $2.01 컨센 $1.93 상회. iPhone $56.99B(+21.7%) 두 분기 연속 +20% 성장, Services $30.98B(+1.9%), 그레이터 차이나 $20.5B(+28%) 큰 폭 회복, GM 49.3% 컨센 48.4% 상회. Q3 매출 가이던스 +14~17%로 슈퍼사이클 톤 유지. 자사주 매입 +$1,000억 추가 승인·배당 27¢ +4%. Cook 마지막 실적 콜에서 Ternus 후임 직접 소개 — 9/1 승계 카운트다운 시작. iOS 18·macOS Sequoia 내장 개인화 AI(글쓰기 도구·Image Playground·Genmoji·알림 우선순위) 온디바이스 중심. AI 경쟁사 앱이 App Store에서 2025년 $9억 수수료 납부, 2026년 $10억+ 예상.",
+        "name": "Apple Intelligence",
+        "isNew": true,
+        "badges": [
+          "llm",
+          "agt"
+        ]
+      },
+      {
+        "url": "https://apple.com/siri/",
+        "desc": "4/22 Google Cloud Next에서 공식 확정 — Apple이 Google을 선호 클라우드 파트너로 선정, 차세대 Apple Foundation Models를 Gemini 기술 기반으로 공동 개발하여 2026 하반기 퍼스널라이즈드 Siri를 구동. 기존 연 $10억 파트너십이 모델 라이선스에서 공동 개발로 격상. 엔지니어링 이슈로 iOS 26.4→26.5(5월) 연기, 완전 대화 경험은 iOS 27(9월). WKA(World Knowledge Answers) AI 검색 탑재로 Perplexity·ChatGPT 직접 경쟁. 9/1 Ternus 취임 시점과 정확히 맞물려 AI 전략 재편 시험대.",
+        "name": "신 Siri + Apple Foundation Models on Gemini",
+        "isNew": true,
+        "badges": [
+          "agt",
+          "llm"
+        ]
+      },
+      {
+        "url": "https://security.apple.com/documentation/private-cloud-compute/",
+        "desc": "온디바이스 처리 불가 요청을 Apple 전용 서버로 전송하는 프라이버시 보호 클라우드 AI 인프라. 서버에 사용자 데이터 미저장. 제3자 보안 감사 가능 설계.",
+        "name": "Private Cloud Compute (PCC)",
+        "isNew": false,
+        "badges": [
+          "agt",
+          "hw"
+        ]
+      },
+      {
+        "url": "https://apple.com/mac/",
+        "desc": "M5: 10코어 GPU + Neural Accelerator, M4 대비 AI 성능 4배 이상. Broadcom 공동 개발 AI 서버 칩 'Baltra' 2026년 내부용 출시 예정. A18 Pro 기반 저가 MacBook 출시 검토.",
+        "name": "M5 칩 / Neural Engine / Baltra",
+        "isNew": false,
+        "badges": [
+          "hw"
+        ]
+      }
+    ]
+  },
+  {
+    "url": "https://mistral.ai",
+    "name": "Mistral AI",
+    "rank": 10,
+    "type": "유럽 AI 전문 기업",
+    "focus": "오픈소스·효율·AI 주권",
+    "products": [
+      {
+        "url": "https://mistral.ai/models/",
+        "desc": "유럽 최강 클로즈드 모델. 영·불·독·서·이탈 다국어 특화. Tesco 등 대형 기업과 파트너십. EU 데이터 주권 준수로 유럽 규제 시장 강점.",
+        "name": "Mistral Large 2 / Large 3",
+        "isNew": false,
+        "badges": [
+          "llm"
+        ]
+      },
+      {
+        "url": "https://mistral.ai/models/",
+        "desc": "2026년 3월 출시. Apache 2.0 라이선스. 경량 고효율 최신작. NVIDIA와 공동 튜닝된 오픈 모델 패밀리로 확장. 자체 GitHub 커뮤니티 fork·PR이 3개월 만에 2배 성장 — 오픈소스 생태계 모멘텀 지속.",
+        "name": "Mistral Small 4 (오픈소스)",
+        "isNew": false,
+        "badges": [
+          "llm"
+        ]
+      },
+      {
+        "url": "https://mistral.ai/products/forge",
+        "desc": "GTC 2026(3/17) 공개. 기업이 자사 데이터로 커스텀 파운데이션 모델을 직접 구축·파인튜닝하는 엔터프라이즈 플랫폼. OpenAI·Anthropic의 폐쇄형 모델 대안. 'Build-your-own AI' 포지셔닝 — EU 데이터 주권·규제 준수 환경 강점. NVIDIA 인프라 통합.",
+        "name": "Mistral Forge",
+        "isNew": false,
+        "badges": [
+          "llm",
+          "agt",
+          "code"
+        ]
+      },
+      {
+        "url": "https://mistral.ai",
+        "desc": "3/30 $8.3억 규모 부채 펀딩으로 파리 인근 Bruyères-le-Châtel 자체 데이터센터 구축. 13,800개 NVIDIA GPU 배치, 초기 용량 44MW, 2026년 하반기 가동. 유럽 AI 주권 인프라의 첫 대규모 실물 구현.",
+        "name": "파리 데이터센터 + $830M 부채 펀딩",
+        "isNew": false,
+        "badges": [
+          "hw"
+        ]
+      },
+      {
+        "url": "https://mistral.ai",
+        "desc": "4/19 국내 보도 — Arthur Mensch CEO와 경영진이 4/16 삼성전자 화성 캠퍼스를 방문, 반도체 부문 전영현 부회장과 AI 메모리 협력을 논의. HBM4·차세대 메모리 공급선 다변화가 목표로 공식 계약은 미체결. Bruyères 자체 데이터센터 확장과 맞물려 NVIDIA·SK하이닉스 의존도를 낮추려는 유럽 AI 주권 인프라 전략 가속.",
+        "name": "삼성전자 HBM 공급선 확보 협상",
+        "isNew": true,
+        "badges": [
+          "hw"
+        ]
+      },
+      {
+        "url": "https://huggingface.co/mistralai",
+        "desc": "Mixtral 8x22B: MoE 아키텍처로 대형 모델급 성능 효율적 구현. Mistral 7B: 엣지·온프레미스 표준. 서방 오픈소스 AI의 대표 주자.",
+        "name": "Mixtral 8x22B / Mistral 7B (오픈소스)",
+        "isNew": false,
+        "badges": [
+          "llm"
+        ]
+      },
+      {
+        "url": "https://chat.mistral.ai",
+        "desc": "초당 최대 1,000단어 생성 속도 — 업계 최고 수준. 유럽·기업 사용자 대상 ChatGPT 대안.",
+        "name": "Le Chat (AI 어시스턴트)",
+        "isNew": false,
+        "badges": [
+          "agt"
+        ]
+      },
+      {
+        "url": "https://mistral.ai/news/voxtral-tts",
+        "desc": "3월 26일 출시. 업계 최초 프론티어급 오픈웨이트 TTS 모델(4B 파라미터). ElevenLabs Flash v2.5 대비 자연스러움 우위, v3과 동등 품질. 9개 언어·제로샷 음성 복제·감정 스티어링·실시간 스트리밍. CC BY-NC 4.0 라이선스. API $0.016/1K 글자. Voxtral 음성 스택 완성.",
+        "name": "Voxtral TTS",
+        "isNew": false,
+        "badges": [
+          "llm"
+        ]
+      },
+      {
+        "url": "https://mistral.ai/news/codestral",
+        "desc": "4/8 출시. 22B 밀집 모델, Apache 2.0으로 상업 제한 해제 — HumanEval·MBPP에서 GPT-4o 상회. Fill-in-the-Middle 네이티브 학습. 출시 1주일 만에 38만+ 다운로드. 유럽 오픈 코딩 모델의 새로운 기준.",
+        "name": "Codestral 2",
+        "isNew": true,
+        "badges": [
+          "code",
+          "llm"
+        ]
+      },
+      {
+        "url": "https://mistral.ai/news/codestral/",
+        "desc": "코딩 전용 특화 모델. 80개 이상 프로그래밍 언어 지원. VS Code·JetBrains IDE 플러그인 통합.",
+        "name": "Codestral",
+        "isNew": false,
+        "badges": [
+          "code"
+        ]
+      },
+      {
+        "url": "https://console.mistral.ai",
+        "desc": "개발자·기업용 모델 배포 플랫폼. EU 데이터 주권 준수. 유럽 규제 환경에서 가장 유리한 AI API.",
+        "name": "Mistral API / La Plateforme",
+        "isNew": false,
+        "badges": [
+          "llm",
+          "agt"
+        ]
+      }
+    ]
+  }
+];
