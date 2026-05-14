@@ -91,6 +91,22 @@ async function renderPng(html) {
 }
 
 // ─── 업로드 ─────────────────────────────────────────────
+async function uploadText(text, file, contentType = 'text/plain') {
+  if (!SECRET) throw new Error('BRIEFICK_SUPABASE_SECRET_KEY 필요');
+  const upRes = await fetch(`${SUPABASE_URL}/storage/v1/object/cartoon/${file}`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${SECRET}`,
+      'apikey': SECRET,
+      'Content-Type': contentType,
+      'x-upsert': 'true',
+      'Cache-Control': 'no-cache',
+    },
+    body: text,
+  });
+  if (!upRes.ok) throw new Error(`upload ${file} ${upRes.status}: ${(await upRes.text()).slice(0,200)}`);
+}
+
 async function uploadToSupabase(buf, file = 'today.png') {
   if (!SECRET) throw new Error('BRIEFICK_SUPABASE_SECRET_KEY 필요');
   const bucket = 'cartoon';
@@ -155,9 +171,18 @@ async function main() {
 
   const shouldUpload = forceUpload || (!noUpload && SECRET);
   if (shouldUpload) {
-    console.log('[newspaper] 3. Supabase Storage 업로드 (cartoon/today.png)');
-    const url = await uploadToSupabase(fs.readFileSync(OUT_PNG));
-    console.log(`  ✓ ${url}`);
+    // 캐시 우회 위해 dated 파일명 + today.png(OG·legacy 호환) + latest.txt(frontend·인스타가 참조)
+    const pad = (n) => String(n).padStart(2, '0');
+    const stamp = `${KST.getUTCFullYear()}${pad(KST.getUTCMonth() + 1)}${pad(KST.getUTCDate())}-${pad(KST.getUTCHours())}${pad(KST.getUTCMinutes())}`;
+    const datedFile = `today-${stamp}.png`;
+    const png = fs.readFileSync(OUT_PNG);
+    console.log(`[newspaper] 3. Supabase Storage 업로드 (${datedFile} + today.png + latest.txt)`);
+    const datedUrl = await uploadToSupabase(png, datedFile);
+    const legacyUrl = await uploadToSupabase(png, 'today.png');
+    await uploadText(datedFile, 'latest.txt');
+    console.log(`  ✓ ${datedUrl}`);
+    console.log(`  ✓ ${legacyUrl}  (OG·legacy 호환)`);
+    console.log(`  ✓ latest.txt → ${datedFile}`);
   } else if (!SECRET) {
     console.log('[newspaper] 3. 업로드 skip (BRIEFICK_SUPABASE_SECRET_KEY 없음)');
   } else {

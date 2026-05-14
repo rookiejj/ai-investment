@@ -158,7 +158,11 @@ jobs:
           SUPABASE_URL: https://ytvcgoldauysvnqckzze.supabase.co
         run: |
           STAMP=$(date +%s)
-          CARTOON_URL="https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/today.png?t=$STAMP"
+          BASE="https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon"
+          # 5/15~ latest.txt에 dated 파일명 적힘 (cache 우회). 실패 시 today.png(legacy) fallback.
+          LATEST=$(curl -fsSL "$BASE/latest.txt?t=$STAMP" | tr -d '\r\n' || echo "today.png")
+          [ -z "$LATEST" ] && LATEST="today.png"
+          CARTOON_URL="$BASE/$LATEST?t=$STAMP"
           OUT=scripts/instagram/out/cartoon.png
           THRESHOLD=3600
 
@@ -169,10 +173,10 @@ jobs:
           else
             AGE=999999
           fi
-          echo "[storage] today.png age=${AGE}s threshold=${THRESHOLD}s"
+          echo "[storage] $LATEST age=${AGE}s threshold=${THRESHOLD}s"
 
           if [ "$AGE" -lt "$THRESHOLD" ] && curl -fsSL "$CARTOON_URL" -o "$OUT" && [ -s "$OUT" ]; then
-            echo "[download] today.png 사용 (fresh)"
+            echo "[download] $LATEST 사용 (fresh)"
           else
             echo "::warning::today.png stale/누락 (age=${AGE}s) — 즉석 생성 + Supabase 동기화"
             # --upload로 today.png에 동시 업로드 — 홈피·인스타 어긋남 방지.
