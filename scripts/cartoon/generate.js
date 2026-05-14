@@ -1,286 +1,169 @@
 #!/usr/bin/env node
-// 오늘의 1컷 만화 — update.js 요약을 받아 풍자적 편집만화 PNG 생성.
-//
-// 무료 파이프라인 (Gemini 2.5 Flash Image / "Nano Banana"):
-//   1. data/*-update.js의 최신 entry summary를 읽음 (한국·미국 마켓)
-//   2. 핵심 이벤트 1~2건 뽑아 메타포 시나리오 매칭 → 한국어 프롬프트 빌드
-//   3. Gemini API로 이미지 생성 (한국어 텍스트 렌더링 가능)
-//   4. scripts/cartoon/out/YYYY-MM-DD-HHMM.png 저장
-//
-// 환경변수:
-//   GEMINI_API_KEY — Google AI Studio API 키 (.env에서 로드)
-//
-// 사용:
-//   node scripts/cartoon/generate.js
-//   node scripts/cartoon/generate.js --prompt-only   (프롬프트만 출력)
+/**
+ * 신문 1면 hero PNG 자동 생성 (2026-05-14~).
+ *
+ * 이전: Gemini nano-banana-pro로 1컷 만화 PNG 생성 (~$0.13/장 × 2회/일)
+ * 이후: Playwright HTML→PNG로 5탭 헤드라인 신문 1면 PNG 생성 (비용 0)
+ *
+ * 흐름:
+ *   1. Supabase read-tab-data → 5탭 최신 entries[0].summary 첫 줄
+ *   2. data/.catchphrase 파일 있으면 그 한 줄(또는 두 줄) 사용
+ *   3. scripts/cartoon/template.html 토큰 치환 후 Playwright로 1080×1350 PNG 캡처
+ *   4. Supabase Storage cartoon/today.png에 PUT (frontend·인스타·OG 모두 같은 경로)
+ *
+ * 사용:
+ *   node scripts/cartoon/generate.js
+ *     → out/today.png 저장 + (BRIEFICK_SUPABASE_SECRET_KEY 있으면) Storage 업로드
+ *   node scripts/cartoon/generate.js --upload
+ *     → 명시적 업로드 (env 누락 시 실패)
+ *   node scripts/cartoon/generate.js --no-upload
+ *     → 로컬 PNG만 (검증용)
+ */
 
 const fs = require('fs');
 const path = require('path');
+const { chromium } = require('playwright');
 
-const ROOT = path.resolve(__dirname, '..', '..');
-const OUT_DIR = path.join(__dirname, 'out');
-fs.mkdirSync(OUT_DIR, { recursive: true });
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://ytvcgoldauysvnqckzze.supabase.co';
+const SECRET = process.env.BRIEFICK_SUPABASE_SECRET_KEY || process.env.SUPABASE_SECRET_KEY;
+const TEMPLATE = path.resolve(__dirname, 'template.html');
+const OUT_DIR = path.resolve(__dirname, 'out');
+const OUT_PNG = path.join(OUT_DIR, 'today.png');
+const CATCHPHRASE_FILE = path.resolve(__dirname, '..', '..', 'data', '.catchphrase');
 
-// .env 로드 (zero deps)
-function loadEnv() {
-  const envPath = path.join(ROOT, '.env');
-  if (!fs.existsSync(envPath)) return;
-  for (const line of fs.readFileSync(envPath, 'utf8').split('\n')) {
-    const m = line.match(/^([A-Z_]+)=(.+)$/);
-    if (m && !process.env[m[1]]) process.env[m[1]] = m[2].trim();
-  }
-}
-loadEnv();
+const args = process.argv.slice(2);
+const noUpload = args.includes('--no-upload');
+const forceUpload = args.includes('--upload');
 
-// Phase 2 (2026-05-14): DB 전환. read-tab-data Edge Function에서 5탭 main entries 한 번에.
-const SUPABASE_FN_URL = process.env.SUPABASE_FN_URL ||
-  'https://ytvcgoldauysvnqckzze.supabase.co/functions/v1';
-let _tabDataCache = null;
-async function fetchTabData() {
-  if (_tabDataCache) return _tabDataCache;
-  const r = await fetch(`${SUPABASE_FN_URL}/read-tab-data?_=${Date.now()}`);
+// ─── 데이터 ─────────────────────────────────────────────
+async function fetchUpdates() {
+  const r = await fetch(`${SUPABASE_URL}/functions/v1/read-tab-data?_=${Date.now()}`);
   if (!r.ok) throw new Error(`read-tab-data ${r.status}`);
-  _tabDataCache = await r.json();
-  return _tabDataCache;
-}
-function loadUpdates(tabId) {
-  // sync wrapper — 동기적 사용을 위해 cache 사용. 호출 전에 await fetchTabData() 필요.
-  const cache = _tabDataCache;
-  if (!cache) throw new Error('fetchTabData() 미선행 — 캐시 없음');
-  return cache.updates?.[tabId] || [];
+  const j = await r.json();
+  return j.updates || {};
 }
 
-function todayKST() {
-  return new Date(Date.now() + 9 * 3600 * 1000);
+function pickHeadline(entry) {
+  if (!entry) return '';
+  const raw = entry.summary || entry.text || '';
+  const lines = String(raw).split('\n').map(s => s.trim()).filter(Boolean);
+  return lines[0] || '';
 }
 
-function todayStamp() {
-  const d = todayKST();
-  const y = d.getUTCFullYear(), m = String(d.getUTCMonth() + 1).padStart(2, '0'), day = String(d.getUTCDate()).padStart(2, '0');
-  const hh = String(d.getUTCHours()).padStart(2, '0'), mm = String(d.getUTCMinutes()).padStart(2, '0'), ss = String(d.getUTCSeconds()).padStart(2, '0');
-  return `${y}-${m}-${day}-${hh}${mm}${ss}`;
-}
-
-// N번째 entry의 summary 모두 모아 헤드라인 (0 = 가장 최신)
-function headlinesAt(index) {
-  const tabs = [
-    {id: 'kr', label: '한국'},
-    {id: 'stocks', label: '미국'},
-    {id: 'ai', label: 'AI'},
-    {id: 'commodity', label: '원자재'},
-    {id: 'unicorn', label: '유니콘'},
-  ];
-  const out = {};
-  let dateRef = '';
-  for (const t of tabs) {
-    try {
-      const upd = loadUpdates(t.id);
-      const entry = upd[index];
-      if (!entry) { out[t.label] = []; continue; }
-      const lines = (entry.summary || '').split('\n').map(s => s.trim()).filter(Boolean);
-      out[t.label] = lines;
-      if (!dateRef && entry.date) dateRef = entry.date;
-    } catch { out[t.label] = []; }
+function readCatchphrase() {
+  if (fs.existsSync(CATCHPHRASE_FILE)) {
+    const txt = fs.readFileSync(CATCHPHRASE_FILE, 'utf8').trim();
+    if (txt) return txt.replace(/\n/g, '<br>');
   }
-  out.__dateRef = dateRef;
-  return out;
+  // fallback — sandbox가 .catchphrase 아직 안 만든 케이스
+  return '오늘의 시장 한 줄로';
 }
 
-const todaysHeadlines = () => headlinesAt(0);
+// ─── 렌더 ───────────────────────────────────────────────
+async function renderPng(html) {
+  fs.mkdirSync(OUT_DIR, { recursive: true });
+  const tmp = path.join(OUT_DIR, '_render_template.html');
+  fs.writeFileSync(tmp, html);
 
-// 화풍 프리셋 — --style 플래그로 선택. 사용처별로 다른 톤 적용 가능.
-const STYLES = {
-  '1950s': `1950s American newspaper political cartoon style, single panel. Heavy ink crosshatching, sepia-toned limited palette, exaggerated caricature in vintage editorial tradition, classic ink-wash shading, hand-lettered captions, mid-century WSJ/NYT op-ed page look. 1080×1350 portrait (4:5) format — vertical, taller than wide.`,
-  'mad-mag': `Mad Magazine style satirical cartoon, single panel. Wildly exaggerated caricature with rubber-hose proportions, loud primary colors, busy chaotic composition with multiple gags happening at once, bold outlines, screaming faces, sound-effect text bursts. Garish 1970s magazine print look. 1080×1350 portrait (4:5) format — vertical, taller than wide.`,
-  'ghibli': `Studio Ghibli inspired hand-painted watercolor illustration, single panel editorial scene. Warm soft tones, painterly clouds and atmospheric lighting, expressive but gentle character design, dreamlike composition with rich background detail. 1080×1350 portrait (4:5) format — vertical, taller than wide.`,
-  'pixar': `Pixar-style 3D rendered editorial scene, single still frame. Clean polished CGI with cinematic lighting, optimistic tone, expressive but realistic character proportions, beautiful background detail with depth-of-field. 1080×1350 portrait (4:5) format — vertical, taller than wide.`,
-  'k-webtoon': `Korean webtoon style illustration, single panel. Flat cel-shaded colors with crisp linework, expressive manhwa character faces, dynamic posing, vibrant accent colors against neutral backgrounds, modern digital art finish. 1080×1350 portrait (4:5) format — vertical, taller than wide.`,
-};
-
-// 그날의 실제 헤드라인을 프롬프트에 직접 주입 — 모델이 매번 다른 장면 합성
-function buildPrompt(headlines, styleKey) {
-  const baseStyle = STYLES[styleKey] || STYLES['1950s'];
-
-  // 5개 탭 첫 줄을 그대로 모델에게 — 각 entry마다 다른 헤드라인이라 자연스레 다른 장면 도출
-  const lines = [];
-  for (const [k, ls] of Object.entries(headlines)) {
-    if (k.startsWith('__')) continue;
-    if (ls.length) lines.push(`【${k}】 ${ls[0]}`);
+  const browser = await chromium.launch();
+  const ctx = await browser.newContext({
+    viewport: { width: 1120, height: 1400 },
+    deviceScaleFactor: 2,
+  });
+  const page = await ctx.newPage();
+  try {
+    await page.goto('file://' + tmp);
+    await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts && document.fonts.ready);
+    await page.waitForTimeout(600);
+    const el = await page.$('.page');
+    if (!el) throw new Error('.page 셀렉터 못 찾음 — template.html 확인');
+    await el.screenshot({ path: OUT_PNG, omitBackground: false });
+  } finally {
+    await browser.close();
+    try { fs.unlinkSync(tmp); } catch {}
   }
-  const situation = lines.join('\n');
-
-  return `${baseStyle}
-
-오늘의 시장 상황 (아래 사건들을 한 화면에 풍자·은유로 통합 표현):
-${situation}
-
-지시:
-- 위 사건 중 가장 임팩트 큰 1~2건을 화면 중심으로, 나머지는 배경·소품으로 자연스럽게 녹이기.
-- 등장 종목·기업명을 캐릭터로 의인화 (예: "AMD"·"삼성전자"·"한화에어로"·"PLTR" 등 실제 사건 주체를 그대로 사용).
-- 한국어 말풍선 1~2개로 핵심 메시지를 짧고 또렷하게 표시 — 정확한 한국어 한글 글자.
-- 차트·라벨·플래카드 등 소품에 한국어/영문 텍스트 자연스럽게 표기 (수치는 정확히).
-- 시장이 상승장이면 밝고 흥겨운 톤, 하락·긴장 분위기면 그에 맞는 표정·구도.
-- 화면 우하단 모서리에 작게 "오늘의 브리픽" 워터마크.`;
+  return OUT_PNG;
 }
 
-// 화풍 → Supabase Storage 파일명 매핑.
-// 5/11 단일화: 1950s 하나로 통일, 단일 파일 today.png. 매핑 없는 화풍은 로컬 저장만.
-const STYLE_STORAGE = {
-  '1950s': 'today.png', // 홈페이지·인스타 캐러셀·Reels 모두 공용
-};
-
-// Supabase Storage 업로드 — public bucket 'cartoon'에 화풍별 파일로 갱신
-async function uploadToSupabase(buf, file) {
-  const url = process.env.SUPABASE_URL || 'https://ytvcgoldauysvnqckzze.supabase.co';
-  const key = process.env.BRIEFICK_SUPABASE_SECRET_KEY || process.env.SUPABASE_SECRET_KEY;
-  if (!key) throw new Error('BRIEFICK_SUPABASE_SECRET_KEY 환경변수 필요 (Supabase secret key)');
+// ─── 업로드 ─────────────────────────────────────────────
+async function uploadToSupabase(buf, file = 'today.png') {
+  if (!SECRET) throw new Error('BRIEFICK_SUPABASE_SECRET_KEY 필요');
   const bucket = 'cartoon';
-
-  // 버킷 생성 (이미 있으면 무시) — POST bucket
-  const bucketUrl = `${url}/storage/v1/bucket`;
-  const ensureRes = await fetch(bucketUrl, {
+  // bucket ensure (이미 있으면 409 무시)
+  const ensureRes = await fetch(`${SUPABASE_URL}/storage/v1/bucket`, {
     method: 'POST',
-    headers: { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json', 'apikey': key },
+    headers: { 'Authorization': `Bearer ${SECRET}`, 'Content-Type': 'application/json', 'apikey': SECRET },
     body: JSON.stringify({ id: bucket, name: bucket, public: true }),
   });
   if (!ensureRes.ok && ensureRes.status !== 409) {
     const t = await ensureRes.text();
     if (!t.includes('already exists')) console.warn(`[bucket] ${ensureRes.status}: ${t}`);
   }
-
-  // 파일 업로드 (upsert)
-  const uploadUrl = `${url}/storage/v1/object/${bucket}/${file}`;
-  const r = await fetch(uploadUrl, {
+  // PUT (upsert)
+  const upRes = await fetch(`${SUPABASE_URL}/storage/v1/object/${bucket}/${file}`, {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${key}`,
-      'apikey': key,
+      'Authorization': `Bearer ${SECRET}`,
+      'apikey': SECRET,
       'Content-Type': 'image/png',
       'x-upsert': 'true',
       'Cache-Control': 'public, max-age=300',
     },
     body: buf,
   });
-  if (!r.ok) throw new Error(`upload ${r.status}: ${await r.text()}`);
-  const publicUrl = `${url}/storage/v1/object/public/${bucket}/${file}`;
-  return publicUrl;
+  if (!upRes.ok) throw new Error(`upload ${upRes.status}: ${(await upRes.text()).slice(0,200)}`);
+  return `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${file}`;
 }
 
-async function callGemini(prompt) {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    throw new Error('GEMINI_API_KEY 환경변수 누락 — .env에 추가하거나 export 필요');
-  }
-  // nano-banana-pro-preview ($0.13/장) — 한국어 렌더링 정확도 때문에 복귀.
-  // gemini-2.5-flash-image($0.04/장)로 다운그레이드 시도했으나 한글 자모 hallucination이 심해
-  // 워터마크·말풍선 글자가 깨짐("오늘"→"오들" 등). 비용 3배지만 품질 우선.
-  // KST 시간대 분기로 매 실행 1장만 생성해 일일 비용은 ~$0.26 수준.
-  const model = process.env.GEMINI_IMAGE_MODEL || 'nano-banana-pro-preview';
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-  // 모든 화풍을 4:5 portrait로 통일 — 홈페이지 카툰 슬롯이 같은 비율로 렌더링되도록.
-  // 프롬프트의 "1080×1350" 문구만으로는 모델이 가끔 1:1 정사각을 뱉어 화풍별 불일치 발생.
-  const body = {
-    contents: [{ parts: [{ text: prompt }] }],
-    generationConfig: { imageConfig: { aspectRatio: '4:5' } },
-  };
-  console.log(`[fetch] Gemini API ${model}`);
-  const r = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  if (!r.ok) {
-    const errText = await r.text();
-    throw new Error(`Gemini API ${r.status}: ${errText}`);
-  }
-  const j = await r.json();
-  // 응답에서 inlineData(base64 image) 추출
-  const parts = j?.candidates?.[0]?.content?.parts || [];
-  for (const p of parts) {
-    if (p.inlineData?.data) {
-      return Buffer.from(p.inlineData.data, 'base64');
-    }
-    if (p.inline_data?.data) {  // 호환성: snake_case도 시도
-      return Buffer.from(p.inline_data.data, 'base64');
-    }
-  }
-  throw new Error(`이미지 데이터 없음. 응답: ${JSON.stringify(j).slice(0, 500)}`);
-}
-
-function parseArg(name, fallback) {
-  const i = process.argv.indexOf(name);
-  if (i < 0 || i + 1 >= process.argv.length) return fallback;
-  return process.argv[i + 1];
-}
-
+// ─── main ───────────────────────────────────────────────
 async function main() {
-  const promptOnly = process.argv.includes('--prompt-only');
-  const noOpen = process.argv.includes('--no-open');
-  const noLatest = process.argv.includes('--no-latest');
-  const upload = process.argv.includes('--upload');
-  const index = Number(parseArg('--index', 0));
-  const tag = parseArg('--tag', '');
-  const styleKey = parseArg('--style', '1950s');
-  const customOut = parseArg('--output', '');
-  // DB에서 5탭 main entries 한 번에 fetch (sync wrapper 호출 전 필수)
-  await fetchTabData();
-  const headlines = headlinesAt(index);
-  console.log(`[headlines] index=${index}${headlines.__dateRef ? ` (date=${headlines.__dateRef})` : ''}`);
-  for (const [k, lines] of Object.entries(headlines)) {
-    if (k.startsWith('__')) continue;
-    if (lines.length) console.log(`  ${k}: ${lines[0]}`);
+  const t0 = Date.now();
+  console.log('[newspaper] 1. read-tab-data fetch');
+  const updates = await fetchUpdates();
+
+  const KST = new Date(Date.now() + 9 * 3600 * 1000);
+  const days = ['일','월','화','수','목','금','토'];
+  const dateKo = `${KST.getUTCFullYear()}년 ${KST.getUTCMonth()+1}월 ${KST.getUTCDate()}일 ${days[KST.getUTCDay()]}요일`;
+  const dayOfYear = Math.floor((KST - new Date(Date.UTC(KST.getUTCFullYear(),0,0))) / 86400000);
+  const volNo = `VOL. MMXXVI · No. ${dayOfYear}`;
+
+  const TAB_IDS = { KR:'kr', STOCKS:'stocks', AI:'ai', COMMODITY:'commodity', UNICORN:'unicorn' };
+  const tokens = {
+    '{{DATE_KO}}': dateKo,
+    '{{VOL_NO}}': volNo,
+    '{{CATCHPHRASE}}': readCatchphrase(),
+  };
+  for (const [key, tab] of Object.entries(TAB_IDS)) {
+    const entry = (updates[tab] || [])[0];
+    tokens[`{{HEAD_${key}}}`] = pickHeadline(entry) || '(데이터 없음)';
+    tokens[`{{SUB_${key}}}`] = ''; // sub 줄은 더 이상 사용 안 함 (디자인 변경 후)
+    console.log(`  ${key.padEnd(10)} ${entry?.date || '?'}  ${tokens[`{{HEAD_${key}}}`]}`);
   }
-  console.log(`[style] ${styleKey}`);
+  console.log(`  catchphrase: ${tokens['{{CATCHPHRASE}}'].replace(/<br>/g, ' / ')}`);
 
-  const prompt = buildPrompt(headlines, styleKey);
-  console.log('\n[prompt]');
-  console.log(prompt);
+  console.log('[newspaper] 2. template 치환 + Playwright 렌더');
+  let html = fs.readFileSync(TEMPLATE, 'utf8');
+  for (const [tok, val] of Object.entries(tokens)) html = html.split(tok).join(val);
+  await renderPng(html);
+  const sz = fs.statSync(OUT_PNG).size;
+  console.log(`  ✓ ${path.relative(process.cwd(), OUT_PNG)}  (${(sz / 1024).toFixed(1)}KB)`);
 
-  if (promptOnly) {
-    console.log('\n[prompt-only mode] API 호출 생략.');
-    return;
-  }
-
-  console.log('\n[generating image...]');
-  const buf = await callGemini(prompt);
-  const stamp = todayStamp();
-  const idxPart = index > 0 ? `-idx${index}` : '';
-  const stylePart = styleKey !== '1950s' ? `-${styleKey}` : '';
-  const tagPart = tag ? `-${tag}` : '';
-  const out = customOut || path.join(OUT_DIR, `${stamp}${idxPart}${stylePart}${tagPart}.png`);
-  fs.mkdirSync(path.dirname(out), { recursive: true });
-  fs.writeFileSync(out, buf);
-  console.log(`[saved] ${out}  (${(buf.length / 1024).toFixed(1)} KB)`);
-
-  // 메인 페이지(로컬)가 참조할 latest는 index=0(최신) 1950s 스타일에서만 갱신.
-  // --no-latest로 명시 회피 가능 (인스타용 cartoon 생성 시 사용).
-  if (index === 0 && styleKey === '1950s' && !noLatest) {
-    const latest = path.join(OUT_DIR, 'latest.png');
-    fs.writeFileSync(latest, buf);
-    console.log(`[saved] ${latest}  (로컬 메인 페이지가 참조)`);
+  const shouldUpload = forceUpload || (!noUpload && SECRET);
+  if (shouldUpload) {
+    console.log('[newspaper] 3. Supabase Storage 업로드 (cartoon/today.png)');
+    const url = await uploadToSupabase(fs.readFileSync(OUT_PNG));
+    console.log(`  ✓ ${url}`);
+  } else if (!SECRET) {
+    console.log('[newspaper] 3. 업로드 skip (BRIEFICK_SUPABASE_SECRET_KEY 없음)');
+  } else {
+    console.log('[newspaper] 3. 업로드 skip (--no-upload)');
   }
 
-  // Supabase Storage 업로드 — index=0(최신) + STYLE_STORAGE에 매핑된 화풍만 업로드.
-  // 매핑 없는 화풍(pixar·k-webtoon·mad-mag 등 실험용)은 로컬 파일만 저장하고 skip.
-  if (upload && index === 0) {
-    const storageFile = STYLE_STORAGE[styleKey];
-    if (storageFile) {
-      try {
-        const publicUrl = await uploadToSupabase(buf, storageFile);
-        console.log(`[uploaded] ${publicUrl}`);
-      } catch (e) {
-        console.error(`[upload failed] ${e.message}`);
-        process.exit(1);
-      }
-    } else {
-      console.log(`[skip upload] style=${styleKey}는 Storage 매핑 없음 — 로컬 저장만`);
-    }
-  }
-
-  if (process.platform === 'darwin' && !noOpen) {
-    require('child_process').exec(`open "${out}"`);
-    console.log('[opened in default viewer]');
-  }
+  console.log(`[newspaper] done in ${Date.now() - t0}ms`);
 }
 
-main().catch(e => { console.error(e.message); process.exit(1); });
+main().catch(e => {
+  console.error('[newspaper] fail:', e.message);
+  process.exit(1);
+});

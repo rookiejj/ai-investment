@@ -1,10 +1,11 @@
 name: Cartoon Generate
 
-# 자동 갱신 sandbox의 마커 commit push 시 1컷 만화 자동 재생성·Supabase Storage 업로드.
+# 자동 갱신 sandbox의 마커 commit push 시 신문 1면 PNG 자동 재생성·Supabase Storage 업로드.
 # 사람이 .cartoon-marker를 안 만지는 한 발화 안 됨 — 컨트롤 단순화.
 #
-# 화풍·파일 단일화 (5/11): 1950s 뉴스 화풍 하나로 통일, Storage 파일도 today.png 단일.
-# 홈피·인스타 캐러셀·인스타 Reels 모두 같은 today.png를 소스로 씀. Gemini 단가 ~$0.13/장.
+# 5/14 newspaper 1면 PNG로 교체: Playwright HTML→PNG 렌더 (비용 0).
+# 이전 Gemini nano-banana-pro 카툰(~$0.13/장 × 2회/일)은 폐기 — 디자인 임팩트 vs 비용 트레이드오프.
+# Storage 파일은 cartoon/today.png 그대로 — 홈피·인스타 캐러셀·인스타 Reels·OG 모두 같은 URL.
 
 on:
   # 마커 commit 트리거 — 자동 갱신 sandbox가 모든 데이터 push 완료 후 마지막 단계로
@@ -49,20 +50,17 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Generate cartoon
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Generate newspaper PNG
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          # Nano Banana Pro($0.13/장) — Gemini 2.5 Flash Image($0.04/장) 다운그레이드 시도했으나
-          # 한국어 자모 hallucination("오늘"→"오들" 등)으로 워터마크·말풍선 깨짐. 품질 우선 복귀.
-          GEMINI_IMAGE_MODEL: nano-banana-pro-preview
           BRIEFICK_SUPABASE_SECRET_KEY: ${{ secrets.BRIEFICK_SUPABASE_SECRET_KEY }}
           SUPABASE_URL: https://ytvcgoldauysvnqckzze.supabase.co
-        run: |
-          node scripts/cartoon/generate.js \
-            --style 1950s \
-            --index ${{ inputs.index || '0' }} \
-            --upload \
-            --no-open
+        run: node scripts/cartoon/generate.js --upload
 
       - name: 종료 알림 (항상 실행)
         if: always()

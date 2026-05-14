@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>Briefick A — sans</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Pretendard:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body { margin:0; background:#2a2a2a; font-family:'Pretendard', system-ui, sans-serif; }
+.page {
+  width:1080px; height:1350px; margin:30px auto;
+  background:#fcfaf5;
+  background-image:
+    radial-gradient(ellipse at top, rgba(0,0,0,.018), transparent 60%),
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(0,0,0,.008) 3px 4px);
+  color:#0d0d0d;
+  padding:60px 70px 70px;
+  box-sizing:border-box;
+  position:relative;
+  border:2px solid #0d0d0d;
+  outline:1px solid #0d0d0d;
+  outline-offset:-10px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.5);
+  display:flex; flex-direction:column;
+}
+
+/* 마스트헤드 */
+.masthead { text-align:center; padding-bottom:4px; }
+.masthead h1 {
+  font-family:'Inter', sans-serif;
+  font-weight:300;
+  font-size:108px;
+  letter-spacing:-4px;
+  margin:0;
+  line-height:1;
+}
+
+/* 날짜·발행번호 */
+.date-bar {
+  display:flex; justify-content:space-between; align-items:center;
+  border-top:4px solid #0d0d0d;
+  border-bottom:1px solid #0d0d0d;
+  padding:11px 4px;
+  margin:18px 0 32px;
+  font-family:'Geist Mono', monospace;
+  font-size:14px; letter-spacing:2.5px; font-weight:400;
+  text-transform:uppercase;
+  color:#333;
+}
+.date-bar .center {
+  font-family:'Pretendard', system-ui, sans-serif;
+  font-weight:400;
+  letter-spacing:.5px; color:#555; text-transform:none;
+  font-size:15px;
+}
+
+/* 메인 catchphrase */
+.catch {
+  text-align:center;
+  margin:0 0 16px 0;
+  padding:20px 30px 24px;
+  position:relative;
+}
+.catch .label {
+  font-family:'Geist Mono', monospace;
+  font-size:13px; letter-spacing:8px; text-transform:uppercase; font-weight:400;
+  color:#666; margin-bottom:24px;
+}
+.catch .haiku {
+  font-family:'Inter', 'Pretendard', sans-serif;
+  font-weight:700;
+  font-size:64px;
+  line-height:1.2;
+  letter-spacing:-2px;
+  color:#0d0d0d;
+}
+
+/* 5탭 헤드라인 — 한 줄씩 stack, 세로 균등 분배 */
+.stories {
+  flex:1;
+  display:flex; flex-direction:column;
+}
+.story {
+  flex:1;
+  border-top:1px solid rgba(0,0,0,.15);
+  padding:16px 0;
+  display:flex; flex-direction:column; justify-content:center;
+}
+.story .market {
+  font-family:'Pretendard', system-ui, sans-serif;
+  font-size:20px; font-weight:500;
+  color:#0d0d0d; margin-bottom:10px;
+  letter-spacing:-.2px;
+}
+.story .head {
+  font-family:'Inter', 'Pretendard', sans-serif;
+  font-weight:400;
+  font-size:26px; line-height:1.35;
+  letter-spacing:-.5px;
+  color:#0d0d0d;
+}
+
+/* 푸터 */
+.foot {
+  margin-top:18px;
+  text-align:center;
+  border-top:1px solid #0d0d0d;
+  padding-top:18px;
+  font-family:'Geist Mono', monospace;
+  font-size:13px; letter-spacing:5px; text-transform:uppercase;
+  color:#555; font-weight:400;
+}
+.foot strong { color:#0d0d0d; letter-spacing:6px; font-weight:500; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="masthead">
+    <h1>Briefick Daily</h1>
+  </div>
+  <div class="date-bar">
+    <span>{{DATE_KO}}</span>
+    <span>{{VOL_NO}}</span>
+  </div>
+
+  <div class="catch">
+    <div class="label">Today's Take</div>
+    <div class="haiku">{{CATCHPHRASE}}</div>
+  </div>
+
+  <div class="stories">
+    <div class="story">
+      <div class="market">🇰🇷  한국 시장</div>
+      <div class="head">{{HEAD_KR}}</div>
+    </div>
+    <div class="story">
+      <div class="market">🇺🇸  미국 시장</div>
+      <div class="head">{{HEAD_STOCKS}}</div>
+    </div>
+    <div class="story">
+      <div class="market">🤖  AI 생태계</div>
+      <div class="head">{{HEAD_AI}}</div>
+    </div>
+    <div class="story">
+      <div class="market">⛏️  원자재·크립토</div>
+      <div class="head">{{HEAD_COMMODITY}}</div>
+    </div>
+    <div class="story full">
+      <div class="market">🦄  비상장·유니콘</div>
+      <div class="head">{{HEAD_UNICORN}}</div>
+    </div>
+  </div>
+
+  <div class="foot"><strong>briefick.com</strong> · 매일 아침 8시 카카오톡 도착</div>
+</div>
+</body>
+</html>
