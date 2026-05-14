@@ -3,6 +3,30 @@
 // 직접 편집 금지 — main(*-update.js)에서 사고가 흡수돼 결국 덮어 쓰임.
 const updatesArchive = [
   {
+    "date": "2026-05-14 11:00 KST",
+    "summary": "Anthropic Ramp 데이터 B2B 고객 34.4% 첫 OpenAI 32.3% 추월 - 5월 시점 정량 입증\nOpenAI DeployCo($4B+ 초기 투자) 정식 가동 - Anthropic 5/4 Blackstone·Goldman·H&F $1.5B JV 대응 채널\nMistral AI 유럽 sovereign AI 단독 - JPMorgan '가장 가치 있는 유럽 AI 기업' 평가 첫 공식\n5/14~15 트럼프-시진핑 베이징 정상회담 1~2일차 - AI 가드레일·자율무기 표준화 채널 단일 의제 부상",
+    "changes": [
+      {
+        "type": "마일스톤",
+        "sector": "Anthropic",
+        "detail": "Anthropic B2B 유료 고객 비중 첫 OpenAI 추월. 5/13 TechCrunch 보도 - Ramp AI Index 5월 데이터에서 Anthropic 유료 비중 34.4% vs OpenAI 32.3%로 첫 단독 1위 기록. 2025년 5월 9% → 2026년 5월 34.4%로 12개월 +26%p 가속 - 매출 80배 가속(Q1 정량) 라인의 동시 입증. 단일 동력 - Claude Opus 4.7 SWE-Bench Pro 64.3% 코딩 단독 우위 + 4/24 Memory 베타 + 5/6 Dreaming + 5/8 Code with Claude 멀티에이전트 오케스트레이션 + 5/5 금융 서비스 에이전트 10종 + 5/4 Blackstone·Goldman·H&F $1.5B JV + SpaceX Colossus 1 단독 임대 누적 베이스. 폴리마켓 IPO 먼저 확률 68% + 5월 보드 $50B/$900B 라운드 결정 임박 + 10월 IPO $400~500B 타겟 라인업 정량 시너지. OpenAI 시간외 $852B 첫 추월 베이스에서 운영 정량 지표까지 동시 우위 시그널 부각.",
+        "time": "2026-05-14 11:00 KST"
+      },
+      {
+        "type": "전략",
+        "sector": "OpenAI",
+        "detail": "OpenAI 'DeployCo' 정식 가동. 5/13 AI Business 보도 - 5/4 발표한 The Deployment Company가 'DeployCo' 약칭으로 정식 가동, $4B+ 초기 투자 확보, OpenAI 과반 지배 자회사. 사업 모델 - PE 컨소시엄 포트폴리오 기업 운영 레이어에 OpenAI 엔지니어 직접 배치(Palantir forward-deployed engineer 패턴 차용), 헬스케어·물류·제조·금융 4개 우선 섹터에 GPT-5.5·Codex·Privacy Filter 임베드. 동시에 OpenAI도 컨설팅 자회사 형태로 본격 가동. 5/4 Anthropic Blackstone·Goldman·H&F $1.5B JV에 대응한 PE 채널 직접 가격 발견 - 양사가 '챗봇·API → 풀스택 배치 엔진' 전환 본격화. ARR $25B + PwC 142개국·370K 컨설턴트 채널 + India 시장 진출 결합으로 글로벌 엔터프라이즈 채널 확장 가속. Anthropic Ramp 데이터 34.4% 첫 추월 단계에서 매출 가속 단일 분기점.",
+        "time": "2026-05-14 11:00 KST"
+      },
+      {
+        "type": "전략",
+        "sector": "Mistral AI",
+        "detail": "Mistral AI 유럽 sovereign AI 단독 평가. 5/13 ChinaPulse·JPMorgan 보고서 종합 - JPMorgan이 Mistral AI를 'Europe's most valuable AI company'로 공식 평가, sovereign AI(정부·기관 모델·인프라·데이터 통제) 카테고리에서 단독 포지셔닝. EU 회원국·국방·금융 부문이 OpenAI Daybreak(5/12 출시·EU 우선 접근)·Anthropic Mythos(EU 협상 미체결) 양 미국 채널을 외면하고 Mistral을 sovereign 옵션으로 채택하는 신호 잔존. 트럼프 5/14~15 베이징 정상회담發 AI 가드레일 표준화 논의가 미·중 외 sovereign 채널 가속하는 사이드 동력 - EU·인도·한국·일본 자국 모델 채택 압력 단일 시그널 부상.",
+        "time": "2026-05-14 11:00 KST"
+      }
+    ]
+  },
+  {
     "date": "2026-05-13 19:20 KST",
     "summary": "Google Gemini Android 중앙 통합 가속 - Apple AI 리부트 직전 선점 시도 첫 정량 보도\nAnthropic SpaceX Colossus 1 컴퓨트 추가 가동 - 5/6 단독 임대 라인 IPO 직전 정량 입증 잔존\nOpenAI Daybreak 사이버 플랫폼 출시 D-1 후속 - 8사 파트너 통합 + EU 우선 접근 카드 라인업\n5/14~15 美·中 베이징 정상회담 D-1~2 - AI 리스크·가드레일 의제 후순위 가능성 잔존",
     "changes": [
