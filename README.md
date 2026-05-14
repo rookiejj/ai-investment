@@ -29,21 +29,20 @@ ai-investment/
 ├── data/
 │   ├── version.js                ← 데이터 버전
 │   ├── .cartoon-marker           ← sandbox 마지막 단계 push로 카툰·인스타 발화 시그널
-│   ├── stocks-{data,update,update-archive}.js   ← 미국 주식 (18 × 7 = 108)
-│   ├── kr-stocks-{data,update,update-archive}.js← 한국 주식 (18 × 7 = 108)
-│   ├── jp-stocks-{data,update}.js               ← 일본 주식 (UI·자동 갱신 제외, 데이터 보존)
-│   ├── ai-{data,update,update-archive}.js       ← AI 기업 10사
-│   ├── commodity-{data,update,update-archive}.js← 원자재·크립토 (6 × 4 = 24)
-│   ├── unicorn-{data,update,update-archive}.js  ← 유니콘 (5 × 7 = 35, AI 전업 기업 제외)
-│   ├── *-update.js               ← 화면 노출(TL;DR·캐러셀·친구톡)용. 최대 5건(약 1주일치) 유지
-│   ├── *-update-archive.js       ← 종목 모달 mentions용. 30일 cutoff. archive-rotate.yml이 자동 갱신
+│   ├── stocks-{data,update}.js   ← 미국 주식 (20 × 7 = 140)
+│   ├── kr-stocks-{data,update}.js← 한국 주식 (20 × 7 = 140)
+│   ├── jp-stocks-{data,update}.js← 일본 주식 (UI·자동 갱신 제외, 데이터 보존)
+│   ├── ai-update.js              ← AI 기업 10사 (ai-data.js는 5/14 폐기 — frontend·발송·발행 어디서도 안 씀)
+│   ├── commodity-{data,update}.js← 원자재·크립토 (6 × 4 = 24)
+│   ├── unicorn-{data,update}.js  ← 유니콘 (5 × 7 = 35, AI 전업 기업 제외)
+│   ├── *-update.js               ← sandbox 작업 컨텍스트(직전 1건 참조용). DB의 tab_updates가 실제 read 진실 소스 + history 보존
 │   ├── calendar-events.js        ← 메인 14일 이벤트 캘린더용 (recurring 패턴 + fixed 알려진 일정)
 │   └── company-ko.js             ← 영문 회사명·티커 → 한글 매핑 (index.html·daily-send 단일 소스)
 ├── scripts/
 │   ├── generate-message.js       ← 로컬 친구톡 메시지 미리보기
 │   ├── send-friendtalk.js        ← 로컬 수동 발송 (디버깅)
-│   ├── trim-update-logs.js       ← *-update.js 최대 5건 트리밍 (sandbox 커밋 직전 필수)
-│   ├── rotate-archive.js         ← main entries를 archive로 mirror, 30일 cutoff (archive-rotate.yml에서 호출)
+│   ├── trim-update-logs.js       ← *-update.js 1건 한도 트리밍 (sandbox 커밋 직전 필수, dedup·history는 DB가 담당)
+│   ├── sync-to-db.js             ← 5탭 *-data.js + *-update.js entries[0]을 write-tab-data·write-tab-update로 동기화 (db-sync.yml이 GitHub Actions runner에서 호출)
 │   ├── lint-jargon.sh            ← 트레이더 은어·편집자 메타 표현 lint
 │   ├── lint-finmap-pool.js       ← sector-pool 한글명 lookup·dual-list lint
 │   ├── subscribers.example.json
@@ -60,8 +59,8 @@ ai-investment/
 │       └── SETUP.md              ← 시크릿·버킷 셋업 가이드
 ├── .github/workflows/
 │   ├── cartoon-generate.yml      ← `data/.cartoon-marker` push 트리거 (자동 갱신 sandbox가 마지막 단계로 마커 push)
-│   ├── instagram-post.yml        ← cartoon-generate workflow_run chain (캐러셀 오전 / Reels 오후, 모두 7장 슬라이드 공유)
-│   └── archive-rotate.yml        ← main *-update.js push 시 archive 30일 cutoff 갱신 (mentions 깊이 확장)
+│   ├── instagram-post.yml        ← cartoon-generate workflow_run chain (KST 07~18시 캐러셀 / 그 외 Reels, 모두 7장 슬라이드 공유)
+│   └── db-sync.yml               ← `data/*-data.js`·`data/*-update.js` push 트리거 (GitHub Actions runner가 scripts/sync-to-db.js 실행 → Supabase tab_data·tab_updates upsert. sandbox 프록시가 Supabase 차단해서 GH Actions 경유 필수)
 ├── supabase/
 │   ├── migrations/               ← 스키마 이력 (init / payment / message_type / delivery_state / admin_settings / template_code)
 │   ├── functions/
@@ -152,9 +151,8 @@ ai-investment/
 
 ### 인스타그램 자동 게시 (`@briefick`)
 - **시간대별 포맷 분기** (KST 기준, instagram-post.yml의 모드 결정 step):
-  - **05~12시** → 캐러셀(정적 게시물 7장)
-  - **13~23시** → Reels(영상 7장 슬라이드쇼)
-  - **00~04시** → all (운영자 수동 push 예외)
+  - **07~18시** → 캐러셀(정적 게시물 7장)
+  - **그 외 (19~06시)** → Reels(영상 7장 슬라이드쇼)
   - 자동 갱신 슬롯이 07:00·19:00 KST라 일상에선 캐러셀·Reels 1회씩 = 2개/일
 - **트리거**: 자동 갱신 sandbox(`trig_016nvC9rVppRnQ9nFZeDjnP8`)가 데이터 push 완료 후 별도 commit으로 `data/.cartoon-marker` 갱신·push → cartoon-generate가 paths 매치로 발화 → success 시 workflow_run chain으로 instagram-post 발화. 마커 push 누락 시 발행 0건이라 RemoteTrigger prompt에 "🔴 절대 생략 금지"로 명시.
 - **수동 발행**: `/publish [mode] [dry]` 슬래시 명령 또는 Actions UI → Run workflow.
@@ -196,7 +194,7 @@ ai-investment/
 ```
 pg_cron(또는 admin-api 프록시) → Vault X-Cron-Secret → daily-send
     ├ body.customMessage 있으면 자동 조립 건너뛰고 본문 그대로 사용 (공지)
-    │  없으면 GitHub Contents API로 data/*-update.js fetch
+    │  없으면 Supabase `tab_updates` 테이블에서 5탭 최신 entries 조회 (DB 진실 소스)
     ├ 한 탭 summary = 한 글머리표 줄(자유 문체 그대로) — 한국 → 미국 → AI → 원자재 → 유니콘 (표시 순서 통일)
     ├ 1000자 한도 초과 시 fitToLimit (모든 탭 보존하며 균등 줄 단위 cut)
     ├ 만료 구독자 expired 전환 (paid_until 과거)
@@ -309,6 +307,16 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-14**: **Supabase DB 전환 + ai-data.js 폐기 + *-update.js entries 1건 한도 + 분할 push 영구 차단**. 정적 *.js 파일 시스템 한계(매 사고마다 push 분할·archive 인프라 복잡도 누적)로 인해 DB 단일 진실 소스 구조로 회귀.
+  - **DB 스키마 신설** — `supabase/migrations/20260514093000_tab_data.sql` (tab_data·tab_updates 테이블 + `rotate_tab_updates_main` 트리거 + RLS), `20260514100000_tab_updates_unique.sql` (NOT NULL + 일반 unique constraint, PostgREST `on_conflict` 매칭용). `tab_updates`는 `source_hash` 기반 dedup으로 무한 history 보존. `archive` 트리거·trim 함수는 폐기(`20260514120000_drop_archive_trim.sql`).
+  - **Edge Function 4종 신설** — `read-tab-data` (5탭 + 최신 main entries 한 응답, public, 5분 캐시) · `read-tab-archive` (30일 lazy fetch) · `write-tab-data` · `write-tab-update` (X-Briefick-Secret 인증, BRIEFICK_WRITE_SECRET).
+  - **db-sync.yml workflow 신설** — `data/*-data.js`·`data/*-update.js` push 감지 → GitHub Actions runner가 `scripts/sync-to-db.js` 실행 → 5탭 evaluate → write-tab-data·write-tab-update 호출 → DB upsert. sandbox 프록시가 Supabase 호스트(`ytvcgoldauysvnqckzze.supabase.co`)를 차단하므로 sandbox는 git push만, DB sync는 GitHub Actions가 담당.
+  - **frontend·daily-send DB read 전환** — `index.html` `loadTabData()` (read-tab-data fetch + URLS·UPD_URLS·ARCHIVE_URLS 폐기), `daily-send`는 GitHub Contents API → `supabase.from('tab_updates').select()`로 전환.
+  - **ai-data.js 폐기** — frontend·daily-send·cartoon·instagram 어디서도 사용 안 됨이 전수 조사로 확인. `data/ai-data.js` 삭제, sandbox prompt에 "ai 탭은 *-update.js만" 분기 추가.
+  - **archive 인프라 전면 폐기** — `data/*-update-archive.js × 5` · `scripts/rotate-archive.js` · `.github/workflows/archive-rotate.yml` · `scripts/migrate-data-to-db.js` · `scripts/fetch-from-db.js` · `docs/SANDBOX_DUAL_WRITE.md` 삭제. mentions 깊이는 DB `tab_updates`가 무한 보존.
+  - **인스타 발행 시간 룰 변경** — `instagram-post.yml`을 KST 07~18시 캐러셀 / 그 외 릴스로 단순화 (기존 05~12 캐러셀/13~23 릴스/00~04 all에서 변경).
+  - **분할 push 근본 해결 — *-update.js entries 1건 한도** — sandbox MCP `push_files` API JSON body ~50KB 한계가 분할 commit의 원인. trim 5건(~150KB) → 2건(~40KB) → 1건(~23KB)으로 단계적 축소. dedup·history는 DB source_hash가 100% 담당, git의 *-update.js는 sandbox 직전 1건 참조용. kr/stocks의 data+update 합산 ~40KB로 push 한계 마진 ~10KB 확보. `scripts/trim-update-logs.js` LIMIT=1, CLAUDE.md·RemoteTrigger prompt 동시 갱신.
+  - **RemoteTrigger prompt 6 push 강제** — "push 정확히 6번(5탭 + 마커)" + "data·update 같은 commit" + "추가 push 절대 금지" + "Supabase 호출 금지" 명시. 5/9~5/13의 분할 push 사고 패턴("kr-data full restore" 보조 commit) 차단. 첫 실행 결과 6 push 정확 통과.
 - **2026-05-13 (3)**: **OG / Twitter Card 메타태그 추가 — 링크 공유 카드 설명 노출**. 기존 `meta name="description"`만 있어 카카오톡·Slack·iMessage·페이스북·X에서 설명 비어 보이던 회귀 해결. `index.html` `<head>`에 og:type·og:title·og:description·og:url·og:site_name·og:locale·og:image·og:image:width·og:image:height·og:image:alt + twitter:card(summary)·twitter:title·twitter:description·twitter:image 풀세트. og:image는 매일 갱신되는 1컷 카툰 supabase URL(`cartoon/today.png`, 1080×1350 4:5)·twitter:card는 정사각 썸네일과 호환되는 `summary`. 이미 공유된 채팅방 갱신은 페이스북 디버거(developers.facebook.com/tools/debug)·X validator 등으로 강제 재크롤링 필요(카카오톡은 별도 도구 없어 URL에 query suffix 붙이거나 1~2주 자동 만료 대기).
 - **2026-05-13 (2)**: **모바일 헤드라인 narrative TLDR 통합 — CSS + JS 분기 + CF Pages 비결정적 500 사고**. 모바일(≤640px)에서 narrative-text(TLDR 5줄)을 CSS `display:none`으로 숨기고 JS `isMobile=matchMedia(640px)` 분기로 narrative-full에 첫 줄까지 포함. 시장별 헤더(🇰🇷 한국 마켓 등) + 1~5번째 줄 통합 표시. 데스크탑은 그대로(카툰 옆 TLDR 5줄 + 더보기로 펼침).
   - **사고**: 첫 시도(`353d30e`, CSS+JS 한 commit)가 CF Pages 빌드 "성공" 표시인데 deploy URL이 500. 정적 파일(/data/*.js)·routing 경로(/terms 등)는 200, /·/preview·/views/index.html만 500. vercel.app 미러(`roysbriefing.vercel.app`)는 200으로 git 코드 결백 확인 → CF Pages 서빙 단의 비결정적 fail로 추정. 빌드 로그는 깨끗("No build command specified")이었음.
