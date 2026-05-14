@@ -260,22 +260,6 @@ section:first-of-type{padding-top:48px;border-top:0}
 .idx-card .idx-value{font:600 22px/1.1 'Geist Mono',monospace;color:var(--fg);margin-top:6px}
 .idx-card svg{display:block;width:100%;height:50px;margin-top:8px}
 
-/* 카툰 자리(narrative-cartoon)에 위젯 박을 때 — 좁은 폭(~280px)에 맞춰 1열 stack */
-.narrative-cartoon.idx-slot{align-items:stretch;justify-content:flex-start;padding:0;background:transparent;border:none;aspect-ratio:auto}
-.narrative-cartoon.idx-slot::after{display:none}
-.narrative-cartoon.idx-slot .idx-widget{width:100%;display:flex;flex-direction:column;gap:8px;margin-bottom:0}
-.narrative-cartoon.idx-slot .idx-row{display:flex;flex-direction:column;gap:8px}
-.narrative-cartoon.idx-slot .idx-group{flex:1}
-.narrative-cartoon.idx-slot .idx-group-head{padding:8px 12px;font-size:10px}
-.narrative-cartoon.idx-slot .idx-group-head .idx-region .idx-delay{font-size:10px}
-.narrative-cartoon.idx-slot .idx-status{font-size:9px;padding:3px 8px}
-.narrative-cartoon.idx-slot .idx-card{padding:10px 12px 12px}
-.narrative-cartoon.idx-slot .idx-card .idx-label{font-size:11px}
-.narrative-cartoon.idx-slot .idx-card .idx-delta{font-size:12px}
-.narrative-cartoon.idx-slot .idx-card .idx-value{font-size:17px;margin-top:4px}
-.narrative-cartoon.idx-slot .idx-card svg{height:30px;margin-top:6px}
-.narrative-cartoon.idx-slot .idx-meta{font:500 10px/1 'Geist Mono',monospace;color:var(--mut);text-align:right;margin-top:2px}
-
 /* Event Calendar */
 .cal-dow-row{
   display:grid;grid-template-columns:repeat(7,1fr);
@@ -1018,6 +1002,34 @@ body.sub-modal-open{overflow:hidden}
       <h2 class="sec-title">이벤트 캘린더 · 2주</h2>
     </div>
   </div>
+  <div class="idx-widget" id="idxWidget" hidden>
+    <div class="idx-head">
+      <div class="idx-ttl">오늘의 마켓 펄스 · 3개월</div>
+      <div class="idx-meta" id="idxMeta">불러오는 중…</div>
+    </div>
+    <div class="idx-row">
+      <div class="idx-group" data-region="kr">
+        <div class="idx-group-head">
+          <span class="idx-region">🇰🇷 한국 <span class="idx-delay">· 15분 지연</span></span>
+          <span class="idx-status" id="idxKrStatus"></span>
+        </div>
+        <div class="idx-cards">
+          <div class="idx-card" data-key="kospi"></div>
+          <div class="idx-card" data-key="kosdaq"></div>
+        </div>
+      </div>
+      <div class="idx-group" data-region="us">
+        <div class="idx-group-head">
+          <span class="idx-region">🇺🇸 미국 <span class="idx-delay">· 15분 지연</span></span>
+          <span class="idx-status" id="idxUsStatus"></span>
+        </div>
+        <div class="idx-cards">
+          <div class="idx-card" data-key="sp500"></div>
+          <div class="idx-card" data-key="nasdaq"></div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="cal-dow-row">
     <div class="sun">일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div class="sat">토</div>
   </div>
@@ -1538,35 +1550,13 @@ function buildNarrative(){
   }
 
   const remainingCount=totalLines-tldrRows.length;
-  // 카툰 자리에 4 지수 위젯 (2026-05-14~). 카툰은 비활성 — 비용 대비 임팩트 약함.
+  // 1컷 만화 — Supabase Storage cartoon/today.png. 화풍·파일 단일화(5/11): 1950s 한 화풍·today.png 한 파일.
+  // 홈피·인스타 캐러셀·인스타 Reels 모두 같은 today.png를 소스로 씀.
+  const cartoonSrc=`https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/today.png?_=${Date.now()}`;
   body.innerHTML=`
     <div class="narrative-flex">
-      <div class="narrative-cartoon idx-slot" id="narrativeCartoon">
-        <div class="idx-widget" id="idxWidget">
-          <div class="idx-row">
-            <div class="idx-group" data-region="kr">
-              <div class="idx-group-head">
-                <span class="idx-region">🇰🇷 한국 <span class="idx-delay">· 15분 지연</span></span>
-                <span class="idx-status" id="idxKrStatus"></span>
-              </div>
-              <div class="idx-cards">
-                <div class="idx-card" data-key="kospi"></div>
-                <div class="idx-card" data-key="kosdaq"></div>
-              </div>
-            </div>
-            <div class="idx-group" data-region="us">
-              <div class="idx-group-head">
-                <span class="idx-region">🇺🇸 미국 <span class="idx-delay">· 15분 지연</span></span>
-                <span class="idx-status" id="idxUsStatus"></span>
-              </div>
-              <div class="idx-cards">
-                <div class="idx-card" data-key="sp500"></div>
-                <div class="idx-card" data-key="nasdaq"></div>
-              </div>
-            </div>
-          </div>
-          <div class="idx-meta" id="idxMeta">불러오는 중…</div>
-        </div>
+      <div class="narrative-cartoon" id="narrativeCartoon">
+        <img src="${cartoonSrc}" alt="오늘의 1컷" onerror="document.getElementById('narrativeCartoon').classList.add('empty');this.removeAttribute('src');">
       </div>
       <div class="narrative-text">
         <div class="tldr-list">${tldrRows.join('')}</div>
@@ -1580,8 +1570,6 @@ function buildNarrative(){
       <div class="narrative-full" id="narrativeFull">${fullSections.join('')}</div>
     `:''}
   `;
-  // 위젯 DOM이 새로 생성됐으니 캐시된 데이터로 즉시 다시 렌더 (idx가 buildNarrative보다 먼저 도착했을 수 있음)
-  if(STATE.indices) renderIndexWidget(STATE.indices);
 
   const btn=document.getElementById('narrativeExpand');
   if(btn){
