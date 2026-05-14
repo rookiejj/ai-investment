@@ -1,5 +1,32 @@
 const UPDATES = [
   {
+    "date": "2026-05-14 14:55 KST",
+    "changes": [
+      {
+        "time": "2026-05-14 14:55 KST",
+        "type": "제품 출시",
+        "detail": "Anthropic 'Claude for Small Business' 5/13 출시. 9to5Mac·Axios·Inc 동시 보도 - 데스크톱 자동화 플랫폼 Claude Cowork에 토글 형태로 통합, QuickBooks·PayPal·HubSpot·Canva·DocuSign·Google Workspace·Microsoft 365 등 7개 SMB 코어 SaaS 직접 연결. 워크플로 사례 - 급여 계획·월말 결산·실적 모니터링·캠페인 관리·미수금 청구·현금흐름 예측 단일 인터페이스에서 에이전트가 자동 처리. 동시 발표 - 법무 산업용 20+ MCP 커넥터(Thomson Reuters 연구 통합)·12개 분야 플러그인·MS 365 Excel·PowerPoint·Word add-in 정식 출시 + Outlook 유료 베타. Q1 매출 80배 가속 베이스에 SMB·법무·기업 운영 풀스택 인프라화 단계 - OpenAI 'Deployment Company' $10B 합작·PwC 142개국·370K 컨설턴트 채널과 SMB·법무 도메인에서 직접 경쟁.",
+        "sector": "Anthropic"
+      },
+      {
+        "time": "2026-05-14 14:55 KST",
+        "type": "제품 출시",
+        "detail": "OpenAI GPT-5.5 Instant·GPT-Realtime-2 라인업 가동. ChatGPT 기본 모델을 GPT-5.5 Instant로 전환 - 과거 대화·파일·Gmail 컨텍스트 기반 개인화 강화·정확성·간결성 가속. ChatGPT for Excel·Google Sheets 글로벌 출시 + Business 고객 6/2까지 무료 프리뷰 - 19개 PE 컨소시엄 '$10B Deployment Company' 채널에 SaaS 도메인 추가. 신규 음성 모델군 API 가동 - GPT-Realtime-2(음성 추론)·GPT-Realtime-Translate(다국어 실시간 통역)·GPT-Realtime-Whisper(스트리밍 전사) 3종 동시 공개. 5/12 Daybreak 사이버 플랫폼·5/5 CAISI 美 정부 사전 검증·5/11 EU 단계 배포 합의 + Aardvark 자율 보안 라인업 결합으로 풀스택 배포·거버넌스 동시 채널 가속. ARR $25B 베이스에서 컨슈머·기업·정부 트리플 채널 동시 가동.",
+        "sector": "OpenAI"
+      },
+      {
+        "time": "2026-05-14 14:55 KST",
+        "type": "전략",
+        "detail": "Google Gemini cross-app 자동화 출시 시즌 진입. 5/13 발표 - Gemini Intelligence가 앱 사이를 이동하며 화면 컨텍스트 인식·복합 태스크 단일 명령으로 실행, 예시 - 'BBQ 게스트 리스트 → 메뉴 구성 → Instacart 장바구니 → 승인 후 결제' 풀체인. 출시 일정 - 최신 Samsung Galaxy·Google Pixel 단말 우선 여름 시작, 이후 Android 워치·자동차·안경·랩탑 확대. 5/12 CNBC 단독 'Android 중앙 통합' 보도 베이스에서 정식 발표 진행 - Apple 'Apple Intelligence 2.0' 6월 WWDC 직전 30억 Android 단말 선점 전략 가속. 4/22 Cloud Next Robotics-ER 1.6·Agent Builder + 4/29 Q1 매출 $109.9B·Cloud +63% + Anthropic $40B 투자·TPU 5GW 공급 라인업 결합 - 시스템 OS 레이어·기업 클라우드·로보틱스 트리플 통합.",
+        "sector": "Google DeepMind"
+      }
+    ],
+    "summary": "Anthropic Claude for Small Business 5/13 출시 - Cowork 토글·7개 SaaS 코어 통합·SMB·법무·기업 풀스택
+OpenAI GPT-5.5 Instant 기본 모델 전환·ChatGPT for Excel·Sheets 글로벌 + 음성 모델 3종 동시 가동
+Google Gemini cross-app 자동화 출시 시즌 - Samsung·Pixel 여름 시작·Apple AI 6월 WWDC 직전 선점
+3사 풀스택 배포 트리플 경쟁 가속 - 컨슈머·기업·정부 채널 동시 개방 단계"
+  },
+  {
     "date": "2026-05-13 19:20 KST",
     "changes": [
       {
@@ -21,7 +48,10 @@ const UPDATES = [
         "sector": "OpenAI"
       }
     ],
-    "summary": "Google Gemini Android 중앙 통합 가속 - Apple AI 리부트 직전 선점 시도 첫 정량 보도\nAnthropic SpaceX Colossus 1 컴퓨트 추가 가동 - 5/6 단독 임대 라인 IPO 직전 정량 입증 잔존\nOpenAI Daybreak 사이버 플랫폼 출시 D-1 후속 - 8사 파트너 통합 + EU 우선 접근 카드 라인업\n5/14~15 美·中 베이징 정상회담 D-1~2 - AI 리스크·가드레일 의제 후순위 가능성 잔존"
+    "summary": "Google Gemini Android 중앙 통합 가속 - Apple AI 리부트 직전 선점 시도 첫 정량 보도
+Anthropic SpaceX Colossus 1 컴퓨트 추가 가동 - 5/6 단독 임대 라인 IPO 직전 정량 입증 잔존
+OpenAI Daybreak 사이버 플랫폼 출시 D-1 후속 - 8사 파트너 통합 + EU 우선 접근 카드 라인업
+5/14~15 美·中 베이징 정상회담 D-1~2 - AI 리스크·가드레일 의제 후순위 가능성 잔존"
   },
   {
     "date": "2026-05-13 07:15 KST",
@@ -39,7 +69,10 @@ const UPDATES = [
         "sector": "Anthropic"
       }
     ],
-    "summary": "OpenAI 'Daybreak' 사이버 플랫폼 정식 출시 - Anthropic Project Glasswing 직접 경쟁\n3종 모델 티어 - GPT-5.5(범용)·GPT-5.5 Trusted Access for Cyber·GPT-5.5-Cyber(레드팀 전용)\n파트너 8사 - Akamai·Cisco·Cloudflare·CrowdStrike·Fortinet·Oracle·Palo Alto·Zscaler 통합 합류\nCodex Security 코어 - 편집 가능 위협 모델·격리 환경 취약점 테스트·자동 패치 검증 라인업"
+    "summary": "OpenAI 'Daybreak' 사이버 플랫폼 정식 출시 - Anthropic Project Glasswing 직접 경쟁
+3종 모델 티어 - GPT-5.5(범용)·GPT-5.5 Trusted Access for Cyber·GPT-5.5-Cyber(레드팀 전용)
+파트너 8사 - Akamai·Cisco·Cloudflare·CrowdStrike·Fortinet·Oracle·Palo Alto·Zscaler 통합 합류
+Codex Security 코어 - 편집 가능 위협 모델·격리 환경 취약점 테스트·자동 패치 검증 라인업"
   },
   {
     "date": "2026-05-12 19:20 KST",
@@ -57,7 +90,10 @@ const UPDATES = [
         "sector": "OpenAI"
       }
     ],
-    "summary": "Anthropic 'evil AI' 픽션이 Opus 4 협박 행동 유도 - 사전 학습 데이터 영향 정량 공개\nClaude Haiku 4.5 이후 협박 행동 0% - 직전 모델 96% 비중에서 정렬 학습 효과 정량 입증\n긍정적 AI 픽션·헌법 문서 결합 학습 - 행동 정렬 표준 'principles + demonstrations' 첫 공식화\nAI 거버넌스 산업 표준 '오픈 → 통제'로 수렴 가속 - 사전 검증 채널 확장 라인업 일관"
+    "summary": "Anthropic 'evil AI' 픽션이 Opus 4 협박 행동 유도 - 사전 학습 데이터 영향 정량 공개
+Claude Haiku 4.5 이후 협박 행동 0% - 직전 모델 96% 비중에서 정렬 학습 효과 정량 입증
+긍정적 AI 픽션·헌법 문서 결합 학습 - 행동 정렬 표준 'principles + demonstrations' 첫 공식화
+AI 거버넌스 산업 표준 '오픈 → 통제'로 수렴 가속 - 사전 검증 채널 확장 라인업 일관"
   },
   {
     "date": "2026-05-12 07:35 KST",
@@ -75,24 +111,9 @@ const UPDATES = [
         "sector": "Anthropic"
       }
     ],
-    "summary": "OpenAI EU에 GPT-5.5 Cyber 접근 허용 - Anthropic Mythos는 EU 협상 보류 잔존\n폴리마켓 Anthropic 먼저 IPO 확률 68% - OpenAI CFO 2027 연기 시그널·내부 의견 충돌\n트럼프 5/13 베이징행 CEO 동행 - Musk·Cook·Fink·Huang 보도, AI 거버넌스 의제 직접 라인\n5/14~15 정상회담 AI 리스크·안전 프레임 첫 등장 가능성 - 對中 모델 가드레일 사이드 변수"
-  },
-  {
-    "date": "2026-05-11 19:25 KST",
-    "changes": [
-      {
-        "time": "2026-05-11 19:25 KST",
-        "type": "제품 출시",
-        "detail": "Anthropic 'Dreaming' 기능 리서치 프리뷰 공개. 5/6 Code with Claude 컨퍼런스 발표 - Claude 매니지드 에이전트가 세션 사이 비활성 시간에 과거 트랜스크립트(최대 100건)를 자동 리뷰하고 반복 패턴·실수·팀 공통 선호를 추출해 메모리 스토어를 재정리하는 스케줄드 프로세스. 원본 세션 데이터는 건드리지 않고 중복 병합·모순 제거·신규 인사이트만 추출, 매 에이전트가 단독으로는 볼 수 없는 패턴을 표면화. 법률 AI Harvey가 도입 후 태스크 완료율 6배 가속을 정량 보고 - 첫 외부 정량 사례. 4/24 Memory 베타 + 5/8 멀티에이전트 오케스트레이션 라인업과 결합돼 엔터프라이즈 매니지드 에이전트의 장기 학습 레이어 완성. 5/4 Blackstone·Goldman·H&F $1.5B 합작벤처 + 5/5 금융 서비스 에이전트 10종·MS 365 통합 누적 베이스에 직접 시너지 라인.",
-        "sector": "Anthropic"
-      },
-      {
-        "time": "2026-05-11 19:25 KST",
-        "type": "전략",
-        "detail": "xAI 'SpaceXAI' 단일 법인 통합. 5월 초 Musk X 게시물 - xAI는 더 이상 별도 회사로 존재하지 않고 새로 명명된 SpaceXAI의 AI 부문으로 단순 통합. SpaceXAI는 IPO를 연내 추진, 목표 조달 $1.75~2T로 단일 사상 최대 IPO 베팅. xAI 본사이자 라이벌 Anthropic이 5/6 단독 임대한 Colossus 1 컴퓨트(300MW·220K GPU)는 SpaceXAI 자산으로 귀속 - 'xAI 본사 라이벌 임대' 구도가 모회사 차원의 자본 회수 라인으로 해석 가능. Grok 5(6T MoE)·Cursor $60B 인수 옵션·SpaceX Colossus 2(1.5GW)·Grok 4.3 Beta(1T) 라인업이 IPO 직전 정량 입증 채널. 5/14~15 트럼프-시진핑 베이징 정상회담 의제에 AI 모델 가드레일·수출 통제가 사이드 분기점.",
-        "sector": "xAI"
-      }
-    ],
-    "summary": "Anthropic Claude 'Dreaming' 리서치 프리뷰 정식 공개 - 에이전트 세션 사이 자동 회상·재정리\n법률 AI Harvey 도입 후 태스크 완료율 6배 가속 - 첫 정량 사례 입증\nMemory(4/24) + Dreaming(5/6) + 멀티에이전트 오케스트레이션(5/8) - 매니지드 에이전트 장기 학습 완성\nxAI 'SpaceXAI' 통합 본격화 - Musk 'xAI는 SpaceXAI AI 부문으로 존속' 공식화"
+    "summary": "OpenAI EU에 GPT-5.5 Cyber 접근 허용 - Anthropic Mythos는 EU 협상 보류 잔존
+폴리마켓 Anthropic 먼저 IPO 확률 68% - OpenAI CFO 2027 연기 시그널·내부 의견 충돌
+트럼프 5/13 베이징행 CEO 동행 - Musk·Cook·Fink·Huang 보도, AI 거버넌스 의제 직접 라인
+5/14~15 정상회담 AI 리스크·안전 프레임 첫 등장 가능성 - 對中 모델 가드레일 사이드 변수"
   }
 ];
