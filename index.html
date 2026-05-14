@@ -132,8 +132,8 @@ section:first-of-type{padding-top:48px;border-top:0}
 .updates-loading{font:400 15px/1.6 'Inter',sans-serif;color:var(--mut);text-align:center;padding:24px 0}
 
 /* TL;DR — 시장별 한 줄 카드 + 좌측 1컷 만화 */
-.narrative-flex{display:flex;gap:20px;align-items:flex-start}
-.narrative-cartoon{flex:0 0 380px;aspect-ratio:4/5;border-radius:14px;border:1px solid var(--border);background:var(--panel-tint);display:flex;align-items:center;justify-content:center;position:relative;padding:10px;box-sizing:border-box}
+.narrative-flex{display:grid;grid-template-columns:2fr 3fr;gap:24px;align-items:flex-start}
+.narrative-cartoon{aspect-ratio:4/5;border-radius:14px;border:1px solid var(--border);background:var(--panel-tint);display:flex;align-items:center;justify-content:center;position:relative;padding:10px;box-sizing:border-box}
 .narrative-cartoon img{display:block;width:100%;height:100%;object-fit:contain;border-radius:6px;cursor:zoom-in}
 @media(max-width:640px){.narrative-cartoon img{cursor:default}}
 
@@ -162,8 +162,8 @@ section:first-of-type{padding-top:48px;border-top:0}
 .narrative-cartoon.empty::after{content:'1컷 만화 준비 중';color:var(--mut);font:500 13px/1.4 'Inter','Pretendard',sans-serif;letter-spacing:-0.01em}
 .narrative-text{flex:1;min-width:0}
 @media (max-width:768px){
-  .narrative-flex{flex-direction:column;gap:14px}
-  .narrative-cartoon{flex:0 0 auto;width:100%;max-width:100%}
+  .narrative-flex{grid-template-columns:1fr;gap:14px}
+  .narrative-cartoon{width:100%;max-width:100%}
 }
 .tldr-list{display:flex;flex-direction:column;gap:10px}
 .tldr-row{
@@ -197,15 +197,8 @@ section:first-of-type{padding-top:48px;border-top:0}
 .narrative-expand:hover{background:var(--panel-tint);border-color:var(--border-strong)}
 .narrative-expand .chev{font:500 24px/1 'Geist Mono',monospace;transition:transform .2s;color:var(--mut)}
 .narrative-expand.open .chev{transform:rotate(180deg)}
-.narrative-full{display:none;margin-top:18px;padding-top:18px;border-top:1px solid var(--border)}
-.narrative-full.open{display:block}
-/* 모바일: 더보기 버튼 숨기고 전체 헤드라인 처음부터 펼침 — 한 화면 스크롤로 흐름.
-   TLDR 한 줄씩 영역도 숨김 (첫 줄은 다음 단계에서 narrative-full에 흡수). */
-@media (max-width:640px){
-  .narrative-expand{display:none}
-  .narrative-full{display:block}
-  .narrative-text{display:none}
-}
+.narrative-full{display:block}
+/* TLDR strip·expand 버튼 5/14 폐기 — 데스크탑·모바일 둘 다 narrative-flex 안에서 전체 헤드라인 처음부터 표시 */
 .updates-section{padding-top:18px;margin-top:18px;border-top:1px solid var(--border)}
 .updates-section:first-child{padding-top:0;margin-top:0;border-top:0}
 .updates-tab-head{
@@ -1554,8 +1547,7 @@ function buildNarrative(){
     return;
   }
 
-  const remainingCount=totalLines-tldrRows.length;
-  // 1컷 만화 — Supabase Storage cartoon/today.png. 화풍·파일 단일화(5/11): 1950s 한 화풍·today.png 한 파일.
+  // 1컷 만화/신문 1면 — Supabase Storage cartoon/today.png. 5/14~ 신문 PNG.
   // 홈피·인스타 캐러셀·인스타 Reels 모두 같은 today.png를 소스로 씀.
   const cartoonSrc=`https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/cartoon/today.png?_=${Date.now()}`;
   body.innerHTML=`
@@ -1563,30 +1555,9 @@ function buildNarrative(){
       <div class="narrative-cartoon" id="narrativeCartoon">
         <img src="${cartoonSrc}" alt="오늘의 1컷" onerror="document.getElementById('narrativeCartoon').classList.add('empty');this.removeAttribute('src');">
       </div>
-      <div class="narrative-text">
-        <div class="tldr-list">${tldrRows.join('')}</div>
-      </div>
+      ${fullSections.length?`<div class="narrative-full" id="narrativeFull">${fullSections.join('')}</div>`:''}
     </div>
-    ${fullSections.length?`
-      <button class="narrative-expand" id="narrativeExpand">
-        <span>전체 헤드라인 ${remainingCount}건 더 보기</span>
-        <span class="chev">▾</span>
-      </button>
-      <div class="narrative-full" id="narrativeFull">${fullSections.join('')}</div>
-    `:''}
   `;
-
-  const btn=document.getElementById('narrativeExpand');
-  if(btn){
-    btn.addEventListener('click',()=>{
-      const full=document.getElementById('narrativeFull');
-      const open=full.classList.toggle('open');
-      btn.classList.toggle('open',open);
-      btn.querySelector('span:first-child').textContent=open
-        ?'접기'
-        :`전체 헤드라인 ${remainingCount}건 더 보기`;
-    });
-  }
 }
 
 // ═══════════════════════════════════════════════════════════
