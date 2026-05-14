@@ -89,9 +89,15 @@ async function writeTabUpdate(tabId, entry) {
 async function syncTab(tab, version) {
   const summary = { tab: tab.id, data: false, update: false, error: null };
   try {
-    const evaluated = evalDataFile(tab.dataFile);
-    await writeTabData(tab.id, evaluated, version);
-    summary.data = true;
+    // ai 탭은 *-data.js 폐기 (frontend·daily-send·cartoon·instagram 어디서도 안 씀).
+    // *-update.js entries만 sync.
+    if (tab.id !== 'ai') {
+      const evaluated = evalDataFile(tab.dataFile);
+      await writeTabData(tab.id, evaluated, version);
+      summary.data = true;
+    } else {
+      summary.data = true; // skip but count as success
+    }
 
     const updateEval = evalDataFile(tab.updateFile);
     const entries = updateEval.updates || [];
