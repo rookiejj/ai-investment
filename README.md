@@ -47,7 +47,9 @@ ai-investment/
 │   ├── lint-finmap-pool.js       ← sector-pool 한글명 lookup·dual-list lint
 │   ├── subscribers.example.json
 │   ├── cartoon/
-│   │   └── generate.js           ← Gemini nano-banana-pro 1950s 카툰 생성·Supabase 업로드
+│   │   ├── generate.js           ← 신문 1면 PNG 자동 생성 (Playwright HTML→PNG, 5/14~) · Supabase Storage cartoon/today.png 업로드
+│   │   ├── template.html         ← 신문 1면 production template (사이트 산세리프 thin 톤)
+│   │   └── render-newspaper.js   ← 디자인 mockup 반복 검증용 (scripts/cartoon/out/preview-*.html → PNG)
 │   └── instagram/                ← 인스타그램 캐러셀·Reels 자동 게시
 │       ├── template.html         ← 1080×1350 슬라이드 HTML 템플릿 (다크 + 사진 BG)
 │       ├── render-slides.js      ← Playwright로 5탭 최신 summary → PNG 7장 렌더
@@ -173,7 +175,7 @@ ai-investment/
   3. `scripts/instagram/music/` 하위 mp3 풀에서 **랜덤 픽**, 페이드인/아웃 합성 (없으면 무음 트랙 부착)
   4. Supabase Storage 업로드 (`Content-Type: video/mp4`)
   5. Graph API REELS 컨테이너 생성(`media_type=REELS`, `share_to_feed=true`) → FINISHED 대기(최대 5분) → publish
-- **카툰 (`cartoon-generate.yml`)**: 자동 갱신 sandbox의 마커 push 시 발화. `--style 1950s` 한 화풍, Gemini nano-banana-pro-preview로 1080×1350 4:5 1장 생성 → Supabase `cartoon/today.png` 업로드. 홈피·캐러셀·Reels 모두 같은 `today.png` 소스 공유. 비용 ~$0.13/장 × 2회/일.
+- **신문 1면 hero (`cartoon-generate.yml`)**: 자동 갱신 sandbox의 마커 push 시 발화. Playwright HTML→PNG 렌더로 1080×1350 4:5 신문 1면 생성 → Supabase `cartoon/today.png` 업로드. 5탭 헤드라인 + catchphrase(data/.catchphrase 파일) + 날짜·발행번호 자동 치환. 홈피·캐러셀·Reels·OG 모두 같은 `today.png` 소스 공유. **비용 0** (이전 Gemini nano-banana-pro ~$0.13/장 × 2회/일 폐기 — 5/14).
 - **캡션**: 캐러셀·Reels 동일. 헤더(날짜·브랜드) + 프로필 링크 유도 CTA + 가변 해시태그(티커·키워드 자동 추출, `#브리픽 #briefick` 항상 보존, 30개 한도)
 - **수동 점검**: `/publish dry` 또는 Actions UI에서 `dry_run=true`로 아티팩트(PNG·mp4·캡션)만 검수, 게시는 X
 - **버킷 분리**: `cartoon` 버킷은 cartoon-generate가 쓰는 마스터 저장소(`today.png` 1장), `instagram-carousel` 버킷은 publish.js가 게시 시 image_url로 Meta API에 전달할 영구 아카이브(`posts/YYYY-MM-DD/HHMMSS/`)
@@ -307,6 +309,12 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-14 (2)**: **카툰 → 신문 1면 PNG 자동 생성으로 교체 + 캘린더 상단 4 지수 위젯 신설**. 디자인 임팩트 vs 비용 트레이드오프 + 데이터 시각화 영역 보강.
+  - **카툰 폐기, 신문 1면 PNG로 대체** — `scripts/cartoon/generate.js`를 Gemini nano-banana-pro API 호출에서 Playwright HTML→PNG 렌더로 재작성. 비용 ~$0.13/장 × 2회/일 → 0. Storage 경로 `cartoon/today.png` 그대로 유지해 frontend·인스타 캐러셀·Reels·OG 통합 코드 변경 0.
+  - **신문 1면 디자인** — `scripts/cartoon/template.html` 산세리프 thin 톤(Inter light + Pretendard light), 마스트헤드 + 날짜·발행번호 + catchphrase + 5탭 한 줄 헤드라인 + 푸터. 토큰 치환 `{{DATE_KO}}·{{VOL_NO}}·{{CATCHPHRASE}}·{{HEAD_KR/STOCKS/AI/COMMODITY/UNICORN}}`. catchphrase는 `data/.catchphrase` 파일 있으면 사용·없으면 fallback.
+  - **`render-newspaper.js` 신설** — 디자인 mockup 반복 검증용. `scripts/cartoon/out/preview-*.html` 파일 만들면 `--all` 일괄 렌더 + DB read-tab-data 자동 fetch + 토큰 치환. PNG 결과로 디자인 비교.
+  - **`cartoon-generate.yml` 수정** — GEMINI env 제거, `npm ci` + `npx playwright install chromium` step 추가. 호출 명령 단순화(`node scripts/cartoon/generate.js --upload`).
+  - **캘린더 상단 4 지수 위젯** — `prices/indices.json` 신설(stock-prices Edge Function이 5분마다 KOSPI·KOSDAQ·S&P·NASDAQ 3개월 일별 시계열 fetch + upload), index.html에 `.idx-widget`(한국·미국 묶음, 낮/밤 명도 배경, 정규장·프리/애프터/장 마감 라벨, KST 07~19 한국 위/그 외 미국 위 swap), 종목 시세와 같은 5분 폴링.
 - **2026-05-14**: **Supabase DB 전환 + ai-data.js 폐기 + *-update.js entries 1건 한도 + 분할 push 영구 차단**. 정적 *.js 파일 시스템 한계(매 사고마다 push 분할·archive 인프라 복잡도 누적)로 인해 DB 단일 진실 소스 구조로 회귀.
   - **DB 스키마 신설** — `supabase/migrations/20260514093000_tab_data.sql` (tab_data·tab_updates 테이블 + `rotate_tab_updates_main` 트리거 + RLS), `20260514100000_tab_updates_unique.sql` (NOT NULL + 일반 unique constraint, PostgREST `on_conflict` 매칭용). `tab_updates`는 `source_hash` 기반 dedup으로 무한 history 보존. `archive` 트리거·trim 함수는 폐기(`20260514120000_drop_archive_trim.sql`).
   - **Edge Function 4종 신설** — `read-tab-data` (5탭 + 최신 main entries 한 응답, public, 5분 캐시) · `read-tab-archive` (30일 lazy fetch) · `write-tab-data` · `write-tab-update` (X-Briefick-Secret 인증, BRIEFICK_WRITE_SECRET).
