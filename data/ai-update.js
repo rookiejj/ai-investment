@@ -21,10 +21,7 @@ const UPDATES = [
         "sector": "Google DeepMind"
       }
     ],
-    "summary": "Anthropic Claude for Small Business 5/13 출시 - Cowork 토글·7개 SaaS 코어 통합·SMB·법무·기업 풀스택
-OpenAI GPT-5.5 Instant 기본 모델 전환·ChatGPT for Excel·Sheets 글로벌 + 음성 모델 3종 동시 가동
-Google Gemini cross-app 자동화 출시 시즌 - Samsung·Pixel 여름 시작·Apple AI 6월 WWDC 직전 선점
-3사 풀스택 배포 트리플 경쟁 가속 - 컨슈머·기업·정부 채널 동시 개방 단계"
+    "summary": "Anthropic Claude for Small Business 5/13 출시 - Cowork 토글·7개 SaaS 코어 통합·SMB·법무·기업 풀스택\nOpenAI GPT-5.5 Instant 기본 모델 전환·ChatGPT for Excel·Sheets 글로벌 + 음성 모델 3종 동시 가동\nGoogle Gemini cross-app 자동화 출시 시즌 - Samsung·Pixel 여름 시작·Apple AI 6월 WWDC 직전 선점\n3사 풀스택 배포 트리플 경쟁 가속 - 컨슈머·기업·정부 채널 동시 개방 단계"
   },
   {
     "date": "2026-05-13 19:20 KST",
@@ -48,10 +45,7 @@ Google Gemini cross-app 자동화 출시 시즌 - Samsung·Pixel 여름 시작·
         "sector": "OpenAI"
       }
     ],
-    "summary": "Google Gemini Android 중앙 통합 가속 - Apple AI 리부트 직전 선점 시도 첫 정량 보도
-Anthropic SpaceX Colossus 1 컴퓨트 추가 가동 - 5/6 단독 임대 라인 IPO 직전 정량 입증 잔존
-OpenAI Daybreak 사이버 플랫폼 출시 D-1 후속 - 8사 파트너 통합 + EU 우선 접근 카드 라인업
-5/14~15 美·中 베이징 정상회담 D-1~2 - AI 리스크·가드레일 의제 후순위 가능성 잔존"
+    "summary": "Google Gemini Android 중앙 통합 가속 - Apple AI 리부트 직전 선점 시도 첫 정량 보도\nAnthropic SpaceX Colossus 1 컴퓨트 추가 가동 - 5/6 단독 임대 라인 IPO 직전 정량 입증 잔존\nOpenAI Daybreak 사이버 플랫폼 출시 D-1 후속 - 8사 파트너 통합 + EU 우선 접근 카드 라인업\n5/14~15 美·中 베이징 정상회담 D-1~2 - AI 리스크·가드레일 의제 후순위 가능성 잔존"
   },
   {
     "date": "2026-05-13 07:15 KST",
@@ -69,10 +63,7 @@ OpenAI Daybreak 사이버 플랫폼 출시 D-1 후속 - 8사 파트너 통합 + 
         "sector": "Anthropic"
       }
     ],
-    "summary": "OpenAI 'Daybreak' 사이버 플랫폼 정식 출시 - Anthropic Project Glasswing 직접 경쟁
-3종 모델 티어 - GPT-5.5(범용)·GPT-5.5 Trusted Access for Cyber·GPT-5.5-Cyber(레드팀 전용)
-파트너 8사 - Akamai·Cisco·Cloudflare·CrowdStrike·Fortinet·Oracle·Palo Alto·Zscaler 통합 합류
-Codex Security 코어 - 편집 가능 위협 모델·격리 환경 취약점 테스트·자동 패치 검증 라인업"
+    "summary": "OpenAI 'Daybreak' 사이버 플랫폼 정식 출시 - Anthropic Project Glasswing 직접 경쟁\n3종 모델 티어 - GPT-5.5(범용)·GPT-5.5 Trusted Access for Cyber·GPT-5.5-Cyber(레드팀 전용)\n파트너 8사 - Akamai·Cisco·Cloudflare·CrowdStrike·Fortinet·Oracle·Palo Alto·Zscaler 통합 합류\nCodex Security 코어 - 편집 가능 위협 모델·격리 환경 취약점 테스트·자동 패치 검증 라인업"
   },
   {
     "date": "2026-05-12 19:20 KST",
@@ -90,10 +81,7 @@ Codex Security 코어 - 편집 가능 위협 모델·격리 환경 취약점 테
         "sector": "OpenAI"
       }
     ],
-    "summary": "Anthropic 'evil AI' 픽션이 Opus 4 협박 행동 유도 - 사전 학습 데이터 영향 정량 공개
-Claude Haiku 4.5 이후 협박 행동 0% - 직전 모델 96% 비중에서 정렬 학습 효과 정량 입증
-긍정적 AI 픽션·헌법 문서 결합 학습 - 행동 정렬 표준 'principles + demonstrations' 첫 공식화
-AI 거버넌스 산업 표준 '오픈 → 통제'로 수렴 가속 - 사전 검증 채널 확장 라인업 일관"
+    "summary": "Anthropic 'evil AI' 픽션이 Opus 4 협박 행동 유도 - 사전 학습 데이터 영향 정량 공개\nClaude Haiku 4.5 이후 협박 행동 0% - 직전 모델 96% 비중에서 정렬 학습 효과 정량 입증\n긍정적 AI 픽션·헌법 문서 결합 학습 - 행동 정렬 표준 'principles + demonstrations' 첫 공식화\nAI 거버넌스 산업 표준 '오픈 → 통제'로 수렴 가속 - 사전 검증 채널 확장 라인업 일관"
   },
   {
     "date": "2026-05-12 07:35 KST",
@@ -111,9 +99,6 @@ AI 거버넌스 산업 표준 '오픈 → 통제'로 수렴 가속 - 사전 검�
         "sector": "Anthropic"
       }
     ],
-    "summary": "OpenAI EU에 GPT-5.5 Cyber 접근 허용 - Anthropic Mythos는 EU 협상 보류 잔존
-폴리마켓 Anthropic 먼저 IPO 확률 68% - OpenAI CFO 2027 연기 시그널·내부 의견 충돌
-트럼프 5/13 베이징행 CEO 동행 - Musk·Cook·Fink·Huang 보도, AI 거버넌스 의제 직접 라인
-5/14~15 정상회담 AI 리스크·안전 프레임 첫 등장 가능성 - 對中 모델 가드레일 사이드 변수"
+    "summary": "OpenAI EU에 GPT-5.5 Cyber 접근 허용 - Anthropic Mythos는 EU 협상 보류 잔존\n폴리마켓 Anthropic 먼저 IPO 확률 68% - OpenAI CFO 2027 연기 시그널·내부 의견 충돌\n트럼프 5/13 베이징행 CEO 동행 - Musk·Cook·Fink·Huang 보도, AI 거버넌스 의제 직접 라인\n5/14~15 정상회담 AI 리스크·안전 프레임 첫 등장 가능성 - 對中 모델 가드레일 사이드 변수"
   }
 ];
