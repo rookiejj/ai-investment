@@ -1,5 +1,29 @@
 const UPDATES = [
   {
+    "date": "2026-05-14 13:45 KST",
+    "changes": [
+      {
+        "time": "2026-05-14 13:45 KST",
+        "type": "제품 출시",
+        "detail": "OpenAI 리얼타임 보이스 모델 라인업 3종 공식 출시. 5/13 OpenAI API 업데이트 - GPT-Realtime-2(스마트 라이브 보이스 추론·다중 턴 자율 응답)·GPT-Realtime-Translate(실시간 다국어 음성 번역·40개 언어 지원)·GPT-Realtime-Whisper(스트리밍 트랜스크립션 차세대). 직전 ChatGPT 디폴트 모델을 GPT-5.5 Instant로 전환해 응답 정확도·개인화 가속과 동시 라인업. 4/29 Aardvark 자율 보안 에이전트 + 5/12 Daybreak 사이버 플랫폼·8사 파트너 통합·EU 우선 접근 카드와 결합돼 멀티모달·풀스택 채널 확장. ARR $25B 베이스에서 음성·통역·실시간 트랜스크립션 카테고리 단독 점유 시그널 - Anthropic Mythos Preview EU 미체결 잔존 단계에서 보이스 카테고리는 OpenAI 선점. 5/14 트럼프 베이징 정상회담 의제에 AI 협력 포함 - 對中 모델·보이스 모델 수출 가이던스가 사이드 분기점.",
+        "sector": "OpenAI"
+      },
+      {
+        "time": "2026-05-14 13:45 KST",
+        "type": "인프라",
+        "detail": "Anthropic Claude Platform on AWS 정식 출시. 5/13 발표 - AWS에서 Claude API를 Anthropic 매니지드 인프라로 즉시 접근 가능, Messages API·Files API·Message Batches API·Claude Managed Agents·Agent Skills·Code Execution·Tool Use 풀라인업 동시 제공. 직전 5/6 SpaceX Colossus 1 단독 임대(300MW·220K GPU) + Google TPU 5GW + AWS 1GW + CoreWeave 다년 라인업 누적 베이스에 AWS 채널은 엔터프라이즈·정부 직접 배포 시그널. 동시 발표 - Claude Code 법률 MCP 커넥터 20종 + 실무 영역 플러그인 12종, 로펌·기업 법무 팀의 리서치·계약·디스커버리·매터 관리·법률 지원 워크플로우 전 영역 커버. 5/4 Blackstone·Goldman·H&F $1.5B 합작벤처 + 5/5 금융 서비스 에이전트 10종·MS 365 통합과 결합 - 엔터프라이즈·전문직 도메인 락인 본격화. IPO $900B 밸류 베이스 펀더멘털 가속.",
+        "sector": "Anthropic"
+      },
+      {
+        "time": "2026-05-14 13:45 KST",
+        "type": "거버넌스",
+        "detail": "美·中 베이징 정상회담 의제에 AI 협력·가드레일 포함. 5/14 1일차 환영행사·양자회담 개회 발언 - 시진핑 '적수 아닌 파트너'·트럼프 '환상적 관계' 직접 시그널, 메가캡 CEO 동행단(Musk·Cook·Fink·Huang) 어셈블. 의제 확정 - 관세·핵심 광물·반도체·대만에 더해 핵군축·이란 전쟁·AI 협력 포함. 對中 AI 칩·보이스 모델·프론티어 LLM 수출 가이던스가 단일 사이드 분기점, Huang CEO 직접 동행이 NVDA·OpenAI·Anthropic 모델 가드레일 표준화 협상 채널. 5/15 2일차 차담·업무오찬 후 출국 - 트럼프 5/14 시 주석에 핵군축 의제 제기 계획 + 모건스탠리 트럼프 방중이 중국 주식 8% 상승(항생 28,400 Q2 2027 목표)으로 가격될 가능성. AI 거버넌스 산업 표준이 美·中 양자 채널로 첫 진입.",
+        "sector": "OpenAI"
+      }
+    ],
+    "summary": "OpenAI 리얼타임 보이스 3종 출시 - GPT-Realtime-2·Translate·Whisper 멀티모달 풀라인업\nAnthropic Claude Platform on AWS 정식 출시 - 엔터프라이즈·정부 채널 + 법률 MCP 커넥터 20종\n美·中 베이징 정상회담 1일차 - 시 '적수 아닌 파트너'·트럼프 '환상적 관계' 의제에 AI 협력 포함\n메가캡 CEO 동행단 Musk·Huang·Cook·Fink - 對中 모델 가드레일·수출 통제 직접 채널"
+  },
+  {
     "date": "2026-05-13 19:20 KST",
     "changes": [
       {
