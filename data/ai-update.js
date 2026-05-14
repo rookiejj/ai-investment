@@ -6,6 +6,24 @@
  */
 const UPDATES = [
   {
+    date: "2026-05-14 11:00 KST",
+    summary: `Anthropic Ramp 데이터 B2B 고객 34.4% 첫 OpenAI 32.3% 추월 - 5월 시점 정량 입증
+OpenAI DeployCo($4B+ 초기 투자) 정식 가동 - Anthropic 5/4 Blackstone·Goldman·H&F $1.5B JV 대응 채널
+Mistral AI 유럽 sovereign AI 단독 - JPMorgan '가장 가치 있는 유럽 AI 기업' 평가 첫 공식
+5/14~15 트럼프-시진핑 베이징 정상회담 1~2일차 - AI 가드레일·자율무기 표준화 채널 단일 의제 부상`,
+    changes: [
+      { type: "마일스톤", sector: "Anthropic",
+        detail: "Anthropic B2B 유료 고객 비중 첫 OpenAI 추월. 5/13 TechCrunch 보도 - Ramp AI Index 5월 데이터에서 Anthropic 유료 비중 34.4% vs OpenAI 32.3%로 첫 단독 1위 기록. 2025년 5월 9% → 2026년 5월 34.4%로 12개월 +26%p 가속 - 매출 80배 가속(Q1 정량) 라인의 동시 입증. 단일 동력 - Claude Opus 4.7 SWE-Bench Pro 64.3% 코딩 단독 우위 + 4/24 Memory 베타 + 5/6 Dreaming + 5/8 Code with Claude 멀티에이전트 오케스트레이션 + 5/5 금융 서비스 에이전트 10종 + 5/4 Blackstone·Goldman·H&F $1.5B JV + SpaceX Colossus 1 단독 임대 누적 베이스. 폴리마켓 IPO 먼저 확률 68% + 5월 보드 $50B/$900B 라운드 결정 임박 + 10월 IPO $400~500B 타겟 라인업 정량 시너지. OpenAI 시간외 $852B 첫 추월 베이스에서 운영 정량 지표까지 동시 우위 시그널 부각.",
+        time: "2026-05-14 11:00 KST" },
+      { type: "전략", sector: "OpenAI",
+        detail: "OpenAI 'DeployCo' 정식 가동. 5/13 AI Business 보도 - 5/4 발표한 The Deployment Company가 'DeployCo' 약칭으로 정식 가동, $4B+ 초기 투자 확보, OpenAI 과반 지배 자회사. 사업 모델 - PE 컨소시엄 포트폴리오 기업 운영 레이어에 OpenAI 엔지니어 직접 배치(Palantir forward-deployed engineer 패턴 차용), 헬스케어·물류·제조·금융 4개 우선 섹터에 GPT-5.5·Codex·Privacy Filter 임베드. 동시에 OpenAI도 컨설팅 자회사 형태로 본격 가동. 5/4 Anthropic Blackstone·Goldman·H&F $1.5B JV에 대응한 PE 채널 직접 가격 발견 - 양사가 '챗봇·API → 풀스택 배치 엔진' 전환 본격화. ARR $25B + PwC 142개국·370K 컨설턴트 채널 + India 시장 진출 결합으로 글로벌 엔터프라이즈 채널 확장 가속. Anthropic Ramp 데이터 34.4% 첫 추월 단계에서 매출 가속 단일 분기점.",
+        time: "2026-05-14 11:00 KST" },
+      { type: "전략", sector: "Mistral AI",
+        detail: "Mistral AI 유럽 sovereign AI 단독 평가. 5/13 ChinaPulse·JPMorgan 보고서 종합 - JPMorgan이 Mistral AI를 'Europe's most valuable AI company'로 공식 평가, sovereign AI(정부·기관 모델·인프라·데이터 통제) 카테고리에서 단독 포지셔닝. EU 회원국·국방·금융 부문이 OpenAI Daybreak(5/12 출시·EU 우선 접근)·Anthropic Mythos(EU 협상 미체결) 양 미국 채널을 외면하고 Mistral을 sovereign 옵션으로 채택하는 신호 잔존. 트럼프 5/14~15 베이징 정상회담發 AI 가드레일 표준화 논의가 미·중 외 sovereign 채널 가속하는 사이드 동력 - EU·인도·한국·일본 자국 모델 채택 압력 단일 시그널 부상.",
+        time: "2026-05-14 11:00 KST" },
+    ]
+  },
+  {
     date: "2026-05-13 19:20 KST",
     summary: `Google Gemini Android 중앙 통합 가속 - Apple AI 리부트 직전 선점 시도 첫 정량 보도
 Anthropic SpaceX Colossus 1 컴퓨트 추가 가동 - 5/6 단독 임대 라인 IPO 직전 정량 입증 잔존
@@ -66,21 +84,6 @@ AI 거버넌스 산업 표준 '오픈 → 통제'로 수렴 가속 - 사전 검�
       { type: "거버넌스", sector: "Anthropic",
         detail: "Anthropic Mythos EU 접근 보류 잔존. 5/11 EU 집행위 종합 - 4~5회 협상에도 Anthropic이 Mythos Preview 모델 접근 약속 미체결, 5/6 ENISA·EU 의회 리스크 평가가 사실상 압박 라인. Mythos Preview는 Project Glasswing 컨소시엄(AWS·Apple·Cisco·CrowdStrike·Google·JPMorgan·Linux Foundation·Microsoft·NVIDIA·Palo Alto Networks) + $100M 크레딧으로 美 기업·정부 사이버 방어 라인업 우선 - EU 채널은 모델 거버넌스 vs 기업 통제 균형 잔존. 5/1 美 국방부 8사 AI 계약 단독 배제 베이스 그대로, 트럼프 행정부 블랙리스트 + 폴리마켓 IPO 먼저 확률 68% + 토큰화 IPO 함의 $1.2T·5월 보드 $50B/$900B 결정 임박이 모순 라인 - 안전 가드레일 견지가 매출·밸류 가속과 동시 작동.",
         time: "2026-05-12 07:35 KST" },
-    ]
-  },
-  {
-    date: "2026-05-11 19:25 KST",
-    summary: `Anthropic Claude 'Dreaming' 리서치 프리뷰 정식 공개 - 에이전트 세션 사이 자동 회상·재정리
-법률 AI Harvey 도입 후 태스크 완료율 6배 가속 - 첫 정량 사례 입증
-Memory(4/24) + Dreaming(5/6) + 멀티에이전트 오케스트레이션(5/8) - 매니지드 에이전트 장기 학습 완성
-xAI 'SpaceXAI' 통합 본격화 - Musk 'xAI는 SpaceXAI AI 부문으로 존속' 공식화`,
-    changes: [
-      { type: "제품 출시", sector: "Anthropic",
-        detail: "Anthropic 'Dreaming' 기능 리서치 프리뷰 공개. 5/6 Code with Claude 컨퍼런스 발표 - Claude 매니지드 에이전트가 세션 사이 비활성 시간에 과거 트랜스크립트(최대 100건)를 자동 리뷰하고 반복 패턴·실수·팀 공통 선호를 추출해 메모리 스토어를 재정리하는 스케줄드 프로세스. 원본 세션 데이터는 건드리지 않고 중복 병합·모순 제거·신규 인사이트만 추출, 매 에이전트가 단독으로는 볼 수 없는 패턴을 표면화. 법률 AI Harvey가 도입 후 태스크 완료율 6배 가속을 정량 보고 - 첫 외부 정량 사례. 4/24 Memory 베타 + 5/8 멀티에이전트 오케스트레이션 라인업과 결합돼 엔터프라이즈 매니지드 에이전트의 장기 학습 레이어 완성. 5/4 Blackstone·Goldman·H&F $1.5B 합작벤처 + 5/5 금융 서비스 에이전트 10종·MS 365 통합 누적 베이스에 직접 시너지 라인.",
-        time: "2026-05-11 19:25 KST" },
-      { type: "전략", sector: "xAI",
-        detail: "xAI 'SpaceXAI' 단일 법인 통합. 5월 초 Musk X 게시물 - xAI는 더 이상 별도 회사로 존재하지 않고 새로 명명된 SpaceXAI의 AI 부문으로 단순 통합. SpaceXAI는 IPO를 연내 추진, 목표 조달 $1.75~2T로 단일 사상 최대 IPO 베팅. xAI 본사이자 라이벌 Anthropic이 5/6 단독 임대한 Colossus 1 컴퓨트(300MW·220K GPU)는 SpaceXAI 자산으로 귀속 - 'xAI 본사 라이벌 임대' 구도가 모회사 차원의 자본 회수 라인으로 해석 가능. Grok 5(6T MoE)·Cursor $60B 인수 옵션·SpaceX Colossus 2(1.5GW)·Grok 4.3 Beta(1T) 라인업이 IPO 직전 정량 입증 채널. 5/14~15 트럼프-시진핑 베이징 정상회담 의제에 AI 모델 가드레일·수출 통제가 사이드 분기점.",
-        time: "2026-05-11 19:25 KST" },
     ]
   }
 ];
