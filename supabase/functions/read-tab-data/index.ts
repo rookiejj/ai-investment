@@ -60,7 +60,7 @@ Deno.serve(async (req) => {
   try {
     const [dataRes, updRes] = await Promise.all([
       fetch(`${supabaseUrl}/rest/v1/tab_data?select=tab_id,payload,version,updated_at`, { headers }),
-      fetch(`${supabaseUrl}/rest/v1/tab_updates?is_archive=eq.false&select=tab_id,entry_date,summary,changes,raw&order=tab_id.asc,entry_date.desc`, { headers }),
+      fetch(`${supabaseUrl}/rest/v1/tab_updates?is_archive=eq.false&select=tab_id,entry_date,summary,changes,raw,id&order=tab_id.asc,entry_date.desc,id.desc`, { headers }),
     ]);
     if (!dataRes.ok) {
       return new Response(`tab_data ${dataRes.status}`, { status: 502 });
