@@ -2353,7 +2353,7 @@ function findMentions(tk){
     }
     return true;
   }
-  for(const tab of Object.keys(UPD_URLS)){
+  for(const tab of ['stocks','kr','ai','commodity','unicorn']){
     const main=STATE.upd[tab]||[];
     const archive=(STATE.updArchive&&STATE.updArchive[tab])||[];
     for(const entry of main){if(!processEntry(tab,entry))break;}
