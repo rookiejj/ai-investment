@@ -246,7 +246,11 @@ async function fetchIndexSeries(symbol: string): Promise<any | null> {
       if (c != null && Number.isFinite(c)) series.push({ t: ts[i], c: Number(c) });
     }
     const current = meta.regularMarketPrice ?? (series.at(-1)?.c ?? null);
-    const prev = meta.previousClose ?? meta.chartPreviousClose ?? (series.at(-2)?.c ?? null);
+    // 어제 종가 = 시계열 마지막에서 두 번째 점. Yahoo의 previousClose는 3mo range에서
+    // undefined로 오고 chartPreviousClose는 3개월 전 값이라 series 기반이 정확.
+    // (마지막 점은 오늘 partial — 장중이면 regularMarketPrice와 동일.)
+    const prev = series.length >= 2 ? series[series.length - 2].c
+      : (meta.previousClose ?? meta.chartPreviousClose ?? null);
     const changePct = current != null && prev != null && prev !== 0
       ? ((current - prev) / prev) * 100 : null;
     return {
