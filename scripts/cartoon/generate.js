@@ -52,8 +52,12 @@ function pickHeadline(entry) {
 
 function readCatchphrase() {
   if (fs.existsSync(CATCHPHRASE_FILE)) {
-    const txt = fs.readFileSync(CATCHPHRASE_FILE, 'utf8').trim();
-    if (txt) return txt.replace(/\n/g, '<br>');
+    let txt = fs.readFileSync(CATCHPHRASE_FILE, 'utf8').trim();
+    if (txt) {
+      // sandbox가 printf '%s' '...\n...'로 박아 literal '\n'이 들어온 케이스도 처리
+      txt = txt.replace(/\\n/g, '\n');
+      return txt.replace(/\n/g, '<br>');
+    }
   }
   // fallback — sandbox가 .catchphrase 아직 안 만든 케이스
   return '오늘의 시장 한 줄로';
