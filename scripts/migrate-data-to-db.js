@@ -7,11 +7,11 @@
  *
  * 사용:
  *   SUPABASE_URL=https://....supabase.co \
- *   SUPABASE_SERVICE_ROLE_KEY=<service role key> \
+ *   BRIEFICK_SUPABASE_SECRET_KEY=sb_secret_... \
  *   node scripts/migrate-data-to-db.js
  *
- * service role key는 Supabase Dashboard → Project Settings → API → service_role.
- * RLS bypass 가능하니 절대 클라이언트·git에 노출 X.
+ * 새 키 시스템(sb_secret_...) — Supabase Dashboard → Project Settings → API Keys → Secret keys.
+ * RLS bypass 가능하니 절대 클라이언트·git에 노출 X. 기존 인스타 publish.js와 동일 env var 사용.
  */
 
 const fs = require('fs');
@@ -19,9 +19,9 @@ const path = require('path');
 const crypto = require('crypto');
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
-const SERVICE_KEY  = process.env.SUPABASE_SERVICE_ROLE_KEY;
-if (!SUPABASE_URL || !SERVICE_KEY) {
-  console.error('SUPABASE_URL·SUPABASE_SERVICE_ROLE_KEY 필요');
+const SECRET_KEY   = process.env.BRIEFICK_SUPABASE_SECRET_KEY || process.env.SUPABASE_SECRET_KEY;
+if (!SUPABASE_URL || !SECRET_KEY) {
+  console.error('SUPABASE_URL·BRIEFICK_SUPABASE_SECRET_KEY 필요');
   process.exit(1);
 }
 
@@ -77,8 +77,8 @@ async function supabaseRequest(method, pathSegment, body) {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${pathSegment}`, {
     method,
     headers: {
-      'apikey': SERVICE_KEY,
-      'Authorization': `Bearer ${SERVICE_KEY}`,
+      'apikey': SECRET_KEY,
+      'Authorization': `Bearer ${SECRET_KEY}`,
       'Content-Type': 'application/json',
       'Prefer': 'resolution=merge-duplicates,return=minimal',
     },
