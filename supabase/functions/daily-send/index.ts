@@ -30,17 +30,17 @@ const LIMIT = 1000;
 const PER_TAB = 1;
 const BATCH_SIZE = 500;
 
-type Tab = { file: string; var: string; emoji: string; label: string; };
+type Tab = { id: string; emoji: string; label: string; };
 type Entry = { date: string; summary: string; };
 type TabWithEntries = Tab & { entries: Entry[] };
 type Subscriber = { id: string; phone: string; name: string | null };
 
 const TABS: Tab[] = [
-  { file: "kr-stocks-update.js", var: "updates", emoji: "🇰🇷", label: "한국 마켓" },
-  { file: "stocks-update.js",    var: "updates", emoji: "🇺🇸", label: "미국 마켓" },
-  { file: "ai-update.js",        var: "UPDATES", emoji: "🤖", label: "AI 기업" },
-  { file: "commodity-update.js", var: "updates", emoji: "🛢️", label: "원자재·크립토" },
-  { file: "unicorn-update.js",   var: "updates", emoji: "🦄", label: "유니콘" },
+  { id: "kr",        emoji: "🇰🇷", label: "한국 마켓" },
+  { id: "stocks",    emoji: "🇺🇸", label: "미국 마켓" },
+  { id: "ai",        emoji: "🤖", label: "AI 기업" },
+  { id: "commodity", emoji: "🛢️", label: "원자재·크립토" },
+  { id: "unicorn",   emoji: "🦄", label: "유니콘" },
 ];
 
 // ═══ 영문 회사명·티커 → 한글 치환 ═════════════════════
@@ -82,35 +82,32 @@ function localizeText(text: string): string {
   return r;
 }
 
-// ═══ GitHub fetch ═══════════════════════════════════════
+// ═══ Supabase DB fetch (tab_updates) ════════════════════
+// 기존 GitHub raw fetch 폐기 — 2026-05-14 DB 전환. 같은 Supabase 프로젝트라 service role 직접.
 
-async function fetchTabEntries(tab: Tab): Promise<Entry[]> {
-  const url = GITHUB_TOKEN
-    ? `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/data/${tab.file}?ref=${GITHUB_BRANCH}`
-    : `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/data/${tab.file}`;
-  const headers: Record<string, string> = {};
-  if (GITHUB_TOKEN) {
-    headers["Authorization"] = `token ${GITHUB_TOKEN}`;
-    headers["Accept"] = "application/vnd.github.raw";
+async function fetchTabEntries(
+  supabase: ReturnType<typeof createClient>,
+  tab: Tab,
+): Promise<Entry[]> {
+  const { data, error } = await supabase
+    .from("tab_updates")
+    .select("entry_date,summary,raw")
+    .eq("tab_id", tab.id)
+    .eq("is_archive", false)
+    .order("entry_date", { ascending: false })
+    .limit(PER_TAB);
+  if (error) {
+    throw new Error(`fetch ${tab.id} failed: ${error.message}`);
   }
-  const res = await fetch(url, { headers });
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`fetch ${tab.file} failed ${res.status}: ${body.slice(0, 200)}`);
-  }
-  const src = await res.text();
-  const list = new Function(
-    `${src};return typeof ${tab.var}!=="undefined"?${tab.var}:[];`
-  )() as unknown[];
-  if (!Array.isArray(list)) return [];
-  return list
-    .slice(0, PER_TAB)
-    .filter((e): e is { date?: string; summary?: string } =>
-      !!e && typeof (e as { summary?: string }).summary === "string")
-    .map((e) => ({
-      date: (e.date ?? "").toString(),
-      // summary 전체를 미리 localize — 이후 fitToLimit의 길이 계산이 한글 기준으로 정확.
-      summary: localizeText(String(e.summary ?? "").trim()),
+  if (!data) return [];
+  return data
+    .filter((row) => {
+      // AI탭은 raw에 entries 형식으로 summary 없을 수 있음. 그건 skip (친구톡 본문엔 안 들어감)
+      return row.summary && typeof row.summary === "string";
+    })
+    .map((row) => ({
+      date: row.entry_date ?? "",
+      summary: localizeText(String(row.summary ?? "").trim()),
     }));
 }
 
@@ -345,7 +342,7 @@ Deno.serve(async (req) => {
       await loadCompanyKoMap();
       const tabs: TabWithEntries[] = [];
       for (const t of TABS) {
-        const entries = await fetchTabEntries(t);
+        const entries = await fetchTabEntries(supabase, t);
         if (entries.length) tabs.push({ ...t, entries });
       }
       tabCount = tabs.length;

@@ -26,20 +26,20 @@ const SITE_URL = 'https://briefick.com';
 const HANDLE = 'briefick';
 
 const TABS = [
-  { key: 'kr',        file: 'kr-stocks-update.js', var: 'updates', emoji: '🇰🇷', label: '한국 마켓' },
-  { key: 'stocks',    file: 'stocks-update.js',    var: 'updates', emoji: '🇺🇸', label: '미국 마켓' },
-  { key: 'ai',        file: 'ai-update.js',        var: 'UPDATES', emoji: '🤖', label: 'AI 기업' },
-  { key: 'commodity', file: 'commodity-update.js', var: 'updates', emoji: '🛢️', label: '원자재·크립토' },
-  { key: 'unicorn',   file: 'unicorn-update.js',   var: 'updates', emoji: '🦄', label: '유니콘' },
+  { key: 'kr',        emoji: '🇰🇷', label: '한국 마켓' },
+  { key: 'stocks',    emoji: '🇺🇸', label: '미국 마켓' },
+  { key: 'ai',        emoji: '🤖', label: 'AI 기업' },
+  { key: 'commodity', emoji: '🛢️', label: '원자재·크립토' },
+  { key: 'unicorn',   emoji: '🦄', label: '유니콘' },
 ];
 
-function loadLatestEntry(file, varName) {
-  const src = fs.readFileSync(path.join(ROOT, 'data', file), 'utf8');
-  const list = new Function(
-    `${src};return typeof ${varName}!=="undefined"?${varName}:[];`
-  )();
-  if (!Array.isArray(list) || list.length === 0) return null;
-  return list[0];
+const SUPABASE_FN_URL = process.env.SUPABASE_FN_URL ||
+  'https://ytvcgoldauysvnqckzze.supabase.co/functions/v1';
+
+async function fetchTabData() {
+  const r = await fetch(`${SUPABASE_FN_URL}/read-tab-data?_=${Date.now()}`);
+  if (!r.ok) throw new Error(`read-tab-data ${r.status}`);
+  return r.json();  // { version, tabs, updates }
 }
 
 function summaryToBullets(summary) {
@@ -136,9 +136,11 @@ async function main() {
   const d = kstNow();
   const dateLabel = tabFooterDate(d);
 
-  // 1) 데이터 로드
+  // 1) 데이터 로드 — Supabase Edge Function에서 5탭 main entries 한 번에
+  const tabResp = await fetchTabData();
   const tabPayloads = TABS.map(t => {
-    const entry = loadLatestEntry(t.file, t.var);
+    const entries = tabResp.updates?.[t.key] || [];
+    const entry = entries[0] || null;
     const bullets = entry ? summaryToBullets(entry.summary) : [];
     return { ...t, bullets };
   });

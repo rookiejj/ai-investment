@@ -1193,31 +1193,12 @@ function restoreScroll(){
 // ═══════════════════════════════════════════════════════════
 // 데이터 로드
 // ═══════════════════════════════════════════════════════════
-// 절대 경로 — Vercel 배포(루트 index.html)와 로컬 HTTP 서빙(/index.html) 양쪽에서 일관 동작.
+// 5탭 종목·헤드라인 데이터는 Supabase Edge Function(read-tab-data·read-tab-archive)에서 read.
+// sector-pool·company-ko·calendar-events는 정적 파일 유지 (변경 빈도 낮음).
+const SUPABASE_FN_URL='https://ytvcgoldauysvnqckzze.supabase.co/functions/v1';
 const URLS={
-  stocks:    '/data/stocks-data.js',
-  kr:        '/data/kr-stocks-data.js',
-  ai:        '/data/ai-data.js',
-  commodity: '/data/commodity-data.js',
-  unicorn:   '/data/unicorn-data.js',
   sectorPool:'/data/sector-pool.js',
   companyKo: '/data/company-ko.js',
-};
-const UPD_URLS={
-  stocks:    {url:'/data/stocks-update.js',    var:'updates'},
-  kr:        {url:'/data/kr-stocks-update.js', var:'updates'},
-  ai:        {url:'/data/ai-update.js',        var:'UPDATES'},
-  commodity: {url:'/data/commodity-update.js', var:'updates'},
-  unicorn:   {url:'/data/unicorn-update.js',   var:'updates'},
-};
-// archive — main 트리밍으로 잘린 옛 entries(~30일 cutoff). mentions 깊이 확장용.
-// archive-rotate.yml 워크플로가 main push 시마다 갱신. 클라는 boot 직후 비차단 fetch.
-const ARCHIVE_URLS={
-  stocks:    '/data/stocks-update-archive.js',
-  kr:        '/data/kr-stocks-update-archive.js',
-  ai:        '/data/ai-update-archive.js',
-  commodity: '/data/commodity-update-archive.js',
-  unicorn:   '/data/unicorn-update-archive.js',
 };
 const CALENDAR_URL='/data/calendar-events.js';
 const PRICES_URL='https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/prices/latest.json';
@@ -1232,10 +1213,22 @@ async function loadCompanyKo(url){
   const t=await r.text();
   return new Function(t+';return typeof COMPANY_KO!=="undefined"?COMPANY_KO:{};')();
 }
-async function loadUpd(url, varName){
-  const r=await fetch(url+'?_='+Date.now());
-  const t=await r.text();
-  return new Function(t+`;return typeof ${varName}!=="undefined"?${varName}:[];`)();
+// 5탭 종목 데이터(tab_data) + main 헤드라인(tab_updates is_archive=false, 5건) 한 번에.
+async function loadTabData(){
+  const r=await fetch(`${SUPABASE_FN_URL}/read-tab-data?_=${Date.now()}`);
+  if(!r.ok) throw new Error(`read-tab-data ${r.status}`);
+  return r.json();  // { version, tabs:{tab:payload}, updates:{tab:[entry,...]} }
+}
+// archive(30일 mentions 깊이) 비차단 fetch. 도착 전엔 main만으로 자연 폴백.
+async function loadTabArchive(){
+  try{
+    const r=await fetch(`${SUPABASE_FN_URL}/read-tab-archive?_=${Date.now()}`);
+    if(!r.ok) return {archive:{}};
+    return r.json();
+  }catch(e){
+    console.warn('archive 로드 실패:',e);
+    return {archive:{}};
+  }
 }
 
 // 시간대별 기본 마켓 — KST 8:00~18:59 한국, 19:00~다음날 7:59 미국 디폴트.
@@ -2715,20 +2708,8 @@ async function loadPrices(){
 // archive lazy fetch — main 도착 후 비차단으로 호출. 도착하면 STATE.updArchive에 저장,
 // 다음 모달 열기부터 mentions 깊이가 ~30일로 확장. 도착 전엔 main만으로 mentions 작동(자연 폴백).
 async function loadArchives(){
-  const tabs=Object.entries(ARCHIVE_URLS);
-  const out={};
-  await Promise.all(tabs.map(async([tab,url])=>{
-    try{
-      const r=await fetch(url+'?_='+Date.now());
-      if(!r.ok){out[tab]=[];return;}
-      const t=await r.text();
-      out[tab]=new Function(t+';return typeof updatesArchive!=="undefined"?updatesArchive:[];')();
-    }catch(e){
-      console.warn(`archive ${tab} 로드 실패:`,e);
-      out[tab]=[];
-    }
-  }));
-  STATE.updArchive=out;
+  const resp=await loadTabArchive();
+  STATE.updArchive=resp.archive||{};
 }
 
 // 페이지 오래 열어둘 때 stale 방지 — 5분마다 백그라운드 갱신 + 카드 재렌더
@@ -2762,18 +2743,19 @@ async function boot(){
   loadArchives().catch(e=>console.warn('archive 로딩 실패:',e));
 
   try{
-    const [stocks,kr,ai,commodity,unicorn,pool,calendar,companyKo]=await Promise.all([
-      loadJS(URLS.stocks),loadJS(URLS.kr),loadJS(URLS.ai),loadJS(URLS.commodity),loadJS(URLS.unicorn),
+    const [tabResp,pool,calendar,companyKo]=await Promise.all([
+      loadTabData(),
       loadJS(URLS.sectorPool).catch(()=>null),
       loadCalendar(),
       loadCompanyKo(URLS.companyKo).catch(()=>({})),
     ]);
     _setCompanyKo(companyKo);
-    STATE.data.stocks=stocks.data;
-    STATE.data.kr=kr.data;
-    STATE.data.ai=ai.data;
-    STATE.data.commodity=commodity.data;
-    STATE.data.unicorn=unicorn.data;
+    // tab_data.payload — {data, META?, BL?} 구조. STATE.data엔 data만, META·BL은 미사용
+    for(const tab of ['stocks','kr','ai','commodity','unicorn']){
+      const payload=tabResp.tabs?.[tab]||{};
+      STATE.data[tab]=payload.data||[];
+    }
+    STATE.dataVersion=tabResp.version||'unknown';
     STATE.pool=pool?.data||null;
     STATE.krNameOverride=pool?.krNameOverride||{};
     STATE.usNameOverride=pool?.usNameOverride||{};
@@ -2788,10 +2770,10 @@ async function boot(){
     }
     STATE.calendar=calendar;
 
-    const updResults=await Promise.all(
-      Object.entries(UPD_URLS).map(([tab,cfg])=>loadUpd(cfg.url,cfg.var).then(d=>[tab,d]))
-    );
-    for(const [tab,data] of updResults)STATE.upd[tab]=data;
+    // main 헤드라인 — tabResp.updates에 탭별 최신 5건 raw entry 배열
+    for(const tab of ['stocks','kr','ai','commodity','unicorn']){
+      STATE.upd[tab]=tabResp.updates?.[tab]||[];
+    }
 
     buildNarrative();
     renderCalendar();

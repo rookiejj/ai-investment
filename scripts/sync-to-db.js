@@ -42,7 +42,7 @@ function evalDataFile(file) {
       data:    typeof data    !== 'undefined' ? data    : null,
       META:    typeof META    !== 'undefined' ? META    : null,
       BL:      typeof BL      !== 'undefined' ? BL      : null,
-      updates: typeof updates !== 'undefined' ? updates : null,
+      updates: typeof updates !== 'undefined' ? updates : (typeof UPDATES !== 'undefined' ? UPDATES : null),
     };`;
   return new Function(wrapped)();
 }

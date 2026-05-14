@@ -32,9 +32,22 @@ function loadEnv() {
 }
 loadEnv();
 
-function loadUpdates(file, varName) {
-  const t = fs.readFileSync(path.join(ROOT, 'data', file), 'utf8');
-  return new Function(t + `;return typeof ${varName}!=="undefined"?${varName}:[];`)();
+// Phase 2 (2026-05-14): DB 전환. read-tab-data Edge Function에서 5탭 main entries 한 번에.
+const SUPABASE_FN_URL = process.env.SUPABASE_FN_URL ||
+  'https://ytvcgoldauysvnqckzze.supabase.co/functions/v1';
+let _tabDataCache = null;
+async function fetchTabData() {
+  if (_tabDataCache) return _tabDataCache;
+  const r = await fetch(`${SUPABASE_FN_URL}/read-tab-data?_=${Date.now()}`);
+  if (!r.ok) throw new Error(`read-tab-data ${r.status}`);
+  _tabDataCache = await r.json();
+  return _tabDataCache;
+}
+function loadUpdates(tabId) {
+  // sync wrapper — 동기적 사용을 위해 cache 사용. 호출 전에 await fetchTabData() 필요.
+  const cache = _tabDataCache;
+  if (!cache) throw new Error('fetchTabData() 미선행 — 캐시 없음');
+  return cache.updates?.[tabId] || [];
 }
 
 function todayKST() {
@@ -51,17 +64,17 @@ function todayStamp() {
 // N번째 entry의 summary 모두 모아 헤드라인 (0 = 가장 최신)
 function headlinesAt(index) {
   const tabs = [
-    {file: 'kr-stocks-update.js', var: 'updates', label: '한국'},
-    {file: 'stocks-update.js', var: 'updates', label: '미국'},
-    {file: 'ai-update.js', var: 'UPDATES', label: 'AI'},
-    {file: 'commodity-update.js', var: 'updates', label: '원자재'},
-    {file: 'unicorn-update.js', var: 'updates', label: '유니콘'},
+    {id: 'kr', label: '한국'},
+    {id: 'stocks', label: '미국'},
+    {id: 'ai', label: 'AI'},
+    {id: 'commodity', label: '원자재'},
+    {id: 'unicorn', label: '유니콘'},
   ];
   const out = {};
   let dateRef = '';
   for (const t of tabs) {
     try {
-      const upd = loadUpdates(t.file, t.var);
+      const upd = loadUpdates(t.id);
       const entry = upd[index];
       if (!entry) { out[t.label] = []; continue; }
       const lines = (entry.summary || '').split('\n').map(s => s.trim()).filter(Boolean);
@@ -209,6 +222,8 @@ async function main() {
   const tag = parseArg('--tag', '');
   const styleKey = parseArg('--style', '1950s');
   const customOut = parseArg('--output', '');
+  // DB에서 5탭 main entries 한 번에 fetch (sync wrapper 호출 전 필수)
+  await fetchTabData();
   const headlines = headlinesAt(index);
   console.log(`[headlines] index=${index}${headlines.__dateRef ? ` (date=${headlines.__dateRef})` : ''}`);
   for (const [k, lines] of Object.entries(headlines)) {

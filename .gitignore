@@ -8,6 +8,26 @@ package-lock.json
 scripts/instagram/out/
 scripts/cartoon/out/
 
+# Phase 2 (2026-05-14): 5탭 데이터는 Supabase DB가 진실원본.
+# 로컬 *-data.js·*-update.js·*-update-archive.js는 fetch-from-db.js가 DB에서 재생성.
+# git에 commit 안 함 (DB가 마스터).
+data/stocks-data.js
+data/stocks-update.js
+data/stocks-update-archive.js
+data/kr-stocks-data.js
+data/kr-stocks-update.js
+data/kr-stocks-update-archive.js
+data/ai-data.js
+data/ai-update.js
+data/ai-update-archive.js
+data/commodity-data.js
+data/commodity-update.js
+data/commodity-update-archive.js
+data/unicorn-data.js
+data/unicorn-update.js
+data/unicorn-update-archive.js
+data/version.js
+
 # Claude Code 로컬 권한 설정 (사용자별·머신별로 달라 공유 X)
 .claude/settings.local.json
 .claude/*.lock
