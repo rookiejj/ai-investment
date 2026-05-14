@@ -1,5 +1,29 @@
 const updates = [
   {
+    "date": "2026-05-14 13:55 KST",
+    "changes": [
+      {
+        "time": "2026-05-14 13:55 KST",
+        "type": "정보 갱신",
+        "detail": "Anduril Series H $5B 클로징 - 5/13 단일 톱 펀딩 발표. 방산테크 카테고리 최대 단일 라운드 - SpaceX·Palantir와 함께 美 국방 R&D 핵심 베이스 강화, Q1 2026 우주·국방 카테고리 자본 집중 가속 라인업의 연장선. 후속 동력 - True Anomaly $650M Series D(4/28)·Fractile AI 추론 칩 베이스(Accel·Founders Fund·Felicis·8VC 참여)와 결합돼 'AI 인접 칩·우주 방산' 양 카테고리 후기 자본 흡수 구도 잔존. 5/14 美·中 베이징 정상회담 의제에 핵군축·이란 전쟁·러시아 포함 - 글로벌 안보 변동성이 방산 후기 단계 자본 집중 후방 동력. SpaceX 5/19~22 S-1 정식 제출 윈도우 카운트다운 + Anthropic 5월 보드 $50B/$900B 라운드 결정 임박과 결합돼 1H 2026 후기 단계 유니콘 자본 흐름 사상 최대 페이스.",
+        "sector": "우주·모빌리티·방산"
+      },
+      {
+        "time": "2026-05-14 13:55 KST",
+        "type": "정보 갱신",
+        "detail": "Databricks·Stripe·Anthropic IPO 직전 카운트다운. 5/14 종합 밸류 라인업 - SpaceX $1.25T(美·中 정상회담 Musk 동행 효과)·OpenAI $840B·ByteDance $480B·Anthropic $380B·Stripe $159B·Databricks $134B로 사상 최대 영역 누적. Databricks $5B 신규 라운드 확정 - 매출 런레이트 $5.4B 연환산·전년 +65% 성장·고객 20,000사 + S-1 비밀 제출 Q3 2026 윈도우 그대로. Anthropic 5/4 GIC·Coatue 주도 Series G $30B 클로징 $380B 밸류 도달 후 5월 보드 $900B 결정 임박. Stripe 2025 텐더 $65B 베이스 +50% 가속 - 2H 2026 IPO 윈도우 잔존. Q1 2026 글로벌 유니콘 1,735개 → 1,680개 베이스에서 합산 밸류 $8.6T·AI·ML 47.6% 카테고리 단일 우위 그대로. 美 PPI 쇼크에도 후기 단계 IPO 스토리 견조.",
+        "sector": "엔터프라이즈 SW"
+      },
+      {
+        "time": "2026-05-14 13:55 KST",
+        "type": "정보 갱신",
+        "detail": "DesignVerse 엔터프라이즈 AI 소프트웨어 라운드 클로징. 5/13 발표 - 조직 문서·내부 규정 학습 후 복합 엔터프라이즈 SW 자동 생성·배포 채널, 신뢰성·감사가능성·아키텍처 일관성 우선 도메인 타겟. AI SW 카테고리 후기 단계 새 진입 - GitHub Copilot·Cursor·Codeium 코드 생성 vs DesignVerse 풀스택 SW 생성 차별화 시그널. 후방 - Rogo $160M Series D(투자 리서치 AI)·Ebury £550M·Kashable $60M Series C·Slash Financial $100M Series C 4~5월 누적 라인업이 핀테크·엔터프라이즈 SW 카테고리 자본 집중 가속. Cursor $60B SpaceXAI 인수 옵션 잔존 - Anysphere(Cursor 모회사) 단독 카테고리 톱 회복 후보. 2H 2026 IPO 라인업 후기 단계 자본 누적 베이스 그대로.",
+        "sector": "엔터프라이즈 SW"
+      }
+    ],
+    "summary": "Anduril Series H $5B 클로징 - 5/13 단일 톱 펀딩·방산테크 카테고리 최대 단일 라운드\nDatabricks $5B 신규 라운드 $134B 밸류 확정 - 매출 런레이트 $5.4B·고객 20,000사·S-1 Q3 2026\nSpaceX $1.25T·OpenAI $840B·Anthropic $380B·Stripe $159B - 후기 단계 IPO 라인업 사상 최대\nDesignVerse 풀스택 엔터프라이즈 SW 생성 AI 라운드 클로징 - 코드 생성 카테고리 차별화 시그널\n5/14 美·中 베이징 정상회담 Musk 동행 - SpaceX 5/19~22 S-1 정식 제출 윈도우 카운트다운"
+  },
+  {
     "date": "2026-05-13 19:30 KST",
     "changes": [
       {
@@ -95,7 +119,7 @@ const updates = [
       {
         "time": "2026-05-11 07:40 KST",
         "type": "정보 갱신",
-        "detail": "Q1 2026 글로벌 후기 단계 자본 환경 베이스 그대로 - PitchBook·Crunchbase 합산 글로벌 유니콘 딜 가치 $245.6B 사상 최고, 거래 227건·연환산 $1T 페이스. 글로벌 유니콘 1,680개·합산 밸류 $8.6T로 분기 신규 진입 가속. Anthropic 토큰화 IPO 함의 $1.2T 도달 + 5월 보드 $50B/$900B 라운드 결정 임박 + SpaceX S-1 5/15~22 윈도우 양 톱 라인업이 후기 단계 자본 흡수의 단독 동력. 4월 누적 후기 단계 유니콘 진입 - Parallel Web Systems 4/28 $100M Series B(Sequoia 주도, AI 검색 API 환각 최소화) + True Anomaly 4/28 $650M Series D(Eclipse·Riot 주도, 우주 안보) 추가 베이스. AI 인접 SW·우주 방산 양 카테고리에 자본 집중되는 'IPO 직전 양극화' 구도 잔존.",
+        "detail": "Q1 2026 글로벌 후기 단계 자본 환경 베이스 그대로 - PitchBook·Crunchbase 합산 글로벌 유니콘 딜 가치 $245.6B 사상 최고, 거래 227건·연환산 $1T 페이스. Anthropic 토큰화 IPO 함의 $1.2T 도달 + 5월 보드 $50B/$900B 라운드 결정 임박 + SpaceX S-1 5/15~22 윈도우 양 톱 라인업이 후기 단계 자본 흡수의 단독 동력. 4월 누적 후기 단계 유니콘 진입 - Parallel Web Systems 4/28 $100M Series B(Sequoia 주도, AI 검색 API 환각 최소화) + True Anomaly 4/28 $650M Series D(Eclipse·Riot 주도, 우주 안보) 추가 베이스. AI 인접 SW·우주 방산 양 카테고리에 자본 집중되는 'IPO 직전 양극화' 구도 잔존.",
         "sector": "엔터프라이즈 SW"
       }
     ],
