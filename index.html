@@ -3109,7 +3109,10 @@ boot();
     _subOpenedViaHistory=true;
   }
   function closeSubModal(fromPopState){
-    if(!fromPopState && _subOpenedViaHistory){
+    // 결제 완료(.completed) 상태에선 history.back 분기 우회 — handlePortoneReturn이 직접 모달 열어
+    // _subOpenedViaHistory 흐름과 분리되어 있어 ✕ 가 안 먹히는 케이스 차단.
+    const isCompleted=!!document.querySelector('#subscribeModal .sub-modal.completed');
+    if(!fromPopState && _subOpenedViaHistory && !isCompleted){
       // 사용자 액션이면 history.back → popstate 핸들러가 closeSubModal(true) 호출
       history.back();
       return;
@@ -3121,6 +3124,8 @@ boot();
     document.body.style.overflow='';
     document.documentElement.style.overflow='';
     modal.style.transform='';
+    const sm=document.querySelector('#subscribeModal .sub-modal');
+    if(sm) sm.classList.remove('completed','processing');
     resetStatus();
   }
   cancel.addEventListener('click',()=>{phoneEl.disabled=false;consent.disabled=false;resetToInput()});
