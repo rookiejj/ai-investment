@@ -309,6 +309,12 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-15**: **GA4 측정 태그 추가 + 구독 결제 1m 100원·6/12m 비활성화 + 결제 완료 모달 ✕ 무반응 fix**. 분석·과금·UX 세 줄기 동시 정리.
+  - **Google Analytics 4 측정 태그 추가** — `index.html` `<head>`에 gtag script(`G-MHK455J1GP`). 봇 자동 필터(JS 실행 안 하는 크롤러 제외)로 실제 사람 방문자만 집계. CF Pages 단독 호스팅 환경 전제(Vercel 미러는 카드사 심사 통과까지 임시 유지, Vercel Analytics 같은 호스팅 종속 솔루션 배제). Cloudflare Web Analytics는 서버 사이드라 봇 비율이 압도적이라 정확도 낮아 GA4 단일화.
+  - **구독 결제 가격 코드 일원화** — `index.html`·`views/renew.html`·`supabase/functions/payment-confirm/index.ts` 세 곳의 `PRICE_PLANS['1m'].amount` 2900 → 100. UI 표기(`2,900원`·`월 2,900원`)도 동시 100원으로. TEST_MODE=false 상태에서 실제 amount 결제 흐름 그대로(갤럭시아 테스트 채널은 실청구 안 됨). 서버 검증값 동기화 위해 `supabase functions deploy payment-confirm --no-verify-jwt` 재배포 필수 — 클라이언트만 변경하면 서버 PRICE_PLANS와 amount mismatch로 거부됨.
+  - **6/12개월 카드 비활성화** — `input[disabled]` + `.sub-modal-plan.disabled`·`.plan.disabled` 클래스(opacity .5 + pointer-events:none + cursor:not-allowed) + "준비 중" 배지. 카드 자체는 노출하되 클릭·키보드 포커스 모두 차단. `index.html`·`views/renew.html` 두 모달 동시 적용. 6m·12m amount는 그대로 유지(UI에서 선택 불가하므로 무관, 향후 활성화 시 그대로 복구 가능).
+  - **결제 완료 모달 ✕ 첫 클릭 무반응 fix** — `closeSubModal`에 `isCompleted` 체크 추가. `.sub-modal.completed` 상태면 `_subOpenedViaHistory` 분기를 우회하고 즉시 닫음. 원인: `handlePortoneReturn`이 직접 모달을 열어 history.pushState 흐름과 분리됐는데 closeSubModal은 history.back을 통과 → popstate 비동기 큐 대기 + 연타 시 history stack 깊이 뒤로 가는 부작용으로 첫 클릭 무반응·연타 시에만 닫힘. 닫힘 직후 `.completed/.processing` 클래스 정리 추가(다음 열림 깨끗하게).
+  - **디버깅 과정** — 첫 추측 헛다리(backdrop-filter blur 제거·subPulseNotice 무한 box-shadow 애니메이션 제거). 모두 효과 없었음. 운영 중 동일 결제 구조의 외부 파일(`index copy.html`, 다른 서비스용)이 폴더에 있어 diff 비교로 정확한 fix 1줄 발견. **메타 교훈**: 모달·결제 흐름 디버깅 시 렌더링 비용 추측 전에 동일 구조 검증된 파일 있으면 그것부터 diff가 가장 빠른 진단.
 - **2026-05-14 (2)**: **카툰 → 신문 1면 PNG 자동 생성으로 교체 + 캘린더 상단 4 지수 위젯 신설**. 디자인 임팩트 vs 비용 트레이드오프 + 데이터 시각화 영역 보강.
   - **카툰 폐기, 신문 1면 PNG로 대체** — `scripts/cartoon/generate.js`를 Gemini nano-banana-pro API 호출에서 Playwright HTML→PNG 렌더로 재작성. 비용 ~$0.13/장 × 2회/일 → 0. Storage 경로 `cartoon/today.png` 그대로 유지해 frontend·인스타 캐러셀·Reels·OG 통합 코드 변경 0.
   - **신문 1면 디자인** — `scripts/cartoon/template.html` 산세리프 thin 톤(Inter light + Pretendard light), 마스트헤드 + 날짜·발행번호 + catchphrase + 5탭 한 줄 헤드라인 + 푸터. 토큰 치환 `{{DATE_KO}}·{{VOL_NO}}·{{CATCHPHRASE}}·{{HEAD_KR/STOCKS/AI/COMMODITY/UNICORN}}`. catchphrase는 `data/.catchphrase` 파일 있으면 사용·없으면 fallback.
