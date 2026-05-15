@@ -649,8 +649,8 @@ section:first-of-type{padding-top:48px;border-top:0}
 
 /* ═══ SUBSCRIBE MODAL (legacy 포팅, sub- 프리픽스로 deep-dive 모달과 격리) ═══ */
 .sub-modal-bg{
-  position:fixed;inset:0;background:rgba(13,13,13,0.45);backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);display:none;align-items:flex-end;justify-content:center;
+  position:fixed;inset:0;background:rgba(13,13,13,0.55);backdrop-filter:blur(3px);
+  -webkit-backdrop-filter:blur(3px);display:none;align-items:flex-end;justify-content:center;
   z-index:1000;padding:0;
   overscroll-behavior:contain;touch-action:none;
 }
@@ -3119,13 +3119,21 @@ boot();
       return;
     }
     _subOpenedViaHistory=false;
-    modal.classList.remove('show');
-    modal.setAttribute('aria-hidden','true');
-    document.body.classList.remove('sub-modal-open');
+    // backdrop blur 해제 + 메인 페이지 reflow가 한 프레임에 몰리면 닫힘 지연 체감.
+    // blur·overflow 먼저 풀고 다음 프레임에서 display:none 토글해 paint 비용을 분산.
+    modal.style.backdropFilter='none';
+    modal.style.webkitBackdropFilter='none';
     document.body.style.overflow='';
     document.documentElement.style.overflow='';
-    modal.style.transform='';
-    resetStatus();
+    requestAnimationFrame(()=>{
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden','true');
+      document.body.classList.remove('sub-modal-open');
+      modal.style.transform='';
+      modal.style.backdropFilter='';
+      modal.style.webkitBackdropFilter='';
+      resetStatus();
+    });
   }
   cancel.addEventListener('click',()=>{phoneEl.disabled=false;consent.disabled=false;resetToInput()});
   openBtn.addEventListener('click',openSubModal);
