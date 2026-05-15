@@ -822,15 +822,11 @@ body.sub-modal-open{overflow:hidden}
   background:var(--acc-light);color:var(--acc-deep);border:2px solid var(--acc);
   font:600 14px/1.6 'Inter','Pretendard Variable',sans-serif;
   text-align:center;letter-spacing:-0.1px;
-  animation:subPulseNotice 2s ease-in-out infinite;
+  box-shadow:0 0 0 4px rgba(24,226,153,0.2);
 }
 .sub-complete-notice.show{display:block}
 .sub-complete-notice .sub-notice-head{display:block;font-size:16px;color:#0a7a50;margin-bottom:6px}
 .sub-complete-notice .sub-notice-sub{display:block;font-weight:500;font-size:13px;color:var(--acc-deep);margin-top:6px}
-@keyframes subPulseNotice{
-  0%,100%{box-shadow:0 0 0 0 rgba(24,226,153,0.45)}
-  50%    {box-shadow:0 0 0 10px rgba(24,226,153,0)}
-}
 .sub-modal-test-banner{
   margin:0 0 14px;padding:8px 12px;border-radius:8px;
   background:#fde8e8;color:var(--err);border:1px solid #f7c6c6;
