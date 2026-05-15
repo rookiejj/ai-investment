@@ -57,6 +57,8 @@ input,textarea{font:inherit;outline:none}
   box-shadow:0 2px 10px rgba(0,0,0,.06);
 }
 .plan input[type="radio"]{position:absolute;opacity:0;pointer-events:none}
+.plan.disabled{opacity:.5;cursor:not-allowed;pointer-events:none}
+.plan.disabled:hover{border-color:var(--border)}
 .plan-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .plan-period{font:600 15px/1.2 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.3px}
 .plan-prices{display:flex;align-items:baseline;gap:6px}
@@ -196,16 +198,16 @@ input,textarea{font:inherit;outline:none}
           <div class="plan-row">
             <span class="plan-period">1개월</span>
             <span class="plan-prices">
-              <span class="plan-price-now">2,900원</span>
+              <span class="plan-price-now">100원</span>
             </span>
           </div>
           <div class="plan-meta">
-            <span>월 2,900원</span>
+            <span>월 100원</span>
             <span></span>
           </div>
         </label>
-        <label class="plan" data-plan="6m">
-          <input type="radio" name="plan" value="6m">
+        <label class="plan disabled" data-plan="6m" aria-disabled="true">
+          <input type="radio" name="plan" value="6m" disabled>
           <div class="plan-row">
             <span class="plan-period">6개월</span>
             <span class="plan-prices">
@@ -215,11 +217,11 @@ input,textarea{font:inherit;outline:none}
           </div>
           <div class="plan-meta">
             <span>월 2,300원</span>
-            <span class="plan-badge">21% 할인</span>
+            <span class="plan-badge">준비 중</span>
           </div>
         </label>
-        <label class="plan" data-plan="12m">
-          <input type="radio" name="plan" value="12m">
+        <label class="plan disabled" data-plan="12m" aria-disabled="true">
+          <input type="radio" name="plan" value="12m" disabled>
           <div class="plan-row">
             <span class="plan-period">12개월</span>
             <span class="plan-prices">
@@ -229,7 +231,7 @@ input,textarea{font:inherit;outline:none}
           </div>
           <div class="plan-meta">
             <span>월 1,900원</span>
-            <span class="plan-badge primary">최대 할인 · 12,000원 절약</span>
+            <span class="plan-badge">준비 중</span>
           </div>
         </label>
       </div>
@@ -269,7 +271,7 @@ input,textarea{font:inherit;outline:none}
 
   // 가격 플랜 — 메인 모달(index.html PRICE_PLANS) 및 서버(payment-confirm)와 동기화 필수.
   const PRICE_PLANS = {
-    '1m':  { months:1,  amount:2900,  testAmount:100, label:'1개월',  orderName:'브리픽 1개월 재구독' },
+    '1m':  { months:1,  amount:100,   testAmount:100, label:'1개월',  orderName:'브리픽 1개월 재구독' },
     '6m':  { months:6,  amount:13800, testAmount:100, label:'6개월',  orderName:'브리픽 6개월 재구독 (할인가)' },
     '12m': { months:12, amount:22800, testAmount:100, label:'12개월', orderName:'브리픽 12개월 재구독 (할인가)' },
   };

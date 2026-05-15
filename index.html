@@ -708,6 +708,8 @@ body.sub-modal-open{overflow:hidden}
   box-shadow:0 2px 10px rgba(0,0,0,.06);
 }
 .sub-modal-plan input[type="radio"]{position:absolute;opacity:0;pointer-events:none}
+.sub-modal-plan.disabled{opacity:.5;cursor:not-allowed;pointer-events:none}
+.sub-modal-plan.disabled:hover{border-color:var(--border)}
 .plan-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .plan-period{
   font:600 15px/1.2 'Pretendard Variable',Pretendard,sans-serif;
@@ -1167,16 +1169,16 @@ body.sub-modal-open{overflow:hidden}
           <div class="plan-row">
             <span class="plan-period">1개월</span>
             <span class="plan-prices">
-              <span class="plan-price-now">2,900원</span>
+              <span class="plan-price-now">100원</span>
             </span>
           </div>
           <div class="plan-meta">
-            <span class="plan-permonth">월 2,900원</span>
+            <span class="plan-permonth">월 100원</span>
             <span></span>
           </div>
         </label>
-        <label class="sub-modal-plan" data-plan="6m">
-          <input type="radio" name="plan" value="6m">
+        <label class="sub-modal-plan disabled" data-plan="6m" aria-disabled="true">
+          <input type="radio" name="plan" value="6m" disabled>
           <div class="plan-row">
             <span class="plan-period">6개월</span>
             <span class="plan-prices">
@@ -1186,11 +1188,11 @@ body.sub-modal-open{overflow:hidden}
           </div>
           <div class="plan-meta">
             <span class="plan-permonth">월 2,300원</span>
-            <span class="plan-badge">21% 할인</span>
+            <span class="plan-badge">준비 중</span>
           </div>
         </label>
-        <label class="sub-modal-plan" data-plan="12m">
-          <input type="radio" name="plan" value="12m">
+        <label class="sub-modal-plan disabled" data-plan="12m" aria-disabled="true">
+          <input type="radio" name="plan" value="12m" disabled>
           <div class="plan-row">
             <span class="plan-period">12개월</span>
             <span class="plan-prices">
@@ -1200,7 +1202,7 @@ body.sub-modal-open{overflow:hidden}
           </div>
           <div class="plan-meta">
             <span class="plan-permonth">월 1,900원</span>
-            <span class="plan-badge primary">최대 할인 · 12,000원 절약</span>
+            <span class="plan-badge">준비 중</span>
           </div>
         </label>
       </div>
@@ -2945,7 +2947,7 @@ boot();
   // 가격 플랜. 서버(payment-confirm)도 동일 매핑을 권위로 들고 있어야 함 — plan key·amount·days 동기화 필수.
   // 라이브 전환 시 amount 적용, 베타 단계에선 testAmount(₩100)로 결제 통과.
   const PRICE_PLANS={
-    '1m': { months:1,  amount:2900,  testAmount:100, label:'1개월',  orderName:'브리픽 1개월 구독' },
+    '1m': { months:1,  amount:100,   testAmount:100, label:'1개월',  orderName:'브리픽 1개월 구독' },
     '6m': { months:6,  amount:13800, testAmount:100, label:'6개월',  orderName:'브리픽 6개월 구독 (할인가)' },
     '12m':{ months:12, amount:22800, testAmount:100, label:'12개월', orderName:'브리픽 12개월 구독 (할인가)' },
   };
