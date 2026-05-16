@@ -1075,6 +1075,7 @@ body.sub-modal-open{overflow:hidden}
       <h2 class="sec-title">시장 한눈에</h2>
       <p class="sec-desc">셀 크기 = 시가총액 · 색상 = 오늘 등락률 · 시세 Yahoo Finance 15분 지연 · 장 시작 후 ~25분간 어제 종가 표시</p>
     </div>
+    <div class="idx-meta" id="finmapMeta">불러오는 중…</div>
   </div>
   <div class="health-controls">
     <button class="health-tab on" data-fmap-market="kr">한국</button>
@@ -2166,6 +2167,16 @@ function chgIntensity(pct){
 function renderFinmap(){
   const grid=document.getElementById('finmapGrid');
   if(!grid) return;
+  // 헤더 우측 timestamp — idxMeta와 동일 데이터 소스(prices/latest.json updatedAt) 공유
+  const meta=document.getElementById('finmapMeta');
+  if(meta){
+    if(STATE.pricesUpdatedAt){
+      const t=new Date(STATE.pricesUpdatedAt);
+      meta.textContent=`${t.toLocaleString('ko-KR',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Seoul'})} KST 갱신`;
+    }else{
+      meta.textContent='불러오는 중…';
+    }
+  }
   const market=FINMAP_STATE.market;
   const cats=STATE.data[market];
   if(!cats||!cats.length){
@@ -2759,6 +2770,8 @@ async function loadPrices(){
     const r=await fetch(PRICES_URL+'?_='+Date.now());
     if(!r.ok) throw new Error('prices '+r.status);
     const j=await r.json();
+    // 핀맵·idxMeta가 공유하는 사이드 채널 — STATE.prices는 시세 객체만 담아 호환 유지
+    STATE.pricesUpdatedAt = j.updatedAt || null;
     return j.prices||{};
   }catch(e){
     console.warn('시세 로드 실패:',e);

@@ -245,7 +245,7 @@ type AligoSendResult = {
 
 // VPS 프록시가 button 미전달 시 기본 버튼(name: '1분 브리핑 보러가기',
 // URL: vercel.app)을 자동 추가하는 동작이 있어, 매번 명시 전달해 덮어씀.
-const DAILY_BUTTON_NAME = "오늘의 브리핑 보러가기";
+const DAILY_BUTTON_NAME = "더 자세한 브리핑 보러가기";
 const DAILY_BUTTON_URL  = "https://briefick.com";
 
 async function aligoSendFriendtalk(opts: {
