@@ -4,9 +4,16 @@
 -- Supabase 신형 API 키(sb_*) 체계 이후, Edge Function은 --no-verify-jwt로
 -- 배포되고 daily-send 함수가 X-Cron-Secret 헤더를 자체 검증합니다.
 --
+-- ⚠ 2026-05-16 사고 후 정정:
+--   cron 명령에서 vault.decrypted_secrets 서브쿼리를 동적으로 평가하면
+--   pg_cron worker 컨텍스트에서 silently fail (cron.job_run_details는 succeeded인데
+--   net._http_response·함수 로그 0건). 본인 1명 발송 테스트로 평문 substitution이
+--   fix임을 확정. STEP 2의 cron 등록은 DO block 안에서 Vault 값을 한 번 꺼내
+--   `format(... %L ...)`로 평문 박는 방식으로 변경.
+--
 -- 사용 순서:
 --   STEP 1 : <CRON_SECRET> 자리에 실제 값 붙여넣고 실행 (최초/교체 시)
---   STEP 2 : 아래 cron 등록 블록 실행
+--   STEP 2 : 아래 cron 등록 DO block 실행 (Vault 값을 등록 시점에 평문 substitution)
 -- ═══════════════════════════════════════════════════
 
 -- ───────────────────────────────────────────────
@@ -44,32 +51,43 @@ select name, description, updated_at from vault.secrets where name = 'cron_secre
 create extension if not exists pg_cron with schema extensions;
 create extension if not exists pg_net  with schema extensions;
 
+-- DO block: 등록 시점에 Vault에서 secret을 1회 꺼내 cron 명령에 평문 substitution.
+-- cron 실행 시점엔 vault 접근 없이 박힌 값으로 호출 → pg_cron worker 컨텍스트의
+-- vault 동적 평가 fail 우회. cron.job 테이블은 supabase_admin/postgres만 접근 가능.
 do $$
+declare
+  v_secret text;
+  v_cmd    text;
 begin
-  if exists (select 1 from cron.job where jobname = 'daily-friendtalk-send') then
-    perform cron.unschedule('daily-friendtalk-send');
-  end if;
-end $$;
+  select decrypted_secret into v_secret
+  from vault.decrypted_secrets where name = 'cron_secret';
 
-select cron.schedule(
-  'daily-friendtalk-send',
-  '0 23 * * 0-5',  -- UTC 기준 = KST 월~토 08:00 1회 (일요일 제외)
-  $CRON$
+  if v_secret is null then
+    raise exception 'cron_secret not found in vault — run STEP 1 first';
+  end if;
+
+  v_cmd := format($SQL$
     select net.http_post(
       url := 'https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/daily-send',
       headers := jsonb_build_object(
         'Content-Type',  'application/json',
-        'X-Cron-Secret', (
-          select decrypted_secret
-          from vault.decrypted_secrets
-          where name = 'cron_secret'
-        )
+        'X-Cron-Secret', %L
       ),
       body := '{}'::jsonb,
       timeout_milliseconds := 30000
     );
-  $CRON$
-);
+  $SQL$, v_secret);
+
+  if exists (select 1 from cron.job where jobname = 'daily-friendtalk-send') then
+    perform cron.unschedule('daily-friendtalk-send');
+  end if;
+
+  perform cron.schedule(
+    'daily-friendtalk-send',
+    '0 23 * * 0-5',  -- UTC 기준 = KST 월~토 08:00 1회 (일요일 제외)
+    v_cmd
+  );
+end $$;
 
 select jobname, schedule, active from cron.job where jobname = 'daily-friendtalk-send';
 

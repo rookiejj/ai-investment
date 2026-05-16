@@ -309,6 +309,15 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-16**: **friendtalk cron 5일 연속 미발사 사고 — pg_cron worker가 vault 서브쿼리 동적 평가에서 silently fail**. 5/12~5/16 매일 KST 08:00 daily-send 친구톡 발사 실패. cron.job_run_details는 매일 `succeeded ("1 row")`로 떴지만 함수 도달 0건(텔레그램 알림·Edge Function 로그·send_logs·알리고 콘솔 모두 없음). 5/16 토요일 사용자가 알아채면서 발견.
+  - **진단 절차** — (1) cron schedule 확인: `'0 23 * * 0-5'` UTC 정상, 토요일 발송 대상 맞음. (2) `/admin daily_send_now` 수동 트리거: 알리고 정상 도달 → 함수·VPS·알리고 모두 멀쩡, **cron 단의 문제 확정**. (3) `cron.job_run_details`: 5일치 모두 succeeded. (4) dry=1로 cron SQL 패턴 직접 호출: 200·`activeSubscribers:19`·메시지 빌드 정상 → **인증·DB·메시지 조립 모두 OK**. (5) `net._http_response` retention(약 6시간) 안에 daily-send 응답 row 0건 → **net.http_post가 큐 등록은 했는데 worker가 실제 HTTP 발사 안 함**. (6) 본인 1명 subscriberIds로 cron 패턴 그대로 SQL Editor 실행: 200·750ms·정상 발송 → **SQL Editor 컨텍스트에선 잘 도는데 pg_cron worker 컨텍스트에서만 깨짐**. (7) cron.job command 확인: secret이 `<CRON_SECRET>` placeholder 평문 (schedule.sql STEP 1 미치환 잔재, vault·함수 환경변수 양쪽 같은 placeholder라 우연 일치로 인증은 통과).
+  - **원인** — `headers := jsonb_build_object('X-Cron-Secret', (select decrypted_secret from vault.decrypted_secrets where name = 'cron_secret'))`. cron 실행 시점에 vault 서브쿼리를 매번 동적 평가하는데, pg_cron worker가 도는 컨텍스트(postgres role)에서 이 평가가 silently fail. cron 명령 SQL 평가 자체는 통과(succeeded·1 row)지만 헤더 값이 NULL 또는 잘못된 상태로 큐 등록 → pg_net worker가 큐 처리 못 함 → 함수에 HTTP 도달 안 함. SQL Editor 컨텍스트(supabase_admin/service_role)에선 정상 평가 → 직접 실행 시 200.
+  - **fix — 등록 시점 평문 substitution** — DO block 안에서 Vault 값을 한 번 꺼내 `format(... %L ...)`로 cron 명령 문자열에 평문 박기. cron 실행 시점엔 vault 접근 0회. cron.job 테이블은 supabase_admin/postgres만 접근 가능해 평문 노출 위험 낮음 (일반 운영 패턴).
+    - `supabase/schedule.sql`: 기존 `select cron.schedule(...)` 단순 호출 → DO block + `format()` 패턴으로 재작성, 헤더 주석에 사고·정정 기록.
+    - `supabase/schedule-expiry.sql`: 동일 패턴(expiry-notice cron도 같은 vault 서브쿼리 구조였음) 동시 fix. 매일 KST 20:00 D-1 만료 안내도 같은 이유로 깨졌을 가능성.
+    - 운영 cron job 자체는 사고 발견 직후 SQL Editor에서 같은 DO block 즉시 실행 → `cron.job.command`에 secret 평문 박힌 상태로 갱신.
+  - **검증** — 본인 phone(01063963280) 한 명만 매분 발송하는 임시 cron(`daily-test-self`) 등록 → 본인 폰에 분단위로 친구톡 정상 도달 확인 → 즉시 unschedule. 평문 substitution fix 작동 확정.
+  - **별개 보안 후속(권장)** — Vault `cron_secret`과 함수 환경변수 `CRON_SECRET`이 양쪽 `<CRON_SECRET>` placeholder 평문 그대로(13자). 양쪽 우연 일치라 인증 작동 중이지만 누구나 추측 가능한 약점. 진짜 random 32자로 양쪽 동시 교체 필요(별도 작업).
 - **2026-05-15**: **GA4 측정 태그 추가 + 구독 결제 1m 100원·6/12m 비활성화 + 결제 완료 모달 ✕ 무반응 fix**. 분석·과금·UX 세 줄기 동시 정리.
   - **Google Analytics 4 측정 태그 추가** — `index.html` `<head>`에 gtag script(`G-MHK455J1GP`). 봇 자동 필터(JS 실행 안 하는 크롤러 제외)로 실제 사람 방문자만 집계. CF Pages 단독 호스팅 환경 전제(Vercel 미러는 카드사 심사 통과까지 임시 유지, Vercel Analytics 같은 호스팅 종속 솔루션 배제). Cloudflare Web Analytics는 서버 사이드라 봇 비율이 압도적이라 정확도 낮아 GA4 단일화.
   - **구독 결제 가격 코드 일원화** — `index.html`·`views/renew.html`·`supabase/functions/payment-confirm/index.ts` 세 곳의 `PRICE_PLANS['1m'].amount` 2900 → 100. UI 표기(`2,900원`·`월 2,900원`)도 동시 100원으로. TEST_MODE=false 상태에서 실제 amount 결제 흐름 그대로(갤럭시아 테스트 채널은 실청구 안 됨). 서버 검증값 동기화 위해 `supabase functions deploy payment-confirm --no-verify-jwt` 재배포 필수 — 클라이언트만 변경하면 서버 PRICE_PLANS와 amount mismatch로 거부됨.

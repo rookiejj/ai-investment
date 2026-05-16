@@ -13,31 +13,42 @@
 create extension if not exists pg_cron with schema extensions;
 create extension if not exists pg_net  with schema extensions;
 
+-- ⚠ 2026-05-16: vault.decrypted_secrets 서브쿼리를 cron 실행 시점에 동적 평가하면
+-- pg_cron worker 컨텍스트에서 silently fail (schedule.sql 헤더 주석 참조). DO block에서
+-- 등록 시점에 Vault 값 1회 꺼내 평문 substitution.
 do $$
+declare
+  v_secret text;
+  v_cmd    text;
 begin
-  if exists (select 1 from cron.job where jobname = 'daily-expiry-notice') then
-    perform cron.unschedule('daily-expiry-notice');
-  end if;
-end $$;
+  select decrypted_secret into v_secret
+  from vault.decrypted_secrets where name = 'cron_secret';
 
-select cron.schedule(
-  'daily-expiry-notice',
-  '0 11 * * *',  -- UTC 11:00 = KST 20:00
-  $CRON$
+  if v_secret is null then
+    raise exception 'cron_secret not found in vault — run schedule.sql STEP 1 first';
+  end if;
+
+  v_cmd := format($SQL$
     select net.http_post(
       url := 'https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/expiry-notice',
       headers := jsonb_build_object(
         'Content-Type',  'application/json',
-        'X-Cron-Secret', (
-          select decrypted_secret
-          from vault.decrypted_secrets
-          where name = 'cron_secret'
-        )
+        'X-Cron-Secret', %L
       ),
       body := '{}'::jsonb,
       timeout_milliseconds := 30000
     );
-  $CRON$
-);
+  $SQL$, v_secret);
+
+  if exists (select 1 from cron.job where jobname = 'daily-expiry-notice') then
+    perform cron.unschedule('daily-expiry-notice');
+  end if;
+
+  perform cron.schedule(
+    'daily-expiry-notice',
+    '0 11 * * *',  -- UTC 11:00 = KST 20:00
+    v_cmd
+  );
+end $$;
 
 select jobname, schedule, active from cron.job where jobname = 'daily-expiry-notice';
