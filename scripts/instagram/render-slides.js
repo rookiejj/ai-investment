@@ -22,8 +22,35 @@ const { chromium } = require('playwright');
 const ROOT = path.resolve(__dirname, '..', '..');
 const OUT_DIR = path.join(__dirname, 'out');
 const TEMPLATE = path.join(__dirname, 'template.html');
+const TEXTURES_DIR = path.join(ROOT, 'assets', 'textures');
 const SITE_URL = 'https://briefick.com';
 const HANDLE = 'briefick';
+
+// 슬라이드 02~07 배경 — assets/textures/ai-*-4x5.png 6종 중 1개 랜덤.
+// 첫 장(cover)은 publish 워크플로가 cartoon.png로 swap. 한 포스팅 안에선 같은 텍스쳐 유지.
+function pickTextureForRun() {
+  if (!fs.existsSync(TEXTURES_DIR)) return null;
+  const files = fs.readdirSync(TEXTURES_DIR).filter(f => /^ai-.*-4x5\.png$/.test(f));
+  if (!files.length) return null;
+  const pick = files[Math.floor(Math.random() * files.length)];
+  const buf = fs.readFileSync(path.join(TEXTURES_DIR, pick));
+  return {
+    name: pick.replace(/\.png$/, ''),
+    dataUri: `data:image/png;base64,${buf.toString('base64')}`,
+  };
+}
+
+// 02~07 슬라이드 HEAD에 주입할 background override. 단색 다크 오버레이로 가독성 보호.
+// 녹색 글로우 그라데이션은 텍스쳐 위에서 AI 같아 보여 사용자 요청으로 제거(2026-05-16).
+function textureBgCss(dataUri) {
+  return `<style>
+    .slide.no-photo, .slide.cta {
+      background:
+        linear-gradient(rgba(8,12,18,0.62), rgba(8,12,18,0.78)),
+        url('${dataUri}') center/cover no-repeat !important;
+    }
+  </style>`;
+}
 
 const TABS = [
   { key: 'kr',        emoji: '🇰🇷', label: '한국 마켓' },
@@ -145,11 +172,16 @@ async function main() {
     return { ...t, bullets };
   });
 
-  // 2) Playwright 시작 — 모든 슬라이드가 단조 그라데이션 BG(.no-photo)로 고정
+  // 2) 이번 발행분 텍스쳐 BG 1개 랜덤 선택 — 02~07 슬라이드 공통 적용
+  const texture = pickTextureForRun();
+  console.log(texture ? `[texture] BG: ${texture.name}` : '[texture] 텍스쳐 없음 — 다크 단색 폴백');
+  const texCss = texture ? textureBgCss(texture.dataUri) : '';
+
+  // 3) Playwright 시작
   const browser = await chromium.launch();
 
   try {
-    // SLIDE 1 — 표지
+    // SLIDE 1 — 표지 (publish에서 cartoon.png로 swap. 텍스쳐 미적용 — 신문 카툰 톤 보존)
     {
       let html = baseTemplate
         .replace('</head>', `${singleSlideCss('cover')}</head>`)
@@ -158,22 +190,22 @@ async function main() {
       console.log('✓ 01.png (cover, 다크 그라데이션 BG)');
     }
 
-    // SLIDE 2~6 — 탭별 (5불릿, 단조 그라데이션 BG 고정)
+    // SLIDE 2~6 — 탭별 (5불릿, 같은 텍스쳐 BG)
     for (let i = 0; i < tabPayloads.length; i++) {
       const t = tabPayloads[i];
       const bulletsHtml = buildBulletsHtml(t.bullets);
       const html = buildTabSlideHtml(baseTemplate, {
         emoji: t.emoji, label: t.label, bulletsHtml, dateLabel,
-      }).replace('</head>', `${singleSlideCss('tab')}</head>`);
+      }).replace('</head>', `${singleSlideCss('tab')}${texCss}</head>`);
 
       const outName = `0${i+2}.png`;
       await renderSlide(browser, html, path.join(OUT_DIR, outName));
       console.log(`✓ ${outName} (${t.label}, bullets=${t.bullets.length})`);
     }
 
-    // SLIDE 7 — CTA (사진 없음)
+    // SLIDE 7 — CTA (같은 텍스쳐 BG)
     {
-      const html = baseTemplate.replace('</head>', `${singleSlideCss('cta')}</head>`)
+      const html = baseTemplate.replace('</head>', `${singleSlideCss('cta')}${texCss}</head>`)
         .replace(/data-bind="cta\.domain">[^<]*</, `data-bind="cta.domain">${escapeHtml(SITE_URL.replace(/^https?:\/\//, ''))}<`)
         .replace(/data-bind="cta\.handle">[^<]*</, `data-bind="cta.handle">@${HANDLE}<`);
       await renderSlide(browser, html, path.join(OUT_DIR, '07.png'));
@@ -183,10 +215,11 @@ async function main() {
     await browser.close();
   }
 
-  // 캡션·어트리뷰션용 메타파일 (사진 BG 폐기 후 photos 필드 제거)
+  // 캡션·어트리뷰션용 메타파일 — texture는 발행 분포 점검·디버깅용
   const meta = {
     date: `${d.year}-${String(d.month).padStart(2,'0')}-${String(d.day).padStart(2,'0')}`,
     dow: d.dow,
+    texture: texture ? texture.name : null,
     tabs: tabPayloads.map(t => ({ key: t.key, emoji: t.emoji, label: t.label, bullets: t.bullets })),
   };
   fs.writeFileSync(path.join(OUT_DIR, 'meta.json'), JSON.stringify(meta, null, 2), 'utf8');
