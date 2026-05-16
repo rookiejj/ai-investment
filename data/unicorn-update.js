@@ -1,26 +1,32 @@
 const updates = [
   {
-    "date": "2026-05-16 19:45 KST",
+    "date": "2026-05-17 12:30 KST",
     "changes": [
       {
-        "time": "2026-05-16 19:45 KST",
+        "time": "2026-05-17 09:00 KST",
         "type": "정보 갱신",
-        "detail": "SpaceX S-1 공개 5/18~22 윈도우 진입 카운트다운 - 4/1 비공개 S-1 제출 + 15일 사전 공개 룰 베이스에서 이르면 5/20(수) 프로스펙터스 공개·6/8 주간 로드쇼 출범·6/11 IPO 프라이싱·6/12 정식 Nasdaq 데뷔 시나리오 가시화. 목표 밸류 $1.75T~$2T·조달 $75B 사상 최대 IPO 라인업 - 2019 Saudi Aramco $29B 압도 단일 시그널. 단일 동력 - 30% 리테일 트랜치 ~$22.5B(UK·EU·호주·캐나다·일본·한국 동급 IPO 평균 3배 할당)·가격대 $525~$530·BofA·Citi·GS·JPM·MS 21개 주관사 인수단 + 5/14 Musk 베이징 트럼프 동행단 외교 채널 + Starshield·美 국방부 8사 AI 계약·Anthropic Colossus 1 단독 임대 연 매출 $3~4B + Falcon 9·Starship·Starlink 4개 사업 라인 가격 발견.",
+        "detail": "SpaceX S-1 공개 5/18~22 윈도우 진입 + Starship V3 첫 비행 5/19 Starbase Pad 2 동시 가속 - 4/1 비공개 S-1 제출 + 15일 사전 공개 룰 베이스에서 이르면 5/20(수) 프로스펙터스 공개·6/8 주간 로드쇼 출범·6/11 IPO 프라이싱·6/12 정식 Nasdaq 데뷔 시나리오. Starship V3 첫 비행 5/19 - Raptor 3 엔진(해수면 250tf·진공 275tf) 업그레이드·22 Starlink 시뮬레이터 배포·서브오비탈 테스트(catch 시도 없음) 단일 동력. 목표 밸류 $1.75T~$2T·조달 $75B 사상 최대 IPO 라인업 - 2019 Saudi Aramco $29B 압도 단일 시그널. 30% 리테일 트랜치 ~$22.5B(韓 포함)·가격대 $525~$530·BofA·Citi·GS·JPM·MS 21개 주관사 + Starlink 2025 이익 $4.4B 더블 + Falcon 9·Starship·Starlink·Starshield 4개 사업 라인 가격 발견.",
         "sector": "우주·모빌리티·방산"
       },
       {
-        "time": "2026-05-16 19:45 KST",
+        "time": "2026-05-13 22:00 KST",
         "type": "정보 갱신",
-        "detail": "Plaid Q2 2026 IPO $6.1B 타깃 - 26년 핀테크 인프라 단독 최대 IPO 라인업 카운트다운, 4월 텐더 $8B 모멘텀 회복 + GS 리드 인수단 + 오픈뱅킹·연결 인프라 단일 채널 지배력 美·英·EU 동시 트랙. Discord Q1 2026 컨피던셜 S-1 신청 - 2025 마지막 펀딩 $15B 베이스 $25B IPO 타깃·MAU 2억+ 단일 동력·Goldman·JPM·Morgan Stanley 주관 라인업·Microsoft 인수 거절 후 단독 상장 트랙. Revolut 2H 2026 세컨더리 $100B+ 진행 - 향후 IPO 타깃 $150~200B 범위(11월 2025 $75B 대비 2.6배)·3/11 영국 PRA 풀 뱅킹 라이센스 획득 후 모기지·소비자 신용 진입·CEO Storonsky 'NASDAQ 美 상장 1순위' 공식 입장. Stripe 2월 세컨더리 $140B 잔존도 사측 '서두르지 않는다'.",
-        "sector": "핀테크"
+        "detail": "Anduril Series H $5B 클로징 확정 5/13 - 밸류 $61B 도달, 9개월 만 $30.5B→$61B 더블 단일 시그널, Thrive Capital·Andreessen Horowitz 공동 주도·누적 펀딩 $11.4B. 단일 동력 - 2025 매출 $2.2B 더블 + Golden Dome $3.2B + 美 우주군 $1.8B + 美 육군 10년 $20B 한도 계약 + Sea-Air-Space 단독 채널 누적 4축, 방산 테크 단일 라운드 사상 최대. 베이스 - Helsing $1.2B Series 클로징 임박 $18B 밸류 도달 시 독일 최대 스타트업 등극 가시화·Bundeswehr HX-2 €269M~€1.46B 프레임워크 베이스 + Daniel Ek 백킹 + Dragoneer·Lightspeed 리드 라인업 동조, 비상장 방산 테크 메가 라인업 단일 사이클 가속.",
+        "sector": "우주·모빌리티·방산"
       },
       {
-        "time": "2026-05-16 19:45 KST",
+        "time": "2026-05-11 23:00 KST",
         "type": "정보 갱신",
-        "detail": "Skyroot 5/7 유니콘 진입 $60M Series C - 인도 소형 위성 발사체 개발 단일 라인, SpaceX IPO 윈도우 진입과 함께 우주 섹터 펀딩 활성화 시그널. 베이스 - Vast(우주정거장) $20B·Relativity Space(3D 프린트 로켓) $4.2B·Anduril(방산 AI) 5/13 Series H $5B $61B 도달·Figure AI(휴머노이드) Series D $48B 클로징 라인업 단일 채널 유지. 단일 동력 - 美 우주군 $1.8B·美 육군 10년 $20B 한도·Golden Dome $3.2B 누적 수주 베이스에서 우주·방산·휴머노이드 3축 비상장 메가 라인 가속, 2026 IPO 메가 라인업 SpaceX·Anthropic·OpenAI·Databricks 합산 $3T+ 단일 시그널 후방 잔존.",
+        "detail": "Cowboy Space(전 Aetherflux) Series B $275M 클로징 확정 5/8~11 - 밸류 $2B 도달, Robinhood 공동창업자 Baiju Bhatt 신생 우주 회사, Index Ventures 리드·IVP·Blossom·a16z·NEA·Breakthrough Energy 라인업. 단일 동력 - LEO 태양광 위성 + 궤도 AI 컴퓨트 + 전용 발사체 단일 채널 비전 + 'There aren't enough rockets for space data centers' 명제 + SpaceX 단독 채널 카운터 포지셔닝 3축. Skyroot $60M Series C 인도 발사체 + Vast $20B 우주정거장 + Relativity Space $4.2B 3D 프린트 로켓 + Figure AI $48B 휴머노이드 + Anduril $61B 방산 테크 동시 사이클 - 비상장 우주·방산·피지컬 AI 메가 라인업 단일 시그널.",
         "sector": "우주·모빌리티·방산"
+      },
+      {
+        "time": "2026-05-11 18:00 KST",
+        "type": "정보 갱신",
+        "detail": "Sierra $950M 라운드 클로징 $15B 밸류 - 5/11 주간 단독 최대 펀딩, Google Ventures·Tiger Global 공동 리드·Bret Taylor(전 Salesforce 공동 CEO) AI 고객경험 플랫폼 단독 채널. 단일 동력 - 엔터프라이즈 CX 에이전트 카테고리 단독 리더십 + Salesforce·HubSpot·Zendesk 카운터 포지셔닝 + Fortune 500 누적 고객 확장 3축. 베이스 - Plaid Q2 2026 IPO $6.1B + Discord Q1 컨피던셜 S-1 $25B + Revolut 2H 세컨더리 $100B+ + Stripe $159B + Canva $134B + Notion $11B 라인업 잔존, 2026 IPO 메가 라인업 SpaceX·Anthropic·OpenAI·Databricks 합산 $3T+ 후방 동조 단일 시그널.",
+        "sector": "엔터프라이즈 SW"
       }
     ],
-    "summary": "SpaceX S-1 공개 5/18~22 윈도우 진입 - 5/20 가시화·6/12 Nasdaq 데뷔 시나리오\nSpaceX 목표 $1.75T~$2T·조달 $75B - Saudi Aramco $29B 압도 사상 최대 IPO\nPlaid Q2 $6.1B·Discord $25B S-1·Revolut 2H 세컨더리 $100B+ 3축\nDiscord Microsoft 인수 거절 후 단독 상장 - GS·JPM·MS 주관 라인업\nSkyroot 5/7 유니콘 진입 $60M - 인도 발사체 우주 섹터 펀딩 활성화 시그널"
+    "summary": "SpaceX S-1 공개 5/18~22 + Starship V3 첫 비행 5/19 Starbase Pad 2 동시\nSpaceX 목표 $1.75T~$2T · 조달 $75B - Saudi Aramco $29B 압도 사상 최대 IPO\nAnduril Series H $5B 클로징 · $61B 밸류 9개월 만 더블 - Thrive·a16z 주도\nHelsing $1.2B 클로징 임박 $18B 밸류 · 독일 최대 스타트업 등극 가시화\nCowboy Space $275M Series B $2B · Sierra $950M $15B - 우주·CX 동시 사이클"
   }
 ];
