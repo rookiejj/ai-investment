@@ -1485,27 +1485,20 @@ function extractTickers(text){
 // ═══════════════════════════════════════════════════════════
 // Today's Narrative builder
 // ═══════════════════════════════════════════════════════════
+// hero pill — 시세 updatedAt(없으면 현재 시각) 기준 'HH:MM KST 갱신' 형태.
+// 데이터 자체 갱신 빈도(매일 1~2회)는 표시하지 않고 prices 폴링(5분) 시점에 맞춰
+// "방금 갱신된 느낌" 우선. idxMeta·finmapMeta와 동일 데이터 소스로 일관.
+function updateHeroTimeLabel(){
+  const el=document.getElementById('lastUpdated');
+  if(!el) return;
+  const src = STATE.pricesUpdatedAt ? new Date(STATE.pricesUpdatedAt) : new Date();
+  const t = src.toLocaleString('ko-KR',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Seoul'});
+  el.textContent = `${t} KST 갱신`;
+}
+
 function buildNarrative(){
   const today=todayKST();
-
-  // 모든 탭 중 가장 최신 datetime entry의 HH:MM을 hero pill에 부착
-  let latestKey='';
-  let latestHHMM=null;
-  for(const k of ['stocks','kr','ai','commodity','unicorn']){
-    const e=STATE.upd[k]?.[0];
-    if(!e||!e.date)continue;
-    const m=e.date.match(/(\d{4})-(\d{2})-(\d{2})\s+(\d{2}):(\d{2})/);
-    if(m){
-      const key=m[1]+m[2]+m[3]+m[4]+m[5];
-      if(key>latestKey){
-        latestKey=key;
-        latestHHMM=`${m[4]}:${m[5]}`;
-      }
-    }
-  }
-  const dateLbl=fmtKSTHuman(today);
-  document.getElementById('lastUpdated').textContent=
-    '최신 데이터 · '+dateLbl+(latestHHMM?' '+latestHHMM:'');
+  updateHeroTimeLabel();
 
   const tabs=[
     {key:'kr',       flag:'🇰🇷', label:'한국 마켓'},
@@ -2866,6 +2859,7 @@ function startPricePolling(){
       renderFinmap();
     }
     if(freshIdx){ STATE.indices=freshIdx; renderIndexWidget(freshIdx); }
+    updateHeroTimeLabel();
   }, PRICE_REFRESH_MS);
 }
 
