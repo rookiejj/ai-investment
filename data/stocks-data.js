@@ -78,7 +78,7 @@ const data = [
         "p2": "192",
         "r1": "216",
         "r2": "337",
-        "rs": "5/15 종가 $225.32 -4.42% 시총 $5.48T·반도체 동반 직격 - 5/20 장 마감 후(KST 5/21) Q1 FY27 컨센 매출 $78.8B +78.8% YoY·EPS $1.77·DC $72.8B +35% YoY·옵션 임플라이드 ±5%($214~$236)·Polymarket beat 확률 ~90%·Goldman $80B 데스크 노트·12개월 목표 $273.62, 6/2~5 Computex N1X Arm 노트북 SoC 사전 시그널 후방",
+        "rs": "5/20 장 마감 후(KST 5/21) Q1 FY27 D-2 - 컨센 매출 $78.8B +78.8% YoY·EPS $1.77·DC $72.8B·Goldman 데스크 노트 $80B·Q2 가이던스 컨센 $86B vs 휘스퍼 $90B·옵션 임플라이드 ±8~10%·Polymarket beat 확률 ~97%·5/14 H200 中 10개사 라이센스 승인 후방·6/1 GTC Taipei N1X·6/2~5 Computex MediaTek 협업 라인업, GAAP GM 75% 유지 여부가 Blackwell 단일 분기점",
         "tk": "NVDA"
       },
       {
