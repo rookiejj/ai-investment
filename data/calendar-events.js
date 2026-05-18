@@ -90,8 +90,10 @@ const fixed = [
   { cat:'earnings', impact:1, title:'CRM Q1 FY27 실적', date:'2026-05-28', tickers:['CRM'] },
   { cat:'earnings', impact:1, title:'COST Q3 FY26 실적', date:'2026-05-29', tickers:['COST'] },
   { cat:'earnings', impact:2, title:'Cisco Q3 FY26 실적', date:'2026-05-13', desc:'장후 발표·AI 네트워킹 모멘텀', tickers:['CSCO'] },
-  { cat:'earnings', impact:1, title:'Palo Alto Q3 FY26 실적', date:'2026-05-19', desc:'CyberArk 통합 효과', tickers:['PANW'] },
-  { cat:'earnings', impact:1, title:'Snowflake Q1 FY27 실적', date:'2026-05-21', tickers:['SNOW'] },
+  { cat:'earnings', impact:1, title:'Palo Alto Q3 FY26 실적', date:'2026-05-26', desc:'CyberArk 통합 효과·5/19에서 연기', tickers:['PANW'] },
+  { cat:'earnings', impact:1, title:'Snowflake Q1 FY27 실적', date:'2026-05-22', tickers:['SNOW'] },
+  { cat:'earnings', impact:2, title:'LOW Q1 2026 실적', date:'2026-05-21', desc:'TGT와 동일일', tickers:['LOW'] },
+  { cat:'earnings', impact:1, title:'TJX Q1 2026 실적', date:'2026-05-22', tickers:['TJX'] },
   { cat:'earnings', impact:2, title:'한화에어로스페이스 Q1 콜', date:'2026-05-06', desc:'Q1 5.75조·OP 6,389억 +21% 베이스', tickers:['012450'] },
 
   // === 한국 어닝·이벤트 ===
@@ -111,7 +113,10 @@ const fixed = [
   { cat:'conf', impact:3, title:'Microsoft Build 2026', date:'2026-05-19', desc:'Azure AI·Copilot·Foundry' },
   { cat:'conf', impact:3, title:'Google I/O 2026', date:'2026-05-20', desc:'Gemini·Android·TPU 8세대' },
   { cat:'conf', impact:2, title:'NVIDIA Computex 키노트', date:'2026-05-19', desc:'대만 컴퓨텍스 본 행사' },
-  { cat:'conf', impact:3, title:'Apple WWDC 2026', date:'2026-06-09', desc:'iOS 27·macOS·Apple Intelligence 차세대 (~6/13)' },
+  { cat:'conf', impact:3, title:'Apple WWDC 2026', date:'2026-06-08', desc:'iOS 27·macOS·Gemini-Siri 차세대 (~6/12)' },
+  { cat:'product', impact:3, title:'SpaceX Starship V3 첫 비행', date:'2026-05-19', desc:'18:30 ET Starbase Pad 2·Flight 12·Raptor 3' },
+  { cat:'ipo', impact:3, title:'SpaceX S-1 공개 가시화', date:'2026-05-20', desc:'Fortune 5/15 "as soon as Wednesday May 20"' },
+  { cat:'macro', impact:2, title:'中 4월 산업생산·소매판매·고정자산투자', date:'2026-05-19', desc:'NBS 발표·관세 영향 단일 점검' },
 
   // === 신제품 출시 ===
   { cat:'product', impact:2, title:'NVIDIA Blackwell Ultra 출하 본격화', date:'2026-05-26', desc:'B300 양산 램프' },
