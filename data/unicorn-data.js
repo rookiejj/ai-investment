@@ -129,10 +129,10 @@ const data = [
     "stocks": [
       {
         "nm": "SpaceX",
-        "rs": "S-1 공개 5/20(수) 가시화 5/18 슬립 - Fortune 5/15 'as soon as Wednesday May 20' 보도, 티커 SPCX(Nasdaq) 베이스·로드쇼 6/4 킥오프·프라이싱 6/11·데뷔 6/12 시나리오 유지·목표 $1.75T~$2T·조달 $75B 사상 최대·MS·BofA·Citi·JPM·GS 리드 21개 주관사·30% 리테일 트랜치 ~$22.5B·Starlink 2025 이익 $4.4B 더블, Starship V3 첫 비행 5/19 18:30 ET Starbase Pad 2·Flight 12·Raptor 3 엔진·22 Starlink 시뮬레이터 배포·서브오비탈 in-space relight·Super Heavy 걸프 소프트 스플래시(catch 시도 없음)",
+        "rs": "S-1 공개 5/20(수) 가시화 D-1 - Reuters·Bloomberg 5/15~18 'May 20 가시화·5/22 마지노선' 라인업, 밸류 $2T+ Bloomberg 5/18 상향(기존 $1.75T 베이스)·티커 SPCX(Nasdaq)·조달 $75B 사상 최대·30% 리테일 ~$22.5B·MS·BofA·Citi·JPM·GS 리드 21개 주관사·Brookfield 5/14 $2B 사전 베팅, Starship V3 첫 비행 5/20 18:30 ET Pad 2 첫 발사·Flight 12·Raptor 3 엔진(250tf/275tf)·100톤+ 재사용·22 Starlink 시뮬레이터·서브오비탈 in-space relight·Super Heavy 걸프 controlled descent",
         "ipo": "2026.06.11 프라이싱·6/12 Nasdaq 데뷔",
-        "val": "$1.75T",
-        "round": "S-1 공개 5/20(수) 가시화·티커 SPCX·리테일 30% 할당",
+        "val": "$2T+",
+        "round": "S-1 공개 5/20(수) D-1·티커 SPCX·리테일 30%·Brookfield $2B",
         "sector": "우주"
       },
       {
