@@ -33,6 +33,10 @@ function planExpectedAmount(key: string): number {
 
 const SHOP_NAME    = "브리픽";
 
+// 첫 결제 보너스 — 번호당 1회, paid_until에 추가 가산.
+// subscribers.trial_used_at 으로 추적 (다음 지정 이벤트 시 수동 NULL 리셋해 재허용 가능).
+const FIRST_PAYMENT_BONUS_DAYS = 7;
+
 // 결제 완료 알림톡 본문 — 알리고 콘솔 등록 템플릿(UH_6779)과 동일한 문구.
 // 변수는 #{상점명}·#{상품명}·#{만료일} 자리에 실제 값 치환해 발송.
 const PAYMENT_TEMPLATE_BODY =
@@ -183,21 +187,32 @@ Deno.serve(async (req) => {
 
     const { data: existing, error: selErr } = await supabase
       .from("subscribers")
-      .select("id, status, paid_until")
+      .select("id, status, paid_until, trial_used_at, last_payment_id")
       .eq("phone", cleaned)
       .maybeSingle();
     if (selErr) throw selErr;
 
+    // 첫 결제자: 기록 자체가 없거나, 기존 row 있어도 결제 이력·트라이얼 이력 모두 비어있을 때.
+    const isFirstPayment = !existing || (!existing.last_payment_id && !existing.trial_used_at);
+    const bonusDays = isFirstPayment ? FIRST_PAYMENT_BONUS_DAYS : 0;
+
     let subscriberId: string;
     let status: "registered" | "extended";
     let newPaidUntil: Date;
+
+    function addBonusDays(d: Date, days: number): Date {
+      if (!days) return d;
+      const r = new Date(d);
+      r.setDate(r.getDate() + days);
+      return r;
+    }
 
     if (existing) {
       // 기존 만료일이 미래면 그 위에 더하고, 과거면 지금부터
       const baseDate = existing.paid_until && new Date(existing.paid_until).getTime() > nowMs
         ? new Date(existing.paid_until)
         : new Date(nowMs);
-      newPaidUntil = addMonths(baseDate, plan.months);
+      newPaidUntil = addBonusDays(addMonths(baseDate, plan.months), bonusDays);
 
       const { error: updErr } = await supabase
         .from("subscribers")
@@ -207,6 +222,7 @@ Deno.serve(async (req) => {
           last_payment_id: paymentId,
           payment_provider: "portone",
           expires_at: null,
+          ...(bonusDays ? { trial_used_at: nowIso } : {}),
           metadata: {
             ad_consent_at: nowIso,
             source: "web-paid",
@@ -217,7 +233,7 @@ Deno.serve(async (req) => {
       subscriberId = existing.id;
       status = "extended";
     } else {
-      newPaidUntil = addMonths(new Date(nowMs), plan.months);
+      newPaidUntil = addBonusDays(addMonths(new Date(nowMs), plan.months), bonusDays);
       const { data: inserted, error: insErr } = await supabase
         .from("subscribers")
         .insert({
@@ -226,6 +242,7 @@ Deno.serve(async (req) => {
           paid_until: newPaidUntil.toISOString(),
           last_payment_id: paymentId,
           payment_provider: "portone",
+          ...(bonusDays ? { trial_used_at: nowIso } : {}),
           metadata: {
             ad_consent_at:       nowIso,
             channel_friended_at: nowIso,
@@ -277,6 +294,7 @@ Deno.serve(async (req) => {
       status,
       paid_until: newPaidUntil.toISOString(),
       alimtalk_sent: alim.ok,
+      first_payment_bonus_days: bonusDays,
     }, { cors });
   } catch (err) {
     console.error("[payment-confirm]", err);
