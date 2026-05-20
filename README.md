@@ -170,7 +170,7 @@ ai-investment/
 - **페이지 구조**: 헤더(브랜드) → h1 그날 날짜 + 요일 → 5탭 섹션 각각 `summary`를 줄 단위 `<li>` + `<details>`로 `changes[].detail` 풀 텍스트 펼침 → 실시간 대시보드 CTA + 지난 시황 링크 → 푸터(약관·개인정보). Pretendard + 메인 색상 시스템 그대로.
 - **메타 태그**: canonical / og:title·description·image·url·type=article / article:published_time / twitter:card / JSON-LD `NewsArticle`(headline·description·datePublished·author·publisher·articleSection·keywords). 네이버 사이트 검증(`naver-site-verification`)·구글 색인용 메타도 메인·daily 페이지 양쪽에 동기.
 - **멱등 빌드**: 같은 날 여러 번 빌드해도 `entries[0]`이 같으면 같은 파일 출력 → git diff 없음 → 자동 commit skip. 다음 사이클에서 새 entry로 다시 빌드.
-- **자동 commit·push 안전성**: `daily-seo.yml`이 푸시하는 paths는 `/daily/**`·`/sitemap.xml`·`/robots.txt`로 db-sync.yml·daily-seo.yml 자신의 트리거 paths와 겹치지 않아 무한 루프 없음.
+- **자동 commit·push 안전성**: `daily-seo.yml`이 푸시하는 paths는 `/daily/**`·`/sitemap.xml`·`/news-sitemap.xml`·`/rss.xml`·`/robots.txt`로 db-sync.yml·daily-seo.yml 자신의 트리거 paths와 겹치지 않아 무한 루프 없음. 워크플로 실행 중 main이 다른 push로 앞서 나갈 수 있는 race condition은 `fetch-depth: 0` + `fetch → rebase → push` 3회 재시도 패턴으로 자동 복구.
 - **URL 규칙**: Cloudflare Pages 기본 동작으로 `.html` 확장자 자동 trim → `/daily/2026-05-20`처럼 noext URL 자동 작동. Vercel은 `vercel.json`의 `cleanUrls: true`로 동일 동작 (양쪽 호스팅 동기).
 - **RSS auto-discovery**: 메인 `index.html`·daily 페이지 head에 `<link rel="alternate" type="application/rss+xml" href="/rss.xml">` — 브라우저·피드리더가 RSS 자동 감지.
 - **외부 색인 등록 (1회성 사용자 작업)**:
@@ -344,6 +344,8 @@ admin_settings (단일 행, id=1)
 - **스케줄 변경**: `cron.schedule` 표현식은 UTC 기준 (KST = UTC+9). 월~토 한정은 UTC dow `0-5` 사용 (KST 월~토 = UTC 일~금). 평일만이면 `0-4`(KST 월~금).
 
 ## Changelog
+
+- **2026-05-20 (3)**: **daily-seo.yml race condition 보강.** 5/20 16:16 첫 실행이 `main -> main (fetch first)`로 reject — 워크플로 실행 중 사용자가 별도 commit을 push해 main이 앞서나간 케이스. `actions/checkout`을 `fetch-depth: 0`(전체 history)으로 늘리고, push step을 `fetch + rebase + push` 3회 재시도 루프로 변경. 충돌 시 `git rebase --abort` 후 sleep 3s 재시도. 같은 race가 재발해도 자동 복구.
 
 - **2026-05-20 (2)**: **RSS 2.0 피드 + Google News Sitemap 추가 — daily SEO 페이지를 피드리더·뉴스 큐레이터·Google News까지 노출 채널 확장.**
   - **RSS 2.0 (`/rss.xml`)** — `scripts/build-daily-page.js`에 `buildRss` 추가. 최근 60개 daily 페이지를 `<item>` 으로(`title`·`link`·`guid isPermaLink="true"`·`pubDate` RFC 822·`description`). 채널 메타에 `<atom:link rel="self">`·`<language>ko-KR</language>`·`<ttl>60</ttl>`. Feedly·Inoreader·일부 뉴스 큐레이터가 자동 수집 가능.
