@@ -3319,11 +3319,12 @@ boot();
         submit.textContent=submitLabelFor(planKey,'extend');
         confirmState='extend';
       }else if(bonusEligible){
-        // Case C: 신규 (또는 만료된 구독자) + 보너스 자격 — 발송 시작은 내일 (알림톡 "내일부터 발송" 과 일치)
-        // 만료일도 start (내일) 기준으로 + 1개월 + 보너스 = 정확히 plan.months + bonusDays 일치 발송.
+        // Case C: 신규 (또는 만료된 구독자) + 보너스 자격.
+        // 발송 시작은 내일 (알림톡 "내일부터 발송" 과 일치) — 단순 안내일.
+        // 만료일은 결제일 기준 1개월(캘린더) + 보너스 — 서버 paid_until 계산과 일치.
         const start=new Date();
         start.setDate(start.getDate()+1);
-        const end=new Date(start);
+        const end=new Date();
         end.setMonth(end.getMonth()+planMonths);
         end.setDate(end.getDate()+bonusDays);
         const startStr=toKstDate(start);
