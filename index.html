@@ -737,6 +737,12 @@ body.sub-modal-open{overflow:hidden}
   background:#fff4d6;color:#8a5400;
 }
 .plan-badge.primary{background:var(--fg);color:#fff}
+.plan-badge.trial{background:#dff5e3;color:#1f6b3a}
+.plan-trial-note{
+  display:block;margin-top:4px;font:500 12px/1.4 'Inter',sans-serif;color:var(--mut);
+}
+.sub-modal-plan.trial-ineligible{opacity:.5;cursor:not-allowed}
+.sub-modal-plan.trial-ineligible .plan-badge.trial{background:#eee;color:var(--mut2)}
 .sub-modal-close{
   width:32px;height:32px;flex-shrink:0;
   border:none;background:var(--border-md);border-radius:50%;cursor:pointer;
@@ -1166,16 +1172,30 @@ body.sub-modal-open{overflow:hidden}
     <p class="sub-modal-sub">매일 아침 8시, 최신 경제 뉴스를 카카오톡으로 받아보세요.<br><span class="sub-modal-extend-note">이미 구독 중이신 분들은 기간이 연장됩니다.</span></p>
     <form id="subscribeForm" novalidate autocomplete="off">
       <div class="sub-modal-plans" role="radiogroup" aria-label="구독 기간 선택">
-        <label class="sub-modal-plan" data-plan="1m">
-          <input type="radio" name="plan" value="1m" checked>
+        <label class="sub-modal-plan" data-plan="trial7">
+          <input type="radio" name="plan" value="trial7" checked>
           <div class="plan-row">
-            <span class="plan-period">1개월</span>
+            <span class="plan-period">7일 무료 체험</span>
             <span class="plan-prices">
-              <span class="plan-price-now">100원</span>
+              <span class="plan-price-now">0원</span>
             </span>
           </div>
           <div class="plan-meta">
-            <span class="plan-permonth">월 100원</span>
+            <span class="plan-permonth">처음 한 번만</span>
+            <span class="plan-badge trial">무료</span>
+          </div>
+          <span class="plan-trial-note">번호당 1회 · 카드 등록 없이 시작 · 만료 시 자동 결제 안 됨</span>
+        </label>
+        <label class="sub-modal-plan" data-plan="1m">
+          <input type="radio" name="plan" value="1m">
+          <div class="plan-row">
+            <span class="plan-period">1개월</span>
+            <span class="plan-prices">
+              <span class="plan-price-now">2,900원</span>
+            </span>
+          </div>
+          <div class="plan-meta">
+            <span class="plan-permonth">월 2,900원</span>
             <span></span>
           </div>
         </label>
@@ -1218,7 +1238,7 @@ body.sub-modal-open{overflow:hidden}
         <span>카카오 친구톡을 통한 <b>광고성 정보 수신</b>에 동의합니다. 매일 오전 8시 발송되며, 언제든지 해지 요청으로 수신을 중단할 수 있습니다.</span>
       </label>
       <div class="sub-confirm-box" id="subConfirm"></div>
-      <button class="sub-modal-submit" id="subSubmit" type="submit">2,900원 결제하기</button>
+      <button class="sub-modal-submit" id="subSubmit" type="submit">7일 무료로 시작하기</button>
       <button class="sub-modal-cancel" id="subCancel" type="button">취소</button>
       <div class="sub-modal-status" id="subStatus"></div>
       <div class="sub-modal-success-actions" id="subSuccess">
@@ -2955,18 +2975,24 @@ boot();
   // 가격 플랜. 서버(payment-confirm)도 동일 매핑을 권위로 들고 있어야 함 — plan key·amount·days 동기화 필수.
   // 라이브 전환 시 amount 적용, 베타 단계에선 testAmount(₩100)로 결제 통과.
   const PRICE_PLANS={
-    '1m': { months:1,  amount:100,   testAmount:100, label:'1개월',  orderName:'브리픽 1개월 구독' },
-    '6m': { months:6,  amount:13800, testAmount:100, label:'6개월',  orderName:'브리픽 6개월 구독 (할인가)' },
-    '12m':{ months:12, amount:22800, testAmount:100, label:'12개월', orderName:'브리픽 12개월 구독 (할인가)' },
+    'trial7':{ trial:true, days:7,  amount:0,     testAmount:0,   label:'7일 무료', orderName:'브리픽 7일 무료 체험' },
+    '1m':    { months:1,            amount:2900,  testAmount:100, label:'1개월',    orderName:'브리픽 1개월 구독' },
+    '6m':    { months:6,            amount:13800, testAmount:100, label:'6개월',    orderName:'브리픽 6개월 구독 (할인가)' },
+    '12m':   { months:12,           amount:22800, testAmount:100, label:'12개월',   orderName:'브리픽 12개월 구독 (할인가)' },
   };
   const TEST_MODE=false;  // false면 plan 정가로 결제. 갤럭시아 테스트 채널은 어차피 실청구 안 됨.
   function planAmount(key){ const p=PRICE_PLANS[key]; return TEST_MODE?p.testAmount:p.amount; }
+  function isTrialPlan(key){ return !!(PRICE_PLANS[key] && PRICE_PLANS[key].trial); }
   function getSelectedPlan(){
     const r=document.querySelector('input[name="plan"]:checked');
-    return r?r.value:'1m';
+    return r?r.value:'trial7';
   }
   function submitLabelFor(planKey, mode){
     const p=PRICE_PLANS[planKey]||PRICE_PLANS['1m'];
+    if(p.trial){
+      if(mode==='ineligible') return '이미 무료 체험을 사용한 번호입니다';
+      return '7일 무료로 시작하기';
+    }
     const won=p.amount.toLocaleString('ko-KR')+'원';
     if(mode==='extend') return `${p.label} ${won} 연장 결제하기`;
     return `${won} 결제하기`;
@@ -3087,6 +3113,13 @@ boot();
   }
   function resetToInput(){
     confirmState=null;
+    // 트라이얼 카드 자격 상태 초기화 — 다른 번호로 다시 시도할 수 있게
+    const trialEl=document.querySelector('.sub-modal-plan[data-plan="trial7"]');
+    if(trialEl){
+      trialEl.classList.remove('trial-ineligible');
+      const radio=trialEl.querySelector('input[type="radio"]');
+      if(radio) radio.disabled=false;
+    }
     submit.disabled=false;submit.textContent=submitLabelFor(getSelectedPlan(),null);
     cancel.classList.remove('show');
     setPlanInputsDisabled(false);
@@ -3221,6 +3254,7 @@ boot();
       const planKey=getSelectedPlan();
       const planMonths=PRICE_PLANS[planKey].months;
       let isActive=false,paidUntilStr='',extStr='',daysLeft=0;
+      let trialEligible=true;
       try{
         const checkRes=await fetch(SUPABASE_URL+'/functions/v1/check-subscription',{
           method:'POST',
@@ -3228,19 +3262,58 @@ boot();
           body:JSON.stringify({phone}),
         });
         const chk=await checkRes.json();
-        if(checkRes.ok&&chk.ok&&chk.subscription_active&&chk.paid_until){
-          isActive=true;
-          const until=new Date(chk.paid_until);
-          const nowDate=new Date();
-          daysLeft=Math.max(0,Math.ceil((until-nowDate)/86400000));
-          const extended=new Date(until);
-          extended.setMonth(extended.getMonth()+planMonths);
-          paidUntilStr=until.toISOString().slice(0,10);
-          extStr=extended.toISOString().slice(0,10);
+        if(checkRes.ok&&chk.ok){
+          if(chk.trial_eligible===false) trialEligible=false;
+          if(chk.subscription_active&&chk.paid_until){
+            isActive=true;
+            const until=new Date(chk.paid_until);
+            const nowDate=new Date();
+            daysLeft=Math.max(0,Math.ceil((until-nowDate)/86400000));
+            paidUntilStr=until.toISOString().slice(0,10);
+            if(planMonths){
+              const extended=new Date(until);
+              extended.setMonth(extended.getMonth()+planMonths);
+              extStr=extended.toISOString().slice(0,10);
+            }
+          }
         }
       }catch(_){/* 체크 실패 시 번호 확인 단계로 진행 */}
 
-      if(isActive){
+      // 트라이얼 자격 미달 — 카드 자체를 비활성화하고 1개월 플랜으로 자동 전환
+      if(isTrialPlan(planKey) && !trialEligible){
+        const trialEl=document.querySelector('.sub-modal-plan[data-plan="trial7"]');
+        if(trialEl){
+          trialEl.classList.add('trial-ineligible');
+          const radio=trialEl.querySelector('input[type="radio"]');
+          if(radio) radio.disabled=true;
+        }
+        const m1=document.querySelector('input[name="plan"][value="1m"]');
+        if(m1){ m1.checked=true; syncPlanSelectedClass(); }
+        showStatus('error','이 번호로는 이미 무료 체험을 사용하셨거나 결제 이력이 있습니다. 1개월 결제로 진행해 주세요.');
+        submit.disabled=false;submit.textContent=submitLabelFor('1m',null);
+        return;
+      }
+
+      if(isTrialPlan(planKey)){
+        // 트라이얼 — 활성 구독자는 다운그레이드 불가 (eligible 체크에서 last_payment_id 로 이미 막힘, 안전망)
+        if(isActive){
+          showStatus('error','이미 활성 구독 중인 번호로는 무료 체험을 시작할 수 없습니다.');
+          submit.disabled=false;submit.textContent=submitLabelFor(planKey,null);
+          return;
+        }
+        const start=new Date();
+        const end=new Date(start.getTime()+7*86400000);
+        const startStr=start.toISOString().slice(0,10);
+        const endStr=end.toISOString().slice(0,10);
+        const extHtml=
+          '<div class="sub-confirm-ext">'+
+            '<div><span>체험 시작</span><b>'+startStr+'</b></div>'+
+            '<div><span>체험 종료</span><b>'+endStr+'</b></div>'+
+          '</div>';
+        showConfirmBox('이 번호로 7일 무료 체험 시작',fmtPhone(phone),extHtml);
+        submit.textContent=submitLabelFor(planKey,null);
+        confirmState='trial';
+      }else if(isActive){
         const planLabel=PRICE_PLANS[planKey].label;
         const extHtml=
           '<div class="sub-confirm-ext">'+
@@ -3270,6 +3343,48 @@ boot();
     const planKey=getSelectedPlan();
     const plan=PRICE_PLANS[planKey];
     const amount=planAmount(planKey);
+
+    // 트라이얼 분기 — PortOne 건너뛰고 start-trial 직접 호출 (0원 결제 흐름 회피)
+    if(isTrialPlan(planKey)){
+      submit.disabled=true;submit.textContent='무료 체험 시작 중…';
+      const subModalEl=document.querySelector('#subscribeModal .sub-modal');
+      status.className='sub-modal-status show info';
+      status.textContent='무료 체험 시작 중…';
+      subModalEl.classList.add('processing');
+      let trialDone=false;
+      try{
+        const res=await fetch(SUPABASE_URL+'/functions/v1/start-trial',{
+          method:'POST',
+          headers:{'Content-Type':'application/json','Authorization':'Bearer '+BRIEFICK_SUPABASE_PUBLISHABLE_KEY,'apikey':BRIEFICK_SUPABASE_PUBLISHABLE_KEY},
+          body:JSON.stringify({phone,ad_consent:true}),
+        });
+        const j=await res.json();
+        if(!res.ok||!j.ok){
+          subModalEl.classList.remove('processing');
+          showStatus('error',j.error||'무료 체험 시작 중 오류가 발생했습니다.');
+          submit.disabled=false;submit.textContent=submitLabelFor(planKey,null);
+        }else{
+          const untilHtml=j.paid_until?'<br><span class="until-date">('+j.paid_until.slice(0,10)+' 까지)</span>':'';
+          status.className='sub-modal-status show success';
+          status.innerHTML='7일 무료 체험이 시작되었습니다!'+untilHtml;
+          document.getElementById('subCompleteNotice').classList.add('show');
+          document.getElementById('subKakaoLink').classList.add('emphasis');
+          subModalEl.classList.remove('processing');
+          subModalEl.classList.add('completed');
+          phoneEl.disabled=true;consent.disabled=true;
+          submit.textContent='체험 시작됨';
+          submit.disabled=true;
+          cancel.classList.remove('show');
+          trialDone=true;
+        }
+      }catch(err){
+        subModalEl.classList.remove('processing');
+        showStatus('error','네트워크 오류: '+err.message);
+        submit.disabled=false;submit.textContent=submitLabelFor(planKey,null);
+      }
+      return;
+    }
+
     const paymentId='briefick'+Date.now()+Math.random().toString(36).slice(2,8);
     submit.disabled=true;submit.textContent='결제창 여는 중...';
     let completed=false;

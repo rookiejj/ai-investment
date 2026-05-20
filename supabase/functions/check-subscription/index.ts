@@ -5,7 +5,13 @@
  * POST body: { phone }
  * 응답:
  *   { ok: true, exists: boolean, status: "new"|"active"|"paused"|"expired"|"cancelled",
- *     paid_until: string|null, subscription_active: boolean }
+ *     paid_until: string|null, subscription_active: boolean,
+ *     trial_eligible: boolean }
+ *
+ * trial_eligible: 7일 무료 체험 자격. 번호당 1회 제한.
+ *   - 신규 번호: true
+ *   - 기존 번호인데 trial_used_at IS NULL AND last_payment_id IS NULL: true
+ *   - 그 외(이미 트라이얼 사용 OR 유료 결제 이력 존재): false
  */
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
@@ -47,18 +53,22 @@ Deno.serve(async (req) => {
     );
     const { data, error } = await supabase
       .from("subscribers")
-      .select("status, paid_until")
+      .select("status, paid_until, trial_used_at, last_payment_id")
       .eq("phone", cleaned)
       .maybeSingle();
     if (error) throw error;
 
     if (!data) {
-      return json({ ok: true, exists: false, status: "new", paid_until: null, subscription_active: false }, { cors });
+      return json({
+        ok: true, exists: false, status: "new", paid_until: null,
+        subscription_active: false, trial_eligible: true,
+      }, { cors });
     }
 
     const now = Date.now();
     const paidUntilMs = data.paid_until ? new Date(data.paid_until).getTime() : 0;
     const subscriptionActive = data.status === "active" && paidUntilMs > now;
+    const trialEligible = !data.trial_used_at && !data.last_payment_id;
 
     return json({
       ok: true,
@@ -66,6 +76,7 @@ Deno.serve(async (req) => {
       status: data.status,
       paid_until: data.paid_until,
       subscription_active: subscriptionActive,
+      trial_eligible: trialEligible,
     }, { cors });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
