@@ -205,19 +205,23 @@ Deno.serve(async (req) => {
     let status: "registered" | "extended";
     let newPaidUntil: Date;
 
-    function addBonusDays(d: Date, days: number): Date {
+    function addDays(d: Date, days: number): Date {
       if (!days) return d;
       const r = new Date(d);
       r.setDate(r.getDate() + days);
       return r;
     }
 
+    // 신규/만료 사용자의 baseDate 는 "내일" — 첫 발송이 내일 8시 KST 부터이므로
+    // UI "발송 시작 = 내일" 과 일관성 유지. 결과: 정확히 plan.months + bonusDays 일치 발송.
+    // 기존 활성 사용자(미래 paid_until 보유)는 그 위에 더해 연장.
+    const nextMorning = addDays(new Date(nowMs), 1);
+
     if (existing) {
-      // 기존 만료일이 미래면 그 위에 더하고, 과거면 지금부터
       const baseDate = existing.paid_until && new Date(existing.paid_until).getTime() > nowMs
         ? new Date(existing.paid_until)
-        : new Date(nowMs);
-      newPaidUntil = addBonusDays(addMonths(baseDate, plan.months), bonusDays);
+        : nextMorning;
+      newPaidUntil = addDays(addMonths(baseDate, plan.months), bonusDays);
 
       const { error: updErr } = await supabase
         .from("subscribers")
@@ -237,7 +241,7 @@ Deno.serve(async (req) => {
       subscriberId = existing.id;
       status = "extended";
     } else {
-      newPaidUntil = addBonusDays(addMonths(new Date(nowMs), plan.months), bonusDays);
+      newPaidUntil = addDays(addMonths(nextMorning, plan.months), bonusDays);
       const { data: inserted, error: insErr } = await supabase
         .from("subscribers")
         .insert({
