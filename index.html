@@ -758,12 +758,6 @@ body.sub-modal-open{overflow:hidden}
 }
 .sub-modal-bonus-banner.applied .bonus-text{color:#225e30}
 .sub-modal-bonus-banner.applied .bonus-text b{color:#0f3d1a}
-.sub-modal-bonus-banner.consumed{
-  background:#f5f5f5;border-color:var(--border-md);box-shadow:none;
-}
-.sub-modal-bonus-banner.consumed .bonus-text,
-.sub-modal-bonus-banner.consumed .bonus-text b{color:var(--mut)}
-.sub-modal-bonus-banner.consumed .bonus-emoji{opacity:.5}
 .sub-modal-close{
   width:32px;height:32px;flex-shrink:0;
   border:none;background:var(--border-md);border-radius:50%;cursor:pointer;
@@ -3006,19 +3000,20 @@ boot();
     if(mode==='extend') return `${p.label} ${won} 연장 결제하기`;
     return `${won} 결제하기`;
   }
-  // 보너스 배너 상태 — neutral(초기) / applied(첫 결제 자격 확정) / consumed(이미 보너스 사용)
+  // 보너스 배너 상태 — neutral(초기) / applied(첫 결제 자격 확정) / hidden(자격 없음, 언급 자체 회피)
   function setBonusBanner(state){
     const el=document.getElementById('subBonusBanner');
     if(!el) return;
-    el.classList.remove('applied','consumed');
+    el.classList.remove('applied');
     const txt=el.querySelector('.bonus-text');
     if(state==='applied'){
+      el.style.display='';
       el.classList.add('applied');
       txt.innerHTML='<b>✅ 7일 무료 추가가 자동 적용됩니다</b>이 번호로 첫 결제 — 만료일에 7일이 더해집니다';
-    }else if(state==='consumed'){
-      el.classList.add('consumed');
-      txt.innerHTML='<b>이미 보너스를 사용한 번호입니다</b>이번 결제는 보너스 없이 진행됩니다';
+    }else if(state==='hidden'){
+      el.style.display='none';
     }else{
+      el.style.display='';
       txt.innerHTML='<b>첫 결제 시 7일 무료 추가!</b>어떤 플랜이든 만료일에 7일이 그냥 더 붙어요 (번호당 1회)';
     }
   }
@@ -3298,7 +3293,7 @@ boot();
         }
       }catch(_){/* 체크 실패 시 번호 확인 단계로 진행 */}
 
-      setBonusBanner(bonusEligible?'applied':'consumed');
+      setBonusBanner(bonusEligible?'applied':'hidden');
 
       if(isActive){
         const planLabel=PRICE_PLANS[planKey].label;
@@ -3313,21 +3308,24 @@ boot();
         showConfirmBox('이 번호로 발송',fmtPhone(phone),extHtml);
         submit.textContent=submitLabelFor(planKey,'extend');
         confirmState='extend';
-      }else{
+      }else if(bonusEligible){
         const planLabel=PRICE_PLANS[planKey].label;
         const start=new Date();
         const end=new Date(start);
         end.setMonth(end.getMonth()+planMonths);
-        if(bonusEligible) end.setDate(end.getDate()+FIRST_PAYMENT_BONUS_DAYS);
+        end.setDate(end.getDate()+FIRST_PAYMENT_BONUS_DAYS);
         const startStr=start.toISOString().slice(0,10);
         const endStr=end.toISOString().slice(0,10);
-        const periodLabel=bonusEligible?(planLabel+' + 7일 보너스'):planLabel;
         const extHtml=
           '<div class="sub-confirm-ext">'+
             '<div><span>발송 시작</span><b>'+startStr+'</b></div>'+
-            '<div><span>'+periodLabel+'</span><b>'+endStr+'</b></div>'+
+            '<div><span>'+planLabel+' + 7일 보너스</span><b>'+endStr+'</b></div>'+
           '</div>';
         showConfirmBox('이 번호로 매일 오전 8시 발송',fmtPhone(phone),extHtml);
+        submit.textContent=submitLabelFor(planKey,'number');
+        confirmState='number';
+      }else{
+        showConfirmBox('이 번호로 매일 오전 8시 발송',fmtPhone(phone),'번호가 맞으신가요?');
         submit.textContent=submitLabelFor(planKey,'number');
         confirmState='number';
       }
