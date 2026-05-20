@@ -1,0 +1,87 @@
+name: Daily SEO Build
+
+# 5탭 *-update.js 변경 시 SEO 정적 페이지 자동 생성·커밋.
+# /daily/YYYY-MM-DD.html + /daily/index.html + /sitemap.xml + /robots.txt
+#
+# db-sync.yml과 같은 paths 트리거 → 두 워크플로 병렬 실행.
+# 이 워크플로의 push는 /daily/**·sitemap.xml·robots.txt만 건드리므로
+# db-sync.yml(data/*-update.js paths만 감시)·이 워크플로 자신 모두 재트리거 없음.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/stocks-update.js'
+      - 'data/kr-stocks-update.js'
+      - 'data/ai-update.js'
+      - 'data/commodity-update.js'
+      - 'data/unicorn-update.js'
+      - 'data/company-ko.js'
+      - 'scripts/build-daily-page.js'
+  workflow_dispatch:
+
+concurrency:
+  group: daily-seo
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 시작 알림
+        run: |
+          curl -s -o /dev/null -X POST \
+            "https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/notify-telegram" \
+            -H "X-Notify-Secret: ${{ secrets.NOTIFY_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -d '{"source":"Daily SEO","status":"start"}' || true
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: SEO 페이지·sitemap·robots 빌드
+        run: node scripts/build-daily-page.js
+
+      - name: 변경사항 커밋·푸시
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add daily/ sitemap.xml robots.txt
+
+          if git diff --cached --quiet; then
+            echo "[daily-seo] 변경사항 없음 — skip"
+            exit 0
+          fi
+
+          DATE_KST=$(TZ=Asia/Seoul date '+%Y-%m-%d')
+          git commit -m "SEO 페이지 자동 빌드 ${DATE_KST}"
+          git push origin main
+
+      - name: 종료 알림 (항상 실행)
+        if: always()
+        run: |
+          case "${{ job.status }}" in
+            success) STATUS="success" ;;
+            failure) STATUS="failure" ;;
+            cancelled) STATUS="failure" ;;
+            *) STATUS="unknown" ;;
+          esac
+          curl -s -o /dev/null -X POST \
+            "https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/notify-telegram" \
+            -H "X-Notify-Secret: ${{ secrets.NOTIFY_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"source\":\"Daily SEO\",\"status\":\"$STATUS\"}" || true
