@@ -21,7 +21,13 @@ ai-investment/
 │   ├── terms.html                ← 이용약관
 │   ├── privacy.html              ← 개인정보처리방침
 │   └── refund.html               ← 환불정책
-├── vercel.json                   ← /admin · /legacy · /renew · /help · /terms ... → views/ rewrite
+├── vercel.json                   ← /admin · /legacy · /renew · /help · /terms ... → views/ rewrite (Vercel)
+├── _redirects                    ← 동일 라우팅 (Cloudflare Pages 메인 호스팅) — vercel.json과 양쪽 동기 유지
+├── sitemap.xml                   ← 자동 생성 (메인 + /daily 전체)
+├── robots.txt                    ← 자동 생성 (sitemap 가리키기)
+├── daily/                        ← SEO 정적 페이지 — 매일 자동 빌드 누적
+│   ├── index.html                ← 지난 시황 모아보기 (최근 60개 카드 그리드)
+│   └── YYYY-MM-DD.html           ← 그날 5탭 헤드라인 페이지 (canonical / og / NewsArticle JSON-LD)
 ├── CLAUDE.md                     ← 데이터 유지보수·자동화 지침
 ├── assets/
 │   ├── briefick_profile_640.jpeg ← 헤더 로고
@@ -42,6 +48,7 @@ ai-investment/
 │   ├── generate-message.js       ← 로컬 친구톡 메시지 미리보기
 │   ├── send-friendtalk.js        ← 로컬 수동 발송 (디버깅)
 │   ├── trim-update-logs.js       ← *-update.js 1건 한도 트리밍 (sandbox 커밋 직전 필수, dedup·history는 DB가 담당)
+│   ├── build-daily-page.js       ← SEO 정적 페이지 빌더 (5탭 update.js entries[0] → /daily/YYYY-MM-DD.html + index + sitemap.xml + robots.txt)
 │   ├── sync-to-db.js             ← 5탭 *-data.js + *-update.js entries[0]을 write-tab-data·write-tab-update로 동기화 (db-sync.yml이 GitHub Actions runner에서 호출)
 │   ├── lint-jargon.sh            ← 트레이더 은어·편집자 메타 표현 lint
 │   ├── lint-finmap-pool.js       ← sector-pool 한글명 lookup·dual-list lint
@@ -62,7 +69,8 @@ ai-investment/
 ├── .github/workflows/
 │   ├── cartoon-generate.yml      ← `data/.cartoon-marker` push 트리거 (자동 갱신 sandbox가 마지막 단계로 마커 push)
 │   ├── instagram-post.yml        ← cartoon-generate workflow_run chain (KST 07~18시 캐러셀 / 그 외 Reels, 모두 7장 슬라이드 공유)
-│   └── db-sync.yml               ← `data/*-data.js`·`data/*-update.js` push 트리거 (GitHub Actions runner가 scripts/sync-to-db.js 실행 → Supabase tab_data·tab_updates upsert. sandbox 프록시가 Supabase 차단해서 GH Actions 경유 필수)
+│   ├── db-sync.yml               ← `data/*-data.js`·`data/*-update.js` push 트리거 (GitHub Actions runner가 scripts/sync-to-db.js 실행 → Supabase tab_data·tab_updates upsert. sandbox 프록시가 Supabase 차단해서 GH Actions 경유 필수)
+│   └── daily-seo.yml             ← `data/*-update.js`·`data/company-ko.js`·`scripts/build-daily-page.js` push 트리거 (build-daily-page.js 실행 → /daily/·sitemap.xml·robots.txt 자동 commit·push, db-sync와 병렬 실행)
 ├── supabase/
 │   ├── migrations/               ← 스키마 이력 (init / payment / message_type / delivery_state / admin_settings / template_code)
 │   ├── functions/
@@ -143,6 +151,20 @@ ai-investment/
 
 ### 콘텐츠 자동 갱신
 - Claude Opus 4.7 원격 에이전트(`trig_016nvC9rVppRnQ9nFZeDjnP8`)가 매일 2회(KST 07:00 / 19:00)로 5개 탭 데이터 갱신·커밋·푸시 — 13시 슬롯은 2026-05-02부터 비활성화
+
+### SEO 정적 페이지 (`/daily/`)
+- **목적**: 매일 갱신되는 5탭 헤드라인을 정적 HTML로 publish해 구글·네이버의 일일 색인 트래픽을 누적으로 잡는다. 비용 0, 운영 0 — GitHub Actions 한 단계가 모든 걸 처리.
+- **트리거**: `data/*-update.js`·`data/company-ko.js`·`scripts/build-daily-page.js` push → `daily-seo.yml` 발화 (db-sync와 동일 paths, 두 워크플로 병렬 실행). 자동 갱신 사이클당 1회 자연 발화.
+- **빌더 (`scripts/build-daily-page.js`)**:
+  - 5탭(`kr-stocks`·`stocks`·`ai`·`commodity`·`unicorn`) `*-update.js`의 `entries[0]` 로드 → `data/company-ko.js`의 `COMPANY_KO`로 localize (daily-send와 동일 로직, 단어 경계 룰 그대로)
+  - 페이지 날짜는 stocks `entries[0].date` prefix(YYYY-MM-DD)로 결정
+  - `/daily/YYYY-MM-DD.html`(그날 페이지) + `/daily/index.html`(최근 60개 카드 그리드) + `/sitemap.xml`(메인 + /daily/ + 모든 daily 페이지) + `/robots.txt`(sitemap 가리키기) 4종 동시 생성
+- **페이지 구조**: 헤더(브랜드) → h1 그날 날짜 + 요일 → 5탭 섹션 각각 `summary`를 줄 단위 `<li>` + `<details>`로 `changes[].detail` 풀 텍스트 펼침 → 실시간 대시보드 CTA + 지난 시황 링크 → 푸터(약관·개인정보). Pretendard + 메인 색상 시스템 그대로.
+- **메타 태그**: canonical / og:title·description·image·url·type=article / article:published_time / twitter:card / JSON-LD `NewsArticle`(headline·description·datePublished·author·publisher·articleSection·keywords). 네이버 사이트 검증(`naver-site-verification`)·구글 색인용 메타도 메인·daily 페이지 양쪽에 동기.
+- **멱등 빌드**: 같은 날 여러 번 빌드해도 `entries[0]`이 같으면 같은 파일 출력 → git diff 없음 → 자동 commit skip. 다음 사이클에서 새 entry로 다시 빌드.
+- **자동 commit·push 안전성**: `daily-seo.yml`이 푸시하는 paths는 `/daily/**`·`/sitemap.xml`·`/robots.txt`로 db-sync.yml·daily-seo.yml 자신의 트리거 paths와 겹치지 않아 무한 루프 없음.
+- **URL 규칙**: Cloudflare Pages 기본 동작으로 `.html` 확장자 자동 trim → `/daily/2026-05-20`처럼 noext URL 자동 작동. Vercel은 `vercel.json`의 `cleanUrls: true`로 동일 동작 (양쪽 호스팅 동기).
+- **외부 색인 등록**: 1회성 사용자 작업 — `search.google.com/search-console`·`searchadvisor.naver.com`에서 `sitemap.xml` 1회 제출하면 매일 자동 fetch.
 
 ### 실시간 시세 (15분 지연)
 - **`stock-prices` Edge Function** — Yahoo Finance v8 chart endpoint(`includePrePost=true`)로 미국·한국·원자재·크립토 시세 fetch. 한국은 `.KS`/`.KQ` 둘 다 시도 매칭, 원자재·크립토는 `COMMODITY_YH` 매핑 테이블(`BTC→BTC-USD`·`GC→GC=F` 등). 결과를 Supabase Storage `prices/latest.json`에 저장.
@@ -238,6 +260,8 @@ pg_cron → Vault X-Cron-Secret → expiry-notice
 | 재구독 안내 친구톡 본문 | `supabase/functions/expiry-notice/index.ts`의 `buildExpiryMessage` |
 | 구독료·상품명 (3단 가격 플랜) | `index.html`·`views/renew.html`의 `PRICE_PLANS` + `supabase/functions/payment-confirm/index.ts`의 `PRICE_PLANS` (단일 소스 — 동기화 필수). plan 키: `1m`·`6m`·`12m`. `TEST_MODE` 토글로 testAmount(₩100) ↔ amount(정가) 전환 |
 | 발송 스케줄 | `supabase/schedule.sql` (뉴스) · `schedule-expiry.sql` (만료 임박) — cron 표현식은 UTC |
+| SEO 페이지 디자인·메타 태그 | `scripts/build-daily-page.js`의 `buildDailyHtml`·`buildIndexHtml` (Pretendard + 메인 색상 시스템) |
+| 라우팅·리다이렉트 | `_redirects` (Cloudflare 메인) + `vercel.json` (Vercel 병행) — **양쪽 동기 유지** |
 | 결제 완료 알림톡 템플릿 | `supabase/functions/payment-confirm/index.ts`의 `ALIMTALK_TEMPLATE_ID` |
 | 미수신자 안내 알림톡 템플릿 | `supabase/functions/admin-api/index.ts`의 `MANUAL_TEMPLATE_ID` (env `ALIMTALK_MANUAL_TEMPLATE_ID`로 오버라이드) |
 
@@ -249,7 +273,7 @@ pg_cron → Vault X-Cron-Secret → expiry-notice
 | 레이어 | 도구 |
 |---|---|
 | 웹 프런트 | 정적 HTML 3종(`index` / `admin` / 법정 문서) · Inter / Pretendard |
-| 호스팅 | **Vercel** · `vercel.json` rewrites로 `/admin`·`/renew`·`/terms`·`/privacy`·`/refund` → `views/` 매핑 |
+| 호스팅 | **Cloudflare Pages (메인) + Vercel (병행)** · 라우팅은 `_redirects`(Cloudflare 형식) + `vercel.json`(Vercel 형식)로 양쪽 동기 유지. Cloudflare는 `.html` 자동 trim 기본 동작, Vercel은 `cleanUrls: true`로 동일 동작 |
 | 백엔드 | **Supabase Pro** (Postgres + Edge Functions + Vault + pg_cron + pg_net) |
 | 결제 | **포트원 V2** (galaxia 테스트 채널 · `windowType.mobile: REDIRECTION`) |
 | 메시지 | **알리고(Aligo)** — 카카오 친구톡·알림톡 · IP 화이트리스트 회피 위해 iwinv VPS(`proxy.briefick.com`, `115.68.224.225`)에 Node 프록시 + Caddy HTTPS · `X-Proxy-Secret` 헤더 인증 |
@@ -308,6 +332,17 @@ admin_settings (단일 행, id=1)
 - **스케줄 변경**: `cron.schedule` 표현식은 UTC 기준 (KST = UTC+9). 월~토 한정은 UTC dow `0-5` 사용 (KST 월~토 = UTC 일~금). 평일만이면 `0-4`(KST 월~금).
 
 ## Changelog
+
+- **2026-05-20**: **SEO 정적 페이지 자동 빌드 시스템 추가 — /daily/YYYY-MM-DD가 매일 자동 누적되어 구글·네이버 색인 트래픽을 잡는다.** 비용 0, 완전 자동, 운영자 작업은 외부 색인 1회 등록뿐.
+  - **빌더 (`scripts/build-daily-page.js`)** — Node 22 단일 스크립트. 5탭(`kr-stocks`·`stocks`·`ai`·`commodity`·`unicorn`) `*-update.js`의 `entries[0]`을 require + `Function` eval로 로드 → `data/company-ko.js`의 `COMPANY_KO`로 localize(daily-send와 같은 단어 경계 룰 — `Cloud`가 `Cloudflare` 안 깨짐) → 페이지 날짜는 stocks `entries[0].date` prefix(YYYY-MM-DD) → 4종 결과물(`/daily/YYYY-MM-DD.html`·`/daily/index.html`·`/sitemap.xml`·`/robots.txt`) 한 번에 생성.
+  - **메타 태그 풀세트** — canonical / og:title·description·image·url·type=article / article:published_time / twitter:card=summary_large_image / JSON-LD `NewsArticle`(headline·description·datePublished·author·publisher·articleSection·keywords). 네이버 사이트 검증(`naver-site-verification=94e282ae9b4b0a4379c03d4dbc7c4e5ad3b1649b`)도 메인 + daily 페이지 양쪽에 동기. og:image는 `/assets/og-image-20260513.png`(브랜드 1200×630 안전 fallback) 재사용.
+  - **자동화 (`.github/workflows/daily-seo.yml`)** — `data/*-update.js`·`data/company-ko.js`·`scripts/build-daily-page.js` push 트리거(db-sync와 동일 paths). `actions/checkout@v4` + `node scripts/build-daily-page.js` + git diff 검사 후 변경 있으면 `daily/` ·`sitemap.xml`·`robots.txt`만 자동 commit·push. `permissions: contents: write`로 `GITHUB_TOKEN`이 main에 push. 본인 트리거 paths와 db-sync 트리거 paths 모두 안 겹쳐 무한 루프 없음. 시작·종료 텔레그램 알림은 다른 워크플로와 동일 패턴.
+  - **멱등 빌드** — 같은 날 여러 번 돌아도 `entries[0]`이 같으면 같은 파일 출력 → git diff empty → 자동 commit skip. 매일 갱신 사이클당 새 페이지 정확히 1개 누적.
+  - **클린 URL** — Cloudflare Pages는 `.html` 자동 trim이 기본 동작이라 `/daily/2026-05-20` 별도 설정 없이 작동. Vercel 호환을 위해 `vercel.json`에 `cleanUrls: true` 추가 — 두 호스팅에서 동일 URL 형태.
+  - **호스팅 정리** — 메인은 **Cloudflare Pages**, Vercel은 병행 운영 중 (보존). 라우팅은 `_redirects`(Cloudflare) + `vercel.json`(Vercel) 양쪽 동기 유지 정책 확립.
+  - **메인 페이지 푸터** — `/daily/` 링크 추가(내부 traversal로 색인 도달성↑).
+  - **외부 색인 등록 (사용자 1회 작업)** — `search.google.com/search-console`·`searchadvisor.naver.com`에 `sitemap.xml` 제출 한 번. 이후 매일 자동 fetch.
+  - 가설: 매일 새 URL 1개 publish가 누적 2~3개월이면 "오늘 한국 주식 시황"·"NVDA Q1 발표" 같은 롱테일 검색에서 자연 유입 시작. ROI 가장 높은 무료·자동 홍보 채널.
 
 - **2026-05-16 (2)**: **인스타 캐러셀 02~07 슬라이드 텍스쳐 BG 도입 — 6종 AI 생성 텍스쳐 풀에서 발행마다 1개 랜덤**. 5/12에 사진 BG 폐기 후 단조 그라데이션으로 통일했던 톤이 다시 정적으로 느껴진다는 판단으로 텍스쳐 BG 재도입. 다만 사진은 노이즈 누적이라 6종 고정 풀로 전환.
   - **텍스쳐 생성 — Gemini nano-banana-pro REST** — `scripts/textures/generate-ai.js`. reference/ 폴더의 Pinterest 무드보드 6종(Grainy Noise·Halftone·Light Leak·Fractal Glass·Cardboard·Plastic Wrap)을 글자 없는 4:5·1:1로 재현. `aspectRatio` 강제 + prompt에 reference 분위기 명시. halftone 4:5만 `IMAGE_RECITATION` 안전장치 한 번 거부 후 표현 바꿔 통과(11/12 → 12/12). 비용 ~$1.6 일회성. `assets/textures/ai-<name>-{4x5,1x1}.png` 12장 보존.
