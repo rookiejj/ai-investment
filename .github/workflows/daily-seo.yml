@@ -44,7 +44,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 1
+          # fetch-depth: 0 — rebase 정확성 위해 전체 history. 트리거가 paths 매치 후
+          # workflow 실행 중 main이 다른 push로 앞서 나가는 race condition 보호.
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -69,7 +71,27 @@ jobs:
 
           DATE_KST=$(TZ=Asia/Seoul date '+%Y-%m-%d')
           git commit -m "SEO 페이지 자동 빌드 ${DATE_KST}"
-          git push origin main
+
+          # fetch + rebase + push 3회 재시도 — main이 워크플로 실행 중 앞서 나가는
+          # race condition(non-fast-forward reject) 자동 복구. 우리 변경은 daily/·
+          # *.xml·robots.txt만이라 다른 변경과 충돌 가능성 낮음, 충돌 시 rebase abort.
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if ! git rebase origin/main; then
+              echo "::warning::rebase 충돌 — abort 후 재시도 ${attempt}/3"
+              git rebase --abort || true
+              sleep 3
+              continue
+            fi
+            if git push origin main; then
+              echo "[daily-seo] push 성공 (시도 ${attempt})"
+              exit 0
+            fi
+            echo "::warning::push 실패 — 재시도 ${attempt}/3"
+            sleep 3
+          done
+          echo "::error::3회 시도 후 push 실패"
+          exit 1
 
       - name: 종료 알림 (항상 실행)
         if: always()
