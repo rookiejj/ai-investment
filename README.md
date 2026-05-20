@@ -24,7 +24,9 @@ ai-investment/
 ├── vercel.json                   ← /admin · /legacy · /renew · /help · /terms ... → views/ rewrite (Vercel)
 ├── _redirects                    ← 동일 라우팅 (Cloudflare Pages 메인 호스팅) — vercel.json과 양쪽 동기 유지
 ├── sitemap.xml                   ← 자동 생성 (메인 + /daily 전체)
-├── robots.txt                    ← 자동 생성 (sitemap 가리키기)
+├── news-sitemap.xml              ← 자동 생성 (최근 48시간 콘텐츠만, Google News 후보)
+├── rss.xml                       ← 자동 생성 RSS 2.0 피드 (최근 60개, 피드리더·뉴스 큐레이터용)
+├── robots.txt                    ← 자동 생성 (sitemap·news-sitemap 가리키기)
 ├── daily/                        ← SEO 정적 페이지 — 매일 자동 빌드 누적
 │   ├── index.html                ← 지난 시황 모아보기 (최근 60개 카드 그리드)
 │   └── YYYY-MM-DD.html           ← 그날 5탭 헤드라인 페이지 (canonical / og / NewsArticle JSON-LD)
@@ -48,7 +50,7 @@ ai-investment/
 │   ├── generate-message.js       ← 로컬 친구톡 메시지 미리보기
 │   ├── send-friendtalk.js        ← 로컬 수동 발송 (디버깅)
 │   ├── trim-update-logs.js       ← *-update.js 1건 한도 트리밍 (sandbox 커밋 직전 필수, dedup·history는 DB가 담당)
-│   ├── build-daily-page.js       ← SEO 정적 페이지 빌더 (5탭 update.js entries[0] → /daily/YYYY-MM-DD.html + index + sitemap.xml + robots.txt)
+│   ├── build-daily-page.js       ← SEO 정적 페이지 빌더 (5탭 update.js entries[0] → /daily/YYYY-MM-DD.html + index + sitemap.xml + news-sitemap.xml + rss.xml + robots.txt)
 │   ├── sync-to-db.js             ← 5탭 *-data.js + *-update.js entries[0]을 write-tab-data·write-tab-update로 동기화 (db-sync.yml이 GitHub Actions runner에서 호출)
 │   ├── lint-jargon.sh            ← 트레이더 은어·편집자 메타 표현 lint
 │   ├── lint-finmap-pool.js       ← sector-pool 한글명 lookup·dual-list lint
@@ -158,13 +160,23 @@ ai-investment/
 - **빌더 (`scripts/build-daily-page.js`)**:
   - 5탭(`kr-stocks`·`stocks`·`ai`·`commodity`·`unicorn`) `*-update.js`의 `entries[0]` 로드 → `data/company-ko.js`의 `COMPANY_KO`로 localize (daily-send와 동일 로직, 단어 경계 룰 그대로)
   - 페이지 날짜는 stocks `entries[0].date` prefix(YYYY-MM-DD)로 결정
-  - `/daily/YYYY-MM-DD.html`(그날 페이지) + `/daily/index.html`(최근 60개 카드 그리드) + `/sitemap.xml`(메인 + /daily/ + 모든 daily 페이지) + `/robots.txt`(sitemap 가리키기) 4종 동시 생성
+  - 한 번 실행에 6종 결과물 동시 생성:
+    1. `/daily/YYYY-MM-DD.html` — 그날 페이지
+    2. `/daily/index.html` — 최근 60개 카드 그리드
+    3. `/sitemap.xml` — 메인 + /daily/ + 모든 daily 페이지
+    4. `/news-sitemap.xml` — 최근 48시간 콘텐츠만 (Google News Top Stories 후보)
+    5. `/rss.xml` — RSS 2.0 표준 피드 (최근 60건, `<atom:link>`·`<language>ko-KR>`·`<ttl>60>` 포함). Feedly·Inoreader·뉴스 큐레이터가 자동 수집
+    6. `/robots.txt` — sitemap·news-sitemap 양쪽 가리킴
 - **페이지 구조**: 헤더(브랜드) → h1 그날 날짜 + 요일 → 5탭 섹션 각각 `summary`를 줄 단위 `<li>` + `<details>`로 `changes[].detail` 풀 텍스트 펼침 → 실시간 대시보드 CTA + 지난 시황 링크 → 푸터(약관·개인정보). Pretendard + 메인 색상 시스템 그대로.
 - **메타 태그**: canonical / og:title·description·image·url·type=article / article:published_time / twitter:card / JSON-LD `NewsArticle`(headline·description·datePublished·author·publisher·articleSection·keywords). 네이버 사이트 검증(`naver-site-verification`)·구글 색인용 메타도 메인·daily 페이지 양쪽에 동기.
 - **멱등 빌드**: 같은 날 여러 번 빌드해도 `entries[0]`이 같으면 같은 파일 출력 → git diff 없음 → 자동 commit skip. 다음 사이클에서 새 entry로 다시 빌드.
 - **자동 commit·push 안전성**: `daily-seo.yml`이 푸시하는 paths는 `/daily/**`·`/sitemap.xml`·`/robots.txt`로 db-sync.yml·daily-seo.yml 자신의 트리거 paths와 겹치지 않아 무한 루프 없음.
 - **URL 규칙**: Cloudflare Pages 기본 동작으로 `.html` 확장자 자동 trim → `/daily/2026-05-20`처럼 noext URL 자동 작동. Vercel은 `vercel.json`의 `cleanUrls: true`로 동일 동작 (양쪽 호스팅 동기).
-- **외부 색인 등록**: 1회성 사용자 작업 — `search.google.com/search-console`·`searchadvisor.naver.com`에서 `sitemap.xml` 1회 제출하면 매일 자동 fetch.
+- **RSS auto-discovery**: 메인 `index.html`·daily 페이지 head에 `<link rel="alternate" type="application/rss+xml" href="/rss.xml">` — 브라우저·피드리더가 RSS 자동 감지.
+- **외부 색인 등록 (1회성 사용자 작업)**:
+  - `search.google.com/search-console` — `sitemap.xml` + `news-sitemap.xml` 둘 다 제출 (News Sitemap은 Top Stories 후보화 위해 별도 필요)
+  - `searchadvisor.naver.com` — `sitemap.xml` 제출 (네이버는 News Sitemap 미사용)
+  - (선택) Feedly·Inoreader 카탈로그에 `https://briefick.com/rss.xml` 등록 — 안 해도 RSS 직접 구독은 가능
 
 ### 실시간 시세 (15분 지연)
 - **`stock-prices` Edge Function** — Yahoo Finance v8 chart endpoint(`includePrePost=true`)로 미국·한국·원자재·크립토 시세 fetch. 한국은 `.KS`/`.KQ` 둘 다 시도 매칭, 원자재·크립토는 `COMMODITY_YH` 매핑 테이블(`BTC→BTC-USD`·`GC→GC=F` 등). 결과를 Supabase Storage `prices/latest.json`에 저장.
@@ -332,6 +344,14 @@ admin_settings (단일 행, id=1)
 - **스케줄 변경**: `cron.schedule` 표현식은 UTC 기준 (KST = UTC+9). 월~토 한정은 UTC dow `0-5` 사용 (KST 월~토 = UTC 일~금). 평일만이면 `0-4`(KST 월~금).
 
 ## Changelog
+
+- **2026-05-20 (2)**: **RSS 2.0 피드 + Google News Sitemap 추가 — daily SEO 페이지를 피드리더·뉴스 큐레이터·Google News까지 노출 채널 확장.**
+  - **RSS 2.0 (`/rss.xml`)** — `scripts/build-daily-page.js`에 `buildRss` 추가. 최근 60개 daily 페이지를 `<item>` 으로(`title`·`link`·`guid isPermaLink="true"`·`pubDate` RFC 822·`description`). 채널 메타에 `<atom:link rel="self">`·`<language>ko-KR</language>`·`<ttl>60</ttl>`. Feedly·Inoreader·일부 뉴스 큐레이터가 자동 수집 가능.
+  - **Google News Sitemap (`/news-sitemap.xml`)** — `xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"` 네임스페이스. **최근 48시간 콘텐츠만** 포함(News Sitemap spec). `<news:publication>`·`<news:publication_date>`·`<news:title>` 필드. Top Stories 후보화에 필요.
+  - **RSS auto-discovery** — 메인 `index.html`·daily 페이지 head에 `<link rel="alternate" type="application/rss+xml" title="브리픽 RSS — 매일 시황" href="/rss.xml">`. 브라우저·피드리더가 RSS 자동 감지.
+  - **robots.txt 확장** — `Sitemap: /sitemap.xml` + `Sitemap: /news-sitemap.xml` 두 줄로 봇이 양쪽 자동 발견.
+  - **빌더 산출물 6종으로 확장** — daily 페이지·index·sitemap·**news-sitemap**·**rss**·robots. `daily-seo.yml`의 `git add`에도 신규 파일 포함. 멱등 빌드·페이지 스캔 로직 재사용(`scanExistingPages`가 title·published_time까지 추출하도록 확장).
+  - **외부 색인 등록 가이드** — Search Console에 `sitemap.xml` + `news-sitemap.xml` 둘 다 제출 필요(News Sitemap은 Top Stories 후보화 위해 별도). 네이버는 News Sitemap 미사용이라 `sitemap.xml`만.
 
 - **2026-05-20**: **SEO 정적 페이지 자동 빌드 시스템 추가 — /daily/YYYY-MM-DD가 매일 자동 누적되어 구글·네이버 색인 트래픽을 잡는다.** 비용 0, 완전 자동, 운영자 작업은 외부 색인 1회 등록뿐.
   - **빌더 (`scripts/build-daily-page.js`)** — Node 22 단일 스크립트. 5탭(`kr-stocks`·`stocks`·`ai`·`commodity`·`unicorn`) `*-update.js`의 `entries[0]`을 require + `Function` eval로 로드 → `data/company-ko.js`의 `COMPANY_KO`로 localize(daily-send와 같은 단어 경계 룰 — `Cloud`가 `Cloudflare` 안 깨짐) → 페이지 날짜는 stocks `entries[0].date` prefix(YYYY-MM-DD) → 4종 결과물(`/daily/YYYY-MM-DD.html`·`/daily/index.html`·`/sitemap.xml`·`/robots.txt`) 한 번에 생성.
