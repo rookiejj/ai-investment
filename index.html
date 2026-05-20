@@ -2989,7 +2989,14 @@ boot();
   };
   // 보너스 일수는 서버 check-subscription / payment-confirm 응답에서 받음 (promo_events 테이블 기반).
   // 클라이언트는 응답된 첫 번째 eligible event 의 bonus_days 만 표시·계산에 사용.
-  const TEST_MODE=false;  // false면 plan 정가로 결제. 갤럭시아 테스트 채널은 어차피 실청구 안 됨.
+  const TEST_MODE=false;
+  // 날짜 포맷은 항상 KST 기준. toISOString().slice(0,10) 은 UTC 날짜라
+  // KST 자정~오전 9시 사이 1일 차이 발생 (이전 사고 — 2026-05-21 발견).
+  function toKstDate(d){
+    if(!d) return '';
+    const date=(d instanceof Date)?d:new Date(d);
+    return new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Seoul'}).format(date);
+  }  // false면 plan 정가로 결제. 갤럭시아 테스트 채널은 어차피 실청구 안 됨.
   function planAmount(key){ const p=PRICE_PLANS[key]; return TEST_MODE?p.testAmount:p.amount; }
   function getSelectedPlan(){
     const r=document.querySelector('input[name="plan"]:checked');
@@ -3082,7 +3089,7 @@ boot();
         const _bonusDays=(j.bonus_days||j.first_payment_bonus_days||0);
         const _bonusName=(j.bonus_event&&j.bonus_event.name)?j.bonus_event.name:('보너스 '+_bonusDays+'일');
         const bonusHtml=(_bonusDays>0)?'<br><span class="until-date">🎁 '+_bonusName+' 적용 — 만료일 +'+_bonusDays+'일</span>':'';
-        const untilHtml=j.paid_until?'<br><span class="until-date">('+j.paid_until.slice(0,10)+' 까지)</span>':'';
+        const untilHtml=j.paid_until?'<br><span class="until-date">('+toKstDate(j.paid_until)+' 까지)</span>':'';
         s.className='sub-modal-status show success';
         s.innerHTML=mainMsg+bonusHtml+untilHtml;
         document.getElementById('subCompleteNotice').classList.add('show');
@@ -3299,8 +3306,8 @@ boot();
             const extended=new Date(until);
             extended.setMonth(extended.getMonth()+planMonths);
             if(bonusEvent) extended.setDate(extended.getDate()+bonusEvent.bonus_days);
-            paidUntilStr=until.toISOString().slice(0,10);
-            extStr=extended.toISOString().slice(0,10);
+            paidUntilStr=toKstDate(until);
+            extStr=toKstDate(extended);
           }
         }
       }catch(_){/* 체크 실패 시 번호 확인 단계로 진행 */}
@@ -3333,8 +3340,8 @@ boot();
         const end=new Date();
         end.setMonth(end.getMonth()+planMonths);
         end.setDate(end.getDate()+bonusDays);
-        const startStr=start.toISOString().slice(0,10);
-        const endStr=end.toISOString().slice(0,10);
+        const startStr=toKstDate(start);
+        const endStr=toKstDate(end);
         const extHtml=
           '<div class="sub-confirm-ext">'+
             '<div><span>발송 시작</span><b>'+startStr+'</b></div>'+
@@ -3404,7 +3411,7 @@ boot();
         const _bonusDays=(j.bonus_days||j.first_payment_bonus_days||0);
         const _bonusName=(j.bonus_event&&j.bonus_event.name)?j.bonus_event.name:('보너스 '+_bonusDays+'일');
         const bonusHtml=(_bonusDays>0)?'<br><span class="until-date">🎁 '+_bonusName+' 적용 — 만료일 +'+_bonusDays+'일</span>':'';
-        const untilHtml=j.paid_until?'<br><span class="until-date">('+j.paid_until.slice(0,10)+' 까지)</span>':'';
+        const untilHtml=j.paid_until?'<br><span class="until-date">('+toKstDate(j.paid_until)+' 까지)</span>':'';
         status.className='sub-modal-status show success';
         status.innerHTML=mainMsg+bonusHtml+untilHtml;
         document.getElementById('subCompleteNotice').classList.add('show');

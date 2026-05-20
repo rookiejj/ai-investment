@@ -282,7 +282,8 @@ Deno.serve(async (req) => {
     });
 
     // 5) 결제 완료 알림톡 발송 (실패해도 결제 자체는 성공 처리)
-    const expiryDate = newPaidUntil.toISOString().slice(0, 10);
+    // 만료일은 KST 기준 — toISOString().slice(0,10) 은 UTC 라 KST 자정 직후 1일 차이 발생.
+    const expiryDate = new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Seoul" }).format(newPaidUntil);
     const alim = await sendPaymentAlimtalk({ phone: cleaned, expiryDate, productName: plan.productName });
     await supabase.from("send_logs").insert({
       subscriber_id: subscriberId,
