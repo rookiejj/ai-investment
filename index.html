@@ -752,12 +752,6 @@ body.sub-modal-open{overflow:hidden}
   display:block;font:700 14px/1.3 'Pretendard Variable',Pretendard,sans-serif;
   color:#3d2700;letter-spacing:-0.2px;
 }
-.sub-modal-bonus-banner.applied{
-  background:linear-gradient(135deg,#dff5e3 0%,#bce8c6 100%);
-  border-color:#7cc28b;box-shadow:0 1px 6px rgba(30,120,50,.15);
-}
-.sub-modal-bonus-banner.applied .bonus-text{color:#225e30}
-.sub-modal-bonus-banner.applied .bonus-text b{color:#0f3d1a}
 .sub-modal-close{
   width:32px;height:32px;flex-shrink:0;
   border:none;background:var(--border-md);border-radius:50%;cursor:pointer;
@@ -3008,27 +3002,18 @@ boot();
     if(mode==='extend') return `${p.label} ${won} 연장 결제하기`;
     return `${won} 결제하기`;
   }
-  // 보너스 배너 상태:
-  //   neutral: 초기 (전화번호 입력 전) — 기본 안내 카피
-  //   applied: 자격 확정 — 이벤트 이름·보너스 일수 동적 표시
-  //   hidden:  자격 없음 — 배너 숨김 (보너스 언급 자체 회피)
-  // event 인자는 applied 상태에서 사용 — { name, bonus_days }
+  // 보너스 배너 — 자격 있으면 노출, 없으면 숨김. 색·메시지 전환 없음 (churn 방지).
+  // event 인자가 있으면 동적 이벤트 이름·일수 사용 (예: 운영 중 이벤트 변경 시 즉시 반영),
+  // 없으면 현재 진행 중 이벤트의 기본 카피.
   function setBonusBanner(state, event){
     const el=document.getElementById('subBonusBanner');
     if(!el) return;
-    el.classList.remove('applied');
+    if(state==='hidden'){ el.style.display='none'; return; }
+    el.style.display='';
     const txt=el.querySelector('.bonus-text');
-    if(state==='applied' && event){
-      el.style.display='';
-      el.classList.add('applied');
-      txt.innerHTML='<b>✅ '+event.bonus_days+'일 무료 추가가 자동 적용됩니다</b>'
-        +'이벤트: '+event.name+' — 만료일에 '+event.bonus_days+'일이 더해집니다';
-    }else if(state==='hidden'){
-      el.style.display='none';
-    }else{
-      el.style.display='';
-      txt.innerHTML='<b>첫 결제 시 7일 무료 추가!</b>어떤 플랜이든 만료일에 7일이 그냥 더 붙어요 (번호당 1회)';
-    }
+    const days=event?event.bonus_days:7;
+    const name=event?event.name:'첫 결제 시 7일 추가';
+    txt.innerHTML='<b>🎁 '+name+'</b>어떤 플랜이든 만료일에 '+days+'일이 그냥 더 붙어요 (번호당 1회)';
   }
 
   // 포트원 모바일 REDIRECTION 복귀 처리
