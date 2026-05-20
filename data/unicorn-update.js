@@ -1,32 +1,32 @@
 const updates = [
   {
-    "date": "2026-05-20 19:40 KST",
+    "date": "2026-05-21 07:30 KST",
+    "summary": "SpaceX S-1 5/20 공식 공개 - 4/1 컴피던셜 신청 50일 만 일반 공개\n티커 SPCX·밸류 $1.75T·조달 $75B 사상 최대 - 6/12 Nasdaq 데뷔 D-22\n21개 주관사·MS·BofA·Citi·JPM·GS 리드·리테일 30% 배정 $22.5B\nRadar Series B $170M 유니콘 - 美 이글 CEO 백킹·매장 재고·도난 방지\nBlitzy $200M Series B 유니콘 - Northzone 리드·AI SW 개발 자동화 플랫폼",
     "changes": [
       {
-        "time": "2026-05-20 12:00 KST",
-        "type": "정보 갱신",
-        "detail": "SpaceX S-1 5/20(수) 공개 임박 - Reuters 보도 6/4 로드쇼·6/11 프라이싱·6/12 Nasdaq 데뷔 목표 단일 시그널, 밸류 $1.75T~$2T+·티커 SPCX·조달 $75B 사상 최대(2019 Saudi Aramco $29B 압도) 단일 동력(Bloomberg·CNBC·Reuters·Techstack 5/19~20). 단일 동력 - Brookfield 5/14 $2B 사전 베팅(모회사 $1B + 계열사 $1B) + 30% 리테일 트랜치 ~$22.5B·가격대 $525~$530 + Morgan Stanley·BofA·Citi·JPMorgan·GS 리드 21개 주관사 + 5-for-1 액면 분할·머스크 듀얼 클래스 의결권 통제 + Starlink 2025 이익 $4.4B 더블·BTC 트레저리 $637M 누적 6축. 베이스 - Starship V3 Flight 12 5/21 18:30 ET 90분 윈도우 첫 V3 비행 확정·OLP 2 Starbase·인도양 splashdown·20 더미 Starlink 위성·7개월만 첫 시험비행 + S-1 공개 직전 make-or-break 시험, 5/22 마지노선·6/12 정식 데뷔 단일 변곡점.",
+        "time": "2026-05-21 05:00 KST",
+        "type": "IPO",
+        "detail": "SpaceX. 5/20(수) S-1 공식 공개 완료 - 4/1 컴피던셜 신청 이후 약 50일 만에 일반 공개로 전환된 사상 최대 IPO(TechCrunch·Reuters 5/20). 티커 SPCX, 밸류에이션 $1.75T, 조달 $75B 규모로 6/4 로드쇼·6/11 프라이싱·6/12 Nasdaq 데뷔 목표. 리테일 비중 30%(~$22.5B), Morgan Stanley·BofA·Citi·JPMorgan·Goldman Sachs 리드의 21개 주관사 라인업. 5/14 Brookfield $2B 사전 베팅으로 기관 수요 사전 확보. 공개된 36페이지 리스크 팩터에 xAI·X 흡수 후 법적 분쟁이 포함된 점이 주요 모니터링 포인트. Starship V3 첫 비행은 5/21 18:30 ET로 D-Day 재연기 - Pad 2 첫 발사·Flight 12·Raptor 3 엔진·100톤+ 재사용 시도가 동시 변곡점.",
         "sector": "우주·모빌리티·방산"
       },
       {
-        "time": "2026-05-20 14:00 KST",
-        "type": "정보 갱신",
-        "detail": "Anthropic Series H $30B at $900B 5월 말 클로징 임박 - 보드 미팅 결정 임박 단일 시그널(Bloomberg·FT·TFN 5/12~19). 단일 동력 - Dragoneer·Greenoaks·Sequoia·Altimeter 4사 공동 리드 각 $2B+ + 2월 Series G $30B at $380B 베이스 3개월 만 밸류 2.37배 + 연환산 매출 $45B 돌파 궁도 + 성사 시 OpenAI $852B 추월 + 비상장 펀딩 사상 최대급 단일 사이클 4축. 베이스 - Q1 ARR $44B+ 80x YoY·$1M+ 고객 2개월 500→1,000 더블 + 26년 10월 IPO 윈도우 후방 카운트다운·비상장 사이클 후반 진입 시그널 + Anduril Series H $5B 클로징 5/13 $61B·Helsing $1.2B Series D $18B 협상 잔존, 비상장 메가 사이클 보드 미팅 결과 단일 변곡점.",
+        "time": "2026-05-21 04:30 KST",
+        "type": "신규 유니콘",
+        "detail": "Radar. 5/19 Series B $170M 조달로 밸류에이션 $1B+ 달성·신규 유니콘 등극(CNBC 5/19). American Eagle CEO Jay Schottenstein이 백킹한 리테일 인베토리 관리 플랫폼 - 매장 내 재고 가시화·도난 및 손실 감소 솔루션 제공. 리테일러向 SaaS 모델로 인베토리·로스 프리벤션 분야 통합 솔루션이 차별점. AI 영상 분석·실시간 추적·자동 발주 트리거 기능을 결합해 기존 RFID·바코드 인프라와 호환되도록 설계된 점이 기관 투자 매력 동인. 디스카운트·기본 채널 회복 신호와 결합돼 후방 수요 베이스 잔존.",
+        "sector": "리테일테크"
+      },
+      {
+        "time": "2026-05-21 04:00 KST",
+        "type": "신규 유니콘",
+        "detail": "Blitzy. 5/5 Series B $200M 조달로 신규 유니콘 합류 - Northzone 리드(Forge Global 5월). AI 기반 IT 애플리케이션 개발 플랫폼으로 커스텀 소프트웨어 개발 프로세스 자동화가 핵심 차별점 - 사양 정의→코드 생성→배포 파이프라인을 멀티스텝 에이전트로 묶어 엔터프라이즈 IT 부서의 백로그 처리량 가속화. 동일 윈도우에 Skyroot(인도 소형 위성 발사체)가 5/7 Series C $60M로 유니콘 합류·Slash(SMB 핀테크)가 4/15 Series C $100M로 유니콘 진입 - AI 인프라·우주·SMB 결제 3개 카테고리 동시 신규 진입 흐름.",
         "sector": "엔터프라이즈 SW"
       },
       {
-        "time": "2026-05-20 10:00 KST",
-        "type": "정보 갱신",
-        "detail": "Databricks 5/18 세컨더리 $196.31/주 Forge - Series L $134B 베이스 프리미엄 단일 시그널(Forge Global 5/18). 단일 동력 - ARR $5.4B +65% YoY·AI 제품 매출 $1.4B+·GS·MS 인수단·2H 2026 S-1 임박 단일 라인업 + Sierra $950M $15B(Google Ventures·Tiger Global 리드·Bret Taylor AI 에이전트 플랫폼) + Plaid Q2 2026 S-1 $6.1B GS 리드 + Discord Q1 컴피던셜 S-1 $15B MS 리드 4축. 베이스 - Stripe $159B 텐더 +74% YoY 베이스·Tempo L1 메인넷 가동·Visa·Nubank·Klarna 테스트 + Revolut 2H 세컨더리 $100B+ 진행 + Kraken(Payward) $20B IPO 준비 라운드 80% + Citadel·Jane Street Kraken 세컨더리 매입·Kraken Reap $600M·Bitnomial $550M 인수 잔존, 2026 IPO 합산 $1.5T+ 메가 사이클 잔존.",
+        "time": "2026-05-21 03:30 KST",
+        "type": "마일스톤",
+        "detail": "Anthropic. Series H $30B at $900B 협상 5월 말 클로징 임박 - 보드 미팅 결정 단일 변곡점 잔존(CNBC·Bloomberg·TechCrunch 5/12~19). Dragoneer·Greenoaks·Sequoia·Altimeter 4사 공동 리드 각 $2B+, 2월 Series G $30B at $380B 베이스 대비 3개월 만 밸류 2.37배. 성사 시 OpenAI $852B 추월·연환산 매출 $45B 돌파 권도·Ramp AI Index 비즈니스 점유율 Anthropic 34.4% vs OpenAI 32.3% 사상 첫 추월. 캐파 부족 흡수 위해 xAI Colossus 2 데이터센터 임대 협상 보도(Fortune 5/8) - 인프라 확보가 매출 가속의 1차 제약. 26년 10월 IPO 윈도우 후방 카운트다운 잔존.",
         "sector": "엔터프라이즈 SW"
-      },
-      {
-        "time": "2026-05-20 11:00 KST",
-        "type": "정보 갱신",
-        "detail": "Stripe $159B 텐더 +74% YoY 베이스 강세 지속 - 비상장 핀테크 메가 사이클 단일 시그널, Klarna KlarnaUSD 메인넷 2026 Tempo L1 출시 베이스. 단일 동력 - Tempo L1 메인넷 가동·Visa·Nubank·Klarna 결제 테스트 + Stripe 자체 결제 처리량 $1T+ + Revolut 2H 세컨더리 $100B+ 진행 + Plaid Q2 2026 S-1 $6.1B GS 리드 합류 4축. 베이스 - 비상장 핀테크 메가 라운드 베이스에서 Anthropic $900B·SpaceX $1.75T~$2T 합산 비상장 $4T+ 사이클 + Discord Q1 컴피던셜 S-1 $15B + Sierra $15B + Databricks $134B 합류, 2H 2026 IPO 윈도우 단일 분기점.",
-        "sector": "핀테크"
       }
-    ],
-    "summary": "SpaceX S-1 5/20 공개 임박 · 6/12 Nasdaq 데뷔 목표 · 밸류 $1.75T~$2T+\nStarship V3 Flight 12 5/21 18:30 ET 90분 윈도우 · 7개월만 첫 시험비행\nAnthropic $30B at $900B 5월 말 클로징 · 보드 미팅 결정 단일 변곡점\nDatabricks Forge $196 $134B 프리미엄 · 2H 2026 S-1 임박 · Sierra·Plaid 합류\nStripe $159B +74% · Tempo L1 메인넷 · 비상장 핀테크 $4T+ 사이클 잔존"
+    ]
   }
 ];

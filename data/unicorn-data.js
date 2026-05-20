@@ -91,10 +91,10 @@ const data = [
       },
       {
         "nm": "Discord",
-        "rs": "Q1 2026 컨피던셜 S-1 신청·세컨더리 밸류 $15B 책정 - 2025 마지막 펀딩 $15B 베이스 $25B IPO 타깃·MAU 2억+ 단일 동력·Goldman·JPM·Morgan Stanley 주관 라인업·Microsoft 인수 거절 후 단독 상장 트랙",
+        "rs": "Q1 2026 컴피던셜 S-1 신청·세컨더리 밸류 $15B 책정 - 2025 마지막 펀딩 $15B 베이스 $25B IPO 타깃·MAU 2억+ 단일 동력·Goldman·JPM·Morgan Stanley 주관 라인업·Microsoft 인수 거절 후 단독 상장 트랙",
         "ipo": "2026 H2 목표",
         "val": "$15B",
-        "round": "컨피던셜 S-1 (Q1 2026)·GS·JPM·MS",
+        "round": "컴피던셜 S-1 (Q1 2026)·GS·JPM·MS",
         "sector": "소셜"
       },
       {
@@ -107,7 +107,7 @@ const data = [
       },
       {
         "nm": "Cursor",
-        "rs": "SpaceX $60B 옵션·불발 시 $10B 브레이크업·4/24 Business Insider xAI·Mistral 3자 파트너십 협의 보도·Colossus에서 모델 학습 진행 중",
+        "rs": "SpaceX $60B 옵션·불발 시 $10B 브레이크업·4/24 Business Insider xAI·Mistral 3자 파트너식 협의 보도·Colossus에서 모델 학습 진행 중",
         "ipo": "SpaceX 인수 검토",
         "val": "$60B (SpaceX 옵션)",
         "round": "SpaceX 옵션 계약 (2026-04)",
@@ -129,10 +129,10 @@ const data = [
     "stocks": [
       {
         "nm": "SpaceX",
-        "rs": "S-1 공개 5/20(수) 임박 - Bloomberg 보도 6/4 로드쇼·6/11 프라이싱·6/12 Nasdaq 데뷔 목표·티커 SPCX·밸류 $1.75T~$2T+·조달 $75B 사상 최대·30% 리테일 ~$22.5B·MS·BofA·Citi·JPM·GS 리드 21개 주관사·Brookfield 5/14 $2B 사전 베팅, Starship V3 첫 비행 5/21 18:30 ET D-Day로 재연기(5/19→5/20→5/21)·Pad 2 첫 발사·Flight 12·Raptor 3 엔진·100톤+ 재사용·22 Starlink 시뮬레이터·인도양 splashdown",
+        "rs": "5/20(수) S-1 공식 공개 완료 - 4/1 컴피던셜 신청 이후 50일 만 일반 공개·티커 SPCX·밸류 $1.75T·조달 $75B 사상 최대 IPO·30% 리테일 ~$22.5B·MS·BofA·Citi·JPM·GS 리드 21개 주관사·6/4 로드쇼·6/11 프라이싱·6/12 Nasdaq 데뷔 목표(TechCrunch 5/20)·Brookfield 5/14 $2B 사전 베팅·36페이지 리스크 팩터(xAI·X 흡수 후 법적 분쟁 포함)·Starship V3 첫 비행 5/21 18:30 ET D-Day로 재연기·Pad 2 첫 발사·Flight 12",
         "ipo": "2026.06.11 프라이싱·6/12 Nasdaq 데뷔",
-        "val": "$2T+",
-        "round": "S-1 공개 5/20(수) D-1·티커 SPCX·리테일 30%·Brookfield $2B",
+        "val": "$1.75T",
+        "round": "5/20 S-1 공개·티커 SPCX·리테일 30%·Brookfield $2B",
         "sector": "우주"
       },
       {
@@ -186,8 +186,8 @@ const data = [
     ]
   },
   {
-    "tag": "AI 신약·BCI·디지털 헬스",
-    "title": "🧬 바이오·헬스",
+    "tag": "AI 신약·BCI·디지털 헤심",
+    "title": "🧬 바이오·헤심",
     "stocks": [
       {
         "nm": "Insitro",
@@ -203,7 +203,7 @@ const data = [
         "ipo": "미정",
         "val": "$4.6B",
         "round": "Series E",
-        "sector": "디지털 헬스"
+        "sector": "디지털 헤심"
       },
       {
         "nm": "Xaira Therapeutics",
@@ -223,7 +223,7 @@ const data = [
       },
       {
         "nm": "Verily",
-        "rs": "Alphabet 지분 축소·독립법인 전환·AI 정밀 헬스 플랫폼",
+        "rs": "Alphabet 지분 축소·독립법인 전환·AI 정밀 헤심 플랫폼",
         "ipo": "미정",
         "val": "미공개",
         "round": "Series X ($300M, 2026-03)",
@@ -261,7 +261,7 @@ const data = [
       },
       {
         "nm": "Ripple",
-        "rs": "4/15 한국 교보생명 토큰화 국채 결제 파트너십·한국 최초 대형 보험사 협업·Citadel 투자",
+        "rs": "4/15 한국 교보생명 토큰화 국채 결제 파트너식·한국 최초 대형 보험사 협업·Citadel 투자",
         "ipo": "IPO 미정 (경영진 부정)",
         "val": "$40B",
         "round": "$500M (Citadel·Fortress)",
