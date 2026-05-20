@@ -164,6 +164,7 @@ ${liHtml}
 <meta name="description" content="${esc(description)}">
 <meta name="keywords" content="시황,미국 주식,한국 주식,AI 기업,원자재,크립토,유니콘,IPO,투자 대시보드,브리픽,${pageDate}">
 <meta name="author" content="브리픽">
+<meta name="naver-site-verification" content="94e282ae9b4b0a4379c03d4dbc7c4e5ad3b1649b">
 <link rel="canonical" href="${canonical}">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png">
@@ -296,6 +297,7 @@ function buildIndexHtml(dailyPages) {
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
+<meta name="naver-site-verification" content="94e282ae9b4b0a4379c03d4dbc7c4e5ad3b1649b">
 <link rel="canonical" href="${canonical}">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
 <meta property="og:title" content="${esc(title)}">
