@@ -3268,7 +3268,11 @@ boot();
       submit.disabled=true;submit.textContent='기존 구독 확인 중…';
       const planKey=getSelectedPlan();
       const planMonths=PRICE_PLANS[planKey].months;
-      let isActive=false,paidUntilStr='',extStr='',daysLeft=0;
+      // 두 가지 "이미 구독중" 케이스를 구분:
+      //  hasFuturePaidUntil: status=active AND paid_until 미래 — 현재 만료일 노출 가능
+      //  isStatusActive:     status=active (paid_until 무관) — daily-send 가 매일 발송 중이므로 사용자 체감상 "구독중"
+      let hasFuturePaidUntil=false, isStatusActive=false;
+      let paidUntilStr='',extStr='';
       let bonusEligible=true;
       try{
         const checkRes=await fetch(SUPABASE_URL+'/functions/v1/check-subscription',{
@@ -3279,11 +3283,10 @@ boot();
         const chk=await checkRes.json();
         if(checkRes.ok&&chk.ok){
           if(chk.trial_eligible===false) bonusEligible=false;
+          if(chk.status==='active') isStatusActive=true;
           if(chk.subscription_active&&chk.paid_until){
-            isActive=true;
+            hasFuturePaidUntil=true;
             const until=new Date(chk.paid_until);
-            const nowDate=new Date();
-            daysLeft=Math.max(0,Math.ceil((until-nowDate)/86400000));
             const extended=new Date(until);
             extended.setMonth(extended.getMonth()+planMonths);
             if(bonusEligible) extended.setDate(extended.getDate()+FIRST_PAYMENT_BONUS_DAYS);
@@ -3295,8 +3298,10 @@ boot();
 
       setBonusBanner(bonusEligible?'applied':'hidden');
 
-      if(isActive){
-        const planLabel=PRICE_PLANS[planKey].label;
+      const planLabel=PRICE_PLANS[planKey].label;
+
+      if(hasFuturePaidUntil){
+        // Case A: 활성 구독자 + 미래 만료일 존재 — 현재 만료 + 새 만료 노출
         const bonusLine=bonusEligible
           ? '<div><span>'+planLabel+' + 7일 보너스</span><b>'+extStr+'</b></div>'
           : '<div><span>'+planLabel+' 결제 시</span><b>'+extStr+'</b></div>';
@@ -3308,10 +3313,27 @@ boot();
         showConfirmBox('이 번호로 발송',fmtPhone(phone),extHtml);
         submit.textContent=submitLabelFor(planKey,'extend');
         confirmState='extend';
+      }else if(isStatusActive){
+        // Case B: 이미 status=active (daily-send 발송 중) 인데 paid_until 없거나 과거
+        // 결제 시 paid_until 은 결제 시점부터 1개월 (+ 보너스) 가산 — 서버 로직과 일치
+        const end=new Date();
+        end.setMonth(end.getMonth()+planMonths);
+        if(bonusEligible) end.setDate(end.getDate()+FIRST_PAYMENT_BONUS_DAYS);
+        const endStr=end.toISOString().slice(0,10);
+        const periodLabel=bonusEligible?(planLabel+' + 7일 보너스 결제 시'):(planLabel+' 결제 시');
+        const extHtml=
+          '<div class="sub-confirm-ext">'+
+            '<div><span>현재 상태</span><b>발송 중</b></div>'+
+            '<div><span>'+periodLabel+'</span><b>'+endStr+'</b></div>'+
+          '</div>';
+        showConfirmBox('이미 발송 중인 번호',fmtPhone(phone),extHtml);
+        submit.textContent=submitLabelFor(planKey,'extend');
+        confirmState='extend';
       }else if(bonusEligible){
-        const planLabel=PRICE_PLANS[planKey].label;
+        // Case C: 신규 (또는 만료된 구독자) + 보너스 자격 — 발송 시작은 내일 (알림톡 "내일부터 발송" 과 일치)
         const start=new Date();
-        const end=new Date(start);
+        start.setDate(start.getDate()+1);
+        const end=new Date();
         end.setMonth(end.getMonth()+planMonths);
         end.setDate(end.getDate()+FIRST_PAYMENT_BONUS_DAYS);
         const startStr=start.toISOString().slice(0,10);
@@ -3325,7 +3347,8 @@ boot();
         submit.textContent=submitLabelFor(planKey,'number');
         confirmState='number';
       }else{
-        showConfirmBox('이 번호로 매일 오전 8시 발송',fmtPhone(phone),'번호가 맞으신가요?');
+        // Case D: 신규 (또는 만료) + 보너스 없음 — 원래의 단순 확인 문구
+        showConfirmBox('이 번호로 매일 오전 8시 발송',fmtPhone(phone),'내일 오전 8시부터 발송 시작 — 번호가 맞으신가요?');
         submit.textContent=submitLabelFor(planKey,'number');
         confirmState='number';
       }
