@@ -16,6 +16,46 @@
   - 구조·UI 변경: 간결한 한국어 요약 (예: "일본 탭 제거")
   - 변경 없으면 커밋 없이 "변경 없음" 보고 후 종료
 
+## 🔴 Supabase Edge Functions — verify_jwt 정책 (엄수)
+
+**브라우저에서 호출하는 Edge Function 은 반드시 `verify_jwt = false`.**
+
+브라우저는 `sb_publishable_*` 형식의 publishable key 로 인증. Supabase 게이트웨이는 기본값(`verify_jwt = true`)일 때 이 형식을 "Invalid JWT" (401 UNAUTHORIZED_INVALID_JWT_FORMAT) 로 거부 — 브라우저 호출 전부 실패. 함수 코드가 정상이어도 게이트웨이에서 막혀 응답 자체가 안 옴.
+
+**적용 방식**: `supabase/config.toml` 에 함수별 명시.
+
+```toml
+[functions.<함수명>]
+verify_jwt = false
+```
+
+**현재 verify_jwt=false 함수 (브라우저 호출)**:
+- subscribe · check-subscription · payment-confirm
+- survey-api · admin-api (내부 HMAC 토큰으로 자체 인증)
+- stock-prices · read-tab-data · read-tab-archive
+
+**verify_jwt=true 유지 (cron·서버 전용)**:
+- daily-send · expiry-notice · notify-telegram
+- write-tab-data · write-tab-update
+
+**🔴 새 함수 추가 시 (엄수)**: 브라우저에서 호출할 거면 `supabase/config.toml` 에 `verify_jwt = false` 항목 추가하고 같은 PR 에 묶기. 안 그러면 다음 `supabase functions deploy` 가 verify_jwt=true (기본값) 로 배포해 즉시 막힘.
+
+**판단법**: `index.html` / `views/*.html` / `daily/*.html` 에서 `fetch(...functions/v1/<함수명>...)` 패턴으로 호출되면 브라우저 호출. 그 외(`scripts/*` 의 server-side, cron, MCP 등)는 service key 사용이라 verify_jwt 무관.
+
+**Why**: 2026-05-20 payment-confirm·check-subscription 이 2주간 401 로 막혀 있었음. publishable key 도입(4/21) 후 verify_jwt 기본값과 충돌해 결제·구독 자격 체크가 silent fail. 클라이언트는 chk.ok=false 만 보고 "신규 구독자"로 처리하는 fallback 분기 타서 사용자에겐 "왜 만료일 무시하고 신규처럼 처리됨?"으로 발현. 게이트웨이 401 은 함수 로그에도 안 잡혀 디버깅 매우 비쌌음. `supabase functions deploy --no-verify-jwt <함수>` 임시 명령으론 한 번 잡히지만 다음 재배포에서 또 풀려서 config.toml 영구 박기로 결정.
+
+**검증법**: 새 함수 배포 직후 (특히 새 PR 머지 후) 다음 한 줄로 401 안 나오는지 확인.
+
+```bash
+curl -s -o /dev/null -w "%{http_code}\n" -X POST \
+  "https://<project-ref>.supabase.co/functions/v1/<함수명>" \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer $PUBLISHABLE_KEY" \
+  -H "apikey: $PUBLISHABLE_KEY" -d '{}'
+```
+
+200/400/405 면 OK (게이트웨이 통과 후 함수 응답). 401 with `code:"UNAUTHORIZED_INVALID_JWT_FORMAT"` 면 verify_jwt 설정 누락.
+
 ## 파일 구조
 
 ```

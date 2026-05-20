@@ -1,0 +1,49 @@
+# Supabase 프로젝트 설정 — supabase functions deploy 시 자동 적용.
+#
+# ⚠️ 이 파일이 존재하는 이유 ⚠️
+# ──────────────────────────────────────────────────────────────────
+# 브라우저에서 호출하는 Edge Function 은 반드시 `verify_jwt = false`.
+# 그렇지 않으면 `sb_publishable_*` 형식의 publishable key 가 게이트웨이에서
+# "UNAUTHORIZED_INVALID_JWT_FORMAT" (401) 로 거부됨 — 브라우저 호출 전부 실패.
+#
+# 함수가 자체 인증을 가진 경우(admin-api 의 HMAC 토큰, write-* 의 secret 등)
+# 라도 게이트웨이 단계에서 막히므로 동일하게 verify_jwt=false 필요.
+#
+# 사고 이력: 2026-05-20 payment-confirm·check-subscription 이 2주간 401 로
+# 막혀 있었음. publishable key 도입 후 verify_jwt 기본값(true) 과 충돌.
+# 무한 디버깅 비용 방지 차 config.toml 에 박아 자동 강제.
+#
+# 백엔드 전용(cron·서버 트리거)은 누락 가능 — daily-send, expiry-notice,
+# notify-telegram, write-tab-data, write-tab-update 등은 service key 로만
+# 호출되므로 verify_jwt=true 유지.
+# ──────────────────────────────────────────────────────────────────
+
+project_id = "briefick"
+
+# ─── 브라우저 호출 함수 (verify_jwt 강제 비활성) ───────────────────
+
+[functions.subscribe]
+verify_jwt = false
+
+[functions.check-subscription]
+verify_jwt = false
+
+[functions.payment-confirm]
+verify_jwt = false
+
+[functions.survey-api]
+verify_jwt = false
+
+[functions.admin-api]
+# admin 인증은 함수 내부 HMAC 토큰(ADMIN_SESSION_SECRET) 으로 직접 수행.
+# 게이트웨이 verify_jwt 와 무관하게 권한 검증됨.
+verify_jwt = false
+
+[functions.stock-prices]
+verify_jwt = false
+
+[functions.read-tab-data]
+verify_jwt = false
+
+[functions.read-tab-archive]
+verify_jwt = false
