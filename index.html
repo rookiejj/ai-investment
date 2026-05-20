@@ -3054,6 +3054,7 @@ boot();
     s.className='sub-modal-status show info';
     s.textContent='결제 처리 중…';
     subModalEl.classList.add('processing');
+    setBonusBanner('hidden');
     sub.style.display='none';
     try{
       const res=await fetch(SUPABASE_URL+'/functions/v1/payment-confirm',{
@@ -3383,6 +3384,7 @@ boot();
       status.className='sub-modal-status show info';
       status.textContent='결제 처리 중…';
       subModalEl.classList.add('processing');
+      setBonusBanner('hidden');
       const res=await fetch(SUPABASE_URL+'/functions/v1/payment-confirm',{
         method:'POST',
         headers:{'Content-Type':'application/json','Authorization':'Bearer '+BRIEFICK_SUPABASE_PUBLISHABLE_KEY,'apikey':BRIEFICK_SUPABASE_PUBLISHABLE_KEY},
