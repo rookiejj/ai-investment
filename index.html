@@ -1184,7 +1184,7 @@ body.sub-modal-open{overflow:hidden}
         <span class="bonus-emoji">🎁</span>
         <span class="bonus-text">
           <b>첫 결제 시 7일 무료 추가!</b>
-          어떤 플랜이든 만료일에 7일이 그냥 더 붙어요 (번호당 1회)
+          어떤 플랜이든 만료일에 7일이 더 추가되요 (번호당 1회)
         </span>
       </div>
       <div class="sub-modal-plans" role="radiogroup" aria-label="구독 기간 선택">
@@ -3013,7 +3013,7 @@ boot();
     const txt=el.querySelector('.bonus-text');
     const days=event?event.bonus_days:7;
     const name=event?event.name:'첫 결제 시 7일 추가';
-    txt.innerHTML='<b>🎁 '+name+'</b>어떤 플랜이든 만료일에 '+days+'일이 그냥 더 붙어요 (번호당 1회)';
+    txt.innerHTML='<b>🎁 '+name+'</b>어떤 플랜이든 만료일에 '+days+'일이 더 추가되요 (번호당 1회)';
   }
 
   // 포트원 모바일 REDIRECTION 복귀 처리
