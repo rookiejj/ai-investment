@@ -4,17 +4,18 @@
  *
  * POST body: { phone }
  * 응답:
- *   { ok: true, exists: boolean, status: "new"|"active"|"paused"|"expired"|"cancelled",
- *     paid_until: string|null, subscription_active: boolean,
- *     trial_eligible: boolean }
+ *   { ok: true, exists: boolean, status, paid_until, subscription_active,
+ *     eligible_events: [{ code, name, bonus_days }],
+ *     trial_eligible: boolean   // 구 클라이언트 호환 — eligible_events 비어있지 않으면 true
+ *   }
  *
- * trial_eligible: 7일 무료 체험 자격. 번호당 1회 제한.
- *   - 신규 번호: true
- *   - 기존 번호인데 trial_used_at IS NULL AND last_payment_id IS NULL: true
- *   - 그 외(이미 트라이얼 사용 OR 유료 결제 이력 존재): false
+ * eligible_events: 이 번호가 결제 시 받을 수 있는 promo 이벤트 목록.
+ *   자세한 정책은 _shared/promo.ts 참조 — 자격 매칭(first_payment/all/returning) +
+ *   미수령 필터, 보너스 큰 순 정렬. 클라이언트는 첫 번째 항목을 우선 노출.
  */
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { getEligibleEvents } from "../_shared/promo.ts";
 
 function corsHeaders(origin: string) {
   return {
@@ -53,22 +54,32 @@ Deno.serve(async (req) => {
     );
     const { data, error } = await supabase
       .from("subscribers")
-      .select("status, paid_until, trial_used_at, last_payment_id")
+      .select("status, paid_until, last_payment_id")
       .eq("phone", cleaned)
       .maybeSingle();
     if (error) throw error;
 
+    const userCtx = {
+      hadPriorPayment: !!data?.last_payment_id,
+      isReturning:     !!data && data.status !== "active",
+    };
+    const eligible = await getEligibleEvents(supabase, cleaned, userCtx);
+    const eligibleOut = eligible.map((e) => ({
+      code: e.code, name: e.name, bonus_days: e.bonus_days,
+    }));
+
     if (!data) {
       return json({
         ok: true, exists: false, status: "new", paid_until: null,
-        subscription_active: false, trial_eligible: true,
+        subscription_active: false,
+        eligible_events: eligibleOut,
+        trial_eligible: eligibleOut.length > 0,  // 구 클라이언트 호환
       }, { cors });
     }
 
     const now = Date.now();
     const paidUntilMs = data.paid_until ? new Date(data.paid_until).getTime() : 0;
     const subscriptionActive = data.status === "active" && paidUntilMs > now;
-    const trialEligible = !data.trial_used_at && !data.last_payment_id;
 
     return json({
       ok: true,
@@ -76,7 +87,8 @@ Deno.serve(async (req) => {
       status: data.status,
       paid_until: data.paid_until,
       subscription_active: subscriptionActive,
-      trial_eligible: trialEligible,
+      eligible_events: eligibleOut,
+      trial_eligible: eligibleOut.length > 0,
     }, { cors });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);

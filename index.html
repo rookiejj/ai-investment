@@ -2987,7 +2987,8 @@ boot();
     '6m': { months:6,  amount:13800, testAmount:100, label:'6개월',  orderName:'브리픽 6개월 구독 (할인가)' },
     '12m':{ months:12, amount:22800, testAmount:100, label:'12개월', orderName:'브리픽 12개월 구독 (할인가)' },
   };
-  const FIRST_PAYMENT_BONUS_DAYS=7;  // 서버 payment-confirm 의 FIRST_PAYMENT_BONUS_DAYS 와 동기화
+  // 보너스 일수는 서버 check-subscription / payment-confirm 응답에서 받음 (promo_events 테이블 기반).
+  // 클라이언트는 응답된 첫 번째 eligible event 의 bonus_days 만 표시·계산에 사용.
   const TEST_MODE=false;  // false면 plan 정가로 결제. 갤럭시아 테스트 채널은 어차피 실청구 안 됨.
   function planAmount(key){ const p=PRICE_PLANS[key]; return TEST_MODE?p.testAmount:p.amount; }
   function getSelectedPlan(){
@@ -3000,16 +3001,21 @@ boot();
     if(mode==='extend') return `${p.label} ${won} 연장 결제하기`;
     return `${won} 결제하기`;
   }
-  // 보너스 배너 상태 — neutral(초기) / applied(첫 결제 자격 확정) / hidden(자격 없음, 언급 자체 회피)
-  function setBonusBanner(state){
+  // 보너스 배너 상태:
+  //   neutral: 초기 (전화번호 입력 전) — 기본 안내 카피
+  //   applied: 자격 확정 — 이벤트 이름·보너스 일수 동적 표시
+  //   hidden:  자격 없음 — 배너 숨김 (보너스 언급 자체 회피)
+  // event 인자는 applied 상태에서 사용 — { name, bonus_days }
+  function setBonusBanner(state, event){
     const el=document.getElementById('subBonusBanner');
     if(!el) return;
     el.classList.remove('applied');
     const txt=el.querySelector('.bonus-text');
-    if(state==='applied'){
+    if(state==='applied' && event){
       el.style.display='';
       el.classList.add('applied');
-      txt.innerHTML='<b>✅ 7일 무료 추가가 자동 적용됩니다</b>이 번호로 첫 결제 — 만료일에 7일이 더해집니다';
+      txt.innerHTML='<b>✅ '+event.bonus_days+'일 무료 추가가 자동 적용됩니다</b>'
+        +'이벤트: '+event.name+' — 만료일에 '+event.bonus_days+'일이 더해집니다';
     }else if(state==='hidden'){
       el.style.display='none';
     }else{
@@ -3073,7 +3079,9 @@ boot();
       }else{
         const msgMap={registered:'구독 완료!',extended:'구독 연장 완료!'};
         const mainMsg=msgMap[j.status]||'완료!';
-        const bonusHtml=(j.first_payment_bonus_days>0)?'<br><span class="until-date">🎁 첫 결제 7일 보너스 적용</span>':'';
+        const _bonusDays=(j.bonus_days||j.first_payment_bonus_days||0);
+        const _bonusName=(j.bonus_event&&j.bonus_event.name)?j.bonus_event.name:('보너스 '+_bonusDays+'일');
+        const bonusHtml=(_bonusDays>0)?'<br><span class="until-date">🎁 '+_bonusName+' 적용 — 만료일 +'+_bonusDays+'일</span>':'';
         const untilHtml=j.paid_until?'<br><span class="until-date">('+j.paid_until.slice(0,10)+' 까지)</span>':'';
         s.className='sub-modal-status show success';
         s.innerHTML=mainMsg+bonusHtml+untilHtml;
@@ -3273,7 +3281,8 @@ boot();
       //  isStatusActive:     status=active (paid_until 무관) — daily-send 가 매일 발송 중이므로 사용자 체감상 "구독중"
       let hasFuturePaidUntil=false, isStatusActive=false;
       let paidUntilStr='',extStr='';
-      let bonusEligible=true;
+      // 서버 응답의 eligible_events[0] (가장 큰 보너스) — 자격 없으면 null
+      let bonusEvent=null;
       try{
         const checkRes=await fetch(SUPABASE_URL+'/functions/v1/check-subscription',{
           method:'POST',
@@ -3282,28 +3291,34 @@ boot();
         });
         const chk=await checkRes.json();
         if(checkRes.ok&&chk.ok){
-          if(chk.trial_eligible===false) bonusEligible=false;
+          if(Array.isArray(chk.eligible_events)&&chk.eligible_events.length>0){
+            bonusEvent=chk.eligible_events[0];
+          }
           if(chk.status==='active') isStatusActive=true;
           if(chk.subscription_active&&chk.paid_until){
             hasFuturePaidUntil=true;
             const until=new Date(chk.paid_until);
             const extended=new Date(until);
             extended.setMonth(extended.getMonth()+planMonths);
-            if(bonusEligible) extended.setDate(extended.getDate()+FIRST_PAYMENT_BONUS_DAYS);
+            if(bonusEvent) extended.setDate(extended.getDate()+bonusEvent.bonus_days);
             paidUntilStr=until.toISOString().slice(0,10);
             extStr=extended.toISOString().slice(0,10);
           }
         }
       }catch(_){/* 체크 실패 시 번호 확인 단계로 진행 */}
 
-      setBonusBanner(bonusEligible?'applied':'hidden');
+      const bonusEligible=!!bonusEvent;
+      const bonusDays=bonusEvent?bonusEvent.bonus_days:0;
+      const bonusLabel=bonusEvent?(' + '+bonusEvent.bonus_days+'일 보너스'):'';
+
+      setBonusBanner(bonusEligible?'applied':'hidden', bonusEvent);
 
       const planLabel=PRICE_PLANS[planKey].label;
 
       if(hasFuturePaidUntil){
         // Case A: 활성 구독자 + 미래 만료일 존재 — 현재 만료 + 새 만료 노출
         const bonusLine=bonusEligible
-          ? '<div><span>'+planLabel+' + 7일 보너스</span><b>'+extStr+'</b></div>'
+          ? '<div><span>'+planLabel+bonusLabel+'</span><b>'+extStr+'</b></div>'
           : '<div><span>'+planLabel+' 결제 시</span><b>'+extStr+'</b></div>';
         const extHtml=
           '<div class="sub-confirm-ext">'+
@@ -3318,9 +3333,9 @@ boot();
         // 결제 시 paid_until 은 결제 시점부터 1개월 (+ 보너스) 가산 — 서버 로직과 일치
         const end=new Date();
         end.setMonth(end.getMonth()+planMonths);
-        if(bonusEligible) end.setDate(end.getDate()+FIRST_PAYMENT_BONUS_DAYS);
+        if(bonusEligible) end.setDate(end.getDate()+bonusDays);
         const endStr=end.toISOString().slice(0,10);
-        const periodLabel=bonusEligible?(planLabel+' + 7일 보너스 결제 시'):(planLabel+' 결제 시');
+        const periodLabel=bonusEligible?(planLabel+bonusLabel+' 결제 시'):(planLabel+' 결제 시');
         const extHtml=
           '<div class="sub-confirm-ext">'+
             '<div><span>현재 상태</span><b>발송 중</b></div>'+
@@ -3335,13 +3350,13 @@ boot();
         start.setDate(start.getDate()+1);
         const end=new Date();
         end.setMonth(end.getMonth()+planMonths);
-        end.setDate(end.getDate()+FIRST_PAYMENT_BONUS_DAYS);
+        end.setDate(end.getDate()+bonusDays);
         const startStr=start.toISOString().slice(0,10);
         const endStr=end.toISOString().slice(0,10);
         const extHtml=
           '<div class="sub-confirm-ext">'+
             '<div><span>발송 시작</span><b>'+startStr+'</b></div>'+
-            '<div><span>'+planLabel+' + 7일 보너스</span><b>'+endStr+'</b></div>'+
+            '<div><span>'+planLabel+bonusLabel+'</span><b>'+endStr+'</b></div>'+
           '</div>';
         showConfirmBox('이 번호로 매일 오전 8시 발송',fmtPhone(phone),extHtml);
         submit.textContent=submitLabelFor(planKey,'number');
@@ -3404,7 +3419,9 @@ boot();
       }else{
         const msgMap={registered:'구독 완료!',extended:'구독 연장 완료!'};
         const mainMsg=msgMap[j.status]||'완료!';
-        const bonusHtml=(j.first_payment_bonus_days>0)?'<br><span class="until-date">🎁 첫 결제 7일 보너스 적용</span>':'';
+        const _bonusDays=(j.bonus_days||j.first_payment_bonus_days||0);
+        const _bonusName=(j.bonus_event&&j.bonus_event.name)?j.bonus_event.name:('보너스 '+_bonusDays+'일');
+        const bonusHtml=(_bonusDays>0)?'<br><span class="until-date">🎁 '+_bonusName+' 적용 — 만료일 +'+_bonusDays+'일</span>':'';
         const untilHtml=j.paid_until?'<br><span class="until-date">('+j.paid_until.slice(0,10)+' 까지)</span>':'';
         status.className='sub-modal-status show success';
         status.innerHTML=mainMsg+bonusHtml+untilHtml;

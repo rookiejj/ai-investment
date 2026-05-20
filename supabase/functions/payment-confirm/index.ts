@@ -13,6 +13,7 @@
  */
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { pickBonusEvent, recordRedemption } from "../_shared/promo.ts";
 
 const PORTONE_API = "https://api.portone.io";
 
@@ -33,9 +34,9 @@ function planExpectedAmount(key: string): number {
 
 const SHOP_NAME    = "브리픽";
 
-// 첫 결제 보너스 — 번호당 1회, paid_until에 추가 가산.
-// subscribers.trial_used_at 으로 추적 (다음 지정 이벤트 시 수동 NULL 리셋해 재허용 가능).
-const FIRST_PAYMENT_BONUS_DAYS = 7;
+// 보너스 일수는 promo_events 테이블에서 결제 시점에 동적으로 결정.
+// 정책 변경/이벤트 추가는 SQL 로 promo_events 에 row 추가 — 코드 변경 불필요.
+// 자세한 정책은 _shared/promo.ts 와 CLAUDE.md "프로모 이벤트 운영" 섹션 참조.
 
 // 결제 완료 알림톡 본문 — 알리고 콘솔 등록 템플릿(UH_6779)과 동일한 문구.
 // 변수는 #{상점명}·#{상품명}·#{만료일} 자리에 실제 값 치환해 발송.
@@ -187,14 +188,18 @@ Deno.serve(async (req) => {
 
     const { data: existing, error: selErr } = await supabase
       .from("subscribers")
-      .select("id, status, paid_until, trial_used_at, last_payment_id")
+      .select("id, status, paid_until, last_payment_id")
       .eq("phone", cleaned)
       .maybeSingle();
     if (selErr) throw selErr;
 
-    // 첫 결제자: 기록 자체가 없거나, 기존 row 있어도 결제 이력·트라이얼 이력 모두 비어있을 때.
-    const isFirstPayment = !existing || (!existing.last_payment_id && !existing.trial_used_at);
-    const bonusDays = isFirstPayment ? FIRST_PAYMENT_BONUS_DAYS : 0;
+    // 적용 가능한 promo 이벤트 1개 결정 (자격 + 미수령, 가장 큰 보너스).
+    const userCtx = {
+      hadPriorPayment: !!existing?.last_payment_id,
+      isReturning:     !!existing && existing.status !== "active",
+    };
+    const bonusEvent = await pickBonusEvent(supabase, cleaned, userCtx);
+    const bonusDays  = bonusEvent?.bonus_days ?? 0;
 
     let subscriberId: string;
     let status: "registered" | "extended";
@@ -222,7 +227,6 @@ Deno.serve(async (req) => {
           last_payment_id: paymentId,
           payment_provider: "portone",
           expires_at: null,
-          ...(bonusDays ? { trial_used_at: nowIso } : {}),
           metadata: {
             ad_consent_at: nowIso,
             source: "web-paid",
@@ -242,7 +246,6 @@ Deno.serve(async (req) => {
           paid_until: newPaidUntil.toISOString(),
           last_payment_id: paymentId,
           payment_provider: "portone",
-          ...(bonusDays ? { trial_used_at: nowIso } : {}),
           metadata: {
             ad_consent_at:       nowIso,
             channel_friended_at: nowIso,
@@ -254,6 +257,15 @@ Deno.serve(async (req) => {
       if (insErr) throw insErr;
       subscriberId = inserted.id;
       status = "registered";
+    }
+
+    // 보너스 이벤트 적용 기록 — subscriber upsert 후 (subscriber_id 확보 필요)
+    if (bonusEvent) {
+      await recordRedemption(supabase, bonusEvent, {
+        subscriberId,
+        phone: cleaned,
+        paymentId,
+      });
     }
 
     // 4) 결제 이력
@@ -294,6 +306,9 @@ Deno.serve(async (req) => {
       status,
       paid_until: newPaidUntil.toISOString(),
       alimtalk_sent: alim.ok,
+      bonus_days: bonusDays,
+      bonus_event: bonusEvent ? { code: bonusEvent.code, name: bonusEvent.name } : null,
+      // 구 클라이언트 호환 (≤2026-05-20)
       first_payment_bonus_days: bonusDays,
     }, { cors });
   } catch (err) {

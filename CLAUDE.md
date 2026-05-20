@@ -16,6 +16,68 @@
   - 구조·UI 변경: 간결한 한국어 요약 (예: "일본 탭 제거")
   - 변경 없으면 커밋 없이 "변경 없음" 보고 후 종료
 
+## 프로모 이벤트 운영 (promo_events / promo_redemptions)
+
+결제 시 보너스 일수 추가를 데이터 기반 이벤트로 관리. 코드 수정 없이 SQL 한 줄로 이벤트 켜고/끄기. 자세한 정책은 `supabase/functions/_shared/promo.ts`.
+
+### 핵심 정책
+- **같은 이벤트는 번호당 1회** (`unique(event_id, phone)` 강제). 다른 이벤트엔 별개 — 매번 새 redemption 가능.
+- **stacking 안 함**: 결제 시 자격 만족하는 이벤트가 여럿이면 `bonus_days` 가장 큰 1개만 적용.
+- **자격 조건 3종**: `first_payment` (이전 결제 없음) / `all` (모든 결제자) / `returning` (status≠active 인 재결제).
+
+### 새 이벤트 발행
+```sql
+insert into public.promo_events (code, name, description, bonus_days, eligible_for, starts_at, ends_at, active)
+values (
+  'summer-promo-2026q3',         -- 사람 읽는 키, 영원히 unique
+  '여름 한정 +5일',                -- UI 노출
+  '7/1~8/31 모든 결제 5일 추가',
+  5,
+  'all',
+  '2026-07-01 00:00:00+09'::timestamptz,
+  '2026-09-01 00:00:00+09'::timestamptz,  -- ends_at 지나면 자동 비활성
+  true
+);
+```
+
+### 이벤트 강제 종료 (kill switch)
+```sql
+update public.promo_events set active = false where code = 'summer-promo-2026q3';
+```
+
+### 특정 번호에게 이벤트 재허용
+```sql
+delete from public.promo_redemptions
+ where phone = '0101234XXXX' and event_id = (select id from promo_events where code='launch-first-payment-7d-2026q2');
+```
+
+### 운영 현황 조회
+```sql
+-- 현재 활성 이벤트
+select id, code, name, bonus_days, eligible_for, starts_at, ends_at
+  from public.promo_events
+ where active = true
+   and starts_at <= now()
+   and (ends_at is null or ends_at > now());
+
+-- 이벤트별 사용량
+select e.code, e.name, count(r.id) as redemption_count, sum(r.bonus_days_applied) as total_bonus_days
+  from public.promo_events e
+  left join public.promo_redemptions r on r.event_id = e.id
+ group by e.id, e.code, e.name
+ order by e.created_at desc;
+```
+
+### 데이터 모델 메모
+- `subscribers.trial_used_at` 컬럼은 deprecated 상태 — drop 안 함(롤백 안전망). 새 코드는 안 읽고/안 씀.
+- 백필: 기존 `trial_used_at` NOT NULL 인 row 는 마이그레이션 시 `launch-first-payment-7d-2026q2` 이벤트의 redemption 으로 1회성 자동 변환.
+
+### 코드 측 포인트
+- 보너스 결정·기록은 모두 `_shared/promo.ts` 의 `pickBonusEvent` / `recordRedemption` 만 사용.
+- `payment-confirm` 응답: `bonus_days` (적용된 일수), `bonus_event: {code, name}` (적용된 이벤트), 구 호환 `first_payment_bonus_days`.
+- `check-subscription` 응답: `eligible_events: [{code, name, bonus_days}]` (보너스 큰 순), 구 호환 `trial_eligible`.
+- `index.html` 의 보너스 배너·confirm 박스·성공 메시지는 `eligible_events[0]` 기반 동적 표시 — 이벤트 이름·일수 그대로 노출.
+
 ## 🔴 Supabase Edge Functions — verify_jwt 정책 (엄수)
 
 **브라우저에서 호출하는 Edge Function 은 반드시 `verify_jwt = false`.**
