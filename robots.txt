@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://briefick.com/sitemap.xml
+Sitemap: https://briefick.com/news-sitemap.xml

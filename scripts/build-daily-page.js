@@ -169,6 +169,7 @@ ${liHtml}
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="브리픽 RSS — 매일 시황" href="/rss.xml">
 
 <meta property="og:title" content="${esc(dayLabel)} 시황 | 브리픽">
 <meta property="og:description" content="${esc(description)}">
@@ -390,10 +391,11 @@ function buildRobots() {
 Allow: /
 
 Sitemap: ${DOMAIN}/sitemap.xml
+Sitemap: ${DOMAIN}/news-sitemap.xml
 `;
 }
 
-// ─── 기존 daily 페이지 스캔 (date·headline 추출) ───────
+// ─── 기존 daily 페이지 스캔 (date·headline·title·publishedISO 추출) ──
 function scanExistingPages(dailyDir) {
   if (!fs.existsSync(dailyDir)) return [];
   const files = fs.readdirSync(dailyDir).filter(f => /^\d{4}-\d{2}-\d{2}\.html$/.test(f));
@@ -401,10 +403,101 @@ function scanExistingPages(dailyDir) {
   for (const f of files) {
     const date = f.replace('.html', '');
     const src = fs.readFileSync(path.join(dailyDir, f), 'utf8');
-    const m = src.match(/<meta name="description" content="([^"]+)"/);
-    pages.push({ date, headline: m ? m[1] : '' });
+    const desc = src.match(/<meta name="description" content="([^"]+)"/);
+    const ttl = src.match(/<title>([^<]+)<\/title>/);
+    const pub = src.match(/<meta property="article:published_time" content="([^"]+)"/);
+    pages.push({
+      date,
+      headline: desc ? decodeHtmlEntities(desc[1]) : '',
+      title: ttl ? decodeHtmlEntities(ttl[1]) : '',
+      publishedISO: pub ? pub[1] : `${date}T07:00:00+09:00`,
+    });
   }
   return pages.sort((a, b) => b.date.localeCompare(a.date));
+}
+
+function decodeHtmlEntities(s) {
+  return String(s)
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+}
+
+// ─── RSS escape (CDATA·entity 사용 안 함, 단순 escape) ──
+function rssEsc(s) {
+  return String(s ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+// ─── ISO → RFC 822 (RSS pubDate 표준) ───────────────────
+function rfc822(iso) {
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return new Date().toUTCString();
+  return d.toUTCString(); // UTC 기준 RFC 1123 — RSS 호환
+}
+
+// ─── RSS 2.0 피드 ───────────────────────────────────────
+function buildRss(dailyPages) {
+  const items = dailyPages.slice(0, 60).map(p => {
+    const url = `${DOMAIN}/daily/${p.date}`;
+    const title = p.title.replace(/\s*\|\s*브리픽\s*$/, '').trim() || `${p.date} 시황`;
+    return `    <item>
+      <title>${rssEsc(title)}</title>
+      <link>${url}</link>
+      <guid isPermaLink="true">${url}</guid>
+      <pubDate>${rfc822(p.publishedISO)}</pubDate>
+      <description>${rssEsc(p.headline)}</description>
+    </item>`;
+  }).join('\n');
+
+  const lastBuild = new Date().toUTCString();
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>브리픽 — 매일 경제 뉴스</title>
+    <link>${DOMAIN}</link>
+    <description>한국·미국 주식, AI 기업, 원자재·크립토, 유니콘 5개 도메인의 일일 헤드라인. 매일 KST 07시·19시 자동 업데이트.</description>
+    <language>ko-KR</language>
+    <atom:link href="${DOMAIN}/rss.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>${lastBuild}</lastBuildDate>
+    <ttl>60</ttl>
+${items}
+  </channel>
+</rss>
+`;
+}
+
+// ─── Google News Sitemap (최근 48시간 콘텐츠만) ─────────
+function buildNewsSitemap(dailyPages) {
+  const cutoff = Date.now() - 48 * 3600 * 1000;
+  const recent = dailyPages.filter(p => new Date(p.publishedISO).getTime() >= cutoff);
+  if (!recent.length) {
+    // Google News spec: 48h 안 콘텐츠 없으면 빈 sitemap도 OK
+  }
+  const urls = recent.map(p => {
+    const title = p.title.replace(/\s*\|\s*브리픽\s*$/, '').trim() || `${p.date} 시황`;
+    return `  <url>
+    <loc>${DOMAIN}/daily/${p.date}</loc>
+    <news:news>
+      <news:publication>
+        <news:name>브리픽</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>${p.publishedISO}</news:publication_date>
+      <news:title>${rssEsc(title)}</news:title>
+    </news:news>
+  </url>`;
+  }).join('\n');
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+${urls}
+</urlset>
+`;
 }
 
 // ─── main ──────────────────────────────────────────────
@@ -444,7 +537,15 @@ function main() {
   fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), buildSitemap(allPages));
   console.log(`[build-daily-page] wrote /sitemap.xml`);
 
-  // 4) robots.txt
+  // 4) RSS 2.0 피드 (Feedly·Inoreader·뉴스 큐레이터 채널)
+  fs.writeFileSync(path.join(ROOT, 'rss.xml'), buildRss(allPages));
+  console.log(`[build-daily-page] wrote /rss.xml (${Math.min(60, allPages.length)} items)`);
+
+  // 5) Google News Sitemap (최근 48시간 콘텐츠만, Top Stories 후보)
+  fs.writeFileSync(path.join(ROOT, 'news-sitemap.xml'), buildNewsSitemap(allPages));
+  console.log(`[build-daily-page] wrote /news-sitemap.xml`);
+
+  // 6) robots.txt (sitemap 두 개 가리킴)
   fs.writeFileSync(path.join(ROOT, 'robots.txt'), buildRobots());
   console.log(`[build-daily-page] wrote /robots.txt`);
 }
