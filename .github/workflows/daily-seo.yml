@@ -1,23 +1,22 @@
 name: Daily SEO Build
 
-# 5탭 *-update.js 변경 시 SEO 정적 페이지 자동 생성·커밋.
-# /daily/YYYY-MM-DD.html + /daily/index.html + /sitemap.xml + /robots.txt
+# 사이클 완료 신호(.cartoon-marker push)에 발화. cartoon-generate.yml 과 같은 트리거.
+# /daily/YYYY-MM-DD.html + /daily/index.html + /sitemap.xml + /news-sitemap.xml + /rss.xml + /robots.txt
 #
-# db-sync.yml과 같은 paths 트리거 → 두 워크플로 병렬 실행.
-# 이 워크플로의 push는 /daily/**·sitemap.xml·robots.txt만 건드리므로
-# db-sync.yml(data/*-update.js paths만 감시)·이 워크플로 자신 모두 재트리거 없음.
+# 이전(5/20~5/21): 5탭 *-update.js 매번 발화 — 사이클당 5회 발화하면서 sandbox push 와
+# main 에 commit 끼어들기·rebase 압력 누적. 5/21 PM 사이클 중단 사고 후 마커 단일 트리거로 정렬.
+# sandbox 가 모든 탭 push 완료 후 마지막에 마커 push → cartoon-generate·daily-seo 둘 다
+# 그 시점에 1회 발화. 사이클 중엔 외부 워크플로 commit 0건 → race condition 0.
+#
+# dev 가 company-ko.js·build-daily-page.js 변경 시는 즉시 rebuild 필요해 별도 paths 로 유지.
 
 on:
   push:
     branches: [main]
     paths:
-      - 'data/stocks-update.js'
-      - 'data/kr-stocks-update.js'
-      - 'data/ai-update.js'
-      - 'data/commodity-update.js'
-      - 'data/unicorn-update.js'
-      - 'data/company-ko.js'
-      - 'scripts/build-daily-page.js'
+      - 'data/.cartoon-marker'         # 자동 갱신 사이클 완료 신호 (5탭 모두 push 끝난 뒤)
+      - 'data/company-ko.js'           # 한글 매핑 dev 변경 시 즉시 rebuild
+      - 'scripts/build-daily-page.js'  # 빌더 코드 dev 변경 시 즉시 rebuild
   workflow_dispatch:
 
 concurrency:

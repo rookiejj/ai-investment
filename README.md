@@ -72,7 +72,7 @@ ai-investment/
 │   ├── cartoon-generate.yml      ← `data/.cartoon-marker` push 트리거 (자동 갱신 sandbox가 마지막 단계로 마커 push)
 │   ├── instagram-post.yml        ← cartoon-generate workflow_run chain (KST 07~18시 캐러셀 / 그 외 Reels, 모두 7장 슬라이드 공유)
 │   ├── db-sync.yml               ← `data/*-data.js`·`data/*-update.js` push 트리거 (GitHub Actions runner가 scripts/sync-to-db.js 실행 → Supabase tab_data·tab_updates upsert. sandbox 프록시가 Supabase 차단해서 GH Actions 경유 필수)
-│   └── daily-seo.yml             ← `data/*-update.js`·`data/company-ko.js`·`scripts/build-daily-page.js` push 트리거 (build-daily-page.js 실행 → /daily/·sitemap.xml·robots.txt 자동 commit·push, db-sync와 병렬 실행)
+│   └── daily-seo.yml             ← `data/.cartoon-marker`·`data/company-ko.js`·`scripts/build-daily-page.js` push 트리거 (cartoon-generate 와 같은 마커 단일 신호 — 사이클 완료 시점 1회. build-daily-page.js 실행 → /daily/·sitemap.xml·rss.xml·news-sitemap.xml·robots.txt 자동 commit·push)
 ├── supabase/
 │   ├── config.toml               ← 공개 호출 함수에 verify_jwt=false 영구 박음 (publishable key 통과 보장)
 │   ├── migrations/               ← 스키마 이력 (init / payment / message_type / delivery_state / admin_settings / template_code / tab_data·tab_updates / promo_events·promo_redemptions)
@@ -164,7 +164,7 @@ ai-investment/
 
 ### SEO 정적 페이지 (`/daily/`)
 - **목적**: 매일 갱신되는 5탭 헤드라인을 정적 HTML로 publish해 구글·네이버의 일일 색인 트래픽을 누적으로 잡는다. 비용 0, 운영 0 — GitHub Actions 한 단계가 모든 걸 처리.
-- **트리거**: `data/*-update.js`·`data/company-ko.js`·`scripts/build-daily-page.js` push → `daily-seo.yml` 발화 (db-sync와 동일 paths, 두 워크플로 병렬 실행). 자동 갱신 사이클당 1회 자연 발화.
+- **트리거**: `data/.cartoon-marker`·`data/company-ko.js`·`scripts/build-daily-page.js` push → `daily-seo.yml` 발화. 자동 갱신 사이클당 1회 자연 발화 (sandbox 가 5탭 모두 push 완료 후 마커 push 시점 — cartoon-generate 와 같은 신호). 2026-05-21 까지는 5탭 *-update.js 매번 트리거였으나 sandbox 사이클 중 race·중단 사고 후 마커 단일 트리거로 정렬.
 - **빌더 (`scripts/build-daily-page.js`)**:
   - 5탭(`kr-stocks`·`stocks`·`ai`·`commodity`·`unicorn`) `*-update.js`의 `entries[0]` 로드 → `data/company-ko.js`의 `COMPANY_KO`로 localize (daily-send와 동일 로직, 단어 경계 룰 그대로)
   - 페이지 날짜는 stocks `entries[0].date` prefix(YYYY-MM-DD)로 결정
@@ -178,7 +178,7 @@ ai-investment/
 - **페이지 구조**: 헤더(브랜드) → h1 그날 날짜 + 요일 → 5탭 섹션 각각 `summary`를 줄 단위 `<li>` + `<details>`로 `changes[].detail` 풀 텍스트 펼침 → 실시간 대시보드 CTA + 지난 시황 링크 → 푸터(약관·개인정보). Pretendard + 메인 색상 시스템 그대로.
 - **메타 태그**: canonical / og:title·description·image·url·type=article / article:published_time / twitter:card / JSON-LD `NewsArticle`(headline·description·datePublished·author·publisher·articleSection·keywords). 네이버 사이트 검증(`naver-site-verification`)·구글 색인용 메타도 메인·daily 페이지 양쪽에 동기.
 - **멱등 빌드**: 같은 날 여러 번 빌드해도 `entries[0]`이 같으면 같은 파일 출력 → git diff 없음 → 자동 commit skip. 다음 사이클에서 새 entry로 다시 빌드.
-- **자동 commit·push 안전성**: `daily-seo.yml`이 푸시하는 paths는 `/daily/**`·`/sitemap.xml`·`/news-sitemap.xml`·`/rss.xml`·`/robots.txt`로 db-sync.yml·daily-seo.yml 자신의 트리거 paths와 겹치지 않아 무한 루프 없음. 워크플로 실행 중 main이 다른 push로 앞서 나갈 수 있는 race condition은 `fetch-depth: 0` + `fetch → rebase → push` 3회 재시도 패턴으로 자동 복구.
+- **자동 commit·push 안전성**: `daily-seo.yml`이 푸시하는 paths는 `/daily/**`·`/sitemap.xml`·`/news-sitemap.xml`·`/rss.xml`·`/robots.txt`로 자신 트리거(`data/.cartoon-marker`·`company-ko.js`·`build-daily-page.js`) 및 다른 워크플로 트리거 paths와 겹치지 않아 무한 루프 없음. 워크플로 실행 중 main이 다른 push로 앞서 나갈 수 있는 race condition은 `fetch-depth: 0` + `fetch → rebase → push` 3회 재시도 패턴으로 자동 복구.
 - **URL 규칙**: Cloudflare Pages 기본 동작으로 `.html` 확장자 자동 trim → `/daily/2026-05-20`처럼 noext URL 자동 작동. Vercel은 `vercel.json`의 `cleanUrls: true`로 동일 동작 (양쪽 호스팅 동기).
 - **RSS auto-discovery**: 메인 `index.html`·daily 페이지 head에 `<link rel="alternate" type="application/rss+xml" href="/rss.xml">` — 브라우저·피드리더가 RSS 자동 감지.
 - **외부 색인 등록 (1회성 사용자 작업)**:
@@ -388,6 +388,13 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-05-21 (2)**: **daily-seo 트리거를 마커 단일 신호로 정렬 — 사이클 중 race·중단 사고 후 정공법 수정.**
+  - 5/21 PM 자동 갱신 사이클이 ai 단계까지만 푸시되고 commodity·unicorn·마커 도달 못함 → cartoon-generate·instagram-post 모두 미발화. 사용자가 알아챔.
+  - 원인 후보 중 강력한 가설은 **daily-seo가 매 *-update.js push 마다 발화 + main 에 자기 commit 추가** → sandbox 의 다음 탭 push 가 매번 rebase 압력 받음. 사이클당 5회 발화 × 2사이클 = 일 10회.
+  - **수정**: `.github/workflows/daily-seo.yml` 의 트리거 paths를 5탭 *-update.js 에서 `data/.cartoon-marker` 로 변경. cartoon-generate 와 동일한 마커 단일 신호. sandbox 가 모든 탭 push 완료 후 마커 push 시점에 둘 다 발화 — 사이클 중 외부 commit 0건 → race 0.
+  - 부작용: SEO 페이지가 점진적이 아닌 사이클 종료 시 1회 갱신. 사용자 체감 차이 없음 (어차피 매일 1장씩 누적되는 페이지).
+  - `data/company-ko.js`·`scripts/build-daily-page.js` 트리거는 유지 — dev 변경 시 즉시 rebuild.
+
 - **2026-05-21**: **프로모 이벤트 시스템 + 결제 정책·UX 정비 — 코드 변경 없이 SQL 한 줄로 보너스 이벤트 발행·종료 가능한 구조 확립.**
   - **신규 테이블 `promo_events` / `promo_redemptions`** (마이그레이션 `20260520231700_promo_events.sql`) — 같은 이벤트는 번호당 1회(`unique(event_id, phone)`), 다른 이벤트엔 별개 적용. 정책: stacking 안 함(가장 큰 보너스 1개만). 자격 조건 3종: `first_payment`(이전 결제 없음) · `all`(모든 결제자) · `returning`(만료 후 재결제).
   - **공통 로직 `supabase/functions/_shared/promo.ts`** — `pickBonusEvent`·`recordRedemption`·`getEligibleEvents`. `payment-confirm`(결제 시 적용 + 기록)·`check-subscription`(UI 노출용 자격 조회) 두 함수 공용. race condition 시 unique violation silent skip.
@@ -411,7 +418,7 @@ admin_settings (단일 행, id=1)
 - **2026-05-20**: **SEO 정적 페이지 자동 빌드 시스템 추가 — /daily/YYYY-MM-DD가 매일 자동 누적되어 구글·네이버 색인 트래픽을 잡는다.** 비용 0, 완전 자동, 운영자 작업은 외부 색인 1회 등록뿐.
   - **빌더 (`scripts/build-daily-page.js`)** — Node 22 단일 스크립트. 5탭(`kr-stocks`·`stocks`·`ai`·`commodity`·`unicorn`) `*-update.js`의 `entries[0]`을 require + `Function` eval로 로드 → `data/company-ko.js`의 `COMPANY_KO`로 localize(daily-send와 같은 단어 경계 룰 — `Cloud`가 `Cloudflare` 안 깨짐) → 페이지 날짜는 stocks `entries[0].date` prefix(YYYY-MM-DD) → 4종 결과물(`/daily/YYYY-MM-DD.html`·`/daily/index.html`·`/sitemap.xml`·`/robots.txt`) 한 번에 생성.
   - **메타 태그 풀세트** — canonical / og:title·description·image·url·type=article / article:published_time / twitter:card=summary_large_image / JSON-LD `NewsArticle`(headline·description·datePublished·author·publisher·articleSection·keywords). 네이버 사이트 검증(`naver-site-verification=94e282ae9b4b0a4379c03d4dbc7c4e5ad3b1649b`)도 메인 + daily 페이지 양쪽에 동기. og:image는 `/assets/og-image-20260513.png`(브랜드 1200×630 안전 fallback) 재사용.
-  - **자동화 (`.github/workflows/daily-seo.yml`)** — `data/*-update.js`·`data/company-ko.js`·`scripts/build-daily-page.js` push 트리거(db-sync와 동일 paths). `actions/checkout@v4` + `node scripts/build-daily-page.js` + git diff 검사 후 변경 있으면 `daily/` ·`sitemap.xml`·`robots.txt`만 자동 commit·push. `permissions: contents: write`로 `GITHUB_TOKEN`이 main에 push. 본인 트리거 paths와 db-sync 트리거 paths 모두 안 겹쳐 무한 루프 없음. 시작·종료 텔레그램 알림은 다른 워크플로와 동일 패턴.
+  - **자동화 (`.github/workflows/daily-seo.yml`)** — `data/.cartoon-marker`·`data/company-ko.js`·`scripts/build-daily-page.js` push 트리거(cartoon-generate 와 동일 마커 신호). `actions/checkout@v4` + `node scripts/build-daily-page.js` + git diff 검사 후 변경 있으면 `daily/` ·`sitemap.xml`·`robots.txt`만 자동 commit·push. `permissions: contents: write`로 `GITHUB_TOKEN`이 main에 push. 본인 트리거 paths와 다른 워크플로 트리거 paths 모두 안 겹쳐 무한 루프 없음. 시작·종료 텔레그램 알림은 다른 워크플로와 동일 패턴.
   - **멱등 빌드** — 같은 날 여러 번 돌아도 `entries[0]`이 같으면 같은 파일 출력 → git diff empty → 자동 commit skip. 매일 갱신 사이클당 새 페이지 정확히 1개 누적.
   - **클린 URL** — Cloudflare Pages는 `.html` 자동 trim이 기본 동작이라 `/daily/2026-05-20` 별도 설정 없이 작동. Vercel 호환을 위해 `vercel.json`에 `cleanUrls: true` 추가 — 두 호스팅에서 동일 URL 형태.
   - **호스팅 정리** — 메인은 **Cloudflare Pages**, Vercel은 병행 운영 중 (보존). 라우팅은 `_redirects`(Cloudflare) + `vercel.json`(Vercel) 양쪽 동기 유지 정책 확립.
