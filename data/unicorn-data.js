@@ -53,10 +53,10 @@ const data = [
       },
       {
         "nm": "Mercury",
-        "rs": "ARR $650M·30만 SMB 고객·$248B 거래량·$5B+ 신규 라운드 협상",
+        "rs": "5/20 Series D $200M $5.2B 클로징 - 14개월 만 +49% 업라운드·a16z·Coatue·Sequoia·CRV·Sapphire·Spark 참여·OCC 조건부 인가 Mercury Bank N.A. 풀 차터 내셔널뱅크 전환 마일스톤·ARR $650M·4년 연속 흑자·누적 펀딩 ~$700M",
         "ipo": "미정",
-        "val": "$3.5B",
-        "round": "Series C ($300M, 2025-03)",
+        "val": "$5.2B",
+        "round": "Series D ($200M, 2026-05)·a16z 리드",
         "sector": "SMB 뱅킹·재무관리"
       }
     ]
@@ -129,7 +129,7 @@ const data = [
     "stocks": [
       {
         "nm": "SpaceX",
-        "rs": "5/20(수) S-1 공식 공개 완료 - 4/1 컴피던셜 신청 이후 50일 만 일반 공개·티커 SPCX·밸류 $1.75T·조달 $75B 사상 최대 IPO·30% 리테일 ~$22.5B·MS·BofA·Citi·JPM·GS 리드 21개 주관사·6/4 로드쇼·6/11 프라이싱·6/12 Nasdaq 데뷔 목표(TechCrunch 5/20)·Brookfield 5/14 $2B 사전 베팅·36페이지 리스크 팩터(xAI·X 흡수 후 법적 분쟁 포함)·Starship V3 첫 비행 5/21 18:30 ET D-Day로 재연기·Pad 2 첫 발사·Flight 12",
+        "rs": "5/20 S-1 공개 후 로드쇼 6/8 시작으로 슬립·프라이싱 6/11·6/12 Nasdaq 데뷔 목표·티커 SPCX·밸류 $1.75T·조달 $75B 사상 최대 IPO·30% 리테일 ~$22.5B·MS·BofA·Citi·JPM·GS 리드 21개 주관사·Brookfield 5/14 $2B 사전 베팅·S-1 Q1 매출 $4.69B 손실 $4.28B·Starship V3 Flight 12 5/21~22 KST 새벽 발사 윈도우·Pad 2 첫 발사",
         "ipo": "2026.06.11 프라이싱·6/12 Nasdaq 데뷔",
         "val": "$1.75T",
         "round": "5/20 S-1 공개·티커 SPCX·리테일 30%·Brookfield $2B",
@@ -177,7 +177,7 @@ const data = [
       },
       {
         "nm": "Figure AI",
-        "rs": "휴머노이드 로봇·Series D $48B 클로징·Amazon 20K + Mercedes 50K 누적 주문 파이프라인 70K+ 유닛 / $14B+ 매출(2029까지)·생산 월 1,200대→Q4 5,000대·BMW 공장 90K+ 파트 로딩",
+        "rs": "5/13~20 BotQ 시간당 1대 양산 도달·누적 350대 출하·패키지 소팅 50시간 무인 라이브스트림 1차 양보 80%+·Series D $48B 클로징·Amazon 20K + Mercedes 50K 누적 주문 파이프라인 70K+ 유닛 / $14B+ 매출(2029까지)·BMW 공장 90K+ 파트 로딩",
         "ipo": "미정",
         "val": "$48B",
         "round": "Series D 클로징 (2026-04)",
