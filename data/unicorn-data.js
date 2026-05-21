@@ -21,10 +21,10 @@ const data = [
       },
       {
         "nm": "Ramp",
-        "rs": "법인카드·지출관리·ARR $1B+",
+        "rs": "5/7~21 GIC·Iconiq 공동 리드 $750M $40B+ 협상 - 6개월 만 +25% 업라운드·14개월 5단계 밸류 점프·ARR $1B AI 우선 차별화 Brex 추월",
         "ipo": "미정",
-        "val": "$32B",
-        "round": "Series F ($300M)",
+        "val": "$40B+ 협상",
+        "round": "Series F+ $750M (2026-05)·GIC·Iconiq",
         "sector": "법인 핀테크"
       },
       {
@@ -129,7 +129,7 @@ const data = [
     "stocks": [
       {
         "nm": "SpaceX",
-        "rs": "5/20 S-1 공개 후 로드쇼 6/8 시작으로 슬립·프라이싱 6/11·6/12 Nasdaq 데뷔 목표·티커 SPCX·밸류 $1.75T·조달 $75B 사상 최대 IPO·30% 리테일 ~$22.5B·MS·BofA·Citi·JPM·GS 리드 21개 주관사·Brookfield 5/14 $2B 사전 베팅·S-1 Q1 매출 $4.69B 손실 $4.28B·Starship V3 Flight 12 5/21~22 KST 새벽 발사 윈도우·Pad 2 첫 발사",
+        "rs": "5/21 Starship V3 Flight 12 발사 윈도우 진입·Pad 2 첫 발사·Raptor 3·1,800만 파운드 추력 신엔진·6/11 프라이싱·6/12 Nasdaq 데뷔 SPCX·밸류 $1.75T 조달 $75B 사상 최대 IPO·일부 $80B 조달 $2T 시나리오·Starlink 2025 매출 $11.4B·Q1 2026 매출 $3.3B·구독자 10.3M YoY 두 배",
         "ipo": "2026.06.11 프라이싱·6/12 Nasdaq 데뷔",
         "val": "$1.75T",
         "round": "5/20 S-1 공개·티커 SPCX·리테일 30%·Brookfield $2B",
