@@ -1,31 +1,31 @@
 const UPDATES = [
   {
-    "date": "2026-05-21 19:30 KST",
-    "summary": "Anthropic 창립 5년 만 첫 분기 흑자 가이던스 - Q2 매출 $10.9B 두 배 가속\nClaude Code 런레이트 $2.5B 돌파 - 연초 대비 두 배·주간 활성 사용자 두 배\nOpenAI Workspace Agents 출시 - Custom GPTs 후속·Slack·Salesforce 직접 연동\nOpenAI Codex 모바일 4M 주간 사용자 대상 ChatGPT 앱 프리뷰 확대\nApple-Intel 칩 제조 협상 - INTC +19% 사상 최고가 갱신 후방 모멘텀 지속",
+    "date": "2026-05-22 08:00 KST",
+    "summary": "Karpathy Anthropic 합류 - OpenAI 공동창립자·Tesla AI 디렉터 프리트레이닝 합류\nAnthropic CNBC Disruptor 50 1위 - 엔터프라이즈 채택률 34.4% OpenAI 첫 추월\nxAI Grok Build 베타 - 코딩 에이전트 3파전 Claude Code·Codex CLI 합류\nMistral AI 5/19 Emmi AI 인수 - 산업·물리 AI 버티컬 확장\nAnthropic-Gates 재단 $200M 4년 파트너십 - 헬스·교육·농업 AI 도구 배포",
     "changes": [
       {
-        "time": "2026-05-21 02:00 KST",
-        "type": "마일스톤",
-        "detail": "Anthropic. 5/20 투자자 대상 Q2 첫 영업이익 흑자 전환 가이던스 공개 - 창립 5년 만 첫 분기 흑자 시그널(TechCrunch·Seoul Economic 5/20). Q2 매출 약 $10.9B로 Q1 $4.8B 대비 두 배 이상 가속, 연간 흑자 시점은 기존 2028년 추정에서 앞당겨질 가능성 부각. Claude Code 런레이트 매출 $2.5B 돌파(연초 대비 2배+), 주간 활성 사용자 1/1 대비 두 배 - Claude Code가 회사 최단 성장 제품으로 부각. 다만 컴퓨트 비용 부담 잔존으로 연간 흑자 유지 여부는 미확정. Series G $30B at $380B 2/12 클로징 베이스에서 추가 $50B 라운드 $1T 밸류 협상 보도(SpendNode 5월) 잔존, OpenAI $852B 추월 시나리오 임박.",
+        "time": "2026-05-22 02:00 KST",
+        "type": "인재",
+        "detail": "Anthropic. 5/19 Andrej Karpathy 합류 공식 발표 - OpenAI 공동창립자·Tesla AI 디렉터·Autopilot 컴퓨터 비전 리드 출신이 Nick Joseph 산하 프리트레이닝 팀 합류(CNBC·TechCrunch·Sherwood 5/19). Karpathy는 Claude를 이용해 프리트레이닝 리서치 자체를 자동화·가속하는 신규 팀을 직접 빌드 - 'vibe coding' 개념 발신자이자 micrograd·nanoGPT 오픈소스 교재로 업계 영향력이 큰 인재. 동시에 Anthropic은 CNBC 2026 Disruptor 50 1위 등극, 엔터프라이즈 채택률 4월 +3.8%p 34.4%로 OpenAI 32.3% 사상 첫 추월. 보조 시그널 - 이미 보도된 $30B 라운드 $900B 밸류 협상이 $1T 시나리오로 확장 보도(Bloomberg·KuCoin 5/12~), 세컨더리 시장 밸류 $1T 통과.",
         "sector": "Anthropic"
       },
       {
-        "time": "2026-05-21 01:30 KST",
+        "time": "2026-05-22 01:30 KST",
         "type": "제품 출시",
-        "detail": "OpenAI. Workspace Agents 리서치 프리뷰 - Custom GPTs 엔터프라이즈 후속 제품으로 Slack·Salesforce 등 SaaS와 직접 연동, 팀 단위 공유 에이전트가 복잡 워크플로우·장기 실행 태스크 자동 처리(VentureBeat·OpenAI 5월). 권한·통제 거버넌스는 조직 설정 그대로 상속, ChatGPT Business·Enterprise·Edu·Teachers 플랜 대상. Workspace Agents는 5/6까지 무료, 이후 크레딧 기반 과금. 동시에 5/14 OpenAI Codex가 ChatGPT iOS·Android 모바일 앱에서 프리뷰로 공급 - 약 400만 주간 사용자 대상 클라우드 코딩 에이전트 모바일 진입(MacRumors·eWeek 5/14). 데스크탑·devbox 위 실행 컨테이너는 그대로 두고 모바일에서 작업 시작·승인·스티어링 가능, HIPAA 지원과 SSH·access token 엔터프라이즈 옵션도 확장.",
-        "sector": "OpenAI"
+        "detail": "xAI. 5월 Grok Build 베타 공급 개시 - SuperGrok Heavy 구독자 대상 코딩 에이전트·CLI로 터미널 플래닝·클린 diff·서브에이전트 병렬·worktree·헤드리스·ACP 지원(DevOps·Releasebot 5월). 동시에 Grok Web Connectors 출시로 SharePoint·Outlook·OneDrive·Google Workspace·Notion·GitHub·Linear 직접 통합, Speech-to-Text API 25개 언어 배치·스트리밍 모드 GA. 코딩 에이전트 시장은 Anthropic Claude Code·OpenAI Codex CLI·xAI Grok Build 3파전 구도로 재편 - Claude Code 런레이트 $2.5B 베이스에서 xAI Grok가 후발 진입으로 가격·통합 차별화에 베팅, 1M 토큰 컨텍스트·네이티브 비디오 입력 Grok 4.3 기반.",
+        "sector": "xAI"
       },
       {
-        "time": "2026-05-21 01:00 KST",
+        "time": "2026-05-22 01:00 KST",
+        "type": "인수",
+        "detail": "Mistral AI. 5/19 Emmi AI 인수 발표 - 산업·물리 AI 버티컬로 확장하는 첫 M&A(Tracxn·Sacra·CNBC Disruptor 5월). 제조·엔지니어링 시뮬레이션·자본집약 섹터 AI 도입이 초기 단계인 영역에 직접 진입, 高지불의향 엔터프라이즈 고객 확보 전략. 베이스 - 3/30 Conventional Debt $830M로 파리 인근 신규 데이터센터에 NVIDIA 칩 13,800개 확보 발표 후 데이터 인프라 캐파 보강, 누적 펀딩 $3.1B·밸류 $13.8B 기준. CNBC Disruptor 50 7위 등극으로 유럽 프론티어 모델 단독 대표성 강화 - Anthropic·OpenAI·Google DeepMind 3강 구도에 4번째 옵션으로 자리 굳히기.",
+        "sector": "Mistral AI"
+      },
+      {
+        "time": "2026-05-22 00:30 KST",
         "type": "전략",
-        "detail": "Apple. Intel과 칩 제조 예비 계약 진행 시그널 지속 - TSMC 의존도 분산을 위한 美 자국 실리콘 회귀(WSJ·MacRumors·EE Times 5/8~5/20). 양사는 1년 이상 협의를 진행해왔고 단기 초점은 entry급 A-series·M-series(M7 2027년 MacBook Pro·MacBook Air·iPad Pro 탑재 예정·A21은 2027년 iPhone). 발표 직후 INTC +19% 사상 최고가 갱신했고, Apple Q2 콘콜에서 Tim Cook이 'iPhone 17 분기 중 A19·A19 Pro 공급 제약' 발언한 직후라 의미 부각. Intel 18A·14A 공정 채택 여부, 전체 양산 규모, 패키징·칩릿 워크 포함 여부는 미확정 - AI 슈퍼사이클로 TSMC 컴슈머 캐파가 압축된 구조적 변화가 직접 동인.",
-        "sector": "Apple"
-      },
-      {
-        "time": "2026-05-21 00:30 KST",
-        "type": "인재",
-        "detail": "Google DeepMind. Contextual AI 연구진 20+명을 약 $80~90M 라이센싱 딜로 영입 - Douwe Kiela CEO 포함, RAG·엔터프라이즈 컨텍스트 연구 코어 흡수(테크 매체 5월). Apple Foundation Models 팀에서 Ruoming Pang 영입 직후 후속 행보로, 메가캡들의 프론티어 연구 인재 흡수 가속 시그널. 자체 채용보다 라이센싱·인수 형태 거래가 IP 우회와 빠른 통합을 동시에 달성하는 구조. 인재 시장 측면에서 시드~Series A 단계 AI 스타트업이 출구 전략으로 IPO 대신 라이센싱 딜 선호하는 패턴이 굳어지는 분기.",
-        "sector": "Google DeepMind"
+        "detail": "Anthropic. 5/14 Bill & Melinda Gates Foundation $200M 4년 파트너십 발표 - AI 기업과 글로벌 자선재단 사상 최대 규모 거래(MobiHealthNews·TechStartups·TheNextWeb 5/14). 자금·Claude 사용 크레딧·기술 지원 패키지로 헬스케어·교육·농업 3개 영역 정부 대상 무료 AI 도구 개발 지원. 동시에 5/19 KPMG가 글로벌 27.6만명 워크포스에 Claude 전사 통합 발표 - 컨설팅 빅클래스4 첫 전면 도입 시그널. Claude for Small Business 별도 패키지로 QuickBooks·PayPal·HubSpot·Canva·Docusign·Google Workspace·Microsoft 365 즉시 연동, 엔터프라이즈 풀스택과 SMB 셀프서비스 동시 확장 베이스.",
+        "sector": "Anthropic"
       }
     ]
   }
