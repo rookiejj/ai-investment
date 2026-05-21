@@ -74,11 +74,15 @@ ai-investment/
 │   ├── db-sync.yml               ← `data/*-data.js`·`data/*-update.js` push 트리거 (GitHub Actions runner가 scripts/sync-to-db.js 실행 → Supabase tab_data·tab_updates upsert. sandbox 프록시가 Supabase 차단해서 GH Actions 경유 필수)
 │   └── daily-seo.yml             ← `data/*-update.js`·`data/company-ko.js`·`scripts/build-daily-page.js` push 트리거 (build-daily-page.js 실행 → /daily/·sitemap.xml·robots.txt 자동 commit·push, db-sync와 병렬 실행)
 ├── supabase/
-│   ├── migrations/               ← 스키마 이력 (init / payment / message_type / delivery_state / admin_settings / template_code)
+│   ├── config.toml               ← 공개 호출 함수에 verify_jwt=false 영구 박음 (publishable key 통과 보장)
+│   ├── migrations/               ← 스키마 이력 (init / payment / message_type / delivery_state / admin_settings / template_code / tab_data·tab_updates / promo_events·promo_redemptions)
 │   ├── functions/
+│   │   ├── _shared/
+│   │   │   ├── notify.ts         ← notify-telegram 공통 helper
+│   │   │   └── promo.ts          ← promo_events / promo_redemptions 공통 로직 (pickBonusEvent / recordRedemption / getEligibleEvents)
 │   │   ├── subscribe/            ← 웹 구독 요청 업서트
-│   │   ├── check-subscription/   ← 결제 전 기존 구독 확인
-│   │   ├── payment-confirm/      ← 포트원 결제 검증 + 구독 연장 + 결제완료 알림톡(ATA)
+│   │   ├── check-subscription/   ← 결제 전 기존 구독 확인 + 활성 promo 이벤트 자격 조회
+│   │   ├── payment-confirm/      ← 포트원 결제 검증 + 구독 연장 + 보너스 이벤트 적용·redemption 기록 + 결제완료 알림톡(ATA)
 │   │   ├── daily-send/           ← 매일 뉴스 친구톡 발송 (평일 cron 트리거)
 │   │   ├── expiry-notice/        ← D-1 만료 임박 재구독 안내 친구톡 (매일 20:00 cron)
 │   │   ├── stock-prices/         ← Yahoo Finance 15분 지연 시세 fetch + Storage `prices/latest.json` 갱신 (5분 cron)
@@ -108,12 +112,16 @@ ai-investment/
 > 구 메인(5탭 카드 그리드, 검색·필터·스와이프 UI)은 `/legacy`에 백업 — 신 메인의 deep-dive 모달이 같은 종목 데이터를 활용하므로 정보 손실 없음.
 
 ### 구독 서비스 (유료)
-- **구독 모달**: 헤더 "매일 카톡으로 받기" → 전화번호 + 광고 수신 동의
+- **구독 모달**: 헤더 "매일 카톡으로 받기" → 플랜 선택 + 전화번호 + 광고 수신 동의
+- **3단 가격 플랜**: 1개월 2,900원 / 6개월 13,800원(21% 할인) / 12개월 22,800원(최대 할인 · 12,000원 절약)
+- **첫 결제 보너스 (프로모 이벤트 시스템)**: 상단 황금 🎁 배너로 진행 중 이벤트 안내(예: "첫 결제 시 7일 추가"). 자격 있는 번호만 자동 적용, 자격 미달 시 배너 자체 숨김(보너스 언급 회피). [데이터 기반 이벤트 시스템](#프로모-이벤트-시스템) 참조.
 - **번호 재확인 단계**: 결제 직전 큰 글씨로 번호 재표시 (오타 방지)
-- **연장 확인**: 기존 구독자엔 남은 일수·연장 후 만료일 안내
-- **결제**: 포트원 V2 (현재 갤럭시아 테스트 채널 · 월 100원)
+- **연장 확인**: 기존 구독자엔 현재 만료일·결제 시 연장된 만료일 안내. 신규 가입자는 발송 시작(내일)·만료일(결제일 + 1개월 + 보너스).
+- **KST 시간대 일관성**: 모든 날짜 표기 `Intl.DateTimeFormat('sv-SE', {timeZone:'Asia/Seoul'})`로 강제 — `toISOString().slice(0,10)`은 UTC 라 KST 자정~오전 9시 사이 1일 오차 발생(이력: 2026-05-21 수정).
+- **결제**: 포트원 V2 (현재 갤럭시아 테스트 채널)
 - **카카오 채널 친구 추가 필수 안내**: 완료 화면에 강조 배너
 - **결제 완료 후 폼 잠금**: 모바일 REDIRECTION 복귀 시 입력값 복원 + 즉시 잠금 (placeholder 노출 방지)
+- **결제 처리·완료 화면에선 보너스 배너 숨김**: 본문 메시지가 이미 적용 사실을 안내하므로 상단 배너 중복 회피
 
 ### 메시징 시스템 (5종)
 
@@ -177,6 +185,26 @@ ai-investment/
   - `search.google.com/search-console` — `sitemap.xml` + `news-sitemap.xml` 둘 다 제출 (News Sitemap은 Top Stories 후보화 위해 별도 필요)
   - `searchadvisor.naver.com` — `sitemap.xml` 제출 (네이버는 News Sitemap 미사용)
   - (선택) Feedly·Inoreader 카탈로그에 `https://briefick.com/rss.xml` 등록 — 안 해도 RSS 직접 구독은 가능
+
+### 프로모 이벤트 시스템
+
+코드 변경 없이 SQL 한 줄로 보너스 이벤트 발행·종료. 결제 시 자격 만족하는 이벤트 중 가장 큰 보너스 1개를 paid_until에 자동 가산.
+
+- **테이블 2종 (`supabase/migrations/20260520231700_promo_events.sql`)**
+  - `promo_events`: code(unique·읽는 키)·name(UI 노출)·bonus_days·eligible_for(`first_payment`/`all`/`returning`)·starts_at·ends_at·active(kill switch)
+  - `promo_redemptions`: event_id × phone unique — 같은 이벤트는 번호당 1회. payment_id로 어떤 결제에서 적용됐는지 추적
+- **공통 로직 (`supabase/functions/_shared/promo.ts`)**: `pickBonusEvent`(결제 시 적용)·`recordRedemption`(이력 기록)·`getEligibleEvents`(UI 노출). race condition 차단(unique violation silent skip).
+- **정책**: stacking 안 함 — 자격 만족 이벤트가 여럿이면 가장 큰 보너스 1개만 적용. 같은 사용자가 다른 이벤트엔 새로 받기 가능.
+- **시드 이벤트**: `launch-first-payment-7d-2026q2` — 첫 결제 +7일, 2026-04-21~무기한.
+- **운영 SQL (CLAUDE.md "프로모 이벤트 운영" 섹션에 상세)**:
+  - 새 이벤트: `insert into promo_events (code, name, bonus_days, eligible_for, starts_at, ends_at, active) values (...)`
+  - 강제 종료: `update promo_events set active=false where code='...'`
+  - 번호 재허용: `delete from promo_redemptions where phone='...' and event_id=(select id from promo_events where code='...')`
+- **응답 필드**
+  - `check-subscription` → `eligible_events: [{code, name, bonus_days}]` (보너스 큰 순)
+  - `payment-confirm` → `bonus_days`, `bonus_event: {code, name}` (적용된 이벤트)
+  - 구 클라이언트 호환: `trial_eligible`, `first_payment_bonus_days` 동시 반환
+- **deprecated**: `subscribers.trial_used_at` 컬럼은 보존하되 새 코드는 안 읽고/안 씀. 마이그레이션 시 자동 백필(`trial_used_at IS NOT NULL` → 시드 이벤트 redemption 변환). 차후 정리 사이클에서 drop.
 
 ### 실시간 시세 (15분 지연)
 - **`stock-prices` Edge Function** — Yahoo Finance v8 chart endpoint(`includePrePost=true`)로 미국·한국·원자재·크립토 시세 fetch. 한국은 `.KS`/`.KQ` 둘 다 시도 매칭, 원자재·크립토는 `COMMODITY_YH` 매핑 테이블(`BTC→BTC-USD`·`GC→GC=F` 등). 결과를 Supabase Storage `prices/latest.json`에 저장.
@@ -270,7 +298,9 @@ pg_cron → Vault X-Cron-Secret → expiry-notice
 | 법정 문서 | `terms.html` / `privacy.html` / `refund.html` |
 | 매일 뉴스 친구톡 본문 | `supabase/functions/daily-send/index.ts` ↔ `scripts/generate-message.js` (동기화) |
 | 재구독 안내 친구톡 본문 | `supabase/functions/expiry-notice/index.ts`의 `buildExpiryMessage` |
-| 구독료·상품명 (3단 가격 플랜) | `index.html`·`views/renew.html`의 `PRICE_PLANS` + `supabase/functions/payment-confirm/index.ts`의 `PRICE_PLANS` (단일 소스 — 동기화 필수). plan 키: `1m`·`6m`·`12m`. `TEST_MODE` 토글로 testAmount(₩100) ↔ amount(정가) 전환 |
+| 구독료·상품명 (3단 가격 플랜) | `index.html`·`views/renew.html`의 `PRICE_PLANS` + `supabase/functions/payment-confirm/index.ts`의 `PRICE_PLANS` (단일 소스 — 동기화 필수). plan 키: `1m`(2,900원)·`6m`(13,800원)·`12m`(22,800원). `TEST_MODE` 토글로 testAmount(₩100) ↔ amount(정가) 전환 |
+| 프로모 이벤트 (보너스 일수) | DB `promo_events` 테이블 (SQL INSERT/UPDATE) — 코드 수정 불필요. 로직은 `supabase/functions/_shared/promo.ts`. 운영 SQL은 `CLAUDE.md` "프로모 이벤트 운영" 섹션 |
+| Edge Function verify_jwt 정책 | `supabase/config.toml` — 브라우저 호출 함수에 `verify_jwt = false` 항목 추가. 누락 시 401 silent fail |
 | 발송 스케줄 | `supabase/schedule.sql` (뉴스) · `schedule-expiry.sql` (만료 임박) — cron 표현식은 UTC |
 | SEO 페이지 디자인·메타 태그 | `scripts/build-daily-page.js`의 `buildDailyHtml`·`buildIndexHtml` (Pretendard + 메인 색상 시스템) |
 | 라우팅·리다이렉트 | `_redirects` (Cloudflare 메인) + `vercel.json` (Vercel 병행) — **양쪽 동기 유지** |
@@ -300,11 +330,13 @@ pg_cron → Vault X-Cron-Secret → expiry-notice
 - pg_cron ↔ daily-send / expiry-notice: 자체 `X-Cron-Secret` (Vault 저장 · 함수 env와 동기화 필수)
 - Edge Function ↔ VPS 알리고 프록시: `X-Proxy-Secret` 헤더 (양쪽 env에 동일 값)
 - 관리자 ↔ admin-api: 비밀번호 해시 기반 세션 토큰
-- 모든 Edge Function은 `--no-verify-jwt`로 배포 (자체 인증 사용)
+- **공개 호출 함수는 `supabase/config.toml`에 `verify_jwt = false` 영구 박힘** (subscribe·check-subscription·payment-confirm·survey-api·admin-api·stock-prices·read-tab-data·read-tab-archive). cron·서버 트리거(daily-send·expiry-notice·notify-telegram·write-*) 는 verify_jwt=true 유지. publishable key 가 게이트웨이를 "Invalid JWT" 로 거부하는 사고(payment-confirm·check-subscription 2주간 silent fail) 재발 방지.
 
 > Vault `cron_secret`을 갱신할 때는 `supabase secrets set CRON_SECRET=...`으로 함수 env도 동시에 갱신해야 401이 발생하지 않음.
 
-> `BRIEFICK_SUPABASE_SECRET_KEY` 갱신 시: ① Supabase 대시보드 Edge Function Secrets 갱신 + ② GitHub Secrets 동기화 + ③ Edge Function 7개 재배포 (`supabase functions deploy <name> --no-verify-jwt`)
+> `BRIEFICK_SUPABASE_SECRET_KEY` 갱신 시: ① Supabase 대시보드 Edge Function Secrets 갱신 + ② GitHub Secrets 동기화 + ③ Edge Function 재배포 (`supabase functions deploy <name>` — config.toml 의 verify_jwt 설정이 자동 적용됨)
+
+> 새 Edge Function 추가 시: 브라우저에서 호출할 거면 `supabase/config.toml` 에 `[functions.<함수명>] verify_jwt = false` **같은 PR 에 추가**. 안 그러면 다음 배포가 verify_jwt=true(기본값)로 배포해 즉시 401. 자세한 정책은 `CLAUDE.md` 의 "🔴 Supabase Edge Functions — verify_jwt 정책" 섹션 + `~/.claude/CLAUDE.md` (글로벌).
 
 ## 데이터 스키마 요약
 
@@ -314,11 +346,22 @@ subscribers
   status (active/paused/expired/cancelled)
   delivery_state (ok/not_friend/blocked/paused_ad/unknown)
   paid_until, last_payment_id, payment_provider
+  trial_used_at (deprecated — 새 코드는 안 읽고/안 씀, 마이그레이션 백필됨, 차후 drop)
   subscribed_at, expires_at, metadata, created_at, updated_at
 
 payments
   payment_id (unique), subscriber_id, provider, amount, currency
   status (paid/failed/refunded), order_name, paid_at, raw_response
+
+promo_events
+  id bigserial, code (unique·읽는 키), name, description
+  bonus_days, eligible_for (first_payment/all/returning)
+  starts_at, ends_at, active, metadata, created_at, updated_at
+
+promo_redemptions
+  id bigserial, event_id (FK), subscriber_id (FK·set null on delete)
+  phone, payment_id, bonus_days_applied, redeemed_at
+  unique(event_id, phone)  ← 같은 이벤트는 번호당 1회
 
 send_logs
   id bigserial, subscriber_id, phone, message, char_count
@@ -344,6 +387,16 @@ admin_settings (단일 행, id=1)
 - **스케줄 변경**: `cron.schedule` 표현식은 UTC 기준 (KST = UTC+9). 월~토 한정은 UTC dow `0-5` 사용 (KST 월~토 = UTC 일~금). 평일만이면 `0-4`(KST 월~금).
 
 ## Changelog
+
+- **2026-05-21**: **프로모 이벤트 시스템 + 결제 정책·UX 정비 — 코드 변경 없이 SQL 한 줄로 보너스 이벤트 발행·종료 가능한 구조 확립.**
+  - **신규 테이블 `promo_events` / `promo_redemptions`** (마이그레이션 `20260520231700_promo_events.sql`) — 같은 이벤트는 번호당 1회(`unique(event_id, phone)`), 다른 이벤트엔 별개 적용. 정책: stacking 안 함(가장 큰 보너스 1개만). 자격 조건 3종: `first_payment`(이전 결제 없음) · `all`(모든 결제자) · `returning`(만료 후 재결제).
+  - **공통 로직 `supabase/functions/_shared/promo.ts`** — `pickBonusEvent`·`recordRedemption`·`getEligibleEvents`. `payment-confirm`(결제 시 적용 + 기록)·`check-subscription`(UI 노출용 자격 조회) 두 함수 공용. race condition 시 unique violation silent skip.
+  - **시드 이벤트 `launch-first-payment-7d-2026q2`** — 첫 결제 +7일, 2026-04-21 시작, 종료 없음. 4/21 publishable key 도입 후 결제한 기존 사용자도 자동 백필(`trial_used_at IS NOT NULL` → `promo_redemptions` row 변환).
+  - **구독 가격 100원 → 2,900원 복구**(5/15 임시 인하 원상복귀) + **6/12개월 플랜 활성화**(13,800원·22,800원). PRICE_PLANS 클라이언트(`index.html`·`views/renew.html`) ↔ 서버(`payment-confirm`) 동기.
+  - **구독 모달 UX 정비** — 상단 황금 🎁 배너로 진행 중 이벤트 안내(자격 있을 때만, 결제 처리 진입 시 자동 숨김). 자격 미달 시 배너 자체 숨김(보너스 언급 회피로 사용자 기분 보호). confirm 박스에 활성 구독자(현재 만료 / 결제 시 만료) · 신규(발송 시작·만료) 자연어 표시. 발송 시작 = 내일(알림톡 "내일부터 발송"과 일치), 만료 = 결제일 + 1개월(캘린더 setMonth) + 보너스.
+  - **KST 시간대 보정** — 모든 날짜 표기를 `Intl.DateTimeFormat('sv-SE', {timeZone:'Asia/Seoul'})`로 강제. `toISOString().slice(0,10)`은 UTC 라 KST 자정~오전 9시 사이 1일 오차 발생 사고(예: 5/21 KST 결제 시 만료일이 6/27로 표시) 일괄 수정. `payment-confirm` 알림톡 `#{만료일}` 변수도 동일하게 보정.
+  - **`supabase/config.toml` 신설** — 브라우저 호출 함수 8개(subscribe·check-subscription·payment-confirm·survey-api·admin-api·stock-prices·read-tab-data·read-tab-archive)에 `verify_jwt = false` 영구 박음. 직전 사고(2주간 401 silent fail) 재발 방지. CLAUDE.md + `~/.claude/CLAUDE.md`(글로벌) 양쪽에 정책·검증 절차 문서화.
+  - **`subscribers.trial_used_at` 컬럼** — deprecated 상태로 보존(드롭 안 함, 롤백 안전망). 새 코드는 안 읽고/안 씀. 차후 정리 사이클에서 제거.
 
 - **2026-05-20 (3)**: **daily-seo.yml race condition 보강.** 5/20 16:16 첫 실행이 `main -> main (fetch first)`로 reject — 워크플로 실행 중 사용자가 별도 commit을 push해 main이 앞서나간 케이스. `actions/checkout`을 `fetch-depth: 0`(전체 history)으로 늘리고, push step을 `fetch + rebase + push` 3회 재시도 루프로 변경. 충돌 시 `git rebase --abort` 후 sleep 3s 재시도. 같은 race가 재발해도 자동 복구.
 
