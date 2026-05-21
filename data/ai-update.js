@@ -24,7 +24,7 @@ const UPDATES = [
       {
         "time": "2026-05-22 00:30 KST",
         "type": "전략",
-        "detail": "Anthropic. 5/14 Bill & Melinda Gates Foundation $200M 4년 파트너십 발표 - AI 기업과 글로벌 자선재단 사상 최대 규모 거래(MobiHealthNews·TechStartups·TheNextWeb 5/14). 자금·Claude 사용 크레딧·기술 지원 패키지로 헬스케어·교육·농업 3개 영역 정부 대상 무료 AI 도구 개발 지원. 동시에 5/19 KPMG가 글로벌 27.6만명 워크포스에 Claude 전사 통합 발표 - 컨설팅 빅클래스4 첫 전면 도입 시그널. Claude for Small Business 별도 패키지로 QuickBooks·PayPal·HubSpot·Canva·Docusign·Google Workspace·Microsoft 365 즉시 연동, 엔터프라이즈 풀스택과 SMB 셀프서비스 동시 확장 베이스.",
+        "detail": "Anthropic. 5/14 Bill & Melinda Gates Foundation $200M 4년 파트너십 발표 - AI 기업과 글로벌 자선재단 사상 최대 규모 거래(MobiHealthNews·TechStartups·TheNextWeb 5/14). 자금·Claude 사용 크레딧·기술 지원 패키지로 헬스케어·교육·농업 3개 영역 정부 대상 무료 AI 도구 개발 지원. 동시에 5/19 KPMG가 글로벌 27.6만명 워크포스에 Claude 전사 통합 발표 - 컨설팅 빅4 첫 전면 도입 시그널. Claude for Small Business 별도 패키지로 QuickBooks·PayPal·HubSpot·Canva·Docusign·Google Workspace·Microsoft 365 즉시 연동, 엔터프라이즈 풀스택과 SMB 셀프서비스 동시 확장 베이스.",
         "sector": "Anthropic"
       }
     ]
