@@ -84,6 +84,26 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 .section-title{font:600 14px/1.3 Pretendard,sans-serif;color:var(--fg);margin-bottom:16px;letter-spacing:-0.2px;display:flex;align-items:center;gap:8px}
 .section-title .count{font-size:12px;color:var(--mut);font-weight:400}
 .section-subtitle{font:400 12px/1.4 Pretendard,sans-serif;color:var(--mut);margin:-10px 0 14px}
+.event-row{display:flex;flex-direction:column;gap:6px;padding:14px 16px;border:1px solid var(--border);border-radius:10px;background:#fff;margin-bottom:8px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.event-row:hover{border-color:var(--border-md);box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.event-row .top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.event-row .name{font:600 14px/1.3 Pretendard,sans-serif;color:var(--fg);letter-spacing:-0.2px}
+.event-row .code{font:500 11px/1 'Inter',sans-serif;color:var(--mut);background:#f6f7f9;padding:3px 6px;border-radius:5px;letter-spacing:0.2px}
+.event-row .meta{display:flex;gap:10px;font-size:12px;color:var(--mut);flex-wrap:wrap}
+.event-row .meta b{color:var(--fg2);font-weight:600}
+.event-row .actions{display:flex;gap:6px;flex-shrink:0}
+.event-row .actions button{padding:4px 10px;border-radius:6px;font-size:12px;font-weight:500;background:transparent;color:var(--fg2);border:1px solid var(--border-md);cursor:pointer}
+.event-row .actions button:hover{background:var(--border-md)}
+.event-row .actions button.danger{color:var(--danger);border-color:#f5cdca}
+.event-row .actions button.danger:hover{background:#fde8e6}
+.ev-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:5px;font:600 11px/1 'Inter',sans-serif;letter-spacing:0.2px}
+.ev-badge.active{background:#dff5e3;color:#225e30}
+.ev-badge.scheduled{background:#e3edff;color:#1d3a7a}
+.ev-badge.ended{background:#eee;color:var(--mut2)}
+.ev-badge.inactive{background:#f5f5f5;color:var(--mut)}
+.ev-redemption-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px}
+.ev-redemption-row:last-child{border-bottom:none}
+.ev-redemption-row .pid{color:var(--mut);font:500 11px/1.2 'Inter',sans-serif}
 
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
 .stat-card{background:var(--panel);padding:18px;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.03);position:relative}
@@ -312,6 +332,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
       <button class="nav-item" data-view="payments"><span class="icon">💳</span>결제</button>
       <button class="nav-item" data-view="sends"><span class="icon">📬</span>발송</button>
       <button class="nav-item" data-view="notice"><span class="icon">📢</span>공지</button>
+      <button class="nav-item" data-view="events"><span class="icon">🎁</span>이벤트</button>
       <button class="nav-item" data-view="surveys"><span class="icon">📊</span>설문</button>
       <button class="nav-item" data-view="system"><span class="icon">🛠️</span>시스템</button>
     </nav>
@@ -597,6 +618,40 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
       </div>
     </section>
 
+    <!-- ═══ 프로모 이벤트 ═══ -->
+    <section class="view hidden" data-view="events">
+      <div class="stats-grid" id="eventsStatsGrid"></div>
+
+      <div class="section">
+        <div class="section-title">프로모 이벤트 <span class="count" id="eventsCount"></span></div>
+        <div class="section-subtitle">결제 시 paid_until 에 자동 가산되는 보너스. 같은 이벤트는 번호당 1회, 다른 이벤트엔 별개로 적용. 가장 큰 보너스 1개만 (stacking 안 함).</div>
+        <div class="filter-bar" style="margin-top:8px">
+          <button class="btn primary" id="eventNewBtn">+ 새 이벤트</button>
+          <button class="btn ghost" id="eventReloadBtn">새로고침</button>
+        </div>
+        <div class="filter-bar" id="eventFilterBar" style="margin-top:8px">
+          <button class="btn primary" data-filter="all">전체</button>
+          <button class="btn ghost" data-filter="active">진행 중</button>
+          <button class="btn ghost" data-filter="scheduled">예정</button>
+          <button class="btn ghost" data-filter="ended">종료</button>
+          <button class="btn ghost" data-filter="inactive">비활성</button>
+        </div>
+        <div id="eventListWrap" style="margin-top:12px"></div>
+      </div>
+
+      <!-- 적용 이력 패널 (이벤트 선택 시 표시) -->
+      <div class="section hidden" id="eventRedemptionsSection">
+        <div class="section-title" id="eventRedemptionsTitle">적용 이력</div>
+        <div class="filter-bar" style="margin-top:8px">
+          <input type="tel" inputmode="numeric" id="eventRedemptionSearch" placeholder="번호로 검색 (하이픈 없이)" maxlength="11"
+            style="flex:1;min-width:160px;padding:8px 12px;border:1px solid var(--border-md);border-radius:8px;font-size:13px">
+          <button class="btn ghost" id="eventRedemptionSearchBtn">검색</button>
+          <button class="btn ghost" id="eventRedemptionsClose">닫기</button>
+        </div>
+        <div id="eventRedemptionsBody" style="margin-top:12px"></div>
+      </div>
+    </section>
+
     <!-- ═══ 시스템 (운영 점검·재실행) ═══ -->
     <section class="view hidden" data-view="system">
       <div class="section">
@@ -620,6 +675,39 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
       </div>
     </section>
   </main>
+</div>
+
+<!-- 이벤트 생성/수정 모달 (pw-modal 스타일 재활용) -->
+<div class="pw-modal-backdrop" id="eventModal" aria-hidden="true" role="dialog" aria-labelledby="eventModalTitle">
+  <div class="pw-modal" style="max-width:480px">
+    <h2 id="eventModalTitle">새 이벤트</h2>
+    <label for="evCode">코드 <span style="color:var(--mut);font-weight:400">(kebab-case · 영원히 unique)</span></label>
+    <input type="text" id="evCode" placeholder="summer-promo-2026q3" autocomplete="off">
+    <label for="evName">이름 <span style="color:var(--mut);font-weight:400">(UI 노출)</span></label>
+    <input type="text" id="evName" placeholder="여름 한정 +5일" autocomplete="off">
+    <label for="evDesc">설명 (선택)</label>
+    <input type="text" id="evDesc" placeholder="7/1~8/31 모든 결제 5일 추가" autocomplete="off">
+    <label for="evBonus">보너스 일수</label>
+    <input type="number" id="evBonus" min="0" max="365" placeholder="5">
+    <label for="evEligible">자격 조건</label>
+    <select id="evEligible" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:8px;font-size:14px;background:#fff;color:var(--fg)">
+      <option value="first_payment">첫 결제 (이전 결제 없음)</option>
+      <option value="all">모든 결제자</option>
+      <option value="returning">만료 후 재결제</option>
+    </select>
+    <label for="evStarts">시작 일시 (KST)</label>
+    <input type="datetime-local" id="evStarts">
+    <label for="evEnds">종료 일시 <span style="color:var(--mut);font-weight:400">(비우면 무기한)</span></label>
+    <input type="datetime-local" id="evEnds">
+    <label style="display:flex;align-items:center;gap:8px;margin-top:8px;font-weight:500">
+      <input type="checkbox" id="evActive" checked> 활성 (kill switch)
+    </label>
+    <div class="pw-status" id="eventModalStatus"></div>
+    <div class="pw-actions">
+      <button class="cancel" id="eventModalCancel" type="button">취소</button>
+      <button class="submit" id="eventModalSave" type="button">생성</button>
+    </div>
+  </div>
 </div>
 
 <!-- 비밀번호 변경 모달 -->
@@ -647,8 +735,8 @@ const SURVEY_API = 'https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/survey
 const SITE_BASE = location.origin;
 const KEY_TOKEN = 'briefick_admin_token';
 const KEY_EXPIRES = 'briefick_admin_expires';
-const VIEWS = ['overview','subscribers','payments','sends','notice','surveys','system'];
-const TITLES = { overview:'대시보드', subscribers:'구독자', payments:'결제', sends:'발송', notice:'공지', surveys:'설문', system:'시스템' };
+const VIEWS = ['overview','subscribers','payments','sends','notice','events','surveys','system'];
+const TITLES = { overview:'대시보드', subscribers:'구독자', payments:'결제', sends:'발송', notice:'공지', events:'이벤트', surveys:'설문', system:'시스템' };
 
 const $ = (id)=>document.getElementById(id);
 const loginView = $('loginView');
@@ -765,9 +853,269 @@ function loadView(name){
   else if(name === 'payments'){ loadPaysStats(); loadExpiring(); loadPayments(); }
   else if(name === 'sends'){ loadSendsStats(); loadLogs(); loadManualTargets(); dsLoadTargets(); }
   else if(name === 'notice'){ noticeLoadTargets(); }
+  else if(name === 'events'){ eventsLoadList(); }
   else if(name === 'surveys'){ surveyLoadList(); }
   else if(name === 'system'){ /* 버튼 클릭 시 lazy fetch — 즉시 fetch는 안 함 */ }
 }
+
+// ─── 프로모 이벤트 ───
+// admin-api 래퍼 — throw 대신 { ok:false, error } 반환 (이벤트 UI 가 폼 인라인 에러 보여주기 편하게)
+async function call(action, payload={}){
+  try { return await api(action, payload); }
+  catch(e){ return { ok:false, error: e.message }; }
+}
+
+let evState = { filter: 'all', events: [], summary: null, selectedId: null, editing: null };
+
+const EL_FOR_LABEL = { first_payment: '첫 결제', all: '모든 결제', returning: '만료 후 재결제' };
+const STATE_LABEL = { active: '🟢 진행 중', scheduled: '⚪️ 예정', ended: '⚫️ 종료', inactive: '⏸ 비활성' };
+
+function fmtKstDate(iso){
+  if(!iso) return '';
+  return new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Seoul'}).format(new Date(iso));
+}
+function fmtKstDateTime(iso){
+  if(!iso) return '';
+  return new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}).format(new Date(iso));
+}
+function fmtPhone(p){return (p||'').replace(/(\d{3})(\d{3,4})(\d{4})/,'$1-$2-$3')}
+
+async function eventsLoadList(){
+  const wrap = $('eventListWrap');
+  wrap.innerHTML = '<div class="loading" style="padding:14px;color:var(--mut);font-size:13px">로딩 중…</div>';
+  const r = await call('events_list');
+  if(!r.ok){ wrap.innerHTML = `<div class="empty">로드 실패: ${r.error||'-'}</div>`; return; }
+  evState.events = r.events || [];
+  evState.summary = r.summary || null;
+  renderEventsStats();
+  renderEventsList();
+}
+
+function renderEventsStats(){
+  const s = evState.summary || { active_count:0, month_redemption_count:0, month_bonus_days:0 };
+  $('eventsStatsGrid').innerHTML = [
+    { label:'진행 중 이벤트', value:s.active_count, unit:'개', cls:'accent' },
+    { label:'이번 달 적용', value:s.month_redemption_count, unit:'건', cls:'info' },
+    { label:'이번 달 부여 보너스', value:s.month_bonus_days, unit:'일', cls:'' },
+  ].map(c => `<div class="stat-card ${c.cls}"><div class="label">${c.label}</div><div class="value">${c.value}<span class="unit">${c.unit}</span></div></div>`).join('');
+  $('eventsCount').textContent = `총 ${evState.events.length}개`;
+}
+
+function renderEventsList(){
+  const wrap = $('eventListWrap');
+  const filter = evState.filter;
+  const filtered = evState.events.filter(e => filter === 'all' || e.state === filter);
+  if(filtered.length === 0){
+    wrap.innerHTML = '<div class="empty" style="padding:24px;text-align:center;color:var(--mut);font-size:13px">해당 상태의 이벤트가 없습니다</div>';
+    return;
+  }
+  wrap.innerHTML = filtered.map(e => {
+    const periodStr = `${fmtKstDate(e.starts_at)} ~ ${e.ends_at ? fmtKstDate(e.ends_at) : '무기한'}`;
+    const toggleLabel = e.active ? '끄기' : '켜기';
+    return `
+      <div class="event-row" data-event-id="${e.id}">
+        <div class="top">
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <span class="name">${escapeHtml(e.name)}</span>
+            <span class="code">${escapeHtml(e.code)}</span>
+            <span class="ev-badge ${e.state}">${STATE_LABEL[e.state]||e.state}</span>
+          </div>
+          <div class="actions">
+            <button data-action="view" data-id="${e.id}">상세</button>
+            <button data-action="edit" data-id="${e.id}">수정</button>
+            <button data-action="toggle" data-id="${e.id}" data-active="${e.active}">${toggleLabel}</button>
+          </div>
+        </div>
+        <div class="meta">
+          <span><b>+${e.bonus_days}일</b></span>
+          <span>자격: <b>${EL_FOR_LABEL[e.eligible_for]||e.eligible_for}</b></span>
+          <span>기간: <b>${periodStr}</b></span>
+          <span>적용: <b>${e.redemption_count}건</b> (${e.total_bonus_days}일)</span>
+        </div>
+        ${e.description ? `<div style="font-size:12px;color:var(--mut);margin-top:2px">${escapeHtml(e.description)}</div>` : ''}
+      </div>`;
+  }).join('');
+  wrap.querySelectorAll('.event-row').forEach(row => {
+    row.addEventListener('click', (ev) => {
+      const btn = ev.target.closest('button');
+      const id = Number(row.dataset.eventId);
+      if(btn){
+        const action = btn.dataset.action;
+        if(action === 'view') eventsShowRedemptions(id);
+        else if(action === 'edit') eventsOpenModal(id);
+        else if(action === 'toggle') eventsToggle(id, btn.dataset.active === 'true');
+      }else{
+        eventsShowRedemptions(id);
+      }
+    });
+  });
+}
+
+async function eventsToggle(id, currentActive){
+  const ev = evState.events.find(e => e.id === id);
+  if(!ev) return;
+  const next = !currentActive;
+  if(!confirm(`'${ev.name}' 을(를) ${next?'켭니다':'끕니다'}.\n계속하시겠어요?`)) return;
+  const r = await call('events_update', { event_id: id, active: next });
+  if(!r.ok){ alert('실패: '+(r.error||'-')); return; }
+  await eventsLoadList();
+}
+
+function eventsOpenModal(editId){
+  evState.editing = editId || null;
+  const modal = $('eventModal');
+  $('eventModalTitle').textContent = editId ? '이벤트 수정' : '새 이벤트';
+  $('eventModalSave').textContent = editId ? '저장' : '생성';
+  $('eventModalStatus').style.display = 'none';
+  $('eventModalStatus').textContent = '';
+
+  if(editId){
+    const e = evState.events.find(x => x.id === editId);
+    if(!e) return;
+    $('evCode').value = e.code; $('evCode').disabled = true;
+    $('evName').value = e.name;
+    $('evDesc').value = e.description || '';
+    $('evBonus').value = e.bonus_days;
+    $('evEligible').value = e.eligible_for;
+    $('evStarts').value = isoToLocalInput(e.starts_at);
+    $('evEnds').value = e.ends_at ? isoToLocalInput(e.ends_at) : '';
+    $('evActive').checked = e.active;
+  }else{
+    $('evCode').value = ''; $('evCode').disabled = false;
+    $('evName').value = '';
+    $('evDesc').value = '';
+    $('evBonus').value = '';
+    $('evEligible').value = 'first_payment';
+    const now = new Date(); now.setSeconds(0,0);
+    $('evStarts').value = isoToLocalInput(now.toISOString());
+    $('evEnds').value = '';
+    $('evActive').checked = true;
+  }
+  modal.classList.add('show');
+}
+
+function eventsCloseModal(){ $('eventModal').classList.remove('show'); }
+
+function isoToLocalInput(iso){
+  // 'YYYY-MM-DDTHH:mm' (브라우저 로컬 = KST 가정)
+  const d = new Date(iso);
+  const pad = (n) => String(n).padStart(2,'0');
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+function localInputToIso(v){
+  if(!v) return null;
+  return new Date(v).toISOString();  // 브라우저 로컬 시간을 그대로 UTC 변환
+}
+
+async function eventsSaveModal(){
+  const payload = {
+    name: $('evName').value.trim(),
+    description: $('evDesc').value.trim() || null,
+    bonus_days: Number($('evBonus').value),
+    eligible_for: $('evEligible').value,
+    starts_at: localInputToIso($('evStarts').value),
+    ends_at: localInputToIso($('evEnds').value),
+    active: $('evActive').checked,
+  };
+  const action = evState.editing ? 'events_update' : 'events_create';
+  if(evState.editing) payload.event_id = evState.editing;
+  else payload.code = $('evCode').value.trim();
+
+  const st = $('eventModalStatus');
+  st.style.display='block'; st.style.background='#fafafa'; st.style.color='#666'; st.textContent='저장 중…';
+  const r = await call(action, payload);
+  if(!r.ok){
+    st.style.background='#fbeaea'; st.style.color='#d45656'; st.textContent = r.error || '실패';
+    return;
+  }
+  eventsCloseModal();
+  await eventsLoadList();
+}
+
+async function eventsShowRedemptions(eventId){
+  evState.selectedId = eventId;
+  const ev = evState.events.find(x => x.id === eventId);
+  if(!ev) return;
+  $('eventRedemptionsSection').classList.remove('hidden');
+  $('eventRedemptionsTitle').textContent = `${ev.name} 적용 이력 — ${ev.redemption_count}건`;
+  $('eventRedemptionSearch').value = '';
+  await loadEventRedemptions(eventId, 1, '');
+  // 스크롤 이동
+  $('eventRedemptionsSection').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+async function loadEventRedemptions(eventId, page, phoneQuery){
+  const body = $('eventRedemptionsBody');
+  body.innerHTML = '<div class="loading" style="padding:14px;color:var(--mut);font-size:13px">로딩 중…</div>';
+  const r = await call('events_redemptions', { event_id: eventId, page, phone_query: phoneQuery });
+  if(!r.ok){ body.innerHTML = `<div class="empty">실패: ${r.error||'-'}</div>`; return; }
+  const rows = r.redemptions || [];
+  if(rows.length === 0){
+    body.innerHTML = '<div class="empty" style="padding:24px;text-align:center;color:var(--mut);font-size:13px">적용 이력 없음</div>';
+    return;
+  }
+  const rowsHtml = rows.map(rd => `
+    <div class="ev-redemption-row">
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <div><b>${fmtPhone(rd.phone)}</b> <span style="color:var(--mut);font-size:12px">· +${rd.bonus_days_applied}일</span></div>
+        <div style="font-size:12px;color:var(--mut)">${fmtKstDateTime(rd.redeemed_at)} ${rd.payment_id?'· <span class="pid">'+escapeHtml(rd.payment_id)+'</span>':''}</div>
+      </div>
+      <button class="btn ghost danger" data-phone="${rd.phone}" style="padding:4px 10px;font-size:12px">재허용</button>
+    </div>`).join('');
+  const totalPages = Math.max(1, Math.ceil(r.total / r.page_size));
+  const pager = totalPages > 1 ? `
+    <div class="filter-bar" style="margin-top:10px;justify-content:center">
+      <button class="btn ghost" data-page="${Math.max(1,page-1)}" ${page===1?'disabled':''}>← 이전</button>
+      <span style="align-self:center;font-size:13px;color:var(--mut)">${page} / ${totalPages}</span>
+      <button class="btn ghost" data-page="${Math.min(totalPages,page+1)}" ${page===totalPages?'disabled':''}>다음 →</button>
+    </div>` : '';
+  body.innerHTML = rowsHtml + pager;
+  body.querySelectorAll('.ev-redemption-row button[data-phone]').forEach(b => {
+    b.addEventListener('click', () => eventsResetRedemption(eventId, b.dataset.phone));
+  });
+  body.querySelectorAll('button[data-page]').forEach(b => {
+    if(b.disabled) return;
+    b.addEventListener('click', () => loadEventRedemptions(eventId, Number(b.dataset.page), phoneQuery));
+  });
+}
+
+async function eventsResetRedemption(eventId, phone){
+  if(!confirm(`${fmtPhone(phone)} 의 이 이벤트 적용 이력을 지웁니다.\n같은 이벤트로 다시 보너스를 받을 수 있게 됩니다.\n계속하시겠어요?`)) return;
+  const r = await call('redemption_delete', { event_id: eventId, phone });
+  if(!r.ok){ alert('실패: '+(r.error||'-')); return; }
+  await loadEventRedemptions(eventId, 1, $('eventRedemptionSearch').value.replace(/[^0-9]/g,''));
+  // 통계도 갱신
+  await eventsLoadList();
+}
+
+// 이벤트 페이지 핸들러 바인딩
+document.addEventListener('DOMContentLoaded', () => {
+  const newBtn = $('eventNewBtn'); if(newBtn) newBtn.addEventListener('click', () => eventsOpenModal(null));
+  const rldBtn = $('eventReloadBtn'); if(rldBtn) rldBtn.addEventListener('click', () => eventsLoadList());
+  const filterBar = $('eventFilterBar');
+  if(filterBar){
+    filterBar.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-filter]');
+      if(!btn) return;
+      evState.filter = btn.dataset.filter;
+      filterBar.querySelectorAll('button').forEach(b => {
+        b.classList.toggle('primary', b===btn);
+        b.classList.toggle('ghost', b!==btn);
+      });
+      renderEventsList();
+    });
+  }
+  const modCancel = $('eventModalCancel'); if(modCancel) modCancel.addEventListener('click', eventsCloseModal);
+  const modSave = $('eventModalSave'); if(modSave) modSave.addEventListener('click', eventsSaveModal);
+  const modBg = $('eventModal');
+  if(modBg) modBg.addEventListener('click', (e) => { if(e.target === modBg) eventsCloseModal(); });
+  const redClose = $('eventRedemptionsClose');
+  if(redClose) redClose.addEventListener('click', () => { $('eventRedemptionsSection').classList.add('hidden'); });
+  const redSearch = $('eventRedemptionSearchBtn');
+  if(redSearch) redSearch.addEventListener('click', () => {
+    if(evState.selectedId) loadEventRedemptions(evState.selectedId, 1, $('eventRedemptionSearch').value.replace(/[^0-9]/g,''));
+  });
+});
 
 // ─── 시스템: 자동 갱신·인스타 운영 ───
 function sysShowResult(elId, ok, html){

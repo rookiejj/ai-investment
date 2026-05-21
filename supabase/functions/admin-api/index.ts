@@ -548,6 +548,187 @@ Deno.serve(async (req) => {
       }
     }
 
+    // ─── events_list ─── 프로모 이벤트 목록 + 적용 건수·총 보너스일 집계
+    if (action === "events_list") {
+      const { data: events, error: evErr } = await supabase
+        .from("promo_events")
+        .select("id, code, name, description, bonus_days, eligible_for, starts_at, ends_at, active, created_at, updated_at")
+        .order("created_at", { ascending: false });
+      if (evErr) throw evErr;
+
+      // redemption 집계 (이벤트별 count + sum)
+      const { data: reds, error: redErr } = await supabase
+        .from("promo_redemptions")
+        .select("event_id, bonus_days_applied");
+      if (redErr) throw redErr;
+
+      const aggMap = new Map<number, { count: number; total_days: number }>();
+      for (const r of reds ?? []) {
+        const eid = (r as { event_id: number }).event_id;
+        const days = (r as { bonus_days_applied: number }).bonus_days_applied;
+        const cur = aggMap.get(eid) ?? { count: 0, total_days: 0 };
+        cur.count += 1;
+        cur.total_days += days;
+        aggMap.set(eid, cur);
+      }
+
+      const nowIso = new Date().toISOString();
+      const enriched = (events ?? []).map((e) => {
+        const agg = aggMap.get((e as { id: number }).id) ?? { count: 0, total_days: 0 };
+        // 상태 산출: 진행 중 / 예정 / 종료 / 비활성
+        let state: "active" | "scheduled" | "ended" | "inactive";
+        const ev = e as Record<string, unknown>;
+        if (!ev.active) state = "inactive";
+        else if ((ev.starts_at as string) > nowIso) state = "scheduled";
+        else if (ev.ends_at && (ev.ends_at as string) <= nowIso) state = "ended";
+        else state = "active";
+        return { ...e, redemption_count: agg.count, total_bonus_days: agg.total_days, state };
+      });
+
+      // 이번 달 요약
+      const monthStart = new Date();
+      monthStart.setDate(1);
+      monthStart.setHours(0, 0, 0, 0);
+      const monthStartIso = monthStart.toISOString();
+      const { data: monthReds, error: mrErr } = await supabase
+        .from("promo_redemptions")
+        .select("bonus_days_applied")
+        .gte("redeemed_at", monthStartIso);
+      if (mrErr) throw mrErr;
+      const monthCount = monthReds?.length ?? 0;
+      const monthDays = (monthReds ?? []).reduce((s, r) => s + ((r as { bonus_days_applied: number }).bonus_days_applied || 0), 0);
+      const activeCount = enriched.filter((e) => (e as { state: string }).state === "active").length;
+
+      return json({
+        ok: true,
+        events: enriched,
+        summary: { active_count: activeCount, month_redemption_count: monthCount, month_bonus_days: monthDays },
+      }, { cors });
+    }
+
+    // ─── events_create ─── 새 이벤트 생성
+    if (action === "events_create") {
+      const code = String(body.code ?? "").trim();
+      const name = String(body.name ?? "").trim();
+      const description = body.description ? String(body.description).trim() : null;
+      const bonusDays = Number(body.bonus_days);
+      const eligibleFor = String(body.eligible_for ?? "");
+      const startsAt = String(body.starts_at ?? "");
+      const endsAt = body.ends_at ? String(body.ends_at) : null;
+      const active = body.active !== false;
+
+      if (!/^[a-z0-9][a-z0-9-]*[a-z0-9]$/.test(code) && code.length > 1 || !code) {
+        return json({ ok: false, error: "코드는 kebab-case (소문자·숫자·하이픈, 2자 이상) 형식이어야 합니다." }, { status: 400, cors });
+      }
+      if (!name) return json({ ok: false, error: "이름이 필요합니다." }, { status: 400, cors });
+      if (!Number.isInteger(bonusDays) || bonusDays < 0 || bonusDays > 365) {
+        return json({ ok: false, error: "보너스 일수는 0~365 정수여야 합니다." }, { status: 400, cors });
+      }
+      if (!["first_payment", "all", "returning"].includes(eligibleFor)) {
+        return json({ ok: false, error: "자격 조건이 올바르지 않습니다." }, { status: 400, cors });
+      }
+      if (!startsAt) return json({ ok: false, error: "시작 일시가 필요합니다." }, { status: 400, cors });
+      if (endsAt && endsAt <= startsAt) {
+        return json({ ok: false, error: "종료 일시는 시작 일시보다 뒤여야 합니다." }, { status: 400, cors });
+      }
+
+      const { data, error } = await supabase
+        .from("promo_events")
+        .insert({ code, name, description, bonus_days: bonusDays, eligible_for: eligibleFor, starts_at: startsAt, ends_at: endsAt, active })
+        .select("id")
+        .single();
+      if (error) {
+        const msg = String(error.message ?? "");
+        if (msg.includes("duplicate") || msg.includes("23505")) {
+          return json({ ok: false, error: "이미 같은 코드의 이벤트가 있습니다." }, { status: 409, cors });
+        }
+        throw error;
+      }
+      return json({ ok: true, event_id: (data as { id: number }).id }, { cors });
+    }
+
+    // ─── events_update ─── 이벤트 수정 (code 제외)
+    if (action === "events_update") {
+      const id = Number(body.event_id);
+      if (!Number.isInteger(id) || id <= 0) {
+        return json({ ok: false, error: "event_id 가 올바르지 않습니다." }, { status: 400, cors });
+      }
+      const patch: Record<string, unknown> = {};
+      if (typeof body.name === "string") patch.name = body.name.trim();
+      if (body.description !== undefined) patch.description = body.description ? String(body.description).trim() : null;
+      if (body.bonus_days !== undefined) {
+        const n = Number(body.bonus_days);
+        if (!Number.isInteger(n) || n < 0 || n > 365) {
+          return json({ ok: false, error: "보너스 일수는 0~365 정수여야 합니다." }, { status: 400, cors });
+        }
+        patch.bonus_days = n;
+      }
+      if (typeof body.eligible_for === "string") {
+        if (!["first_payment", "all", "returning"].includes(body.eligible_for)) {
+          return json({ ok: false, error: "자격 조건이 올바르지 않습니다." }, { status: 400, cors });
+        }
+        patch.eligible_for = body.eligible_for;
+      }
+      if (body.starts_at !== undefined) patch.starts_at = String(body.starts_at);
+      if (body.ends_at !== undefined) patch.ends_at = body.ends_at ? String(body.ends_at) : null;
+      if (body.active !== undefined) patch.active = body.active === true;
+
+      if (Object.keys(patch).length === 0) {
+        return json({ ok: false, error: "변경할 필드가 없습니다." }, { status: 400, cors });
+      }
+      if (patch.starts_at && patch.ends_at && (patch.ends_at as string) <= (patch.starts_at as string)) {
+        return json({ ok: false, error: "종료 일시는 시작 일시보다 뒤여야 합니다." }, { status: 400, cors });
+      }
+      const { error } = await supabase.from("promo_events").update(patch).eq("id", id);
+      if (error) throw error;
+      return json({ ok: true }, { cors });
+    }
+
+    // ─── events_redemptions ─── 특정 이벤트의 적용 이력 (페이지네이션)
+    if (action === "events_redemptions") {
+      const id = Number(body.event_id);
+      if (!Number.isInteger(id) || id <= 0) {
+        return json({ ok: false, error: "event_id 가 올바르지 않습니다." }, { status: 400, cors });
+      }
+      const page = Math.max(1, Number(body.page) || 1);
+      const pageSize = 50;
+      const from = (page - 1) * pageSize;
+      const to = from + pageSize - 1;
+
+      let query = supabase
+        .from("promo_redemptions")
+        .select("id, phone, payment_id, bonus_days_applied, redeemed_at, subscriber_id", { count: "exact" })
+        .eq("event_id", id)
+        .order("redeemed_at", { ascending: false })
+        .range(from, to);
+      if (typeof body.phone_query === "string" && body.phone_query.trim()) {
+        const q = body.phone_query.replace(/[^0-9]/g, "");
+        if (q) query = query.ilike("phone", `%${q}%`);
+      }
+      const { data, error, count } = await query;
+      if (error) throw error;
+      return json({ ok: true, redemptions: data ?? [], total: count ?? 0, page, page_size: pageSize }, { cors });
+    }
+
+    // ─── redemption_delete ─── 단일 redemption 삭제 → 그 번호 같은 이벤트 재허용
+    if (action === "redemption_delete") {
+      const id = Number(body.event_id);
+      const phone = String(body.phone ?? "").replace(/[^0-9]/g, "");
+      if (!Number.isInteger(id) || id <= 0) {
+        return json({ ok: false, error: "event_id 가 올바르지 않습니다." }, { status: 400, cors });
+      }
+      if (!/^01[016789]\d{7,8}$/.test(phone)) {
+        return json({ ok: false, error: "전화번호 형식이 올바르지 않습니다." }, { status: 400, cors });
+      }
+      const { error } = await supabase
+        .from("promo_redemptions")
+        .delete()
+        .eq("event_id", id)
+        .eq("phone", phone);
+      if (error) throw error;
+      return json({ ok: true }, { cors });
+    }
+
     return json({ ok: false, error: `unknown action: ${action}` }, { status: 400, cors });
   } catch (err) {
     console.error("[admin-api]", err);
