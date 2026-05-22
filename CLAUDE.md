@@ -133,6 +133,7 @@ ai-investment/
 │   ├── commodity-data.js       / commodity-update.js
 │   ├── unicorn-data.js         / unicorn-update.js
 │   ├── calendar-events.js      ← 이벤트 캘린더 데이터 (recurring 패턴 + fixed 단발)
+│   ├── macro-data.js           ← FRED 매크로 지표 (scripts/fetch-macro.js 자동 생성, UI·DB sync 미와이어 — Phase 2 예정)
 │   └── company-ko.js           ← 영문 회사명·티커 → 한글 매핑 (index.html·daily-send 공용)
 └── README.md
 ```
