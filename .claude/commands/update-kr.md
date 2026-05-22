@@ -7,6 +7,7 @@
 2. **판단** — 현재 `data/kr-stocks-data.js`와 비교, 편집 기준 부합 항목만 보수적 선정. 회계·거버넌스 이슈·상장폐지 위험 종목은 즉시 제외·대체. 카테고리당 정확히 7개 유지.
 
 3. **편집** — `data/kr-stocks-data.js` 최소 diff 수정. rs 12단어 이내, 단위는 천억원, 대형주 정수·소형주 소수점, 적자는 음수.
+   - **관점**: CLAUDE.md [🆕 기관급 톤 가이드] 적용 — 매크로·밸류에이션·cross-asset·정책 중 사건 본질에 가장 맞는 *하나*의 렌즈를 자연 결합. kr은 특히 외국인 순매수·매도·환율 민감도·MSCI/FTSE 펀드플로·한미 금리차 자주 활용.
 
 4. **이력** — `data/kr-stocks-update.js` 맨 앞에 엔트리 prepend.
    - date: `TZ=Asia/Seoul date +"%Y-%m-%d %H:%M KST"`

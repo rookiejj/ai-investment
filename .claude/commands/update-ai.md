@@ -7,6 +7,7 @@
 2. **판단** — 현재 `data/ai-data.js`와 비교, 새 모델·제품·주요 뉴스만 추가. 기존 NEW 배지들은 isNew:false로 내림(출시 4~6주 경과 기준). 새 항목은 isNew:true.
 
 3. **편집** — `data/ai-data.js` 최소 diff 수정. desc는 기술 스펙 + 시장 맥락. 단순 스펙 나열 금지.
+   - **관점**: CLAUDE.md [🆕 기관급 톤 가이드] 적용 — 매크로·밸류에이션·cross-asset·정책 중 사건 본질에 가장 맞는 *하나*의 렌즈를 자연 결합. ai는 특히 capability benchmark·CAPEX 트렌드·인프라 lock-in·monetization unit economics·모델 출시 cadence 자주 활용.
 
 4. **이력** — `data/ai-update.js` 맨 앞에 엔트리 prepend (AI 탭 공통 스키마, changes[].time 포함).
    - date: `TZ=Asia/Seoul date +"%Y-%m-%d %H:%M KST"`

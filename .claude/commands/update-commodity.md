@@ -7,6 +7,7 @@
 2. **판단** — 현재 `data/commodity-data.js`와 비교, 의미 있는 가격 변동(원자재 ±5% 이상, 금리·DXY 10bp/1% 이상)은 반영. 카테고리당 정확히 4개 유지 (시장·원자재는 7 확장 안 함). 시장 지표 카테고리가 첫 번째, 원자재가 뒤.
 
 3. **편집** — `data/commodity-data.js` 최소 diff 수정. 가격·YTD·1Y·52주 범위 현행화.
+   - **관점**: CLAUDE.md [🆕 기관급 톤 가이드] 적용 — 매크로·밸류에이션·cross-asset·정책 중 사건 본질에 가장 맞는 *하나*의 렌즈를 자연 결합. commodity는 특히 실질금리(10y - CPI)·중앙은행 매수·매도·재고 사이클·달러 강도 카운터·지정학 자주 활용.
 
 4. **이력** — `data/commodity-update.js` 맨 앞에 엔트리 prepend.
    - date: `TZ=Asia/Seoul date +"%Y-%m-%d %H:%M KST"`

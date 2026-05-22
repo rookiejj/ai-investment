@@ -7,6 +7,7 @@
 2. **판단** — 상장·인수 완료된 기업은 **즉시 제외**하고 동일 카테고리 비상장 대표 기업으로 교체. 의미 있는 밸류 변동(±30% 이상)·신규 라운드는 반영. 카테고리당 정확히 7개 유지.
 
 3. **편집** — `data/unicorn-data.js` 최소 diff 수정. val은 **확정된 마지막 라운드** 기준(협상 중 수치는 rs 본문에만 맥락으로).
+   - **관점**: CLAUDE.md [🆕 기관급 톤 가이드] 적용 — 매크로·밸류에이션·cross-asset·정책 중 사건 본질에 가장 맞는 *하나*의 렌즈를 자연 결합. unicorn은 특히 라운드 normalization·M&A discount·IPO 윈도우 timing·후속 라운드 up/down·DPI(회수 배수) 자주 활용.
 
 4. **이력** — `data/unicorn-update.js` 맨 앞에 엔트리 prepend.
    - date: `TZ=Asia/Seoul date +"%Y-%m-%d %H:%M KST"`

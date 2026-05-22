@@ -486,6 +486,67 @@ QCOM, OpenAI, MediaTek 2028 AI 스마트폰 칩 협력
 
 **How to apply:** 자동 갱신 에이전트가 조사 단계에서 향후 일정을 다룰 때, 종목 카드 `rs`에만 적지 말고 `data/calendar-events.js`의 `fixed` 배열에도 한 줄 추가. 한 사건이 여러 곳에 노출돼야 사용자가 만나는 채널(친구톡·캐러셀·캘린더) 모두에 일관되게 보인다. 특히 14일 윈도우 안 빈 평일이 보이면 그 날짜에 알려진 일정 후보(위 [빈 날짜 의식적 점검] 리스트)를 자동으로 한 번 더 확인.
 
+### 🆕 기관급 톤 가이드 (institutional lens)
+
+retail news 단순 나열에 머무르지 말고 institutional research(FRED·Yardeni·셀사이드 보고서)의 결을 한 줄씩 녹인다. 사건만 나열하면 yahoo, 사건에 *맥락*까지 엮으면 Bloomberg.
+
+**공통 4가지 렌즈 (모든 탭 적용)**
+
+1. **매크로 컨텍스트** — 10y 국채금리·DXY·CPI·연준 정책을 사건 배경으로 인용
+   - ❌ "AAPL Q2 매출 $90B 컨센 상회"
+   - ✅ "AAPL Q2 매출 $90B 컨센 상회 - 달러 119 강세 환율 헤드윈드 30bp 흡수"
+
+2. **밸류에이션 컨텍스트** — forward P/E·earnings yield·sector relative·peer multiple
+   - ❌ "NVDA $216 +4% 신고가"
+   - ✅ "NVDA $216 +4% forward P/E 32 sector premium 유지·earnings yield 3.1% 10y gap 150bp"
+
+3. **cross-asset 시그널** — 채권 spread·FX 모멘텀·원자재 ratio·VIX
+   - ❌ "한국 10년물 4.2% 부담"
+   - ✅ "한국 10년물 4.2%·美 10y gap 40bp 외국인 채권 비중 카운터"
+
+4. **정책 환경** — Fed funds path·중앙은행 변곡·재정 정책
+   - ❌ "FOMC 매파"
+   - ✅ "Fed funds 3.6% 동결·dot plot 25bp 인하 1회로 후퇴·BOJ YCC 정상화 6월 분기점"
+
+**탭별 자주 쓰는 렌즈**
+
+| 탭 | 즐겨 쓰는 관점 |
+|---|---|
+| **stocks** | sector rotation · earnings revision · 매크로 민감도(rates·USD) · institutional flow · forward P/E |
+| **kr** | 외국인 순매수·매도 · 환율 민감도 · MSCI/FTSE 펀드플로 · 코스피200 비중 · 한미 금리차 |
+| **ai** | capability benchmark · CAPEX 트렌드 · 인프라 lock-in · monetization unit economics · 모델 출시 cadence |
+| **commodity** | 실질금리(10y - CPI) · 중앙은행 매수·매도 · 재고 사이클 · 달러 강도 카운터 · 지정학 |
+| **unicorn** | 라운드 normalization · DPI · M&A discount · IPO 윈도우 timing · 후속 라운드 down/up |
+
+**🔴 적용 룰 (엄수)**
+
+- **rs 12단어 한도 유지** — 한 줄에 *하나의 렌즈*만 끼워넣기. 모든 줄에 매크로 박는 거 아님
+- 사건의 핵심에 가장 적합한 *하나*의 렌즈 선택. 무리하게 끼워 맞추지 말 것
+- 일반 사용자가 못 읽는 슬랭은 풀어서 또는 생략:
+  - **MOVE index** → "채권 변동성"
+  - **skew** → "옵션 비대칭"
+  - **GEX** → "감마 노출"
+  - **basis trade** → "선현물 차익"
+  - **convexity** → "볼록성"
+  - **carry** → "캐리"·"이자 수익"
+  - **DPI/TVPI** → "회수 배수"·"누적 배수"
+  - 단, **forward P/E·earnings yield·spread·CAPEX·MSCI·NFP** 등은 일반 독자도 충분히 노출된 표현 → 그대로 사용
+- 매크로 수치는 *오늘 조사 시점* 값 사용 — 옛 값(예: "10y 4.2%") 박힌 채로 두지 말 것
+
+**🔴 summary 5줄 적용 (엄수)**
+
+친구톡·인스타에 그대로 노출되는 면. **첫 줄에 institutional 렌즈 박지 말 것** — 첫 줄은 그날의 대표 헤드라인(임팩트 최대 단일 사건). 2~5줄에 자연스럽게 매크로·밸류·cross-asset 끼워넣기.
+
+- ❌ 첫 줄: "10y 4.6%·DXY 119 강세 동조·sector rotation 방어주로"
+- ✅ 첫 줄: "삼성전자 296,000원 +4.23% 사상 최고가"
+- ✅ 둘째 줄: "한국 10년물 4.2%·美 10y gap 40bp 외국인 채권플로 카운터"
+
+탭 간 cross-tab 인용 금지 원칙(위 [탭 콘텐츠 독립성 원칙]) 계속 유효 — 매크로 렌즈도 자기 탭 시장 주체로 환원해 서술.
+
+**Why**: 사용자가 매일 받는 친구톡·인스타 본문이 institutional brief의 결을 가지면 "여기 다른 곳들이랑 다르네"가 자연 발생. retail news 사이트는 사실 나열에 그치고 institutional brief는 항상 맥락을 동반 — 이 결의 차이가 신뢰감 형성.
+
+**How to apply**: 자동 갱신 에이전트가 `rs`·`summary`·`detail`·AI `desc` 작성 시 위 4가지 렌즈 중 하나를 선택해 자연어로 결합. 모든 줄·모든 항목에 강제 적용 아님 — 사건 본질에 가장 잘 맞는 곳에만 끼워넣기. 첫 시도가 어색하면 빼는 쪽이 안전.
+
 ---
 
 ## 탭별 명세
