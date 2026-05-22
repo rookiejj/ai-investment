@@ -129,7 +129,7 @@ const data = [
     "stocks": [
       {
         "nm": "SpaceX",
-        "rs": "5/21 Starship V3 Flight 12 발사 윈도우 진입·Pad 2 첫 발사·Raptor 3·1,800만 파운드 추력 신엔진·6/11 프라이싱·6/12 Nasdaq 데뷔 SPCX·밸류 $1.75T 조달 $75B 사상 최대 IPO·일부 $80B 조달 $2T 시나리오·Starlink 2025 매출 $11.4B·Q1 2026 매출 $3.3B·구독자 10.3M YoY 두 배",
+        "rs": "5/21~22 Starship V3 Flight 12 발사 윈도우 진입·Pad 2 첫 발사·Raptor 3·1,800만 파운드 추력·6/11 프라이싱·6/12 Nasdaq 데뷔 SPCX D-21·밸류 $1.75T 조달 $75B 사상 최대 IPO·일부 $80B $2T 시나리오·Starlink Q1 2026 매출 $3.3B·구독자 10.3M YoY +106%·5/20 S-1 공개 후 단일 IPO 분기점",
         "ipo": "2026.06.11 프라이싱·6/12 Nasdaq 데뷔",
         "val": "$1.75T",
         "round": "5/20 S-1 공개·티커 SPCX·리테일 30%·Brookfield $2B",
@@ -169,7 +169,7 @@ const data = [
       },
       {
         "nm": "Anduril",
-        "rs": "5/13 Series H $5B 조달 확정 $61B 밸류 도달 - 9개월 만 30.5→61B 더블·Thrive Capital·a16z 공동 주도·누적 펀딩 $11.4B·Golden Dome $3.2B + 美 우주군 $1.8B + 美 육군 10년 $20B 한도 계약 누적 수주",
+        "rs": "5/13 Series H $5B 종결 $61B 밸류 - 1년 만 30.5→61B 더블·Thrive Capital·a16z 공동 주도·누적 펀딩 $11B+·2025 매출 $2.2B·Golden Dome $3.2B + 美 우주군 $1.8B + 美 육군 10년 $20B 한도 계약 누적 수주",
         "ipo": "단기 아님(Luckey)",
         "val": "$61B",
         "round": "Series H $5B (2026-05)",
@@ -239,7 +239,7 @@ const data = [
       },
       {
         "nm": "Sword Health",
-        "rs": "AI 기반 근골격 치료·Hinge 경쟁사·글로벌 확장",
+        "rs": "AI 기반 근골격 치료·Hinge Health 5/22 IPO 데뷔 후 비상장 단독 MSK 채널·글로벌 확장",
         "ipo": "미정",
         "val": "$3B",
         "round": "Series E ($130M, 2024-06)",
