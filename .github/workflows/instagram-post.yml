@@ -239,12 +239,12 @@ jobs:
           }
           echo "[verify] reels.mp4 OK (${DUR_INT}s, h264 1080x1920)"
 
-      - name: 출력물 아티팩트 업로드 (디버깅용, 7일 보관)
+      - name: 출력물 아티팩트 업로드 (디버깅용, 1일 보관)
         uses: actions/upload-artifact@v4
         with:
           name: instagram-output
           path: scripts/instagram/out/
-          retention-days: 7
+          retention-days: 1
 
       - name: 인스타그램 게시
         env:
