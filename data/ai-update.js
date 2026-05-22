@@ -1,31 +1,37 @@
 const UPDATES = [
   {
-    "date": "2026-05-22 19:00 KST",
-    "summary": "OpenAI $122B 라운드 클로징 $852B 밸류 - 사상 최대 사적 자금조달\nAnthropic Mythos 차세대 모델 업계 리더십 - Colossus 1 300MW 220K GPU 전용\nGoogle Gemini 3.5 Flash GA·Antigravity 2.0 에이전트 플랫폼·Gemma 4 오픈\nxAI SuperGrok Heavy 5/21 출시 - 더 높은 rate limit·SpaceX 산하 통합\nMeta 8,000명(10%) 정리해고 AI 피벗·NVDA RTX PRO 5000 72GB GA",
+    "date": "2026-05-23 07:30 KST",
+    "summary": "Anthropic 6/15 프로그래매틱 사용량 분리 - Claude Code·Agent SDK 별도 크레딧·Compliance API GA\nOpenAI Codex Goal Mode GA + macOS Appshots - 장기 horizon 아웃컴 에이전트로 진화\nMistral Medium 3.5 + Vibe Remote Agents - 코딩 에이전트 4파전 진입·SWE-bench 77.6\nGoogle DeepMind Contextual AI 영입 $80~90M 라이센스 딜 - 엔터프라이즈 grounding 강화\nApple WWDC26 6/8 키노트 확정 - Siri 챗봇 개편·Gemini 기반 Foundation Models 공식화",
     "changes": [
       {
-        "time": "2026-05-22 02:00 KST",
-        "type": "펀딩",
-        "detail": "OpenAI. $122B 메가 펀딩 클로징 - 사상 최대 사적 자금조달·포스트머니 밸류 $852B(Crescendo AI 5월). CFO Sarah Friar IPO 시 리테일 투자자용 일부 주식 유보 확인으로 2026 하반기 IPO 시그널 확정 - 사적 자금조달 사이클 끝나가는 분기점. AI 광고 사업 2030년 $100B 목표 천명, Google 핵심 광고 모델 직접 도전 흐름. 동시에 GPT-5.5 Instant 5/5 출시 후 디폴트 모델 전환 진행 - AIME 2025: 81.2 vs 65.4·MMMU-Pro 76 vs 69.2·환각 감소·법률·의학·금융 신뢰도 강화. Anthropic·Google DeepMind 3강 구도에서 단일 매출 1위 굳히기 흐름.",
-        "sector": "OpenAI"
-      },
-      {
-        "time": "2026-05-22 03:00 KST",
-        "type": "모델 출시",
-        "detail": "Google DeepMind. Gemini 3.5 Flash GA·I/O 2026 후속 5/20 배포 시작 - $1.50/$9 per 1M 토큰·1M 컨텍스트·AI Mode 디폴트 모델로 전환(Tom's Guide 5/20). Antigravity 2.0 + Antigravity CLI 에이전트 플랫폼 동시 공개 - 코딩 에이전트 시장 Claude Code·Codex CLI·xAI Grok Build 3파전에 4번째 진입. Gemini MAU 900M 1년 만에 2배·Ultra 구독 $250→$200 인하·새 Developer tier $100/월 신설로 가격·접근성 동시 확장. Gemma 4 오픈 모델 Apache 2.0 라이선스 출시 - 에이전틱·추론 특화 오픈소스 라인업. DeepMind Contextual AI 연구자 20명+ 영입 $80~90M 라이선스 딜로 인재 흡수도 가속.",
-        "sector": "Google DeepMind"
-      },
-      {
-        "time": "2026-05-22 02:30 KST",
-        "type": "인프라",
-        "detail": "Anthropic. Mythos(미공개 차세대 모델) 업계 리더십 확보 - Google·OpenAI 임원도 'Anthropic이 Mythos로 앞서감' 인정·금융 시스템 수십 년 묵은 버그 발견 등 보안 분야 시연(Axios I/O 5/21). 동시에 SpaceX Colossus 1 데이터센터 전체 캐파 확보 - 300MW 220,000 NVIDIA GPU 전용 사용·xAI Cursor 모델 학습과 컴퓨트 공유 흐름(DCD 5월). 엔터프라이즈 - SAP Business AI Platform Claude 통합·PwC 전사 배포·Klaviyo 마케팅 통합. CNBC Disruptor 50 1위 등극·엔터프라이즈 채택률 4월 34.4%로 OpenAI 32.3% 사상 첫 추월 유지.",
+        "time": "2026-05-23 02:00 KST",
+        "type": "제품 출시",
+        "detail": "Anthropic. Compliance API GA·6/15 프로그래매틱 사용 청구 분리 발표(InfoWorld 5/22). CrowdStrike·Palo Alto 엔터프라이즈 보안 거버넌스 도구와 통합 - 규제 산업 도입 가속 채널. 6/15부터 Claude Code·Agent SDK·GitHub Actions·3rd-party 프레임워크 프로그래매틱 트래픽이 채팅 구독과 분리 별도 크레딧 - Pro $20·Max 5x $100·Max 20x $200 월간 한도 API 요율 적용. 프론티어 랩 첫 에이전트 트래픽 공식 미터링 - 에이전틱 시대 수익화 템플릿 셋팅·Claude Code 주도 $14B ARR 런레이트 capa 압박 동인. 20+ 법률 MCP 커넥터 + 12개 실무 영역 플러그인 동반 출시.",
         "sector": "Anthropic"
       },
       {
-        "time": "2026-05-22 01:30 KST",
+        "time": "2026-05-23 02:30 KST",
         "type": "제품 출시",
-        "detail": "xAI. SuperGrok Heavy 5/21 출시 - 더 높은 rate limit + Grok Heavy 액세스·Grok Build(터미널 코딩 에이전트) 5/14~15 베타 후속·$300/월 구독 전용(Basenor 5/21). 5월 SpaceX 산하 'SpaceXAI' 디비전 통합 발표 - SpaceX-Cursor $60B 인수 옵션 패러그래프 등 우주·AI 단일 구도 가시화·Cursor 인수 무산 시 $10B 파트너십 대안 진행. Grok 4.20 5/1 출시 후 2M 컨텍스트 베이스 잔존, Web Connectors로 SharePoint·Outlook·Google Workspace·Notion·GitHub·Linear 직접 통합. 코딩 에이전트 시장 Anthropic Claude Code·OpenAI Codex CLI·xAI Grok Build 3파전 가격 차별화 베팅.",
-        "sector": "xAI"
+        "detail": "OpenAI. Codex Goal Mode GA·앱·IDE·CLI 전 채널 배포 - 결과(outcome)와 성공 기준 정의 후 에이전트가 반복 수렴(OpenAI Release Notes 5/22). macOS Appshots 신기능 - 단축키로 앱 윈도우를 Codex 스레드에 스크린샷+텍스트 컨텍스트 첨부, 잠긴 컴퓨터 원격 control, ChatGPT Business 워크스페이스 공유 플러그인. 장기 horizon outcome-driven 에이전트 성숙 - Claude Code 우세 직접 대응 채널. 컨센 - 코딩 에이전트 시장 Claude Code·Codex CLI·xAI Grok Build·Mistral Vibe 4파전 가속·OpenAI $122B 펀딩 후 Codex·Sora·Atlas 라인업 모두 GA 채널 확장.",
+        "sector": "OpenAI"
+      },
+      {
+        "time": "2026-05-23 03:00 KST",
+        "type": "모델 출시",
+        "detail": "Mistral AI. Medium 3.5 퍼블릭 프리뷰 - 128B dense·Vibe(코딩 에이전트 CLI) 디폴트·Le Chat 디폴트(MarkTechPost 5월). API 리퀸스트당 reasoning effort 설정 가능 - 경량 채팅부터 장시간 에이전틱 런까지 동일 모델 운영, SWE-bench Verified 77.6 클로드 4.5 동급 성능. Vibe Remote Agents - 로컬 CLI 세션이 클라우드 샌드박스로 텔레포트·세션 상태 보존·완료 시 GitHub PR 오픈. 코딩 에이전트 시장 진입 - 프론티어 3강(Anthropic·OpenAI·Google) 카운터 유럽 단독 플레이어 가시화, 비EU 클라우드 sovereignty 채널 후방 수요.",
+        "sector": "Mistral AI"
+      },
+      {
+        "time": "2026-05-23 02:30 KST",
+        "type": "인프라",
+        "detail": "Google DeepMind. Contextual AI 연구자 20명+ 영입 $80~90M 라이센스 딜 - 공동창업자·CEO Douwe Kiela 합류·acqui-hire 패턴(HeyGoTrade 5월). Gemini 3.5 Flash GA·I/O 2026 후속 5/20 배포 후 인재 흡수 가속화 채널. Kiela는 DPO·RAG 분야 파이오니어 - 엔터프라이즈 grounding 연구 강화·CapEx $180~190B 베이스에서 인재 캐파 추가 확보. Gemini MAU 900M 1년 만에 2배·Ultra 구독 $250→$200 인하·새 Developer tier $100/월 신설 가격·접근성 확장 잔존. Gemma 4 Apache 2.0 오픈 - 에이전틱·추론 특화 오픈소스 라인업 후속 잔존.",
+        "sector": "Google DeepMind"
+      },
+      {
+        "time": "2026-05-23 04:00 KST",
+        "type": "제품 출시 예정",
+        "detail": "Apple. WWDC26 6/8 10am PT 키노트 확정·iOS 27 Siri 챗봇 인터페이스 단독 앱 공개 시그널(9to5Mac·MacRumors 5/22). 핵심 동인 - 수백 개 에이전틱 앱 액션·LLM 기반 월드 지식·멀티 액션 요청·Gemini 기반 Apple Foundation Models가 Photos 편집 도구 구동·카메라 앱 전용 Siri 모드. ChatGPT·Claude·Gemini 카운터 Apple 단독 챗봇 제품 첫 커밋·Google Gemini 파트너십이 검색을 넘어 파운데이션 모델 영역으로 확장 공식화 신호. 동시에 Apple Intelligence 기반 접근성 - VoiceOver·Magnifier·온디바이스 자막 생성 - 6/8 키노트 단일 분기점.",
+        "sector": "Apple"
       }
     ]
   }
