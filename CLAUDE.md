@@ -132,7 +132,7 @@ ai-investment/
 │   ├── ai-data.js              / ai-update.js
 │   ├── commodity-data.js       / commodity-update.js
 │   ├── unicorn-data.js         / unicorn-update.js
-│   ├── calendar-events.js      ← 차세대 대시보드(/preview) 전용 캘린더 데이터
+│   ├── calendar-events.js      ← 이벤트 캘린더 데이터 (recurring 패턴 + fixed 단발)
 │   └── company-ko.js           ← 영문 회사명·티커 → 한글 매핑 (index.html·daily-send 공용)
 └── README.md
 ```
@@ -404,7 +404,7 @@ AI 탭은 `entries: [{ text, time }]` 형식도 호환. 레거시 string 엔트�
 `summary`는 **줄바꿈으로 뉴스를 구분하는 다중 줄 문자열**로 작성한다. daily-send은 줄별로 글머리표(`•`)를 붙여 친구톡에 박는다.
 
 - **줄바꿈(`\n`) = 뉴스 간 구분자**. 한 줄 = 하나의 사건/주제.
-- **🔴 첫 줄 = 그날의 대표 헤드라인 (엄수)**. `/preview` 페이지의 TL;DR strip이 첫 줄을 그대로 노출하므로, 시장 지수 같은 일상 라인이 아니라 임팩트 가장 큰 단일 사건을 첫 줄에 둔다 (예: 메가캡 신고가·메이저 펀딩·정책 결정·신제품 출시). 지수 동향은 두 번째 이후 줄로.
+- **🔴 첫 줄 = 그날의 대표 헤드라인 (엄수)**. 친구톡·인스타·헤드라인 hero 등 여러 노출 면이 첫 줄을 그대로 끌어 쓰므로, 시장 지수 같은 일상 라인이 아니라 임팩트 가장 큰 단일 사건을 첫 줄에 둔다 (예: 메가캡 신고가·메이저 펀딩·정책 결정·신제품 출시). 지수 동향은 두 번째 이후 줄로.
 - **한 사건 내부의 병렬 나열은 `,` 또는 `·`**. (예: "NVDA, MU, AMD 일제 강세" / "QCOM·OpenAI·MediaTek 협력")
 - **줄 수**: 탭당 3~5줄 권장.
 - **한 줄 길이**: ~30~40자 권장.
@@ -445,7 +445,7 @@ QCOM, OpenAI, MediaTek 2028 AI 스마트폰 칩 협력
 
 ### 캘린더 이벤트 운영 (data/calendar-events.js)
 
-차세대 대시보드(`/preview`)의 이벤트 캘린더 전용 데이터. update.js와 별개 파일로 운영하되, 자동 갱신 흐름에 함께 포함된다.
+이벤트 캘린더 데이터 파일. update.js와 별개로 운영하되, 자동 갱신 흐름에 함께 포함된다.
 
 **구조**:
 - `recurring`: 반복 패턴 (매주 목 실업수당, 매월 첫 금 NFP 등). 자동 갱신 시 **수정 금지** — 패턴 변경은 사람이 직접.
