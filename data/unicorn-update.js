@@ -1,7 +1,7 @@
 const updates = [
   {
-    "date": "2026-05-23 19:40 KST",
-    "summary": "SpaceX Starship V3 Flight 12 5/22 발사 성공 - Ship 인도양 splashdown·6/12 IPO D-20\nHinge Health 5/22 NYSE 데뷔 +17% $37.56 마감·디지털 헬스 IPO 윈도우 재개 확정\nRadar Series B $170M·Socket Series C $60M $1B - 리테일·보안 SaaS 신규 유니콘 2건 동시\nShield AI 펨타곤 LUCAS 자율 무인기 협업 - $12.7B 밸류 후속 모멘텀\nKraken IPO 2026 Q3·Ripple $40B·ConsenSys IPO 2026 H2 크립토 IPO 라인업 가시화",
+    "date": "2026-05-23 19:50 KST",
+    "summary": "SpaceX Starship V3 Flight 12 5/22 발사 성공 - Ship 인도양 splashdown·6/12 IPO D-20\nHinge Health 5/22 NYSE 데뷔 +17% $37.56 마감·디지털 헬스 IPO 윈도우 재개 확정\nRadar Series B $170M·Socket Series C $60M $1B - 리테일·보안 SaaS 신규 유니콘 2건 동시\nShield AI 펜타곤 LUCAS 자율 무인기 협업 - $12.7B 밸류 후속 모멘텀\nKraken IPO 2026 Q3·Ripple $40B·ConsenSys IPO 2026 H2 크립토 IPO 라인업 가시화",
     "changes": [
       {
         "time": "2026-05-22 22:30 UTC",
@@ -12,8 +12,8 @@ const updates = [
       {
         "time": "2026-05-22 16:00 EDT",
         "type": "IPO",
-        "detail": "Hinge Health(HNGE). 5/22 NYSE 데뷔 첫 거래 - 공모가 $32·시초가 $39.25 +23%·종가 $37.56 +17% 마감·시총 $3B+ 안착(Fierce Healthcare·CNBC 5/22). 1,366.6만 주·총 $437M 조달·디지털 헬스 SaaS MSK(근골격) 단독 채널 - Omada Health·Caris Life 이후 가장 큰 데뷔 + Day 1 종가 +17% 안정 마감으로 디지털 헬스 IPO 윈도우 재개 시그널 확정. Function Health·Abridge·Cohere Health 후속 후보 분기점·Insitro·Sword Health 등 비상장 디지털 헬스·AI 신약 카테고리 리레이팅 기대. 유니콘 탭 바이오·헤심 슬롯 신규 후보 발굴 흐름·2021년 말 이후 첫 디지털 헬스 IPO 성공 사례 컨센.",
-        "sector": "바이오·헤심"
+        "detail": "Hinge Health(HNGE). 5/22 NYSE 데뷔 첫 거래 - 공모가 $32·시초가 $39.25 +23%·종가 $37.56 +17% 마감·시총 $3B+ 안착(Fierce Healthcare·CNBC 5/22). 1,366.6만 주·총 $437M 조달·디지털 헬스 SaaS MSK(근골격) 단독 채널 - Omada Health·Caris Life 이후 가장 큰 데뷔 + Day 1 종가 +17% 안정 마감으로 디지털 헬스 IPO 윈도우 재개 시그널 확정. Function Health·Abridge·Cohere Health 후속 후보 분기점·Insitro·Sword Health 등 비상장 디지털 헬스·AI 신약 카테고리 리레이팅 기대. 유니콘 탭 바이오·헬스 슬롯 신규 후보 발굴 흐름·2021년 말 이후 첫 디지털 헬스 IPO 성공 사례 컨센.",
+        "sector": "바이오·헬스"
       },
       {
         "time": "2026-05-19 12:00 EDT",
@@ -24,7 +24,7 @@ const updates = [
       {
         "time": "2026-05-19 10:00 EDT",
         "type": "펀딩",
-        "detail": "방산 AI 3강 펨타곤 직접 채널. Shield AI 미 정부 LUCAS(저비용 무인 전투 공격) 무인기 프로그램에 Hivemind 자율 SW 파트너쉭 - 5/19 발표·이란 전쟁 수요 catalyst(CNBC 5/19). 베이스 - Series G $1B / $12.7B 밸류·FY26 매출 전망 $540M+ 80%+ 성장 잔존. 동시에 Anduril Series H $5B $61B(1년 만 30.5→61B 더블)·Saronic Series $1.75B $9.25B 라인업 잔존. 유니콘 탭 우주·모빌리티·방산 카테고리가 SpaceX·Anduril·Saronic·Shield AI 4강 구도로 굳어지며 미 국방 R&D 발주 사이클 직접 수혜 채널 가시화 - Golden Dome $3.2B + 美 우주군 $1.8B + 美 육군 10년 $20B 한도 누적 수주 베이스.",
+        "detail": "방산 AI 3강 펜타곤 직접 채널. Shield AI 미 정부 LUCAS(저비용 무인 전투 공격) 무인기 프로그램에 Hivemind 자율 SW 파트너십 - 5/19 발표·이란 전쟁 수요 catalyst(CNBC 5/19). 베이스 - Series G $1B / $12.7B 밸류·FY26 매출 전망 $540M+ 80%+ 성장 잔존. 동시에 Anduril Series H $5B $61B(1년 만 30.5→61B 더블)·Saronic Series $1.75B $9.25B 라인업 잔존. 유니콘 탭 우주·모빌리티·방산 카테고리가 SpaceX·Anduril·Saronic·Shield AI 4강 구도로 굳어지며 미 국방 R&D 발주 사이클 직접 수혜 채널 가시화 - Golden Dome $3.2B + 美 우주군 $1.8B + 美 육군 10년 $20B 한도 누적 수주 베이스.",
         "sector": "우주·모빌리티·방산"
       }
     ]
