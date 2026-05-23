@@ -1,12 +1,12 @@
 const UPDATES = [
   {
-    "date": "2026-05-23 19:30 KST",
-    "summary": "Anthropic $30B+ 라운드 마감 임박·$900B 밸류로 OpenAI 추월 첫 1위\nxAI Grok 5/22 Vercel·Canva·Gamma·S&P Global 커넥터 - 생산성 허브 전환\nNVIDIA Computex 6/1 젤슨 키노트 - Vera Rubin NVL72·Jetson Thor·Alpamayo AV 사전 어워드\nAnthropic·MS AI 칩 협상 + SpaceX $1.25B/월 GPU 계약 - 컴퓨트 다원화\nApple WWDC26 6/8 키노트 D-16·Siri 챗봇 단독 앱 + Gemini Foundation Models",
+    "date": "2026-05-24 07:30 KST",
+    "summary": "Anthropic 美 기업 채택 34.4% OpenAI 첫 추월·$30B 라운드 $900B 5/27 임박\nxAI Grok 5/22 Vercel·Canva·Gamma·S&P Global 커넥터 - 생산성 허브 전환\nNVIDIA Computex 6/1 젤슨 키노트 - Vera Rubin NVL72·Jetson Thor·Alpamayo AV 사전 어워드\nAnthropic·MS AI 칩 협상·xAI $1.25B/월 GPU 계약 - 컴퓨트 다원화\nApple WWDC26 6/8 키노트 D-16·Siri 챗봇 단독 앱 + Gemini Foundation Models",
     "changes": [
       {
         "time": "2026-05-22 18:00 EDT",
         "type": "펀딩",
-        "detail": "Anthropic. $30B+ 펀딩 라운드 5/27 주 마감 임박·$900B 밸류 - OpenAI($500B 수준) 추월 글로벌 AI 스타트업 시총 1위 등극(Bloomberg 5/22). Co-lead - Sequoia·Dragoneer·Altimeter·Greenoaks. Q2 매출 가이던스 $10.9B Q1 $4.8B 대비 +130% QoQ·연간 ARR 런레이트 $14B·$1M+ 연간 계약 고객 500→1,000+ 2-4월 더블·첫 분기 영업 흑자 가시화. 동시에 Microsoft AI 서버 칩 임대 초기 협상 보도(Bloomberg 5/21~22) - 기존 AWS Trainium + Google TPU + SpaceX $1.25B/월 2029.05까지 GPU 컴퓨트 계약(SpaceX IPO 명세) 베이스에서 MS 진입 시 4번째 컴퓨트 백본·종속 위험 분산 의도 명확. 6/15 프로그래매틱 청구 분리 GA 패키지·Claude Code $14B ARR 캐파 압박 동인 잔존.",
+        "detail": "Anthropic. 4월 美 기업 AI 채택률 34.4%로 OpenAI 32.3% 첫 추월(VentureBeat 5/22) - AI 레이스 시작 이래 엔터프라이즈 점유 1위 등극. Q2 매출 가이던스 $10.9B Q1 $4.8B 대비 +130% QoQ·영업이익 약 $559M 첫 분기 흑자 가시화 - OpenAI($5.7B 매출 적자 지속)·xAI 대비 수익성 선행(Tech Startups 5/22). 동시에 $30B+ 펀딩 라운드 5/27 주 마감 임박·$900B 밸류로 OpenAI($500B 수준) 추월 글로벌 AI 스타트업 시총 1위, Co-lead Sequoia·Dragoneer·Altimeter·Greenoaks. 연간 ARR 런레이트 $14B·$1M+ 연간 계약 고객 500→1,000+ 2-4월 더블. Microsoft AI 서버 칩 임대 초기 협상 보도(Bloomberg 5/21~22) - 기존 AWS Trainium·Google TPU·xAI $1.25B/월 2029.05까지 GPU 컴퓨트 계약(TechCrunch 5/20·$40B+ 규모) 베이스에서 MS 진입 시 4번째 컴퓨트 백본·종속 위험 분산. 6/15 프로그래매틱 청구 분리 GA 패키지·Claude Code $14B ARR 캐파 압박 동인 잔존.",
         "sector": "Anthropic"
       },
       {
