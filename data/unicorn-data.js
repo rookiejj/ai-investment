@@ -1,6 +1,6 @@
 const data = [
   {
-    "tag": "결제·뱅킹·HR·SMB",
+    "tag": "결제·목먶·HR·SMB",
     "title": "💳 핀테크",
     "stocks": [
       {
@@ -13,10 +13,10 @@ const data = [
       },
       {
         "nm": "Revolut",
-        "rs": "2H 2026 세컨더리 $100B+ 진행 - 향후 IPO 타깃 $150~200B 범위·11월 2025 세컨더리 $75B 대비 2.6배·3/11 영국 PRA 풀 뱅킹 라이센스 후 모기지·소비자 신용 진입·CEO Storonsky 'NASDAQ 美 상장 1순위' 공식 입장",
+        "rs": "2H 2026 세컰더리 $100B+ 진행 - 향후 IPO 타깃 $150~200B 범위·11월 2025 세컰더리 $75B 대비 2.6배·3/11 영국 PRA 풀 뱅상 라이센스 후 모기지·소비자 신용 진입·CEO Storonsky 'NASDAQ 美 상장 1순위' 공식 입장",
         "ipo": "2028+ 연기",
         "val": "$75B",
-        "round": "세컨더리 2H26 $100B+",
+        "round": "세컰더리 2H26 $100B+",
         "sector": "네오뱅크"
       },
       {
@@ -48,7 +48,7 @@ const data = [
         "rs": "피크 $40B→$12B 재평가·2025 흑자 전환·유럽 최대 독립 게이트웨이",
         "ipo": "미정",
         "val": "$12B",
-        "round": "세컨더리 (2025-09)",
+        "round": "세컰더리 (2025-09)",
         "sector": "글로벌 결제"
       },
       {
@@ -86,12 +86,12 @@ const data = [
         "rs": "AI 워크스페이스·문서·위키",
         "ipo": "미정",
         "val": "$11B",
-        "round": "세컨더리 ($270M)",
+        "round": "세컰더리 ($270M)",
         "sector": "생산성"
       },
       {
         "nm": "Discord",
-        "rs": "Q1 2026 컴피던셜 S-1 신청·세컨더리 밸류 $15B 책정 - 2025 마지막 펀딩 $15B 베이스 $25B IPO 타깃·MAU 2억+ 단일 동력·Goldman·JPM·Morgan Stanley 주관 라인업·Microsoft 인수 거절 후 단독 상장 트랙",
+        "rs": "Q1 2026 컴피던셜 S-1 신청·세컰더리 밸류 $15B 책정 - 2025 마지막 펀딩 $15B 베이스 $25B IPO 타깃·MAU 2억+ 단일 동력·Goldman·JPM·Morgan Stanley 주관 라인업·Microsoft 인수 거절 후 단독 상장 트랙",
         "ipo": "2026 H2 목표",
         "val": "$15B",
         "round": "컴피던셜 S-1 (Q1 2026)·GS·JPM·MS",
@@ -102,7 +102,7 @@ const data = [
         "rs": "노코드 데이터베이스·자동화",
         "ipo": "미정",
         "val": "$4B",
-        "round": "세컨더리 (다운)",
+        "round": "세컰더리 (다운)",
         "sector": "노코드"
       },
       {
@@ -129,7 +129,7 @@ const data = [
     "stocks": [
       {
         "nm": "SpaceX",
-        "rs": "5/21~22 Starship V3 Flight 12 발사 윈도우 진입·Pad 2 첫 발사·Raptor 3·1,800만 파운드 추력·6/11 프라이싱·6/12 Nasdaq 데뷔 SPCX D-21·밸류 $1.75T 조달 $75B 사상 최대 IPO·일부 $80B $2T 시나리오·Starlink Q1 2026 매출 $3.3B·구독자 10.3M YoY +106%·5/20 S-1 공개 후 단일 IPO 분기점",
+        "rs": "5/22 Starship V3 Flight 12 발사 성공 - Pad 2 첫 발사·Raptor 33기 가동·Ship 단일 엔진 손실에도 인도양 splashdown 계획대로·22개 모의 스타링크 배치·V3 하드웨어 데뷔 단일 마일스톤·Super Heavy 부스트 백 번 실패 멕시코만 추락도 회수 비계획·6/11 프라이싱·6/12 Nasdaq 데뷔 SPCX D-20·밸류 $1.75T·조달 $75B 사상 최대 IPO 직접 모멘텀",
         "ipo": "2026.06.11 프라이싱·6/12 Nasdaq 데뷔",
         "val": "$1.75T",
         "round": "5/20 S-1 공개·티커 SPCX·리테일 30%·Brookfield $2B",
