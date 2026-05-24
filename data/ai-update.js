@@ -1,37 +1,19 @@
 const UPDATES = [
   {
-    "date": "2026-05-24 07:30 KST",
-    "summary": "Anthropic 美 기업 채택 34.4% OpenAI 첫 추월·$30B 라운드 $900B 5/27 임박\nxAI Grok 5/22 Vercel·Canva·Gamma·S&P Global 커넥터 - 생산성 허브 전환\nNVIDIA Computex 6/1 젤슨 키노트 - Vera Rubin NVL72·Jetson Thor·Alpamayo AV 사전 어워드\nAnthropic·MS AI 칩 협상·xAI $1.25B/월 GPU 계약 - 컴퓨트 다원화\nApple WWDC26 6/8 키노트 D-16·Siri 챗봇 단독 앱 + Gemini Foundation Models",
+    "date": "2026-05-25 07:30 KST",
+    "summary": "Google Gemini Spark 에이전트 이번 주 AI Ultra 우선 공개 - 연결 앱 추론 자동화\nGemini Omni 텍스트·이미지·오디오 영상 생성 - OpenAI 소라 정면 대응\nAnthropic $30B 라운드 이번 주 마감 - $900B+ OpenAI 추월 세계 1위 AI 스타트업\nAnthropic Q2 매출 가이던스 $10.9B +130% QoQ 첫 흑자 분기 가시화\nNVIDIA Computex 6/1 젤슨 키노트·Apple WWDC 6/8 D-14 차기 분기점",
     "changes": [
       {
-        "time": "2026-05-22 18:00 EDT",
-        "type": "펀딩",
-        "detail": "Anthropic. 4월 美 기업 AI 채택률 34.4%로 OpenAI 32.3% 첫 추월(VentureBeat 5/22) - AI 레이스 시작 이래 엔터프라이즈 점유 1위 등극. Q2 매출 가이던스 $10.9B Q1 $4.8B 대비 +130% QoQ·영업이익 약 $559M 첫 분기 흑자 가시화 - OpenAI($5.7B 매출 적자 지속)·xAI 대비 수익성 선행(Tech Startups 5/22). 동시에 $30B+ 펀딩 라운드 5/27 주 마감 임박·$900B 밸류로 OpenAI($500B 수준) 추월 글로벌 AI 스타트업 시총 1위, Co-lead Sequoia·Dragoneer·Altimeter·Greenoaks. 연간 ARR 런레이트 $14B·$1M+ 연간 계약 고객 500→1,000+ 2-4월 더블. Microsoft AI 서버 칩 임대 초기 협상 보도(Bloomberg 5/21~22) - 기존 AWS Trainium·Google TPU·xAI $1.25B/월 2029.05까지 GPU 컴퓨트 계약(TechCrunch 5/20·$40B+ 규모) 베이스에서 MS 진입 시 4번째 컴퓨트 백본·종속 위험 분산. 6/15 프로그래매틱 청구 분리 GA 패키지·Claude Code $14B ARR 캐파 압박 동인 잔존.",
-        "sector": "Anthropic"
-      },
-      {
-        "time": "2026-05-22 14:00 EDT",
-        "type": "제품 출시",
-        "detail": "xAI. Grok 3rd-party 커넥터 5/22 추가 발표 - Vercel(사이트 배포)·Canva(디자인)·Gamma(프레젠테이션)·S&P Global(실시간 시장 데이터) 4종(Basenor 5/22). 스탠드얼론 챗봇에서 생산성 허브로 포지셔닝 전환·ChatGPT·Claude·Gemini 카운터 다중 채널 통합 시그널. 5월 누적 라인업 - Grok 4.3(5/4 1M context·네이티브 비디오)·Grok Build 0.1 코딩 에이전트(5/14)·5/22 커넥터·코딩 에이전트 4파전(Anthropic·OpenAI·Mistral·xAI) 가속·OpenAI $122B 펀딩 후속 Codex·Sora·Atlas GA 확장·Anthropic $30B 라운드와 동조한 펀딩 + 제품 경쟁 가속화 잔존.",
-        "sector": "xAI"
-      },
-      {
-        "time": "2026-05-23 09:00 KST",
-        "type": "제품 출시 예정",
-        "detail": "NVIDIA. Computex Taipei 6/1 젤슨 황 키노트 11am Taiwan Time 타이베이 뒮직 센터 확정·GTC Taipei 6/2~4 후속(Computex 2026·NVIDIA 공식 5/22). 키노트 5층 케이크(에너지→앱) 테마·physical AI·AI factories·agentic systems 통합 메시지. 프리쇼 어워드 라인업 공개 - Vera Rubin NVL72(골든 + 지속가능성 더블)·Jetson Thor 엣지 AI(골든)·Alpamayo AV 플랫폼·AI 인프라 차기 세대 단일 분기점 부각. Q1 FY27 매출 $81.6B + Q2 가이던스 $91B + 자사주 $80B 베이스에서 5/22 종가 $219.51 -1.4% 컨센 상회 미반응 채널·Computex 후속 디테일이 forward P/E 22x earnings yield 4.5% 채권 카운터 영역 돌파 분기점.",
-        "sector": "NVIDIA"
-      },
-      {
-        "time": "2026-05-23 04:00 KST",
-        "type": "제품 출시 예정",
-        "detail": "Apple. WWDC26 6/8 10am PT 키노트 D-16 진입·iOS 27 Siri 챗봇 인터페이스 단독 앱 공개 시그널(9to5Mac·MacRumors 5/22). 핵심 동인 - 수백 개의 에이전틱 앱 액션·LLM 기반 월드 지식·멀티 액션 요청·Gemini 기반 Apple Foundation Models가 Photos 편집 도구 구동·카메라 앱 전용 Siri 모드. ChatGPT·Claude·Gemini 카운터 Apple 단독 챗봇 제품 첫 커밋·Google Gemini 파트너십이 검색을 넘어 파운데이션 모델 영역으로 확장 공식화 신호. 동시에 Apple Intelligence 기반 접근성 - VoiceOver·Magnifier·온디바이스 자막 생성 - 6/8 키노트 단일 분기점.",
-        "sector": "Apple"
-      },
-      {
-        "time": "2026-05-23 02:30 KST",
+        "time": "2026-05-19 10:00 PDT",
         "type": "모델 출시",
-        "detail": "Mistral AI. Medium 3.5 퍼블릭 프리뷰 - 128B dense·Vibe(코딩 에이전트 CLI) 디폴트·Le Chat 디폴트(MarkTechPost 5월). API 리퀸스트당 reasoning effort 설정 가능 - 경량 채팅부터 장시간 에이전틱 런까지 동일 모델 운영, SWE-bench Verified 77.6 Claude 4.5 동급 성능. Vibe Remote Agents - 로컬 CLI 세션이 클라우드 샌드박스로 텔레포트·세션 상태 보존·완료 시 GitHub PR 오픈. 코딩 에이전트 시장 진입 - 프론티어 3강(Anthropic·OpenAI·Google) 카운터 유럽 단독 플레이어 가시화, 비EU 클라우드 sovereignty 채널 후방 수요·Anthropic $30B 라운드와 동조한 코딩 에이전트 4파전 경쟁 격화 잔존.",
-        "sector": "Mistral AI"
+        "detail": "Google DeepMind. I/O 2026에서 Gemini 라인업 대거 공개 - 범용 AI 에이전트 Gemini Spark가 연결된 앱들을 가로질러 추론해 작업을 자동 수행하며 이번 주부터 신뢰 테스터·AI Ultra 구독자에게 우선 배포. 동시에 텍스트·이미지·오디오에서 영상을 생성·편집하는 멀티모달 모델 Gemini Omni를 선보여 OpenAI 소라에 정면 대응. Gemini 3.5 Flash·Omni Flash로 추론 비용 효율을 끌어올리고 Antigravity 2.0 데스크톱 오케스트레이션·Gemini API의 Managed Agents로 에이전트 인프라를 확장. 안드로이드 생태계 잠금과 결합해 OpenAI·Anthropic과의 프론티어 경쟁이 사실상 백중세로 좁혀졌다는 평가.",
+        "sector": "Google DeepMind"
+      },
+      {
+        "time": "2026-05-24 09:00 KST",
+        "type": "펀딩",
+        "detail": "Anthropic. $30B 이상 신규 라운드가 5/26 주간 마감을 앞두고 $900B+ 밸류로 OpenAI를 추월하며 세계 최고 가치 AI 스타트업 등극이 임박(Bloomberg 5/22) - Sequoia·Dragoneer·Altimeter·Greenoaks 공동 주도에 각 약 $2B 투입, 기존 투자자 Founders Fund·General Catalyst도 참여 전망. 2월 시리즈 G에 이어 14주 만의 두 번째 $30B 조달. Q2 매출 가이던스 $10.9B로 직전 분기 대비 +130% QoQ·첫 흑자 분기 가시화가 OpenAI(매출 적자 지속) 대비 수익성 선행 내러티브를 강화. AWS Trainium·Google TPU·xAI GPU 계약에 Microsoft 칩 임대 협상까지 컴퓨트 백본 다원화로 종속 위험 분산.",
+        "sector": "Anthropic"
       }
     ]
   }
