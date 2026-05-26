@@ -1,12 +1,12 @@
 const UPDATES = [
   {
-    "date": "2026-05-26 19:15 KST",
-    "summary": "Anthropic $30B+ 라운드 이번 주 마감 임박 - $900B+ 세계 1위 등극\nOpenAI $852B 추월·Sequoia·Dragoneer 등 $2B씩 공동 주도\nGoogle Gemma 4 오픈 모델 - 31B Arena 3위·26B 6위 개방형 우위\nGemini Enterprise 에이전트 플랫폼 - 프론티어 vs 개방형 경쟁",
+    "date": "2026-05-27 07:25 KST",
+    "summary": "Anthropic $30B+ 라운드 마감 임박 - $930B 포스트머니 세계 1위 등극\nOpenAI $852B 추월·Sequoia·Dragoneer 등 $2B씩 공동 주도\nClaude Mythos·Project Glasswing 고위험 취약점 1만건+ 발견 보안 변곡\nGoogle Gemma 4 오픈 모델·Gemini Enterprise 에이전트 플랫폼 카운터",
     "changes": [
       {
         "time": "2026-05-26 18:55 KST",
         "type": "펀딩",
-        "detail": "Anthropic. $30B 이상 신규 라운드가 이번 주 마감을 앞두며 $900B+ 밸류로 세계 최고 가치 AI 스타트업 등극이 임박했다(Bloomberg) - 3월 $852B로 평가된 OpenAI를 추월하는 수준으로 비상장 AI 밸류 서열의 역전이 가시화됐다. Sequoia·Dragoneer·Altimeter·Greenoaks가 각 약 $2B씩 공동 주도하고 Founders Fund·General Catalyst 등 기존 투자자도 참여 전망. 연 매출 런레이트가 가파르게 치솟은 수익성 선행 내러티브가 밸류 점프를 뒷받침하며, OpenAI와의 조달 경쟁이 프론티어 모델 CAPEX 군비 경쟁으로 번지는 구도다.",
+        "detail": "Anthropic. $30B 이상 신규 라운드가 이번 주 마감을 앞두며 포스트머니 약 $930B로 세계 최고 가치 AI 스타트업 등극이 임박했다(Bloomberg) - 3월 $852B로 평가된 OpenAI를 추월하는 수준으로 비상장 AI 밸류 서열의 역전이 가시화됐다. Sequoia·Dragoneer·Altimeter·Greenoaks가 각 약 $2B씩 공동 주도하고 기존 투자자도 참여 전망이다. 같은 날 Project Glasswing 진척 발표에서 Claude Mythos Preview가 주요 OS·브라우저 전반에서 고위험·심각 취약점 1만건 이상을 식별했고 참여 조직이 40여 곳으로 확대돼, 연 매출 런레이트 급등과 함께 보안 자동화가 수익화 내러티브의 새 축으로 부상했다.",
         "sector": "Anthropic"
       },
       {
