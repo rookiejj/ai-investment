@@ -95,19 +95,41 @@ jobs:
         with:
           node-version: '22'
 
-      # ffmpeg는 johnvansickle CDN의 static binary로 받는다 — Azure apt 미러 의존 0.
-      # 5/8에 5→2분 timeout으로 줄였으나 미러 hang이 2분 넘는 케이스로 5/12 두 슬롯 연속
-      # 발행 fail. apt 의존 제거로 근본 해결. 폰트는 apt 유지(없어도 영상 자체는 됨).
+      # ffmpeg는 GitHub release static binary로 받는다 — apt 의존 0.
+      # 5/8 Azure apt 미러 hang → johnvansickle, 5/24 johnvansickle 단일 호스트 hang →
+      # BtbN GitHub release CDN. 5/27 BtbN latest(롤링 릴리스)가 asset 교체 윈도우에
+      # 작은 에러 본문(~435B)을 흘려보냈고, -f 없던 curl이 그걸 파일로 저장 → tar fail.
+      # 소스를 더 바꾸는 대신 다운로드를 방어적으로: 3중 검증 + 폴백.
+      #   1) -f 로 HTTP 에러를 curl 단계에서 잡아 435B 에러 본문 저장 차단
+      #   2) --retry-all-errors 로 교체 윈도우(404·일시 5xx)를 재시도로 넘김
+      #   3) 받은 파일 크기(>20MB)·xz 무결성 검증 후에만 추출 (200-with-bad-body 백스톱)
+      # BtbN 실패 시 johnvansickle 폴백 — churn vs host-hang 실패 모드가 독립이라 동시 실패 희박.
       - name: ffmpeg static binary 다운로드
-        timeout-minutes: 2
+        timeout-minutes: 5
         run: |
           set -e
-          curl -L --retry 3 --max-time 60 \
-            https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz \
-            -o /tmp/ffmpeg.tar.xz
-          tar -xJf /tmp/ffmpeg.tar.xz -C /tmp/
-          sudo mv /tmp/ffmpeg-*-amd64-static/ffmpeg /usr/local/bin/ffmpeg
-          sudo mv /tmp/ffmpeg-*-amd64-static/ffprobe /usr/local/bin/ffprobe
+          URLS=(
+            "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz"
+            "https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz"
+          )
+          OK=0
+          for URL in "${URLS[@]}"; do
+            echo "[ffmpeg] try: $URL"
+            if curl -fL --retry 4 --retry-all-errors --retry-delay 3 --max-time 90 "$URL" -o /tmp/ffmpeg.tar.xz \
+                 && [ "$(stat -c%s /tmp/ffmpeg.tar.xz)" -gt 20000000 ] \
+                 && xz -t /tmp/ffmpeg.tar.xz; then
+              echo "[ffmpeg] OK $(stat -c%s /tmp/ffmpeg.tar.xz)B"
+              OK=1; break
+            fi
+            echo "::warning::ffmpeg 다운로드 실패/손상 — 다음 소스로 ($URL)"
+          done
+          [ "$OK" = 1 ] || { echo "::error::모든 ffmpeg 소스 다운로드 실패"; exit 1; }
+          mkdir -p /tmp/ffx
+          tar -xJf /tmp/ffmpeg.tar.xz -C /tmp/ffx
+          # BtbN(.../bin/ffmpeg)·johnvansickle(.../ffmpeg) 레이아웃 차이를 find로 흡수.
+          sudo mv "$(find /tmp/ffx -type f -name ffmpeg | head -1)" /usr/local/bin/ffmpeg
+          sudo mv "$(find /tmp/ffx -type f -name ffprobe | head -1)" /usr/local/bin/ffprobe
+          sudo chmod +x /usr/local/bin/ffmpeg /usr/local/bin/ffprobe
           ffmpeg -version | head -1
 
       # 한글 폰트도 apt 의존 제거 — Google Noto GitHub release에서 직접 다운로드.
