@@ -12,7 +12,7 @@ const UPDATES = [
       {
         "time": "2026-05-26 18:55 KST",
         "type": "펀딩",
-        "detail": "Anthropic. $30B 이상 신규 라운드가 이번 주 마감을 앞두며 포스트머니 약 $930B로 세계 최고 가치 AI 스타트업 등극이 임박했다(Bloomberg) - 3월 $852B로 평가된 OpenAI를 추월하는 수준으로 비상장 AI 밸류 서열의 역전이 가시화됐다. Sequoia·Dragoneer·Altimeter·Greenoaks가 각 약 $2B쥍 공동 주도하고 기존 투자자도 참여 전망이다. 같은 날 Project Glasswing 진첩 발표에서 Claude Mythos Preview가 주요 OS·브라우저 전반에서 고위험·심각 취약점 1만건 이상을 식별했고 참여 조직이 40여 곳으로 확대돼, 연 매출 런레이트 급등과 함께 보안 자동화가 수익화 내러티브의 새 축으로 부상했다.",
+        "detail": "Anthropic. $30B 이상 신규 라운드가 이번 주 마감을 앞두며 포스트머니 약 $930B로 세계 최고 가치 AI 스타트업 등극이 임박했다(Bloomberg) - 3월 $852B로 평가된 OpenAI를 추월하는 수준으로 비상장 AI 밸류 서열의 역전이 가시화됐다. Sequoia·Dragoneer·Altimeter·Greenoaks가 각 약 $2B씩 공동 주도하고 기존 투자자도 참여 전망이다. 같은 날 Project Glasswing 진척 발표에서 Claude Mythos Preview가 주요 OS·브라우저 전반에서 고위험·심각 취약점 1만건 이상을 식별했고 참여 조직이 40여 곳으로 확대돼, 연 매출 런레이트 급등과 함께 보안 자동화가 수익화 내러티브의 새 축으로 부상했다.",
         "sector": "Anthropic"
       },
       {
