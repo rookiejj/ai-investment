@@ -1,23 +1,23 @@
 const data = [
   {
-    "tag": "결제·뱅킹·HR·SMB",
+    "tag": "결제·뷱킹·HR·SMB",
     "title": "💳 핀테크",
     "stocks": [
       {
         "nm": "Stripe",
-        "rs": "$159B 텐더 +74% YoY 베이스 - Tempo L1 메인넷 가동·Visa·Nubank·Klarna 테스트·결제 인프라 1위·TPV $1.9T·2H 2026 IPO 윈도우 잔존도 IPO 보류 시그널 잔존",
+        "rs": "$159B 텔더 +74% YoY 베이스 - Tempo L1 메인넷 가동·Visa·Nubank·Klarna 테스트·결제 인프라 1위·TPV $1.9T·2H 2026 IPO 윈도우 잔존도 IPO 보류 시그널 잔존",
         "ipo": "2H 2026 윈도우",
         "val": "$159B",
-        "round": "2/26 텐더오퍼",
+        "round": "2/26 텔더오퍼",
         "sector": "결제"
       },
       {
         "nm": "Revolut",
-        "rs": "2H 2026 세컨더리 $100B+ 진행 - 향후 IPO 타깃 $150~200B 범위·11월 2025 세컨더리 $75B 대비 2.6배·3/11 영국 PRA 풀 뱅킹 라이센스 후 모기지·소비자 신용 진입·CEO Storonsky 'NASDAQ 美 상장 1순위' 공식 입장",
+        "rs": "2H 2026 세컨더리 $100B+ 진행 - 향후 IPO 타깃 $150~200B 범위·11월 2025 세컨더리 $75B 대비 2.6배·3/11 영국 PRA 풀 뷱킹 라이센스 후 모기지·소비자 신용 진입·CEO Storonsky 'NASDAQ 美 상장 1순위' 공식 입장",
         "ipo": "2028+ 연기",
         "val": "$75B",
         "round": "세컨더리 2H26 $100B+",
-        "sector": "네오뱅크"
+        "sector": "네오뷱크"
       },
       {
         "nm": "Ramp",
@@ -29,10 +29,10 @@ const data = [
       },
       {
         "nm": "Plaid",
-        "rs": "Q2 2026 IPO $6.1B 타깃 - 26년 핀테크 인프라 단독 최대 IPO 카운트다운·4월 텐더 $8B 모멘텀 회복·GS 리드 인수단·오픈뱅킹·연결 인프라 단일 채널 지배력·美·英·EU 동시 트랙",
+        "rs": "Q2 2026 IPO $6.1B 타깃 - 26년 핀테크 인프라 단독 최대 IPO 카운트다운·4월 텔더 $8B 모멘텀 회복·GS 리드 인수단·오픈뷱킹·연결 인프라 단일 채널 지배력·美·英·EU 동시 트랙",
         "ipo": "2026 Q2",
         "val": "$8B",
-        "round": "텐더오퍼 (업라운드)·GS 리드",
+        "round": "텔더오퍼 (업라운드)·GS 리드",
         "sector": "핀테크 인프라"
       },
       {
@@ -53,11 +53,11 @@ const data = [
       },
       {
         "nm": "Mercury",
-        "rs": "5/20 Series D $200M $5.2B 클로징 - 14개월 만 +49% 업라운드·a16z·Coatue·Sequoia·CRV·Sapphire·Spark 참여·OCC 조건부 인가 Mercury Bank N.A. 풀 차터 내셔널뱅크 전환 마일스톤·ARR $650M·4년 연속 흑자·누적 펀딩 ~$700M",
+        "rs": "5/20 Series D $200M $5.2B 클로징 - 14개월 만 +49% 업라운드·a16z·Coatue·Sequoia·CRV·Sapphire·Spark 참여·OCC 조건부 인가 Mercury Bank N.A. 풀 차터 내셔널뷱크 전환 마일스톤·ARR $650M·4년 연속 흑자·누적 펀딩 ~$700M",
         "ipo": "미정",
         "val": "$5.2B",
         "round": "Series D ($200M, 2026-05)·a16z 리드",
-        "sector": "SMB 뱅킹·재무관리"
+        "sector": "SMB 뷱킹·재무관리"
       }
     ]
   },
@@ -129,10 +129,10 @@ const data = [
     "stocks": [
       {
         "nm": "SpaceX",
-        "rs": "6/8 로드쇼·6/11 프라이싱·6/12 Nasdaq 데뷔 SPCX D-15 - 6/7 21개 IB 125명 애널리스트 데이·6/11 리테일 투자자 1,500명 IR·골드만삭스 lead·MS·BofA·Citi·JPM 공동 주관·조달 $75B+(2019 사우디 아람코 $29.4B 추월 사상 최대)·밸류 $1.75T~$2T·머스크 85.1% 의결권 거버넌스 변수",
-        "ipo": "2026.06.12 Nasdaq 데뷔 (6/8 로드쇼·6/11 프라이싱)",
+        "rs": "6/4 로드쇼 가속·6/11 프라이싱·6/12 Nasdaq 데뷔 SPCX D-14 - 당초 6/8에서 1주 가속·리테일 30% 할당 역대 IPO 최대·Robinhood/Fidelity/Schwab 직접 라우팅·CFO 'biggest part of any IPO in history' - 골드만 lead·$75B+ 사상 최대 조달·밸류 $1.75T MSFT 추월·머스크 85.1% 의결권 변수",
+        "ipo": "2026.06.12 Nasdaq 데뷔 (6/4 로드쇼·6/11 프라이싱)",
         "val": "$1.75T~$2T",
-        "round": "5/20 S-1 공개·티커 SPCX·골드만 lead·6/7 IB 데이·6/8 로드쇼·6/11 리테일 1,500명 IR",
+        "round": "5/20 S-1 공개·티커 SPCX·골드만 lead·6/4 로드쇼 가속·6/11 리테일 직접 라우팅 30% 할당",
         "sector": "우주"
       },
       {
@@ -165,7 +165,7 @@ const data = [
         "ipo": "미정 (2027 흑자 목표)",
         "val": "$126B",
         "round": "Series D ($16B, 2026-02)",
-        "sector": "자율주행 로보택시"
+        "sector": "자율주행 로봇택시"
       },
       {
         "nm": "Anduril",

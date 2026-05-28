@@ -1,18 +1,18 @@
 const updates = [
   {
-    "date": "2026-05-28 19:35 KST",
-    "summary": "SpaceX SPCX D-15 - 6/7 21개 IB 125명 애널리스트 데이·6/11 리테일 1,500명 IR\n조달 $75B+ 사우디 아람코 $29.4B 추월 사상 최대 IPO·밸류 $1.75T~$2T\n골드만삭스 lead 주관·MS·BofA·Citi·JPM 공동 신디케이트\nStripe $159B 세컨더리·Databricks ARR $5.4B·OpenAI $1T 공모 거론\nPlaid $6.1B 4월 라운드 - 핀테크 IPO 후보 부각",
+    "date": "2026-05-29 07:30 KST",
+    "summary": "SpaceX SPCX 로드쇼 6/4 가속 D-7 - 당초 6/8에서 1주 앞당김·리테일 30% 할당 역대 IPO 최대\nSpaceX CFO 'Retail biggest part of any IPO in history' - Robinhood·Fidelity·Schwab 직접 라우팅\nCognition AI $1B 라운드 $25B 프리·$26B 포스트 - Lux·General Catalyst·8VC 8개월 만 2.5배\nDevin ARR $492M 엔터프라이즈 사용 +50% MoM - Mercedes·NASA·Goldman·Santander 고객사",
     "changes": [
       {
         "time": "2026-05-28 07:30 KST",
         "type": "IPO",
-        "detail": "SpaceX. 6/12 Nasdaq 데뷔(티커 SPCX)를 D-15로 앞두고 일정 디테일이 확정됐다 - 6/7 21개 IB 약 125명의 애널리스트가 회사를 만나는 IB 데이, 6/8 로드쇼 킥오프, 6/11 프라이싱과 동시에 리테일 투자자 약 1,500명을 초청하는 대규모 IR이 잡혔다. 조달 목표 $75B 이상은 2019년 사우디 아람코의 $29.4B를 추월하는 사상 최대 IPO 규모로, 밸류는 $1.75T에서 $2T까지 재호가되는 중이다. 골드만삭스가 lead 북러너를 맡고 모건스탠리·BofA·Citi·JPM이 신디케이트에 합류했다. 머스크가 클래스B 85% 의결권을 유지하는 슈퍼보팅 구조와 우주·AI 부문 적자 구조가 거버넌스·수익성 디스카운트 변수로 남는다.",
+        "detail": "SpaceX. 6/12 Nasdaq 데뷔(티커 SPCX)를 D-14 앞두고 로드쇼 일정이 6/4로 1주일 가속됐다 - 당초 6/8 주에서 앞당겨졌고 6/11 프라이싱 일정은 유지된다. CFO Bret Johnsen이 리테일 30% 할당을 공식화하며 'Retail is going to be a critical part of this and a bigger part than any IPO in history'라고 발언, Robinhood·Fidelity·Schwab가 IPO 가격에 직접 라우팅한다. 조달 목표 $75B+로 2019 사우디 아람코 $29.4B를 추월하는 사상 최대 IPO 규모이며, 밸류 $1.75T가 MSFT를 추월해 AAPL·NVDA 다음 자리에 안착하는 시나리오. 머스크 85.1% 의결권 슈퍼보팅 구조와 우주·AI 부문 적자 구조가 거버넌스·수익성 디스카운트 변수로 남는다.",
         "sector": "우주·모빌리티·방산"
       },
       {
-        "time": "2026-05-28 06:30 KST",
+        "time": "2026-05-27 22:00 KST",
         "type": "펀딩",
-        "detail": "후기 단계 비상장. SpaceX 공모 카운트다운에 맞춰 다른 메가캡 비상장사의 후속 라운드·세컨더리 흐름도 가시화되고 있다 - Databricks가 ARR 런레이트 $5.4B 베이스에서 $134B 밸류로 신규 라운드($5B 지분·$2B 차입) 진행이 보도됐고, OpenAI는 $1T 공모 시나리오와 함께 $750B 밸류 $100B 라운드가 거론된다. Anthropic은 별도 $30B 라운드로 $930B 밸류 진입이 임박했다. 핀테크 쪽에서는 Plaid가 4월 $6.1B 포스트머니로 $575M 보통주 매각을 마무리하며 2026 IPO 후보로 부각된다. 프리IPO 자금이 막바지 라운드로 집중되는 패턴이다.",
+        "detail": "후기 단계 비상장. Cognition AI가 5/27 $1B 라운드 $25B 프리/$26B 포스트머니로 클로징했다 - Lux·General Catalyst·8VC 공동 주도, 8개월 전 $400M/$10.2B 라운드에서 2.5배 점프했다. Devin 엔터프라이즈 ARR는 $492M, 사용량이 6개월 연속 +50% MoM 가속을 이어왔고 고객사에 Mercedes-Benz·NASA·Goldman·Santander가 합류했다. 자체 코드의 90%가 Devin이 작성한다는 시그널이 동반 공개돼 AI 코딩 카테고리의 단일 마일스톤이 됐다. 같은 흐름에서 5/13 Anduril Series H $5B/$61B(직전 $30.5B 대비 더블), 5/11 Helsing $1.2B/$18B 협상(독일 역대 최대 스타트업 라운드), 5/8 Kraken $20B 사전조달(직전 $13.3B 대비 상승)이 누적되며 후기 단계 비상장 capex 사이클이 분기점에 진입했다.",
         "sector": "엔터프라이즈 SW"
       }
     ]
