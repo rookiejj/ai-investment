@@ -5,7 +5,7 @@ const data = [
     "stocks": [
       {
         "nm": "Stripe",
-        "rs": "$159B 텔더 +74% YoY 베이스 - Tempo L1 메인넷 가동·Visa·Nubank·Klarna 테스트·결제 인프라 1위·TPV $1.9T·2H 2026 IPO 윈도우 잔존도 IPO 보류 시그널 잔존",
+        "rs": "$159B 텔더 +74% YoY 베이스 - 5/8 WLFI USD1 네이티브 발행 첫 외부 발행자·3/18 Tempo L1 메인넷 가동·Visa·Nubank·Klarna 테스트·TPV $1.9T·2H 2026 IPO 윈도우 잔존도 IPO 보류 시그널",
         "ipo": "2H 2026 윈도우",
         "val": "$159B",
         "round": "2/26 텔더오퍼",
@@ -53,10 +53,10 @@ const data = [
       },
       {
         "nm": "Mercury",
-        "rs": "5/20 Series D $200M $5.2B 클로징 - 14개월 만 +49% 업라운드·a16z·Coatue·Sequoia·CRV·Sapphire·Spark 참여·OCC 조건부 인가 Mercury Bank N.A. 풀 차터 내셔널뷱크 전환 마일스톤·ARR $650M·4년 연속 흑자·누적 펀딩 ~$700M",
+        "rs": "5/20 Series D $200M $5.2B 클로징 - 14개월 +49% 업라운드·TCV 리드 a16z·Coatue·Sequoia·CRV·Sapphire·Spark 참여·OCC 풀 차터 내셔널뷱크 전환 진행·ARR $650M·4년 연속 흑자·누적 펀딩 ~$700M",
         "ipo": "미정",
         "val": "$5.2B",
-        "round": "Series D ($200M, 2026-05)·a16z 리드",
+        "round": "Series D ($200M, 2026-05)·TCV 리드",
         "sector": "SMB 뷱킹·재무관리"
       }
     ]
@@ -91,8 +91,8 @@ const data = [
       },
       {
         "nm": "Discord",
-        "rs": "Q1 2026 컴피던셜 S-1 신청·세컨더리 밸류 $15B 책정 - 2025 마지막 펀딩 $15B 베이스 $25B IPO 타깃·MAU 2억+ 단일 동력·Goldman·JPM·Morgan Stanley 주관 라인업·Microsoft 인수 거절 후 단독 상장 트랙",
-        "ipo": "2026 H2 목표",
+        "rs": "Q1 2026 컴피던셜 S-1 후 공개 S-1 부재 - Polymarket 6/30 IPO 86.5% no 컨센·H1 2026 슬립·2025 마지막 펀딩 $15B 베이스 $25B IPO 타깃·MAU 2억+·GS·JPM·MS 주관·Microsoft 인수 거절 후 단독 트랙",
+        "ipo": "H2 2026 슬립",
         "val": "$15B",
         "round": "컴피던셜 S-1 (Q1 2026)·GS·JPM·MS",
         "sector": "소셜"
@@ -129,7 +129,7 @@ const data = [
     "stocks": [
       {
         "nm": "SpaceX",
-        "rs": "6/4 로드쇼 가속·6/11 프라이싱·6/12 Nasdaq 데뷔 SPCX D-14 - 당초 6/8에서 1주 가속·리테일 30% 할당 역대 IPO 최대·Robinhood/Fidelity/Schwab 직접 라우팅·CFO 'biggest part of any IPO in history' - 골드만 lead·$75B+ 사상 최대 조달·밸류 $1.75T MSFT 추월·머스크 85.1% 의결권 변수",
+        "rs": "5/28 Bloomberg 'Unlike Any Other' 단독 - Q1 매출 $4.69B +15% YoY·2025 연 $18.67B +33%·Q1 순손실 $4.28B 적자 확대·6/4 로드쇼·6/11 프라이싱·6/12 Nasdaq 데뷔 SPCX D-13·리테일 30% 직접 라우팅 역대 최대·머스크 85.1% 의결권",
         "ipo": "2026.06.12 Nasdaq 데뷔 (6/4 로드쇼·6/11 프라이싱)",
         "val": "$1.75T~$2T",
         "round": "5/20 S-1 공개·티커 SPCX·골드만 lead·6/4 로드쇼 가속·6/11 리테일 직접 라우팅 30% 할당",
