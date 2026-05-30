@@ -1,11 +1,7 @@
 const updates = [
   {
     "date": "2026-05-30 19:30 KST",
-    "summary": "주간 마감 - Brent $92.56 5월 -19% COVID 이후 최악·WTI $87.18 -16.5%·美·이란 60일 휴전 MOU 대기
-금 $4,540~4,580 2일 연속 반등·5월 -0.8% MoM·은 $76 5월 +3% MoM - 휴전 FOMO·DXY 약세 안전자산 복귀
-BTC $73,100~73,500 11개 ETF 6일 연속 -$2B 유출·5/30 $6.25B 옵션 만기 변동성 변수·ETH $2,003
-리튬 카보네이트 CNY 175,500/t 1주 -8%·연초 +47% 누적 - Bald Hill mine 재가동·재고 매도 시그널
-다음 주 분기점 6/7 OPEC+ JMMC·Saudi 실제 6.88 vs 쿼터 10.29 mbpd spare capacity 3.4 mbpd",
+    "summary": "주간 마감 - Brent $92.56 5월 -19% COVID 이후 최악·WTI $87.18 -16.5%·美·이란 60일 휴전 MOU 대기\n금 $4,540~4,580 2일 연속 반등·5월 -0.8% MoM·은 $76 5월 +3% MoM - 휴전 FOMO·DXY 약세 안전자산 복귀\nBTC $73,100~73,500 11개 ETF 6일 연속 -$2B 유출·5/30 $6.25B 옵션 만기 변동성 변수·ETH $2,003\n리튬 카보네이트 CNY 175,500/t 1주 -8%·연초 +47% 누적 - Bald Hill mine 재가동·재고 매도 시그널\n다음 주 분기점 6/7 OPEC+ JMMC·Saudi 실제 6.88 vs 쿼터 10.29 mbpd spare capacity 3.4 mbpd",
     "changes": [
       {
         "time": "2026-05-30 16:00 KST",
