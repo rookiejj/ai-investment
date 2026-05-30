@@ -1,8 +1,14 @@
 const UPDATES = [
   {
-    "date": "2026-05-30 19:25 KST",
-    "summary": "Anthropic Claude Opus 4.8 출시 5/28 - Dynamic Workflows 수백 서브에이전트 병렬·코딩 결함 4배 감소·41일 최단 사이클\nMusk vs OpenAI 5/18 평결 - 9인 배심 만장일치 시효 도과·올트먼·브록맨 책임 면제·머스크 항소 예고\nCognition Series D $1B/$26B 5/27 클로징 - Devin ARR $492M·8개월 2.5배·Devin 자체 코드 89% 작성\nApple WWDC 6/8 D-9 - Gemini 1.2T 커스텀 Siri $1B/yr·iOS 27 Extensions Claude·Gemini 3rd-party 개방\nxAI Grok Build 0.1 - DoD $200M·GSA OneGov 18개월 연방 전 기관 접근·Custom Skills 256K 정식",
+    "date": "2026-05-31 07:50 KST",
+    "summary": "Apple WWDC 6/8 D-8 - Gemini 1.2T 커스텀 Siri $1B/yr·iOS 27 Extensions Claude·Gemini 개방·5G 위성 인터넷\nAnthropic Series H $65B/$965B 5/29 클로징·OpenAI $852B 추월·Opus 4.8 출시 41일 최단·코딩 결함 4배 감소\nMusk vs OpenAI 5/18 평결 - 시효 도과 만장일치 기각·올트먼·브록맨 책임 면제·머스크 항소 예고\nCognition Series D $1B/$26B 5/27 - Devin ARR $492M·8개월 2.5배·Devin 자체 코드 89% 작성\nxAI Grok 4 GSA OneGov 18개월 연방 전 기관 접근·DoD $200M·Custom Skills 256K 정식 출시",
     "changes": [
+      {
+        "time": "2026-05-30 23:00 KST",
+        "type": "전략",
+        "detail": "Apple. WWDC 2026 6/8 키노트 D-8 카운트다운 - Gemini 1.2T 파라미터 커스텀 모델 기반 Siri 재구축($1B/yr 지불) 확정 보도, iOS 27·iPadOS 27·macOS 27 동시 발표 예정. Siri Extensions 전용 앱으로 텍스트·음성 모드 동시 지원·과거 대화 기록 액세스가 핵심 신기능, ChatGPT 독점 종료 + Claude·Gemini·기타 3rd-party 모델 사용자 선택권 개방이 모델 공급사 다변화 시그널. Apple 자체 Private Cloud Compute에서 추론 처리·genai.apple.com 서브도메인 등록·Apple Intelligence on-device AI 키워드 잔존. iOS 27 5G 위성 인터넷 연결성(iPhone 18 Pro·Ultra 한정) 추가, 메모리 칩 확보(삼성·SK 5/27~28 라운드) + 황 NVIDIA 6/5 한국 방한 분기점이 아시아 AI 인프라 락인 사이클과 정렬돼 동시 진행된다.",
+        "sector": "Apple"
+      },
       {
         "time": "2026-05-28 23:00 KST",
         "type": "모델 출시",
@@ -20,12 +26,6 @@ const UPDATES = [
         "type": "펀딩",
         "detail": "Cognition. 5/27 Series D $1B/$26B 포스트머니 클로징 - Lux·General Catalyst·8VC 리드, 8개월 전 $10.2B 대비 2.5배 점프했다. Devin ARR $492M, 엔터프라이즈 사용 6개월 연속 50% MoM 가속, Mercedes·NASA·Goldman·Santander 톱티어 고객 락인. Devin이 Cognition 자체 코드 89%를 작성한 점이 autonomous coding의 unit economics 입증 시그널로 작동했다. Anthropic Series H $65B/$965B + Opus 4.8 Dynamic Workflows + SpaceX 6/12 SPCX 데뷔 + OpenAI ARR $25B+ 2026말 IPO 시나리오와 동시 진행돼 후기 단계 AI 자본 회수 사이클의 분기점에 진입했다.",
         "sector": "Cognition"
-      },
-      {
-        "time": "2026-05-29 09:00 KST",
-        "type": "전략",
-        "detail": "Apple. WWDC 2026 6/8 키노트 D-9 카운트다운 - Gemini 1.2T 파라미터 커스텀 모델 기반 Siri 재구축($1B/yr 지불) 확정 보도, iOS 27 Extensions로 ChatGPT 독점 종료 + Claude·Gemini 3rd-party 개방이 핵심 발표 예정. Apple 자체 Private Cloud Compute에서 추론 처리, genai.apple.com 서브도메인 등록 시그널 + Apple Intelligence on-device AI 키워드 잔존. 모델 공급사 다변화로 OpenAI 일방 종속 종료 + 메모리 칩 확보(삼성·SK 5/27~28 라운드) + 황 NVIDIA 6/5 한국 방한 분기점이 아시아 AI 인프라 락인 사이클과 정렬돼 동시 진행된다.",
-        "sector": "Apple"
       },
       {
         "time": "2026-05-29 14:00 KST",
