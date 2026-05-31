@@ -5,11 +5,11 @@ const data = [
     "stocks": [
       {
         "nm": "비트코인",
-        "rs": "5/29 $73,643 +1.1% 24h 반등 - 11개 현물 BTC ETF 6일 연속 유출 streak·5/28 단일 $223.3M 3주 최대 유출·AUM $106B($109B 피크 하회)·실질금리·DXY headwind·세일러 818K 평단 $75,537 손실권 잔존·oversold compressed volatility",
+        "rs": "5/31 $74,033 +1.97% 24h 주말 반등 - 11개 현물 BTC ETF 6일 연속 유출 누적 -$2B·5/28 단일 -$733M·IBIT -$528M 단일 종목 1/30 이후 2위 출금·실질금리·DXY headwind·Polymarket 62% 美·이란 deal 5/31 카운터·oversold spring loaded",
         "tk": "BTC",
         "y1": "-27%",
-        "ytd": "-27%",
-        "price": "$73,643",
+        "ytd": "-26%",
+        "price": "$74,033",
         "range": "$60,187–126,186"
       },
       {
