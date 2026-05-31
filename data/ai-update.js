@@ -1,37 +1,25 @@
 const UPDATES = [
   {
-    "date": "2026-05-31 07:50 KST",
-    "summary": "Apple WWDC 6/8 D-8 - Gemini 1.2T 커스텀 Siri $1B/yr·iOS 27 Extensions Claude·Gemini 개방·5G 위성 인터넷\nAnthropic Series H $65B/$965B 5/29 클로징·OpenAI $852B 추월·Opus 4.8 출시 41일 최단·코딩 결함 4배 감소\nMusk vs OpenAI 5/18 평결 - 시효 도과 만장일치 기각·올트먼·브록맨 책임 면제·머스크 항소 예고\nCognition Series D $1B/$26B 5/27 - Devin ARR $492M·8개월 2.5배·Devin 자체 코드 89% 작성\nxAI Grok 4 GSA OneGov 18개월 연방 전 기관 접근·DoD $200M·Custom Skills 256K 정식 출시",
+    "date": "2026-05-31 19:40 KST",
+    "summary": "Anthropic Mythos 'coming weeks' - Opus 4.8 + Project Glasswing 사이버 능력\nAnthropic $47B ARR run rate·시총 $965B·OpenAI $25B+ 추월\n5/30 Claude AI 글로벌 outage 토요일 다운타임 시그널\nMistral Medium 3.5 - 128B SWE-Bench 77.6%·Vibe 리모트 에이전트\nxAI Grok 4 GSA OneGov + Anthropic-xAI $1.25B/월 컴퓨팅 계약 잔존",
     "changes": [
       {
-        "time": "2026-05-30 23:00 KST",
-        "type": "전략",
-        "detail": "Apple. WWDC 2026 6/8 키노트 D-8 카운트다운 - Gemini 1.2T 파라미터 커스텀 모델 기반 Siri 재구축($1B/yr 지불) 확정 보도, iOS 27·iPadOS 27·macOS 27 동시 발표 예정. Siri Extensions 전용 앱으로 텍스트·음성 모드 동시 지원·과거 대화 기록 액세스가 핵심 신기능, ChatGPT 독점 종료 + Claude·Gemini·기타 3rd-party 모델 사용자 선택권 개방이 모델 공급사 다변화 시그널. Apple 자체 Private Cloud Compute에서 추론 처리·genai.apple.com 서브도메인 등록·Apple Intelligence on-device AI 키워드 잔존. iOS 27 5G 위성 인터넷 연결성(iPhone 18 Pro·Ultra 한정) 추가, 메모리 칩 확보(삼성·SK 5/27~28 라운드) + 황 NVIDIA 6/5 한국 방한 분기점이 아시아 AI 인프라 락인 사이클과 정렬돼 동시 진행된다.",
-        "sector": "Apple"
-      },
-      {
-        "time": "2026-05-28 23:00 KST",
-        "type": "모델 출시",
-        "detail": "Anthropic. 5/28 Claude Opus 4.8을 정식 출시했다 - Opus 4.7 출시 41일 만의 최단 사이클로, 가격은 4.7과 동일하면서 코딩 결함이 검출 단계에서 누락되는 비율이 4.7 대비 4배 감소했다. 핵심 신기능은 Dynamic Workflows(research preview) - Claude Code가 수백 개 서브에이전트를 병렬로 코디네이션해 대규모 코드베이스 마이그레이션을 kickoff부터 merge까지 자동 수행, 기존 테스트 슈트를 합격 기준으로 사용한다. 'effort' 컨트롤 패널로 응답 추론 깊이 사용자 조절 + 자체 불확실성 플래깅 강화 + unsupported claim 감소. GitHub Copilot 5/28 GA, Claude API·Bedrock·Vertex AI 동시 전개. Series H $65B/$965B(5/29 클로징, OpenAI $852B 추월)·Amazon 5GW·Google 5GW TPU·SpaceX Colossus 인프라 락인과 정렬된 frontier 모델 사이클 가속 시그널.",
+        "time": "2026-05-31 18:00 KST",
+        "type": "모델 출시 예정",
+        "detail": "Anthropic. 5/29 Series H $65B/$965B 클로징·OpenAI $852B 추월에 이어 5/30~31 Mythos 'coming weeks' 광역 출시 시그널이 누적됐다 - Opus 티어를 넘어서는 새 클래스로 자율 취약점 식별·복합 사이버 공격 체이닝 능력이 검증돼 Project Glasswing 한정 테스트 단계 진입, 안전성 가드 강화 후 광역 전개 예정. 5/28 Opus 4.8 정식 출시(코딩 결함 4배 감소·Dynamic Workflows 서브에이전트 병렬 코디네이션)에 더해 ARR run rate $47B(연초 $30B 대비 +56%)·전년 $10B 대비 4.7배 가속이 forward 펀더멘털 베이스, OpenAI ARR $25B+ 대비 단일 분기 추월 시점에 진입했다. Amazon 5GW·Google 5GW TPU·SpaceX Colossus + Anthropic-xAI $1.25B/월 2029.5 컴퓨팅 계약 lock-in이 frontier 모델 사이클 가속을 딬받침한다.",
         "sector": "Anthropic"
       },
       {
-        "time": "2026-05-18 12:00 KST",
-        "type": "거버넌스",
-        "detail": "OpenAI. 5/18 캘리포니아 연방법원 9인 자문 배심이 머스크 vs OpenAI 소송에서 만장일치 평결을 내렸다 - 머스크가 2024년 제기한 시점이 시효를 도과했다는 단일 쟁점만으로 모든 청구를 기각, Yvonne Gonzalez Rogers 판사도 동의해 사건 자체를 dismiss했다. 올트먼·브록맨·OpenAI는 비영리 약정 위반·신탁 의무 위반 청구 전체에서 책임을 면제받았다 - 만약 승소했다면 OpenAI·MS가 비영리 재단에 최대 $150B disgorge + 올트먼·브록맨 해임 + 영리법인 해체 시나리오. 머스크는 'merit이 아닌 calendar technicality' X 발언 + 항소 예고. ChatGPT 8억 WAU + ARR $25B+ 2026말 IPO 시나리오 잔존, 거버넌스 디스카운트 해소 시그널.",
-        "sector": "OpenAI"
+        "time": "2026-05-30 22:00 KST",
+        "type": "인프라",
+        "detail": "Anthropic. 5/30(토) Claude AI 글로벌 outage가 전 세계 사용자에게 광범위 다운타임을 유발 - API·Claude.ai 콘솔·Claude Code 동시 영향, 토요일 저녁 부분 복구 시그널 진행. ARR $47B run rate·Project Glasswing Mythos 광역 출시 직전 시점이라 인프라 집중도·단일 장애 영향이 forward 변수로 부상, SpaceX Colossus·Amazon Trainium·Google TPU 다층 백본 분산이 long-term mitigation 트랙이지만 단기 서비스 SLA·엔터프라이즈 신뢰도 시그널로 작동. OpenAI도 동기간 부분 장애 보도가 누적돼 frontier lab 컴퓨팅 인프라 안정성 자체가 risk premium 입력 항목으로 재진입했다.",
+        "sector": "Anthropic"
       },
       {
-        "time": "2026-05-27 22:00 KST",
-        "type": "펀딩",
-        "detail": "Cognition. 5/27 Series D $1B/$26B 포스트머니 클로징 - Lux·General Catalyst·8VC 리드, 8개월 전 $10.2B 대비 2.5배 점프했다. Devin ARR $492M, 엔터프라이즈 사용 6개월 연속 50% MoM 가속, Mercedes·NASA·Goldman·Santander 톱티어 고객 락인. Devin이 Cognition 자체 코드 89%를 작성한 점이 autonomous coding의 unit economics 입증 시그널로 작동했다. Anthropic Series H $65B/$965B + Opus 4.8 Dynamic Workflows + SpaceX 6/12 SPCX 데뷔 + OpenAI ARR $25B+ 2026말 IPO 시나리오와 동시 진행돼 후기 단계 AI 자본 회수 사이클의 분기점에 진입했다.",
-        "sector": "Cognition"
-      },
-      {
-        "time": "2026-05-29 14:00 KST",
-        "type": "제품 출시",
-        "detail": "xAI. Grok Build 0.1 enterprise traction이 5/27~29 가속됐다 - 5/14 release의 Custom Skills 정식 출시(256K context 코딩 모델, 입력 $1/M·출력 $2/M)에 이어 Grok Imagine API에 Quality Mode 추가, DoD $200M 계약과 GSA OneGov로 모든 연방기관 18개월 Grok 4 $0.42/agency 접근이 입력됐다. Anthropic 5/29 Series H 클로징 + Opus 4.8 출시·OpenAI Rosalind 정부 wedge와 정렬된 frontier 모델의 연방·엔터프라이즈 동시 진입 사이클로, SpaceX Colossus 1·2 GPU 인프라 lock-in이 forward 가시성을 떠받친다.",
-        "sector": "xAI"
+        "time": "2026-05-31 17:00 KST",
+        "type": "모델 출시",
+        "detail": "Mistral AI. Medium 3.5(public preview) - 128B 단일 dense 모델로 chat·reasoning·coding·agentic 기능을 하나로 통합, Le Chat·Vibe CLI의 기본 모델로 Medium 3.1·Magistral·Devstral 2를 일괄 대체했다. SWE-Bench Verified 77.6% 달성(Devstral 2·Qwen3.5 397B 상회)이 real-world GitHub 이슈 해결 능력 입증 시그널, Vibe 리모트 에이전트(클라우드 코딩 세션 + 로컬 CLI 텔레포트·세션 히스토리·태스크 상태 보존)가 자율 코딩 unit economics 분기점. NVIDIA 파트너쉭 기반 신규 open weight 모델 패밀리 + Emmi AI 산업 시뮬레이션 통합(제조·항공·반도체)이 유럽 prime AI lab의 enterprise wedge 강화 입력.",
+        "sector": "Mistral AI"
       }
     ]
   }
