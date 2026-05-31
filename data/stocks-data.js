@@ -78,7 +78,7 @@ const data = [
         "p2": "192",
         "r1": "216",
         "r2": "337",
-        "rs": "5/20 AMC Q1 FY27 매출 $81.6B +85% YoY 컨센 $78.8B 압도·EPS $1.87 vs 컨센 $1.77·데이터센터 $75.2B +92% YoY +100% 단독 신기록·전체 매출 92% 비중·Q2 가이던스 $89.1~92.8B 컨센 $87.3B 큰 폭 상회·자사주 +$80B + 분기배당 25배 인상·5/21 종가 -1.77% 환원 - '공급 제약·지정학' 우려 동인·Jensen 'Demand has gone parabolic. Agentic AI has arrived.' 발언·6/1 Computex 키노트·6/2~4 GTC Taipei",
+        "rs": "5/29 $211.14 시총 $5.2T·6/1 GTC Taipei 12시 KST 키노트 D-Day - N1X ARM 노트북 SoC 첫 공개·Vera Rubin NVL72 파트너·Five-Layer Cake 풀스택 AI 팩토리·6/5 한국 4대그룹 회동 듀얼 트랙",
         "tk": "NVDA"
       },
       {
