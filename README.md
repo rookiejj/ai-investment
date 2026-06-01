@@ -52,6 +52,7 @@ ai-investment/
 │   ├── trim-update-logs.js       ← *-update.js 1건 한도 트리밍 (sandbox 커밋 직전 필수, dedup·history는 DB가 담당)
 │   ├── build-daily-page.js       ← SEO 정적 페이지 빌더 (5탭 update.js entries[0] → /daily/YYYY-MM-DD.html + index + sitemap.xml + news-sitemap.xml + rss.xml + robots.txt)
 │   ├── sync-to-db.js             ← 5탭 *-data.js + *-update.js entries[0]을 write-tab-data·write-tab-update로 동기화 (db-sync.yml이 GitHub Actions runner에서 호출)
+│   ├── snapshot-tabs-to-storage.js ← read-tab-data·read-tab-archive 응답을 정적 JSON으로 Storage(tabs/latest.json·archive.json)에 업로드 — 헤드라인 read 경로 CDN 캐시화 (db-sync.yml이 sync 직후 호출)
 │   ├── lint-jargon.sh            ← 트레이더 은어·편집자 메타 표현 lint
 │   ├── lint-finmap-pool.js       ← sector-pool 한글명 lookup·dual-list lint
 │   ├── subscribers.example.json
@@ -71,11 +72,11 @@ ai-investment/
 ├── .github/workflows/
 │   ├── cartoon-generate.yml      ← `data/.cartoon-marker` push 트리거 (자동 갱신 sandbox가 마지막 단계로 마커 push)
 │   ├── instagram-post.yml        ← cartoon-generate workflow_run chain (KST 07~18시 캐러셀 / 그 외 Reels, 모두 7장 슬라이드 공유)
-│   ├── db-sync.yml               ← `data/*-data.js`·`data/*-update.js` push 트리거 (GitHub Actions runner가 scripts/sync-to-db.js 실행 → Supabase tab_data·tab_updates upsert. sandbox 프록시가 Supabase 차단해서 GH Actions 경유 필수)
+│   ├── db-sync.yml               ← `data/*-data.js`·`data/*-update.js` push 트리거 (GitHub Actions runner가 scripts/sync-to-db.js 실행 → Supabase tab_data·tab_updates upsert. sandbox 프록시가 Supabase 차단해서 GH Actions 경유 필수. sync 직후 scripts/snapshot-tabs-to-storage.js로 정적 스냅샷도 업로드 — best-effort)
 │   └── daily-seo.yml             ← `data/.cartoon-marker`·`data/company-ko.js`·`scripts/build-daily-page.js` push 트리거 (cartoon-generate 와 같은 마커 단일 신호 — 사이클 완료 시점 1회. build-daily-page.js 실행 → /daily/·sitemap.xml·rss.xml·news-sitemap.xml·robots.txt 자동 commit·push)
 ├── supabase/
 │   ├── config.toml               ← 공개 호출 함수에 verify_jwt=false 영구 박음 (publishable key 통과 보장)
-│   ├── migrations/               ← 스키마 이력 (init / payment / message_type / delivery_state / admin_settings / template_code / tab_data·tab_updates / promo_events·promo_redemptions)
+│   ├── migrations/               ← 스키마 이력 (init / payment / message_type / delivery_state / admin_settings / template_code / tab_data·tab_updates / promo_events·promo_redemptions / drop tab_updates_main 뷰)
 │   ├── functions/
 │   │   ├── _shared/
 │   │   │   ├── notify.ts         ← notify-telegram 공통 helper
@@ -388,6 +389,8 @@ admin_settings (단일 행, id=1)
 - **스케줄 변경**: `cron.schedule` 표현식은 UTC 기준 (KST = UTC+9). 월~토 한정은 UTC dow `0-5` 사용 (KST 월~토 = UTC 일~금). 평일만이면 `0-4`(KST 월~금).
 
 ## Changelog
+
+- **2026-06-01**: **헤드라인 로딩 정적화 — 무료 플랜 전환 후 read 함수 직격 지연 해소 + Security Definer View 경고 제거**. Supabase 유료→무료 플랜 다운그레이드 후 헤드라인 로딩이 느려진다는 사용자 보고. 원인 진단: `read-tab-data`/`read-tab-archive` 함수 응답을 Cloudflare가 캐시 안 함(`cf-cache-status: DYNAMIC`) + `index.html`이 `?_=Date.now()` 캐시버스터까지 붙여 **매 방문이 Postgres 2쿼리를 직격**. 무료 플랜의 작은 컴퓨트·잦은 콜드스타트에 100% 노출돼 TTFB 0.3~1.6s(콜드 첫 요청 1.57s). 해결: `scripts/snapshot-tabs-to-storage.js` 신설 — `db-sync` 직후 두 read 함수 응답을 그대로 떠서 public `tabs` 버킷(`tabs/latest.json`={version,tabs,updates}·`tabs/archive.json`={archive}, `Cache-Control: max-age=120, stale-while-revalidate=600`)에 업로드. 이미 runner가 가진 `BRIEFICK_SUPABASE_SECRET_KEY`로 올려 신규 Edge Function 배포·추가 비용 0. `index.html` `loadTabData()`·`loadTabArchive()`는 정적 파일(CDN 캐시)을 먼저 fetch하고 없거나 실패하면 기존 함수로 폴백 — DB(tab_data·tab_updates)는 여전히 source of truth, 초기 배포 시 정적 파일 부재도 graceful. `db-sync.yml`에 best-effort 스냅샷 step 추가(`continue-on-error`). 실측: TTFB 0.3~0.65s → **0.12s·`cf-cache-status: HIT`** (3~5배 단축·콜드스타트 스파이크 제거, Storage 요청이 DB 요청을 역전). 부수 처리: Advisor가 CRITICAL(Security Definer View)로 잡던 `public.tab_updates_main` 뷰(`20260514093000_tab_data.sql` 생성, 현재 read 경로는 `tab_updates` 테이블을 직접 쿼리해 미사용)를 drop(`20260601150000_drop_tab_updates_main_view.sql`) — 죽은 객체 + 하위 테이블 RLS 우회 경고 제거. 향후 PostgREST로 뷰가 다시 필요하면 `security_invoker=true`로 생성.
 
 - **2026-05-21 (3)**: **admin 대시보드에 프로모 이벤트 CRUD UI 추가 — 코드 변경 없이 SQL 한 줄로 이벤트 발행·종료 가능.**
   - 사이드바 `🎁 이벤트` 항목 신설(notice 와 surveys 사이). 해시 라우팅 `/admin#events`.
