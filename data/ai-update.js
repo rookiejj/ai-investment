@@ -1,19 +1,25 @@
 const UPDATES = [
   {
-    "date": "2026-05-27 07:25 KST",
-    "summary": "Anthropic $30B+ 라운드 마감 임박 - $930B 포스트머니 세계 1위 등극\nOpenAI $852B 추월·Sequoia·Dragoneer 등 $2B씩 공동 주도\nClaude Mythos·Project Glasswing 고위험 취약점 1만건+ 발견 보안 변곡\nGoogle Gemma 4 오픈 모델·Gemini Enterprise 에이전트 플랫폼 카운터",
+    "date": "2026-06-01 19:30 KST",
+    "summary": "Vera CPU 1차 출하 - Anthropic 5/18·OpenAI·xAI·Oracle 차례 락인\nRubin 플랫폼 frontier 학습 베이스 - Anthropic·Meta·Mistral·OpenAI·xAI 5개 lab\nApple-Google $1B/년 Gemini 1.2T 파라미터 Siri 통합 WWDC 6/8 첫 공개 D-7\nPrivate Cloud Compute 위 Gemini 실행·standalone Siri 앱·Dynamic Island 활성화\nAnthropic Series H $65B/$965B·ARR $47B·Mythos 'coming weeks' D-Day 임박",
     "changes": [
       {
-        "time": "2026-05-26 18:55 KST",
-        "type": "펀딩",
-        "detail": "Anthropic. $30B 이상 신규 라운드가 이번 주 마감을 앞두며 포스트머니 약 $930B로 세계 최고 가치 AI 스타트업 등극이 임박했다(Bloomberg) - 3월 $852B로 평가된 OpenAI를 추월하는 수준으로 비상장 AI 밸류 서열의 역전이 가시화됐다. Sequoia·Dragoneer·Altimeter·Greenoaks가 각 약 $2B씩 공동 주도하고 기존 투자자도 참여 전망이다. 같은 날 Project Glasswing 진척 발표에서 Claude Mythos Preview가 주요 OS·브라우저 전반에서 고위험·심각 취약점 1만건 이상을 식별했고 참여 조직이 40여 곳으로 확대돼, 연 매출 런레이트 급등과 함께 보안 자동화가 수익화 내러티브의 새 축으로 부상했다.",
-        "sector": "Anthropic"
+        "time": "2026-06-01 12:30 KST",
+        "type": "인프라",
+        "detail": "NVIDIA Vera CPU 1차 출하 명단 공식 확정. VP Ian Buck이 5/18 Anthropic에 Vera CPU 직접 1호 인도, 이후 OpenAI·SpaceX(xAI)·Oracle 순차 전달. Computex 키노트(6/1 12 KST)에서 황 CEO가 Vera Rubin 7칩 플랫폼(Vera CPU + Rubin GPU 페어링)을 'generational leap'으로 공식 발표 - frontier 학습 베이스로 Anthropic·Meta·Mistral·OpenAI·xAI 5개 lab 동시 채택 확인. Vera Rubin NVL72 가을 첫 출하·풀양산 가이던스가 AI 모델 사이클 가속 입력 - 같은 GPU 위에서 5개 lab이 동시 학습하면 capability scaling이 1세대당 6~12개월 사이클로 압축. Anthropic Mythos·OpenAI 다음 frontier·xAI Grok 5·Meta Llama 5·Mistral 다음 frontier 모두 Rubin 기반 가설 강화.",
+        "sector": "NVIDIA"
       },
       {
-        "time": "2026-05-26 18:50 KST",
-        "type": "생태계",
-        "detail": "Google DeepMind. 추론·에이전트 워크플로에 특화한 오픈 모델 제품군 Gemma 4를 공개했다 - 31B 모델이 Arena 텍스트 리더보드에서 개방형 3위, 26B가 6위에 올라 개방형 진영 상위권을 굳혔다. Google Cloud Next에서는 Salesforce·ServiceNow·Oracle·Adobe·Workday 에이전트를 묶은 통합 Gemini Enterprise 플랫폼을 선보여 에이전트 구축·오케스트레이션·거버넌스를 한 곳에 모았다. OpenAI·Anthropic의 프론티어 밸류 레이스에 맞서 Google은 개방형 가중치와 엔터프라이즈 에이전트 락인을 카운터로 내세우는 구도다.",
-        "sector": "Google DeepMind"
+        "time": "2026-06-01 14:00 KST",
+        "type": "전략",
+        "detail": "Apple. 6/8(월) WWDC 2026 키노트에서 Google Gemini 통합 Siri 첫 공개 확정 D-7. 1/12 발표 Google-Apple 다년 라이선스 ~$1B/년 기반 1.2T 파라미터 커스텀 Gemini 모델 - Apple Private Cloud Compute 서버에서 자체 호스팅, Google 인프라 직접 호출 미경로 디자인. 신규 Siri 풀챗봇 - 웹 검색·이미지 생성·콘텐츠 요약·코딩 어시·파일 분석·멀티 스텝 명령 - standalone Siri 앱·대화 히스토리·Dynamic Island 제스처 활성화 패턴 노출. iOS 27·iPadOS 27·macOS 27·tvOS 27·watchOS 27·visionOS 27 OS 6종 동시. Apple Intelligence 18개월 지연 만회·Anthropic Claude·OpenAI ChatGPT 양사 의존 누락 보완·on-device + cloud 하이브리드 아키텍쳐가 forward 디바이스 ASP·구독 단가 변수.",
+        "sector": "Apple"
+      },
+      {
+        "time": "2026-06-01 06:30 KST",
+        "type": "모델 출시 예정",
+        "detail": "Anthropic. 5/29 Series H $65B/$965B 클로징·OpenAI $852B 추월에 이어 Mythos 'coming weeks' 광역 출시 시그널이 누적 - Opus 티어를 넘어서는 새 클래스로 자율 취약점 식별·복합 사이버 공격 체이닝 능력이 검증돼 Project Glasswing 한정 테스트 단계 진입, 안전성 가드 강화 후 광역 전개 예정. 5/28 Opus 4.8 정식 출시(코딩 결함 4배 감소·Dynamic Workflows 서브에이전트 병렬 코디네이션)에 더해 ARR run rate $47B·전년 $10B 대비 4.7배 가속이 forward 펀더멘털 베이스. Vera CPU 1차 1호 인도(5/18)로 Rubin GPU 락인 선점·Amazon 5GW·Google 5GW TPU·SpaceX Colossus + xAI 컴퓨팅 $1.25B/월 락인이 frontier 모델 사이클 가속을 다층 백본으로 뒷받침.",
+        "sector": "Anthropic"
       }
     ]
   }

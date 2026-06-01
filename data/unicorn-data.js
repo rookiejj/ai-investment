@@ -1,23 +1,23 @@
 const data = [
   {
-    "tag": "결제·뱅킹·HR·SMB",
+    "tag": "결제·뷱킹·HR·SMB",
     "title": "💳 핀테크",
     "stocks": [
       {
         "nm": "Stripe",
-        "rs": "$159B 텐더 +74% YoY 베이스 - Tempo L1 메인넷 가동·Visa·Nubank·Klarna 테스트·결제 인프라 1위·TPV $1.9T·2H 2026 IPO 윈도우 잔존도 IPO 보류 시그널 잔존",
+        "rs": "$159B 텔더 +74% YoY 베이스 - 5/8 WLFI USD1 네이티브 발행 첫 외부 발행자·3/18 Tempo L1 메인넷 가동·Visa·Nubank·Klarna 테스트·TPV $1.9T·2H 2026 IPO 윈도우 잔존도 IPO 보류 시그널",
         "ipo": "2H 2026 윈도우",
         "val": "$159B",
-        "round": "2/26 텐더오퍼",
+        "round": "2/26 텔더오퍼",
         "sector": "결제"
       },
       {
         "nm": "Revolut",
-        "rs": "2H 2026 세컨더리 $100B+ 진행 - 향후 IPO 타깃 $150~200B 범위·11월 2025 세컨더리 $75B 대비 2.6배·3/11 영국 PRA 풀 뱅킹 라이센스 후 모기지·소비자 신용 진입·CEO Storonsky 'NASDAQ 美 상장 1순위' 공식 입장",
+        "rs": "2H 2026 세컨더리 $100B+ 진행 - 향후 IPO 타깃 $150~200B 범위·11월 2025 세컨더리 $75B 대비 2.6배·3/11 영국 PRA 풀 뷱킹 라이센스 후 모기지·소비자 신용 진입·CEO Storonsky 'NASDAQ 美 상장 1순위' 공식 입장",
         "ipo": "2028+ 연기",
         "val": "$75B",
         "round": "세컨더리 2H26 $100B+",
-        "sector": "네오뱅크"
+        "sector": "네오뷱크"
       },
       {
         "nm": "Ramp",
@@ -29,10 +29,10 @@ const data = [
       },
       {
         "nm": "Plaid",
-        "rs": "Q2 2026 IPO $6.1B 타깃 - 26년 핀테크 인프라 단독 최대 IPO 카운트다운·4월 텐더 $8B 모멘텀 회복·GS 리드 인수단·오픈뱅킹·연결 인프라 단일 채널 지배력·美·英·EU 동시 트랙",
+        "rs": "Q2 2026 IPO $6.1B 타깃 - 26년 핀테크 인프라 단독 최대 IPO 카운트다운·4월 텔더 $8B 모멘텀 회복·GS 리드 인수단·오픈뷱킹·연결 인프라 단일 채널 지배력·美·英·EU 동시 트랙",
         "ipo": "2026 Q2",
         "val": "$8B",
-        "round": "텐더오퍼 (업라운드)·GS 리드",
+        "round": "텔더오퍼 (업라운드)·GS 리드",
         "sector": "핀테크 인프라"
       },
       {
@@ -53,11 +53,11 @@ const data = [
       },
       {
         "nm": "Mercury",
-        "rs": "5/20 Series D $200M $5.2B 클로징 - 14개월 만 +49% 업라운드·a16z·Coatue·Sequoia·CRV·Sapphire·Spark 참여·OCC 조건부 인가 Mercury Bank N.A. 풀 차터 내셔널뱅크 전환 마일스톤·ARR $650M·4년 연속 흑자·누적 펀딩 ~$700M",
+        "rs": "5/20 Series D $200M $5.2B 클로징 - 14개월 +49% 업라운드·TCV 리드 a16z·Coatue·Sequoia·CRV·Sapphire·Spark 참여·OCC 풀 차터 내셔널뷱크 전환 진행·ARR $650M·4년 연속 흑자·누적 펀딩 ~$700M",
         "ipo": "미정",
         "val": "$5.2B",
-        "round": "Series D ($200M, 2026-05)·a16z 리드",
-        "sector": "SMB 뱅킹·재무관리"
+        "round": "Series D ($200M, 2026-05)·TCV 리드",
+        "sector": "SMB 뷱킹·재무관리"
       }
     ]
   },
@@ -91,8 +91,8 @@ const data = [
       },
       {
         "nm": "Discord",
-        "rs": "Q1 2026 컴피던셜 S-1 신청·세컨더리 밸류 $15B 책정 - 2025 마지막 펀딩 $15B 베이스 $25B IPO 타깃·MAU 2억+ 단일 동력·Goldman·JPM·Morgan Stanley 주관 라인업·Microsoft 인수 거절 후 단독 상장 트랙",
-        "ipo": "2026 H2 목표",
+        "rs": "Q1 2026 컴피던셜 S-1 후 공개 S-1 부재 - Polymarket 6/30 IPO 86.5% no 컨센·H1 2026 슬립·2025 마지막 펀딩 $15B 베이스 $25B IPO 타깃·MAU 2억+·GS·JPM·MS 주관·Microsoft 인수 거절 후 단독 트랙",
+        "ipo": "H2 2026 슬립",
         "val": "$15B",
         "round": "컴피던셜 S-1 (Q1 2026)·GS·JPM·MS",
         "sector": "소셜"
@@ -129,10 +129,10 @@ const data = [
     "stocks": [
       {
         "nm": "SpaceX",
-        "rs": "6/8 로드쇼·6/11 프라이싱·6/12 Nasdaq 데뷔 SPCX D-17 - 조달 $75B+·밸류 $1.75T→$2T 재호가·스타링크 2025 매출 $10.6B 전체 67%·가입 1,030만·조정 EBITDA $6.6B·커넥티비티 분기 $1.19B 흑자 vs 우주 -$619M·AI 부문 -$2.5B 수익 편중·머스크 85.1% 의결권 거버넌스 변수",
-        "ipo": "2026.06.12 Nasdaq 데뷔 (6/8 로드쇼·6/11 프라이싱)",
+        "rs": "5/28 Bloomberg 'Unlike Any Other' 단독 - Q1 매출 $4.69B +15% YoY·2025 연 $18.67B +33%·Q1 순손실 $4.28B 적자 확대·6/4 로드쇼·6/11 프라이싱·6/12 Nasdaq 데뷔 SPCX D-13·리테일 30% 직접 라우팅 역대 최대·머스크 85.1% 의결권",
+        "ipo": "2026.06.12 Nasdaq 데뷔 (6/4 로드쇼·6/11 프라이싱)",
         "val": "$1.75T~$2T",
-        "round": "5/20 S-1 공개·티커 SPCX·6/8 로드쇼·리테일 30%",
+        "round": "5/20 S-1 공개·티커 SPCX·골드만 lead·6/4 로드쇼 가속·6/11 리테일 직접 라우팅 30% 할당",
         "sector": "우주"
       },
       {
@@ -165,7 +165,7 @@ const data = [
         "ipo": "미정 (2027 흑자 목표)",
         "val": "$126B",
         "round": "Series D ($16B, 2026-02)",
-        "sector": "자율주행 로보택시"
+        "sector": "자율주행 로봇택시"
       },
       {
         "nm": "Anduril",

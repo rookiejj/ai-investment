@@ -1,25 +1,25 @@
 const updates = [
   {
-    "date": "2026-05-27 07:20 KST",
-    "summary": "Micron +18% $886.6 시총 $1조 첫 돌파 - UBS 목표가 $535→$1,625\n나스닥 26,656 +1.19%·S&P 7,519 +0.61% 칩 주도 동반 신고가\n다우 50,461 -0.23% 헬스케어·에너지 약세에 홀로 하락\nAutoZone EPS $38.07 컨센 상회·Zscaler $1.08 상회 매출은 소폭 하회\n5/30 4월 PCE·6/16 워시 첫 FOMC 인하 경로 입력값 대기",
+    "date": "2026-06-01 19:00 KST",
+    "summary": "NVDA Computex 키노트 RTX Spark·Vera Rubin 풀생산 공식\nN1X ARM 노트북 SoC 세계 첫 공개·MS·Dell·HP·ASUS·Lenovo·MSI 가을 출시\nVera Rubin 풀생산 - Anthropic·OpenAI·xAI·Dell·Oracle·CoreWeave 1차 고객\n美 선물 일요일 야간 NDX +0.6%·S&P +0.3%·Dow +0.1% 6월 출발 강세\n트럼프 호르무즈 즉시 개방·핵 제로 demand·Iran Fars 반박 - 휴전 협상 표류",
     "changes": [
       {
-        "time": "2026-05-27 05:10 KST",
-        "type": "정보 갱신",
-        "detail": "Micron(MU). 5/26 18% 급등해 $886.6 사상 최고로 마감하며 메모리 업체 최초로 시가총액 $1조를 돌파했다 - UBS가 목표가를 $535에서 $1,625로 대폭 상향한 것이 도화선이었다. HBM4 물량이 연말까지 완판된 가운데, 美 유일의 메모리 제조사로서 AI 스택의 핵심 메모리 레이어 지위를 굳혔다는 평가다. forward 멀티플 부담에도 DRAM +125%·NAND +234% 전망의 'memflation' 내러티브가 칩 랠리를 끌어올려 나스닥을 신고가로 견인했다.",
+        "time": "2026-06-01 12:00 KST",
+        "type": "제품 출시",
+        "detail": "NVDA(NVDA) Computex Taipei 키노트 핵심 발표. 6/1 11:00 Taipei(12:00 KST)에서 황 CEO가 ① N1X 세계 첫 ARM 노트북 SoC 공식 공개 - Blackwell GPU + MediaTek ARM CPU 듀얼 다이·TSMC 3nm·70B 트랜지스터·20 CPU 코어·6,144 CUDA 코어 - 가을 Microsoft·Dell·HP·ASUS·Lenovo·MSI 6개 OEM Windows PC 라인업 동시 출시. ② RTX Spark 데스크탑·노트북 동시 로드맵 3세대 - Rubin LPDDR6 메모리 → Rosa → Feynman 차세대 확정. ③ Vera Rubin NVL72 풀 양산 진입·가을 첫 출하·1차 고객 Anthropic·OpenAI·xAI·Dell·Oracle·CoreWeave 명시. Apple·Intel·Qualcomm PC 칩 시장 3중 압박 본격화. forward 시총 $5.2T·FY27 Q1 매출 $81.6B +85% YoY 컨센 추가 상향 카탈리스트. 美 선물 NDX +0.6%로 Monday 강세 반영 시작.",
         "sector": "반도체"
       },
       {
-        "time": "2026-05-27 05:05 KST",
-        "type": "정보 갱신",
-        "detail": "美 증시. 5/26 나스닥이 1.19% 오른 26,656.18, S&P 500이 0.61% 오른 7,519.12로 동반 사상 최고 마감했다 - 메모리·반도체 주도의 강세였다. 반면 다우는 헬스케어·에너지 약세에 0.23% 밀린 50,461.68로 홀로 하락해 지수 간 차별화가 뚜렷했다. forward 멀티플이 역사적 상단인 만큼 추가 상승은 물가 경로 확인을 요하며, 5/30 4월 PCE와 6/16~17 케빈 워시 의장 체제 첫 FOMC가 인하 경로를 가르는 차기 입력값으로 대기한다.",
-        "sector": "시장"
+        "time": "2026-06-01 09:00 KST",
+        "type": "정책 환경",
+        "detail": "트럼프 행정부 이란·호르무즈 협상. 5/29 백악관 상황실 장시간 회의 후 최종 결정 미발표 - 트럼프 트루스소셜에서 이란 ① 핵무기 영구 포기 ② 호르무즈 해협 무역 즉시 무제한 개방 ③ 매장된 농축물질 IAEA·이란 공조로 美 발굴·파괴 - 3개 demand 명시. 이란 국영 Fars는 \"기존 합의 본문 위배\" 반박. 60일 휴전 MOU 전 단계 합의 보도(5/29 CNN) 직후 양측 강경 입장으로 협상 표류. Brent $92.56·5월 -19% COVID 이후 최악·Saudi spare capacity 3.41 mbpd 여유가 단기 공급 카운터·美 선물 NDX +0.6% risk-on 우선 - 트레이더는 휴전 연장 베이스 무게. 6/7 OPEC+ JMMC 직전 가격 변동성 확대 잠재.",
+        "sector": "에너지·매크로"
       },
       {
-        "time": "2026-05-27 05:00 KST",
+        "time": "2026-06-01 07:30 KST",
         "type": "정보 갱신",
-        "detail": "어닝. 5/26 AutoZone이 회계 3분기 EPS $38.07로 컨센 $36.65를 상회했으나 매출 $4.84B는 컨센 $4.88B를 소폭 하회했다 - 부품 수요 견조 속 마진 압박이 병존했다. 마감 후 Zscaler는 EPS $1.08로 컨센 $1.04를 상회하고 매출 $850M은 컨센 $860M을 소폭 하회해 제로트러스트 클라우드 수요의 양면을 보였다. EPS 상회·매출 하회 패턴이 소비·사이버보안 양 섹터에서 동시 관찰됐다.",
-        "sector": "소비·사이버보안"
+        "detail": "美 5월 마감 + 6월 출발 점검. 나스닥 5월 +8% S&P +5% Dow +3% 단일월 강세로 6월 신고가 기조 진입 - Sunday 선물 NDX +0.6%·S&P +0.3%·Dow +0.1%. 5/29 S&P 7,580.06 +0.22% 9주 연속 상승 2017년 11월 이후 최장·Dow 51,032 사상 첫·나스닥 26,972 동반 신고가. Dell Technologies +30% 어닝 서프라이즈(AI 서버 백로그) 후속 효과 잔존. Goldman 5/27 2026 EPS forecast $340 +24% YoY 상향·연말 S&P 7,600→8,000 상향. 1주 캘린더: 6/3 ADP·ISM 서비스 - 6/4 ECB - 6/5 NFP 컨센 +12.5만/실업 4.3% + 황 NVIDIA 한국 방한 4대그룹 회동 - 6/8 Apple WWDC 26 키노트 Siri·Google Gemini 통합 첫 공개·6/16~17 케빈 워시 첫 FOMC. 10y 4.45%·DXY 98.89·VIX 15.30 risk-on 기조 6월 진입.",
+        "sector": "시장"
       }
     ]
   }
