@@ -56,6 +56,18 @@ jobs:
         run: |
           node scripts/sync-to-db.js
 
+      # DB 동기화 직후 read 함수 응답을 정적 JSON으로 Storage에 박는다.
+      # 프론트는 이 정적 파일(CDN 캐시)을 먼저 읽어 헤드라인 로딩 시 DB·함수 직격을 우회.
+      # best effort — 실패해도 프론트는 함수 폴백으로 정상 동작하므로 워크플로를 멈추지 않는다.
+      - name: tabs 정적 스냅샷 업로드
+        if: always()
+        continue-on-error: true
+        env:
+          SUPABASE_URL: https://ytvcgoldauysvnqckzze.supabase.co
+          BRIEFICK_SUPABASE_SECRET_KEY: ${{ secrets.BRIEFICK_SUPABASE_SECRET_KEY }}
+        run: |
+          node scripts/snapshot-tabs-to-storage.js
+
       - name: 종료 알림 (항상 실행)
         if: always()
         run: |
