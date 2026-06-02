@@ -78,7 +78,7 @@ const data = [
         "p2": "192",
         "r1": "216",
         "r2": "337",
-        "rs": "5/29 $211.14 시총 $5.2T·6/1 GTC Taipei 12시 KST 키노트 D-Day - N1X ARM 노트북 SoC 첫 공개·Vera Rubin NVL72 파트너·Five-Layer Cake 풀스택 AI 팩토리·6/5 한국 4대그룹 회동 듀얼 트랙",
+        "rs": "6/1 $224 +5% 시총 $5.5T 신고가 - GTC Taipei 키노트 Vera Rubin NVL72 풀양산·HBM4 1차 공급 삼성·SK·마이크론·N1X ARM 노트북 SoC + RTX Spark 데스크탑 공식·6/5 한국 4대그룹 회동 D-3",
         "tk": "NVDA"
       },
       {
