@@ -18,7 +18,7 @@ const data = [
         "p2": "148",
         "r1": "403",
         "r2": "455",
-        "rs": "4/29 장후 Q1 매출 $109.9B +22% 컨센 $107.1B 상회·EPS $5.11 vs 컨센 $2.62 압도·Cloud $20.03B +63% 백로그 $460B QoQ 두 배·CapEx $180~190B 상향·Pichai '컴퓨트 제약' 직접 언급",
+        "rs": "6/2 -4% $362 - $80B 사상 최대 주식 발행($10B Berkshire·$30B 공모·$40B ATM 7월)·CapEx 2026 $180~190B AI 인프라 자금·자사주 매입 기조 reversed dilution 부담",
         "tk": "GOOGL"
       },
       {
@@ -78,7 +78,7 @@ const data = [
         "p2": "192",
         "r1": "216",
         "r2": "337",
-        "rs": "5/29 $211.14 시총 $5.2T·6/1 GTC Taipei 12시 KST 키노트 D-Day - N1X ARM 노트북 SoC 첫 공개·Vera Rubin NVL72 파트너·Five-Layer Cake 풀스택 AI 팩토리·6/5 한국 4대그룹 회동 듀얼 트랙",
+        "rs": "6/2 $225.61 시총 $5.5T 안착 - 황 컴퓨텍스 무대 Marvell '다음 1조달러' 호명·Vera Rubin NVL72 풀양산·HBM4 1차 공급 삼성·SK·마이크론·6/5 한국 4대그룹 회동 D-2",
         "tk": "NVDA"
       },
       {
@@ -201,7 +201,7 @@ const data = [
         "p2": "2.5",
         "r1": "33",
         "r2": "38",
-        "rs": "AI 서버·GreenLake 하이브리드",
+        "rs": "6/2 +19% Q2 매출 $10.68B vs 컨센 $9.77B·EPS $0.79 vs $0.53 압도·네트워킹 +148% YoY·라우팅 $1M→$775M·Juniper 시너지 2년 조기·FY28 EPS 목표 상회 가이던스",
         "tk": "HPE"
       }
     ]
