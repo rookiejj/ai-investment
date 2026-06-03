@@ -1,29 +1,29 @@
 const updates = [
   {
-    "date": "2026-06-03 07:30 KST",
-    "summary": `S&P 7,609.78 +0.13%·나스닥 27,093.90 +0.03%·다우 51,307.79 +0.45% 3대 지수 동반 신고가
-Marvell +30% 황 컴퓨텍스 무대 "다음 1조달러 기업" 호명 - AI 인터커넥트 단독 카탈리스트
-HPE +19% Q2 매출 $10.68B EPS $0.79 컨센 압도·Juniper 시너지 라우팅 매출 $1M→$775M 폭증
-Alphabet -4% $80B 사상 최대 주식 발행 - $10B Berkshire·$30B 공모·$40B ATM 7월 시작
-AAPL -2% 황 키노트 부재 - 6/8 WWDC 26 D-5 Gemini 1.2T Siri 통합 카운트다운`,
+    "date": "2026-06-03 19:30 KST",
+    "summary": `Anthropic S-1 6/1 컨피덴셜 $965B 발표 - 10월 NASDAQ 상장 타깃 AI IPO 분기점
+6/3 ADP 11만 컨센·ISM 서비스·CRWD AH 광역 sector rotation 시그널
+6/2 S&P 7,609.78·나스닥 27,094·다우 51,308 동반 신고가 안착
+AAPL 11주 연속 상승 2004 이후 최장·YTD +16% 매그7 2위
+6/5 NFP +12.5만·6/16 워시 첫 FOMC dot plot 변곡점`,
     "changes": [
       {
-        "time": "2026-06-02 16:00 KST",
-        "type": "수치 갱신",
-        "detail": "美 6/2 마감. S&P 500 7,609.78 +0.13% 사상 최고·나스닥 27,093.90 +0.03% 27K 위 안착·다우 51,307.79 +0.45% 동반 신고가. AI 인프라 sector rotation 단독 견인 - Marvell(MRVL) +30% Computex Taipei 황·Murphy 동석 무대 'next trillion-dollar company' 호명 후 시총 $billions 증분·AI 인터커넥트·네트워킹 lock-in 단독 카탈리스트. HPE +19% Q2 매출 $10.68B vs 컨센 $9.77B·EPS $0.79 vs 컨센 $0.53 압도·네트워킹 +148% YoY·라우팅 매출 $1M→$775M·Juniper 시너지 2년 조기 도달·FY28 EPS 목표 상회 가이던스. 6/1 NVDA +5% Vera Rubin 풀양산 후속 6/2 $225.61 안착·시총 $5.5T 유지. 6/2 sector premium 베이스 - forward 10y 4.45%·DXY 98.89·VIX 15.30 risk-on 기조. 1주 캘린더 - 6/3 ADP·ISM 서비스·6/4 ECB·6/5 NFP 컨센 +12.5만 + 황 한국 회동·6/8 Apple WWDC 26 + Anthropic IPO 시점 시그널·6/16~17 케빈 워시 첫 FOMC dot plot.",
-        "sector": "시장"
-      },
-      {
-        "time": "2026-06-02 16:30 KST",
+        "time": "2026-06-03 19:25 KST",
         "type": "자본 조달",
-        "detail": "Alphabet(GOOGL). 6/2 종가 -4% $362 - $80B 사상 최대 주식 발행 발표 후 매도. 구성 $10B Berkshire Hathaway 사모 + $30B 공모 + $40B ATM(at-the-market) 7월 시작·전체 사이즈 글로벌 ECM 사상 최대 트랜잭션 진입. 자금 용도 AI 인프라 CapEx - 2026 가이던스 $180~190B(2025 대비 약 2배)·2027 추가 step-up. 기존 자사주 매입 기조 정면 reversed 시그널로 - 행정실 우려 dilution + ATM 수개월 매물 부담이 forward 단기 weakness 카운터. Salesforce·Anthropic·OpenAI·Bezos 동시 AI 자본 가속 사이클이 광역 흐름, GOOGL 컴퓨트 제약 직접 언급 후 1.5분기 만에 자본 구조 재편 - forward earnings yield 2.8% sector premium 디스카운트 가속 가능성.",
+        "detail": "Anthropic. 6/1 SEC 컨피덴셜 S-1 제출 - 밸류에이션 $965B·Series H $65B 직후 라운드 완료 후속. ARR $47B(12월 대비 약 5배)·코딩 에이전트(Claude Code·Devin 협업)·엔터프라이즈 컨트랙트 동시 가속 베이스 - OpenAI $852B 처음 추월. 10월 NASDAQ 상장 타깃·골드만삭스·모건스탠리 주관 - 인텔 1971년 이후 최대 신규 상장 트랜잭션 진입 시나리오. OpenAI 후속 컨피덴셜 S-1 수주 내 제출 가능성·가을 동시 상장 윈도우 시그널 - AI IPO 사이클 풀가속 진입. forward earnings yield 베이스 부재(아직 적자)지만 토픽 비교군 (NVDA forward P/E 32·sector premium) sector multiple 결정 변곡점. CrowdStrike·Palo Alto·Salesforce·OpenAI 동시 AI 자본 사이클이 forward 12개월 IPO·secondary·CapEx step-up 광역 흐름.",
         "sector": "AI 플랫폼"
       },
       {
-        "time": "2026-06-02 16:45 KST",
-        "type": "공급망",
-        "detail": "Marvell Technology(MRVL). 6/2 +30% 폭등 - 황 Computex Taipei 무대 'Marvell is the next trillion-dollar company' 직접 호명 후 단독 랠리. AI 인터커넥트·custom silicon·800G 광 네트워킹이 NVIDIA Vera Rubin NVL72 scale-out 핵심 구성 노출·forward AI infrastructure CapEx $1.5T+ 사이클 톱티어 노출 재평가. 6/2 직전 4월 Q1 매출 $2.4B 컨센 상회·DC 매출 가이던스 가속 베이스에서 황 호명이 sector premium 재가속. forward Anthropic·OpenAI·Google·Meta CapEx 합산 2026~2028 누적 $1T+ 시나리오에서 Broadcom·Marvell duopoly 인터커넥트 IP 라이센싱 멀티이어 사이클 가시화 - forward FY27E 매출 $12B+ 컨센 상향 카탈리스트 진입.",
-        "sector": "반도체"
+        "time": "2026-06-03 19:20 KST",
+        "type": "수치 갱신",
+        "detail": "美 6/3 개장 전. 다우 선물 -0.3%·나스닥·S&P 선물 flat·러셀 2000 -0.4% - 3연속 신고가 후 brief breather. 6/2 종가 베이스 S&P 7,609.78 +0.13% 사상 최고·나스닥 27,094 +0.03%·다우 51,308 +0.45%. 6/3 핵심 매크로 - ADP 5월 민간 고용 +11만 컨센 vs 4월 +10.9만 + 4월 공장 주문 + ISM 서비스 PMI 동시 발표. AAPL 6/2 +0.5% YTD +16% 매그7 2위 (NVDA 다음)·11주 연속 상승 2004년 이후 최장 스트릭·역대 신고가 - 6/8 WWDC 26 D-5 on-device AI·Siri redesign 카탈리스트 카운트다운. 1주 캘린더 - 6/3 CRWD AH 매출 $1.36B EPS $1.06 컨센·6/5 NFP +12.5만 컨센·6/16~17 워시 첫 FOMC dot plot 변곡점. 10y 4.45%·DXY 98.89·VIX 15.30·WTI $66 risk-on 기조 유지.",
+        "sector": "시장"
+      },
+      {
+        "time": "2026-06-03 19:15 KST",
+        "type": "실적 예정",
+        "detail": "CrowdStrike(CRWD). 6/3 美 장 마감 후 FY27 Q1 발표 - 매출 $1.36~$1.364B·조정 EPS $1.06~$1.07 자체 가이던스. forward 핵심 - Falcon 플랫폼 사이버보안 SaaS 매출 가속 + 7/2024 outage 후 churn 정상화 진척 + AI agent security(Charlotte AI) 자체 모듈 매출 기여 가속 + Palo Alto Networks 6/2 마감 후 FY26 Q3 +18% YoY 매출 베이스라인 후 sector tone 결정. 6/2 종가 sector forward P/E 18배·NTM 매출 멀티플 12배 premium 베이스에서 컨센 상회·NRR 120%+ 유지 시 sector relative 재평가 카탈리스트. AI 보안 sector rotation - Anthropic·OpenAI 엔터프라이즈 배치 가속으로 forward 12개월 매출 컨센 step-up 잔존, 광역 SW sector earnings revision 시즌 후반 핵심 시그널.",
+        "sector": "사이버보안"
       }
     ]
   }
