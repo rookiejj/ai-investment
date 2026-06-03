@@ -10,7 +10,7 @@ Claude Opus 4.8 1주차 + 6주 cadence 차세대 모델 D-day`,
       {
         "time": "2026-06-04 07:50 KST",
         "type": "마일스톤",
-        "detail": "Anthropic. 런레이트 매출 $30B 돌파 - 12월 $9B 대비 +3.3배 가속 + 엔터프라이즈 컨트랙트 동시 가속. 핵심 수치 - $1M+ 연간 결제 고객 1,000개 돌파(2월 500개 대비 2배)·6/1 SEC 비공개 S-1 접수·5/29 Series H $65B/$965B 클로직 후 12거래일 IPO 데뷔 가시권·6/3 Claude Opus 4.8 정식 출시 + Mythos 프리뷰 6월 일정 일관 진행. Q2 매출 가이던스 $10.9B 직전 분기 두 배 + 첫 흑자 분기 진입 컨센·ARR run rate $47B(전년 4.7배) 베이스. 컴퓨트 베이스 - Google·Broadcom 3.5GW TPU 2027 온라인 + 5/29 Series H 클로직과 동조 + Amazon 5GW·SpaceX Colossus 인프라 락인 누적. forward 매크로 - frontier AI 시장 점유율 OpenAI 첫 추월 + 10월 NASDAQ 상장 윈도우 + 1조달러 첫 진입 시나리오. forward earnings yield 베이스 부재(적자 잔존)지만 NVDA forward P/E 32 sector premium 비교군으로 multiple 분기점.",
+        "detail": "Anthropic. 런레이트 매출 $30B 돌파 - 12월 $9B 대비 +3.3배 가속 + 엔터프라이즈 컨트랙트 동시 가속. 핵심 수치 - $1M+ 연간 결제 고객 1,000개 돌파(2월 500개 대비 2배)·6/1 SEC 비공개 S-1 접수·5/29 Series H $65B/$965B 클로징 후 12거래일 IPO 데뷔 가시권·6/3 Claude Opus 4.8 정식 출시 + Mythos 프리뷰 6월 일정 일관 진행. Q2 매출 가이던스 $10.9B 직전 분기 두 배 + 첫 흑자 분기 진입 컨센·ARR run rate $47B(전년 4.7배) 베이스. 컴퓨트 베이스 - Google·Broadcom 3.5GW TPU 2027 온라인 + 5/29 Series H 클로징과 동조 + Amazon 5GW·SpaceX Colossus 인프라 락인 누적. forward 매크로 - frontier AI 시장 점유율 OpenAI 첫 추월 + 10월 NASDAQ 상장 윈도우 + 1조달러 첫 진입 시나리오. forward earnings yield 베이스 부재(적자 잔존)지만 NVDA forward P/E 32 sector premium 비교군으로 multiple 분기점.",
         "sector": "Anthropic"
       },
       {

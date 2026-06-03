@@ -10,7 +10,7 @@ AAPL WWDC 6/8 D-4 Siri 2.0 카운트다운 · 연간 +50% 사상 최고 근접
       {
         "time": "2026-06-04 07:40 KST",
         "type": "수치 갱신",
-        "detail": "美 6/3 마감. S&P 500 -0.74%·나스닥 -0.89%·다우 -1%+ 3연속 신고가 행진 중단 - 이란 6/3 새벽 쿠웨이트·바레인·역내 표적 탄도 미사일 동시 발사 후 美 CENTCOM 일부 요격·일부 비행 중 와해 보고. 인프라 일부 손상·쿠웨이트 사상자 1명·바레인向 3발 요격. 美·이란 협상 진첩 정체 + 호르무즈 risk premium 재확대 후속 - WTI $95+/bbl 3연속 상승·Brent $97+ 동조 강세·10y 4.45% 동결·DXY 98.89·VIX 16.5 상승. 6/3 핵심 매크로 - ADP 5월 민간 고용 +11만 컨센·ISM 서비스 PMI 53.7 컨센 + 4월 공장 주문 동시 발표. 6/5 NFP +12.5만 컨센 D-2·6/16~17 케빈 워시 첫 FOMC dot plot 변곡점 D-12·Polymarket 60% no-cut H1 2026. forward 매크로 - 실질금리(10y - CPI) 65bp + 호르무즈 risk premium + earnings revision 시즌 후반이 sector rotation 모멘텀. AI·소프트웨어 sector forward P/E premium 베이스 유지하나 일중 변동성 확대 잠재.",
+        "detail": "美 6/3 마감. S&P 500 -0.74%·나스닥 -0.89%·다우 -1%+ 3연속 신고가 행진 중단 - 이란 6/3 새벽 쿠웨이트·바레인·역내 표적 탄도 미사일 동시 발사 후 美 CENTCOM 일부 요격·일부 비행 중 와해 보고. 인프라 일부 손상·쿠웨이트 사상자 1명·바레인向 3발 요격. 美·이란 협상 진척 정체 + 호르무즈 risk premium 재확대 후속 - WTI $95+/bbl 3연속 상승·Brent $97+ 동조 강세·10y 4.45% 동결·DXY 98.89·VIX 16.5 상승. 6/3 핵심 매크로 - ADP 5월 민간 고용 +11만 컨센·ISM 서비스 PMI 53.7 컨센 + 4월 공장 주문 동시 발표. 6/5 NFP +12.5만 컨센 D-2·6/16~17 케빈 워시 첫 FOMC dot plot 변곡점 D-12·Polymarket 60% no-cut H1 2026. forward 매크로 - 실질금리(10y - CPI) 65bp + 호르무즈 risk premium + earnings revision 시즌 후반이 sector rotation 모멘텀. AI·소프트웨어 sector forward P/E premium 베이스 유지하나 일중 변동성 확대 잠재.",
         "sector": "시장"
       },
       {
