@@ -1058,17 +1058,6 @@ body.sub-modal-open{overflow:hidden}
 
 <main>
 
-<!-- Hero + Today's Narrative -->
-<section class="hero">
-  <div class="hero-eyebrow">1분 마켓 브리핑</div>
-  <h1 class="hero-title">오늘<br><span class="accent">놓치면 안 되는 것</span></h1>
-  <div class="hero-meta"><span class="dot"></span><span id="lastUpdated">데이터 로드 중…</span></div>
-
-  <div class="narrative-card" id="narrativeCard">
-    <div id="narrativeBody"><div class="updates-loading">데이터를 불러오고 있습니다…</div></div>
-  </div>
-</section>
-
 <!-- Market Pulse — 4 indices, KOSPI·KOSDAQ·S&P·NASDAQ 3-month sparkline -->
 <section>
   <div class="sec-head">
@@ -1101,6 +1090,17 @@ body.sub-modal-open{overflow:hidden}
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- Hero + Today's Narrative -->
+<section class="hero">
+  <div class="hero-eyebrow">1분 마켓 브리핑</div>
+  <h1 class="hero-title">오늘<br><span class="accent">놓치면 안 되는 것</span></h1>
+  <div class="hero-meta"><span class="dot"></span><span id="lastUpdated">데이터 로드 중…</span></div>
+
+  <div class="narrative-card" id="narrativeCard">
+    <div id="narrativeBody"><div class="updates-loading">데이터를 불러오고 있습니다…</div></div>
   </div>
 </section>
 
@@ -3329,7 +3329,7 @@ boot();
   (function(){
     const bar=document.getElementById('ctaSticky');
     if(!bar||!('IntersectionObserver'in window))return;
-    const targets=[document.querySelector('.hero'),document.getElementById('whySubscribe'),document.querySelector('footer.footer')].filter(Boolean);
+    const targets=[document.querySelector('main > section'),document.getElementById('whySubscribe'),document.querySelector('footer.footer')].filter(Boolean);
     if(!targets.length)return;
     const vis=new WeakMap();
     const io=new IntersectionObserver(es=>{
