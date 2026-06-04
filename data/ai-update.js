@@ -10,13 +10,13 @@ Mistral Vibe 5/28 리브랜드 - Le Chat → 자율 워크·코드 에이전트 
       {
         "time": "2026-06-04 19:40 KST",
         "type": "생태계",
-        "detail": "Anthropic. Claude Partner Network 6/3 Services Track + Partner Hub 동시 출범 - 엔터프라이즈 컨설팅·SI·매니지드 서비스 파트너 인증 체계 정식화·Project Glasswing 6/2 확장과 동조. Claude Opus 4.8 기본 컨텍스트 1M 토큰으로 확장 - 코드베이스 스케일 마이그레이션 본격 지원·dynamic workflows로 수십만 라인 리팩토링 자동화 베이스. Opus 4.8 5/28 출시 후 41일 cadence(4.7 → 4.8)·코딩 신뢰성 4배 개선·동일 가격 유지 sector pricing power 카운터. forward 매크로 - 6/1 SEC 비공개 S-1 접수·Series H $65B/$965B 클로징 후 12거래일 IPO 데뷔 가시권·런레이트 ARR $47B(전년 4.7배)·Q2 매출 가이던스 $10.9B 직전 분기 두 배·첫 흑자 분기 컨센. 컴퓨트 베이스 - Google·Broadcom 3.5GW TPU 2027 + Amazon 5GW + SpaceX Colossus 인프라 락인 누적. Mythos 프리뷰 6월 일정 일관·NASDAQ 10월 상장 윈도우 + 1조달러 첫 진입 시나리오 - frontier AI 카테고리 리더쉭 분기점.",
+        "detail": "Anthropic. Claude Partner Network 6/3 Services Track + Partner Hub 동시 출범 - 엔터프라이즈 컨설팅·SI·매니지드 서비스 파트너 인증 체계 정식화·Project Glasswing 6/2 확장과 동조. Claude Opus 4.8 기본 컨텍스트 1M 토큰으로 확장 - 코드베이스 스케일 마이그레이션 본격 지원·dynamic workflows로 수십만 라인 리팩토링 자동화 베이스. Opus 4.8 5/28 출시 후 41일 cadence(4.7 → 4.8)·코딩 신뢰성 4배 개선·동일 가격 유지 sector pricing power 카운터. forward 매크로 - 6/1 SEC 비공개 S-1 접수·Series H $65B/$965B 클로징 후 12거래일 IPO 데뷔 가시권·런레이트 ARR $47B(전년 4.7배)·Q2 매출 가이던스 $10.9B 직전 분기 두 배·첫 흑자 분기 컨센. 컴퓨트 베이스 - Google·Broadcom 3.5GW TPU 2027 + Amazon 5GW + SpaceX Colossus 인프라 락인 누적. Mythos 프리뷰 6월 일정 일관·NASDAQ 10월 상장 윈도우 + 1조달러 첫 진입 시나리오 - frontier AI 카테고리 리더십 분기점.",
         "sector": "Anthropic"
       },
       {
         "time": "2026-06-04 19:35 KST",
         "type": "모델 출시 예정",
-        "detail": "Google DeepMind. Gemini 3.5 Pro 6월 출시 임박 - 5/19 I/O 2026 키노트에서 Pichai 'give us until next month to get it to you' 공약 후속·API ID·모델 카드 아직 미공개. Gemini 3.5 Flash GA 5/19 - Gemini 앱·AI Mode in Search 기본 모델 + API $1.50/$9.00 per M tokens 베이스. 핵심 카운터 - Apple-Google 1/12 멀티이어 AI 파트너십 $1B/년·1.2T 파라미터 커스텀 Gemini 모델 + Apple Private Cloud Compute 하드웨어 격리 enclaves 데이터 미공유 + iOS 27 출시 시 약 14억 iPhone 대상 Siri 2.0 백엔드 + WWDC 6/8 D-4 공식 발표 컨센. Google DeepMind sector premium 베이스 - GPT-5.6 vs Opus 4.8 vs Gemini 3.5 Pro 6월 동시 프론티어 사이클 + Apple 14억 디바이스 분포 락인 + 코딩·웹서치·이미지 생성 멀티 모달 카테고리 리더쉭 동조 매크로. forward 매크로 - Anthropic·OpenAI IPO 윈도우 + Mythos·Grok 5 6월 동시 출시 가속 시나리오가 frontier AI 광역 카테고리 변곡점.",
+        "detail": "Google DeepMind. Gemini 3.5 Pro 6월 출시 임박 - 5/19 I/O 2026 키노트에서 Pichai 'give us until next month to get it to you' 공약 후속·API ID·모델 카드 아직 미공개. Gemini 3.5 Flash GA 5/19 - Gemini 앱·AI Mode in Search 기본 모델 + API $1.50/$9.00 per M tokens 베이스. 핵심 카운터 - Apple-Google 1/12 멀티이어 AI 파트너십 $1B/년·1.2T 파라미터 커스텀 Gemini 모델 + Apple Private Cloud Compute 하드웨어 격리 enclaves 데이터 미공유 + iOS 27 출시 시 약 14억 iPhone 대상 Siri 2.0 백엔드 + WWDC 6/8 D-4 공식 발표 컨센. Google DeepMind sector premium 베이스 - GPT-5.6 vs Opus 4.8 vs Gemini 3.5 Pro 6월 동시 프론티어 사이클 + Apple 14억 디바이스 분포 락인 + 코딩·웹서치·이미지 생성 멀티 모달 카테고리 리더십 동조 매크로. forward 매크로 - Anthropic·OpenAI IPO 윈도우 + Mythos·Grok 5 6월 동시 출시 가속 시나리오가 frontier AI 광역 카테고리 변곡점.",
         "sector": "Google DeepMind"
       },
       {
