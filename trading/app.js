@@ -159,7 +159,7 @@ const IV_BTNS=[['1d','1D'],['1wk','1W'],['1mo','1M']];
 
 const Panels = {
   /* 지수 요약 */
-  indices: () => ({ title:'MARKET PULSE', def:{h:200},
+  indices: () => ({ title:'마켓 요약 · 지수', def:{h:200},
     mount(body){
       body.innerHTML='<div class="note">불러오는 중…</div>';
       const render=()=>{
@@ -175,7 +175,7 @@ const Panels = {
     }}),
 
   /* 관심종목 */
-  watchlist: () => ({ title:'WATCHLIST', def:{h:260},
+  watchlist: () => ({ title:'관심종목', def:{h:260},
     mount(body,head){
       const addBtn=el('button',{class:'pbtn',title:'추가'},'+'); head.appendChild(addBtn);
       addBtn.onclick=()=>{ const s=prompt('티커 추가 (예: AAPL, 005930.KS)'); if(s){ const u=s.trim().toUpperCase(); if(!state.watchlist.includes(u)){state.watchlist.push(u);saveWatch();draw();refreshQuotes([u]);} } };
@@ -194,7 +194,7 @@ const Panels = {
     }}),
 
   /* 종목 상세 */
-  quote: () => ({ title:'QUOTE', def:{h:240},
+  quote: () => ({ title:'종목 상세', def:{h:240},
     mount(body){
       function draw(){ const sym=state.symbol; const q=state.quotes[sym]||{}; const ds=q.dataState||'loading';
         const chCls=sign(q.change);
@@ -221,7 +221,7 @@ const Panels = {
     }}),
 
   /* 등락 상위 (관심종목 기반) */
-  movers: () => ({ title:'MOVERS (WATCHLIST)', def:{h:240},
+  movers: () => ({ title:'등락 상위 · 관심종목', def:{h:240},
     mount(body){
       function draw(){ const arr=state.watchlist.map(s=>({s,q:state.quotes[s]||{}})).filter(x=>x.q.changePct!=null).sort((a,b)=>b.q.changePct-a.q.changePct);
         if(!arr.length){ body.innerHTML='<div class="note">시세 로딩 시 표시됩니다.</div>'; return; }
@@ -235,7 +235,7 @@ const Panels = {
     }}),
 
   /* 차트 */
-  chart: () => ({ title:'CHART', def:{h:520},
+  chart: () => ({ title:'차트', def:{h:520},
     mount(body){
       body.style.padding='0'; body.style.display='flex'; body.style.flexDirection='column';
       const tb=el('div',{class:'chart-toolbar'});
@@ -268,7 +268,7 @@ const Panels = {
     }}),
 
   /* 뉴스 (브리픽 실데이터 + 정직한 상태) */
-  news: () => ({ title:'NEWS', def:{h:320},
+  news: () => ({ title:'뉴스', def:{h:320},
     mount(body){
       body.innerHTML='<div class="note">뉴스 불러오는 중…</div>';
       (async()=>{
@@ -289,7 +289,7 @@ const Panels = {
     }}),
 
   /* AI 시장 요약 */
-  aisummary: () => ({ title:'AI MARKET SUMMARY', def:{h:240},
+  aisummary: () => ({ title:'AI 시장요약', def:{h:240},
     mount(body){
       const refresh=el('button',{class:'pbtn',title:'다시'},'↻');
       function build(){
@@ -301,7 +301,7 @@ const Panels = {
     }}),
 
   /* 포트폴리오 보유 */
-  holdings: () => ({ title:'PORTFOLIO · HOLDINGS', def:{h:340},
+  holdings: () => ({ title:'포트폴리오 · 보유종목', def:{h:340},
     mount(body,head){
       const add=el('button',{class:'pbtn',title:'추가'},'+'); head.appendChild(add);
       add.onclick=()=>Portfolio.addPrompt(draw);
@@ -321,7 +321,7 @@ const Panels = {
     }}),
 
   /* 포트폴리오 비중/지표 */
-  alloc: () => ({ title:'ALLOCATION & METRICS', def:{h:340},
+  alloc: () => ({ title:'비중 · 지표', def:{h:340},
     mount(body){
       function draw(){
         const h=Portfolio.get(); if(!h.length){ body.innerHTML='<div class="note">보유 종목 추가 시 비중·손익·리밸런싱을 계산합니다.</div>'; return; }
@@ -346,7 +346,7 @@ const Panels = {
     }}),
 
   /* 옵션 (정직한 API 필요 + 인터페이스) */
-  options: () => ({ title:'OPTIONS CHAIN', def:{h:340},
+  options: () => ({ title:'옵션 체인', def:{h:340},
     mount(body){
       function draw(){ body.innerHTML=`
         <div class="note" style="margin-bottom:8px">${state.symbol} 옵션 체인</div>
@@ -359,7 +359,7 @@ const Panels = {
     }}),
 
   /* 주문 티켓 (Paper) */
-  ticket: () => ({ title:'ORDER TICKET', def:{h:340},
+  ticket: () => ({ title:'주문 티켓', def:{h:340},
     mount(body){
       function draw(){ const sym=state.symbol; const q=state.quotes[sym]||{}; const live=state.settings.liveEnabled;
         body.innerHTML=`
@@ -393,7 +393,7 @@ const Panels = {
     }}),
 
   /* 포지션 (Paper) */
-  positions: () => ({ title:'POSITIONS (PAPER)', def:{h:240},
+  positions: () => ({ title:'포지션 · 모의', def:{h:240},
     mount(body){
       function draw(){ const acc=Paper.get(); const syms=Object.keys(acc.pos); if(syms.length)refreshQuotes(syms);
         const rows=syms.map(s=>{ const p=acc.pos[s]; const q=state.quotes[s]||{}; const val=q.price!=null?q.price*p.qty:null; const pl=val!=null?val-p.avgCost*p.qty:null;
@@ -406,7 +406,7 @@ const Panels = {
     }}),
 
   /* 체결 내역 (Paper) */
-  blotter: () => ({ title:'ORDER BLOTTER (PAPER)', def:{h:240},
+  blotter: () => ({ title:'체결 내역 · 모의', def:{h:240},
     mount(body){
       function draw(){ const acc=Paper.get();
         const rows=(acc.log||[]).slice().reverse().slice(0,50).map(o=>`<tr><td class="l">${new Date(o.t).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'})}</td><td class="l ${o.side==='buy'?'up':'down'}">${o.side==='buy'?'매수':'매도'}</td><td class="l">${o.sym}</td><td>${nf0(o.qty)}</td><td>${nf(o.fill,2)}</td></tr>`).join('');
@@ -416,7 +416,7 @@ const Panels = {
     }}),
 
   /* AI 어시스턴트 */
-  aichat: () => ({ title:'AI ASSISTANT', def:{h:420},
+  aichat: () => ({ title:'AI 어시스턴트', def:{h:420},
     mount(body){
       body.style.display='flex'; body.style.flexDirection='column';
       const log=el('div',{class:'ai-log'},''); log.style.flex='1'; log.style.overflow='auto';
@@ -639,14 +639,50 @@ function openSettings(){
 }
 function openHelp(){
   const m=$('#modal');
-  m.querySelector('.modal').innerHTML=`<h3>명령창 사용법 <span class="x">✕</span></h3>
-    <div class="note" style="line-height:1.9">
-    <b>AAPL</b> — 해당 종목 차트로 이동<br>
-    <b>go portfolio</b> — 탭 이동 (markets/chart/news/portfolio/options/orders/ai)<br>
-    <b>add TSLA</b> — 관심종목 추가<br>
-    <b>buy NVDA 10</b> / <b>sell NVDA 5</b> — 모의 주문<br>
-    <b>help</b> — 이 도움말</div>
-    <div class="warn" style="margin-top:10px">데이터 정책: 실데이터만 표시. 없으면 "지연/데이터 없음/API 필요"로 명확히 구분하며 가짜 숫자를 만들지 않습니다.</div>`;
+  const row=(a,b)=>`<div style="display:flex;gap:8px;padding:2px 0"><div style="flex:0 0 116px;color:var(--fg)">${a}</div><div style="color:var(--mut)">${b}</div></div>`;
+  m.querySelector('.modal').innerHTML=`<h3>사용 가이드 <span class="x">✕</span></h3>
+    <div style="font-size:11px;line-height:1.5">
+      <div class="note" style="color:var(--acc2);margin:2px 0 4px;font-weight:700">탭 (위 줄 · 클릭하면 화면 전환)</div>
+      ${row('시장','지수 요약·관심종목·차트·등락·뉴스를 한 화면에')}
+      ${row('모니터','관심종목 + 선택 종목 상세')}
+      ${row('차트','캔들차트 중심 (기간·인터벌·지표)')}
+      ${row('뉴스','시황 헤드라인 + AI 요약')}
+      ${row('포트폴리오','보유종목·평가손익·비중·리밸런싱')}
+      ${row('옵션','옵션 체인 (API 연동 필요)')}
+      ${row('주문','모의 주문 티켓·포지션·체결내역')}
+      ${row('AI','AI 어시스턴트 대화')}
+
+      <div class="note" style="color:var(--acc2);margin:10px 0 4px;font-weight:700">박스(패널)</div>
+      ${row('마켓 요약·지수','주요 지수·금리·원자재·환율 현재가·등락')}
+      ${row('관심종목','시세 목록. 클릭=선택, + 추가, ✕ 삭제')}
+      ${row('종목 상세','현재가·전일종가·통화·데이터 상태')}
+      ${row('등락 상위','관심종목 중 상승/하락 상위')}
+      ${row('차트','캔들+거래량+이동평균/볼린저/RSI/MACD')}
+      ${row('뉴스','헤드라인 (강세/약세/중립 태그)')}
+      ${row('포트폴리오·보유','수량·평단·현재가·평가·손익. + 추가, ✎ 수정, ✕ 삭제')}
+      ${row('비중·지표','섹터·국가·통화 비중, 손익, 리밸런싱')}
+      ${row('주문 티켓','수량·유형 입력 후 매수/매도 (모의)')}
+      ${row('포지션·체결내역','모의 보유·현금 / 주문 기록')}
+
+      <div class="note" style="color:var(--acc2);margin:10px 0 4px;font-weight:700">버튼·조작</div>
+      ${row('패널 헤더 드래그','위치 이동 (다른 칸으로도)')}
+      ${row('헤더 ▾','접기 / 펼치기')}
+      ${row('패널 아래·옆 경계','드래그로 높이·폭 조절 (PC)')}
+      ${row('+ / ✎ / ✕','추가 / 수정 / 삭제')}
+      ${row('⚡ AI','AI 탭으로 이동')}
+      ${row('⚙ 설정','Gemini 키·기본종목·거래모드·레이아웃 초기화·데이터 삭제')}
+      ${row('PAPER / LIVE','거래 모드. 초록=모의(체결 안 됨), 빨강=실거래')}
+
+      <div class="note" style="color:var(--acc2);margin:10px 0 4px;font-weight:700">명령창 (위 CMD ▸)</div>
+      ${row('NVDA','해당 종목 차트로 이동')}
+      ${row('go portfolio','탭 이동 (markets/chart/news/portfolio/options/orders/ai)')}
+      ${row('add TSLA','관심종목 추가')}
+      ${row('buy NVDA 10','모의 매수 / sell NVDA 5 모의 매도')}
+      ${row('help','이 가이드')}
+
+      <div class="note" style="color:var(--acc2);margin:10px 0 4px;font-weight:700">데이터 배지</div>
+      <div class="note" style="line-height:1.9">${dsBadge('realtime')} 실시간 · ${dsBadge('delayed')} 지연(Yahoo ~15분) · ${dsBadge('unavailable')} 데이터 없음 · ${dsBadge('api')} 별도 API 필요 · ${dsBadge('error')} 오류<br>실데이터만 표시하고, 없으면 가짜 숫자 대신 위 배지로 이유를 밝힙니다.</div>
+    </div>`;
   m.classList.add('on'); m.querySelector('.x').onclick=()=>m.classList.remove('on'); m.onclick=e=>{if(e.target===m)m.classList.remove('on');};
 }
 function updateModeBadge(){ const b=$('#modeBadge'); const live=state.settings.liveEnabled; b.className='modebadge '+(live?'live':'paper'); b.textContent=live?'● LIVE 실거래':'● PAPER 모의'; }
@@ -670,6 +706,7 @@ function boot(){
   $$('.gmenu button').forEach(b=> b.onclick=()=>{ const map={Markets:'markets',Portfolio:'portfolio',Research:'news',Tools:'chart',AI:'ai'}; switchTab(map[b.dataset.m]||'markets'); });
   $('#btnAI').onclick=()=>switchTab('ai');
   $('#btnSettings').onclick=openSettings;
+  $('#btnHelp').onclick=openHelp;
   $('#cmd').addEventListener('keydown',e=>{ if(e.key==='Enter'){ runCommand(e.target.value); e.target.value=''; } });
   buildStrip(); clock(); updateModeBadge();
   // 데이터 소스 상태
