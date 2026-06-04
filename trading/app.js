@@ -46,10 +46,11 @@ const Data = (() => {
   async function resolveBase(){
     if(basePromise) return basePromise;
     basePromise = (async () => {
-      // 1) 로컬/Docker 프록시
+      // 1) 로컬/Docker 프록시 — 반드시 실제 JSON {ok:true} 인지 검증.
+      //    (정적 호스팅은 미지의 경로에 SPA 폴백으로 200 HTML 을 주므로 r.ok 만으론 오판)
       try{
         const r = await fetch('/api/health', {cache:'no-store'});
-        if(r.ok){ return '/api/market-data'; }
+        if(r.ok){ const j = await r.json().catch(()=>null); if(j && j.ok===true) return '/api/market-data'; }
       }catch(_){}
       // 2) 프로덕션 Supabase Edge Function
       if(CFG.SUPABASE_MARKET_URL) return CFG.SUPABASE_MARKET_URL;
