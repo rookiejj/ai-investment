@@ -181,14 +181,20 @@ table.grid tr.sel td{background:#13202e}
 /* responsive */
 @media(max-width:760px){
   .gmenu,.cmdhint,.splitter,.presize{display:none}
-  /* 단일 스크롤: 워크스페이스 하나만 스크롤하고, 컬럼·패널은 내용 높이로 펼침 (중첩 스크롤 제거) */
-  .workspace.on{flex-direction:column;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+  /* 🔴 모바일: 내부 스크롤 컨테이너를 없애고 브라우저(문서)가 네이티브로 스크롤.
+     워크스페이스를 absolute → 일반 흐름으로 바꿔 page 자체가 한 번에 스크롤된다. */
+  html,body{height:auto;overflow:visible}
+  body{overflow-x:hidden}
+  .topbar{position:sticky;top:0;z-index:60}
+  .tabs{position:sticky;top:var(--h-top);z-index:55}
+  .workspace{position:static;top:auto;bottom:auto;left:auto;right:auto;height:auto;overflow:visible}
+  .workspace.on{display:flex;flex-direction:column}
   .col{flex:none!important;width:100%;height:auto;min-width:0}
   .col-body{overflow:visible;height:auto;padding:6px;gap:6px}
   .panel{flex:none!important;flex-basis:auto!important;height:auto}
   .pbody{overflow:visible;min-height:0}
-  /* flex-fill 내부 레이아웃 패널(차트·AI챗)은 고정 높이 유지 — 내용이 0으로 붕괴 방지 */
-  .panel[data-pid="chart"]{height:440px;flex-basis:440px!important}
-  .panel[data-pid="aichat"]{height:460px;flex-basis:460px!important}
+  /* flex-fill 패널(차트·AI챗)만 고정 높이 — 내용 0 붕괴 방지. 그 외엔 내부 스크롤 0 */
+  .panel[data-pid="chart"]{height:430px}
+  .panel[data-pid="aichat"]{height:460px}
   .panel[data-pid="chart"] .pbody,.panel[data-pid="aichat"] .pbody{overflow:hidden}
 }
