@@ -1,0 +1,11 @@
+{
+  "name": "briefick-terminal-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Briefick Terminal 정적 서빙 + Yahoo 시세 프록시 (의존성 0)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": { "node": ">=18" }
+}

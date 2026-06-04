@@ -47,3 +47,7 @@ verify_jwt = false
 
 [functions.read-tab-archive]
 verify_jwt = false
+
+[functions.market-data]
+# /trading 터미널이 브라우저에서 직접 호출하는 시세 프록시 (Yahoo Finance 15분 지연).
+verify_jwt = false

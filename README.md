@@ -87,6 +87,7 @@ ai-investment/
 │   │   ├── daily-send/           ← 매일 뉴스 친구톡 발송 (평일 cron 트리거)
 │   │   ├── expiry-notice/        ← D-1 만료 임박 재구독 안내 친구톡 (매일 20:00 cron)
 │   │   ├── stock-prices/         ← Yahoo Finance 15분 지연 시세 fetch + Storage `prices/latest.json` 갱신 (5분 cron)
+│   │   ├── market-data/          ← /trading 터미널용 시세 프록시 (Yahoo v8 chart, verify_jwt=false)
 │   │   ├── survey-api/           ← 설문 시스템 (공개 응답 + 관리자 CRUD)
 │   │   └── admin-api/            ← 운영 대시보드용 (login / change_password / stats / logs / subscribers / payments / expiring_soon / manual_send[알림톡] / daily_send_preview / daily_send_now / notice_send[공지 친구톡])
 │   ├── schedule.sql              ← 매일 뉴스 cron (평일 08:00 KST)
@@ -94,6 +95,13 @@ ai-investment/
 │   ├── schedule-prices.sql       ← 시세 갱신 cron (매 5분)
 │   ├── queries.sql               ← 운영 조회·상태 변경 템플릿
 │   └── README.md                 ← Supabase 세팅 가이드
+├── trading/                     ← 🆕 독립 금융 터미널 (/trading) — 메인 서비스와 코드 공유 0
+│   ├── index.html               ← 터미널 셸 (상단바·지수 스트립·8탭·워크스페이스)
+│   ├── app.js                   ← DataService·캔들차트·패널 드래그/리사이즈·포트폴리오·Paper·AI·뉴스
+│   ├── styles.css · config.js   ← 다크 고밀도 스타일 · 데이터 경로/지수 설정
+│   ├── server/server.js         ← 로컬/Docker 정적 서빙 + Yahoo 프록시 (의존성 0)
+│   ├── Dockerfile · docker-compose.yml · .env.example
+│   └── README.md                ← 실행/배포/API키/제공자/Gemini/브로커/보안/레이아웃 문서
 ├── docs/
 │   ├── kakao-subscription-plan.md        ← 서비스 기획서
 │   └── friendtalk-dispatch-runbook.md    ← 발송 파이프라인 E2E 매뉴얼
@@ -389,6 +397,8 @@ admin_settings (단일 행, id=1)
 - **스케줄 변경**: `cron.schedule` 표현식은 UTC 기준 (KST = UTC+9). 월~토 한정은 UTC dow `0-5` 사용 (KST 월~토 = UTC 일~금). 평일만이면 `0-4`(KST 월~금).
 
 ## Changelog
+
+- **2026-06-04**: **`/trading` 독립 금융 터미널 신설 — 미국주식 한국어 고밀도 터미널 (메인 서비스 무영향)**. 블룸버그 스타일 터미널을 `trading/` 폴더 + `/trading` 라우트로 완전 독립 구현(기존 `index.html`·데이터·함수와 코드/상태 공유 0). **실데이터·가짜숫자 금지 정책**: 모든 시세에 `실시간/지연/데이터 없음/API 필요/오류` 배지, 못 구하면 비워둠. **데이터 경로(CORS 해결)**: 브라우저→프록시→Yahoo Finance v8 chart(무키·~15분 지연). 로컬/Docker 는 `trading/server/server.js`(Node 내장 모듈만, 의존성 0) 가 정적 서빙+프록시 겸함, 프로덕션은 `supabase/functions/market-data`(verify_jwt=false). ⚠ Yahoo 가 풀 Chrome UA 를 429 차단 → 짧은 `Mozilla/5.0` UA + query1/query2 로테이션 + 재시도 + 20초 캐시 + 동시성 3 제한으로 안정화(실측). **기능**: 8탭(시장/모니터/차트/뉴스/포트폴리오/옵션/주문/AI) 실전환, 드래그·리사이즈·컬럼 스플리터 + 탭별 레이아웃 localStorage 저장, 실데이터 캔들차트(SMA/Bollinger/RSI/MACD·기간 1M~10Y·인터벌 1D/1W/1M 실변경, canvas), 지수 스트립·관심종목·종목 상세, 수동 포트폴리오+지표(비중·손익·섹터/국가/통화·리밸런싱 플래그), **Paper Trading**(로컬 모의계좌·PAPER/LIVE 배지 분리·실주문 명시 게이팅), AI(Gemini 키 선택 + 규칙기반 폴백), 명령창(`NVDA`/`go portfolio`/`buy NVDA 10`/`help`). 뉴스는 브리픽 시황 스냅샷 실데이터 + 미국 원문/번역은 `API 필요`. 옵션·SEC/DART·실브로커 주문·무지연 시세는 인터페이스+문서화(스캐폴드). 배포: Docker/compose + `.env.example` + 라우팅(`_redirects`·`vercel.json`). 문서: `trading/README.md`(실행/배포/API키/제공자/Gemini/브로커/보안/레이아웃/가짜vs실데이터). Playwright 렌더+기능 테스트(실데이터 로딩·탭 전환·차트·모의체결·커맨드) 통과.
 
 - **2026-06-03**: **랜딩 전환 레이어 + 메인 섹션 재배치 — 콘텐츠 우선 구조 유지하며 구독 설득·CTA 보강**. 경쟁사(데일리쿠키) 대비 분석 결과 브리픽은 "콘텐츠는 보여주나 구독 이유·CTA가 비어 있다"는 진단. 모델 교체 없이 설득 레이어만 추가. (1) `index.html` 푸터 직전 `#whySubscribe` 섹션 신설 — 혜택 카드 3개(찾는 시간 0·빠지지 않는 습관·1분 충분) + 3플랜 가격(할인 표시) + 🎁 첫 결제 7일 보너스 + CTA. (2) `#ctaSticky` 하단 고정 CTA 바(PC·모바일 공통, 콘텐츠 1240px 라인 정렬) — IntersectionObserver로 첫 섹션·`#whySubscribe`·footer 가 보일 땐 자동 숨김, 중간 스크롤 구간에만 노출. (3) 세 CTA 모두 기존 `openSubModal` 재사용(`[data-open-sub]` 위임) — 결제 로직 무수정. (4) 섹션 순서 교체: **오늘의 마켓(지수) → 헤드라인** 으로, 그리고 hero 를 둘로 분리해 타이틀 배너(eyebrow·H1·갱신시각)를 페이지 최상단으로, 헤드라인 본문(narrative)은 마켓 아래 별도 섹션으로(중복 H1·`#lastUpdated` 제거). (5) sticky 바가 우측 하단 플로팅 버튼(`.scroll-top`·`.mobile-refresh`)을 가리는 문제 — JS가 실제 바 높이(`offsetHeight`)+14px를 측정해 `--cta-bar-h`로 주입, `margin-bottom`으로 lift(hover transform 충돌 회피·resize 대응·기기/safe-area 무관). Playwright iPhone 13 에뮬레이션으로 렌더 검증.
 

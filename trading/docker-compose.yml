@@ -1,0 +1,15 @@
+# Briefick Terminal — 로컬/실서버 단독 배포.
+#   cd trading && docker compose up -d   →  http://localhost:8080
+#
+# HTTPS·로그인·세션은 앞단 리버스 프록시(Caddy/Nginx/Cloudflare)에서 종단.
+# 자세한 운영 배포는 trading/README.md "배포" 참조.
+services:
+  terminal:
+    build: .
+    image: briefick-terminal
+    container_name: briefick-terminal
+    ports:
+      - "${PORT:-8080}:8080"
+    environment:
+      - PORT=8080
+    restart: unless-stopped

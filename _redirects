@@ -6,3 +6,4 @@
 /help        /views/help     200
 /legacy      /views/legacy   200
 /survey/*    /views/survey   200
+/trading     /trading/index.html   200

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Briefick Terminal — 미국주식 한국어 금융 터미널</title>
+<meta name="description" content="미국 주식·ETF·지수·금리·원자재·환율 + 한국 주식을 한국어로 보는 고밀도 금융 터미널. 실데이터 기반, 가짜 숫자 없음.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Top bar -->
+<header class="topbar">
+  <div class="brand"><span class="logo"></span>BRIEFICK<small>TERMINAL</small></div>
+  <nav class="gmenu">
+    <button data-m="Markets" class="on">Markets</button>
+    <button data-m="Portfolio">Portfolio</button>
+    <button data-m="Research">Research</button>
+    <button data-m="Tools">Tools</button>
+    <button data-m="AI">AI</button>
+  </nav>
+  <div class="cmdwrap">
+    <span class="pfx">CMD ▸</span>
+    <input id="cmd" placeholder="티커 입력 또는 명령 (예: NVDA · go portfolio · buy AAPL 10 · help)" autocomplete="off" spellcheck="false">
+    <span class="cmdhint">Enter</span>
+  </div>
+  <button class="topbtn ai" id="btnAI">⚡ AI</button>
+  <div class="modebadge paper" id="modeBadge">● PAPER 모의</div>
+  <div class="conn" id="conn"><span class="dot off"></span>연결 확인 중…</div>
+  <span class="conn" id="clock">--:--:-- NY</span>
+  <button class="topbtn" id="btnSettings" title="설정">⚙</button>
+</header>
+
+<!-- Index strip -->
+<div class="strip" id="strip"></div>
+
+<!-- Tabs -->
+<div class="tabs" id="tabs">
+  <span class="spacer"></span>
+  <span class="miniaction">
+    <span style="color:#64748b">실데이터 · Yahoo 15분 지연</span>
+    <button onclick="window.__bft&&window.__bft.switchTab(window.__bft.state.__cur||'markets')" title="새로고침">↻</button>
+  </span>
+</div>
+
+<!-- Workspace -->
+<div class="workspace" id="ws"></div>
+
+<!-- Modal host -->
+<div class="modal-bg" id="modal"><div class="modal"></div></div>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
