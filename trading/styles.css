@@ -183,10 +183,15 @@ table.grid tr.sel td{background:#13202e}
   .gmenu,.cmdhint,.splitter,.presize{display:none}
   /* 🔴 모바일: 내부 스크롤 컨테이너를 없애고 브라우저(문서)가 네이티브로 스크롤.
      워크스페이스를 absolute → 일반 흐름으로 바꿔 page 자체가 한 번에 스크롤된다. */
-  html,body{height:auto;overflow:visible}
-  body{overflow-x:hidden}
-  .topbar{position:sticky;top:0;z-index:60}
-  .tabs{position:sticky;top:var(--h-top);z-index:55}
+  html,body{height:auto;overflow-x:hidden}
+  body{overflow-y:visible}
+  /* 상단바: 항목을 숨기지 않고, 폭을 넘치면 다음 줄로 wrap (정보 보존·가로 스크롤 제거).
+     명령창은 항상 전체폭 별도 줄. 상단바는 일반 흐름으로 스크롤되고 탭만 고정. */
+  .topbar{height:auto;flex-wrap:wrap;row-gap:5px;padding:6px 10px}
+  .topbar>*{min-width:0}
+  .cmdwrap{flex:1 1 100%;order:9}
+  .conn,#clock{font-size:9px}
+  .tabs{position:sticky;top:0;z-index:55}
   .workspace{position:static;top:auto;bottom:auto;left:auto;right:auto;height:auto;overflow:visible}
   .workspace.on{display:flex;flex-direction:column}
   .col{flex:none!important;width:100%;height:auto;min-width:0}
