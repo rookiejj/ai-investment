@@ -14,6 +14,7 @@
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import { pickBonusEvent, recordRedemption } from "../_shared/promo.ts";
+import { sendPaymentAlimtalk } from "../_shared/alimtalk.ts";
 
 const PORTONE_API = "https://api.portone.io";
 
@@ -32,22 +33,10 @@ function planExpectedAmount(key: string): number {
   return TEST_MODE ? p.testAmount : p.amount;
 }
 
-const SHOP_NAME    = "브리픽";
-
 // 보너스 일수는 promo_events 테이블에서 결제 시점에 동적으로 결정.
 // 정책 변경/이벤트 추가는 SQL 로 promo_events 에 row 추가 — 코드 변경 불필요.
 // 자세한 정책은 _shared/promo.ts 와 CLAUDE.md "프로모 이벤트 운영" 섹션 참조.
-
-// 결제 완료 알림톡 본문 — 알리고 콘솔 등록 템플릿(UH_6779)과 동일한 문구.
-// 변수는 #{상점명}·#{상품명}·#{만료일} 자리에 실제 값 치환해 발송.
-const PAYMENT_TEMPLATE_BODY =
-`안녕하세요! #{상점명} 입니다.
-
-#{상품명} 결제가 완료되었습니다.
-
-내일부터 뉴스를 받아보실 수 있으며, 고객님의 서비스 제공 만료일은 #{만료일} 입니다.
-
-자동 결제가 되지 않는 상품으로, 만료일 전에 재결제가 필요합니다.`;
+// 결제 완료 알림톡 발송은 _shared/alimtalk.ts (payment-webhook 과 공용).
 
 function corsHeaders(origin: string) {
   return {
@@ -64,59 +53,6 @@ function json(body: unknown, init: ResponseInit & { cors: Record<string, string>
     ...init,
     headers: { ...init.cors, "Content-Type": "application/json" },
   });
-}
-
-// ═══ 알리고 알림톡 (VPS 프록시 경유) ═══════════════════
-// SOLAPI HMAC 인증 코드는 알리고 전환으로 제거.
-// 친구톡과 동일하게 동적 IP의 Edge Function이 알리고 IP 화이트리스트를 통과 못 해
-// VPS 프록시(proxy.briefick.com/alimtalk/send, 115.68.224.225)를 경유한다.
-
-async function sendPaymentAlimtalk(opts: {
-  phone: string;
-  expiryDate: string;   // YYYY-MM-DD
-  productName: string;
-}): Promise<{ ok: boolean; mid?: string; error?: string }> {
-  const proxyUrl    = Deno.env.get("ALIGO_PROXY_ALIMTALK_URL");
-  const proxySecret = Deno.env.get("ALIGO_PROXY_SECRET");
-  const tplCode     = Deno.env.get("ALIGO_PAYMENT_TPL_CODE");
-  if (!proxyUrl || !proxySecret || !tplCode) {
-    return { ok: false, error: "aligo proxy env missing (ALIGO_PROXY_ALIMTALK_URL/ALIGO_PROXY_SECRET/ALIGO_PAYMENT_TPL_CODE)" };
-  }
-
-  // 등록된 템플릿 본문에 변수 치환 — 알리고는 송신 메시지가 등록 템플릿과 일치해야 통과
-  const message = PAYMENT_TEMPLATE_BODY
-    .replace("#{상점명}", SHOP_NAME)
-    .replace("#{상품명}", opts.productName)
-    .replace("#{만료일}", opts.expiryDate);
-
-  // AC(채널추가) 버튼 — 알리고 등록 템플릿(UH_6779)의 버튼 이름과 정확히 일치해야 노출.
-  // 공백 한 칸 차이라도 미일치 시 버튼이 사라지므로 등록 그대로 "채널추가" 사용.
-  const button = {
-    button: [{ name: "채널추가", linkType: "AC", linkTypeName: "채널추가" }],
-  };
-
-  try {
-    const res = await fetch(proxyUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Proxy-Secret": proxySecret,
-      },
-      body: JSON.stringify({
-        phones: [opts.phone],
-        message,
-        tpl_code: tplCode,
-        button,
-      }),
-    });
-    const j = await res.json();
-    if (!res.ok || j.code !== 0) {
-      return { ok: false, error: `aligo proxy ${res.status} code=${j.code ?? "?"}: ${j.message ?? JSON.stringify(j).slice(0, 300)}` };
-    }
-    return { ok: true, mid: j.info?.mid ? String(j.info.mid) : undefined };
-  } catch (e) {
-    return { ok: false, error: e instanceof Error ? e.message : String(e) };
-  }
 }
 
 Deno.serve(async (req) => {

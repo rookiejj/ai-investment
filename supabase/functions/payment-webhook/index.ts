@@ -23,6 +23,7 @@
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import { pickBonusEvent, recordRedemption } from "../_shared/promo.ts";
+import { sendPaymentAlimtalk } from "../_shared/alimtalk.ts";
 
 const PORTONE_API = "https://api.portone.io";
 const STORE_ID = "store-94ded677-c4c2-45a7-adc2-eb735d601a52";
@@ -167,6 +168,19 @@ Deno.serve(async (req: Request) => {
         }
         // payments.subscriber_id 보정
         if (subscriberId) await supabase.from("payments").update({ subscriber_id: subscriberId }).eq("payment_id", paymentId);
+        // 결제 완료 알림톡 — payment-confirm 이 멱등 가드로 스킵하므로 여기서 발송(누락 방지) + 로그
+        const expiryDate = new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Seoul" }).format(newPaidUntil);
+        const alim = await sendPaymentAlimtalk({ phone, expiryDate, productName: plan.productName });
+        if (subscriberId) {
+          await supabase.from("send_logs").insert({
+            subscriber_id: subscriberId, phone,
+            message: `결제 완료 알림 (${plan.productName}, 만료일 ${expiryDate}) [webhook]`,
+            char_count: 0, status: alim.ok ? "success" : "fail",
+            message_type: "alimtalk", template_code: "payment_complete", provider: "aligo",
+            provider_code: alim.mid ?? null, provider_message: alim.ok ? "ok" : (alim.error ?? ""), provider_msg_id: alim.mid ?? null,
+          });
+        }
+        if (!alim.ok) console.error("[payment-webhook] alimtalk failed:", alim.error);
         recovered = true;
         console.warn(`[payment-webhook] orphan 복구: ${phone} ${paymentId} (+${plan.months}m +${bonusDays}d)`);
       }
