@@ -80,10 +80,12 @@ ai-investment/
 │   ├── functions/
 │   │   ├── _shared/
 │   │   │   ├── notify.ts         ← notify-telegram 공통 helper
-│   │   │   └── promo.ts          ← promo_events / promo_redemptions 공통 로직 (pickBonusEvent / recordRedemption / getEligibleEvents)
+│   │   │   ├── promo.ts          ← promo_events / promo_redemptions 공통 로직 (pickBonusEvent / recordRedemption / getEligibleEvents)
+│   │   │   └── alimtalk.ts       ← 결제완료 알림톡 발송 (payment-confirm·payment-webhook 공용 단일 소스)
 │   │   ├── subscribe/            ← 웹 구독 요청 업서트
 │   │   ├── check-subscription/   ← 결제 전 기존 구독 확인 + 활성 promo 이벤트 자격 조회
-│   │   ├── payment-confirm/      ← 포트원 결제 검증 + 구독 연장 + 보너스 이벤트 적용·redemption 기록 + 결제완료 알림톡(ATA)
+│   │   ├── payment-confirm/      ← 포트원 결제 검증 + 구독 연장 + 보너스 적용 + 결제완료 알림톡(ATA). 멱등 가드(같은 paymentId 재처리 차단)
+│   │   ├── payment-webhook/      ← 포트원 결제 webhook(서버→서버). paid/failed/refunded 멱등 기록 + orphan 구독 복구+알림톡 + 전체취소 자동 회수. verify_jwt=false
 │   │   ├── daily-send/           ← 매일 뉴스 친구톡 발송 (평일 cron 트리거)
 │   │   ├── expiry-notice/        ← D-1 만료 임박 재구독 안내 친구톡 (매일 20:00 cron)
 │   │   ├── stock-prices/         ← Yahoo Finance 15분 지연 시세 fetch + Storage `prices/latest.json` 갱신 (5분 cron)
@@ -340,7 +342,7 @@ pg_cron → Vault X-Cron-Secret → expiry-notice
 - pg_cron ↔ daily-send / expiry-notice: 자체 `X-Cron-Secret` (Vault 저장 · 함수 env와 동기화 필수)
 - Edge Function ↔ VPS 알리고 프록시: `X-Proxy-Secret` 헤더 (양쪽 env에 동일 값)
 - 관리자 ↔ admin-api: 비밀번호 해시 기반 세션 토큰
-- **공개 호출 함수는 `supabase/config.toml`에 `verify_jwt = false` 영구 박힘** (subscribe·check-subscription·payment-confirm·survey-api·admin-api·stock-prices·read-tab-data·read-tab-archive). cron·서버 트리거(daily-send·expiry-notice·notify-telegram·write-*) 는 verify_jwt=true 유지. publishable key 가 게이트웨이를 "Invalid JWT" 로 거부하는 사고(payment-confirm·check-subscription 2주간 silent fail) 재발 방지.
+- **공개 호출 함수는 `supabase/config.toml`에 `verify_jwt = false` 영구 박힘** (subscribe·check-subscription·payment-confirm·survey-api·admin-api·stock-prices·read-tab-data·read-tab-archive·market-data·payment-webhook). cron·서버 트리거(daily-send·expiry-notice·notify-telegram·write-*) 는 verify_jwt=true 유지. (payment-webhook 은 포트원이 서버→서버로 호출 — Supabase JWT 가 없으므로 게이트웨이 통과 위해 verify_jwt=false, 검증은 포트원 단건조회 재확인으로 수행) publishable key 가 게이트웨이를 "Invalid JWT" 로 거부하는 사고(payment-confirm·check-subscription 2주간 silent fail) 재발 방지.
 
 > Vault `cron_secret`을 갱신할 때는 `supabase secrets set CRON_SECRET=...`으로 함수 env도 동시에 갱신해야 401이 발생하지 않음.
 
@@ -397,6 +399,8 @@ admin_settings (단일 행, id=1)
 - **스케줄 변경**: `cron.schedule` 표현식은 UTC 기준 (KST = UTC+9). 월~토 한정은 UTC dow `0-5` 사용 (KST 월~토 = UTC 일~금). 평일만이면 `0-4`(KST 월~금).
 
 ## Changelog
+
+- **2026-06-06**: **실결제 라이브 전환 + 결제 webhook 안전망 + 운영 매칭 + 알림톡 누락 수정**. 갤럭시아(빌게이트) 실연동 채널로 전환(테스트→라이브 `channelKey`, 테스트 배너 제거, `index.html`·`views/renew.html`). 전환 직후 카드·간편결제가 "알 수 없는 에러"로 실패 → 원인은 **실연동 채널에 테스트용 암호화키/IV가 그대로** 있던 것(포트원 콘솔에서 실연동 암호화키·IV로 교체해 해결 — MID `POS260605721` 는 콘솔 설정 값이라 코드 무관). `requestPayment` 에 `customData:{phone,plan}` 추가 — PG 콘솔·webhook 전화번호 매칭. **`payment-webhook` Edge Function 신설**: 포트원 결제 이벤트를 서버→서버로 받아 단건조회 API 로 권위 검증 후 `payments` 멱등 기록(paid/failed/refunded, `payment_id` UNIQUE 락), 클라이언트 미복귀(orphan) 결제 **구독 자동 복구 + 알림톡**, **전체 취소(CANCELLED) 자동 회수**(plan 개월 + 보너스 일수 차감, 부분취소는 기록만, redemption 기록은 유지해 재취득 차단). `prevStatus` 가드로 webhook 재전송/재호출 시 이중 처리 방지. `payment-confirm` 에 멱등 가드(같은 `last_payment_id` 면 재처리 skip). **알림톡 누락 수정**: webhook 이 payment-confirm 보다 먼저 처리하면 알림톡이 안 나가던 race — `sendPaymentAlimtalk` 을 `_shared/alimtalk.ts` 로 추출(단일 소스), webhook orphan 복구 경로에서도 발송 → 멱등 가드로 **정확히 1회** 발송. **운영 매칭**: admin 결제탭에 **"주문번호(PG 콘솔 매칭)" 컬럼** 추가(클릭 복사) — PG 콘솔 "주문번호" 와 동일 값(우리 `payment_id`). 성공/실패/환불 상태 배지로 구분. **프로모 이벤트 `all` 전환**: 런칭 이벤트(`launch-first-payment-7d-2026q2`)를 `first_payment`→`all`("지금 결제 시 7일")로 변경 — `promo_redemptions` 한 줄 삭제로 결제이력 무관 재허용 가능. 보너스 배너 문구 "첫 결제"→"지금 결제"(`index.html` 4곳). **🔴 운영 룰: 결제 취소는 반드시 포트원 콘솔에서** — 하위 PG(빌게이트)에서 직접 취소하면 포트원이 모르고 webhook 도 안 와 DB 동기화 누락(이 경우 admin 결제ID 로 찾아 수동 동기화). 새 함수 verify_jwt=false 는 `config.toml` 에 박음. README/CLAUDE.md verify_jwt 목록 갱신.
 
 - **2026-06-04**: **`/trading` 독립 금융 터미널 신설 — 미국주식 한국어 고밀도 터미널 (메인 서비스 무영향)**. 블룸버그 스타일 터미널을 `trading/` 폴더 + `/trading` 라우트로 완전 독립 구현(기존 `index.html`·데이터·함수와 코드/상태 공유 0). **실데이터·가짜숫자 금지 정책**: 모든 시세에 `실시간/지연/데이터 없음/API 필요/오류` 배지, 못 구하면 비워둠. **데이터 경로(CORS 해결)**: 브라우저→프록시→Yahoo Finance v8 chart(무키·~15분 지연). 로컬/Docker 는 `trading/server/server.js`(Node 내장 모듈만, 의존성 0) 가 정적 서빙+프록시 겸함, 프로덕션은 `supabase/functions/market-data`(verify_jwt=false). ⚠ Yahoo 가 풀 Chrome UA 를 429 차단 → 짧은 `Mozilla/5.0` UA + query1/query2 로테이션 + 재시도 + 20초 캐시 + 동시성 3 제한으로 안정화(실측). **기능**: 8탭(시장/모니터/차트/뉴스/포트폴리오/옵션/주문/AI) 실전환, 드래그·리사이즈·컬럼 스플리터 + 탭별 레이아웃 localStorage 저장, 실데이터 캔들차트(SMA/Bollinger/RSI/MACD·기간 1M~10Y·인터벌 1D/1W/1M 실변경, canvas), 지수 스트립·관심종목·종목 상세, 수동 포트폴리오+지표(비중·손익·섹터/국가/통화·리밸런싱 플래그), **Paper Trading**(로컬 모의계좌·PAPER/LIVE 배지 분리·실주문 명시 게이팅), AI(Gemini 키 선택 + 규칙기반 폴백), 명령창(`NVDA`/`go portfolio`/`buy NVDA 10`/`help`). 뉴스는 브리픽 시황 스냅샷 실데이터 + 미국 원문/번역은 `API 필요`. 옵션·SEC/DART·실브로커 주문·무지연 시세는 인터페이스+문서화(스캐폴드). 배포: Docker/compose + `.env.example` + 라우팅(`_redirects`·`vercel.json`). 문서: `trading/README.md`(실행/배포/API키/제공자/Gemini/브로커/보안/레이아웃/가짜vs실데이터). Playwright 렌더+기능 테스트(실데이터 로딩·탭 전환·차트·모의체결·커맨드) 통과.
 
