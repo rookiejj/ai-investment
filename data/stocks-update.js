@@ -1,41 +1,31 @@
 const updates = [
   {
-    "date": "2026-06-05 19:30 KST",
-    "summary": `AVGO 프리마켓 -15% 추가 하회 · 인프라 SW 매출 컨센 하회 · AI sector 차익실현
-S&P 선물 -0.66% · 나스닥 선물 -0.9% · NFP D-day 베팅 약세 진입
-NFP 5월 컨센 +8.5만 · 실업률 4.3% 동결 · 21:30 KST 8:30 ET 발표
-AAPL WWDC 6/8 D-3 · Siri 2.0 · 커스텀 Gemini 통합 헤드라인
-LULU Q1 컨센 상회 · FY26 가이던스 하향 - 매출 -1~0% 후퇴`,
+    "date": "2026-06-06 07:30 KST",
+    "summary": "나스닥 -4.18% 2025/4월 이래 최악·S&P -2.64% 10월 이래 최악·다우 -695p 1조 달러 증발\nNFP 5월 +172k 컨센 +85k 두 배 컨센 상회·10y 4.52%·30y 5% 진입 인하 베팅 후퇴\n반도체 셀오프 - AVGO -7.9% MRVL -16% MU -13% INTC·AMD -11% NVDA -4.93% $207\nMETA -7% 600억 secondary 검토 - GOOGL $80B 라이즈 뒤따라 AI 인프라 자금 가속\nWWDC 6/8 13시 KST - Siri 2.0 Gemini 1.2T 통합·AAPL 연 $1B 구글 페이 분기점",
     "changes": [
       {
-        "time": "2026-06-05 18:00 KST",
+        "time": "2026-06-05 16:00 KST",
         "type": "수치 갱신",
-        "detail": "Broadcom(AVGO). Q2 FY26 발표 후 6/4 종가 -15%·6/5 프리마켓 -15% 추가 하회로 단기 -28% 누적 후퇴. 핵심 - 매출 $22.19B 컨센 $22.04B 소폭 상회·EPS adj. $2.44 컨센 $2.39 상회 + Q3 가이던스 매출 $29.4B +84% YoY·non-GAAP OPM 67% 유지·Q2 AI 반도체 매출 $10.8B +143% YoY 사상 최대 + Tan CEO FY26 AI 반도체 $100B+ 가이던스 재확인(상향 부재). 시장 카운터 - 인프라 소프트웨어 매출 컨센 미세 하회·FY26 AI 가이던스 상향 부재가 AI sector premium 정점 시그널로 해석·short 포지셔닝 가속·forward P/E 35→29 sector 평균 진입. 매그캡 sector rotation - AVGO 충격이 NVDA·AMD·MU 일제 -3~-5% 후퇴 동조 + 다우 +874p 사상 최고가 비테크 매그캡 자금 이동 흡수. 매크로 컨텍스트 - 10y 4.45%·DXY 99·WTI $95 호르무즈 리스크 premium 잔존이 risk-off 사이드윈드. forward 시그널 - 6/5 21:30 KST NFP 발표·6/8 AAPL WWDC·NVDA earnings 8월 후속 카탈리스트가 sector premium 회복 분기점.",
+        "detail": "시장. 6/5 마감 - 나스닥 -4.18% 2025년 4월 이래 최악 1일 낙폭·S&P 500 -2.64% 10월 이래 최악·다우 -695p -1.35% 약 3개월 최악·시총 약 $1조 증발. 트리거 1 - NFP 5월 +172,000 컨센 +85,000 두 배 컨센 상회·실업률 4.3% 유지·3월 +29k·4월 +64k 상향이 노동시장 견조 시그널로 해석되며 Fed funds 4.50% 추가 인하 베팅 후퇴. Polymarket no-cut H1 2026 60%→70%대 진입·dot plot 25bp 인하 1회로 후퇴 추가 확인. 트리거 2 - AI sector premium 차익실현 - AVGO Q2 인프라 SW 매출 컨센 미세 하회·FY26 AI 가이던스 상향 부재가 사이클 정점 시그널로 해석되며 셀오프 이틀째 가속. 트리거 3 - META 600억 secondary 검토 보도·GOOGL $80B 라이즈 뒤따라 AI 인프라 CAPEX 자금 가속이 dilution 우려. 채권 - 10y 4.52% 돌파·30y 5% 첫 진입·2y 4.20%로 커브 32bp 완만한 평탄화·DXY 99.5 강세 동조. forward 시그널 - 6/8 AAPL WWDC·6/15~17 G7·6/16~17 케빈 워시 첫 FOMC dot plot이 단기 변동성 분기점.",
+        "sector": "시장"
+      },
+      {
+        "time": "2026-06-05 16:00 KST",
+        "type": "수치 갱신",
+        "detail": "Broadcom(AVGO)·Marvell(MRVL)·Micron(MU)·Intel(INTC)·AMD. 반도체 sector 동반 셀오프 이틀째 가속 - AVGO 종가 $395.54 -7.9% 단일 종목 셀오프 이틀째·6/3~5 누적 약 -22% 후퇴, MRVL -16% custom AI 칩 경쟁 우려 동조, MU -13% HBM4 3사 분점 마이크론 가세 시그널로 점유 분점 우려, INTC·AMD -11%대, NVDA -4.93% 종가 $207.22 시총 $5.1T - 5T 베이스 캠프 후퇴. 트리거 - AVGO Q2 매출 $22.2B +48% YoY·EPS $2.44 컨센 상회·Q3 가이던스 매출 $29.4B +84% YoY·Q2 AI 반도체 매출 $10.8B +143% YoY 사상 최대로 펀더멘털 강세 - 그러나 인프라 SW 매출 컨센 소폭 하회 + 차분기 AI 가이던스 가장 공격적 베팅 미달이 정점 시그널로 해석. forward P/E AVGO 29·NVDA 32 sector 평균 진입 - 5T 대 6T 시총 구간 valuation re-rating 진행. 시그널 - 황 한국 발언 'HBM4 삼성·SK·마이크론 3사 양산' MU 마이크론에는 점유 분점 호재·SK·삼성에는 가산 카운터로 sector 내 reshuffling. forward 카탈리스트 - NVDA Q2 earnings 8월 후속이 sector premium 회복 분기점.",
         "sector": "반도체"
       },
       {
-        "time": "2026-06-05 19:25 KST",
+        "time": "2026-06-05 14:00 KST",
         "type": "수치 갱신",
-        "detail": "시장. 6/5 프리마켓 - S&P 500 선물 -0.66% 3,551·나스닥 100 선물 -0.9%·다우 선물 -0.05% 34,647. AVGO 프리마켓 -15% 추가 후퇴가 AI 반도체 sector premium 차익실현 가속·NFP 8:30 ET 발표 대기로 risk-off 진입. 6/4 종가 베이스 - 다우 51,561.93 +874.86p +1.73% 사상 최고·S&P 500 7,584.31 +0.41%·나스닥 26,830.96 -0.09%. 매크로 컨텍스트 - 10y 4.45%·2y 4.06% 커브 39bp·DXY 99.0 안정·WTI $95+/bbl 3연속 상승·UAE OPEC 탈퇴 후 호르무즈 risk premium 잔존. forward 시그널 - NFP 5월 컨센 +8.5만(4월 +115k 후퇴)·실업률 4.3% 동결·시간당 임금 +0.3% MoM이 노동시장 둔화 베이스 확인 vs 견조 시그널 분기점. Fed funds 4.50% target·dot plot 25bp 인하 1회 후퇴·Polymarket no-cut H1 2026 60%·6/16~17 케빈 워시 첫 FOMC dot plot D-11이 멀티이어 매크로 분기점.",
-        "sector": "시장"
-      },
-      {
-        "time": "2026-06-05 07:15 KST",
-        "type": "실적 발표",
-        "detail": "Lululemon(LULU). 6/4 마감 후 FY26 Q1 발표 - 매출·EPS 컨센 상회 + FY26 가이던스 하향이 혼합 시그널. 핵심 수치 - 매출 $2.5B(+4% YoY·constant currency +2%) 컨센 $2.46B $40M 상회 + EPS adj. $1.69 컨센 $1.67 $0.02 상회 + 매출총이익률 -410bp 54.2% 관세·할인 압박 + 북미 매출 -3%·동일점 매출 -6% + 중국 본토 +30%(constant +23%)·동일점 +13% + Rest of World +13%(constant +9%) 강세. FY26 가이던스 하향 - 매출 $11.00~11.15B(직전 $11.35~11.50B에서 절대값 약 -$350M, -1~0% YoY로 직전 +2~4%에서 후퇴) 잔여 분기 추가 관세·정리 할인·proxy contest 비용 부담. 컨텍스트 - YTD -41% 7년 최저 영역에서 매출 컨센 상회에도 가이던스 하향이 sector premium 후퇴 카운터. 매그7 sector rotation·소비 sector earnings revision 하향 베이스 + Athleisure 경쟁(Alo Yoga·Vuori) + 관세 $380M 직격이 forward 분기점. WWDC 6/8·NFP 6/5 매크로 시그널이 단기 변곡점.",
-        "sector": "소비·리테일"
-      },
-      {
-        "time": "2026-06-05 07:10 KST",
-        "type": "이벤트 예정",
-        "detail": "Apple(AAPL). WWDC 2026 6/8 키노트 D-3 카운트다운 - 10AM PT·6/12 종료 5일 일정. 신규 발표 컨센 - Siri 2.0·Apple Intelligence 확장·iOS 27·macOS 27 + Siri 2.0 백엔드 커스텀 Google Gemini 모델 통합 보도가 헤드라인 카탈리스트. 셀사이드 타깃 - 모건스탠리 베이스 $330·불 케이스 $440·Wedbush $400·Evercore ISI $365 상향. 11주 연속 상승 2004 이후 최장 스트릭·연간 +50% 매그7 2위 사상 최고 근접. forward P/E 33 sector premium + on-device AI 강화 + Siri redesign + 외부 LLM(Gemini·Claude) 통합 + Apple Silicon 차세대 칩 + WWDC25 Apple Intelligence 출시 대비 1년 delayed Siri 약속이 26년 신뢰 회복 변곡점. UBS 카운터 - 키노트 자체로는 단독 카탈리스트 약함·가을 정식 출시 확정 후 멀티이어 모멘텀. 6/4 다우 +1.73% 사상 최고 비테크 rotation에 매그7 sector premium 동조 변동성 가능.",
+        "detail": "Meta Platforms(META). 종가 -7% 약 $585 - 600억 달러 규모 secondary 주식 발행 검토 보도 직격. 핵심 - Susan Li CFO·Dina Powell McCormick 사장 주관 협의·은행 미선정 초기 단계·옵션 전부 열어둠. 트리거 - 알파벳 6/3 $80B 사상 최대 자사 주식 발행 성공 후 META가 동일 패턴 모색 - 양사 합산 약 $140~165B AI 인프라 CAPEX 자금 조달 가속. 컨텍스트 - META FY26 CAPEX 가이던스 $140~145B(2025 절대값 약 2배)·AI·데이터센터 직접 직격이 자금 갭 -25~30B 추정 자체 현금흐름 한계 진입. 시그널 - 매그캡 sector dilution 신뢰 카운터·forward P/E 28→26 dilution 조정 진입이 단기 셀오프 트리거·6/4 알파벳 secondary 후 추가 명단 검토 우려가 sector 전반 셀오프 확산. forward 시그널 - META 공식 발표 시점·은행 선정·발행 가격 분기점·동일 패턴 MSFT·AMZN 후속 추적이 매그캡 sector 자금 사이클 핵심 분기점.",
         "sector": "AI 플랫폼"
       },
       {
-        "time": "2026-06-05 07:05 KST",
-        "type": "이벤트",
-        "detail": "시장. 6/5 8:30 ET 5월 NFP 발표 D-day 카운트다운 - 컨센 +10만 추가 일자리·실업률 4.3% 동결·시간당 임금 +0.3% MoM·평균 주간 노동시간 34.3시간. 직전 4월 +115k 컨센 +55k 대폭 상회 후속에서 5월 reading이 노동시장 둔화 베이스 확인 vs 견조 시그널 분기점. 매크로 컨텍스트 - 1Q 비농업 생산성 +1.5% QoQ·Challenger 5월 정리해고 +47% YoY·JOLTS 4월 구인 730만(2021년 이래 최저) + Fed funds 4.50% target rate·dot plot 25bp 인하 1회 후퇴·Polymarket no-cut H1 2026 60%. forward 시그널 - NFP 강세 시 sector rotation·달러 강세·10y 카운터 + NFP 약세 시 인하 기대 회복·매그7 sector premium 재시도가 단기 변곡점. 6/16~17 케빈 워시 첫 FOMC dot plot D-11이 멀티이어 매크로 분기점.",
-        "sector": "시장"
+        "time": "2026-06-05 13:00 KST",
+        "type": "이벤트 예정",
+        "detail": "Apple(AAPL). WWDC 2026 6/8 일요일 13시 KST(美 10시 PT) 키노트 - 월스트리트 'AAPL 올해 최대 AI 카탈리스트' 평가. 핵심 카탈리스트 1 - Siri 2.0 전면 재구축 - 2년 약속 후 첫 공개, iOS 27 탑재·맞춤형 Google Gemini 모델 구동·AAPL 연 약 $1B 구글 페이 라이센스로 핵심 LLM 외주. 핵심 카탈리스트 2 - 1.2조 파라미터 시스템이 요약·기획 등 heavy 워크로드 - Apple 자체 private 서버 호스팅으로 데이터 격리. 핵심 카탈리스트 3 - 전용 Siri 앱·Extensions 기능 iOS/iPadOS/macOS 27 전반 - Claude·Gemini 등 3자 챗봇 핸드오프 허용. 추가 - iOS 27 'Snow Leopard 업데이트' 버그·구코드 정리로 속도 개선. 컨텍스트 - AAPL YTD -15% 매그7 최하위·forward P/E 24·earnings yield 4.2% 10y gap 30bp·Siri 결과 실망 시 추가 sell-off, 임프레시브 시 -15% 회복 트리거. forward 시그널 - Siri 2.0 데모 quality·third-party 챗봇 통합 깊이·5G iPhone 미니멈 OS 27 호환 사양이 다음 분기 단기 핵심.",
+        "sector": "AI 플랫폼"
       }
     ]
   }
