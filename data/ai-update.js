@@ -1,22 +1,22 @@
 const UPDATES = [
   {
-    "date": "2026-06-05 07:30 KST",
-    "summary": `OpenAI GPT-5.6 6월 출시 임박 - Polymarket 68% 6/8~14 윈도우 D-3
-Anthropic Mythos 6월 출시 컨센 · Claude Opus 4.8 + Partner Network 베이스
-Apple Siri 2.0 6/8 WWDC - 커스텀 Google Gemini 1.2T 백엔드 통합
-xAI Grok 5 Q2 베타 - Colossus 2 멤피스 학습 + 6T MoE 멀티모달 컨센
-Mistral Vibe 5/28 출범 - Le Chat → 자율 워크 + 코드 에이전트 통합`,
+    "date": "2026-06-05 19:35 KST",
+    "summary": `OpenAI Codex 주간 사용자 500만 돌파 · Sites 프리뷰 · GPT-Rosalind 생명과학 출시
+Anthropic SEC 비공개 S-1 제출 D+4 · Opus 4.8 全 티어 default 적용
+Apple Siri 2.0 6/8 WWDC D-3 - 커스텀 Google Gemini 1.2T 백엔드 통합
+GPT-5.6 6월 출시 임박 - Polymarket 68% 6/8~14 윈도우 D-3
+xAI Grok 5 Q2 베타 · Mistral Vibe 5/28 출범 - frontier 5중 경쟁`,
     "changes": [
       {
-        "time": "2026-06-05 07:25 KST",
-        "type": "모델 출시 예정",
-        "detail": "OpenAI. GPT-5.6 출시 임박 - Polymarket 68% 6/8~14 6일 윈도우 D-3 카운트다운 + 코드네임 iris-alpha·ember-alpha·beacon-alpha 내부 체크포인트 노출 + Codex 백엔드 트레이스 확인. 핵심 컨센 - SWE-bench 80%+ Anthropic Mythos top tier 근접 + 가격 2~3배 낮음 + reasoning·agentic workflow·고급 프론트엔드 생성·tool use cost efficiency·long-horizon agent 효율 가속. ChatGPT Pro 사용자 컨텍스트 약 1.5M 토큰(GPT-5.5 대비 +43%) 베이스. Anthropic Opus 4.8 5/28 출시 + Mistral Vibe 5/28 출범 + Google Gemini 3.5 Pro 6월 카운터로 코딩 sector 4중 경쟁 가속. 황 NVIDIA GTC Taipei $30B 투자 'probably the last before IPO' 발언 베이스 - OpenAI 비공개 S-1 SEC 제출 가능성 가시화·가을 IPO 윈도우·Anthropic $965B 카테고리 첫 추월 사이클 분기점. forward 매크로 - 모델 성능 베이스 + 매출 가속 + IPO 동시 진행이 가을 광역 사이클·Vera CPU 1차 고객 명시·SpaceX Colossus 컴퓨트 락인이 인프라 멀티이어 베이스.",
+        "time": "2026-06-05 18:00 KST",
+        "type": "제품 출시",
+        "detail": "OpenAI. Codex 주간 사용자 500만 돌파 마일스톤 + 신규 기능 라인업 공개 - ①Role-specific 플러그인 - Codex가 사용자 직무·도구에 맞춰 적응 ②Sites 프리뷰 - 워크스페이스 공유 가능한 인터랙티브 웹앱·사이트 생성 URL 발급 ③Annotations - 문서·스프레드시트·슬라이드 in-place 정제 협업 ④Computer Use on Windows - 윈도우 앱 시·클릭·타이핑 빌드 테스트 ⑤Codex Profiles - 모바일·Mac 원격 연속 작업. 동시 발표 GPT-Rosalind 생명과학 업데이트 - 강화된 agentic coding·신약 개발·유전체 성능·증거 검색·바이오인포매틱스 워크플로우 신규 플러그인·trusted-access 연구 프리뷰 자격 기관 글로벌 확장. 컨텍스트 - GPT-5.6 6월 출시 임박 + Codex 백엔드 트레이스·iris-alpha·ember-alpha·beacon-alpha 체크포인트 노출이 Polymarket 68% 6/8~14 윈도우 베팅 카운터. forward 시그널 - 황 NVIDIA $30B 투자 'probably the last before IPO' 발언이 OpenAI 비공개 S-1 SEC 제출 가능성·가을 IPO 윈도우 분기점·Anthropic 6/1 S-1 접수 후 IPO 경주 양강 사이클 가속.",
         "sector": "OpenAI"
       },
       {
-        "time": "2026-06-05 07:20 KST",
-        "type": "모델 출시 예정",
-        "detail": "Anthropic. Mythos 6월 출시 컨센 - Claude Opus 4.8(5/28 출시) 다음 frontier 모델 + ULTRA tier 코드명·dynamic workflow 확장·long-horizon agent 신뢰성 4배 개선 베이스. Polymarket OpenAI GPT-5.6 6/8~14 윈도우 카운터 - Mythos 출시 시점에 따라 sector pricing power·카테고리 리더십 분기점 잡힘. Claude Partner Network 6/3 Services Track + Partner Hub 출범 - 엔터프라이즈 컨설팅·SI·매니지드 서비스 파트너 인증 체계 정식화·Project Glasswing 6/2 확장과 동조. 컴퓨트 베이스 - Google·Broadcom 3.5GW TPU 2027 + Amazon 5GW + SpaceX Colossus 인프라 락인 누적. forward 매크로 - 6/1 SEC 비공개 S-1 접수·Series H $65B/$965B 클로징 후 12거래일 IPO 데뷔 가시권·런레이트 ARR $47B(전년 4.7배)·Q2 매출 가이던스 $10.9B 직전 분기 두 배·첫 흑자 분기 컨센·NASDAQ 10월 상장 윈도우 + 1조달러 첫 진입 시나리오 frontier AI 카테고리 리더십 광역 분기점.",
+        "time": "2026-06-05 18:30 KST",
+        "type": "거버넌스",
+        "detail": "Anthropic. 6/1 SEC 비공개 S-1 접수 D+4 - IPO 경주에서 OpenAI 선제 + 5/28 Claude Opus 4.8 출시 후 Max·Team Premium·Enterprise pay-as-you-go·Anthropic API 全 티어 default 적용 완료(6월 1주차) - dynamic workflow 도구 신규 + long-horizon agent 신뢰성 4배 개선 + OpenAI GPT-5.5·Google Gemini 3.1 Pro 합성 벤치마크 상회. Mythos 6월 출시 컨센 - ULTRA tier 코드명·OpenAI GPT-5.6 6/8~14 Polymarket 68% 카운터로 sector pricing power 분기점. 5/11 EU 사이버 모델 접근 OpenAI 제공 결정과 대조 - Mythos 유럽 미접근 정책 유지 + 안전성 가드레일 차별화. Claude Partner Network 6/3 Services Track + Partner Hub - 엔터프라이즈 컨설팅·SI·매니지드 서비스 파트너 인증 체계 정식화. 컴퓨트 베이스 - Google·Broadcom 3.5GW TPU 2027 + Amazon 5GW + SpaceX Colossus 락인. forward 매크로 - Series H $65B/$965B 클로징 후 12거래일 IPO 데뷰 가시권·런레이트 ARR $47B(전년 4.7배)·Q2 매출 가이던스 $10.9B 직전 분기 두 배·첫 흑자 분기 컨센·NASDAQ 10월 상장 윈도우 + 1조달러 첫 진입 시나리오 frontier AI 광역 카테고리 리더십 분기점.",
         "sector": "Anthropic"
       },
       {
