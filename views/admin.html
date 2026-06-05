@@ -453,8 +453,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
         </div>
         <div class="tbl-scroll">
           <table class="tbl">
-            <thead><tr><th>결제일</th><th>전화번호</th><th>상품</th><th>금액</th><th>상태</th><th>PG</th></tr></thead>
-            <tbody id="paysBody"><tr><td colspan="6" class="loading">로딩 중…</td></tr></tbody>
+            <thead><tr><th>결제일</th><th>전화번호</th><th>상품</th><th>금액</th><th>상태</th><th>PG</th><th>주문번호 (PG 콘솔 매칭)</th></tr></thead>
+            <tbody id="paysBody"><tr><td colspan="7" class="loading">로딩 중…</td></tr></tbody>
           </table>
         </div>
         <div class="pager" id="paysPager"></div>
@@ -1668,12 +1668,12 @@ async function loadPayments(){
     limit: PAYS_LIMIT,
     offset: paysOffset,
   };
-  $('paysBody').innerHTML = `<tr><td colspan="6" class="loading">로딩 중…</td></tr>`;
+  $('paysBody').innerHTML = `<tr><td colspan="7" class="loading">로딩 중…</td></tr>`;
   try{
     const r = await api('payments', { filters });
     $('paysCount').textContent = `총 ${r.total.toLocaleString()}건`;
     if(!r.rows.length){
-      $('paysBody').innerHTML = `<tr><td colspan="6" class="empty">결제 기록이 없습니다</td></tr>`;
+      $('paysBody').innerHTML = `<tr><td colspan="7" class="empty">결제 기록이 없습니다</td></tr>`;
     }else{
       $('paysBody').innerHTML = r.rows.map(row=>(
         `<tr>
@@ -1683,12 +1683,13 @@ async function loadPayments(){
           <td class="c-amount">${fmtWon(row.amount)}</td>
           <td><span class="badge ${row.status}">${row.status}</span></td>
           <td style="font-size:11px;color:var(--mut)">${row.provider||'-'}</td>
+          <td><span class="payid" title="PG 콘솔의 '주문번호'와 동일 — 클릭하여 복사 후 콘솔에서 검색·취소" onclick="navigator.clipboard&&navigator.clipboard.writeText('${row.payment_id||''}');this.textContent='복사됨';setTimeout(()=>this.textContent='${row.payment_id||'-'}',900)" style="font:11px ui-monospace,monospace;color:var(--fg2);cursor:pointer;user-select:all">${row.payment_id||'-'}</span></td>
         </tr>`
       )).join('');
     }
     renderPaysPager(r.total);
   }catch(err){
-    $('paysBody').innerHTML = `<tr><td colspan="6" class="empty">오류: ${err.message}</td></tr>`;
+    $('paysBody').innerHTML = `<tr><td colspan="7" class="empty">오류: ${err.message}</td></tr>`;
   }
 }
 function renderPaysPager(total){

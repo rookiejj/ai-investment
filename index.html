@@ -1224,7 +1224,7 @@ body.sub-modal-open{overflow:hidden}
         <div class="pd">최대 할인</div>
       </div>
     </div>
-    <div class="why-bonus">🎁 첫 결제 시 만료일에 7일이 더 추가돼요 (번호당 1회)</div>
+    <div class="why-bonus">🎁 지금 결제 시 만료일에 7일이 더 추가돼요 (번호당 1회)</div>
     <button type="button" class="why-cta" data-open-sub>매일 카톡으로 받기</button>
     <div class="why-fine">카카오톡 채널 친구 추가 후 발송 · 언제든 해지 가능</div>
   </div>
@@ -1269,7 +1269,7 @@ body.sub-modal-open{overflow:hidden}
   <div class="cta-sticky-inner">
     <div class="cta-sticky-txt">
       <b>매일 아침 카톡으로 받기</b>
-      <span>1개월 2,900원 · 첫 결제 7일 추가</span>
+      <span>1개월 2,900원 · 지금 결제 7일 추가</span>
     </div>
     <button type="button" class="cta-sticky-btn" data-open-sub>구독하기</button>
   </div>
@@ -1304,12 +1304,11 @@ body.sub-modal-open{overflow:hidden}
       <h2 id="subscribeTitle">브리픽 구독하기</h2>
       <button class="sub-modal-close" type="button" aria-label="닫기" id="subscribeClose">✕</button>
     </div>
-    <div class="sub-modal-test-banner">본 결제는 테스트용으로, 실제로는 결제되지 않습니다.</div>
     <p class="sub-modal-sub">매일 아침 8시, 최신 경제 뉴스를 카카오톡으로 받아보세요.<br><span class="sub-modal-extend-note">이미 구독 중이신 분들은 기간이 연장됩니다.</span></p>
     <form id="subscribeForm" novalidate autocomplete="off">
       <div class="sub-modal-bonus-banner" id="subBonusBanner">
         <span class="bonus-text">
-          <b>첫 결제 시 7일 무료 추가!</b>
+          <b>지금 결제 시 7일 무료 추가!</b>
           어떤 플랜이든 만료일에 7일이 더 추가돼요 (번호당 1회)
         </span>
       </div>
@@ -3114,7 +3113,7 @@ boot();
   const SUPABASE_URL='https://ytvcgoldauysvnqckzze.supabase.co';
   const BRIEFICK_SUPABASE_PUBLISHABLE_KEY='sb_publishable_BRlDRwvdanR1sLX2b_Iagg_AtLA8Wyf';
   const PORTONE_STORE_ID='store-94ded677-c4c2-45a7-adc2-eb735d601a52';
-  const PORTONE_CHANNEL_KEY='channel-key-e32b9dbf-38c1-43a0-a080-1e208f22ab40';
+  const PORTONE_CHANNEL_KEY='channel-key-79cd4c35-0407-49ef-9d59-a756f7be6285';
   // 가격 플랜. 서버(payment-confirm)도 동일 매핑을 권위로 들고 있어야 함 — plan key·amount·days 동기화 필수.
   // 라이브 전환 시 amount 적용, 베타 단계에선 testAmount(₩100)로 결제 통과.
   const PRICE_PLANS={
@@ -3153,7 +3152,7 @@ boot();
     el.style.display='';
     const txt=el.querySelector('.bonus-text');
     const days=event?event.bonus_days:7;
-    const name=event?event.name:'첫 결제 시 7일 추가';
+    const name=event?event.name:'지금 결제 시 7일 추가';
     txt.innerHTML='<b>🎁 '+name+'</b>어떤 플랜이든 만료일에 '+days+'일이 더 추가돼요 (번호당 1회)';
   }
 
@@ -3536,6 +3535,7 @@ boot();
         currency:'KRW',
         payMethod:'CARD',
         customer:{customerId:phone,phoneNumber:phone},
+        customData:{phone,plan:planKey},
         windowType:{pc:'IFRAME',mobile:'REDIRECTION'},
         redirectUrl:location.origin+location.pathname,
         bypass:{galaxia:{ITEM_CODE:'BRIEFICK_'+planKey.toUpperCase()}},

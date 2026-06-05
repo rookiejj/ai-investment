@@ -193,6 +193,16 @@ Deno.serve(async (req) => {
       .maybeSingle();
     if (selErr) throw selErr;
 
+    // 멱등 가드: 이 paymentId 가 이미 처리됐으면(webhook 등) 재연장 금지.
+    // paymentId 는 매 결제 고유(랜덤)라 정상 흐름에선 절대 매칭되지 않음 — 중복 처리만 차단.
+    if (existing?.last_payment_id === paymentId) {
+      return json({
+        ok: true, status: "extended", paid_until: existing.paid_until,
+        alimtalk_sent: false, bonus_days: 0, bonus_event: null, first_payment_bonus_days: 0,
+        note: "already_processed",
+      }, { cors });
+    }
+
     // 적용 가능한 promo 이벤트 1개 결정 (자격 + 미수령, 가장 큰 보너스).
     const userCtx = {
       hadPriorPayment: !!existing?.last_payment_id,

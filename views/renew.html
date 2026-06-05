@@ -188,7 +188,6 @@ input,textarea{font:inherit;outline:none}
       <span>브리픽</span>
     </div>
     <h1>재구독</h1>
-    <div class="test-banner">본 결제는 테스트용으로, 실제로는 결제되지 않습니다.</div>
     <p class="sub">매일 아침 8시, 최신 경제 뉴스를 카카오톡으로 받아보세요.<br><span class="extend-note">이미 구독 중이신 분들은 기간이 연장됩니다.</span></p>
 
     <form id="subscribeForm" novalidate autocomplete="off">
@@ -266,7 +265,7 @@ input,textarea{font:inherit;outline:none}
   const SUPABASE_URL = 'https://ytvcgoldauysvnqckzze.supabase.co';
   const BRIEFICK_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_BRlDRwvdanR1sLX2b_Iagg_AtLA8Wyf';
   const PORTONE_STORE_ID = 'store-94ded677-c4c2-45a7-adc2-eb735d601a52';
-  const PORTONE_CHANNEL_KEY = 'channel-key-e32b9dbf-38c1-43a0-a080-1e208f22ab40';
+  const PORTONE_CHANNEL_KEY = 'channel-key-79cd4c35-0407-49ef-9d59-a756f7be6285';
   const PENDING_KEY = 'briefickRenewPendingPayment';
 
   // 가격 플랜 — 메인 모달(index.html PRICE_PLANS) 및 서버(payment-confirm)와 동기화 필수.
@@ -510,6 +509,7 @@ input,textarea{font:inherit;outline:none}
         currency: 'KRW',
         payMethod: 'CARD',
         customer: { customerId: phone, phoneNumber: phone },
+        customData: { phone, plan: planKey },
         windowType: { pc: 'IFRAME', mobile: 'REDIRECTION' },
         redirectUrl: location.origin + location.pathname,
         bypass: { galaxia: { ITEM_CODE: 'BRIEFICK_'+planKey.toUpperCase() } },

@@ -51,3 +51,8 @@ verify_jwt = false
 [functions.market-data]
 # /trading 터미널이 브라우저에서 직접 호출하는 시세 프록시 (Yahoo Finance 15분 지연).
 verify_jwt = false
+
+[functions.payment-webhook]
+# 포트원이 서버→서버로 호출하는 결제 webhook. Supabase JWT 가 없으므로 게이트웨이 통과 위해
+# verify_jwt=false. 실제 검증은 함수 내부에서 "포트원 단건조회 API 재조회 + storeId 일치"로 수행.
+verify_jwt = false
