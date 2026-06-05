@@ -1,16 +1,16 @@
 const updates = [
   {
-    "date": "2026-06-05 07:35 KST",
-    "summary": `BTC $62,258 7:40 ET 이란 전쟁 개시 전 수준 모두 반납 - risk-off 가속
-ETH $1,741 $1,800 하향 이탈 - BTC 동반·8월 사상 최고 대비 -65%
-금 $4,479 +1.0% 회복·은 $74.61 +0.76% - safe-haven 재유입
-WTI $95 -1%·Brent $97 후퇴 - 트럼프 '주말 합의 진척 가능' 발언
+    "date": "2026-06-05 19:45 KST",
+    "summary": `BTC $60,500 영역 후퇴 - 글로벌 risk-off 동조 가속·alternative 자산성 신뢰 후퇴
+금 $4,500 영역 안정 - 美·이란 갈등 + 글로벌 risk-off가 safe-haven 재유입
+ETH $1,700 하향 이탈 - BTC 동반·8월 사상 최고 대비 -65% 누적
+WTI $93 -2%·Brent $95 후퇴 - 트럼프 '주말 이란 협상 진철 가능' 발언
 6/7 OPEC+ JMMC 188 kbpd 7월 증산 D-2 · UAE 탈퇴 spare capacity 2.5 mbpd`,
     "changes": [
       {
-        "time": "2026-06-05 07:30 KST",
+        "time": "2026-06-05 18:00 KST",
         "type": "수치 갱신",
-        "detail": "크립토 6/5 점검. BTC $62,258 6/4 7:40 ET - 이란 전쟁 개시 시점 $65,879 수준 모두 반납·전쟁 초기 alternative safe-haven 자산성 베이스에서 risk-on 자산으로 시그널 회귀. ETH $1,741 7:40 ET $1,800 하향 이탈·8월 사상 최고 $4,953 대비 -65% 누적 조정. 매크로 컨텍스트 - 실질금리(10y 4.45% - CPI 3.8%) 65bp + DXY 99 강세 + Polymarket 60% no-cut H1 2026 + 6/16~17 케빈 워시 첫 FOMC dot plot D-11 + 美·이란 양방향 미사일 risk-off + 5월 spot BTC ETF -$2.97B 사상 최대 단일월 분배 + spot ETH ETF 3주 -$712M 동조 후퇴 + 펀딩 rate 음수 영역 잔존. 글로벌 시총 $2.4T 10월 최고 $4.28T 대비 -44% 누적 조정 영역. SOL $80·XRP $1.25 동조 후퇴. forward 시그널 - institutional outflow 사상 최대가 단기 헤드윈드 + AI 인프라 sector premium 흡수 alternative pool 잔존이 변곡점.",
+        "detail": "크립토 6/5 점검. BTC $60,500 영역 6/5 일중 후퇴(6/4 $62,258 종가) - 이란 전쟁 개시 시점 $65,879 수준 모두 반납·전쟁 초기 alternative safe-haven 자산성 베이스에서 risk-on 자산으로 시그널 회귀 확정. ETH $1,700 영역 후퇴·8월 사상 최고 $4,953 대비 -65% 누적 조정. 트리거 - 글로벌 risk-off 가속(아시아 칩 sector 동조 매도 + 美 프리마켓 후퇴) + AI 반도체 sector premium 차익실현 자금이 alternative 자산 회수로 이어진 negative 펀드플로 효과. 매크로 컨텍스트 - 실질금리(10y 4.45% - CPI 3.8%) 65bp + DXY 99 강세 + Polymarket 60% no-cut H1 2026 + 6/16~17 케빈 워시 첫 FOMC dot plot D-11 + 美·이란 양방향 미사일 risk-off + 5월 spot BTC ETF -$2.97B 사상 최대 단일월 분배 + spot ETH ETF 3주 -$712M 동조 후퇴 + 펀딩 rate 음수 영역 잔존. 글로벌 시총 $2.3T 10월 최고 $4.28T 대비 -46% 누적 조정 영역. SOL $78·XRP $1.23 동조 후퇴. forward 시그널 - institutional outflow 사상 최대가 단기 헤드윈드·AI 인프라 sector premium 흡수 alternative pool 잔존이 변곡점·NFP 21:30 KST·6/16 FOMC가 매크로 분기점.",
         "sector": "크립토"
       },
       {
@@ -22,7 +22,7 @@ WTI $95 -1%·Brent $97 후퇴 - 트럼프 '주말 합의 진척 가능' 발언
       {
         "time": "2026-06-05 07:20 KST",
         "type": "수치 갱신",
-        "detail": "에너지 6/5 점검. WTI $95/bbl 6/4 -1% 3연속 상승 후 풀백·Brent $97/bbl 동조 후퇴 - 트럼프 '주말 이란 협상 진척 가능' 발언이 위크엔드 합의 기대로 풀백 트리거. 이란 측 협상 진척 부정·이스라엘 레바논 타격 지속 + 美·이란 양방향 미사일 잔존이 양방향 변곡점. 공급 카운터 - EIA 美 원유재고 6주 연속 감소·최저 운영수준 근접·1Q26 marketed production 120.2 Bcf/d +4% YoY·Permian·Haynesville 6% 증산 동조. forward 6/7 OPEC+ JMMC D-2 - 188 kbpd 7월 증산 컨센·UAE OPEC 탈퇴(5/1) 후 spare capacity 2.5 mbpd로 축소(이전 3.8 mbpd) 공급 카운터 약화. 실질금리 65bp + 美·이란 봉쇄 risk premium + UAE 이탈 공급 카운터 약화가 6월 유가 양방향 변곡점. 호르무즈 2/28 봉쇄 이래 LNG 유럽·아시아 wartime 프리미엄 잔존.",
+        "detail": "에너지 6/5 점검. WTI $95/bbl 6/4 -1% 3연속 상승 후 풀백·Brent $97/bbl 동조 후퇴 - 트럼프 '주말 이란 협상 진철 가능' 발언이 위크엔드 합의 기대로 풀백 트리거. 이란 측 협상 진철 부정·이스라엘 레바논 타격 지속 + 美·이란 양방향 미사일 잔존이 양방향 변곡점. 공급 카운터 - EIA 美 원유재고 6주 연속 감소·최저 운영수준 근접·1Q26 marketed production 120.2 Bcf/d +4% YoY·Permian·Haynesville 6% 증산 동조. forward 6/7 OPEC+ JMMC D-2 - 188 kbpd 7월 증산 컨센·UAE OPEC 탈퇴(5/1) 후 spare capacity 2.5 mbpd로 축소(이전 3.8 mbpd) 공급 카운터 약화. 실질금리 65bp + 美·이란 봉쇄 risk premium + UAE 이탈 공급 카운터 약화가 6월 유가 양방향 변곡점. 호르무즈 2/28 봉쇄 이래 LNG 유럽·아시아 wartime 프리미엄 잔존.",
         "sector": "에너지"
       }
     ]
