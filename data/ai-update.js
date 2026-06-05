@@ -1,35 +1,35 @@
 const UPDATES = [
   {
-    "date": "2026-06-04 19:45 KST",
-    "summary": `Anthropic Claude Partner Network 6/3 출범 - Services Track + Partner Hub 동시 공개
-Google Gemini 3.5 Pro 6월 출시 임박 - Pichai "내달까지" 무대 공약
-Apple-Google $1B/년 커스텀 Gemini 1.2T - WWDC 6/8 Siri 2.0 베이스
-OpenAI GPT-5.6 6월 윈도우 - Polymarket 80~89% Codex 백엔드 노출
-Mistral Vibe 5/28 리브랜드 - Le Chat → 자율 워크·코드 에이전트 전환`,
+    "date": "2026-06-05 19:35 KST",
+    "summary": `OpenAI Codex 주간 사용자 500만 돌파 · Sites 프리뷰 · GPT-Rosalind 생명과학 출시
+Anthropic SEC 비공개 S-1 제출 D+4 · Opus 4.8 全 티어 default 적용
+Apple Siri 2.0 6/8 WWDC D-3 - 커스텀 Google Gemini 1.2T 백엔드 통합
+GPT-5.6 6월 출시 임박 - Polymarket 68% 6/8~14 윈도우 D-3
+xAI Grok 5 Q2 베타 · Mistral Vibe 5/28 출범 - frontier 5중 경쟁`,
     "changes": [
       {
-        "time": "2026-06-04 19:40 KST",
-        "type": "생태계",
-        "detail": "Anthropic. Claude Partner Network 6/3 Services Track + Partner Hub 동시 출범 - 엔터프라이즈 컨설팅·SI·매니지드 서비스 파트너 인증 체계 정식화·Project Glasswing 6/2 확장과 동조. Claude Opus 4.8 기본 컨텍스트 1M 토큰으로 확장 - 코드베이스 스케일 마이그레이션 본격 지원·dynamic workflows로 수십만 라인 리팩토링 자동화 베이스. Opus 4.8 5/28 출시 후 41일 cadence(4.7 → 4.8)·코딩 신뢰성 4배 개선·동일 가격 유지 sector pricing power 카운터. forward 매크로 - 6/1 SEC 비공개 S-1 접수·Series H $65B/$965B 클로징 후 12거래일 IPO 데뷔 가시권·런레이트 ARR $47B(전년 4.7배)·Q2 매출 가이던스 $10.9B 직전 분기 두 배·첫 흑자 분기 컨센. 컴퓨트 베이스 - Google·Broadcom 3.5GW TPU 2027 + Amazon 5GW + SpaceX Colossus 인프라 락인 누적. Mythos 프리뷰 6월 일정 일관·NASDAQ 10월 상장 윈도우 + 1조달러 첫 진입 시나리오 - frontier AI 카테고리 리더십 분기점.",
-        "sector": "Anthropic"
-      },
-      {
-        "time": "2026-06-04 19:35 KST",
-        "type": "모델 출시 예정",
-        "detail": "Google DeepMind. Gemini 3.5 Pro 6월 출시 임박 - 5/19 I/O 2026 키노트에서 Pichai 'give us until next month to get it to you' 공약 후속·API ID·모델 카드 아직 미공개. Gemini 3.5 Flash GA 5/19 - Gemini 앱·AI Mode in Search 기본 모델 + API $1.50/$9.00 per M tokens 베이스. 핵심 카운터 - Apple-Google 1/12 멀티이어 AI 파트너십 $1B/년·1.2T 파라미터 커스텀 Gemini 모델 + Apple Private Cloud Compute 하드웨어 격리 enclaves 데이터 미공유 + iOS 27 출시 시 약 14억 iPhone 대상 Siri 2.0 백엔드 + WWDC 6/8 D-4 공식 발표 컨센. Google DeepMind sector premium 베이스 - GPT-5.6 vs Opus 4.8 vs Gemini 3.5 Pro 6월 동시 프론티어 사이클 + Apple 14억 디바이스 분포 락인 + 코딩·웹서치·이미지 생성 멀티 모달 카테고리 리더십 동조 매크로. forward 매크로 - Anthropic·OpenAI IPO 윈도우 + Mythos·Grok 5 6월 동시 출시 가속 시나리오가 frontier AI 광역 카테고리 변곡점.",
-        "sector": "Google DeepMind"
-      },
-      {
-        "time": "2026-06-04 19:30 KST",
-        "type": "모델 출시 예정",
-        "detail": "OpenAI. GPT-5.6·GPT-5.6 Pro 6월 출시 임박 - Polymarket 80~89% 6/30 확률·Codex 내부 트레이스 노출·체크포인트 테스트 누적·내부 코드네임 iris-alpha·ember-alpha·beacon-alpha 보고. ChatGPT Pro 사용자 컨텍스트 윈도우 약 1.5M 토큰(GPT-5.5 대비 +43%) 베이스. 핵심 개선 - reasoning·agentic workflow·고급 프론트엔드 생성·tool use cost efficiency·SWE-bench 80%+ 컨센. Anthropic Opus 4.8 5/28 출시 + Mistral Vibe 5/28 출범 + Gemini 3.5 Pro 6월 카운터로 코딩 sector 4중 경쟁 가속. 황 NVIDIA GTC Taipei $30B 투자 'probably the last before IPO' 발언 베이스 - OpenAI 후속 비공개 S-1 SEC 제출 가능성 가시화·가을 IPO 윈도우·Anthropic $965B 대비 시장 점유율 첫 추월 사이클 분기점. forward 5,000억 ARR 멀티 가속 - 모델 성능 베이스 + 매출 가속 + IPO 동시 진행이 가을 광역 사이클. Vera CPU 1차 고객 명시·SpaceX Colossus 컴퓨트 락인이 인프라 멀티이어 베이스.",
+        "time": "2026-06-05 18:00 KST",
+        "type": "제품 출시",
+        "detail": "OpenAI. Codex 주간 사용자 500만 돌파 마일스톤 + 신규 기능 라인업 공개 - ①Role-specific 플러그인 - Codex가 사용자 직무·도구에 맞춰 적응 ②Sites 프리뷰 - 워크스페이스 공유 가능한 인터랙티브 웹앱·사이트 생성 URL 발급 ③Annotations - 문서·스프레드시트·슬라이드 in-place 정제 협업 ④Computer Use on Windows - 윈도우 앱 시·클릭·타이핑 빌드 테스트 ⑤Codex Profiles - 모바일·Mac 원격 연속 작업. 동시 발표 GPT-Rosalind 생명과학 업데이트 - 강화된 agentic coding·신약 개발·유전체 성능·증거 검색·바이오인포매틱스 워크플로우 신규 플러그인·trusted-access 연구 프리뷰 자격 기관 글로벌 확장. 컨텍스트 - GPT-5.6 6월 출시 임박 + Codex 백엔드 트레이스·iris-alpha·ember-alpha·beacon-alpha 체크포인트 노출이 Polymarket 68% 6/8~14 윈도우 베팅 카운터. forward 시그널 - 황 NVIDIA $30B 투자 'probably the last before IPO' 발언이 OpenAI 비공개 S-1 SEC 제출 가능성·가을 IPO 윈도우 분기점·Anthropic 6/1 S-1 접수 후 IPO 경주 양강 사이클 가속.",
         "sector": "OpenAI"
       },
       {
-        "time": "2026-06-04 19:25 KST",
-        "type": "제품 출시",
-        "detail": "Mistral AI. Vibe 5/28 출범 - Le Chat 어시스턴트 리브랜드 + 자율 워크 에이전트 + 코드 에이전트 통합 플랫폼 전환. Work Mode - 웹·모바일 장기 작업 에이전트, 도구 선택·진행 스트리밍·복합 작업 완료까지·Code Mode - 전용 웹 surface 원격 코딩 에이전트. 핵심 - 세션 병렬 실행·머신 오프 상태 지속·Slack 등 외부 트리거(6월)·Mistral Medium 3.5 베이스(SWE-Bench Verified 77.6% 검증). 가격 - Free·Pro $14.99/월·Team $24.99/사용자·Enterprise 별도. Mistral 동시 발표 산업 AI + 데이터센터 확장 - 풀스택 전략 전환으로 OpenAI·Anthropic·Google DeepMind 카운터. EU 정식 sovereign AI sector 단독 베이스 - Le Chat → Vibe 리브랜드가 컨슈머·엔터프라이즈 통합 변곡점. forward - GPT-5.6·Opus 4.8·Gemini 3.5 Pro·Vibe 4중 프론티어 사이클 6월 동시 진행이 코딩 에이전트 sector 광역 카테고리 베이스.",
-        "sector": "Mistral AI"
+        "time": "2026-06-05 18:30 KST",
+        "type": "거버넌스",
+        "detail": "Anthropic. 6/1 SEC 비공개 S-1 접수 D+4 - IPO 경주에서 OpenAI 선제 + 5/28 Claude Opus 4.8 출시 후 Max·Team Premium·Enterprise pay-as-you-go·Anthropic API 全 티어 default 적용 완료(6월 1주차) - dynamic workflow 도구 신규 + long-horizon agent 신뢰성 4배 개선 + OpenAI GPT-5.5·Google Gemini 3.1 Pro 합성 벤치마크 상회. Mythos 6월 출시 컨센 - ULTRA tier 코드명·OpenAI GPT-5.6 6/8~14 Polymarket 68% 카운터로 sector pricing power 분기점. 5/11 EU 사이버 모델 접근 OpenAI 제공 결정과 대조 - Mythos 유럽 미접근 정책 유지 + 안전성 가드레일 차별화. Claude Partner Network 6/3 Services Track + Partner Hub - 엔터프라이즈 컨설팅·SI·매니지드 서비스 파트너 인증 체계 정식화. 컴퓨트 베이스 - Google·Broadcom 3.5GW TPU 2027 + Amazon 5GW + SpaceX Colossus 락인. forward 매크로 - Series H $65B/$965B 클로징 후 12거래일 IPO 데뷰 가시권·런레이트 ARR $47B(전년 4.7배)·Q2 매출 가이던스 $10.9B 직전 분기 두 배·첫 흑자 분기 컨센·NASDAQ 10월 상장 윈도우 + 1조달러 첫 진입 시나리오 frontier AI 광역 카테고리 리더십 분기점.",
+        "sector": "Anthropic"
+      },
+      {
+        "time": "2026-06-05 07:15 KST",
+        "type": "제품 출시 예정",
+        "detail": "Apple. WWDC 2026 6/8 키노트 D-3 카운트다운 - Siri 2.0 백엔드 커스텀 Google Gemini 1.2T 파라미터 모델 통합 정식 발표 컨센. Apple-Google 1/12 멀티이어 AI 파트너십 $1B/년 베이스 + Apple Private Cloud Compute 하드웨어 격리 enclaves 데이터 미공유 + iOS 27 출시 시 약 14억 iPhone 대상 Siri 2.0 백엔드 적용. 핵심 카운터 - WWDC25 Apple Intelligence 출시 대비 1년 delayed Siri 약속이 26년 신뢰 회복 분기점. 추가 컨센 - on-device AI 강화·외부 LLM(Gemini·Claude) 통합·Apple Silicon 차세대 칩. Google DeepMind sector premium 카운터 - GPT-5.6 vs Mythos vs Gemini 3.5 Pro 6월 동시 frontier 사이클 + Apple 14억 디바이스 분포 락인 + 코딩·웹서치·이미지 생성 멀티 모달 카테고리 리더십 동조. forward 매크로 - Anthropic·OpenAI IPO 윈도우 + Mythos·Grok 5 6월 동시 출시 가속 시나리오가 frontier AI 광역 카테고리 변곡점.",
+        "sector": "Apple"
+      },
+      {
+        "time": "2026-06-05 07:10 KST",
+        "type": "모델 출시 예정",
+        "detail": "xAI. Grok 5 Q2 2026 베타 윈도우(5~6월) - Polymarket 33% 6/30 출시 확률 + Colossus 2 멤피스 슈퍼클러스터 학습 진행 + Q1 2026 직전 목표 후퇴 후 Q2 추정 공식 시그널. 핵심 컨센 - 6T 파라미터 MoE 아키텍처·1.5M 토큰 컨텍스트·텍스트·이미지·오디오·비디오 네이티브 멀티모달·Musk 'AGI 10% 확률' 발언 베이스. 가격 - SuperGrok $30/월·SuperGrok Heavy $300/월 베이스 유지. OpenAI GPT-5.6·Anthropic Mythos·Google Gemini 3.5 Pro·Mistral Vibe 6월 동시 frontier 사이클 4중 카운터에서 출시 cadence가 sector premium 분기점. forward 매크로 - 황 NVIDIA H200·B200 클러스터 확장 + X 플랫폼 통합 + 정부·국방 AI 워크로드 진출 가속 시나리오 + IPO 시그널 미정이 xAI 멀티이어 카테고리 차별화 분기점. 6월 출시 시점에 따라 frontier AI 5중 경쟁 광역 카테고리 변곡점.",
+        "sector": "xAI"
       }
     ]
   }
