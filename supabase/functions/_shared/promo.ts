@@ -16,6 +16,7 @@ export interface PromoEvent {
   code: string;
   name: string;
   bonus_days: number;
+  bonus_months?: number;   // 캘린더 월 보너스(setMonth, 28/30/31 자동). 컬럼 없으면 undefined→0. bonus_days 와 합산.
   eligible_for: "first_payment" | "all" | "returning";
 }
 
@@ -36,7 +37,7 @@ export async function getActiveEvents(supabase: Sb): Promise<PromoEvent[]> {
   const nowIso = new Date().toISOString();
   const { data, error } = await supabase
     .from("promo_events")
-    .select("id, code, name, bonus_days, eligible_for")
+    .select("*")   // bonus_months 컬럼이 없어도(미추가 상태) 안 깨지도록 * 사용
     .eq("active", true)
     .lte("starts_at", nowIso)
     .or(`ends_at.is.null,ends_at.gt.${nowIso}`);
@@ -81,7 +82,8 @@ export async function getEligibleEvents(
   return events
     .filter((e) => matchEligibility(e, ctx))
     .filter((e) => !redeemed.has(e.id))
-    .sort((a, b) => b.bonus_days - a.bonus_days);
+    // 보너스 큰 순 — 월은 ~31일로 환산해 비교(정렬용 근사치)
+    .sort((a, b) => ((b.bonus_months ?? 0) * 31 + b.bonus_days) - ((a.bonus_months ?? 0) * 31 + a.bonus_days));
 }
 
 /**

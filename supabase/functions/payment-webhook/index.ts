@@ -146,9 +146,10 @@ Deno.serve(async (req: Request) => {
         const userCtx = { hadPriorPayment: !!existing?.last_payment_id, isReturning: !!existing && existing.status !== "active" };
         const bonusEvent = await pickBonusEvent(supabase, phone, userCtx);
         const bonusDays = bonusEvent?.bonus_days ?? 0;
+        const bonusMonths = bonusEvent?.bonus_months ?? 0;
         const base = existing?.paid_until && new Date(existing.paid_until).getTime() > nowMs
           ? new Date(existing.paid_until) : new Date(nowMs);
-        const newPaidUntil = addDays(addMonths(base, plan.months), bonusDays);
+        const newPaidUntil = addDays(addMonths(base, plan.months + bonusMonths), bonusDays);
         if (existing) {
           await supabase.from("subscribers").update({
             status: "active", paid_until: newPaidUntil.toISOString(), last_payment_id: paymentId,
@@ -182,7 +183,7 @@ Deno.serve(async (req: Request) => {
         }
         if (!alim.ok) console.error("[payment-webhook] alimtalk failed:", alim.error);
         recovered = true;
-        console.warn(`[payment-webhook] orphan 복구: ${phone} ${paymentId} (+${plan.months}m +${bonusDays}d)`);
+        console.warn(`[payment-webhook] orphan 복구: ${phone} ${paymentId} (+${plan.months + bonusMonths}m +${bonusDays}d)`);
       }
     }
 
@@ -192,13 +193,19 @@ Deno.serve(async (req: Request) => {
     let revoked = false;
     if (status === "CANCELLED" && prevStatus !== "refunded" && existing?.paid_until) {
       const plan = PRICE_PLANS[parsePlan(payment)];
-      // 이 결제로 적용된 보너스 일수 — 만료일에서 함께 차감.
+      // 이 결제로 적용된 보너스(일+월) — 만료일에서 함께 차감. 월은 redemption→event 로 역산.
       // ⚠ redemption 기록은 일부러 삭제하지 않음: "번호당 1회"를 소진 상태로 유지해
       //   취소 후 재결제 시 보너스 재취득(어뷰징)을 막는다. 정당한 재허용은 운영자가 수동(SQL).
-      const { data: reds } = await supabase.from("promo_redemptions").select("bonus_days_applied").eq("payment_id", paymentId);
+      const { data: reds } = await supabase.from("promo_redemptions").select("event_id, bonus_days_applied").eq("payment_id", paymentId);
       const bonusDays = (reds ?? []).reduce((s: number, r: any) => s + (r.bonus_days_applied ?? 0), 0);
+      let bonusMonths = 0;
+      const evIds = (reds ?? []).map((r: any) => r.event_id).filter(Boolean);
+      if (evIds.length) {
+        const { data: evs } = await supabase.from("promo_events").select("bonus_months").in("id", evIds);
+        bonusMonths = (evs ?? []).reduce((s: number, e: any) => s + (e.bonus_months ?? 0), 0);
+      }
       const pu = new Date(existing.paid_until);
-      pu.setMonth(pu.getMonth() - plan.months);
+      pu.setMonth(pu.getMonth() - plan.months - bonusMonths);
       if (bonusDays) pu.setDate(pu.getDate() - bonusDays);
       const expired = pu.getTime() <= Date.now();
       await supabase.from("subscribers").update({
@@ -206,7 +213,7 @@ Deno.serve(async (req: Request) => {
         status: expired ? "expired" : existing.status,
       }).eq("id", existing.id);
       revoked = true;
-      console.warn(`[payment-webhook] 전체취소 회수: ${phone} ${paymentId} -${plan.months}m -${bonusDays}d -> ${pu.toISOString()}${expired ? " (expired)" : ""}`);
+      console.warn(`[payment-webhook] 전체취소 회수: ${phone} ${paymentId} -${plan.months + bonusMonths}m -${bonusDays}d -> ${pu.toISOString()}${expired ? " (expired)" : ""}`);
     }
 
     return ok({ ok: true, status: mapped, recovered, revoked, phone_matched: !!phone });

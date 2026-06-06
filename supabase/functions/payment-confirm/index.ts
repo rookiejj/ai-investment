@@ -144,8 +144,9 @@ Deno.serve(async (req) => {
       hadPriorPayment: !!existing?.last_payment_id,
       isReturning:     !!existing && existing.status !== "active",
     };
-    const bonusEvent = await pickBonusEvent(supabase, cleaned, userCtx);
-    const bonusDays  = bonusEvent?.bonus_days ?? 0;
+    const bonusEvent  = await pickBonusEvent(supabase, cleaned, userCtx);
+    const bonusDays   = bonusEvent?.bonus_days ?? 0;
+    const bonusMonths = bonusEvent?.bonus_months ?? 0;   // 캘린더 월 보너스 (28/30/31 자동)
 
     let subscriberId: string;
     let status: "registered" | "extended";
@@ -165,7 +166,7 @@ Deno.serve(async (req) => {
       const baseDate = existing.paid_until && new Date(existing.paid_until).getTime() > nowMs
         ? new Date(existing.paid_until)
         : new Date(nowMs);
-      newPaidUntil = addBonusDays(addMonths(baseDate, plan.months), bonusDays);
+      newPaidUntil = addBonusDays(addMonths(baseDate, plan.months + bonusMonths), bonusDays);
 
       const { error: updErr } = await supabase
         .from("subscribers")
@@ -185,7 +186,7 @@ Deno.serve(async (req) => {
       subscriberId = existing.id;
       status = "extended";
     } else {
-      newPaidUntil = addBonusDays(addMonths(new Date(nowMs), plan.months), bonusDays);
+      newPaidUntil = addBonusDays(addMonths(new Date(nowMs), plan.months + bonusMonths), bonusDays);
       const { data: inserted, error: insErr } = await supabase
         .from("subscribers")
         .insert({
@@ -256,7 +257,8 @@ Deno.serve(async (req) => {
       paid_until: newPaidUntil.toISOString(),
       alimtalk_sent: alim.ok,
       bonus_days: bonusDays,
-      bonus_event: bonusEvent ? { code: bonusEvent.code, name: bonusEvent.name } : null,
+      bonus_months: bonusMonths,
+      bonus_event: bonusEvent ? { code: bonusEvent.code, name: bonusEvent.name, bonus_days: bonusDays, bonus_months: bonusMonths } : null,
       // 구 클라이언트 호환 (≤2026-05-20)
       first_payment_bonus_days: bonusDays,
     }, { cors });

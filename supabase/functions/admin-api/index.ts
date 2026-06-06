@@ -552,7 +552,7 @@ Deno.serve(async (req) => {
     if (action === "events_list") {
       const { data: events, error: evErr } = await supabase
         .from("promo_events")
-        .select("id, code, name, description, bonus_days, eligible_for, starts_at, ends_at, active, created_at, updated_at")
+        .select("*")   // bonus_months 컬럼 추가 전에도 안 깨지도록 *
         .order("created_at", { ascending: false });
       if (evErr) throw evErr;
 
@@ -611,7 +611,8 @@ Deno.serve(async (req) => {
       const code = String(body.code ?? "").trim();
       const name = String(body.name ?? "").trim();
       const description = body.description ? String(body.description).trim() : null;
-      const bonusDays = Number(body.bonus_days);
+      const bonusDays = Number(body.bonus_days ?? 0);
+      const bonusMonths = Number(body.bonus_months ?? 0);
       const eligibleFor = String(body.eligible_for ?? "");
       const startsAt = String(body.starts_at ?? "");
       const endsAt = body.ends_at ? String(body.ends_at) : null;
@@ -624,6 +625,9 @@ Deno.serve(async (req) => {
       if (!Number.isInteger(bonusDays) || bonusDays < 0 || bonusDays > 365) {
         return json({ ok: false, error: "보너스 일수는 0~365 정수여야 합니다." }, { status: 400, cors });
       }
+      if (!Number.isInteger(bonusMonths) || bonusMonths < 0 || bonusMonths > 12) {
+        return json({ ok: false, error: "보너스 개월은 0~12 정수여야 합니다." }, { status: 400, cors });
+      }
       if (!["first_payment", "all", "returning"].includes(eligibleFor)) {
         return json({ ok: false, error: "자격 조건이 올바르지 않습니다." }, { status: 400, cors });
       }
@@ -634,7 +638,7 @@ Deno.serve(async (req) => {
 
       const { data, error } = await supabase
         .from("promo_events")
-        .insert({ code, name, description, bonus_days: bonusDays, eligible_for: eligibleFor, starts_at: startsAt, ends_at: endsAt, active })
+        .insert({ code, name, description, bonus_days: bonusDays, bonus_months: bonusMonths, eligible_for: eligibleFor, starts_at: startsAt, ends_at: endsAt, active })
         .select("id")
         .single();
       if (error) {
@@ -662,6 +666,13 @@ Deno.serve(async (req) => {
           return json({ ok: false, error: "보너스 일수는 0~365 정수여야 합니다." }, { status: 400, cors });
         }
         patch.bonus_days = n;
+      }
+      if (body.bonus_months !== undefined) {
+        const n = Number(body.bonus_months);
+        if (!Number.isInteger(n) || n < 0 || n > 12) {
+          return json({ ok: false, error: "보너스 개월은 0~12 정수여야 합니다." }, { status: 400, cors });
+        }
+        patch.bonus_months = n;
       }
       if (typeof body.eligible_for === "string") {
         if (!["first_payment", "all", "returning"].includes(body.eligible_for)) {

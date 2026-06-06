@@ -65,7 +65,7 @@ Deno.serve(async (req) => {
     };
     const eligible = await getEligibleEvents(supabase, cleaned, userCtx);
     const eligibleOut = eligible.map((e) => ({
-      code: e.code, name: e.name, bonus_days: e.bonus_days,
+      code: e.code, name: e.name, bonus_days: e.bonus_days, bonus_months: e.bonus_months ?? 0,
     }));
 
     if (!data) {

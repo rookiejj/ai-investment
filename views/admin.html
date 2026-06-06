@@ -687,8 +687,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
     <input type="text" id="evName" placeholder="여름 한정 +5일" autocomplete="off">
     <label for="evDesc">설명 (선택)</label>
     <input type="text" id="evDesc" placeholder="7/1~8/31 모든 결제 5일 추가" autocomplete="off">
-    <label for="evBonus">보너스 일수</label>
-    <input type="number" id="evBonus" min="0" max="365" placeholder="5">
+    <label for="evBonusMonths">보너스 개월 (한 달=1, 캘린더 기준)</label>
+    <input type="number" id="evBonusMonths" min="0" max="12" placeholder="0">
+    <label for="evBonus">보너스 추가 일수 (개월과 합산, 선택)</label>
+    <input type="number" id="evBonus" min="0" max="365" placeholder="0">
     <label for="evEligible">자격 조건</label>
     <select id="evEligible" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:8px;font-size:14px;background:#fff;color:var(--fg)">
       <option value="first_payment">첫 결제 (이전 결제 없음)</option>
@@ -927,7 +929,7 @@ function renderEventsList(){
           </div>
         </div>
         <div class="meta">
-          <span><b>+${e.bonus_days}일</b></span>
+          <span><b>+${e.bonus_months?((e.bonus_months===1?'한 달':e.bonus_months+'개월')+(e.bonus_days?' '+e.bonus_days+'일':'')):(e.bonus_days+'일')}</b></span>
           <span>자격: <b>${EL_FOR_LABEL[e.eligible_for]||e.eligible_for}</b></span>
           <span>기간: <b>${periodStr}</b></span>
           <span>적용: <b>${e.redemption_count}건</b> (${e.total_bonus_days}일)</span>
@@ -976,6 +978,7 @@ function eventsOpenModal(editId){
     $('evName').value = e.name;
     $('evDesc').value = e.description || '';
     $('evBonus').value = e.bonus_days;
+    $('evBonusMonths').value = e.bonus_months || 0;
     $('evEligible').value = e.eligible_for;
     $('evStarts').value = isoToLocalInput(e.starts_at);
     $('evEnds').value = e.ends_at ? isoToLocalInput(e.ends_at) : '';
@@ -985,6 +988,7 @@ function eventsOpenModal(editId){
     $('evName').value = '';
     $('evDesc').value = '';
     $('evBonus').value = '';
+    $('evBonusMonths').value = '';
     $('evEligible').value = 'first_payment';
     const now = new Date(); now.setSeconds(0,0);
     $('evStarts').value = isoToLocalInput(now.toISOString());
@@ -1011,7 +1015,8 @@ async function eventsSaveModal(){
   const payload = {
     name: $('evName').value.trim(),
     description: $('evDesc').value.trim() || null,
-    bonus_days: Number($('evBonus').value),
+    bonus_days: Number($('evBonus').value || 0),
+    bonus_months: Number($('evBonusMonths').value || 0),
     eligible_for: $('evEligible').value,
     starts_at: localInputToIso($('evStarts').value),
     ends_at: localInputToIso($('evEnds').value),
@@ -1057,7 +1062,7 @@ async function loadEventRedemptions(eventId, page, phoneQuery){
   const rowsHtml = rows.map(rd => `
     <div class="ev-redemption-row">
       <div style="display:flex;flex-direction:column;gap:2px">
-        <div><b>${fmtPhone(rd.phone)}</b> <span style="color:var(--mut);font-size:12px">· +${rd.bonus_days_applied}일</span></div>
+        <div><b>${fmtPhone(rd.phone)}</b> <span style="color:var(--mut);font-size:12px">${rd.bonus_days_applied>0?'· +'+rd.bonus_days_applied+'일':''}</span></div>
         <div style="font-size:12px;color:var(--mut)">${fmtKstDateTime(rd.redeemed_at)} ${rd.payment_id?'· <span class="pid">'+escapeHtml(rd.payment_id)+'</span>':''}</div>
       </div>
       <button class="btn ghost danger" data-phone="${rd.phone}" style="padding:4px 10px;font-size:12px">재허용</button>

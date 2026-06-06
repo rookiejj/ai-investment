@@ -1224,7 +1224,7 @@ body.sub-modal-open{overflow:hidden}
         <div class="pd">최대 할인</div>
       </div>
     </div>
-    <div class="why-bonus">🎁 지금 결제 시 만료일에 7일이 더 추가돼요 (번호당 1회)</div>
+    <div class="why-bonus">🎁 지금 결제 시 만료일에 한 달이 더 추가돼요 (번호당 1회)</div>
     <button type="button" class="why-cta" data-open-sub>매일 카톡으로 받기</button>
     <div class="why-fine">카카오톡 채널 친구 추가 후 발송 · 언제든 해지 가능</div>
   </div>
@@ -1269,7 +1269,7 @@ body.sub-modal-open{overflow:hidden}
   <div class="cta-sticky-inner">
     <div class="cta-sticky-txt">
       <b>매일 아침 카톡으로 받기</b>
-      <span>1개월 2,900원 · 지금 결제 7일 추가</span>
+      <span>1개월 2,900원 · 지금 결제 한 달 무료</span>
     </div>
     <button type="button" class="cta-sticky-btn" data-open-sub>구독하기</button>
   </div>
@@ -1308,8 +1308,8 @@ body.sub-modal-open{overflow:hidden}
     <form id="subscribeForm" novalidate autocomplete="off">
       <div class="sub-modal-bonus-banner" id="subBonusBanner">
         <span class="bonus-text">
-          <b>지금 결제 시 7일 무료 추가!</b>
-          어떤 플랜이든 만료일에 7일이 더 추가돼요 (번호당 1회)
+          <b>지금 결제 시 한 달 무료!</b>
+          어떤 플랜이든 만료일에 한 달이 더 추가돼요 (번호당 1회)
         </span>
       </div>
       <div class="sub-modal-plans" role="radiogroup" aria-label="구독 기간 선택">
@@ -3145,15 +3145,30 @@ boot();
   // 보너스 배너 — 자격 있으면 노출, 없으면 숨김. 색·메시지 전환 없음 (churn 방지).
   // event 인자가 있으면 동적 이벤트 이름·일수 사용 (예: 운영 중 이벤트 변경 시 즉시 반영),
   // 없으면 현재 진행 중 이벤트의 기본 카피.
+  // 보너스(월+일) → 한국어 문구. 월은 캘린더 기준(달마다 일수 다름).
+  function bonusText(months, days){
+    months=months||0; days=days||0;
+    const m = months>0 ? (months===1?'한 달':months+'개월') : '';
+    const d = days>0 ? days+'일' : '';
+    return (m && d) ? (m+' '+d) : (m || d || '');
+  }
+  // 날짜에 보너스 적용 — 월 먼저 setMonth(캘린더), 그 다음 일. 서버 로직과 동일.
+  function applyBonus(date, months, days){
+    const r=new Date(date);
+    if(months) r.setMonth(r.getMonth()+(months||0));
+    if(days) r.setDate(r.getDate()+(days||0));
+    return r;
+  }
   function setBonusBanner(state, event){
     const el=document.getElementById('subBonusBanner');
     if(!el) return;
     if(state==='hidden'){ el.style.display='none'; return; }
     el.style.display='';
     const txt=el.querySelector('.bonus-text');
-    const days=event?event.bonus_days:7;
-    const name=event?event.name:'지금 결제 시 7일 추가';
-    txt.innerHTML='<b>🎁 '+name+'</b>어떤 플랜이든 만료일에 '+days+'일이 더 추가돼요 (번호당 1회)';
+    const days=event?(event.bonus_days||0):0;
+    const months=event?(event.bonus_months||0):1;   // 기본 폴백: 한 달
+    const name=event?event.name:'지금 결제 시 한 달 무료';
+    txt.innerHTML='<b>🎁 '+name+'</b>어떤 플랜이든 만료일에 '+bonusText(months,days)+'이 더 추가돼요 (번호당 1회)';
   }
 
   // 포트원 모바일 REDIRECTION 복귀 처리
@@ -3213,8 +3228,10 @@ boot();
         const msgMap={registered:'구독 완료!',extended:'구독 연장 완료!'};
         const mainMsg=msgMap[j.status]||'완료!';
         const _bonusDays=(j.bonus_days||j.first_payment_bonus_days||0);
-        const _bonusName=(j.bonus_event&&j.bonus_event.name)?j.bonus_event.name:('보너스 '+_bonusDays+'일');
-        const bonusHtml=(_bonusDays>0)?'<br><span class="until-date">🎁 '+_bonusName+' 적용 — 만료일 +'+_bonusDays+'일</span>':'';
+        const _bonusMonths=(j.bonus_months||(j.bonus_event&&j.bonus_event.bonus_months)||0);
+        const _bt=bonusText(_bonusMonths,_bonusDays);
+        const _bonusName=(j.bonus_event&&j.bonus_event.name)?j.bonus_event.name:('보너스 '+_bt);
+        const bonusHtml=(_bonusDays>0||_bonusMonths>0)?'<br><span class="until-date">🎁 '+_bonusName+' 적용 — 만료일 +'+_bt+'</span>':'';
         const untilHtml=j.paid_until?'<br><span class="until-date">('+toKstDate(j.paid_until)+' 까지)</span>':'';
         s.className='sub-modal-status show success';
         s.innerHTML=mainMsg+bonusHtml+untilHtml;
@@ -3453,7 +3470,7 @@ boot();
             const until=new Date(chk.paid_until);
             const extended=new Date(until);
             extended.setMonth(extended.getMonth()+planMonths);
-            if(bonusEvent) extended.setDate(extended.getDate()+bonusEvent.bonus_days);
+            if(bonusEvent){ if(bonusEvent.bonus_months) extended.setMonth(extended.getMonth()+bonusEvent.bonus_months); if(bonusEvent.bonus_days) extended.setDate(extended.getDate()+bonusEvent.bonus_days); }
             paidUntilStr=toKstDate(until);
             extStr=toKstDate(extended);
           }
@@ -3461,8 +3478,9 @@ boot();
       }catch(_){/* 체크 실패 시 번호 확인 단계로 진행 */}
 
       const bonusEligible=!!bonusEvent;
-      const bonusDays=bonusEvent?bonusEvent.bonus_days:0;
-      const bonusLabel=bonusEvent?(' + '+bonusEvent.bonus_days+'일 보너스'):'';
+      const bonusDays=bonusEvent?(bonusEvent.bonus_days||0):0;
+      const bonusMonths=bonusEvent?(bonusEvent.bonus_months||0):0;
+      const bonusLabel=bonusEvent?(' + '+bonusText(bonusMonths,bonusDays)+' 보너스'):'';
 
       setBonusBanner(bonusEligible?'applied':'hidden', bonusEvent);
 
@@ -3488,8 +3506,8 @@ boot();
         const start=new Date();
         start.setDate(start.getDate()+1);
         const end=new Date();
-        end.setMonth(end.getMonth()+planMonths);
-        end.setDate(end.getDate()+bonusDays);
+        end.setMonth(end.getMonth()+planMonths+bonusMonths);
+        if(bonusDays) end.setDate(end.getDate()+bonusDays);
         const startStr=toKstDate(start);
         const endStr=toKstDate(end);
         const extHtml=
@@ -3561,8 +3579,10 @@ boot();
         const msgMap={registered:'구독 완료!',extended:'구독 연장 완료!'};
         const mainMsg=msgMap[j.status]||'완료!';
         const _bonusDays=(j.bonus_days||j.first_payment_bonus_days||0);
-        const _bonusName=(j.bonus_event&&j.bonus_event.name)?j.bonus_event.name:('보너스 '+_bonusDays+'일');
-        const bonusHtml=(_bonusDays>0)?'<br><span class="until-date">🎁 '+_bonusName+' 적용 — 만료일 +'+_bonusDays+'일</span>':'';
+        const _bonusMonths=(j.bonus_months||(j.bonus_event&&j.bonus_event.bonus_months)||0);
+        const _bt=bonusText(_bonusMonths,_bonusDays);
+        const _bonusName=(j.bonus_event&&j.bonus_event.name)?j.bonus_event.name:('보너스 '+_bt);
+        const bonusHtml=(_bonusDays>0||_bonusMonths>0)?'<br><span class="until-date">🎁 '+_bonusName+' 적용 — 만료일 +'+_bt+'</span>':'';
         const untilHtml=j.paid_until?'<br><span class="until-date">('+toKstDate(j.paid_until)+' 까지)</span>':'';
         status.className='sub-modal-status show success';
         status.innerHTML=mainMsg+bonusHtml+untilHtml;
