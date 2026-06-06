@@ -436,10 +436,16 @@ Deno.serve(async (req) => {
         headers: { "Content-Type": "application/json", "X-Cron-Secret": cronSecret },
         body: proxyBody,
       });
-      const respBody = await res.json().catch(() => ({}));
+      const respBody = await res.json().catch(() => ({})) as { ok?: boolean; error?: string; sent?: number; failed?: number };
+      const okFlag = res.ok && respBody?.ok !== false;
       return json({
-        ok: res.ok && (respBody as { ok?: boolean })?.ok !== false,
+        ok: okFlag,
         status: res.status,
+        // 실패 시 daily-send 의 실제 에러를 표면화 (안 그러면 클라이언트가 "HTTP 200" 만 보임)
+        error: okFlag ? undefined
+          : (respBody?.error
+             || (typeof respBody?.failed === "number" ? `발송 실패 ${respBody.failed}건 (성공 ${respBody.sent ?? 0}건)` : null)
+             || `daily-send HTTP ${res.status}`),
         response: respBody,
       }, { cors });
     }
