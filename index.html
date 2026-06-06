@@ -1265,7 +1265,7 @@ body.sub-modal-open{overflow:hidden}
 </main>
 
 <!-- 모바일 sticky 구독 CTA — 중간 콘텐츠 스크롤 구간에만 노출 (히어로·구독섹션·푸터 보일 땐 숨김) -->
-<div class="cta-sticky hide" id="ctaSticky">
+<div class="cta-sticky" id="ctaSticky">
   <div class="cta-sticky-inner">
     <div class="cta-sticky-txt">
       <b>매일 아침 카톡으로 받기</b>
@@ -3350,25 +3350,19 @@ boot();
   openBtn.addEventListener('click',openSubModal);
   // 새 전환 CTA(왜 구독 섹션·모바일 sticky 바)도 같은 구독 모달 재사용
   document.querySelectorAll('[data-open-sub]').forEach(b=>b.addEventListener('click',openSubModal));
-  // 모바일 sticky CTA — 히어로·구독 섹션·푸터가 보일 땐 숨기고, 중간 콘텐츠 스크롤 구간에만 노출
+  // 하단 구독 CTA — 항상 노출. 푸터를 가리지 않도록 본문 하단에 바 높이만큼 여백 확보.
   (function(){
     const bar=document.getElementById('ctaSticky');
-    if(!bar||!('IntersectionObserver'in window))return;
-    const targets=[document.querySelector('main > section'),document.getElementById('whySubscribe'),document.querySelector('footer.footer')].filter(Boolean);
-    if(!targets.length)return;
-    const vis=new WeakMap();
-    // 바 노출 시 우측 하단 플로팅 버튼을 실제 바 높이 + 14px만큼 올림 (가림 방지)
-    const applyLift=()=>{
-      const on=!bar.classList.contains('hide');
-      document.body.style.setProperty('--cta-bar-h', on ? (bar.offsetHeight+14)+'px' : '0px');
+    if(!bar)return;
+    bar.classList.remove('hide');   // 항상 표시 (이전: 히어로·푸터 보일 때 숨김)
+    const apply=()=>{
+      const h=bar.offsetHeight;
+      document.body.style.setProperty('--cta-bar-h', (h+14)+'px'); // 우측 하단 플로팅 버튼 lift
+      document.body.style.paddingBottom = h+'px';                   // 푸터가 바에 가리지 않도록
     };
-    const io=new IntersectionObserver(es=>{
-      es.forEach(e=>vis.set(e.target,e.isIntersecting));
-      bar.classList.toggle('hide',targets.some(t=>vis.get(t)));
-      applyLift();
-    },{threshold:0});
-    targets.forEach(t=>io.observe(t));
-    window.addEventListener('resize',applyLift);
+    apply();
+    window.addEventListener('resize', apply);
+    if(window.ResizeObserver) new ResizeObserver(apply).observe(bar);
   })();
   closeBtn.addEventListener('click',()=>closeSubModal());
   modal.addEventListener('click',e=>{if(e.target===modal)closeSubModal()});
