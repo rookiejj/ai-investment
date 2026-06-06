@@ -1,12 +1,12 @@
 const updates = [
   {
-    "date": "2026-06-06 07:30 KST",
-    "summary": "BTC $62,045 NFP 후 추가 후퇴 - 크립토 2024/7월 이래 최악 주간·spot ETF 13세션 -$4.4B 누적\nETH $1,668 critical 지지 근접·10월 신고가 대비 -65% 누적\n금 $4,735/oz 약세 - 10y 4.52% 돌파·30y 5% 진입 실질금리 90bp 진입\nWTI $93/bbl 6/4 -3.1% 후 풀백 안정·이란 협상 진척 vs 헤즈볼라 휴전 거부 양방향\n6/7 OPEC+ JMMC D-1 - 188 kbpd 7월 증산 컨센·UAE 탈퇴 spare capacity 2.5 mbpd",
+    "date": "2026-06-06 19:40 KST",
+    "summary": "BTC $62,875 -14.3% 주간·시총 $1.26T·spot ETF 13세션 -$4.4B 사상 최대 누적\n10월 신고가 $128,000 대비 -51% 누적·헤지펀드 -31,400 BTC·브로커리지 -18,800 BTC\n금 $4,735/oz 약세 - 10y 4.54% 30y 5%·실질금리 74bp·中央은행 2025 850톤 매수 카운터\nWTI $93/bbl 풀백 안정·6/7 OPEC+ 41차 ministerial 188 kbpd 7월 증산 확정\nETH $1,668 critical 지지·spot ETH ETF 3주 -$712M·UAE 이탈 spare capacity 2.5 mbpd",
     "changes": [
       {
-        "time": "2026-06-05 22:30 KST",
+        "time": "2026-06-06 19:40 KST",
         "type": "수치 갱신",
-        "detail": "크립토 NFP 후 셀오프 가속. BTC $62,045 9:19 ET 후퇴(6/5 시가 $63,812 -0.3%) - NFP 5월 +172k 컨센 +85k 두 배 컨센 상회로 Fed funds 인하 베팅 후퇴·10y 4.52% 돌파 + 30y 5% 첫 진입이 risk 자산 직격. 크립토 주간 -약 8% 2024/7월 이래 최악 주간 진행 - 10월 신고가 $126,200 대비 -51% 누적 조정 영역. ETH $1,668 9:19 ET·시가 $1,768 -2.4%·critical 지지 근접·8월 사상 최고 $4,953 대비 -65% 누적. 트리거 - spot BTC ETF 13세션 연속 outflow 누적 약 -$4.4B 사상 최대 + spot ETH ETF 3주 -$712M 동조 후퇴·헤즈볼라 이스라엘 휴전 거부 risk-off 시그널·美 셀오프 동조(나스닥 -4.18% 1조 달러 증발) alternative 자산 회수 가속. 매크로 컨텍스트 - 실질금리(10y 4.52% - CPI 3.8%) 72bp 진입 + DXY 99.5 강세 + 5월 spot BTC ETF -$2.97B 사상 최대 단일월 분배 누적. SOL $74·XRP $1.18 동조 후퇴. forward 시그널 - institutional outflow 사상 최대가 단기 헤드윈드·6/8 미국 시장 재개 + GPT-5.6 6/8~14 윈도우·6/16~17 케빈 워시 첫 FOMC dot plot이 매크로 분기점.",
+        "detail": "크립토 NFP 후 셀오프 가속. BTC $62,875 6/5 마감·주간 -14.3% 시총 $1.26T·5월 중순 대비 -20%·10월 신고가 $128,000 대비 -51% 누적 조정 영역. 트리거 - NFP 5월 +172k 컨센 +85k 두 배 상회로 Fed funds 인하 베팅 후퇴·10y 4.54% 돌파 + 30y 5% 첫 진입이 risk 자산 직격·spot BTC ETF 13세션 연속 outflow 누적 -$4.4B 사상 최대 - AUM $104.29B → $80.40B 약 -23% 후퇴·hedge fund -31,400 BTC -39%·brokerage -18,800 BTC -53% institutional 매도가 매도 압력 주체. ETH $1,668 critical 지지 근접·8월 사상 최고 $4,953 대비 -65% 누적·spot ETH ETF 3주 -$712M 동조. 매크로 - 실질금리(10y 4.54% - CPI 3.8%) 74bp + DXY 99.5 강세 동조 + risk-off 동조 매도가 alternative 자산 회수 가속·SpaceX 등 IPO·AI 주식으로 institutional money rotation 시그널. SOL $74·XRP $1.18 동조. forward - 6/8 美 시장 재개 + WWDC + GPT-5.6 윈도우·6/16~17 워시 첫 FOMC dot plot이 매크로 분기점.",
         "sector": "크립토"
       },
       {
@@ -16,9 +16,9 @@ const updates = [
         "sector": "귀금속"
       },
       {
-        "time": "2026-06-05 22:00 KST",
+        "time": "2026-06-06 19:40 KST",
         "type": "수치 갱신",
-        "detail": "에너지 weekend 디제스트. WTI $93/bbl 6/4 -3.1% 후 풀백 안정·Brent $95/bbl 동조 후퇴 - 트럼프 '이란 협상 진척' 발언이 풀백 트리거 vs 헤즈볼라 이스라엘 휴전 거부·美·이란 양방향 미사일 잔존이 양방향 변곡점. 주간 +6% 잔존 - 호르무즈 risk premium 상존. 공급 - 오만 Mina Al Fahal 수출 터미널 폭발 후 일시 지연 - 정상 복귀 + EIA 美 원유재고 6주 연속 감소·최저 운영수준 근접·1Q26 marketed production 120.2 Bcf/d +4% YoY·Permian·Haynesville 6% 증산 동조. 수요 카운터 - 중국 원유수입 10년 최저로 후퇴·정유 가동률 둔화. forward 6/7 OPEC+ JMMC D-1 - 188 kbpd 7월 증산 컨센·UAE OPEC 탈퇴(5/1) 후 spare capacity 2.5 mbpd로 축소(이전 3.8 mbpd) 공급 카운터 약화. 실질금리 72bp + 美·이란 봉쇄 risk premium + UAE 이탈 공급 카운터 약화가 6월 유가 양방향 변곡점. 호르무즈 2/28 봉쇄 이래 LNG 유럽·아시아 wartime 프리미엄 잔존.",
+        "detail": "에너지 6/7 OPEC+ D-1 시그널 확정. WTI $93/bbl·Brent $95/bbl 6/4 -3.1% 후 풀백 안정·트럼프 '이란 협상 진척' 발언이 풀백 트리거 vs 헤즈볼라 이스라엘 휴전 거부·美·이란 양방향 미사일 잔존이 양방향 변곡점. 핵심 - 6/7 OPEC+ 41차 ministerial 및 JMMC 합동 - 5/3 합의 188 kbpd 7월 증산 확정(사우디·러시아 각 62 kbpd·이라크 26·쿠웨이트 16·카자흐 10·알제리 6·오만 5). 공급 - 오만 Mina Al Fahal 터미널 폭발 후 정상 복귀 + EIA 美 원유재고 6주 연속 감소·최저 운영수준 근접·1Q26 marketed production 120.2 Bcf/d +4% YoY. 수요 카운터 - 중국 원유수입 10년 최저로 후퇴·정유 가동률 둔화. UAE OPEC 탈퇴(5/1) 후 spare capacity 2.5 mbpd 축소(이전 3.8 mbpd) 공급 카운터 약화 + 실질금리 74bp + 美·이란 봉쇄 risk premium이 6월 유가 양방향 변곡점. 호르무즈 2/28 봉쇄 이래 LNG 유럽·아시아 wartime 프리미엄 잔존.",
         "sector": "에너지"
       }
     ]
