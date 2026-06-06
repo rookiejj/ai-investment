@@ -373,9 +373,11 @@ Deno.serve(async (req) => {
         : null;
       const proxyBody = JSON.stringify(subscriberIds && subscriberIds.length > 0 ? { subscriberIds } : {});
       const url = `${supabaseUrl}/functions/v1/daily-send${dryRun ? "?dry=1" : ""}`;
+      // 내부 함수 호출 인증: 두 함수가 동일하게 공유하는 서비스키 사용(CRON_SECRET 불일치 방어).
+      const internalSecret = Deno.env.get("BRIEFICK_SUPABASE_SECRET_KEY") ?? cronSecret;
       const res = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json", "X-Cron-Secret": cronSecret },
+        headers: { "Content-Type": "application/json", "X-Cron-Secret": internalSecret },
         body: proxyBody,
       });
       const respBody = await res.json().catch(() => ({}));
@@ -431,9 +433,11 @@ Deno.serve(async (req) => {
 
       const proxyBody = JSON.stringify({ subscriberIds, customMessage: message });
       const url = `${supabaseUrl}/functions/v1/daily-send`;
+      // 내부 함수 호출 인증: 서비스키 사용(CRON_SECRET 불일치 방어).
+      const internalSecret = Deno.env.get("BRIEFICK_SUPABASE_SECRET_KEY") ?? cronSecret;
       const res = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json", "X-Cron-Secret": cronSecret },
+        headers: { "Content-Type": "application/json", "X-Cron-Secret": internalSecret },
         body: proxyBody,
       });
       const respBody = await res.json().catch(() => ({})) as { ok?: boolean; error?: string; sent?: number; failed?: number };

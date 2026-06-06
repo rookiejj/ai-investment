@@ -291,12 +291,17 @@ Deno.serve(async (req) => {
   const startedAt = Date.now();
   let isManual = false;
   try {
-    // verify_jwt=false로 배포되므로 자체 인증 필수
-    const cronSecret = Deno.env.get("CRON_SECRET");
-    const headerSecret = req.headers.get("x-cron-secret")
-      ?? (req.headers.get("authorization") ?? "").replace(/^Bearer\s+/i, "");
-    if (!cronSecret || headerSecret !== cronSecret) {
-      return new Response(JSON.stringify({ ok: false, error: "unauthorized" }), {
+    // verify_jwt=false로 배포되므로 자체 인증 필수.
+    // 허용: CRON_SECRET(pg_cron Vault 값) OR 서비스키(admin-api 등 내부 함수 호출).
+    // 서비스키는 두 함수가 동일하게 공유 → CRON_SECRET 공백/드리프트와 무관하게 항상 일치.
+    // trim 으로 헤더 전송 시 trailing whitespace 차이도 방어.
+    const cronSecret = (Deno.env.get("CRON_SECRET") ?? "").trim();
+    const svcKey = (Deno.env.get("BRIEFICK_SUPABASE_SECRET_KEY") ?? "").trim();
+    const headerSecret = (req.headers.get("x-cron-secret")
+      ?? (req.headers.get("authorization") ?? "").replace(/^Bearer\s+/i, "")).trim();
+    const authed = (!!cronSecret && headerSecret === cronSecret) || (!!svcKey && headerSecret === svcKey);
+    if (!authed) {
+      return new Response(JSON.stringify({ ok: false, error: `unauthorized (hdr_len=${headerSecret.length})` }), {
         status: 401,
         headers: { "Content-Type": "application/json" },
       });
