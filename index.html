@@ -1056,9 +1056,6 @@ body.sub-modal-open{overflow:hidden}
       <img src="/assets/briefick_profile_640.jpeg" alt="">
       <span>브리픽</span>
     </a>
-    <div class="top-nav">
-      <button class="btn-primary" type="button" id="subscribeBtn">매일 카톡으로 받기</button>
-    </div>
   </div>
 </header>
 
@@ -3347,7 +3344,7 @@ boot();
     resetStatus();
   }
   cancel.addEventListener('click',()=>{phoneEl.disabled=false;consent.disabled=false;resetToInput()});
-  openBtn.addEventListener('click',openSubModal);
+  if(openBtn) openBtn.addEventListener('click',openSubModal);  // 헤더 버튼 제거됨 — null 가드
   // 새 전환 CTA(왜 구독 섹션·모바일 sticky 바)도 같은 구독 모달 재사용
   document.querySelectorAll('[data-open-sub]').forEach(b=>b.addEventListener('click',openSubModal));
   // 하단 구독 CTA — 항상 노출. 푸터를 가리지 않도록 본문 하단에 바 높이만큼 여백 확보.
