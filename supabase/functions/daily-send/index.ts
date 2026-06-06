@@ -369,11 +369,16 @@ Deno.serve(async (req) => {
       console.log(`[info] expired ${expiredCount} subscriber(s)`);
     }
 
-    // 3) 활성 구독자 조회 (subscriberIds 필터 있으면 해당 ID만)
-    let subQ = supabase
-      .from("subscribers")
-      .select("id, phone, name")
-      .eq("status", "active");
+    // 3) 수신자 조회.
+    //    - 매일 뉴스: 항상 status='active' 만.
+    //    - 공지(customMessage)로 subscriberIds 가 명시되면: 관리자가 고른 ID 전체에 발송(상태 무관)
+    //      → 만료(expired)·일시중지·해지 구독자에게도 론칭/이벤트 공지 가능.
+    //    안전장치: customMessage 라도 subscriberIds 가 비어 있으면 active 만(전체-만료자 오발송 방지).
+    let subQ = supabase.from("subscribers").select("id, phone, name");
+    const noticeToSelected = !!customMessage && !!subscriberIds && subscriberIds.length > 0;
+    if (!noticeToSelected) {
+      subQ = subQ.eq("status", "active");
+    }
     if (subscriberIds && subscriberIds.length > 0) {
       subQ = subQ.in("id", subscriberIds);
     }

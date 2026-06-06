@@ -558,6 +558,13 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
         <div class="section-subtitle">매일 뉴스와 별개로, 임의 본문을 선택한 구독자에게 친구톡으로 발송합니다. 점검·이벤트·긴급 안내 등에 사용. 카카오 광고성 발송 정책 준수 (KST 21:00~08:00 야간 발송 금지).</div>
         <div class="ds-grid">
           <div class="filter-bar ds-toolbar">
+            <select id="noticeStatusFilter" style="padding:6px 10px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:#fff;color:var(--fg)">
+              <option value="active">active (활성)</option>
+              <option value="expired">expired (만료)</option>
+              <option value="paused">paused (일시중지)</option>
+              <option value="cancelled">cancelled (해지)</option>
+              <option value="">상태 전체</option>
+            </select>
             <button class="btn ghost" id="noticeReload">대상 새로고침</button>
             <button class="btn ghost select-all" id="noticeSelectAll">모두 선택/해제</button>
           </div>
@@ -1874,12 +1881,15 @@ function noticeUpdateUI(){
   $('noticeSendBtn').disabled = !(n>0 && len>0 && len<=1000);
 }
 async function noticeLoadTargets(){
-  $('noticeTargets').innerHTML = '<div class="loading">활성 구독자 로딩 중…</div>';
+  const st = $('noticeStatusFilter').value;
+  const stLabel = st || '전체';
+  $('noticeTargets').innerHTML = `<div class="loading">${stLabel} 구독자 로딩 중…</div>`;
   try{
-    const r = await api('subscribers', { filter: { status: 'active' } });
+    const filter = st ? { status: st } : {};   // 빈 값 = 상태 전체 (만료·해지 포함)
+    const r = await api('subscribers', { filter });
     noticeRows = r.rows || [];
     if(!noticeRows.length){
-      $('noticeTargets').innerHTML = '<div class="empty">활성 구독자가 없습니다</div>';
+      $('noticeTargets').innerHTML = `<div class="empty">${stLabel} 구독자가 없습니다</div>`;
       noticeUpdateUI();
       return;
     }
@@ -1888,7 +1898,7 @@ async function noticeLoadTargets(){
       +`<input type="checkbox" data-id="${r.id}">`
       +`<span class="phone">${r.phone}</span>`
       +`<span style="color:var(--mut);font-size:12px">${r.name||''}</span>`
-      +`<span class="badge ${r.delivery_state||'unknown'}" style="margin-left:auto">${r.delivery_state||'unknown'}</span>`
+      +`<span class="badge ${r.status||'unknown'}" style="margin-left:auto">${r.status||'unknown'}</span>`
       +`</div>`
     )).join('');
     $('noticeTargets').querySelectorAll('input[type=checkbox]').forEach(c=>{
@@ -1901,6 +1911,7 @@ async function noticeLoadTargets(){
 }
 $('noticeBody').addEventListener('input', noticeUpdateUI);
 $('noticeReload').addEventListener('click', noticeLoadTargets);
+$('noticeStatusFilter').addEventListener('change', noticeLoadTargets);
 $('noticeSelectAll').addEventListener('click', ()=>{
   const boxes = $('noticeTargets').querySelectorAll('input[type=checkbox]');
   const allChecked = [...boxes].every(c=>c.checked);
