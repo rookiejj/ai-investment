@@ -56,3 +56,9 @@ verify_jwt = false
 # 포트원이 서버→서버로 호출하는 결제 webhook. Supabase JWT 가 없으므로 게이트웨이 통과 위해
 # verify_jwt=false. 실제 검증은 함수 내부에서 "포트원 단건조회 API 재조회 + storeId 일치"로 수행.
 verify_jwt = false
+
+[functions.daily-send]
+# pg_cron·admin-api(공지/즉시발송) 가 X-Cron-Secret(또는 서비스키) 헤더로 호출. JWT 가 아니라
+# verify_jwt=true 면 게이트웨이가 "Missing authorization header" 로 막아 admin 내부 호출이 401.
+# 자체 인증(CRON_SECRET / 서비스키 검증)이 있으므로 verify_jwt=false 로 게이트웨이 통과.
+verify_jwt = false
