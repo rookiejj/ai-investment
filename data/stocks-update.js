@@ -1,24 +1,36 @@
 const updates = [
   {
-    "date": "2026-06-08 19:30 KST",
-    "summary": "WWDC 2026 키노트 D-Day 카운트다운 - 6/9 02:00 KST(6/8 10시 PT) 팀쿡 마지막 키노트 임박\nNVIDIA 한국 동시 파트너십 - SK하이닉스·LG·NAVER 3사 6/8 발표·아시아 AI 인프라 거점 확장\nSpaceX SPCX 프라이싱 D-3 - 6/11 장마감 후·$135 고정·$75B 조달·6/12 데뷔 D-4\nFutures 변동성 잔존 - 6/5 셀오프 후 첫 거래일·이란 호르무즈 보복 타격 risk-off 동조\n6/10~11 美 CPI·PPI 동시 발표 · 6/12 SPCX 데뷔 · 6/16~17 워시 첫 FOMC dot plot 변곡점",
+    "date": "2026-06-09 07:30 KST",
+    "summary": "NVDA $208 LG그룹 AI팩토리·로봇·자율주행 전방위 동맹 가속\nINTC $108 +9% 구글 TPU 300만개 2028 파운드리 위탁 잭팟\n나스닥 26,150 +1.7% S&P 7,458 +1% 6/5 폭락 후 반등 시도\nWTI $93.67 이란·이스라엘 미사일 교환 호르무즈 재점화\n6/16~17 FOMC 동결 97.8% NFP 충격·10y 4.54%·DXY 100",
     "changes": [
       {
-        "time": "2026-06-08 19:30 KST",
-        "type": "이벤트 예정",
-        "detail": "Apple(AAPL). WWDC 2026 키노트 D-Day 카운트다운 - 6/9 02:00 KST(6/8 10:00 PT) 팀쿡 마지막 키노트 임박. Siri 2.0 leak 확정 흐름 - Google Gemini 1.2T 백본 + 자체 on-device 모델 하이브리드·$1B/년 라이센스·iOS 27 + iPadOS 27 + macOS 27 + tvOS 27 + watchOS 27 + visionOS 27 동시 베타 시드. Siri 2.0 신기능 - Dynamic Island 상시 표시·chat mode·personal context(이메일·사진·파일 접근)·on-screen awareness·multi-step task·standalone Siri 앱·자체 web search 출시. AAPL YTD -15% 매그7 최하위·forward P/E 24·earnings yield 4.2%·10y 4.55% gap 35bp 축소가 매크로 헤드윈드 잔존이 키노트 weight 추가 베이스. forward 시그널 - Siri 2.0 데모 quality + third-party 챗봇(Claude·ChatGPT·Gemini) 통합 깊이 + iPhone 18 9월 사이클 가이던스가 단기 분기점·iPhone 11 모델 iOS 27 컷오프로 6년 만의 업그레이드 사이클 베이스 카운터.",
+        "time": "2026-06-09 07:30 KST",
+        "type": "이벤트",
+        "detail": "NVIDIA(NVDA). $208.14 +1.04% - 한국 5개사 동시 발표 후속으로 황 CEO 아시아 AI 인프라 거점 확장 시그널 확정. LG그룹 AI팩토리·휴머노이드(Isaac GR00T)·자율주행·EXAONE 학습 전방위 동맹·SK하이닉스 Vera Rubin·Vera CPU·RTX Spark·Jetson Thor 메모리 다년 공급계약 동반. forward P/E 33 sector premium 유지·earnings yield 3.0% 10y gap 150bp 부담에도 인프라 lock-in 모멘텀 우위. 6/5 NVDA -5.93% $205.70 폭락 후 첫 거래일 자율반등 시도가 baseline. forward 시그널 - GTC Taipei 후속·8월 Q2 print이 single-name 변곡점.",
         "sector": "AI 플랫폼"
       },
       {
-        "time": "2026-06-08 19:00 KST",
+        "time": "2026-06-09 07:00 KST",
         "type": "이벤트",
-        "detail": "NVIDIA(NVDA). 한국 동시 AI 파트너십 6/8 발표 - SK하이닉스 + LG그룹 + NAVER 3사 동시 발표가 황 CEO 아시아 AI 인프라 거점 확장 시그널. SK하이닉스 - HBM4 분점 우위 확정 + Rubin 다량 공급 베이스로 sector 점유 카운터 + 신규 협력 deepen. NAVER - 자체 AI 에이전트 N + GPU 연 1조원 투자 베이스에서 NVIDIA 칩 우선 공급 확보. LG - 가전·로봇·자동차 부품 AI 통합 분기점. 6/5 NVDA -6.20% 종가 $205.10 시총 $5.0T 후퇴 후 첫 거래일 베이스로 카운터 시그널 - Morgan Stanley OW $288·22x CY27 EPS $13.08 베이스 유지·forward P/E 32 sector 평균 진입이 단기 매수 베이스. 매크로 - 반도체 sector forward P/E 평균 32 진입 후 re-rating 본격화·5T~6T 시총 구간 valuation 사이클 진행·10y 4.55% sector premium 카운터 잔존. forward 시그널 - 6/9 미국 장 개장 시 NVDA·SK 파트너십 가격 반영·6/18 MRVL Q1 print + 8월 NVDA Q2 print이 single-name 변곡점.",
+        "detail": "Intel(INTC). $108.27 +9% 시총 +$8B - 구글이 Intel 18A 노드에 TPU 300만개(2028) 위탁 보도가 단일 폭등 카탈리스트. 의미 - TSMC 독점 균열 시그널·NVDA도 차세대 Feynman 평가 중·파운드리 사업 turnaround 가시화. forward P/E 18 sector discount 베이스에서 foundry CAPEX 가이던스 상향 여지·2027 매출 기여 본격화 시나리오 진입. 18A 노드 양산 cadence 분기 가시성 + 외부 고객 다지점화가 sector premium re-rating 분기점. forward 시그널 - Q2 print + 18A 양산 본격 update + Pentagon 칩 보조금 final 결정이 단일 카탈리스트.",
         "sector": "반도체"
       },
       {
-        "time": "2026-06-08 18:30 KST",
-        "type": "이벤트 예정",
-        "detail": "Tesla(TSLA)·SpaceX. 머스크 자산 동조 카탈리스트 사이클 D-3. SpaceX SPCX 로드쇼 D+4 - 6/11 프라이싱(장마감 후 D-3)·6/12 Nasdaq 데뷔 D-4·$135 고정·555.6M주 $75B 조달·시총 $1.77T 진입 - Aramco 2019 $29.4B/$1.7T 추월 + Alibaba 2014 $21.8B 사상 최대 3배 이상 추월·美 시총 7위 등극 + TSLA $1.6T 추월. 21개 IB 125명 애널리스트·6/11 1,500명 리테일 이벤트(美·英·EU·Canada·Australia·Japan·Korea) + 리테일 30% 배정(Robinhood·Fidelity·Schwab) 역대 평균 3배. Morningstar 카운터 - $1.75T 적정가 2배 과대 평가 경고가 가격 분기점. TSLA 6/4 Austin 로보택시 245 sq mi 확장 D+4 - Cybercab 풀자율 단계 활성화·Waymo 250대 카운터·forward P/E 78 sector 평균 32 대비 sector premium 2.4배 잔존. 매크로 - 6/5 美 셀오프(나스닥 -4.18%) 후 첫 메가 IPO 신뢰 테스트 분기점·이란 호르무즈 美 보복 타격 risk-off + DXY 99.5 강세 카운터·G7 카나나스키스 6/15~17 동시 변곡점.",
+        "time": "2026-06-09 06:30 KST",
+        "type": "이벤트",
+        "detail": "Apple(AAPL). $307~313 - WWDC 2026 'Siri AI' 공개, Google Gemini 백엔드·NVIDIA B200 가동 연 $1B 다년 계약 공식화. iOS 27 9월 정식·7월 베타·EU는 DMA 규제로 출시 제외 - Apple 생태계 lock-in vs 규제 비용 트레이드오프 본격화. 시장 반응 분기 - 자체 모델 부재 분류, forward P/E 28 sector premium 정당화 약함. 'Liquid Glass' 디자인·macOS Golden Gate·standalone Siri 앱·multi-step task·personal context 동반 공개. forward 시그널 - 7월 베타 quality·iPhone 18 9월 사이클 가이던스·EU DMA 추가 라운드가 단일 분기점.",
+        "sector": "AI 플랫폼"
+      },
+      {
+        "time": "2026-06-09 06:00 KST",
+        "type": "이벤트",
+        "detail": "방산·에너지. 이란·이스라엘 상호 미사일 교환 후 IDF 이란 석유화학 시설 공습 - 호르무즈 supply 우려 재점화로 WTI $93.67 +3.46%·Brent $96.05 +3.18% 동반 상승. LMT YTD +40%·RTX +57% - THAAD 96→400/년 증산 계약 추가 수혜·earnings yield 4.5% defensive premium 우위. XOM·CVX 통합 메이저 캐시리턴 모멘텀 - CVX 배당 4.5%·Hess 시너지 본격화. OPEC+ 7월 188 kbpd 증산에도 지정학 프리미엄 우위 잔존. forward 시그널 - 트럼프 60일 휴전안 무산 risk·이란 추가 보복 시 Brent $100 돌파 카탈리스트.",
+        "sector": "방산"
+      },
+      {
+        "time": "2026-06-09 05:30 KST",
+        "type": "수치 갱신",
+        "detail": "매크로·금리. 6/5 NFP 172K(컨센 80K 대폭 상회) - 10y 4.54% +6bp·DXY 100.07 강세 동조. Fed funds 동결 확률 97.8%(6/16~17 FOMC)·Powell '오일 인플레 정점 미확인' 매파 기조 잔존. 6/10 5월 CPI 4.0%+ YoY 예상 - 4월 3.8% 대비 가속, Cleveland Fed nowcast 4.18%. forward P/E 21.1(5년평균 19.9·10년평균 19.0 상회) sector premium 매크로 헤드윈드 카운터. 6/5 S&P -2.64%·나스닥 -4.18% NFP·중동 risk 동조 폭락 후 6/8 +1.00%·+1.71% 자율반등 시도. forward 시그널 - 6/10 CPI·6/11 PPI·6/12 SpaceX 데뷔·6/16~17 dot plot이 단일 분기점.",
         "sector": "AI 플랫폼"
       }
     ]
