@@ -1,23 +1,23 @@
 const data = [
   {
-    "tag": "결제·뼱킹·HR·SMB",
+    "tag": "결제·뎱킹·HR·SMB",
     "title": "💳 핀테크",
     "stocks": [
       {
         "nm": "Stripe",
-        "rs": "$159B 텔더 +74% YoY 베이스 - 5/8 WLFI USD1 네이티브 발행 첫 외부 발행자·3/18 Tempo L1 메인넷 가동·Visa·Nubank·Klarna 테스트·TPV $1.9T·2H 2026 IPO 윈도우 잔존도 IPO 보류 시그널",
+        "rs": "$159B 텍더 +74% YoY 베이스 - 5/8 WLFI USD1 네이티브 발행 첫 외부 발행자·3/18 Tempo L1 메인넷 가동·Visa·Nubank·Klarna 테스트·TPV $1.9T·2H 2026 IPO 윈도우 잔존도 IPO 보류 시그널",
         "ipo": "2H 2026 윈도우",
         "val": "$159B",
-        "round": "2/26 텔더오퍼",
+        "round": "2/26 텍더오퍼",
         "sector": "결제"
       },
       {
         "nm": "Revolut",
-        "rs": "2H 2026 세컨더리 $100B+ 진행 - 향후 IPO 타깃 $150~200B 범위·11월 2025 세컨더리 $75B 대비 2.6배·3/11 영국 PRA 풀 뼱킹 라이센스 후 모기지·소비자 신용 진입·CEO Storonsky 'NASDAQ 美 상장 1순위' 공식 입장",
+        "rs": "2H 2026 세컨더리 $100B+ 진행 - 향후 IPO 타깃 $150~200B 범위·11월 2025 세컨더리 $75B 대비 2.6배·3/11 영국 PRA 풀 뎱킹 라이센스 후 모기지·소비자 신용 진입·CEO Storonsky 'NASDAQ 美 상장 1순위' 공식 입장",
         "ipo": "2028+ 연기",
         "val": "$75B",
         "round": "세컨더리 2H26 $100B+",
-        "sector": "네오뼱크"
+        "sector": "네오뎱크"
       },
       {
         "nm": "Ramp",
@@ -29,10 +29,10 @@ const data = [
       },
       {
         "nm": "Plaid",
-        "rs": "Q2 2026 IPO $6.1B 타깃 - 26년 핀테크 인프라 단독 최대 IPO 카운트다운·4월 텔더 $8B 모멘텀 회복·GS 리드 인수단·오픈뼱킹·연결 인프라 단일 채널 지배력·美·英·EU 동시 트랙",
+        "rs": "Q2 2026 IPO $6.1B 타깃 - 26년 핀테크 인프라 단독 최대 IPO 카운트다운·4월 텍더 $8B 모멘텀 회복·GS 리드 인수단·오픈뎱킹·연결 인프라 단일 채널 지배력·美·英·EU 동시 트랙",
         "ipo": "2026 Q2",
         "val": "$8B",
-        "round": "텔더오퍼 (업라운드)·GS 리드",
+        "round": "텍더오퍼 (업라운드)·GS 리드",
         "sector": "핀테크 인프라"
       },
       {
@@ -53,11 +53,11 @@ const data = [
       },
       {
         "nm": "Mercury",
-        "rs": "5/20 Series D $200M $5.2B 클로징 - 14개월 +49% 업라운드·TCV 리드 a16z·Coatue·Sequoia·CRV·Sapphire·Spark 참여·OCC 풀 차터 내셔널뼱크 전환 진행·ARR $650M·4년 연속 흑자·누적 펀딩 ~$700M",
+        "rs": "5/20 Series D $200M $5.2B 클로징 - 14개월 +49% 업라운드·TCV 리드 a16z·Coatue·Sequoia·CRV·Sapphire·Spark 참여·OCC 풀 차터 내셔널뎱크 전환 진행·ARR $650M·4년 연속 흑자·누적 펀딩 ~$700M",
         "ipo": "미정",
         "val": "$5.2B",
         "round": "Series D ($200M, 2026-05)·TCV 리드",
-        "sector": "SMB 뼱킹·재무관리"
+        "sector": "SMB 뎱킹·재무관리"
       }
     ]
   },
@@ -67,10 +67,10 @@ const data = [
     "stocks": [
       {
         "nm": "Canva",
-        "rs": "ARR $3.3B+·AI 생성 디자인·12월 $134B 업라운드",
-        "ipo": "2026 H2 Blackbird 지지",
-        "val": "$134B",
-        "round": "2025-12 Insight·Fidelity·JPM",
+        "rs": "작년 8월 직원 세컨더리 $42B 밸류·ARR $4B YoY +35% 성장·MAU 265M·8년 연속 흑자·2H 2026 IPO 후보 1순위·Figma 11~12x ARR 적용 시 $44~48B base case",
+        "ipo": "2026 H2 후보",
+        "val": "$42B",
+        "round": "직원 세컨더리 (2025-08)",
         "sector": "디자인"
       },
       {
@@ -129,10 +129,10 @@ const data = [
     "stocks": [
       {
         "nm": "SpaceX",
-        "rs": "6/5 로드쇼 D-2 · 6/11 프라이싱 D-6 · 6/12 Nasdaq 데뷔 SPCX D-7 - $135 고정·555.6M주 $75B 조달·$1.77T 밸류·Aramco·Alibaba 추월 사상 최대 IPO·Morningstar $1.75T 적정가 2배 경고",
-        "ipo": "2026.06.12 Nasdaq 데뷔 (6/4 로드쇼·6/11 프라이싱 락인)",
+        "rs": "6/12 Nasdaq 데뷔 D-3·6/10 주문서 마감·6/11 프라이싱 - $135 고정·$1.77T 밸류·주문서 $150B 2배 오버서브·머스크 리테일 30% 배정 추진·forward P/S 70x 부담",
+        "ipo": "2026.06.12 Nasdaq 데뷔 (6/10 주문서 마감·6/11 프라이싱)",
         "val": "$1.77T",
-        "round": "5/20 S-1 공개·티커 SPCX·골드만 lead·로드쇼 D-2·리테일 30% 할당 역대 3배·머스크 82% 슈퍼보팅",
+        "round": "SPCX·골드만 lead·MS·BofA·Citi·JPM 신디케이트·리테일 30% 할당 역대 3배·머스크 82% 슈퍼보팅·$75B 조달",
         "sector": "우주"
       },
       {
@@ -253,10 +253,10 @@ const data = [
     "stocks": [
       {
         "nm": "Kraken",
-        "rs": "크립토 거래소 3위·co-CEO Sethi 공개 확인·Deutsche Börse $200M",
+        "rs": "모회사 Payward 5월 $20B 프리IPO 라운드 가동 - 3월 IPO 보류 후 시장 재진입 시그널·스테이블코인 뷱크 차터·yield 프로덕트로 IPO 후보 중 가장 강한 스테이블코인 사업 보유",
         "ipo": "2026 Q3 목표",
-        "val": "$13.3B",
-        "round": "IPO 비밀 신청 (4/14)",
+        "val": "$20B",
+        "round": "프리IPO 라운드 (2026-05)·Payward",
         "sector": "크립토 거래소"
       },
       {
