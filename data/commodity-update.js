@@ -1,24 +1,24 @@
 const updates = [
   {
-    "date": "2026-06-10 07:30 KST",
-    "summary": "WTI $87.6 -4.04%·Brent $90.9 -3.53% 이란 핵협상 진전 supply risk 디플레\n금 $4,331 +0.18% 휴전 합의 안전자산 vs Fed 12월 인상 70% 가격반영 양방향\nBTC $63K 안정 - 13일 ETF 유출 종료 자금 복귀 시작 시그널\nETH ETF 17일 연속 유출 vs BitMine 12.7만 ETH $214M 매수 institutional 양방향\n美 5월 CPI 6/10 22:30 KST 헤드라인 +4.2% YoY 발표 단일 카탈리스트",
+    "date": "2026-06-10 19:35 KST",
+    "summary": "WTI $96·Brent $100 강세 복귀 - Trump 이란 추가 타격 시사 지정학 프리미엄 회복\n금 $4,300+ 강세 복귀 - 美·이란 충돌 재가속 안전자산 leverage·CPI 4.3% 인플레 헤지\nBTC $61,289 -3.12%·ETH $1,627 -3.42% risk-off - 총 시총 $2.2T -48% 정점 대비\nMicroStrategy 첫 코인 매도 - spot ETF 누적 -$3B·whale 매도 동조\n美 5월 CPI 21:30 KST 단일 분기점 - 헤드라인 4.3% YoY 베이스",
     "changes": [
       {
-        "time": "2026-06-10 07:00 KST",
+        "time": "2026-06-10 19:35 KST",
         "type": "이벤트",
-        "detail": "에너지·WTI·Brent. 6/9 WTI $87.61 -4.04%·Brent $90.92 -3.53% 일중 큰 폭 하락 - 백악관 관계자 인용 이란 핵협상 진전 보도가 단일 카탈리스트로 지정학 프리미엄 디플레이션. 휴전 유지 vs 호르무즈 사실상 봉쇄 유지(美·이란 dual blockade) 양방향. 트럼프 '재공습 가능' 발언 카운터 잔존. 실질금리(10y 4.54% - CPI 3.8%) 74bp + DXY 100.07 강세 동조 vs 중동 supply risk 카운터. forward 시그널 - 6/10 22:30 KST 美 5월 CPI 헤드라인 +4.2% YoY·6/10 USDA WASDE·6/11 EIA STEO·이란 핵협상 공식화 시점·이란 추가 보복 risk가 단일 분기점.",
+        "detail": "에너지·WTI·Brent. 6/10 WTI $95~98·Brent $99~102 강세 복귀 - Trump '이란 미군 표적 시 재공습 가능' 인터뷰가 단일 카탈리스트로 지정학 프리미엄 회복. 호르무즈 2/28 봉쇄 잔존·OPEC+ 7월 188 kbpd 증산 카운터 유지·KOSPI -6%+ 동조 risk-off. 美·이란 충돌 격화 시 글로벌 supply 1% 위협·CPI 4.3% YoY 직전 인플레 가속 베이스. 매크로 - 실질금리(10y 4.54% - CPI 3.8%) 74bp + DXY 100.07 강세 동조 vs 지정학 프리미엄 카운터. forward 시그널 - 21:30 KST 美 5월 CPI 헤드라인 4.3% YoY·6/11 EIA STEO·이란 추가 행동 risk·6/16~17 FOMC dot plot이 단일 분기점.",
         "sector": "에너지"
       },
       {
-        "time": "2026-06-10 07:00 KST",
-        "type": "수치 갱신",
-        "detail": "귀금속·금·은. 금 $4,331/oz +0.18%·은 $68.69/oz +0.54% - 이란·이스라엘 휴전 합의로 inflationary risk 일부 디플레이션 vs 강력한 美 NFP repricing 후 Fed 12월 인상 70% 가격반영 양방향. 3월말 저점 복귀 후 매크로 안정. 12월 25bp 인상 70% 가격반영이 단일 카운터·중앙은행 BRICS 매수 vs ETF 유출 잔존. 매크로 - 실질금리 상승 + DXY 100 강세 부담 vs 휴전 후 risk-on 동조 vs 지정학 잔존이 cross-asset 변곡. forward 시그널 - 6/10 22:30 KST 5월 CPI 헤드라인 +4.2% YoY 발표·6/11 PPI·6/16~17 FOMC dot plot·중앙은행 분기 보고가 단일 분기점.",
+        "time": "2026-06-10 19:35 KST",
+        "type": "이벤트",
+        "detail": "귀금속·금. 6/10 spot $4,300+ 강세 복귀 - Trump 이란 추가 타격 시사 안전자산 프리미엄 회복. KOSPI -6%+ 매도 사이드카·美 risk-off 동조 자금 유입·VKOSPI 사상 최고치 변동성 카운터·Q1 중앙은행 244톤 매수 베이스 유지. CPI 4.3% YoY 직전 인플레 헤지 leverage·실질금리(10y 4.54% - CPI 3.8%) 74bp 카운터에도 지정학 프리미엄 압도. forward 시그널 - 21:30 KST 美 5월 CPI·6/16~17 FOMC dot plot·이란 추가 행동·중앙은행 분기 보고가 단일 분기점·BRICS 매수 cadence 지속.",
         "sector": "귀금속"
       },
       {
-        "time": "2026-06-10 07:00 KST",
-        "type": "수치 갱신",
-        "detail": "크립토. BTC ~$63,000 안정세 - 13일 spot BTC ETF 누적 유출 streak 종료·자금 복귀 시작 시그널이 단일 카탈리스트로 $60K 직전 저점에서 회복. 6/8 -$4.3B 누적 유출 후 단기 oversold 카니발 페이즈. ETH spot ETF 17일 연속 유출 streak vs BitMine 126,971 ETH $214M 단일 매수 institutional 양방향. 매크로 - 실질금리 상승 vs 휴전 risk-on 동조 vs CPI 분기점 양방향. forward 시그널 - 6/10 22:30 KST 美 5월 CPI 발표·6/16~17 FOMC dot plot·spot ETF 자금 복귀 cadence·CLARITY Act 통과 윈도우가 단일 분기점.",
+        "time": "2026-06-10 19:35 KST",
+        "type": "이벤트",
+        "detail": "크립토. 6/10 BTC $61,289 -3.12%·ETH $1,627.70 -3.42%·총 시총 $2.2T -2.76% 24h·정점 대비 -48% - 美·이란 충돌 재가속 risk-off 트리거. MicroStrategy 첫 코인 매도(2020 매수 사이클 이래 첫 매도) 단일 카탈리스트로 sentiment 직격·spot BTC ETF 누적 -$3B whale 동조 매도. 9월 인하 확률 28% 매파 카운터·KOSPI -6%+ 동조 risk-off 강도 검증. forward 시그널 - 21:30 KST 美 5월 CPI 헤드라인 4.3% YoY·6/16~17 FOMC dot plot·MicroStrategy 매도 cadence·CLARITY Act 통과 윈도우가 단일 분기점.",
         "sector": "크립토"
       }
     ]
