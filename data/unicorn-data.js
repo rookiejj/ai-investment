@@ -91,10 +91,10 @@ const data = [
       },
       {
         "nm": "Discord",
-        "rs": "Q1 2026 컴피던셜 S-1 후 공개 S-1 부재 - Polymarket 6/30 IPO 86.5% no 컨센·H1 2026 슬립·2025 마지막 펀딩 $15B 베이스 $25B IPO 타깃·MAU 2억+·GS·JPM·MS 주관·Microsoft 인수 거절 후 단독 트랙",
-        "ipo": "H2 2026 슬립",
+        "rs": "1/6 confidential S-1 후속 - Q2 2026 $15B IPO 목표·MAU 2억+·ARR $725M+·Goldman·JPM 인수단·SpaceX 6/12 메가 IPO 직후 큐 진입 윈도우 모색·Microsoft 인수 거절 단독 트랙",
+        "ipo": "Q2 2026 목표 ($15B)",
         "val": "$15B",
-        "round": "컴피던셜 S-1 (Q1 2026)·GS·JPM·MS",
+        "round": "컴피던셜 S-1 (1/6 2026)·GS·JPM",
         "sector": "소셜"
       },
       {
@@ -129,8 +129,8 @@ const data = [
     "stocks": [
       {
         "nm": "SpaceX",
-        "rs": "6/12 Nasdaq 데뷔 D-2·6/10 주문서 마감일·6/11 프라이싱 - $135 고정·$1.77T 밸류·미국 시총 7위 진입·Tesla 시총 추월·주문서 $150B+ 2배 오버서브·forward P/S 70x·75억$ 모집 사상 최대 IPO",
-        "ipo": "2026.06.12 Nasdaq 데뷔 (6/10 주문서 마감·6/11 프라이싱)",
+        "rs": "6/12 Nasdaq 데뷔 D-1·6/11 프라이싱 - $135 고정·$1.77T 밸류 美 시총 7위 진입·Tesla $1.6T 추월·주문서 $150B+ 2배 오버서브·forward P/S 70x·75억$ 모집 사상 최대 IPO",
+        "ipo": "2026.06.12 Nasdaq 데뷔 (6/11 프라이싱)",
         "val": "$1.77T",
         "round": "SPCX·골드만 lead·MS·BofA·Citi·JPM 신디케이트·리테일 30% 할당 역대 3배·머스크 82% 슈퍼보팅·$75B 조달",
         "sector": "우주"
