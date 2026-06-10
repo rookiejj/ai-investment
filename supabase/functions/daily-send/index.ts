@@ -29,6 +29,9 @@ import { notify } from "../_shared/notify.ts";
 const LIMIT = 1000;
 const PER_TAB = 1;
 const BATCH_SIZE = 500;
+// 친구톡 가독성: 탭당 상위 N줄(중요도순 첫 줄=헤드라인)만 노출 + 줄 사이 빈 줄.
+// 큐레이션(update.js)은 5줄까지 쓰되 발송 본문은 상위 3줄로 압축 — 한도 여유 + 가독성.
+const MAX_LINES_PER_TAB = 3;
 
 type Tab = { id: string; emoji: string; label: string; };
 type Entry = { date: string; summary: string; };
@@ -139,15 +142,18 @@ function smartCut(s: string, max: number): string {
   return raw.slice(0, max - 1) + "…";
 }
 function buildTabBlock(tab: TabWithEntries): string {
-  const lines = [`${tab.emoji} ${tab.label}`, ""];
   const [first] = tab.entries;
+  const bullets: string[] = [];
   if (first) {
     for (const raw of first.summary.split("\n")) {
       const line = raw.trim();
-      if (line) lines.push(`• ${line}`);
+      if (!line) continue;
+      bullets.push(`• ${line}`);
+      if (bullets.length >= MAX_LINES_PER_TAB) break; // 상위 N줄만
     }
   }
-  return lines.join("\n");
+  // 제목 아래 빈 줄 + 글머리표 사이마다 빈 줄(\n\n)로 가독성 확보
+  return [`${tab.emoji} ${tab.label}`, "", bullets.join("\n\n")].join("\n");
 }
 function buildMessage(tabs: TabWithEntries[]): string {
   const parts = [`📊 브리픽 · ${kstDateLabel()}`];
@@ -177,11 +183,12 @@ function fitToLimit(tabs: TabWithEntries[], max: number): string {
   const usedChars: number[] = [];
   for (const t of valid) {
     const lines = (t.entries[0]?.summary ?? "")
-      .split("\n").map((s) => s.trim()).filter(Boolean);
+      .split("\n").map((s) => s.trim()).filter(Boolean)
+      .slice(0, MAX_LINES_PER_TAB); // 상위 N줄만
     const kept: string[] = [];
     let used = 0;
     for (const line of lines) {
-      const cost = 2 + line.length + 1; // "• " + line + "\n"
+      const cost = 2 + line.length + 2; // "• " + line + "\n\n" (빈 줄 포함)
       if (used + cost > perTab) break;
       kept.push(line);
       used += cost;
@@ -195,10 +202,11 @@ function fitToLimit(tabs: TabWithEntries[], max: number): string {
   if (leftover > 0) {
     for (let i = 0; i < valid.length && leftover > 0; i++) {
       const allLines = (valid[i].entries[0]?.summary ?? "")
-        .split("\n").map((s) => s.trim()).filter(Boolean);
+        .split("\n").map((s) => s.trim()).filter(Boolean)
+        .slice(0, MAX_LINES_PER_TAB); // 상위 N줄만
       let used = usedChars[i];
       for (let j = taken[i].length; j < allLines.length; j++) {
-        const cost = 2 + allLines[j].length + 1;
+        const cost = 2 + allLines[j].length + 2;
         if (cost > leftover) break;
         taken[i].push(allLines[j]);
         used += cost;
