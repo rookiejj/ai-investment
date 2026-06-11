@@ -1,31 +1,25 @@
 const updates = [
   {
-    "date": "2026-06-11 07:45 KST",
-    "summary": "Stripe $159B 텍더오퍼 - 1년 만 +74% 밸류 더블 업라운드\nDiscord 1/6 confidential S-1 후속 - $15B Q2 IPO 목표 Goldman·JPM 인수단\nCanva $42B 8/2025 - Zoom IPO 출신 CFO 영입 Nasdaq 준비\nAnduril $61B Series H $5B 5/13 - 1년 만 30.5→61B 더블 업라운드\nDatabricks 2027 IPO 41% Kalshi - 메가 IPO 큐 후순위 lock-in",
+    "date": "2026-06-11 19:40 KST",
+    "summary": "Databricks $165~175B 라운드 협상 - 4개월 만 $134B→$175B 30% 업라운드\n6/12 SpaceX IPO 데뷔 D-1 - $1.77T 메가 IPO 후순위 unicorn 큐 영향\nDiscord Q2 2026 IPO $15B 카운트다운·Plaid·Canva 후속 큐 형성\nStripe $159B 텍더 +74% YoY·Anduril $61B 5/13 더블 업라운드\nDatabricks CEO '2026 IPO terrible year' - 2027 IPO 41% Kalshi prediction",
     "changes": [
       {
-        "time": "2026-02-15 10:00 PT",
+        "time": "2026-06-09 12:00 PT",
         "type": "라운드",
-        "detail": "Stripe. 2/2026 직원 텍더오퍼 $159B 밸류 - 1년 전 $91.5B 대비 +74% YoY 더블 업라운드 단일 카탈리스트. ARR $1B+ TPV $1.9T 베이스에 Tempo L1 메인넷 3/18 가동·5/8 WLFI USD1 네이티브 발행 첫 외부 발행자·Visa·Nubank·Klarna 테스트 stablecoin 인프라 lock-in. CEO Collison '임박 IPO 계획 없음' 발언 잔존하나 2H 2026 윈도우 분기점 잔존. forward 시그널 - 2H 2026 IPO 윈도우 진입 여부·SpaceX 6/12·OpenAI 9월 메가 IPO 큐 직후 후기 단계 unicorn IPO 윈도우 분기점·stablecoin 인프라 distribution 누적이 펀더멘털 카운터.",
-        "sector": "핀테크"
+        "detail": "Databricks. 6/8~9 PYMNTS·Reuters 보도 - $165B~$175B 신규 펀딩 협상 진행 단일 분기점. 2/2026 $134B 베이스에서 4개월 만 22~31% 업라운드 추진·$5.4B revenue run rate 달성 후 forward P/S 30x 인식 시도. CEO Ali Ghodsi 6/4 Bloomberg TV '2026은 IPO terrible year' 발언 - SpaceX 메가 IPO 직후 후순위 자금 흡수 우려가 비공개 자금 조달 전환 베이스. Ghodsi 별도로 투자자에게 '2027년 IPO 가능' 발언 - Kalshi prediction market 2027 IPO 41% 확률 흐름 일관. forward 시그널 - 협상 1개월 내 종결 가이던스·SpaceX 6/12·OpenAI 9월·Anthropic 후속 메가 IPO 큐가 후순위 unicorn IPO 윈도우 카운터·AI 매출 $1.4B·forward P/S 25x 베이스가 다음 라운드 펀더멘탈.",
+        "sector": "엔터프라이즈 SW"
       },
       {
-        "time": "2026-01-06 09:00 PT",
-        "type": "IPO",
-        "detail": "Discord. 1/6 SEC confidential S-1 제출 - Q2 2026 $15B IPO 목표 Goldman Sachs·JPMorgan 인수단 카운트다운 단일 분기점. MAU 2억+·ARR $725M+ 베이스 잔존·2025 마지막 펀딩 $15B 베이스. Microsoft 인수 거절 후 단독 IPO 트랙. forward 시그널 - SpaceX 6/12 메가 IPO 직후 큐 진입 윈도우 모색·H2 2026 슬립 가능성 잔존·게이밍 sector 자금플로 베이스·CEO Citron 발언 흐름이 cadence 분기점. 매크로 - SpaceX·OpenAI·Anthropic 메가 IPO 자금 흡수가 후기 단계 unicorn IPO 윈도우 카운터·Databricks CEO '2026 IPO 어려운 해' 발언 동조 - 후순위 unicorn IPO 모색 cadence lock-in.",
+        "time": "2026-06-11 09:00 ET",
+        "type": "이벤트",
+        "detail": "후기 단계 unicorn 큐 - SpaceX 6/12 데뷔 영향. SpaceX 6/12 Nasdaq 데뷔 D-1 $135 고정가·시총 $1.77T·75억$ 모집 - 사상 최대 IPO 자금 흡수 단일 분기점. Tesla $1.6T 상회 美 7번째 자리 진입. 후순위 후기 단계 unicorn 큐 - Discord Q2 $15B·Plaid Q2 $6.1B·Canva 2H 2026·Stripe 2H 2026 윈도우·Anduril 자금 사이클 누적이 forward IPO 준비 시그널. forward 시그널 - OpenAI 9월 confidential IPO 진행·Anthropic 사전 IPO 후속·Databricks 2027 시간차 IPO 대기 - 메가 IPO 5건 시간 분산이 후기 단계 unicorn 가격 발견 카탈리스트. 매크로 - SpaceX·OpenAI·Anthropic 3사 합산 $3.5T+ 사상 최대 IPO 파이프라인 자금 흡수가 sector rotation·후순위 unicorn 자금 분산 leverage·VIX 18.2 변동성에도 메가 IPO 진행 - 시장 risk-on 시그널 잔존.",
         "sector": "엔터프라이즈 SW"
       },
       {
         "time": "2026-05-13 12:00 PT",
         "type": "라운드",
-        "detail": "Anduril. 5/13 Series H $5B 종결 $61B 밸류 - 1년 만 30.5→61B 더블 업라운드 단일 카탈리스트. Thrive Capital·a16z 공동 주도·누적 펀딩 $11B+. 2025 매출 $2.2B·Golden Dome $3.2B + 美 우주군 $1.8B + 美 육군 10년 $20B 한도 계약 누적 수주. forward 시그널 - Pentagon FY27 $1.5T 예산 요청 +42% 통과 분기점·CEO Luckey '단기 IPO 아님' 입장 유지하나 자금 사이클이 forward IPO 준비 시그널 누적·Kalshi 2027 IPO 7% 확률 후순위 lock-in. 매크로 - 美·이란 충돌 격화 방산 sector 단독 펀더멘털 강도·메가 IPO 큐 자금 흡수 카운터에도 방산 AI 카테고리 lock-in.",
+        "detail": "Anduril. 5/13 Series H $5B 종결 $61B 밸류 - 1년 만 30.5→61B 더블 업라운드 단일 카탈리스트. Thrive Capital·a16z 공동 주도·누적 펀딩 $11B+. 2025 매출 $2.2B·Golden Dome $3.2B + 美 우주군 $1.8B + 美 육군 10년 $20B 한도 계약 누적 수주. forward 시그널 - Pentagon FY27 $1.5T 예산 요청 +42% 통과 분기점·CEO Luckey '단기 IPO 아님' 입장 유지하나 자금 사이클이 forward IPO 준비 시그널 누적·Kalshi 2027 IPO 7% 확률 후순위 lock-in. 매크로 - 美·이란 충돌 격화 방산 sector 단독 펀더멘탈 강도·메가 IPO 큐 자금 흡수 카운터에도 방산 AI 카테고리 lock-in.",
         "sector": "우주·모빌리티·방산"
-      },
-      {
-        "time": "2026-06-09 10:00 PT",
-        "type": "거버넌스",
-        "detail": "Canva·Databricks·Plaid. unicorn IPO 큐 후순위 lock-in 사이클 - Canva $42B 8/2025 직원 텍더오퍼 + Zoom IPO 출신 Kelly Steckelberg CFO 영입 Nasdaq 상장 준비 시그널, ARR $4B YoY +35%·MAU 265M·8년 연속 흑자 베이스. Databricks $134B forward P/S 25 baseline·$5.4B ARR run-rate·AI 매출 $1.4B·CEO '2026 IPO terrible year' 발언으로 2027 IPO 41% Kalshi prediction. Plaid Q2 2026 IPO $6.1B 타깃 - 26년 핀테크 인프라 단독 최대 IPO 카운트다운. forward 시그널 - SpaceX 6/12·OpenAI 9월·Anthropic 동시 메가 IPO 큐 자금 흡수가 후순위 unicorn IPO 윈도우 카운터·2H 2026 후속 cadence가 sector 분기점.",
-        "sector": "엔터프라이즈 SW"
       }
     ]
   }
