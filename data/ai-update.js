@@ -1,25 +1,25 @@
 const UPDATES = [
   {
-    "date": "2026-06-11 19:30 KST",
-    "summary": "Claude Fable 5 일반 GA 6/9 - Mythos 5 동시 출격 frontier 단독\nFable 5 $10/$50 토큰가·Pro·Max·Enterprise 6/22까지 무료 distribution\nAWS·Bedrock·Vertex·MS Foundry 동시 가능 - multi-cloud lock-in 즉시 가시화\nMythos 5 Project Glasswing 美 정부 협력 - 사이버보안 전용 lock-in\nGemini 3.5 Pro 6월 GA 임박·Grok 5 Q2 지연 - Polymarket 6월 33% 저조",
+    "date": "2026-06-12 07:50 KST",
+    "summary": "Stripe 5천만 줄 Ruby migration 月→日 - Fable 5 enterprise lock-in 가시화\nAnthropic 31.4% global LLM 매출 점유 - OpenAI 추월 첫 분기\nMicrosoft Project Polaris MAI 8월 Copilot GPT-4 대체\nGemini 3.5 Pro 6월 GA 임박·2M 토큰·Deep Think·Siri 통합\nMistral AI Now Summit Airbus·산업 AI €1B 매출 가이던스",
     "changes": [
       {
-        "time": "2026-06-09 10:00 PT",
-        "type": "모델 출시",
-        "detail": "Anthropic. Claude Fable 5 일반 GA 6/9 - Mythos 5 동시 발표 frontier 단독 분기점. Fable 5는 Mythos 클래스 capability를 일반 사용자용 safeguard와 함께 묶은 모델 - 거의 모든 capability 벤치마크에서 SOTA·소프트웨어 엔지니어링·지식 작업·비전·과학 연구 카테고리 동시 lock-in. Mythos 5는 동일 underlying 모델을 사이버 디팬더·인프라 프로바이더에 한해 safeguard 일부 해제로 배포·Project Glasswing 통해 美 정부 협력 카운터. Claude API·AWS Bedrock·Vertex AI·Microsoft Foundry 동시 가용성 - multi-cloud lock-in 즉시 가시화. 가격 $10/M 인풋·$50/M 아웃풋 토큰·Pro·Max·Team·Enterprise 플랜 6/22까지 무제한 사용 무료 - distribution + monetization 동력. forward 시그널 - Gemini 3.5 Pro 6월 GA 임박과 capability head-to-head 카운트다운·OpenAI GPT-5.6·xAI Grok 5 Q2 지연 (Polymarket 6월 33% 저조)이 frontier 4파전 분기점·Mythos 5 미국 정부 lock-in이 sector dominance 카운터.",
+        "time": "2026-06-11 10:00 PT",
+        "type": "마일스톤",
+        "detail": "Anthropic. Claude Fable 5 enterprise lock-in 가시화 단일 분기점 - Stripe 5,000만 줄 Ruby 코드베이스 codebase-wide migration이 月 단위 작업을 1일로 압축 완료 case study 발표·기존 팀 2개월 수작업 분량 24시간 내 처리. Anthropic 2026 상반기 global LLM 매출 점유율 31.4% - OpenAI 추월 첫 분기 도달·forward signal로 enterprise 카테고리 dominance 가시화. Fable 5 Pro·Max·Team·Enterprise 6/22까지 무제한 무료 distribution → 6/23 usage credit 전환·standard subscription 복귀는 가용성 확보 후 가이던스. 가격 $10/M 인풋·$50/M 아웃풋 토큰 - Opus 4.8 대비 2배·monetization 동력 동시 확보. forward 시그널 - 6/22 무료 trial 종료 단일 분기점·Fable 5 paid tier 전환율이 monetization 베이스·Mythos 5 미국 정부 Project Glasswing lock-in이 카테고리 dominance 강도·Gemini 3.5 Pro 6월 GA 임박·xAI Grok 5 Q2 지연 (Polymarket 6월 33% 저조)이 frontier 4파전 분기점.",
         "sector": "Anthropic"
       },
       {
-        "time": "2026-06-10 09:00 PT",
+        "time": "2026-06-02 09:00 PT",
         "type": "인프라",
-        "detail": "OpenAI·Oracle. 6/10 발표 - Oracle Cloud Infrastructure를 통한 OpenAI 모델·Codex 접근 commitment 확장 단일 분기점. Stargate $500B 5년 인프라 협력 베이스 + OCI 엔터프라이즈 distribution lock-in - $300B 5년 컴퓨트 공급 계약 베이스 위에 추가 capacity. ChatGPT 메모리 개선 6월 Plus·Pro 사용자 롤아웃 - past chats·saved memories·Gmail 연동으로 personalized continuity 카운터. Sora 앱 4/26 shutdown 후 API 9/24 discontinue 예정 - video generation 카테고리 retreat. forward 시그널 - 9월 OpenAI confidential IPO 진행 베이스·Anthropic Fable 5 frontier 카운터 직후 OpenAI GPT-5.6 출시 시점이 frontier 4파전 분기점·OCI 매출 가속이 enterprise developer monetization 베이스.",
-        "sector": "OpenAI"
+        "detail": "Microsoft. Build 2026 후속 Project Polaris·MAI Code One 단일 분기점 - GitHub Copilot 8월부터 GPT-4 Turbo 대체 MAI Code One 자체 모델 전환 카운트다운·OpenAI cord 부분 절단 가시화. MAI 7개 신모델 발표 - reasoning·코딩·전사·voice·image - MAI-Thinking-1 reasoning 플래그십·Microsoft IQ 통합 인텔리전스 레이어(Work IQ·Foundry IQ·Fabric IQ·Web IQ) lock-in. Azure Cobalt 200 VMs 50% agentic AI 성능 개선·자동 마이그레이션 + 3개월 GPT-4 폴백 옵션. OpenAI 파트너십 병행 - GPT-5.5 6/3 Foundry GA·GPT-5.5 Pro 프리미엄 변형·Claude Sonnet 4.5·Haiku 4.5·Opus 4.1 Azure 공개 미리보기·Foundry API + Entra 인증 + Azure 청구. forward 시그널 - 8월 MAI Code One 전환 단일 분기점·GitHub Copilot 사용자 자동 마이그레이션이 enterprise 자체 모델 lock-in 베이스·OpenAI 의존도 단계 축소가 multi-vendor AI 카테고리 확립.",
+        "sector": "Microsoft"
       },
       {
-        "time": "2026-06-08 10:00 PT",
+        "time": "2026-06-10 14:00 ET",
         "type": "인프라",
-        "detail": "Google DeepMind·Apple. WWDC 2026 6/8 발표 - Apple 자체 LLM 한계 시인 + Google과 연 $1B 라이센스 체결로 custom Gemini 모델 1.2T 파라미터 기반 Siri AI 클라우드 두뇌 구축. on-device는 Apple 자체 파운데이션 모델·서버 처리는 Private Cloud Compute로 custom Gemini 활용 - 멀티턴 대화·앱간 작업·온스크린 인식·개인 컨텍스트 이해 3대 능력 lock-in. Anthropic Claude·Google Gemini 등 서드파티 챗봇 직접 Siri 통합 옵션 제공 - multi-vendor AI 전략 카테고리 확립. forward 시그널 - Gemini 3.5 Pro 6월 GA 임박이 Apple 통합 직후 distribution 가속·Claude Fable 5 6/9 GA 베이스 옆 Google·Anthropic 동시 진입으로 frontier 4파전 lock-in 분기점.",
-        "sector": "Google DeepMind"
+        "detail": "Mistral AI. AI Now Summit 6/9~10 발표 - 산업 AI 확장 + Airbus 코어 파트너십 단일 분기점. Airbus 커머셜 항공기·헬리콥터·방산·우주 全 사업부 AI 통합 - 디자인 초기부터 온보드 capability까지 사업 핵심 프로세스 lock-in·crital data 통제 + 보안 요건 충족. Les Ulis Essonne 10MW 신규 inference DC Q3 2026 가동·자체 capacity 통제 + 보안·투명성 카운터. Emmi AI(오스트리아) 5/19 인수 - 산업 엔지니어링 AI 시뮬레이션 lock-in. 1,000명 인력 + €1B(약 $1.17B) 2026 매출 가이던스 - Vibe 컨슈머 어시스턴트 리브랜딩 카운터. forward 시그널 - €1B 매출 가이던스 달성 분기점·EU 산업 sovereign AI 카테고리 단독 강도 베이스·Airbus·EU 정부 lock-in이 enterprise 카테고리 deep penetration 모멘텀·OpenAI·Anthropic·Google 3강 외 EU 단일 frontier 시그널 잔존.",
+        "sector": "Mistral AI"
       }
     ]
   }
