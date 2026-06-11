@@ -1,25 +1,25 @@
 const updates = [
   {
-    "date": "2026-06-11 19:20 KST",
-    "summary": "SpaceX IPO 6/12 데뷔 D-1 - $135 시총 $1.77T Tesla 상회 美 7번째 자리\n호르무즈 봉쇄 - Brent $94.8 +1.8% XOM·CVX upstream 직접 leverage\nSMCI -28% $7B 증자 충격 - AI 트레이드 시험대·NVDA·AMD·MU 동반 약세\n6/10 다우 49,919 -1.87% 50K 붕괴·S&P 7,267 -1.62%·나스닥 25,170 -1.98%\n근원 CPI 2.9% 부합 안도 vs 호르무즈 에너지 +23.5% leverage 분기점",
+    "date": "2026-06-12 07:35 KST",
+    "summary": "SpaceX SPCX 6/12 Nasdaq 데뷰 $135·시총 $1.77T·美 7번째 자리\nNVDA $204.87 반등·Vera Rubin 전면 양산·HBM4 3사 인증\nHormuz 30일 내 재개방 - XOM·CVX -10% 정점 대비 회복\nLMT $4.76B PAC-3 MSE 2030 계약·BA·BAE Pentagon 프레임워크\nFOMC 6/16~17 D-5 무인하 97%·Warsh 신임 의장 첫 회의",
     "changes": [
       {
-        "time": "2026-06-11 09:00 ET",
+        "time": "2026-06-12 09:30 ET",
         "type": "이벤트",
-        "detail": "SpaceX IPO(SPCX) 6/12 Nasdaq 데뷔 D-1 직전 - 555.6M 주 $135 고정가·시총 $1.77T·75억$ 모집 - Tesla $1.6T 시총 상회 美 7번째 자리·머스크 82% 의결권 유지. 사적 secondary 거래 $129~$137 박스권 - 시장 데뷔 가격 발견 카탈리스트. 2025 매출 $18.7B +33%·순손실 $4.9B - Alibaba 3배+ 사상 최대 IPO 등극. Goldman Sachs 리드·Morgan Stanley·BoA·Citi·JPM 컨소시엄. forward 시그널 - 6/12 첫날 변동성이 RKLB·ASTS·LUNR 우주 sector 동조 강세 단일 분기점·기관 자금플로 SpaceX 비중 신규 편입이 sector 강도 베이스·OpenAI·Anthropic 9월 합산 $2T+ IPO 파이프라인 자금 분산 leverage. 매크로 - 우주 카테고리 인덱스 재구성·forward P/E 우주 sector 재평가·VIX 18.2 변동성에도 IPO 진행 - 시장 risk-on 시그널 잔존.",
+        "detail": "SpaceX(SPCX) 6/12 Nasdaq 데뷰 - $135 고정가·555.6M주·$75B 모집·시총 $1.77T 사상 최대 IPO 단일 분기점·Tesla $1.6T 상회 美 7번째 자리·머스크 82% 의결권 유지. 가격 발견 프로세스로 09:30 정규 개장보다 늦은 오전 후반~오후 초반 첫 매칭 가능성·복수 변동성 정지 예고. Nasdaq 5월 megacap IPO 룰 변경 - 7~7/7 Nasdaq-100 자동 편입 가능성·트래커 펀드·ETF 강제 매수 wave가 초기 매도 압력 카운터. 2025 매출 $18.7B +33%·순손실 $4.9B·Alibaba 3배+ 사상 최대 IPO·Goldman Sachs 리드·Morgan Stanley·BoA·Citi·JPM 컨소시엄. forward 시그널 - 6/12 첫날 변동성이 RKLB·ASTS·LUNR 우주 sector 동조 강세 단일 분기점·기관 자금플로 SpaceX 신규 편입이 sector 강도 베이스·7/7 Nasdaq-100 편입 카운트다운이 강제 매수 카탈리스트. 매크로 - 우주 카테고리 인덱스 재구성·forward P/E 우주 sector 재평가·VIX 18.2 변동성에도 IPO 진행 - 시장 risk-on 시그널 잔존·트럼프 이란 타격 캔슬 risk-off 해제 후방.",
         "sector": "우주"
       },
       {
-        "time": "2026-06-11 08:30 ET",
+        "time": "2026-06-12 07:00 ET",
         "type": "이벤트",
-        "detail": "ExxonMobil(XOM)·Chevron(CVX)·ConocoPhillips(COP). 이란 6/11 호르무즈 해협 봉쇄 선언·美 추가 자위 타격 후속 - Brent $94.8 +1.8%·WTI $91.9 +2.0% 단숨 점프. 호르무즈는 글로벌 원유 소비 1/5·LNG 다수 통과 핵심 길목·봉쇄 지속 시 공급 충격 본격화 우려. upstream 비중 큰 메이저 직접 leverage - YTD XOM +28.8%·COP +26.6%·CVX +22.6% 누적·CVX는 oil leverage 가장 높아 supply shock 가장 큰 베팅. forward 시그널 - 호르무즈 봉쇄 지속 24~48시간 분기점·외교 해결 시 risk premium 즉시 해제 양방향·OPEC+ 추가 감산·증산 응답이 다음 변곡점. 매크로 - 호르무즈 5월 CPI 에너지 +23.5% YoY 견인이 인플레 재점화 우려 가시화·연준 인하 경로 후퇴 leverage·sector rotation tech→에너지 가속 시그널.",
-        "sector": "에너지"
+        "detail": "NVIDIA(NVDA)·AMD·Micron(MU)·Marvell(MRVL). 6/11 종가 NVDA $204.87 - 6/10 SMCI -28% 폭락發 AI 칩 sector 광범위 약세 후 반등 단일 분기점. Vera Rubin 전면 양산 진입·5x Blackwell 추론 성능·10x throughput per watt·1/10 token cost 베이스·Samsung·SK하이닉스·Micron 3사 HBM4 공급사 공식 인증·SK하이닉스 60~70% 점유 추정. AWS·Google Cloud·Microsoft Azure·Oracle 4대 cloud provider 여름 출하 시작 가이던스·OpenAI·Anthropic·Meta 7-chip 플랫폼 합류 lock-in. AMD Helios rack-scale로 NVL72 카운터 진입. forward 시그널 - Q3 HBM4 출하 본격화·NVDA 6/11 +2.95% 단일 강세 - 트럼프 이란 타격 캔슬 risk-on 시그널·6/16~17 FOMC dot plot이 sector premium 카운터 분기점. 매크로 - forward P/E 33 sector premium 5년평균 19.9 카운터 잔존·earnings yield 3.1% 10y 4.55% gap 145bp 잔존·AI 인프라 CAPEX $7.9T 2030 흐름 leverage 베이스.",
+        "sector": "반도체"
       },
       {
-        "time": "2026-06-10 16:00 ET",
+        "time": "2026-06-11 16:00 ET",
         "type": "이벤트",
-        "detail": "Super Micro(SMCI)·NVIDIA(NVDA)·AMD·Micron(MU). 6/10 SMCI -28% 폭락 - $7B 신규 주식 발행 증자 발표·AI 서버 backlog $39B 충당 자금 조달 명목이나 dilution 우려 즉시 매도세. 동조 매도 - NVDA -2%대·AMD -3.5%·MU -4% AI 칩 sector 광범위 약세·INTC -2% 메가캡 동반 - CPI 4.2% 헤드라인 + 美-이란 추가 충돌 risk-off가 leverage 압도. AI 트레이드 reality check 변곡점 - AI 인프라 demand 강도 vs 자금 조달 dilution 트레이드오프 시험대. forward 시그널 - 6/12 SpaceX IPO 자금 분산 단일 카탈리스트·6/16~17 FOMC dot plot 매크로 분기점·NVDA Vera Rubin Q3 양산·HBM4 출하 본격화가 sector 회복 베이스. 매크로 - SMCI dilution 모델이 AI 인프라 자금 조달 sector 전반 헤드윈드·forward P/E 33 sector premium 5년평균 19.9 카운터 압력 누적·earnings yield 3.1% 10y 4.55% gap 145bp 잔존.",
-        "sector": "반도체"
+        "detail": "Lockheed Martin(LMT)·Boeing(BA)·BAE Systems(BAESY). 6월 누적 - LMT $4.76B PAC-3 MSE Patriot 요격탄 2030년까지 가속 양산 계약 단일 분기점·LMT Aeronautics 5월 $879M 추가 누계 - 美 美·이스라엘 2/28 이란 타격 이후 1조$+ 방산 contract wave. Pentagon Boeing·Lockheed Martin·BAE·Honeywell 프레임워크 합의 - PAC-3 components 생산 3배 확장·THAAD 요격탄 96→400/年 4배 확대(각 $12.77M). LMT 5/21 Troy Alabama 신규 탄약 생산센터 착공·2030년까지 $9B 투자·87,000sf 확장·4,000개 신규 일자리. forward 시그널 - 트럼프 이란 타격 캔슬 후방에도 PAC-3·THAAD 발주 잔량 지속·Pentagon FY27 $1.5T 예산 요청 +42% 통과가 sector 카탈리스트·이스라엘 Iron Dome 추가 발주가 다음 변곡점. 매크로 - forward P/E 방산 sector 19x·earnings yield 5.2% 10y 대비 절대값 매력·중동 escalation premium 누적이 sector 단독 강도 베이스.",
+        "sector": "방산"
       }
     ]
   }
