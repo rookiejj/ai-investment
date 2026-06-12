@@ -1,6 +1,6 @@
 const data = [
   {
-    "tag": "결제·뎱킹·HR·SMB",
+    "tag": "결제·등킹·HR·SMB",
     "title": "💳 핀테크",
     "stocks": [
       {
@@ -13,11 +13,11 @@ const data = [
       },
       {
         "nm": "Revolut",
-        "rs": "2H 2026 세컨더리 $100B+ 진행 - 향후 IPO 타깃 $150~200B 범위·11월 2025 세컨더리 $75B 대비 2.6배·3/11 영국 PRA 풀 뎱킹 라이센스 후 모기지·소비자 신용 진입·CEO Storonsky 'NASDAQ 美 상장 1순위' 공식 입장",
+        "rs": "2H 2026 세컨더리 $100B+ 진행 - 향후 IPO 타깃 $150~200B 범위·11월 2025 세컨더리 $75B 대비 2.6배·3/11 영국 PRA 풀 등킹 라이센스 후 모기지·소비자 신용 진입·CEO Storonsky 'NASDAQ 美 상장 1순위' 공식 입장",
         "ipo": "2028+ 연기",
         "val": "$75B",
         "round": "세컨더리 2H26 $100B+",
-        "sector": "네오뎱크"
+        "sector": "네오등크"
       },
       {
         "nm": "Ramp",
@@ -29,7 +29,7 @@ const data = [
       },
       {
         "nm": "Plaid",
-        "rs": "Q2 2026 IPO $6.1B 타깃 - 26년 핀테크 인프라 단독 최대 IPO 카운트다운·4월 텍더 $8B 모멘텀 회복·GS 리드 인수단·오픈뎱킹·연결 인프라 단일 채널 지배력·美·英·EU 동시 트랙",
+        "rs": "Q2 2026 IPO $6.1B 타깃 - 26년 핀테크 인프라 단독 최대 IPO 카운트다운·4월 텍더 $8B 모멘텀 회복·GS 리드 인수단·오픈등킹·연결 인프라 단일 채널 지배력·美·英·EU 동시 트랙",
         "ipo": "2026 Q2",
         "val": "$8B",
         "round": "텍더오퍼 (업라운드)·GS 리드",
@@ -53,11 +53,11 @@ const data = [
       },
       {
         "nm": "Mercury",
-        "rs": "5/20 Series D $200M $5.2B 클로징 - 14개월 +49% 업라운드·TCV 리드 a16z·Coatue·Sequoia·CRV·Sapphire·Spark 참여·OCC 풀 차터 내셔널뎱크 전환 진행·ARR $650M·4년 연속 흑자·누적 펀딩 ~$700M",
+        "rs": "5/20 Series D $200M $5.2B 클로징 - 14개월 +49% 업라운드·TCV 리드 a16z·Coatue·Sequoia·CRV·Sapphire·Spark 참여·OCC 풀 차터 내셔널등크 전환 진행·ARR $650M·4년 연속 흑자·누적 펀딩 ~$700M",
         "ipo": "미정",
         "val": "$5.2B",
         "round": "Series D ($200M, 2026-05)·TCV 리드",
-        "sector": "SMB 뎱킹·재무관리"
+        "sector": "SMB 등킹·재무관리"
       }
     ]
   },
@@ -128,12 +128,12 @@ const data = [
     "title": "🚀 우주·모빌리티·방산",
     "stocks": [
       {
-        "nm": "SpaceX",
-        "rs": "6/12 Nasdaq 데뷔 D-1·6/11 프라이싱 - $135 고정·$1.77T 밸류 美 시총 7위 진입·Tesla $1.6T 추월·주문서 $150B+ 2배 오버서브·forward P/S 70x·75억$ 모집 사상 최대 IPO",
-        "ipo": "2026.06.12 Nasdaq 데뷔 (6/11 프라이싱)",
-        "val": "$1.77T",
-        "round": "SPCX·골드만 lead·MS·BofA·Citi·JPM 신디케이트·리테일 30% 할당 역대 3배·머스크 82% 슈퍼보팅·$75B 조달",
-        "sector": "우주"
+        "nm": "Saronic Technologies",
+        "rs": "3/31 Series D $1.75B Kleiner Perkins 리드 - $4B→$9.25B 더블 업라운드·Andreessen Horowitz·Advent·Bessemer 참여·美 해군 $392M 누계·자율 함정 Spyglass·Corsair·Marauder 6종·2027 연 20+척 양산 가이던스·중국 해군 카운터 핵심",
+        "ipo": "미정",
+        "val": "$9.25B",
+        "round": "Series D ($1.75B, 2026-03)·Kleiner Perkins",
+        "sector": "자율 해군 방산"
       },
       {
         "nm": "Zipline",
@@ -170,7 +170,7 @@ const data = [
       {
         "nm": "Anduril",
         "rs": "5/13 Series H $5B 종결 $61B 밸류 - 1년 만 30.5→61B 더블·Thrive Capital·a16z 공동 주도·누적 펀딩 $11B+·2025 매출 $2.2B·Golden Dome $3.2B + 美 우주군 $1.8B + 美 육군 10년 $20B 한도 계약 누적 수주",
-        "ipo": "단기 아님(Luckey)",
+        "ipo": "단기 아닔(Luckey)",
         "val": "$61B",
         "round": "Series H $5B (2026-05)",
         "sector": "방산 AI"
@@ -239,7 +239,7 @@ const data = [
       },
       {
         "nm": "Sword Health",
-        "rs": "AI 기반 근골격 치료·Hinge Health 5/22 IPO 데뷔 후 비상장 단독 MSK 채널·글로벌 확장",
+        "rs": "AI 기반 근골격 치료·Hinge Health 5/22 IPO 데뷰 후 비상장 단독 MSK 채널·글로벌 확장",
         "ipo": "미정",
         "val": "$3B",
         "round": "Series E ($130M, 2024-06)",
