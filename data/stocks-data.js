@@ -78,7 +78,7 @@ const data = [
         "p2": "192",
         "r1": "216",
         "r2": "337",
-        "rs": "6/10 $199~207 -2% 부근 sector rotation - 美 CPI 4.2% 헤드라인 3년 최고·근원 2.9% 컨센 하회 안도 부분 상쇄·SpaceX·OpenAI·Anthropic 메가 IPO 자금 분산·forward P/E 33 sector premium 유지",
+        "rs": "6/12 $203~207 회복·Vera Rubin 양산·HBM4 3사 인증 - 美 CPI 4.2% 헤드라인 3년 최고·근원 2.9% 안도·forward P/E 33 sector premium·earnings yield 3.1% 10y 4.45% gap 135bp",
         "tk": "NVDA"
       },
       {
@@ -768,7 +768,7 @@ const data = [
         "p2": "-0.08",
         "r1": "0.60",
         "r2": "0.90",
-        "rs": "6/12 SpaceX IPO $135 시총 $1.77T D-1 - 75억$ 사상 최대 IPO 우주 sector 자금 재평가·Neutron 4분기 재지연·$816M SDA 수주·국방 프라임 전환 모멘텀",
+        "rs": "6/12 SpaceX IPO $135→$160.95 +19% 첫날 마감·시총 $2.1T - 우주 sector 자금 재평가 베이스·Neutron 4분기 재지연·$816M SDA 수주·국방 프라임 전환 모멘텀",
         "tk": "RKLB"
       },
       {
