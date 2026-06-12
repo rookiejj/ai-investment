@@ -26,6 +26,16 @@ const recurring = [
     schedule:{type:'monthly_business_day', n:1} }, // 매월 첫 영업일
   { cat:'macro', impact:1, title:'미국 ISM 서비스 PMI',
     schedule:{type:'monthly_business_day', n:3} }, // 매월 셋째 영업일
+  { cat:'macro', impact:1, title:'미국 NFIB 소기업 낙관지수',
+    schedule:{type:'monthly_nth_dow', n:2, dow:2} }, // 매월 둘째 화요일
+  { cat:'macro', impact:2, title:'미국 미시간대 소비자심리·인플레 기대 1차',
+    schedule:{type:'monthly_nth_dow', n:2, dow:5} }, // 매월 둘째 금요일 (잠정)
+  { cat:'macro', impact:1, title:'미국 필라델피아 연준 제조업지수',
+    schedule:{type:'monthly_nth_dow', n:3, dow:4} }, // 매월 셋째 목요일
+  { cat:'macro', impact:1, title:'미국 미시간대 소비자심리 확정',
+    schedule:{type:'monthly_nth_dow', n:4, dow:5} }, // 매월 넷째 금요일 (확정)
+  { cat:'macro', impact:2, title:'미국 컨퍼런스보드 소비자신뢰지수',
+    schedule:{type:'monthly_nth_dow', n:4, dow:2} }, // 매월 넷째 화요일경
 
   // === 한국 매크로 (정기) ===
   { cat:'macro', impact:2, title:'한국 수출입 잠정',
@@ -70,9 +80,16 @@ const fixed = [
 
   // === 6월 매크로 ===
   { cat:'macro', impact:3, title:'미국 5월 NFP 비농업 고용', date:'2026-06-05', desc:'5월 첫 금요일' },
-  { cat:'macro', impact:3, title:'6월 FOMC (1일차)', date:'2026-06-09' },
-  { cat:'macro', impact:3, title:'6월 FOMC + 점도표·SEP', date:'2026-06-10', desc:'기준금리 결정 + 분기별 경제 전망' },
   { cat:'macro', impact:3, title:'미국 5월 CPI', date:'2026-06-11' },
+  { cat:'macro', impact:2, title:'미국 5월 PPI', date:'2026-06-12', desc:'근원 PPI 동반 발표' },
+  { cat:'macro', impact:2, title:'미국 5월 소매판매', date:'2026-06-17', desc:'전월·전년·근원 동시 발표·소비 모멘텀 핵심 지표' },
+  { cat:'macro', impact:3, title:'6월 FOMC 결과·점도표·SEP', date:'2026-06-18', desc:'KST 오전 3시·기준금리 결정 + 분기 경제전망' },
+  { cat:'policy', impact:1, title:'미국 노예해방일 준틴스 (휴장)', date:'2026-06-19', desc:'NYSE·Nasdaq 휴장' },
+  { cat:'macro', impact:2, title:'미국 5월 기존주택판매', date:'2026-06-22' },
+  { cat:'macro', impact:2, title:'미국 5월 신규주택판매', date:'2026-06-24' },
+  { cat:'macro', impact:3, title:'미국 1Q GDP 확정치', date:'2026-06-25', desc:'3차 추정' },
+  { cat:'earnings', impact:2, title:'마이크론 FQ3 실적', date:'2026-06-25', desc:'장후 발표·HBM·DDR5 수요 점검대', tickers:['MU'] },
+  { cat:'macro', impact:3, title:'미국 5월 PCE 물가', date:'2026-06-26', desc:'Fed 선호 인플레 지표' },
 
   // === 5월 어닝 ===
   { cat:'earnings', impact:3, title:'AMD Q1 2026 실적', date:'2026-05-05', desc:'장후 발표·MI450 캐파·OpenAI 6GW + Meta 6GW 주문', tickers:['AMD'] },
