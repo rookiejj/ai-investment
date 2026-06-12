@@ -1,24 +1,36 @@
 const UPDATES = [
   {
-    "date": "2026-06-12 07:50 KST",
-    "summary": "Stripe 5천만 줄 Ruby migration 月→日 - Fable 5 enterprise lock-in 가시화\nAnthropic 31.4% global LLM 매출 점유 - OpenAI 추월 첫 분기\nMicrosoft Project Polaris MAI 8월 Copilot GPT-4 대체\nGemini 3.5 Pro 6월 GA 임박·2M 토큰·Deep Think·Siri 통합\nMistral AI Now Summit Airbus·산업 AI €1B 매출 가이던스",
+    "date": "2026-06-13 07:35 KST",
+    "summary": "OpenAI GPT-5.6 'Kindle' 6월 출시 임박·Polymarket 85%+ 베팅\nGemini 3.5 Pro 6월 GA·2M 토큰·Deep Think·Siri 통합 카운트다운\nAnthropic 31.4% 글로벌 LLM 매출 점유·OpenAI 추월 첫 분기 도달\nNVIDIA Nemotron 3 Ultra 550B 6/4 오픈웨이트 - 허용 라이선스 최대 규모\nMistral 파리 13,800 GB300 mid-2026 가동·€1.2B 스웨덴 후속",
     "changes": [
       {
-        "time": "2026-06-11 10:00 PT",
+        "time": "2026-06-12 16:00 PT",
+        "type": "모델 출시 예정",
+        "detail": "OpenAI. GPT-5.6 'Kindle' 코드네임 6월 말 출시 임박 단일 분기점 - Polymarket 6/30 이전 출시 베팅 85%+ 도달·Codex 로그에 'iris-alpha' 모델 레퍼런스 노출. 향상 영역 - 추론(reasoning)·코딩(coding)·비전 처리(vision) 3대 축으로 Anthropic Claude Fable 5 직접 카운터. Claude Fable 5가 Stripe 5,000만 줄 Ruby codebase migration 月→日 단축 case study로 enterprise lock-in 가시화한 후 OpenAI가 가격 인하 동시 패키지 검토 - $10/M 인풋·$50/M 아웃풋 토큰 Anthropic Fable 5 동등 가격 매칭 가능성. forward 시그널 - GPT-5.6 GA 단일 분기점·가격 정책 동시 발표 시 frontier 4파전 가격 전쟁 본격화·Gemini 3.5 Pro 6월 GA·Claude Opus 4.8 Artificial Analysis Intelligence Index 61.4 1위 vs GPT-5.5 60.2 직전 도전 분기점.",
+        "sector": "OpenAI"
+      },
+      {
+        "time": "2026-06-12 14:00 PT",
+        "type": "모델 출시 예정",
+        "detail": "Google DeepMind. Gemini 3.5 Pro 6월 GA 임박 단일 분기점 - 구글 공식 '이달 중 일반 가용' 가이던스 유지. 핵심 차별화 - 2M 토큰 컨텍스트 윈도우(GPT-5.5 1M·Claude 200K 대비 2~10배)·Deep Think 모드 강화·6/8 WWDC Tim Cook 마지막 키노트에서 Gemini-powered Siri 통합 공식화·Multi-AI Extensions로 Claude도 iPhone 옵션 추가. Apple Intelligence backbone 부분 이관 - OpenAI 의존도 단계 축소·구글 컨텍스트 캐싱 비용 우위(타사 50~80% 할인) 보강. forward 시그널 - 6월 GA 정확 일자·Siri 통합 출하 시점·Gemini 3.5 Pro Artificial Analysis Index 진입 점수가 frontier 4파전 순위 baseline·Project Astra 차세대 멀티모달 데모가 후속 분기점·Google Cloud TPU v6e Trillium 후방 인프라.",
+        "sector": "Google DeepMind"
+      },
+      {
+        "time": "2026-06-12 11:00 ET",
         "type": "마일스톤",
-        "detail": "Anthropic. Claude Fable 5 enterprise lock-in 가시화 단일 분기점 - Stripe 5,000만 줄 Ruby 코드베이스 codebase-wide migration이 月 단위 작업을 1일로 압축 완료 case study 발표·기존 팀 2개월 수작업 분량 24시간 내 처리. Anthropic 2026 상반기 global LLM 매출 점유율 31.4% - OpenAI 추월 첫 분기 도달·forward signal로 enterprise 카테고리 dominance 가시화. Fable 5 Pro·Max·Team·Enterprise 6/22까지 무제한 무료 distribution → 6/23 usage credit 전환·standard subscription 복귀는 가용성 확보 후 가이던스. 가격 $10/M 인풋·$50/M 아웃풋 토큰 - Opus 4.8 대비 2배·monetization 동력 동시 확보. forward 시그널 - 6/22 무료 trial 종료 단일 분기점·Fable 5 paid tier 전환율이 monetization 베이스·Mythos 5 미국 정부 Project Glasswing lock-in이 카테고리 dominance 강도·Gemini 3.5 Pro 6월 GA 임박·xAI Grok 5 Q2 지연 (Polymarket 6월 33% 저조)이 frontier 4파전 분기점.",
+        "detail": "Anthropic. 2026 상반기 글로벌 LLM 매출 점유율 31.4%로 OpenAI 추월 첫 분기 도달 단일 분기점 - Claude Fable 5 enterprise lock-in 가시화. Stripe 5,000만 줄 Ruby codebase-wide migration 月 단위→1일 압축 case study가 frontier 카테고리 dominance 입증·Fable 5 Pro·Max·Team·Enterprise 6/22까지 무제한 무료 → 6/23 usage credit 전환 distribution 전략 - 6/22 무료 trial 종료 단일 모니터링 분기점. Claude Mythos 5 같은 베이스에 safeguards 해제로 사이버보안·생물학 specific use cases·미국 정부 Project Glasswing lock-in 확보. forward 시그널 - Fable 5 paid tier 전환율이 monetization 베이스·OpenAI GPT-5.6 'Kindle' 6월 출시·Gemini 3.5 Pro 6월 GA·xAI Grok 5 Q2 지연(Polymarket 6월 33%) 등 frontier 4파전 분기점·Artificial Analysis Intelligence Index Claude Opus 4.8 61.4 1위 유지 여부.",
         "sector": "Anthropic"
       },
       {
-        "time": "2026-06-02 09:00 PT",
-        "type": "인프라",
-        "detail": "Microsoft. Build 2026 후속 Project Polaris·MAI Code One 단일 분기점 - GitHub Copilot 8월부터 GPT-4 Turbo 대체 MAI Code One 자체 모델 전환 카운트다운·OpenAI cord 부분 절단 가시화. MAI 7개 신모델 발표 - reasoning·코딩·전사·voice·image - MAI-Thinking-1 reasoning 플래그십·Microsoft IQ 통합 인텔리전스 레이어(Work IQ·Foundry IQ·Fabric IQ·Web IQ) lock-in. Azure Cobalt 200 VMs 50% agentic AI 성능 개선·자동 마이그레이션 + 3개월 GPT-4 폴백 옵션. OpenAI 파트너십 병행 - GPT-5.5 6/3 Foundry GA·GPT-5.5 Pro 프리미엄 변형·Claude Sonnet 4.5·Haiku 4.5·Opus 4.1 Azure 공개 미리보기·Foundry API + Entra 인증 + Azure 청구. forward 시그널 - 8월 MAI Code One 전환 단일 분기점·GitHub Copilot 사용자 자동 마이그레이션이 enterprise 자체 모델 lock-in 베이스·OpenAI 의존도 단계 축소가 multi-vendor AI 카테고리 확립.",
-        "sector": "Microsoft"
+        "time": "2026-06-04 09:00 PT",
+        "type": "모델 출시",
+        "detail": "NVIDIA. Nemotron 3 Ultra 550B 6/4 오픈웨이트 출시 단일 분기점 - 완전 허용 라이선스 하 최대 규모 공개 모델. Hugging Face 다운로드 누계 24시간 내 50만+·Llama 3.1 405B(2024) 1위 자리 교체. 차별화 - reasoning 특화 베이스·H100·H200 단일 노드 추론 최적화·NIM(NVIDIA Inference Microservices) 통합 enterprise 배포·DGX Cloud 무료 추론 30일 trial 동반. 동시 발표 - Cosmos World Foundation Model 2.0 피지컬 AI·Isaac GR00T N2 휴머노이드 베이스·Project Digits AI 슈퍼컴 1인용 $3,000 8월 출하 가이던스. forward 시그널 - 오픈웨이트 enterprise 채택률·Mistral·Meta·DeepSeek 후속 경쟁 모델·CUDA lock-in 강화 시그널·6월 Computex Taipei 후속 발표 카운트다운.",
+        "sector": "NVIDIA"
       },
       {
-        "time": "2026-06-10 14:00 ET",
+        "time": "2026-06-10 09:00 CET",
         "type": "인프라",
-        "detail": "Mistral AI. AI Now Summit 6/9~10 발표 - 산업 AI 확장 + Airbus 코어 파트너십 단일 분기점. Airbus 커머셜 항공기·헬리콥터·방산·우주 全 사업부 AI 통합 - 디자인 초기부터 온보드 capability까지 사업 핵심 프로세스 lock-in·crital data 통제 + 보안 요건 충족. Les Ulis Essonne 10MW 신규 inference DC Q3 2026 가동·자체 capacity 통제 + 보안·투명성 카운터. Emmi AI(오스트리아) 5/19 인수 - 산업 엔지니어링 AI 시뮬레이션 lock-in. 1,000명 인력 + €1B(약 $1.17B) 2026 매출 가이던스 - Vibe 컨슈머 어시스턴트 리브랜딩 카운터. forward 시그널 - €1B 매출 가이던스 달성 분기점·EU 산업 sovereign AI 카테고리 단독 강도 베이스·Airbus·EU 정부 lock-in이 enterprise 카테고리 deep penetration 모멘텀·OpenAI·Anthropic·Google 3강 외 EU 단일 frontier 시그널 잔존.",
+        "detail": "Mistral AI. 파리 남부 Bruyères-le-Châtel 신규 데이터센터 mid-2026 가동 임박 단일 분기점 - 13,800 NVIDIA GB300 GPU 클러스터·3월 $830M 부채 펀딩 확보분 집행. €1.2B EcoDataCenter 스웨덴 후속 계약 - 2027 가동·총 18,000+ GPU 유럽 sovereign AI 인프라 베이스. Mistral Forge 플랫폼(3월 GTC 발표) 핵심 - enterprise 자체 데이터로 frontier급 모델 pre-training·post-training·강화학습 풀스택 지원·Airbus·BNP Paribas·Schneider Electric 등 산업 AI €1B 매출 가이던스. forward 시그널 - 파리 DC 첫 모델 학습 일정·Mistral Large 3 MoE 후속·EU AI Act 준수 sovereign AI 카테고리 dominance·Mistral 6번째 펀딩 라운드 valuation $14B 추정 후속 분기점.",
         "sector": "Mistral AI"
       }
     ]
