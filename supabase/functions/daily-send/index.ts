@@ -85,6 +85,87 @@ function localizeText(text: string): string {
   return r;
 }
 
+// ═══ 오늘의 주요 일정 (data/calendar-events.js) ════════════
+// index.html 캘린더와 동일 큐레이션 소스. GitHub raw로 fetch 후
+// 오늘(KST) 날짜에 해당하는 fixed·recurring 이벤트만 추려 친구톡 상단 블록 생성.
+type CalSchedule = { type?: string; dow?: number; n?: number; day?: number };
+type CalEvent = { date?: string; title: string; cat?: string; impact?: number; schedule?: CalSchedule };
+type CalendarData = { recurring: CalEvent[]; fixed: CalEvent[] };
+
+async function loadCalendarEvents(): Promise<CalendarData> {
+  try {
+    const url = GITHUB_TOKEN
+      ? `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/data/calendar-events.js?ref=${GITHUB_BRANCH}`
+      : `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/data/calendar-events.js`;
+    const headers: Record<string, string> = {};
+    if (GITHUB_TOKEN) {
+      headers["Authorization"] = `token ${GITHUB_TOKEN}`;
+      headers["Accept"] = "application/vnd.github.raw";
+    }
+    const res = await fetch(url, { headers });
+    if (!res.ok) throw new Error(`status=${res.status}`);
+    const src = await res.text();
+    const cal = new Function(
+      `${src};return typeof calendarEvents!=="undefined"?calendarEvents:{recurring:[],fixed:[]};`
+    )() as CalendarData;
+    return { recurring: cal.recurring ?? [], fixed: cal.fixed ?? [] };
+  } catch (e) {
+    console.warn("[warn] calendar-events load failed, schedule block skipped", e);
+    return { recurring: [], fixed: [] };
+  }
+}
+
+// 오늘(KST)에 해당하는 이벤트 제목 추출 (impact>=2만, 중요도순 상위 N).
+// index.html expandRecurring과 동일한 매칭 로직 — fixed 날짜 일치 + recurring 패턴 일치.
+function eventsForToday(cal: CalendarData, max = 4): string[] {
+  const now = new Date();
+  const kst = new Date(now.getTime() + 9 * 3600 * 1000 + now.getTimezoneOffset() * 60 * 1000);
+  const y = kst.getUTCFullYear(), m = kst.getUTCMonth() + 1, day = kst.getUTCDate(), dow = kst.getUTCDay();
+  const dateStr = `${y}-${String(m).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
+  const out: Array<{ title: string; impact: number }> = [];
+  for (const ev of cal.fixed ?? []) {
+    if (ev.date === dateStr) out.push({ title: ev.title, impact: ev.impact ?? 2 });
+  }
+  for (const ev of cal.recurring ?? []) {
+    const s = ev.schedule ?? {};
+    let match = false;
+    if (s.type === "weekly" && s.dow === dow) match = true;
+    else if (s.type === "monthly_nth_dow" && s.dow === dow) {
+      const firstDow = new Date(Date.UTC(y, m - 1, 1)).getUTCDay();
+      const firstOfDow = 1 + ((s.dow - firstDow + 7) % 7);
+      if (day === firstOfDow + ((s.n ?? 1) - 1) * 7) match = true;
+    } else if (s.type === "monthly_day" && s.day === day) match = true;
+    else if (s.type === "monthly_business_day") {
+      let bd = 0;
+      for (let dd = 1; dd <= day; dd++) {
+        const dy = new Date(Date.UTC(y, m - 1, dd)).getUTCDay();
+        if (dy >= 1 && dy <= 5) bd++;
+      }
+      if (bd === s.n && dow >= 1 && dow <= 5) match = true;
+    }
+    if (match) out.push({ title: ev.title, impact: ev.impact ?? 1 });
+  }
+
+  const byTitle = new Map<string, number>();
+  for (const e of out) {
+    const ex = byTitle.get(e.title);
+    if (ex === undefined || e.impact > ex) byTitle.set(e.title, e.impact);
+  }
+  return [...byTitle.entries()]
+    .filter(([, imp]) => imp >= 2)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, max)
+    .map(([title]) => localizeText(title));
+}
+
+function buildScheduleBlock(cal: CalendarData): string {
+  const titles = eventsForToday(cal);
+  if (!titles.length) return "";
+  const bullets = titles.map((t) => `• ${t}`).join("\n");
+  return [`📅 오늘 주요 일정`, "", bullets].join("\n");
+}
+
 // ═══ Supabase DB fetch (tab_updates) ════════════════════
 // 기존 GitHub raw fetch 폐기 — 2026-05-14 DB 전환. 같은 Supabase 프로젝트라 service role 직접.
 
@@ -155,16 +236,17 @@ function buildTabBlock(tab: TabWithEntries): string {
   // 제목 아래 빈 줄 + 글머리표 사이마다 빈 줄(\n\n)로 가독성 확보
   return [`${tab.emoji} ${tab.label}`, "", bullets.join("\n\n")].join("\n");
 }
-function buildMessage(tabs: TabWithEntries[]): string {
+function buildMessage(tabs: TabWithEntries[], scheduleBlock = ""): string {
   const parts = [`📊 브리픽 · ${kstDateLabel()}`];
+  if (scheduleBlock) parts.push(scheduleBlock);
   for (const t of tabs) if (t.entries.length) parts.push(buildTabBlock(t));
   return parts.join("\n\n");
 }
 
 // 합산이 한도 초과 시 모든 탭 보존하며 줄 단위로 균등 cut.
 // 각 탭에 동일 budget 분배 → 한도 초과한 탭은 끝 줄부터 제거 (중간 자르기·"…" 없음)
-function fitToLimit(tabs: TabWithEntries[], max: number): string {
-  const full = buildMessage(tabs);
+function fitToLimit(tabs: TabWithEntries[], max: number, scheduleBlock = ""): string {
+  const full = buildMessage(tabs, scheduleBlock);
   if (full.length <= max) return full;
   const valid = tabs.filter((t) => t.entries.length > 0);
   if (!valid.length) return full;
@@ -172,9 +254,10 @@ function fitToLimit(tabs: TabWithEntries[], max: number): string {
   const header = `📊 브리픽 · ${kstDateLabel()}`;
   const headerLen = header.length;
   const sepLen = 2; // "\n\n"
+  const scheduleLen = scheduleBlock ? scheduleBlock.length + sepLen : 0;
   const tabHeaderLen = valid.map((t) => `${t.emoji} ${t.label}\n\n`.length);
   const tabHeaderTotal = tabHeaderLen.reduce((a, b) => a + b, 0);
-  const remaining = max - headerLen - sepLen * valid.length - tabHeaderTotal;
+  const remaining = max - headerLen - scheduleLen - sepLen * valid.length - tabHeaderTotal;
   if (remaining <= 0) return full.slice(0, max);
 
   // 1차 패스: 탭별 평균 budget 적용
@@ -221,7 +304,7 @@ function fitToLimit(tabs: TabWithEntries[], max: number): string {
     ...t,
     entries: [{ ...t.entries[0], summary: taken[i].join("\n") }],
   }));
-  return buildMessage(trimmedTabs);
+  return buildMessage(trimmedTabs, scheduleBlock);
 }
 
 // 알리고는 SOLAPI와 달리 표준화된 실패 사유 코드를 제공하지 않음 (rslt_message 자연어만).
@@ -351,7 +434,7 @@ Deno.serve(async (req) => {
       message = customMessage;
       rawMessage = customMessage;
     } else {
-      // 한글 매핑 먼저 로드 — fetchTabEntries에서 summary localize 시 사용
+      // 한글 매핑 먼저 로드 — fetchTabEntries·일정 블록 localize 시 사용
       await loadCompanyKoMap();
       const tabs: TabWithEntries[] = [];
       for (const t of TABS) {
@@ -359,8 +442,10 @@ Deno.serve(async (req) => {
         if (entries.length) tabs.push({ ...t, entries });
       }
       tabCount = tabs.length;
-      rawMessage = buildMessage(tabs);
-      message = fitToLimit(tabs, LIMIT);
+      // 오늘의 주요 일정 블록 (이벤트 없으면 빈 문자열 → 미노출)
+      const scheduleBlock = buildScheduleBlock(await loadCalendarEvents());
+      rawMessage = buildMessage(tabs, scheduleBlock);
+      message = fitToLimit(tabs, LIMIT, scheduleBlock);
       truncated = message.length < rawMessage.length;
       if (truncated) {
         console.warn(`[warn] message truncated even-share: ${rawMessage.length}→${message.length}`);
