@@ -1,8 +1,20 @@
 const UPDATES = [
   {
-    "date": "2026-06-13 07:35 KST",
-    "summary": "OpenAI GPT-5.6 'Kindle' 6월 출시 임박·Polymarket 85%+ 베팅\nGemini 3.5 Pro 6월 GA·2M 토큰·Deep Think·Siri 통합 카운트다운\nAnthropic 31.4% 글로벌 LLM 매출 점유·OpenAI 추월 첫 분기 도달\nNVIDIA Nemotron 3 Ultra 550B 6/4 오픈웨이트 - 허용 라이선스 최대 규모\nMistral 파리 13,800 GB300 mid-2026 가동·€1.2B 스웨덴 후속",
+    "date": "2026-06-13 19:20 KST",
+    "summary": "OpenAI, Ona(구 Gitpod) 인수 - Codex 에이전트 보안 클라우드 실행 흡수\nG7 프랑스 6/15~17 Altman·Hassabis·Amodei 동시 회동 사상 첫 3강 정렬\nGPT-5.6 'Kindle' 6월 말 출시 임박·Polymarket 85%+ 베팅\nGemini 3.5 Pro 6월 GA·2M 토큰·Siri 통합 카운트다운\nAnthropic 31.4% 글로벌 LLM 매출 점유·OpenAI 추월 첫 분기",
     "changes": [
+      {
+        "time": "2026-06-12 10:00 PT",
+        "type": "인수",
+        "detail": "OpenAI(Ona 인수). Ona(구 Gitpod) 인수 발표 - Codex 에이전트가 고객 자체 클라우드 안에서 보안·사전 구성 환경으로 멀티스텝 작업 실행하는 인프라 흡수. 재무 조건 비공개·합병 후 양사 독립 법인 유지·Ona 직원 Codex 팀 합류 예정·표준 클로징 절차 대기. Codex 주간 활성 사용자 500만 명 돌파·연초 대비 +400% 성장 베이스가 모네타이제이션 narrative 강화. 핵심 - 에이전트가 노트북 닫힌 상태에서도 장시간 다단계 코딩·테스팅·배포 자동화하는 enterprise 워크플로 lock-in 가시화. Anthropic Claude Fable 5의 Stripe Ruby 코드베이스 전체 마이그레이션 case study가 enterprise lock-in 카테고리에서 frontier로 굳히는 가운데 OpenAI도 동일 카테고리 정공법 진입 시그널. forward 시그널 - 인수 클로징 일정·Codex Enterprise tier 가격 정책·GPT-5.6 'Kindle' 6월 말 출시와 동시 통합 발표 가능성·Gemini 3.5 Pro 6월 GA·G7 정상회담 6/15~17 AI 거버넌스 논의 분기점.",
+        "sector": "OpenAI"
+      },
+      {
+        "time": "2026-06-12 11:00 ET",
+        "type": "거버넌스",
+        "detail": "OpenAI·Google DeepMind·Anthropic(G7 동시 참석). G7 프랑스 Évian-les-Bains 정상회담 6/15~17 - Sam Altman·Demis Hassabis·Dario Amodei 3강 동시 참석 사상 첫 단일 분기점. Macron 대통령 직접 초청·Altman은 첫 G7 참석. 프랑스 G7 의장국 의제 AI 최상단 - 인프라·규제·거버넌스 3축 논의. 직전 3사 CEO 공동 서한 美 의회 제출 - 합성 DNA·AI 바이오 위협 강력 규제 촉구로 사상 첫 정책 공동 전선 형성. forward 시그널 - 정상회담 공동선언 AI 거버넌스 프레임워크 강도가 frontier 라운드 비용 함수·EU AI Act 시행 가속 시그널·美 행정명령·英 AI 안전연구소 통합 카운트다운·Mistral 파리 신규 DC mid-2026 가동과 sovereign AI 의제 연동. 매크로 - GPT-5.6 'Kindle' 6월 말 출시·Gemini 3.5 Pro 6월 GA 임박이 정상회담 직후 frontier 4파전 분기점 중첩.",
+        "sector": "OpenAI"
+      },
       {
         "time": "2026-06-12 16:00 PT",
         "type": "모델 출시 예정",
