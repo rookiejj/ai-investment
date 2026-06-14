@@ -36,7 +36,7 @@ const data = [
         "p2": "15",
         "r1": "57",
         "r2": "68",
-        "rs": "4/28 OpenAI 매출 컨센 하회 WSJ 보도로 -4% 급락·$300B 5년 컴퓨트 공급 계약 펀딩 우려 부각·Oracle '기술 채택 가속·신규 5.5 모델 모멘텀' 적극 방어·RPO $553B",
+        "rs": "Q4 FY26 매출 $19.2B +21%·OCI +93% $5.8B·RPO $638B +$85B QoQ 사상 최대·FY27 가이던스 $74B+ 상향·OpenAI Stargate $300B 베이스·forward P/E 32 sector premium",
         "tk": "ORCL"
       },
       {
@@ -78,7 +78,7 @@ const data = [
         "p2": "192",
         "r1": "216",
         "r2": "337",
-        "rs": "6/12 $203~207 회복·Vera Rubin 양산·HBM4 3사 인증 - 美 CPI 4.2% 헤드라인 3년 최고·근원 2.9% 안도·forward P/E 33 sector premium·earnings yield 3.1% 10y 4.45% gap 135bp",
+        "rs": "6/12 $216 +4.0% 시총 $5.3T 사상 최고·Vera Rubin Q3 양산·HBM4 3사 인증·forward P/E 33 sector premium·earnings yield 3.1% 10y 4.47% gap 137bp",
         "tk": "NVDA"
       },
       {
