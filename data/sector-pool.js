@@ -25,7 +25,7 @@ const SECTOR_POOL = {
     "🛢️ 에너지":         ["XOM","CVX","COP","SLB","LNG","EOG","OXY","MPC","PSX","VLO","HAL","BKR","FANG","KMI","ENB","TRP"],
     "🌱 친환경·청정기술":["ENPH","FSLR","BE","BLDP","PLUG","RUN","NOVA","ARRY","SHLS","CWEN","NEE","BEP"],
     "🚗 자동차·모빌리티":["TSLA","TM","GM","F","STLA","HMC","RIVN","LCID","NIO","XPEV","LI","FORD","BWA","LEA"],
-    "🚀 우주":           ["RKLB","ASTS","LUNR","IRDM","PL","BKSY","SPIR","MNTS","RDW"],
+    "🚀 우주":           ["SPCX","RKLB","ASTS","LUNR","IRDM","PL","BKSY","SPIR","MNTS","RDW"],
     "✈️ 항공":           ["BA","TDG","HEI","HWM","DAL","UAL","LUV","AAL","JOBY","ACHR","TXT"],
     "🛡️ 방산":           ["LMT","RTX","NOC","GD","HII","LHX","KTOS","AVAV","LDOS","BAH","CW"],
     "⚛️ 양자·크립토":    ["IBM","COIN","MSTR","RGTI","IONQ","QUBT","HOOD","MARA","RIOT","CLSK","BTBT","HUT","BTDR","BITF"],
@@ -166,7 +166,7 @@ const US_NAME_OVERRIDE = {
   "LCID": "루시드", "NIO": "니오", "XPEV": "샤오펑", "LI": "리오토",
   "BWA": "보그워너", "LEA": "리어",
   // 우주
-  "MNTS": "모멘터스", "RDW": "레드와이어",
+  "SPCX": "스페이스X", "MNTS": "모멘터스", "RDW": "레드와이어",
   "ASTS": "AST 스페이스모바일", "LUNR": "인튜이티브 머신스",
   "IRDM": "이리듐", "PL": "플래닛 랩스", "BKSY": "블랙스카이", "SPIR": "스파이어",
   // 항공
