@@ -15,6 +15,7 @@
 const fs = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
+const { pickDistinctHeadlines } = require('../cartoon/headline-dedup');
 // Unsplash 사진 BG 폐기 (5/12) — 모든 슬라이드를 7번 CTA와 같은 단조·트렌디한 그라데이션
 // 고정. 사진 키워드 매칭 노이즈 + Unsplash 의존 제거. 코드는 dead로 남겨 두지 않고 미사용.
 // const { fetchImageDataUri } = require('./image-source');
@@ -76,6 +77,15 @@ function summaryToBullets(summary) {
     .map(line => line.trim())
     .filter(Boolean)
     .slice(0, 5);
+}
+
+// 탭 간 dedup이 정한 distinct lead 줄을 이 탭 불릿 맨 앞으로 이동(내용 보존·순서만 변경).
+// 표지(1면)와 같은 헤드라인이 슬라이드 첫 불릿으로 오게 해 일관성 확보 + 첫 불릿 도배 방지.
+function leadFirst(bullets, lead) {
+  if (!lead) return bullets;
+  const idx = bullets.indexOf(lead);
+  if (idx <= 0) return bullets;  // 이미 맨 앞이거나 못 찾음(5줄 밖) → 그대로
+  return [lead, ...bullets.slice(0, idx), ...bullets.slice(idx + 1)];
 }
 
 function kstNow() {
@@ -165,10 +175,12 @@ async function main() {
 
   // 1) 데이터 로드 — Supabase Edge Function에서 5탭 main entries 한 번에
   const tabResp = await fetchTabData();
+  // 탭 간 첫 불릿 중복 제거 — 표지(1면)와 동일 로직으로 distinct lead 산출 후 각 탭 첫 줄로 정렬
+  const heads = pickDistinctHeadlines(tabResp.updates || {});
   const tabPayloads = TABS.map(t => {
     const entries = tabResp.updates?.[t.key] || [];
     const entry = entries[0] || null;
-    const bullets = entry ? summaryToBullets(entry.summary) : [];
+    const bullets = entry ? leadFirst(summaryToBullets(entry.summary), heads[t.key]) : [];
     return { ...t, bullets };
   });
 
