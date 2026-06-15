@@ -43,6 +43,8 @@ async function fetchUpdates() {
   return j.updates || {};
 }
 
+const { pickDistinctHeadlines } = require('./headline-dedup');
+
 function pickHeadline(entry) {
   if (!entry) return '';
   const raw = entry.summary || entry.text || '';
@@ -149,6 +151,8 @@ async function main() {
   const volNo = `VOL. MMXXVI · No. ${dayOfYear}`;
 
   const TAB_IDS = { KR:'kr', STOCKS:'stocks', AI:'ai', COMMODITY:'commodity', UNICORN:'unicorn' };
+  // 탭 간 헤드라인 중복 제거 — 같은 사건이 여러 탭 첫 줄에 올라온 날에도 1면 중복 방지
+  const heads = pickDistinctHeadlines(updates);
   const tokens = {
     '{{DATE_KO}}': dateKo,
     '{{VOL_NO}}': volNo,
@@ -156,7 +160,7 @@ async function main() {
   };
   for (const [key, tab] of Object.entries(TAB_IDS)) {
     const entry = (updates[tab] || [])[0];
-    tokens[`{{HEAD_${key}}}`] = pickHeadline(entry) || '(데이터 없음)';
+    tokens[`{{HEAD_${key}}}`] = heads[tab] || pickHeadline(entry) || '(데이터 없음)';
     tokens[`{{SUB_${key}}}`] = ''; // sub 줄은 더 이상 사용 안 함 (디자인 변경 후)
     console.log(`  ${key.padEnd(10)} ${entry?.date || '?'}  ${tokens[`{{HEAD_${key}}}`]}`);
   }

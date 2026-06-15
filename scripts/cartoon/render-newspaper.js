@@ -28,6 +28,7 @@
 const { chromium } = require('playwright');
 const path = require('path');
 const fs = require('fs');
+const { pickDistinctHeadlines } = require('./headline-dedup');
 
 // --catchphrase "..."  --all  파싱
 const args = process.argv.slice(2);
@@ -126,10 +127,12 @@ const TAB_IDS = { KR: 'kr', STOCKS: 'stocks', AI: 'ai', COMMODITY: 'commodity', 
         '{{VOL_NO}}': volNo,
         '{{CATCHPHRASE}}': (catchphrase || '신고가 행진과<br>호르무즈, 같은 무대').replace(/\\n/g, '<br>'),
       };
+      // 탭 간 헤드라인 중복 제거 — 같은 사건이 여러 탭 첫 줄에 올라온 날에도 1면 중복 방지
+      const heads = pickDistinctHeadlines(updates);
       for (const [key, tabId] of Object.entries(TAB_IDS)) {
         const entry = (updates[tabId] || [])[0];
         const { head, sub } = pickFromEntry(entry);
-        tokens[`{{HEAD_${key}}}`] = head || '(데이터 없음)';
+        tokens[`{{HEAD_${key}}}`] = heads[tabId] || head || '(데이터 없음)';
         tokens[`{{SUB_${key}}}`] = sub || '';
       }
       for (const [tok, val] of Object.entries(tokens)) {
