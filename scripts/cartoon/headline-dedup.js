@@ -59,46 +59,102 @@ function summaryLines(entry) {
 
 // updates: { kr:[entry,...], stocks:[...], ... } (read-tab-data 응답의 .updates)
 // 반환: { kr:'헤드라인', stocks:'...', ... } — 탭 간 중복 제거된 1면 헤드라인.
-function pickDistinctHeadlines(updates, order = PREEMPT_ORDER) {
-  const used = [];           // 이미 채택된 헤드라인 토큰 집합들
-  const result = {};
-  for (const tab of order) {
-    const lines = summaryLines((updates[tab] || [])[0]);
-    let chosen = '';
-    for (const line of lines) {
-      const tok = tokenize(line);
-      if (!used.some(u => isDuplicate(u, tok))) { chosen = line; used.push(tok); break; }
-    }
-    if (!chosen && lines.length) {  // 모든 줄이 기존과 겹침 → 첫 줄 폴백
-      chosen = lines[0];
-      used.push(tokenize(chosen));
-    }
-    result[tab] = chosen;
+// ─── 도메인 소유권 분류 ────────────────────────────────────
+// 각 탭(도메인)의 식별 키워드. 한 줄을 어느 탭이 "소유"하는지 판정하는 근거.
+// 토큰은 tokenize() 출력 형태와 동일해야 매칭됨(약어 대문자·한글 노운).
+const DOMAIN_KW = {
+  kr: new Set([
+    'KOSPI', '코스피', '코스닥', 'KOSDAQ', '삼성전자', 'SK하이닉스', '외국인', '외인',
+    '원화', '원달러', '한국', '이재명', '한미', '한은', '한국은행', '코스피', '증시', '한미전략투자공사',
+  ]),
+  stocks: new Set([
+    'FOMC', 'Fed', 'Warsh', 'Powell', 'dot', 'plot', '나스닥', '다우', 'Nasdaq', 'Treasury',
+    'ADBE', 'NVDA', 'AAPL', 'MSFT', 'SPCX', 'SpaceX', 'CapEx', 'RPO', '연준',
+  ]),
+  ai: new Set([
+    'GPT', 'Gemini', 'Claude', 'Anthropic', 'OpenAI', 'Altman', 'Hassabis', 'Amodei',
+    'LLM', 'xAI', 'Mistral', 'Llama', 'DeepMind', 'Fable', 'Kindle', 'Vertex', 'iris',
+  ]),
+  commodity: new Set([
+    'WTI', '브렌트', '원유', 'OPEC', '호르무즈', 'BTC', 'ETH', 'SOL', 'XRP', '비트코인', '이더',
+    '금', '은', '구리', '니켈', '리튬', '원자재', '농산물', '천연가스', '플래티널', '플래티넘', 'spot', '이란',
+  ]),
+  unicorn: new Set([
+    'Series', '펀딩', 'Databricks', 'Anduril', 'Plaid', 'Shield', 'Saronic', 'Polymarket',
+    'Discord', 'secondary', 'primary', '라운드', '밸류에이션', '비상장', '프리IPO',
+  ]),
+};
+
+// 한 줄의 소유 도메인 판정. 키워드 최다 매칭 도메인.
+// 동점이면 그 줄이 현재 있는 탭(fallbackTab) 우선 — 자기 탭에서 쓴 자기 도메인 줄 보호.
+// 매칭 0이면 fallbackTab(자기 탭) — 일반 줄은 자기 탭 소유로 본다.
+function classifyOwner(tokens, fallbackTab) {
+  const scores = {};
+  let max = 0;
+  for (const [d, kw] of Object.entries(DOMAIN_KW)) {
+    let s = 0;
+    for (const t of tokens) if (kw.has(t)) s++;
+    scores[d] = s;
+    if (s > max) max = s;
   }
-  return result;
+  if (max === 0) return fallbackTab;
+  if ((scores[fallbackTab] || 0) === max) return fallbackTab; // 동점 → 자기 탭
+  for (const [d, s] of Object.entries(scores)) if (s === max) return d;
+  return fallbackTab;
 }
 
-// 탭별 불릿 전역 dedup — 슬라이드 2~6면용.
-// 선점 순서로 돌며, 앞 탭이 이미 쓴 줄과 겹치는 불릿은 뒤 탭에서 **완전히 제거**한다.
-// (첫 불릿만 분산이 아니라 하단 줄까지 같은 사건 중복 제거)
-// 각 탭은 자기 고유 줄만 max개까지 남긴다. 많이 겹치면 불릿 수가 줄어들 수 있다.
-// 반환: { kr:[줄,...], stocks:[...], ... } — 표시 순서는 호출부가 정함.
+// ─── 탭별 불릿 dedup (도메인 소유권 기반) ──────────────────
+// 같은 사건이 여러 탭에 있으면 **소유 도메인 탭이 가져가고, 빌려온 탭에선 제거**한다.
+// 처리 순서가 아니라 도메인이 우선권. (예: FOMC는 kr이 먼저여도 stocks가 소유 → kr에서 제거)
+// 단, 같은 사건이라도 *프레이밍 도메인이 다르면 다른 줄*로 본다 — 같은 토큰을 공유해도
+// 소유 도메인이 다르면 병합하지 않음. (예: "G7-이재명 출국"=kr 소유, "G7-AI 3강"=ai 소유 → 둘 다 유지)
+// 반환: { kr:[줄,...], ... } — 각 탭 원래 순서 보존, max개 한도.
 function dedupeBulletsByTab(updates, order = PREEMPT_ORDER, max = 5) {
-  const used = [];
+  // 1) 모든 탭의 후보 줄을 인스턴스로 수집 + 소유 도메인 판정
+  const instances = [];
+  for (const tab of order) {
+    summaryLines((updates[tab] || [])[0]).forEach((line, idx) => {
+      const tokens = tokenize(line);
+      instances.push({ tab, idx, line, tokens, owner: classifyOwner(tokens, tab) });
+    });
+  }
+  // 2) (소유 도메인 동일 + 토큰 중복) 기준으로 클러스터링 — 같은 사건·같은 프레이밍끼리만 묶임
+  const groups = [];
+  for (const inst of instances) {
+    const g = groups.find(gr => gr.owner === inst.owner
+      && gr.members.some(m => isDuplicate(m.tokens, inst.tokens)));
+    if (g) g.members.push(inst);
+    else groups.push({ owner: inst.owner, members: [inst] });
+  }
+  // 3) 그룹마다 keeper 선정 — 소유 탭 인스턴스 우선, 없으면 선점 우선순위 높은 탭
+  const prio = t => { const i = order.indexOf(t); return i < 0 ? 999 : i; };
+  const keep = new Set();
+  for (const g of groups) {
+    let keeper = g.members.find(m => m.tab === g.owner);
+    if (!keeper) keeper = g.members.slice().sort((a, b) => prio(a.tab) - prio(b.tab))[0];
+    keep.add(keeper);
+  }
+  // 4) 탭별로 원래 순서대로 keeper만 추려 반환
   const result = {};
   for (const tab of order) {
-    const lines = summaryLines((updates[tab] || [])[0]);
-    const kept = [];
-    for (const line of lines) {
-      const tok = tokenize(line);
-      if (used.some(u => isDuplicate(u, tok))) continue; // 앞 탭과 겹치면 제거
-      kept.push(line);
-      used.push(tok);
-      if (kept.length >= max) break;
-    }
-    result[tab] = kept;
+    result[tab] = instances
+      .filter(i => i.tab === tab && keep.has(i))
+      .sort((a, b) => a.idx - b.idx)
+      .map(i => i.line)
+      .slice(0, max);
   }
   return result;
 }
 
-module.exports = { pickDistinctHeadlines, dedupeBulletsByTab, tokenize, isDuplicate, PREEMPT_ORDER };
+// 표지(1면) 헤드라인 — 탭별 dedup 결과의 첫 줄. 슬라이드 첫 불릿과 일관.
+function pickDistinctHeadlines(updates, order = PREEMPT_ORDER) {
+  const deduped = dedupeBulletsByTab(updates, order, 5);
+  const result = {};
+  for (const tab of order) {
+    const lines = summaryLines((updates[tab] || [])[0]);
+    result[tab] = (deduped[tab] || [])[0] || lines[0] || ''; // 전부 제거된 극단 케이스 폴백
+  }
+  return result;
+}
+
+module.exports = { pickDistinctHeadlines, dedupeBulletsByTab, classifyOwner, tokenize, isDuplicate, DOMAIN_KW, PREEMPT_ORDER };
