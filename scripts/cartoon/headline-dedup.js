@@ -78,4 +78,27 @@ function pickDistinctHeadlines(updates, order = PREEMPT_ORDER) {
   return result;
 }
 
-module.exports = { pickDistinctHeadlines, tokenize, isDuplicate, PREEMPT_ORDER };
+// 탭별 불릿 전역 dedup — 슬라이드 2~6면용.
+// 선점 순서로 돌며, 앞 탭이 이미 쓴 줄과 겹치는 불릿은 뒤 탭에서 **완전히 제거**한다.
+// (첫 불릿만 분산이 아니라 하단 줄까지 같은 사건 중복 제거)
+// 각 탭은 자기 고유 줄만 max개까지 남긴다. 많이 겹치면 불릿 수가 줄어들 수 있다.
+// 반환: { kr:[줄,...], stocks:[...], ... } — 표시 순서는 호출부가 정함.
+function dedupeBulletsByTab(updates, order = PREEMPT_ORDER, max = 5) {
+  const used = [];
+  const result = {};
+  for (const tab of order) {
+    const lines = summaryLines((updates[tab] || [])[0]);
+    const kept = [];
+    for (const line of lines) {
+      const tok = tokenize(line);
+      if (used.some(u => isDuplicate(u, tok))) continue; // 앞 탭과 겹치면 제거
+      kept.push(line);
+      used.push(tok);
+      if (kept.length >= max) break;
+    }
+    result[tab] = kept;
+  }
+  return result;
+}
+
+module.exports = { pickDistinctHeadlines, dedupeBulletsByTab, tokenize, isDuplicate, PREEMPT_ORDER };
