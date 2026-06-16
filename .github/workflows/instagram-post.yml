@@ -174,8 +174,6 @@ jobs:
       # 자동 흐름(cartoon-generate 직후 instagram-post 발사)에선 파일 나이 ~5분이라 항상 통과.
       - name: 오늘의 카툰 다운로드 (캐러셀·Reels 공용 소스)
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_IMAGE_MODEL: nano-banana-pro-preview
           BRIEFICK_SUPABASE_SECRET_KEY: ${{ secrets.BRIEFICK_SUPABASE_SECRET_KEY }}
           SUPABASE_URL: https://ytvcgoldauysvnqckzze.supabase.co
         run: |
