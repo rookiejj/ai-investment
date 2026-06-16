@@ -2683,10 +2683,11 @@ function openModal(tk,market,_peerSwap){
     </div>
     `:''}
 
+    ${mentions.length?`
     <div class="modal-section">
       <div class="modal-sec-label">최근 사건</div>
       <div class="mentions-list">
-        ${mentions.length?mentions.map(m=>`
+        ${mentions.map(m=>`
           <div class="mention-item">
             <div class="mention-head">
               <span class="mention-tab" data-t="${escapeHtml(m.tab)}">${TAB_LABEL[m.tab]||m.tab}</span>
@@ -2694,9 +2695,10 @@ function openModal(tk,market,_peerSwap){
             </div>
             <div class="mention-text">${escapeHtml(m.text)}</div>
           </div>
-        `).join(''):'<div style="color:var(--mut);font-size:14px;padding:12px">최근 30일 직접 언급 없음</div>'}
+        `).join('')}
       </div>
     </div>
+    `:''}
 
     ${peers.length?`
     <div class="modal-section">
