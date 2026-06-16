@@ -62,6 +62,16 @@ jobs:
           SUPABASE_URL: https://ytvcgoldauysvnqckzze.supabase.co
         run: node scripts/cartoon/generate.js --upload
 
+      # 오래된 dated PNG 정리 — 최신 30장(~15일)만 남기고 삭제. best effort, 실패해도 무시.
+      - name: 오래된 cartoon PNG 정리
+        if: always()
+        continue-on-error: true
+        env:
+          BRIEFICK_SUPABASE_SECRET_KEY: ${{ secrets.BRIEFICK_SUPABASE_SECRET_KEY }}
+          SUPABASE_URL: https://ytvcgoldauysvnqckzze.supabase.co
+          CARTOON_KEEP: '30'
+        run: node scripts/cartoon/cleanup-old.js
+
       - name: 종료 알림 (항상 실행)
         if: always()
         run: |
