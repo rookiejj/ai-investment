@@ -97,17 +97,46 @@
   }
   .footrule .turn { font-family: 'Fraunces', serif; font-style: italic; color: var(--accent); }
 
-  /* ============ SLIDE 1 — HOOK ============ */
-  .s-hook .center { gap: 38px; }
-  .s-hook .head {
+  /* ============ SLIDE 1 — HERO (full-bleed cinematic photo) ============ */
+  .s-hero { padding: 0; }
+  .s-hero::before, .s-hero::after { display: none; } /* 종이결·비네팅 제거 */
+  .hero-bg {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: 50% 50%;
+  }
+  /* 상·하단 어둡게 — 텍스트 가독성. 중앙 일출은 살림 */
+  .hero-scrim {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg,
+      rgba(9,15,26,0.66) 0%, rgba(9,15,26,0.30) 22%,
+      rgba(9,15,26,0.04) 44%, rgba(9,15,26,0.10) 62%, rgba(9,15,26,0.72) 100%);
+  }
+  .hero-content {
+    position: absolute; inset: 0; z-index: 2;
+    padding: 76px 80px 72px;
+    display: flex; flex-direction: column; color: #fff;
+  }
+  .hero-top { display: flex; align-items: center; justify-content: space-between; }
+  .hero-wm { font-family: 'Fraunces', serif; font-weight: 800; font-size: 42px; letter-spacing: 0.3px; color: #fff; }
+  .hero-wm .dot { color: #F0C067; }
+  .hero-edition { font-family: 'Fraunces', serif; font-style: italic; font-size: 27px; color: rgba(255,255,255,0.82); letter-spacing: 0.3px; }
+  .hero-mid { margin-top: 64px; display: flex; flex-direction: column; gap: 26px; }
+  .hero-kicker {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 600;
+    font-size: 40px; color: #F0C067; letter-spacing: 0.3px;
+    text-shadow: 0 2px 18px rgba(0,0,0,0.5);
+  }
+  .hero-head {
     font-family: 'Nanum Myeongjo', serif; font-weight: 800;
-    font-size: 116px; line-height: 1.12; letter-spacing: -3px; color: var(--ink);
+    font-size: 104px; line-height: 1.16; letter-spacing: -2.5px; color: #fff;
+    text-shadow: 0 4px 30px rgba(0,0,0,0.55);
   }
-  .s-hook .kick {
-    font-size: 40px; font-weight: 500; color: var(--ink2); line-height: 1.5;
-    letter-spacing: -0.5px; max-width: 800px;
+  .hero-foot {
+    margin-top: auto; display: flex; align-items: center; justify-content: space-between;
+    font-size: 30px; font-weight: 600; color: rgba(255,255,255,0.92); letter-spacing: -0.3px;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.6);
   }
-  .s-hook .kick b { color: var(--ink); font-weight: 700; }
+  .hero-foot .turn { font-family: 'Fraunces', serif; font-style: italic; color: #F0C067; }
 
   /* ============ SLIDE 2 — PROBLEM ============ */
   .s-prob .center { gap: 42px; }
@@ -223,18 +252,24 @@
 </head>
 <body>
 
-<!-- ===================== SLIDE 1 — HOOK ===================== -->
-<div class="slide s-hook" data-slide="1">
-  <div class="mast">
-    <div class="left"><img class="owl" data-owl src="" alt=""><span class="name">Briefick</span></div>
-    <div class="right">Morning Brief · <span class="pageno">No. 01</span></div>
+<!-- ===================== SLIDE 1 — HERO (full-bleed photo) ===================== -->
+<div class="slide s-hero" data-slide="1">
+  <div class="hero-bg" data-hero style="background-image:url('__HERO__')"></div>
+  <div class="hero-scrim"></div>
+  <div class="hero-content">
+    <div class="hero-top">
+      <span class="hero-wm">briefick<span class="dot">.</span></span>
+      <span class="hero-edition">Morning Brief</span>
+    </div>
+    <div class="hero-mid">
+      <div class="hero-kicker">매일 아침 8시</div>
+      <div class="hero-head">밤새, 시장을<br>지켜봤습니다.</div>
+    </div>
+    <div class="hero-foot">
+      <span>6개 시장 핵심만, 한 장으로</span>
+      <span class="turn">넘겨보기 →</span>
+    </div>
   </div>
-  <div class="center">
-    <div class="kicker">오늘의 질문</div>
-    <div class="head">오늘 시장,<br><span class="accent">3줄로</span> 설명할<br>수 있나요?</div>
-    <div class="kick">증권사 앱 다섯 개, 뉴스 알림 수십 개.<br><b>그런데 왜 아직도 한마디로 정리가 안 될까요.</b></div>
-  </div>
-  <div class="footrule"><span>흩어진 경제 뉴스의 아침</span><span class="turn">넘겨보기 →</span></div>
 </div>
 
 <!-- ===================== SLIDE 2 — PROBLEM ===================== -->

@@ -32,6 +32,13 @@ async function main() {
   const owlUri = `data:image/jpeg;base64,${owlBuf.toString('base64')}`;
   html = html.replace(/(<img[^>]*\bdata-owl\b[^>]*\bsrc=")[^"]*(")/g, `$1${owlUri}$2`);
 
+  // 1페이지 풀블리드 히어로 사진 인젝션 (hero/owl.png) — __HERO__ 플레이스홀더 치환
+  const heroPath = path.join(__dirname, 'hero', 'owl.png');
+  if (fs.existsSync(heroPath)) {
+    const heroUri = `data:image/png;base64,${fs.readFileSync(heroPath).toString('base64')}`;
+    html = html.replace('__HERO__', heroUri);
+  }
+
   // 슬라이드 개수 파악
   const slideCount = (html.match(/data-slide="\d+"/g) || []).length;
   if (!slideCount) throw new Error('template.html에서 .slide[data-slide] 를 찾지 못함');
