@@ -147,28 +147,29 @@
     font-family: 'Noto Serif KR', serif; font-weight: 900;
     font-size: 62px; letter-spacing: -1.6px; color: var(--ink); margin-top: 18px; line-height: 1.2;
   }
-  .phonewrap { flex: 1; display: flex; align-items: center; justify-content: center; padding-top: 24px; }
+  .phonewrap { flex: 1; display: flex; align-items: stretch; justify-content: center; padding-top: 22px; }
   .phone {
-    width: 752px; border-radius: 60px; padding: 18px;
+    width: 812px; border-radius: 58px; padding: 16px;
     background: linear-gradient(160deg, #3a342c, #211d18);
-    box-shadow: 0 44px 90px rgba(54,40,24,0.4), 0 0 0 2px rgba(37,32,26,0.12);
+    box-shadow: 0 40px 84px rgba(54,40,24,0.4), 0 0 0 2px rgba(37,32,26,0.12);
+    display: flex; flex-direction: column;
   }
-  .phone-screen { background: #9bbbd4; border-radius: 42px; overflow: hidden; font-family: 'Pretendard', sans-serif; }
-  .kk-top { background: #9bbbd4; padding: 26px 30px 18px; display: flex; align-items: center; gap: 16px; }
+  .phone-screen { background: #9bbbd4; border-radius: 44px; overflow: hidden; font-family: 'Pretendard', sans-serif; flex: 1; display: flex; flex-direction: column; }
+  .kk-top { background: #9bbbd4; padding: 24px 30px 14px; display: flex; align-items: center; gap: 16px; }
   .kk-top .back { color: #2b2b2b; font-size: 30px; font-weight: 700; }
   .kk-top .name { color: #1a1a1a; font-size: 30px; font-weight: 700; letter-spacing: -0.5px; }
   .kk-top .badge { width: 26px; height: 26px; background: var(--terra); border-radius: 50%; display: inline-flex; align-items:center; justify-content:center; color:#fff; font-size:16px; font-weight:800; }
-  .kk-body { background: #9bbbd4; padding: 10px 26px 34px; }
-  .kk-date { text-align: center; font-size: 22px; color: rgba(0,0,0,0.45); font-weight: 600; margin: 10px 0 24px; }
+  .kk-body { background: #9bbbd4; padding: 6px 24px 26px; flex: 1; }
+  .kk-date { text-align: center; font-size: 22px; color: rgba(0,0,0,0.45); font-weight: 600; margin: 8px 0 18px; }
   .kk-msgrow { display: flex; align-items: flex-start; gap: 16px; }
-  .kk-ava { width: 62px; height: 62px; border-radius: 20px; flex-shrink: 0; }
-  .kk-bubble { background: #fff; border-radius: 6px 24px 24px 24px; padding: 30px; max-width: 540px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
-  .kk-h { font-size: 27px; font-weight: 800; color: #111; letter-spacing: -0.5px; display:flex; align-items:center; gap:10px; }
-  .kk-sub { font-size: 19px; color: #888; font-weight: 600; margin: 6px 0 18px; }
-  .kk-sec { margin-top: 16px; }
-  .kk-sec .lbl { font-size: 23px; font-weight: 800; color: #111; letter-spacing: -0.4px; }
-  .kk-sec ul { list-style: none; margin: 8px 0 0; }
-  .kk-sec li { font-size: 20px; color: #333; line-height: 1.5; font-weight: 500; padding-left: 18px; position: relative; margin-bottom: 4px; }
+  .kk-ava { width: 60px; height: 60px; border-radius: 20px; flex-shrink: 0; }
+  .kk-bubble { background: #fff; border-radius: 6px 24px 24px 24px; padding: 30px 30px 28px; max-width: 624px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+  .kk-h { font-size: 29px; font-weight: 800; color: #111; letter-spacing: -0.5px; display:flex; align-items:center; gap:10px; }
+  .kk-sub { font-size: 20px; color: #888; font-weight: 600; margin: 6px 0 16px; padding-bottom: 16px; border-bottom: 1px solid #eee; }
+  .kk-sec { margin-top: 18px; }
+  .kk-sec .lbl { font-size: 24px; font-weight: 800; color: #111; letter-spacing: -0.4px; }
+  .kk-sec ul { list-style: none; margin: 9px 0 0; }
+  .kk-sec li { font-size: 21px; color: #333; line-height: 1.46; font-weight: 500; padding-left: 18px; position: relative; margin-bottom: 5px; }
   .kk-sec li::before { content: "•"; position: absolute; left: 0; color: var(--terra); }
   .kk-sec li .up { color: var(--kk-up); font-weight: 700; }
   .kk-sec li .dn { color: var(--kk-dn); font-weight: 700; }
@@ -294,7 +295,7 @@
             <img class="kk-ava" data-owl src="" alt="">
             <div class="kk-bubble">
               <div class="kk-h">📊 브리픽 데일리</div>
-              <div class="kk-sub">2026-06-17 (수) · 오전 8:00</div>
+              <div class="kk-sub">2026-06-17 (수) · 오전 8:00 · 6개 시장</div>
               <div class="kk-sec">
                 <div class="lbl">🇰🇷 한국 마켓</div>
                 <ul>
@@ -310,9 +311,23 @@
                 </ul>
               </div>
               <div class="kk-sec">
+                <div class="lbl">🤖 AI 기업</div>
+                <ul>
+                  <li>오픈AI 신모델 공개 · 추론 속도 2배</li>
+                  <li>앤트로픽 기업가치 $1,800억 협상</li>
+                </ul>
+              </div>
+              <div class="kk-sec">
                 <div class="lbl">🛢️ 원자재·크립토</div>
                 <ul>
                   <li>BTC $68,200 <span class="up">+2.4%</span> · 금 $2,380/oz</li>
+                  <li>WTI $74/배럴 · 공급 차질 우려 부각</li>
+                </ul>
+              </div>
+              <div class="kk-sec">
+                <div class="lbl">🦄 유니콘·프리IPO</div>
+                <ul>
+                  <li>스페이스X 로드쇼 D-3 · 밸류 $3,500억</li>
                 </ul>
               </div>
             </div>
