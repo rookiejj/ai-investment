@@ -7,6 +7,7 @@ node_modules/
 package-lock.json
 scripts/instagram/out/
 scripts/cartoon/out/
+scripts/promo/out/
 
 # 2026-05-14 sandbox proxy가 Supabase 차단이라 데이터 파일도 git에 두고
 # 작업 공간으로 사용. GitHub Actions runner(db-sync.yml)가 push 받으면 자동 DB sync.

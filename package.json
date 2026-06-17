@@ -9,7 +9,8 @@
   "scripts": {
     "ig:render": "node scripts/instagram/render-slides.js",
     "ig:publish": "node scripts/instagram/publish.js",
-    "ig:run": "node scripts/instagram/render-slides.js && node scripts/instagram/publish.js"
+    "ig:run": "node scripts/instagram/render-slides.js && node scripts/instagram/publish.js",
+    "promo:render": "node scripts/promo/render.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0",

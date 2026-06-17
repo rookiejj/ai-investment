@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>Briefick Promo Carousel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<style>
+  :root {
+    --bg: #07100c;
+    --bg2: #0a1611;
+    --white: #ffffff;
+    --green: #18E299;
+    --green-deep: #0fa76e;
+    --text: #ffffff;
+    --text-mid: rgba(255,255,255,0.72);
+    --text-mute: rgba(255,255,255,0.46);
+    --line: rgba(255,255,255,0.10);
+    --line-strong: rgba(255,255,255,0.18);
+    --kk-yellow: #FEE500;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 1080px; height: 1350px;
+    font-family: 'Pretendard', 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .num, .en { font-family: 'Inter', 'Pretendard', sans-serif; }
+
+  .slide {
+    width: 1080px; height: 1350px;
+    position: relative;
+    overflow: hidden;
+    padding: 96px 88px;
+    display: flex;
+    flex-direction: column;
+    color: var(--text);
+    background:
+      radial-gradient(ellipse 95% 45% at 50% -2%, rgba(24,226,153,0.20) 0%, rgba(7,16,12,0) 60%),
+      radial-gradient(ellipse 110% 50% at 50% 102%, rgba(15,167,110,0.16) 0%, rgba(7,16,12,0) 62%),
+      linear-gradient(180deg, #07100c 0%, #08130e 50%, #07100c 100%);
+  }
+  /* subtle dotted grid texture */
+  .slide::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.045) 1.4px, transparent 1.4px);
+    background-size: 46px 46px;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .slide > * { position: relative; z-index: 1; }
+
+  /* ---- shared atoms ---- */
+  .brandrow { display: flex; align-items: center; justify-content: space-between; }
+  .brandmark { display: flex; align-items: center; gap: 18px; }
+  .brandmark .owl { width: 58px; height: 58px; border-radius: 50%; display: block; }
+  .brandmark .wm { font-family: 'Inter', sans-serif; font-size: 40px; font-weight: 800; letter-spacing: -1px; color: #fff; }
+  .brandmark .wm .dot { color: var(--green); }
+  .pageno {
+    font-family: 'Geist Mono', monospace; font-size: 24px; font-weight: 600;
+    color: var(--text-mute); letter-spacing: 1px;
+  }
+  .overline {
+    font-family: 'Geist Mono', monospace;
+    font-size: 26px; font-weight: 600; letter-spacing: 4px;
+    color: var(--green); text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 16px;
+  }
+  .overline::before {
+    content: ""; width: 46px; height: 2px; background: var(--green); display: inline-block;
+  }
+  .swipe {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-size: 27px; font-weight: 600; color: var(--text-mute); letter-spacing: -0.3px;
+  }
+  .swipe .arrow { font-size: 30px; color: var(--green); }
+  .center { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+  /* ============ SLIDE 1 — HOOK ============ */
+  .s-hook .center { gap: 40px; }
+  .s-hook .huge {
+    font-size: 128px; font-weight: 800; line-height: 1.04; letter-spacing: -4px;
+    color: #fff;
+  }
+  .s-hook .huge .g { color: var(--green); }
+  .s-hook .kick {
+    font-size: 40px; font-weight: 600; color: var(--text-mid); letter-spacing: -0.6px;
+    line-height: 1.5; max-width: 760px;
+  }
+  .s-hook .kick b { color: #fff; font-weight: 700; }
+
+  /* ============ SLIDE 2 — PROBLEM ============ */
+  .s-prob .center { gap: 44px; }
+  .s-prob .big {
+    font-size: 92px; font-weight: 800; line-height: 1.12; letter-spacing: -3px; color: #fff;
+  }
+  .s-prob .big .strike { color: var(--text-mute); text-decoration: line-through; text-decoration-thickness: 4px; }
+  .s-prob .big .g { color: var(--green); }
+  .s-prob .body {
+    font-size: 40px; font-weight: 500; color: var(--text-mid); line-height: 1.55; letter-spacing: -0.5px;
+    max-width: 800px;
+  }
+  .chaos { display: flex; flex-wrap: wrap; gap: 16px; max-width: 880px; }
+  .chaos .chip {
+    font-size: 27px; font-weight: 600; color: var(--text-mute);
+    padding: 14px 26px; border: 1px solid var(--line-strong); border-radius: 9999px;
+    background: rgba(255,255,255,0.03);
+  }
+
+  /* ============ SLIDE 3 — SOLUTION ============ */
+  .s-sol .center { gap: 40px; }
+  .s-sol .big {
+    font-size: 104px; font-weight: 800; line-height: 1.08; letter-spacing: -3.5px; color: #fff;
+  }
+  .s-sol .big .g { color: var(--green); }
+  .s-sol .body {
+    font-size: 42px; font-weight: 500; color: var(--text-mid); line-height: 1.5; letter-spacing: -0.5px;
+    max-width: 820px;
+  }
+  .s-sol .body b { color: #fff; font-weight: 700; }
+  .pills { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 12px; }
+  .pills .pill {
+    font-size: 30px; font-weight: 600; color: #fff;
+    padding: 16px 30px; border-radius: 9999px;
+    border: 1px solid rgba(24,226,153,0.35);
+    background: rgba(24,226,153,0.08);
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+
+  /* ============ SLIDE 4 — PROOF (phone) ============ */
+  .s-proof { align-items: stretch; }
+  .s-proof .title {
+    font-size: 60px; font-weight: 800; letter-spacing: -2px; color: #fff; margin-top: 18px; line-height: 1.15;
+  }
+  .s-proof .title .g { color: var(--green); }
+  .phonewrap { flex: 1; display: flex; align-items: center; justify-content: center; padding-top: 30px; }
+  .phone {
+    width: 760px; border-radius: 60px; padding: 18px;
+    background: linear-gradient(160deg, #2a2a2e, #141416);
+    box-shadow: 0 44px 100px rgba(0,0,0,0.6), 0 0 0 2px rgba(255,255,255,0.05);
+  }
+  .phone-screen { background: #9bbbd4; border-radius: 42px; overflow: hidden; }
+  .kk-top {
+    background: #9bbbd4; padding: 26px 30px 18px; display: flex; align-items: center; gap: 16px;
+  }
+  .kk-top .back { color: #2b2b2b; font-size: 30px; font-weight: 700; }
+  .kk-top .name { color: #1a1a1a; font-size: 30px; font-weight: 700; letter-spacing: -0.5px; }
+  .kk-top .badge { width: 26px; height: 26px; background: var(--green); border-radius: 50%; display: inline-flex; align-items:center; justify-content:center; color:#063; font-size:18px; font-weight:800;}
+  .kk-body { background: #9bbbd4; padding: 10px 26px 34px; }
+  .kk-date { text-align: center; font-size: 22px; color: rgba(0,0,0,0.45); font-weight: 600; margin: 10px 0 24px; }
+  .kk-msgrow { display: flex; align-items: flex-start; gap: 16px; }
+  .kk-ava { width: 62px; height: 62px; border-radius: 20px; flex-shrink: 0; }
+  .kk-bubble {
+    background: #fff; border-radius: 6px 24px 24px 24px; padding: 30px 30px 32px;
+    max-width: 540px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  .kk-h { font-size: 27px; font-weight: 800; color: #111; letter-spacing: -0.5px; display:flex; align-items:center; gap:10px; }
+  .kk-sub { font-size: 19px; color: #888; font-weight: 600; margin: 6px 0 18px; }
+  .kk-sec { margin-top: 16px; }
+  .kk-sec .lbl { font-size: 23px; font-weight: 800; color: #111; letter-spacing: -0.4px; }
+  .kk-sec ul { list-style: none; margin: 8px 0 0; }
+  .kk-sec li { font-size: 20px; color: #333; line-height: 1.5; font-weight: 500; padding-left: 18px; position: relative; margin-bottom: 4px; }
+  .kk-sec li::before { content: "•"; position: absolute; left: 0; color: var(--green-deep); }
+  .kk-sec li .up { color: #d23; font-weight: 700; }
+  .kk-sec li .dn { color: #06f; font-weight: 700; }
+
+  /* ============ SLIDE 5 — WHY ============ */
+  .s-why .title {
+    font-size: 78px; font-weight: 800; letter-spacing: -2.5px; line-height: 1.12; color: #fff; margin-top: 16px;
+  }
+  .s-why .title .g { color: var(--green); }
+  .feats { margin-top: 64px; display: flex; flex-direction: column; gap: 30px; }
+  .feat { display: flex; align-items: flex-start; gap: 28px; padding-bottom: 30px; border-bottom: 1px solid var(--line); }
+  .feat:last-child { border-bottom: none; }
+  .feat .ic {
+    width: 84px; height: 84px; border-radius: 22px; flex-shrink: 0;
+    background: rgba(24,226,153,0.10); border: 1px solid rgba(24,226,153,0.30);
+    display: flex; align-items: center; justify-content: center; font-size: 42px;
+  }
+  .feat .ft { display: flex; flex-direction: column; gap: 8px; padding-top: 4px; }
+  .feat .ft .h { font-size: 40px; font-weight: 800; color: #fff; letter-spacing: -1px; }
+  .feat .ft .d { font-size: 29px; font-weight: 500; color: var(--text-mid); letter-spacing: -0.4px; line-height: 1.4; }
+
+  /* ============ SLIDE 6 — CTA ============ */
+  .s-cta .center { gap: 36px; }
+  .s-cta .huge {
+    font-size: 110px; font-weight: 800; line-height: 1.06; letter-spacing: -3.5px; color: #fff;
+  }
+  .s-cta .huge .g { color: var(--green); }
+  .s-cta .sub {
+    font-size: 40px; font-weight: 600; color: var(--text-mid); letter-spacing: -0.5px; line-height: 1.5;
+  }
+  .s-cta .sub b { color: #fff; }
+  .freebadge {
+    align-self: flex-start; margin-top: 4px;
+    font-size: 30px; font-weight: 700; letter-spacing: -0.4px; color: #052;
+    background: var(--green); padding: 18px 34px; border-radius: 9999px;
+    display: inline-flex; align-items: center; gap: 12px;
+    box-shadow: 0 0 50px rgba(24,226,153,0.4);
+  }
+  .ctafoot {
+    display: flex; align-items: center; gap: 18px; margin-top: 12px;
+    padding-top: 40px; border-top: 1px solid var(--line);
+  }
+  .ctafoot .dom {
+    font-family: 'Inter', sans-serif; font-size: 46px; font-weight: 800; letter-spacing: -1px; color: #fff;
+  }
+  .ctafoot .dom .g { color: var(--green); }
+  .ctafoot .sep { width: 6px; height: 6px; border-radius: 50%; background: var(--text-mute); }
+  .ctafoot .ig { font-size: 34px; font-weight: 600; color: var(--text-mid); letter-spacing: -0.4px; }
+</style>
+</head>
+<body>
+
+<!-- ===================== SLIDE 1 — HOOK ===================== -->
+<div class="slide s-hook" data-slide="1">
+  <div class="brandrow">
+    <div class="brandmark"><img class="owl" data-owl src="" alt=""><span class="wm">briefick<span class="dot">.</span></span></div>
+    <div class="pageno">01</div>
+  </div>
+  <div class="center">
+    <div class="overline">Morning Brief</div>
+    <div class="huge">오늘 시장,<br><span class="g">3줄로</span><br>설명할 수 있나요?</div>
+    <div class="kick">증권사 앱 다섯 개, 뉴스 알림 수십 개.<br><b>그런데 왜 아직도 한마디로 정리가 안 될까요.</b></div>
+  </div>
+  <div class="brandrow">
+    <div class="swipe"><span class="arrow">→</span> 넘겨보세요</div>
+    <div class="pageno"></div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 2 — PROBLEM ===================== -->
+<div class="slide s-prob" data-slide="2">
+  <div class="brandrow">
+    <div class="overline">The Problem</div>
+    <div class="pageno">02</div>
+  </div>
+  <div class="center">
+    <div class="big">정보가 <span class="strike">부족</span>해서가<br>아닙니다.</div>
+    <div class="body">하루에 쏟아지는 경제 뉴스 수천 건.<br>읽을 시간도, 무엇이 중요한지 <b style="color:#fff">걸러낼 기준</b>도 없을 뿐입니다.</div>
+    <div class="chaos">
+      <span class="chip">금리 인하?</span>
+      <span class="chip">엔비디아 실적</span>
+      <span class="chip">환율 1,400원</span>
+      <span class="chip">반도체 수급</span>
+      <span class="chip">비트코인</span>
+      <span class="chip">유가 급등</span>
+      <span class="chip">외국인 수급</span>
+      <span class="chip">유니콘 IPO</span>
+    </div>
+  </div>
+  <div class="swipe"><span class="arrow">→</span></div>
+</div>
+
+<!-- ===================== SLIDE 3 — SOLUTION ===================== -->
+<div class="slide s-sol" data-slide="3">
+  <div class="brandrow">
+    <div class="overline">The Brief</div>
+    <div class="pageno">03</div>
+  </div>
+  <div class="center">
+    <div class="big">그래서,<br><span class="g">브리픽</span>이<br>대신 읽습니다.</div>
+    <div class="body"><b>6개 시장</b>의 핵심만 추려서,<br>매일 아침 <b>8시 카톡</b>으로.</div>
+    <div class="pills">
+      <span class="pill">🇰🇷 한국</span>
+      <span class="pill">🇺🇸 미국</span>
+      <span class="pill">🤖 AI</span>
+      <span class="pill">🛢️ 원자재</span>
+      <span class="pill">🪙 크립토</span>
+      <span class="pill">🦄 유니콘</span>
+    </div>
+  </div>
+  <div class="swipe"><span class="arrow">→</span></div>
+</div>
+
+<!-- ===================== SLIDE 4 — PROOF (phone) ===================== -->
+<div class="slide s-proof" data-slide="4">
+  <div class="brandrow">
+    <div class="overline">Every Morning · 8 AM</div>
+    <div class="pageno">04</div>
+  </div>
+  <div class="title">매일 아침, <span class="g">이렇게</span> 도착합니다</div>
+  <div class="phonewrap">
+    <div class="phone">
+      <div class="phone-screen">
+        <div class="kk-top">
+          <span class="back">‹</span>
+          <span class="name">브리픽</span>
+          <span class="badge">✓</span>
+        </div>
+        <div class="kk-body">
+          <div class="kk-date">2026년 6월 17일 수요일</div>
+          <div class="kk-msgrow">
+            <img class="kk-ava" data-owl src="" alt="">
+            <div class="kk-bubble">
+              <div class="kk-h">📊 브리픽 데일리</div>
+              <div class="kk-sub">2026-06-17 (수) · 오전 8:00</div>
+              <div class="kk-sec">
+                <div class="lbl">🇰🇷 한국 마켓</div>
+                <ul>
+                  <li>삼성전자 9만원 회복 <span class="up">+3.1%</span> · HBM4 양산 가시화</li>
+                  <li>코스피 외국인 6거래일 연속 순매수</li>
+                </ul>
+              </div>
+              <div class="kk-sec">
+                <div class="lbl">🇺🇸 미국 마켓</div>
+                <ul>
+                  <li>나스닥 <span class="up">+0.8%</span> · 엔비디아 신고가 경신</li>
+                  <li>FOMC 앞두고 10년물 4.3%로 안정</li>
+                </ul>
+              </div>
+              <div class="kk-sec">
+                <div class="lbl">🛢️ 원자재·크립토</div>
+                <ul>
+                  <li>BTC $68,200 <span class="up">+2.4%</span> · 금 $2,380/oz</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 5 — WHY ===================== -->
+<div class="slide s-why" data-slide="5">
+  <div class="brandrow">
+    <div class="overline">Why Briefick</div>
+    <div class="pageno">05</div>
+  </div>
+  <div class="title">뉴스가 아니라,<br><span class="g">브리핑</span>입니다</div>
+  <div class="feats">
+    <div class="feat">
+      <div class="ic">🗂️</div>
+      <div class="ft"><div class="h">6개 시장을 한 번에</div><div class="d">한국·미국·AI·원자재·크립토·유니콘. 탭 옮겨 다닐 필요 없이 한 장으로.</div></div>
+    </div>
+    <div class="feat">
+      <div class="ic">🎯</div>
+      <div class="ft"><div class="h">기관 리서치의 시선</div><div class="d">단순 사실 나열이 아니라, 왜 중요한지 맥락까지 짚어줍니다.</div></div>
+    </div>
+    <div class="feat">
+      <div class="ic">⏱️</div>
+      <div class="ft"><div class="h">1분이면 충분</div><div class="d">핵심만 압축. 출근길 커피 한 모금이면 오늘 시장이 정리됩니다.</div></div>
+    </div>
+    <div class="feat">
+      <div class="ic">💬</div>
+      <div class="ft"><div class="h">매일 아침 8시, 카톡으로</div><div class="d">앱 설치도, 따로 챙겨볼 필요도 없이. 알아서 도착합니다.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SLIDE 6 — CTA ===================== -->
+<div class="slide s-cta" data-slide="6">
+  <div class="brandrow">
+    <div class="brandmark"><img class="owl" data-owl src="" alt=""><span class="wm">briefick<span class="dot">.</span></span></div>
+    <div class="pageno">06</div>
+  </div>
+  <div class="center">
+    <div class="overline">Start Tomorrow</div>
+    <div class="huge">내일 아침은,<br><span class="g">다를 겁니다.</span></div>
+    <div class="sub">흩어진 경제 뉴스, 모아서 <b>1분이면 끝</b>.<br>지금 구독하면 <b>첫 달 무료</b>로 받아볼 수 있습니다.</div>
+    <div class="freebadge">🎁 첫 달 무료</div>
+  </div>
+  <div class="ctafoot">
+    <div class="dom">briefick<span class="g">.</span>com</div>
+    <div class="sep"></div>
+    <div class="ig">@briefick</div>
+  </div>
+</div>
+
+</body>
+</html>
