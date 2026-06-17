@@ -173,6 +173,12 @@
   .kk-sec li::before { content: "•"; position: absolute; left: 0; color: var(--terra); }
   .kk-sec li .up { color: var(--kk-up); font-weight: 700; }
   .kk-sec li .dn { color: var(--kk-dn); font-weight: 700; }
+  /* "아래로 더 이어짐" 암시 — 세로 점 + 흐려지는 마감 */
+  .kk-more { display: flex; flex-direction: column; align-items: center; gap: 9px; margin-top: 26px; }
+  .kk-more span { width: 9px; height: 9px; border-radius: 50%; background: #c4ccd2; }
+  .kk-more span:nth-child(1) { opacity: 0.85; }
+  .kk-more span:nth-child(2) { opacity: 0.55; }
+  .kk-more span:nth-child(3) { opacity: 0.3; }
 
   /* ============ SLIDE 5 — WHY ============ */
   .s-why .title {
@@ -330,6 +336,7 @@
                   <li>스페이스X 로드쇼 D-3 · 밸류 $3,500억</li>
                 </ul>
               </div>
+              <div class="kk-more"><span></span><span></span><span></span></div>
             </div>
           </div>
         </div>
