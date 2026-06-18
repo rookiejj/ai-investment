@@ -91,10 +91,10 @@ const data = [
       },
       {
         "nm": "Discord",
-        "rs": "1/6 confidential S-1 후속 - Q2 2026 $15B IPO 목표·MAU 2억+·ARR $725M+·Goldman·JPM 인수단·SpaceX 6/12 메가 IPO 직후 큐 진입 윈도우 모색·Microsoft 인수 거절 단독 트랙",
-        "ipo": "Q2 2026 목표 ($15B)",
-        "val": "$15B",
-        "round": "컴피던셜 S-1 (1/6 2026)·GS·JPM",
+        "rs": "6월 IPO 윈도우 close-out·Polymarket 1.7%·2027 mid 80% 베팅 - 1/6 confidential S-1·5월 정식 S-1 등록·Goldman·JPM 인수단·FOMC 매파 충격 IPO appetite 카운터",
+        "ipo": "2027 mid 후순위 (80%)",
+        "val": "$25B (MS 거부)",
+        "round": "S-1 등록 (5월)·GS·JPM",
         "sector": "소셜"
       },
       {
@@ -170,7 +170,7 @@ const data = [
       {
         "nm": "Anduril",
         "rs": "5/13 Series H $5B 종결 $61B 밸류 - 1년 만 30.5→61B 더블·Thrive Capital·a16z 공동 주도·누적 펀딩 $11B+·2025 매출 $2.2B·Golden Dome $3.2B + 美 우주군 $1.8B + 美 육군 10년 $20B 한도 계약 누적 수주",
-        "ipo": "단기 아닔(Luckey)",
+        "ipo": "단기 아닐(Luckey)",
         "val": "$61B",
         "round": "Series H $5B (2026-05)",
         "sector": "방산 AI"
@@ -239,7 +239,7 @@ const data = [
       },
       {
         "nm": "Sword Health",
-        "rs": "AI 기반 근골격 치료·Hinge Health 5/22 IPO 데뷰 후 비상장 단독 MSK 채널·글로벌 확장",
+        "rs": "AI 기반 근과격 치료·Hinge Health 5/22 IPO 데뷰 후 비상장 단독 MSK 채널·글로벌 확장",
         "ipo": "미정",
         "val": "$3B",
         "round": "Series E ($130M, 2024-06)",
@@ -253,7 +253,7 @@ const data = [
     "stocks": [
       {
         "nm": "Kraken",
-        "rs": "모회사 Payward 5월 $20B 프리IPO 라운드 가동 - 3월 IPO 보류 후 시장 재진입 시그널·스테이블코인 뷱크 차터·yield 프로덕트로 IPO 후보 중 가장 강한 스테이블코인 사업 보유",
+        "rs": "모회사 Payward 5월 $20B 프리IPO 라운드 가동 - 3월 IPO 보류 후 시장 재진입 시그널·스테이블코인 뵱크 차터·yield 프로덕트로 IPO 후보 중 가장 강한 스테이블코인 사업 보유",
         "ipo": "2026 Q3 목표",
         "val": "$20B",
         "round": "프리IPO 라운드 (2026-05)·Payward",
