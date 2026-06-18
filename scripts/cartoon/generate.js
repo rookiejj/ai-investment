@@ -44,6 +44,7 @@ async function fetchUpdates() {
 }
 
 const { pickDistinctHeadlines } = require('./headline-dedup');
+const { normalizeFinanceTerms } = require('./normalize');
 
 function pickHeadline(entry) {
   if (!entry) return '';
@@ -58,6 +59,8 @@ function readCatchphrase() {
     if (txt) {
       // sandbox가 printf '%s' '...\n...'로 박아 literal '\n'이 들어온 케이스도 처리
       txt = txt.replace(/\\n/g, '\n');
+      // 금융 용어 오타 기계 교정 (예: 조스피→코스피)
+      txt = normalizeFinanceTerms(txt);
       return txt.replace(/\n/g, '<br>');
     }
   }
@@ -160,7 +163,7 @@ async function main() {
   };
   for (const [key, tab] of Object.entries(TAB_IDS)) {
     const entry = (updates[tab] || [])[0];
-    tokens[`{{HEAD_${key}}}`] = heads[tab] || pickHeadline(entry) || '(데이터 없음)';
+    tokens[`{{HEAD_${key}}}`] = normalizeFinanceTerms(heads[tab] || pickHeadline(entry)) || '(데이터 없음)';
     tokens[`{{SUB_${key}}}`] = ''; // sub 줄은 더 이상 사용 안 함 (디자인 변경 후)
     console.log(`  ${key.padEnd(10)} ${entry?.date || '?'}  ${tokens[`{{HEAD_${key}}}`]}`);
   }
