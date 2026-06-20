@@ -25,12 +25,46 @@ const TABS = [
   { id: 'unicorn',   emoji: '🦄', label: '유니콘·프리IPO', file: 'unicorn-update.js' },
 ];
 
+// 따옴표(" 또는 ') 문자열 안의 raw 줄바꿈·탭을 \n·\t escape로 치환.
+// 배경(2026-06-19): 자동 갱신 에이전트가 멀티라인 summary를 백틱·\n 대신 큰따옴표로
+//   써서 raw 줄바꿈이 들어가면 JS 문법상 미종료 문자열 → SyntaxError로 SEO 빌드 사망.
+//   백틱(`)·정상 escape는 건드리지 않도록 문자열 컨텍스트를 추적하며 스캔.
+function escapeRawNewlinesInStrings(src) {
+  let out = '';
+  let quote = null;        // 현재 열린 따옴표 문자 ("·'·`) 또는 null
+  for (let i = 0; i < src.length; i++) {
+    const c = src[i];
+    if (quote) {
+      if (c === '\\') { out += c + (src[i + 1] ?? ''); i++; continue; } // escape 시퀀스 보존
+      if (c === quote) { quote = null; out += c; continue; }
+      if (quote !== '`' && (c === '\n' || c === '\r')) { out += c === '\n' ? '\\n' : '\\r'; continue; }
+      if (quote !== '`' && c === '\t') { out += '\\t'; continue; }
+      out += c; continue;
+    }
+    if (c === '"' || c === "'" || c === '`') { quote = c; out += c; continue; }
+    out += c;
+  }
+  return out;
+}
+
 // ─── 데이터 로더 ────────────────────────────────────────
 function loadUpdates(filePath) {
   const src = fs.readFileSync(filePath, 'utf8');
   // updates 배열 + 호환 entries — daily-send와 동일 패턴
-  const updates = new Function(`${src};return typeof updates!=="undefined"?updates:[];`)();
-  return updates || [];
+  const build = (s) => new Function(`${s};return typeof updates!=="undefined"?updates:[];`)();
+  try {
+    return build(src) || [];
+  } catch (e) {
+    // 깨진 멀티라인 따옴표 문자열 자동 복구 후 1회 재시도
+    const fixed = escapeRawNewlinesInStrings(src);
+    try {
+      const r = build(fixed) || [];
+      console.warn(`[loadUpdates] ${path.basename(filePath)}: 깨진 따옴표 멀티라인 자동 복구 (${e.message})`);
+      return r;
+    } catch (e2) {
+      throw new Error(`${path.basename(filePath)} 파싱 실패 (복구 후에도): ${e2.message}`);
+    }
+  }
 }
 
 function loadCompanyKo() {
