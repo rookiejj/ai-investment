@@ -34,7 +34,7 @@ const recurring = [
     schedule:{type:'monthly_nth_dow', n:3, dow:4} }, // 매월 셋째 목요일
   { cat:'macro', impact:1, title:'미국 미시간대 소비자심리 확정',
     schedule:{type:'monthly_nth_dow', n:4, dow:5} }, // 매월 넷째 금요일 (확정)
-  { cat:'macro', impact:2, title:'미국 컨퍼런스보드 소비자신뢰지수',
+  { cat:'macro', impact:2, title:'미국 컴퍼런스보드 소비자신뢰지수',
     schedule:{type:'monthly_nth_dow', n:4, dow:2} }, // 매월 넷째 화요일경
 
   // === 한국 매크로 (정기) ===
@@ -86,10 +86,12 @@ const fixed = [
   { cat:'macro', impact:3, title:'6월 FOMC 결과·점도표·SEP', date:'2026-06-18', desc:'KST 오전 3시·기준금리 결정 + 분기 경제전망' },
   { cat:'policy', impact:1, title:'미국 노예해방일 준틴스 (휴장)', date:'2026-06-19', desc:'NYSE·Nasdaq 휴장' },
   { cat:'macro', impact:2, title:'미국 5월 기존주택판매', date:'2026-06-22' },
+  { cat:'macro', impact:3, title:'MSCI 6월 분기 리뷰·한국 비중', date:'2026-06-23', desc:'한국 패시브 유입·외국인 플로 단일 분기점' },
   { cat:'macro', impact:2, title:'미국 5월 신규주택판매', date:'2026-06-24' },
   { cat:'macro', impact:3, title:'미국 1Q GDP 확정치', date:'2026-06-25', desc:'3차 추정' },
   { cat:'earnings', impact:2, title:'마이크론 FQ3 실적', date:'2026-06-25', desc:'장후 발표·HBM·DDR5 수요 점검대', tickers:['MU'] },
   { cat:'macro', impact:3, title:'미국 5월 PCE 물가', date:'2026-06-26', desc:'Fed 선호 인플레 지표' },
+  { cat:'other', impact:3, title:'캐나다 CPSP 잠수함 60조 우협 발표 윈도우', date:'2026-06-30', desc:'한화오션·HD현대중공업 vs 獨 TKMS 양자 결전' },
 
   // === 5월 어닝 ===
   { cat:'earnings', impact:3, title:'AMD Q1 2026 실적', date:'2026-05-05', desc:'장후 발표·MI450 캐파·OpenAI 6GW + Meta 6GW 주문', tickers:['AMD'] },
@@ -97,7 +99,7 @@ const fixed = [
   { cat:'earnings', impact:2, title:'MSTR Q1 2026 실적', date:'2026-05-05', desc:'장후 발표·세일러 BTC 주간 매수 일시 중단 후 결과', tickers:['MSTR'] },
   { cat:'earnings', impact:2, title:'DIS Q2 FY26 실적', date:'2026-05-06', desc:'장전 발표·신임 D\'Amaro 첫 콜·매출 $24.8B·EPS $1.49 컨센', tickers:['DIS'] },
   { cat:'earnings', impact:2, title:'UBER Q1 2026 실적', date:'2026-05-06', desc:'장전 발표·매출 $13.27B·EPS $0.71·총예약 $52~53.5B 컨센', tickers:['UBER'] },
-  { cat:'earnings', impact:2, title:'CRWV Q1 2026 실적', date:'2026-05-07', desc:'장후 발표·컨센 매출 $1.97B +100%·EPS -$0.89·옵션 ±17% 변동성', tickers:['CRWV'] },
+  { cat:'earnings', impact:2, title:'CRWV Q1 2026 실적', date:'2026-05-07', desc:'장후 발표·컨센 매출 $1.97B +100%·EPS -$0.89·옥션 ±17% 변동성', tickers:['CRWV'] },
   { cat:'earnings', impact:2, title:'TTD Q1 2026 실적', date:'2026-05-07', desc:'장후 5pm ET·매출 $678M·EBITDA $195M 가이던스·Publicis 후폭풍 점검', tickers:['TTD'] },
   { cat:'earnings', impact:1, title:'MCHP Q1 FY26 실적', date:'2026-05-07', desc:'장후 발표·EPS $0.50·매출 $1.26B 컨센', tickers:['MCHP'] },
   { cat:'earnings', impact:2, title:'WMT Q1 FY27 실적', date:'2026-05-15', desc:'관세 영향·소비 건전성 점검대', tickers:['WMT'] },
@@ -119,9 +121,9 @@ const fixed = [
   { cat:'earnings', impact:1, title:'삼성SDI Q1 실적', date:'2026-05-12', tickers:['006400'] },
 
   // === IPO·펀딩 ===
-  { cat:'ipo', impact:3, title:'SpaceX S-1 정식 제출 윈도우 시작', date:'2026-05-15', desc:'5/15~5/22, 6/8 로드쇼' },
+  { cat:'ipo', impact:3, title:'SpaceX S-1 정식 제출 윈도우 시작', date:'2026-05-15', desc:'5/15~5/22, 6/8 로드솼' },
   { cat:'ipo', impact:3, title:'SpaceX S-1 제출 마감', date:'2026-05-22' },
-  { cat:'ipo', impact:3, title:'SpaceX 로드쇼 시작', date:'2026-06-08', desc:'6/11 리테일 투어, 6/18~30 프라이싱' },
+  { cat:'ipo', impact:3, title:'SpaceX 로드솼 시작', date:'2026-06-08', desc:'6/11 리테일 투어, 6/18~30 프라이싱' },
   { cat:'ipo', impact:3, title:'Anthropic $40~50B 라운드 마감 추정', date:'2026-05-14', desc:'$850~900B 밸류, 5월 보드 미팅' },
   { cat:'ipo', impact:2, title:'Cerebras IPO 프라이싱 추정', date:'2026-05-22', desc:'CBRS, $35B+ 밸류, $3B+ 조달', tickers:['CBRS'] },
 
@@ -132,7 +134,7 @@ const fixed = [
   { cat:'conf', impact:2, title:'NVIDIA Computex 키노트', date:'2026-05-19', desc:'대만 컴퓨텍스 본 행사' },
   { cat:'conf', impact:3, title:'Apple WWDC 2026', date:'2026-06-08', desc:'iOS 27·macOS·Gemini-Siri 차세대 (~6/12)' },
   { cat:'product', impact:3, title:'SpaceX Starship V3 첫 비행', date:'2026-05-19', desc:'18:30 ET Starbase Pad 2·Flight 12·Raptor 3' },
-  { cat:'ipo', impact:3, title:'SpaceX S-1 공개 가시화', date:'2026-05-20', desc:'Fortune 5/15 "as soon as Wednesday May 20"' },
+  { cat:'ipo', impact:3, title:'SpaceX S-1 공개 가시화', date:'2026-05-20', desc:'Fortune 5/15 \"as soon as Wednesday May 20\"' },
   { cat:'macro', impact:2, title:'中 4월 산업생산·소매판매·고정자산투자', date:'2026-05-19', desc:'NBS 발표·관세 영향 단일 점검' },
 
   // === 신제품 출시 ===
