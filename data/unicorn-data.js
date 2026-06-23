@@ -5,7 +5,7 @@ const data = [
     "stocks": [
       {
         "nm": "Stripe",
-        "rs": "$159B 텍더 +74% YoY 베이스 - 5/8 WLFI USD1 네이티브 발행 첫 외부 발행자·3/18 Tempo L1 메인넷 가동·Visa·Nubank·Klarna 테스트·TPV $1.9T·2H 2026 IPO 윈도우 잔존도 IPO 보류 시그널",
+        "rs": "6/23 $150B+ 풍문 - 5월 tender $91.5B 대비 +64% 업라운드 가능성·97.5% H1 2026 IPO NO Polymarket·Q1 결제 처리 $1T+·CEO Collison 'no imminent plan' 시그널",
         "ipo": "2H 2026 윈도우",
         "val": "$159B",
         "round": "2/26 텍더오퍼",
