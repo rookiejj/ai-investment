@@ -18,7 +18,7 @@ const data = [
         "p2": "148",
         "r1": "403",
         "r2": "455",
-        "rs": "6/2 -4% $362 - $80B 사상 최대 주식 발행($10B Berkshire·$30B 공모·$40B ATM 7월)·CapEx 2026 $180~190B AI 인프라 자금·자사주 매입 기조 reversed dilution 부담",
+        "rs": "6/22 -10% $326 sector 최대 낙폭 - AI capex $180~190B + 2027 'significant' 가이던스 의구·Q1 FCF $10B -47%·Shazeer·Jumper talent 이적 동조·forward P/E 17",
         "tk": "GOOGL"
       },
       {
