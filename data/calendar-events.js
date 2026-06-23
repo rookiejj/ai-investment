@@ -121,9 +121,9 @@ const fixed = [
   { cat:'earnings', impact:1, title:'삼성SDI Q1 실적', date:'2026-05-12', tickers:['006400'] },
 
   // === IPO·펀딩 ===
-  { cat:'ipo', impact:3, title:'SpaceX S-1 정식 제출 윈도우 시작', date:'2026-05-15', desc:'5/15~5/22, 6/8 로드솼' },
+  { cat:'ipo', impact:3, title:'SpaceX S-1 정식 제출 윈도우 시작', date:'2026-05-15', desc:'5/15~5/22, 6/8 로드쇼' },
   { cat:'ipo', impact:3, title:'SpaceX S-1 제출 마감', date:'2026-05-22' },
-  { cat:'ipo', impact:3, title:'SpaceX 로드솼 시작', date:'2026-06-08', desc:'6/11 리테일 투어, 6/18~30 프라이싱' },
+  { cat:'ipo', impact:3, title:'SpaceX 로드쇼 시작', date:'2026-06-08', desc:'6/11 리테일 투어, 6/18~30 프라이싱' },
   { cat:'ipo', impact:3, title:'Anthropic $40~50B 라운드 마감 추정', date:'2026-05-14', desc:'$850~900B 밸류, 5월 보드 미팅' },
   { cat:'ipo', impact:2, title:'Cerebras IPO 프라이싱 추정', date:'2026-05-22', desc:'CBRS, $35B+ 밸류, $3B+ 조달', tickers:['CBRS'] },
 
