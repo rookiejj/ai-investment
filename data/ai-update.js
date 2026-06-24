@@ -1,25 +1,25 @@
 const UPDATES = [
   {
-    "date": "2026-06-24 09:30 KST",
-    "summary": "NVDA 6/24 9am ET 2026 연차주총 - Blackwell 양산 + Vera CPU 자체 개발 첫 상용화 단일 분기점\nOpenAI GPT-5.5-Cyber 6/22 출시 CyberGym 85.6% - CrowdStrike·Sophos·Fortinet 사이버 sector 제휴 신규\nClaude 6/23 글로벌 장애 수천 명 영향 후 해소 - 6/30 가상 컨퍼런스 사이언스 도메인 카운트다운\nxAI Grok 4.3 AWS Bedrock GA 1M 컨텍스트 - Word 추가 기능 확장 채널 다각화\nMistral Emmi AI 물리 시뮬레이션 신규 - 제조·우주·반도체 디지털 트윈 도메인 확장",
+    "date": "2026-06-24 20:00 KST",
+    "summary": "Anthropic 6/30 가상 컴퍼런스 D-6 카운트다운·Glasswing 150 기관 확대·John Jumper 합류 후 첫 R&D 시그널\nOpenAI 9월 listing 직전 - $852B~$1T 밸류·Anthropic $965B 추월 후 첫 메가캱 IPO\nMS MAI-Thinking-1 reasoning 모델 35B active·256K 컨텍스트 - OpenAI 의존 축소 가속\nClaude Mythos Preview 150 기관 확대 - 미국 정부·중요 인프라 15개국 본격 침투\nxAI Grok 5 H2 출시 Polymarket 12-33% - Colossus 2 학습 분기점 후순위 잔존",
     "changes": [
       {
-        "time": "2026-06-24 09:00 EDT",
+        "time": "2026-06-24 12:00 EDT",
         "type": "이벤트",
-        "detail": "NVIDIA. 6/24 화 9am ET 2026 연차주총 단일 분기점 - 핵심 의제 Blackwell 양산 가속 + Vera CPU 자체 개발 첫 상용화 가이던스. Vera Rubin Q3 풀프로덕션 진입 + Blackwell B300 출하량 가속 - Anthropic·Meta·Mistral·OpenAI 동시 채택 가시화·Huang 가이던스 Blackwell + Rubin 2026-2027 누계 매출 $1T 베이스·8/26 Q2 어닝 사전 시그널·Rubin Ultra 2027 양산 qualification 후속 분기점. 자본 환원 정책 + AI 인프라 capex 가이던스 - 6/22 hyperscaler $452B+ AI capex 의구 트리거 카운터 베이스·forward P/E 30 sector premium 유지·earnings yield 3.0% 10y 4.50% gap 150bp. 단기 시그널 - 6/24 연차주총 9am ET·8/26 Q2 어닝·Rubin Ultra qualification·HBM4 3사 인증 후속. 매크로 - NVDA forward P/E 30·hyperscaler $750B FY26 capex 베이스·forward EV/매출 LLM sector 20x premium·DXY 100.45 환차 흡수.",
-        "sector": "NVIDIA"
-      },
-      {
-        "time": "2026-06-22 12:00 EDT",
-        "type": "모델 출시",
-        "detail": "OpenAI. GPT-5.5-Cyber 6/22 출시 - 사이버 보안 특화 모델·CyberGym 벤치마크 85.6% 점수 + 표준 GPT-5.5 81.8% 대비 +3.8pt 우위·Daybreak 패치 자동화 프로그램 확장 + Codex Security 도구 신규·오픈 소스 패치 이니셔티브 동시 가속. 사이버 sector 파트너십 신규 3건 - CrowdStrike·Sophos·Fortinet 통합 채널 확장·엔터프라이즈 사이버 보안 도메인 직접 침투 베이스. Noam Shazeer 6/18 합류 후 talent 화력 강화 단계 - Altman 'noam is one of the people I have most wanted to work with' 시그널·GPT-5.6 후속 출시 윈도우 베이스 잔존. 단기 시그널 - GPT-5.6 후속 발표·OpenAI 9월 listing 직전 노이즈·Anthropic 10월 IPO 73% 베팅 경쟁·Microsoft Foundry 5.5-Cyber 후속 통합. 매크로 - hyperscaler $750B FY26 CapEx 베이스·forward EV/매출 LLM sector 15~20x premium·OpenAI ARR $200B 흐름 컨센·DXY 100.45 강세.",
-        "sector": "OpenAI"
-      },
-      {
-        "time": "2026-06-23 14:00 EDT",
-        "type": "이벤트",
-        "detail": "Anthropic. 6/23 화 Claude 글로벌 장애 수천 명 영향 후 해소 - 美 동부 시간 오후 발생·약 3시간 다운타임·AWS Bedrock·Microsoft Foundry·Google Cloud Vertex AI 엔터프라이즈 채널 동시 영향·API·웹 UI 전반 응답 불가·infrastructure incident 정도 가이던스. 6/30 화 가상 컨퍼런스 카운트다운 - Claude 사이언스 리서치 도메인 단일 분기점·John Jumper 6/19 합류 후 protein folding·biology AI 신규 도메인 확장 첫 공개 베이스·노벨화학상 수상자 + AlphaFold 공동 설계자 통합 후 첫 R&D 시그널. Claude Fable 5 안착 단계 + Series H $65B 클로징·$965B 포스트머니 잔존 - run-rate 매출 $47B+·글로벌 LLM 매출 31.4% 1위 점유. 단기 시그널 - 6/30 가상 컨퍼런스·S-1 confidential 6/1 제출 24일째·10월 IPO listing 카운트다운 73% Polymarket 베팅·OpenAI 9월 listing $852B~$1T 밸류 경쟁. 매크로 - forward EV/매출 LLM sector 20x premium·hyperscaler $750B FY26 capex 베이스·DXY 100.45 강세.",
+        "detail": "Anthropic. 6/30 화 가상 컴퍼런스 D-6 카운트다운 - Claude 사이언스 리서치 도메인 단일 분기점·John Jumper 6/19 합류 후 protein folding·biology AI 신규 도메인 확장 첫 공개 베이스·노벨화학상 수상자 + AlphaFold 공동 설계자 통합 후 첫 R&D 시그널·6/23 글로벌 장애 후 안정성 회복 단계. Project Glasswing 150 기관 확대 - 6/3 초기 50 → 150 기관 + 15개국 + 중요 인프라 침투·Claude Mythos Preview 10,000+ 고위험 보안 결함 발견·미국 정부 + 오픈소스 메인테이너 협력 확대·OpenAI Daybreak Codex 보안 경쟁 시장 분기점. Series H $65B 클로징 $965B 포스트머니 OpenAI $852B 추월 1위 유지 - run-rate 매출 $47B+·글로벌 LLM 매출 31.4% 1위·S-1 confidential 6/1 제출 24일째·10월 listing 73% Polymarket 베팅. 단기 시그널 - 6/30 가상 컴퍼런스·10월 listing 카운트다운·OpenAI 9월 listing 직전 메가 흡인·Glasswing Mythos 1 일반 공개 6-12개월. 매크로 - forward EV/매출 LLM sector 20x premium·hyperscaler $750B FY26 capex 베이스·DXY 100.45 약세·실질금리 190bp.",
         "sector": "Anthropic"
+      },
+      {
+        "time": "2026-06-24 09:00 EDT",
+        "type": "모델 출시",
+        "detail": "Microsoft. MAI-Thinking-1 reasoning 모델 출시 - 35B active 파라미터·256K-토큰 컨텍스트 윈도우·복잡 다단계 instruction + 장기 컨텍스트 reasoning + 코드 생성 특화·MAI-Code-1-Flash 동반 출시 자연어 → 소스코드 변환·Build 컴퍼런스 SF 6/2 발표·OpenAI 의존 축소 전략 가속 단계. Foundry 멀티-LLM 플랫폼 - GPT-5.5 + Claude Fable 5 + Mistral + Llama 4 + MAI-Thinking-1 통합 채널 확장·엔터프라이즈 reasoning 시장 직접 침투 베이스·Anthropic Claude Code + OpenAI Codex 경쟁 카운터 시도. 단기 시그널 - MAI-Thinking-2 후속 출시·Foundry 가격 정책 변경·Azure AI Foundry 통합 가속·7/30 FOMC 이후 capex 가이던스 후속·hyperscaler $750B FY26 capex 베이스. 매크로 - forward EV/매출 LLM sector 15~20x premium·MSFT forward P/E 32 sector premium·earnings yield 3.1% 10y 4.50% gap 140bp·DXY 100.45 강세 흡수·실질금리 190bp.",
+        "sector": "Microsoft"
+      },
+      {
+        "time": "2026-06-24 09:00 EDT",
+        "type": "모델 출시 예정",
+        "detail": "xAI·OpenAI. xAI Grok 5 Colossus 2 학습 단계 - Q2 목표 가이던스 잔존·Polymarket 6/30 전 출시 12~33% 베팅·Grok 4.3 AWS Bedrock GA + 1M 컨텍스트 후속 베이스·Word 추가 기능 통합 채널 다각화 단계·Memphis 데이터센터 1.2M H200 GPU 단일 최대 학습 인프라 잔존. OpenAI 9월 listing 직전 노이즈 - $852B~$1T 밸류·S-1 confidential 6월 마지막 주 제출 윈도우·Anthropic 10월 73% Polymarket 베팅과 메가캱 IPO 경쟁·run-rate 매출 $200B 흐름 컨센·GPT-5.5-Cyber 6/22 출시 후 GPT-5.6 후속 가시화·Codex Security + Microsoft Foundry 통합 가속. 단기 시그널 - Grok 5 Q3 슬립 시나리오·OpenAI S-1 confidential 제출·Microsoft Foundry MAI-Thinking-1 통합·Anthropic 6/30 가상 컴퍼런스. 매크로 - hyperscaler $750B FY26 CapEx 베이스·forward EV/매출 LLM sector 15~20x premium·OpenAI ARR $200B 흐름 컨센·DXY 100.45 강세·실질금리 190bp.",
+        "sector": "xAI"
       }
     ]
   }
