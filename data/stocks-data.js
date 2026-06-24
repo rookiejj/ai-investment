@@ -78,7 +78,7 @@ const data = [
         "p2": "192",
         "r1": "216",
         "r2": "337",
-        "rs": "6/12 $216 +4.0% 시총 $5.3T 사상 최고·Vera Rubin Q3 양산·HBM4 3사 인증·forward P/E 33 sector premium·earnings yield 3.1% 10y 4.47% gap 137bp",
+        "rs": "6/24 연차주총 - Vera CPU·Blackwell B300 가이던스·자사주 +$80B·Q1 FY27 DC $75.2B +92%",
         "tk": "NVDA"
       },
       {
@@ -123,7 +123,7 @@ const data = [
         "p2": "23",
         "r1": "37",
         "r2": "79",
-        "rs": "6/8 +10% 폭락 후 V자 반등 - 시총 $1T 돌파 황 코멘트·Marvell 시총 $1T 카운트다운·HBM·AI 서버 수요 베이스 forward P/E 18 사이클 강도",
+        "rs": "6/24 AMC FQ3 매출 $41.46B GM 84.9% 사상 최대·Q4 가이던스 $50B GM 86%·시간외 +13.96% $1,194",
         "tk": "MU"
       },
       {
