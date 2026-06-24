@@ -1,7 +1,7 @@
 const updates = [
   {
     "date": "2026-06-25 07:30 KST",
-    "summary": "Anduril $61B 5/13 Series H 후속·NATO Ankara 7/7 D-12 - sovereign defense 단일 분기점\nAnthropic S-1 25일째 + 6/30 가상 컴퍼런스 D-5 - 10월 listing 73% Polymarket 베팅\nOpenAI 9월 listing 직전 - $852B~$1T 밸류·Anthropic $965B 추월 후 첫 메가캵 IPO\nDatabricks Forge $170.7B 2차시장 평가 - H2 S-1 임박·ARR $5.4B 사상 최대 엔터프라이즈 SW IPO 후보\nStripe $159B 풍문 업데이트 + Canva $42B Fidelity secondary·H2 SaaS IPO 윈도우 카운트다운",
+    "summary": "Anduril $61B 5/13 Series H 후속·NATO Ankara 7/7 D-12 - sovereign defense 단일 분기점\nAnthropic S-1 25일째 + 6/30 가상 컴퍼런스 D-5 - 10월 listing 73% Polymarket 베팅\nOpenAI 9월 listing 직전 - $852B~$1T 밸류·Anthropic $965B 추월 후 첫 메가캡 IPO\nDatabricks Forge $170.7B 2차시장 평가 - H2 S-1 임박·ARR $5.4B 사상 최대 엔터프라이즈 SW IPO 후보\nStripe $159B 풍문 업데이트 + Canva $42B Fidelity secondary·H2 SaaS IPO 윈도우 카운트다운",
     "changes": [
       {
         "time": "2026-06-24 12:00 EDT",
@@ -12,13 +12,13 @@ const updates = [
       {
         "time": "2026-06-24 12:00 EDT",
         "type": "이벤트",
-        "detail": "Anthropic·OpenAI·Kraken. Anthropic S-1 6/1 confidential 25일째 + 6/30 가상 컴퍼런스 D-5 + 10월 listing 73% Polymarket 베팅 - John Jumper 6/19 합류 + Glasswing 150 기관 확대 + Claude Tag for Slack 6/24 출시 + Mythos Preview 10,000+ 보안 결함 발견·Series H $65B 클로징 $965B 포스트머니 OpenAI $852B 추월 1위 유지·run-rate 매출 $47B+·전략 인프라 파트너 글로벌 메모리·반도체 sector 동참. OpenAI 9월 listing 직전 메가캵 IPO 경쟁 - $852B~$1T 밸류·S-1 confidential 6/8 제출·run-rate 매출 $200B 흐름 컨센·GPT-5.5-Cyber 6/22 출시 후 GPT-5.6 후속 가시화. Kraken S-1 confidential 6월 파일링 + $20B 밸류 - CEO Arjun Sethi H2 2026 listing 가이던스·CLARITY Act 통과 후 crypto exchange listing 윈도우 분기점. 단기 시그널 - Anthropic 10월 listing 카운트다운·6/30 가상 컴퍼런스·OpenAI 9월 listing·Kraken H2 listing·CLARITY Act 통과. 매크로 - VIX 23 변동성·crypto exchange forward EV/매출 8x premium·DXY 100.45 강세·SpaceX SPCX 6/12 데뷰 후 $2T+ post-IPO 가격 발견·실질금리 190bp.",
+        "detail": "Anthropic·OpenAI·Kraken. Anthropic S-1 6/1 confidential 25일째 + 6/30 가상 컴퍼런스 D-5 + 10월 listing 73% Polymarket 베팅 - John Jumper 6/19 합류 + Glasswing 150 기관 확대 + Claude Tag for Slack 6/24 출시 + Mythos Preview 10,000+ 보안 결함 발견·Series H $65B 클로징 $965B 포스트머니 OpenAI $852B 추월 1위 유지·run-rate 매출 $47B+·전략 인프라 파트너 글로벌 메모리·반도체 sector 동참. OpenAI 9월 listing 직전 메가캡 IPO 경쟁 - $852B~$1T 밸류·S-1 confidential 6/8 제출·run-rate 매출 $200B 흐름 컨센·GPT-5.5-Cyber 6/22 출시 후 GPT-5.6 후속 가시화. Kraken S-1 confidential 6월 파일링 + $20B 밸류 - CEO Arjun Sethi H2 2026 listing 가이던스·CLARITY Act 통과 후 crypto exchange listing 윈도우 분기점. 단기 시그널 - Anthropic 10월 listing 카운트다운·6/30 가상 컴퍼런스·OpenAI 9월 listing·Kraken H2 listing·CLARITY Act 통과. 매크로 - VIX 23 변동성·crypto exchange forward EV/매출 8x premium·DXY 100.45 강세·SpaceX SPCX 6/12 데뷰 후 $2T+ post-IPO 가격 발견·실질금리 190bp.",
         "sector": "크립토·Web3"
       },
       {
         "time": "2026-06-24 12:00 EDT",
         "type": "이벤트",
-        "detail": "Databricks·Stripe·Canva. Databricks 6/13 Forge 2차시장 $170.7B - 12월 Series L $4B $134B 대비 +27% 업라운드·1월 JPMorgan $1.8B 부채 financing pre-IPO 준비 후속·H2 2026 S-1 SEC 제출 트랙·역대 최대 엔터프라이즈 SW IPO 후보·ARR $5.4B run-rate·650+ $1M+ 고객·연 55% YoY 성장. Stripe $159B 풍문 업데이트 - 5월 tender $91.5B 대비 +73% 업라운드·Q1 결제 처리 $1T+ 도달·programmable financial platform + Revenue suite + 스테이블코인 결제 리더쉭·CEO Patrick Collison 'no imminent plan' 시그널 잔존·97.5% H1 2026 IPO NO Polymarket. Canva $42B 밸류 + ARR $3.3B - Fidelity 리드 secondary·JPMorgan AM 동참·2026 top SaaS IPO 후보·240M MAU·27M 유료 시트·디자인·문서·코드 풀스택 워크플로우. 단기 시그널 - Databricks S-1 윈도우·Stripe IPO 일정·Canva S-1 윈도우·Notion 후속 펀딩·SpaceX SPCX 6/12 데뷰 $2T+ 후 SaaS IPO 흡인력. 매크로 - VIX 23 변동성·SaaS forward EV/매출 12x sector premium·DXY 100.45 강세·실질금리 190bp.",
+        "detail": "Databricks·Stripe·Canva. Databricks 6/13 Forge 2차시장 $170.7B - 12월 Series L $4B $134B 대비 +27% 업라운드·1월 JPMorgan $1.8B 부채 financing pre-IPO 준비 후속·H2 2026 S-1 SEC 제출 트랙·역대 최대 엔터프라이즈 SW IPO 후보·ARR $5.4B run-rate·650+ $1M+ 고객·연 55% YoY 성장. Stripe $159B 풍문 업데이트 - 5월 tender $91.5B 대비 +73% 업라운드·Q1 결제 처리 $1T+ 도달·programmable financial platform + Revenue suite + 스테이블코인 결제 리더십·CEO Patrick Collison 'no imminent plan' 시그널 잔존·97.5% H1 2026 IPO NO Polymarket. Canva $42B 밸류 + ARR $3.3B - Fidelity 리드 secondary·JPMorgan AM 동참·2026 top SaaS IPO 후보·240M MAU·27M 유료 시트·디자인·문서·코드 풀스택 워크플로우. 단기 시그널 - Databricks S-1 윈도우·Stripe IPO 일정·Canva S-1 윈도우·Notion 후속 펀딩·SpaceX SPCX 6/12 데뷰 $2T+ 후 SaaS IPO 흡인력. 매크로 - VIX 23 변동성·SaaS forward EV/매출 12x sector premium·DXY 100.45 강세·실질금리 190bp.",
         "sector": "엔터프라이즈 SW"
       }
     ]
