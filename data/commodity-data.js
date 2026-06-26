@@ -5,29 +5,29 @@ const data = [
     "stocks": [
       {
         "nm": "비트코인",
-        "rs": "6/26 $59,442 -2.35% $60K 하향 6일째·debasement trade unwind·ETF 유출 $4.5B·CLARITY Act 지연 베팅",
+        "rs": "6/26 $60,148 $60K 안착 - bear flag 반등 첫 시그널·CLARITY Act 가톨릭 100명 반대·ETF 유출 $4.5B 잔존·Fear & Greed 13",
         "tk": "BTC",
         "y1": "-39%",
         "ytd": "-39%",
-        "price": "$59,442",
+        "price": "$60,148",
         "range": "$59,100–128,000"
       },
       {
         "nm": "이더리움",
-        "rs": "6/26 $1,563 -2.94% 동조 약세·Glamsterdam 테스트 가스 효율 가이던스 잔존·사상 최고 $4,953 대비 -68%·실질금리 200bp 카운터",
+        "rs": "6/26 $1,580 -4.9% 24h - Glamsterdam 테스트 가스 효율 가이던스 잔존·사상 최고 $4,953 대비 -68%·실질금리 200bp 카운터",
         "tk": "ETH",
         "y1": "-68%",
         "ytd": "-49%",
-        "price": "$1,563",
+        "price": "$1,580",
         "range": "$1,563–4,953"
       },
       {
-        "rs": "6/26 $63 -3.5% 동조 약세·debasement trade unwind·ETF AUM $1.1B·Firedancer 가동·스테이블코인 인프라 베이스 잔존",
+        "rs": "6/26 $66.56 +10% intraday 회복·토큰화 주식 $2.5B 주간 볼륨·ETF AUM $1.1B 돌파·Firedancer 가동·스테이블코인 인프라",
         "nm": "솔라나",
         "tk": "SOL",
         "y1": "-68%",
         "ytd": "-47%",
-        "price": "$63",
+        "price": "$66.56",
         "range": "$60–295"
       },
       {
@@ -89,11 +89,11 @@ const data = [
     "stocks": [
       {
         "nm": "원유 WTI",
-        "rs": "6/26 $69.85 장중 $73.17 단발 spike·호르무즈 risk 재부상 후 되돌림·OPEC+ 7월 회의 D-4·구조적 oversupply",
+        "rs": "6/26 $70.5 spike 후 되돌림 - 오만 인근 탱커 피격·Iraq OPEC 쿼터 갈등·6/30 OPEC+ 회의 D-3·구조적 oversupply 잔존",
         "tk": "CL",
         "y1": "-15%",
         "ytd": "-10%",
-        "price": "$69.85",
+        "price": "$70.5",
         "range": "$58–115"
       },
       {
