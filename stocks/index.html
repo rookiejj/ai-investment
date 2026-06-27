@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Briefick Stocks — 미국·한국 전 상장 종목</title>
+<meta name="description" content="미국·한국에 상장된 모든 주식과 ETF를 한 페이지에서. NASDAQ·NYSE·AMEX + KOSPI·KOSDAQ·KONEX 약 1.7만 종목 검색·필터.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Top bar -->
+<header class="topbar">
+  <div class="brand"><span class="logo"></span>BRIEFICK<small>STOCKS</small></div>
+  <div class="searchwrap" id="searchwrap">
+    <span class="pfx">🔍</span>
+    <input id="q" placeholder="티커 또는 종목명 검색 (예: NVDA · 삼성전자 · semiconductor)" autocomplete="off" spellcheck="false">
+    <button class="clearq" id="clearq" title="지우기">✕</button>
+  </div>
+  <a class="tophome" href="/">← 브리픽 홈</a>
+</header>
+
+<!-- Tabs: 전체 / 미국 / 한국 -->
+<div class="tabs" id="tabs">
+  <button class="tab on" data-tab="all">전체 <span class="cnt" id="cnt-all">–</span></button>
+  <button class="tab" data-tab="us">🇺🇸 미국 <span class="cnt" id="cnt-us">–</span></button>
+  <button class="tab" data-tab="kr">🇰🇷 한국 <span class="cnt" id="cnt-kr">–</span></button>
+</div>
+
+<!-- Filter bar -->
+<div class="filterbar">
+  <div class="chipset">
+    <span class="lab">유형</span>
+    <button class="chip on" data-type="all">전체</button>
+    <button class="chip" data-type="stock">주식</button>
+    <button class="chip" data-type="etf">ETF</button>
+  </div>
+  <select class="fsel" id="exchSel"><option value="">모든 거래소</option></select>
+  <span class="fspacer"></span>
+  <div class="viewtoggle" id="viewtoggle" role="group" aria-label="보기 방식">
+    <button class="vbtn on" data-layout="list" title="리스트 보기">☰ 리스트</button>
+    <button class="vbtn" data-layout="bubble" title="버블 보기">⬢ 버블</button>
+  </div>
+  <span class="fcount" id="fcount">로딩 중…</span>
+</div>
+
+<!-- Scrollable content (list + bubble) -->
+<div class="scrollarea" id="scrollarea">
+  <!-- 리스트 보기 -->
+  <table class="grid" id="listview">
+    <thead>
+      <tr>
+        <th class="num" style="width:64px" data-sort="idx">#</th>
+        <th data-sort="t" style="width:140px">티커 <span class="arrow" data-for="t"></span></th>
+        <th data-sort="n">종목명 <span class="arrow" data-for="n"></span></th>
+        <th data-sort="e" style="width:130px">거래소 <span class="arrow" data-for="e"></span></th>
+        <th class="num" data-sort="cap" style="width:120px">시총 <span class="arrow" data-for="cap"></span></th>
+        <th data-sort="ty" style="width:84px">유형 <span class="arrow" data-for="ty"></span></th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+  <!-- 버블 보기 (티커만, 줄바꿈 나열) -->
+  <div class="bubbleview" id="bubbleview" style="display:none"></div>
+  <div class="loading" id="loading">전 종목 데이터 불러오는 중<span class="dot">…</span></div>
+  <div class="sentinel" id="sentinel"></div>
+  <div class="endmsg" id="endmsg" style="display:none"></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

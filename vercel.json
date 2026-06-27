@@ -9,6 +9,7 @@
     { "source": "/help",    "destination": "/views/help.html" },
     { "source": "/legacy",  "destination": "/views/legacy.html" },
     { "source": "/survey/:id",  "destination": "/views/survey.html?id=:id" },
-    { "source": "/trading",  "destination": "/trading/index.html" }
+    { "source": "/trading",  "destination": "/trading/index.html" },
+    { "source": "/stocks",   "destination": "/stocks/index.html" }
   ]
 }

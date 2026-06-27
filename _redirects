@@ -7,3 +7,4 @@
 /legacy      /views/legacy   200
 /survey/*    /views/survey   200
 /trading     /trading/index.html   200
+/stocks      /stocks/index.html    200
