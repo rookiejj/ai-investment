@@ -5,11 +5,11 @@ const data = [
     "stocks": [
       {
         "nm": "비트코인",
-        "rs": "6/26 $60,148 $60K 안착 - bear flag 반등 첫 시그널·CLARITY Act 가톨릭 100명 반대·ETF 유출 $4.5B 잔존·Fear & Greed 13",
+        "rs": "6/27 $60,237 $60K 안착 - bear flag 반등 단계·CLARITY Act 가톨릭 100명 반대·ETF 유출 $4.5B 잔존·Fear & Greed 13",
         "tk": "BTC",
         "y1": "-39%",
         "ytd": "-39%",
-        "price": "$60,148",
+        "price": "$60,237",
         "range": "$59,100–128,000"
       },
       {
@@ -47,11 +47,11 @@ const data = [
     "stocks": [
       {
         "nm": "금 (Gold)",
-        "rs": "6/24 $3,987 -3.07% 7개월 최저·$4,000 하향 - debasement trade unwind + 매파 dot plot·1월 $5,600 고점 대비 -28%·중앙은행 매수 베이스 카운터",
+        "rs": "6/26 $4,092 +1.1% $4,000 회복 - PCE 컨센 하회 후속·美·Iran 주말 재충돌 안전자산 카운터·중앙은행 매수 베이스",
         "tk": "GC",
         "y1": "+12%",
-        "ytd": "-7%",
-        "price": "$3,987",
+        "ytd": "-5%",
+        "price": "$4,092",
         "range": "$3,123–5,626"
       },
       {
@@ -89,7 +89,7 @@ const data = [
     "stocks": [
       {
         "nm": "원유 WTI",
-        "rs": "6/26 $70.5 spike 후 되돌림 - 오만 인근 탱커 피격·Iraq OPEC 쿼터 갈등·6/30 OPEC+ 회의 D-3·구조적 oversupply 잔존",
+        "rs": "6/26 $70.5 spike 후 되돌림 - 美·Iran 주말 재충돌·Iraq OPEC 쿼터 갈등·7/5 OPEC+ 회의 분기점·구조적 oversupply 잔존",
         "tk": "CL",
         "y1": "-15%",
         "ytd": "-10%",
@@ -98,7 +98,7 @@ const data = [
       },
       {
         "nm": "브렌트유",
-        "rs": "6/24 $73.5/bbl -3.5% 동조 약세 - 美·Iran 평화 진전·호르무즈 정상화·Gulf producers 우회 채널·OPEC+ 7월 D-5",
+        "rs": "6/26 $73.5/bbl 약세 - 美·Iran 주말 재충돌 risk premium 재상승·호르무즈 통항 정상화 75%·OPEC+ 7/5 회의 분기점",
         "tk": "BZ",
         "y1": "-2%",
         "ytd": "+2%",
@@ -244,7 +244,7 @@ const data = [
         "nm": "커피 (Arabica)",
         "rs": "5/15 $2.66/lb -3.6% - 브라질 풍작 전망 공급과잉·전년 고점 대비 조정 잔존",
         "tk": "KC",
-        "y1": "-18%",
+        "y1": "+45%",
         "ytd": "-5%",
         "price": "$2.66/lb",
         "range": "$1.80–4.20"
