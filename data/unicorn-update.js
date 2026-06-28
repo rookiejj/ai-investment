@@ -1,11 +1,7 @@
 const updates = [
   {
     "date": "2026-06-28 19:30 KST",
-    "summary": "SpaceX SPCX $153 -32% off peak $225 - OpenAI $1T listing 회피 사례 인용 잔존
-Anthropic 단독 메가캡 LLM IPO 윈도우 첫 가시화 - 10월 73% Polymarket
-Stripe $159B 잔존·John Collison 'solution in search of problem' IPO 비주류
-Canva $42B IPO Q3 2026 가시화 - Kelly Steckelberg CFO Zoom IPO 경력 시그널
-Databricks 2027 S-1·Kraken Q3 2026 - H2 2026 메가캡 IPO 단독 윈도우",
+    "summary": "SpaceX SPCX $153 -32% off peak $225 - OpenAI $1T listing 회피 사례 인용 잔존\nAnthropic 단독 메가캡 LLM IPO 윈도우 첫 가시화 - 10월 73% Polymarket\nStripe $159B 잔존·John Collison 'solution in search of problem' IPO 비주류\nCanva $42B IPO Q3 2026 가시화 - Kelly Steckelberg CFO Zoom IPO 경력 시그널\nDatabricks 2027 S-1·Kraken Q3 2026 - H2 2026 메가캡 IPO 단독 윈도우",
     "changes": [
       {
         "time": "2026-06-28 19:30 KST",
