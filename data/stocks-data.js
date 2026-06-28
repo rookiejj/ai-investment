@@ -78,7 +78,7 @@ const data = [
         "p2": "192",
         "r1": "216",
         "r2": "337",
-        "rs": "6/24 연차주총 - Vera CPU·Blackwell B300 가이던스·자사주 +$80B·Q1 FY27 DC $75.2B +92%",
+        "rs": "주간 -8% 1년래 최악·OpenAI 2027 IPO 후퇴 후속 $470B capex 우려·Vera Rubin·B300·자사주 +$80B",
         "tk": "NVDA"
       },
       {
