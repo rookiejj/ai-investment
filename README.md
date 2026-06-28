@@ -21,8 +21,7 @@ ai-investment/
 │   ├── terms.html                ← 이용약관
 │   ├── privacy.html              ← 개인정보처리방침
 │   └── refund.html               ← 환불정책
-├── vercel.json                   ← /admin · /legacy · /renew · /help · /terms ... → views/ rewrite (Vercel)
-├── _redirects                    ← 동일 라우팅 (Cloudflare Pages 메인 호스팅) — vercel.json과 양쪽 동기 유지
+├── _redirects                    ← 라우팅 (/admin · /legacy · /renew · /help · /terms · /trading · /stocks ... → 대상) — Cloudflare Pages 단독 호스팅
 ├── sitemap.xml                   ← 자동 생성 (메인 + /daily 전체)
 ├── news-sitemap.xml              ← 자동 생성 (최근 48시간 콘텐츠만, Google News 후보)
 ├── rss.xml                       ← 자동 생성 RSS 2.0 피드 (최근 60개, 피드리더·뉴스 큐레이터용)
@@ -191,7 +190,7 @@ ai-investment/
 - **메타 태그**: canonical / og:title·description·image·url·type=article / article:published_time / twitter:card / JSON-LD `NewsArticle`(headline·description·datePublished·author·publisher·articleSection·keywords). 네이버 사이트 검증(`naver-site-verification`)·구글 색인용 메타도 메인·daily 페이지 양쪽에 동기.
 - **멱등 빌드**: 같은 날 여러 번 빌드해도 `entries[0]`이 같으면 같은 파일 출력 → git diff 없음 → 자동 commit skip. 다음 사이클에서 새 entry로 다시 빌드.
 - **자동 commit·push 안전성**: `daily-seo.yml`이 푸시하는 paths는 `/daily/**`·`/sitemap.xml`·`/news-sitemap.xml`·`/rss.xml`·`/robots.txt`로 자신 트리거(`data/.cartoon-marker`·`company-ko.js`·`build-daily-page.js`) 및 다른 워크플로 트리거 paths와 겹치지 않아 무한 루프 없음. 워크플로 실행 중 main이 다른 push로 앞서 나갈 수 있는 race condition은 `fetch-depth: 0` + `fetch → rebase → push` 3회 재시도 패턴으로 자동 복구.
-- **URL 규칙**: Cloudflare Pages 기본 동작으로 `.html` 확장자 자동 trim → `/daily/2026-05-20`처럼 noext URL 자동 작동. Vercel은 `vercel.json`의 `cleanUrls: true`로 동일 동작 (양쪽 호스팅 동기).
+- **URL 규칙**: Cloudflare Pages 기본 동작으로 `.html` 확장자 자동 trim → `/daily/2026-05-20`처럼 noext URL 자동 작동.
 - **RSS auto-discovery**: 메인 `index.html`·daily 페이지 head에 `<link rel="alternate" type="application/rss+xml" href="/rss.xml">` — 브라우저·피드리더가 RSS 자동 감지.
 - **외부 색인 등록 (1회성 사용자 작업)**:
   - `search.google.com/search-console` — `sitemap.xml` + `news-sitemap.xml` 둘 다 제출 (News Sitemap은 Top Stories 후보화 위해 별도 필요)
@@ -315,7 +314,7 @@ pg_cron → Vault X-Cron-Secret → expiry-notice
 | Edge Function verify_jwt 정책 | `supabase/config.toml` — 브라우저 호출 함수에 `verify_jwt = false` 항목 추가. 누락 시 401 silent fail |
 | 발송 스케줄 | `supabase/schedule.sql` (뉴스) · `schedule-expiry.sql` (만료 임박) — cron 표현식은 UTC |
 | SEO 페이지 디자인·메타 태그 | `scripts/build-daily-page.js`의 `buildDailyHtml`·`buildIndexHtml` (Pretendard + 메인 색상 시스템) |
-| 라우팅·리다이렉트 | `_redirects` (Cloudflare 메인) + `vercel.json` (Vercel 병행) — **양쪽 동기 유지** |
+| 라우팅·리다이렉트 | `_redirects` (Cloudflare Pages) |
 | 결제 완료 알림톡 템플릿 | `supabase/functions/payment-confirm/index.ts`의 `ALIMTALK_TEMPLATE_ID` |
 | 미수신자 안내 알림톡 템플릿 | `supabase/functions/admin-api/index.ts`의 `MANUAL_TEMPLATE_ID` (env `ALIMTALK_MANUAL_TEMPLATE_ID`로 오버라이드) |
 
@@ -327,7 +326,7 @@ pg_cron → Vault X-Cron-Secret → expiry-notice
 | 레이어 | 도구 |
 |---|---|
 | 웹 프런트 | 정적 HTML 3종(`index` / `admin` / 법정 문서) · Inter / Pretendard |
-| 호스팅 | **Cloudflare Pages (메인) + Vercel (병행)** · 라우팅은 `_redirects`(Cloudflare 형식) + `vercel.json`(Vercel 형식)로 양쪽 동기 유지. Cloudflare는 `.html` 자동 trim 기본 동작, Vercel은 `cleanUrls: true`로 동일 동작 |
+| 호스팅 | **Cloudflare Pages** · 라우팅은 `_redirects`. `.html` 자동 trim 기본 동작 |
 | 백엔드 | **Supabase Pro** (Postgres + Edge Functions + Vault + pg_cron + pg_net) |
 | 결제 | **포트원 V2** (galaxia 테스트 채널 · `windowType.mobile: REDIRECTION`) |
 | 메시지 | **알리고(Aligo)** — 카카오 친구톡·알림톡 · IP 화이트리스트 회피 위해 iwinv VPS(`proxy.briefick.com`, `115.68.224.225`)에 Node 프록시 + Caddy HTTPS · `X-Proxy-Secret` 헤더 인증 |

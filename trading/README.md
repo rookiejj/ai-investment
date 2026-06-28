@@ -106,7 +106,7 @@ docker compose up -d        # → http://localhost:8080
 
 ### A. 우리 스택 (Cloudflare Pages + Supabase) — 실제 운영 방식
 
-1. **정적 페이지**: `trading/` 가 그대로 Cloudflare Pages 에 배포된다. `/trading` 라우트는 `_redirects`·`vercel.json` 에 등록돼 있다.
+1. **정적 페이지**: `trading/` 가 그대로 Cloudflare Pages 에 배포된다. `/trading` 라우트는 `_redirects` 에 등록돼 있다.
 2. **시세 프록시(Edge Function)**: `supabase/functions/market-data` 를 배포한다.
    ```bash
    supabase functions deploy market-data
