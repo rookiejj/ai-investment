@@ -146,6 +146,27 @@ const fixed = [
   { cat:'policy', impact:1, title:'한국 어린이날 (휴장)', date:'2026-05-05', desc:'KOSPI 휴장' },
   { cat:'policy', impact:1, title:'미국 메모리얼 데이 (휴장)', date:'2026-05-26', desc:'NYSE·Nasdaq 휴장' },
   { cat:'policy', impact:2, title:'EU 디지털시장법(DMA) 추가 라운드 결정', date:'2026-05-22' },
+
+  // === 7월 매크로 ===
+  { cat:'macro', impact:3, title:'미국 6월 NFP 비농업 고용', date:'2026-07-02', desc:'독립기념일 관측 휴장 전 목요일로 앞당겨 발표' },
+  { cat:'policy', impact:1, title:'미국 독립기념일 관측 (휴장)', date:'2026-07-03', desc:'NYSE·Nasdaq 휴장 (7/4 토요일)·채권시장 7/2 조기 마감' },
+  { cat:'macro', impact:2, title:'중국 6월 CPI·PPI', date:'2026-07-09', desc:'NBS 발표·내수 물가·디플레 우려 점검' },
+  { cat:'macro', impact:3, title:'미국 6월 CPI', date:'2026-07-14', desc:'BLS 8:30 ET·6월 FOMC 후 첫 인플레 확인대' },
+  { cat:'macro', impact:2, title:'중국 6월 무역수지', date:'2026-07-14', desc:'수출입·관세 영향 단일 점검' },
+  { cat:'macro', impact:2, title:'미국 6월 PPI', date:'2026-07-15', desc:'근원 PPI 동반 발표' },
+  { cat:'macro', impact:3, title:'중국 Q2 GDP·6월 산업생산·소매판매', date:'2026-07-15', desc:'NBS 분기 성장률 + 월간 활동지표 동시 발표' },
+  { cat:'macro', impact:2, title:'미국 6월 소매판매', date:'2026-07-16', desc:'소비 모멘텀 핵심 지표' },
+  { cat:'macro', impact:3, title:'한국 BOK 7월 금융통화위원회', date:'2026-07-16', desc:'기준금리 결정·물가 3%대 부담 속 분기점' },
+  { cat:'macro', impact:2, title:'한국 Q2 GDP 속보치', date:'2026-07-23', desc:'한국은행 잠정 성장률' },
+  { cat:'macro', impact:3, title:'7월 FOMC 결과', date:'2026-07-30', desc:'KST 오전 3시·기준금리 결정 (7월은 점도표·SEP 없음)' },
+  { cat:'macro', impact:3, title:'미국 6월 PCE 물가', date:'2026-07-31', desc:'Fed 선호 인플레 지표' },
+
+  // === Q2 어닝 시즌 ===
+  { cat:'earnings', impact:2, title:'JPMorgan Q2 실적 (어닝 시즌 개막)', date:'2026-07-14', desc:'장전 발표·대형 은행 일제 시작', tickers:['JPM'] },
+  { cat:'earnings', impact:2, title:'TSMC Q2 실적', date:'2026-07-16', desc:'AI 반도체 수요·HBM·파운드리 가이던스', tickers:['TSM'] },
+  { cat:'earnings', impact:2, title:'Netflix Q2 실적', date:'2026-07-16', desc:'장후 발표·구독·광고 성장 점검', tickers:['NFLX'] },
+  { cat:'earnings', impact:2, title:'Tesla Q2 실적', date:'2026-07-22', desc:'장후 발표·인도량·마진·로보택시 진척', tickers:['TSLA'] },
+  { cat:'earnings', impact:3, title:'빅테크 Q2 어닝 주간 (MSFT·GOOGL·META·AMZN·AAPL)', date:'2026-07-29', desc:'7월 마지막 주 메가캡 집중 발표·AI CAPEX 점검대' },
 ];
 
 // 외부에서 접근할 변수명 (다른 update.js와 일관성)
