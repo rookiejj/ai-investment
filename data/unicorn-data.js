@@ -5,10 +5,10 @@ const data = [
     "stocks": [
       {
         "nm": "Stripe",
-        "rs": "6/23 $150B+ 풍문 - 5월 tender $91.5B 대비 +64% 업라운드 가능성·97.5% H1 2026 IPO NO Polymarket·Q1 결제 처리 $1T+·CEO Collison 'no imminent plan' 시그널",
-        "ipo": "2H 2026 윈도우",
+        "rs": "$159B 2월 tender vs 2025 $91.5B +73% 업라운드·FCF $2.2B 자체 운영·Collison 'no rush'·H1 2026 IPO Polymarket 13%",
+        "ipo": "2026 말~2027 후보",
         "val": "$159B",
-        "round": "2/26 텍더오퍼",
+        "round": "텍더오퍼 (2026-02)",
         "sector": "결제"
       },
       {
@@ -67,8 +67,8 @@ const data = [
     "stocks": [
       {
         "nm": "Canva",
-        "rs": "작년 8월 직원 세컨더리 $42B 밸류·ARR $4B YoY +35% 성장·MAU 265M·8년 연속 흑자·2H 2026 IPO 후보 1순위·Figma 11~12x ARR 적용 시 $44~48B base case",
-        "ipo": "2026 H2 후보",
+        "rs": "$42B 직원 세컨더리($1,646/주)·ARR $3.3~4B +35% YoY·미국 redomicile 완료·Steckelberg(전 Zoom IPO) CFO·Blackbird 'H2 2026 ready'",
+        "ipo": "2026 H2 후보 (S-1 미공개)",
         "val": "$42B",
         "round": "직원 세컨더리 (2025-08)",
         "sector": "디자인"
@@ -239,7 +239,7 @@ const data = [
       },
       {
         "nm": "Sword Health",
-        "rs": "AI 기반 근과격 치료·Hinge Health 5/22 IPO 데뷰 후 비상장 단독 MSK 채널·글로벌 확장",
+        "rs": "AI 기반 근과격 치료·Hinge Health 5/22 IPO 데뷔 후 비상장 단독 MSK 채널·글로벌 확장",
         "ipo": "미정",
         "val": "$3B",
         "round": "Series E ($130M, 2024-06)",
@@ -253,10 +253,10 @@ const data = [
     "stocks": [
       {
         "nm": "Kraken",
-        "rs": "모회사 Payward 5월 $20B 프리IPO 라운드 가동 - 3월 IPO 보류 후 시장 재진입 시그널·스테이블코인 뵱크 차터·yield 프로덕트로 IPO 후보 중 가장 강한 스테이블코인 사업 보유",
-        "ipo": "2026 Q3 목표",
-        "val": "$20B",
-        "round": "프리IPO 라운드 (2026-05)·Payward",
+        "rs": "11월 confidential S-1·Q3 2026 listing 타깃·Deutsche Börse 4/26 $13.3B 재평가·CLARITY Polymarket 42% 대기·Tim Scott '2026 통과' 가이던스",
+        "ipo": "2026 Q3 후보",
+        "val": "$13.3B",
+        "round": "$800M Pre-IPO (2025-11)",
         "sector": "크립토 거래소"
       },
       {
