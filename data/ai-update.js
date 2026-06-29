@@ -1,25 +1,25 @@
 const UPDATES = [
   {
-    "date": "2026-06-29 19:30 KST",
-    "summary": "Anthropic 6/30 'AI for Science' D-1 - John Jumper 신규 영입 후 pharma·biotech 단독 윈도우\nAWS Summit DC 6/30 동시 라이브 - Claude on AWS 정부·엔터프라이즈 monetization 분기점\nOpenAI 2027 listing 후퇴·SoftBank 9984 -12% 5.6조엔 직격 후속 capex 우려 누적\nxAI Grok 5 Q3 슬립 - Polymarket 6/30 전 출시 7% 단계 후퇴·V9-Medium 7월 가시화\nClaude Code on AWS 워크숍 - hyperscaler $470B 2026 capex 컨센 첫 시그널",
+    "date": "2026-06-30 07:35 KST",
+    "summary": "Anthropic 6/30 'AI for Science' D-Day 10:00 PST 라이브 - pharma·biotech 단독 윈도우\nAnthropic 6/30 AWS Summit DC 라이브 동시 - Claude on AWS 정부·엔터프라이즈 monetization\nGOOGL Workspace Gemini 3.1 Flash TTS 53 presets·Canvas Classroom 통합·Workspace 정상 트랙\nApple WWDC 2026 iOS 27·iPadOS 27·macOS 27 골든게이트 출시 - Siri 재구축 Gemini under hood\nMistral $3.5B €20B 밸류 6월 완료 - 유럽 사상 최대 AI 라운드·Paris DC 클러스터 $830M 동조",
     "changes": [
       {
-        "time": "2026-06-29 19:30 KST",
+        "time": "2026-06-30 07:35 KST",
         "type": "이벤트",
-        "detail": "Anthropic. 6/30 화요일 'The Briefing: AI for Science' 가상 컨퍼런스 D-1 카운트다운 - 10:00 PST 라이브 스트림 + Anthropic 리더십·life sciences 임원·연구 기관 동반 시연 - Claude 의 pharma·biotech·life sciences 활용 사례 단독 윈도우 첫 가시화 - John Jumper 6/19 합류 (AlphaFold Nobel 수상자) 후속 첫 공식 출시·동일 6/30 Anthropic at AWS Summit Washington DC 10:00 EDT 라이브 - 정부·엔터프라이즈 customer showcase + Claude on AWS monetization 분기점 + Claude Code on AWS 워크숍 동시 가시화·Series H $65B $965B 포스트머니 1위 유지·run-rate 매출 $47B+ 베이스·OpenAI 2027 listing 후퇴 후속 메가캡 LLM IPO 단독 윈도우 첫 가시화 - 10월 listing 73% Polymarket 베팅 잔존·Project Glasswing 150 기관 확대 + Mythos Preview 10,000+ 보안 결함 발견 + Anthropic Seoul 6/17 정식 개소·Amazon 협력 확대 5GW 신규 컴퓨트 가이던스. 단기 시그널 - 6/30 AI for Science + AWS Summit DC 라이브·10월 listing 카운트다운·美 상원은행위 Alibaba Qwen distillation 후속 정책 응답·Claude Opus 4.7 후속 5.0 가이던스 잔존. 매크로 - Anthropic forward EV/매출 LLM sector 20x premium vs OpenAI 2027 후퇴 후속 단독 윈도우 첫 가시화·hyperscaler $470B 2026 capex 컨센 첫 시그널·DXY 100.50 강세·실질금리 200bp·VIX 25 변동성 2단계 잔존·life sciences AI 적용 monetization 카테고리 분기점 첫 가시화.",
+        "detail": "Anthropic. 6/30 화요일 'The Briefing: AI for Science' 가상 컴퍼런스 D-Day 10:00 PST 라이브 스트림 - Anthropic 리더십·life sciences 임원·연구 기관 동반 시연·Claude pharma·biotech·life sciences 활용 사례 단독 윈도우 첫 가시화 - John Jumper 6/19 합류 (AlphaFold Nobel 수상자) 후속 첫 공식 출시·동일 6/30 Anthropic at AWS Summit Washington DC 10:00 EDT 라이브 - 정부·엔터프라이즈 customer showcase + Claude on AWS monetization 분기점·confidential S-1 6/1 파일링 후속 10월 Nasdaq listing 가이던스·Morgan Stanley·Goldman·JPM 리드·>$60B 조달 가이던스·Series H-1 5월 $65B → $965B 포스트머니 #1 유지·run-rate 매출 $30B ARR (4월) 도달·2,500명 인력·Fortune 10 중 8개 고객·Colossus 1 전체 용량 활용 가이던스·Polymarket 10/31 IPO 37% vs 12/31 76%·ticker $ANTH 59%. 단기 시그널 - 6/30 AI for Science 컴퍼런스·6/30 AWS Summit DC·10월 listing 카운트다운·S-1 후속 Q3 pricing 윈도우·OpenAI 2027 listing 후퇴 후속 단독 윈도우. 매크로 - Anthropic forward EV/매출 LLM sector 20x premium·hyperscaler $470B 2026 capex 컨센 첫 시그널·DXY 강세·실질금리 200bp·VIX 16.4 변동성 정상·life sciences AI 적용 monetization 카테고리 분기점 첫 가시화.",
         "sector": "Anthropic"
       },
       {
-        "time": "2026-06-26 18:00 EDT",
-        "type": "거버넌스",
-        "detail": "OpenAI. NYT 6/26 IPO 2027 연기 컨센 보도 후속 SoftBank 9984 -12% 6,226엔 마감 + 일중 -14% 도달 + 5.6조엔 시총 직격 - bankers SpaceX SPCX 6/12 IPO 후속 $135 → $225 peak → $153 -32% off peak 사례 회피 가이던스 직접 인용·CEO Sam Altman $1T 밸류 미만 listing 거부 'non-starter' 직접 코멘트 + Sarah Friar 2027 가이던스 associates 전달·6/8 S-1 confidential 파일링 잔존 vs 9월 listing 직전 윈도우 후퇴·Kalshi 6/26 listing 시점 베팅 2027 우세·SoftBank $65B 누계 투자 + 6/26 주총 Masayoshi Son AI bubble 부정 + 'still in its infancy' 직접 옷호·트럼프 행정부 OpenAI 최신 모델 출시 단계 가이던스 + 보안 우려 카운터 추가·OpenAI $200B run-rate 매출 + 분기 사상 최대 성장 베이스. 단기 시그널 - 6/30 Anthropic 컨퍼런스·OpenAI S-1 confidential 후속·美 상원 中 AI 모델 access 정책 응답·GPT-5.5-Cyber 후속 5.6 가이던스. 매크로 - OpenAI forward EV/매출 LLM sector 20x premium·hyperscaler $470B 2026 capex 컨센 첫 시그널 vs OpenAI IPO 후퇴 후속 capex 우려 누적·DXY 100.50 강세·실질금리 200bp·VIX 25 변동성 2단계 잔존.",
-        "sector": "OpenAI"
+        "time": "2026-06-30 07:35 KST",
+        "type": "제품 출시",
+        "detail": "Google·Apple·Microsoft. GOOGL 6/29 Workspace 업데이트 라이브 - Google Vids 아바타 Gemini 3.1 Flash TTS 업그레이드 (53 presets vs 23)·Gemini Canvas Classroom 과제 첨부·Gemini app EU/US 데이터 regionalization 토글·6/16 Gemini 3.5 Flash 엔터프라이즈 always-on 디폴트 (토글 제거) 후속 잔존·Workspace 가시화 첫 사이클·Dow Jones 6/29 편입 데뷔 +4~5% 동조. Apple WWDC 2026 6/8~9 출시 - iOS 27·iPadOS 27·macOS 27 'Golden Gate' 출시·Siri 재구축 Google Gemini 백엔드 + standalone 앱 + visual intelligence·AI 답장 제안 Messages·Phone 미드콜 크로스앱 컨텍스트·Photos +70% 빠름·AirDrop +80%·iPhone 11+ 자격·iOS 19 명명 점프 27로 변경. Microsoft June 2026 전략 - Azure + Copilot + GitHub + M365 + Foundry 통합 엔터프라이즈 AI 컨트롤 플레인·Q3 FY2026 capex 가이던스 ~$190B·Build 2026 (6/2~3 SF) agents + Foundry 강조·6월 Product Terms 3개월 연속 재작성 - 단일 Enterprise AI Services Code of Conduct 전 Foundry 모델 적용. 단기 시그널 - 6/30 Anthropic 컴퍼런스·7월 Microsoft FY26 Q4 어닝·iOS 27 GA 9월·Gemini 4 가이던스 잔존. 매크로 - hyperscaler $470B 2026 capex 컨센 첫 시그널·Microsoft FY27 capex $190B·forward EV/매출 SaaS sector 12x·DXY 강세·실질금리 200bp·VIX 16.4 변동성 정상·Apple Siri Gemini 통합 첫 사이클 정렬.",
+        "sector": "Google"
       },
       {
-        "time": "2026-06-29 19:30 KST",
-        "type": "모델 출시 예정",
-        "detail": "xAI·Grok 5. Polymarket Grok 5 6/30 전 출시 베팅 7% 단계 후퇴 - Q1 2026 → Q2 → Q3 슬립 가시화·Memphis 데이터센터 1.2M H200 GPU 단일 최대 학습 인프라 가동 잔존·Grok V9-Medium 1.5T 코딩 모델 학습 완료 + Elon Musk 6월 코멘트 확인 + 7월 출시 가이던스 가시화·Grok 4.3 AWS Bedrock GA + 1M 컨텍스트 베이스·Grok Voice 6/4 모바일 출시 + Grok Imagine Video 1.5 Image-to-Video Arena #1 + 720p 15초 native audio + API access 베이스·xAI Grok Build 의 /goal 자율 모드 출시 - 장기 자율 실행 + 계획·실행·검증 통합 첫 사이클·원년 공동창립자 11명 5월까지 전원 이탈 + Reid Hoffman 'train wreck' 코멘트 카운터 잔존·OpenAI 2027 listing 후퇴 후속 xAI Series J $200B 밸류 vs Anthropic $965B 단독 LLM IPO 윈도우 첫 가시화 카운터. 단기 시그널 - 6/30 Polymarket 분기점·Q3 Grok 5 슬립 가시화·V9-Medium 7월 출시·Memphis 1.2M H200 가동·Grok 5 6T 모델 학습 후속. 매크로 - xAI Series J $200B 밸류 잔존 vs Polymarket 7% 단계 카운터·hyperscaler $470B 2026 capex 컨센 첫 시그널·forward EV/매출 LLM sector 15~20x premium·DXY 100.50 강세·실질금리 200bp.",
-        "sector": "xAI"
+        "time": "2026-06-30 07:35 KST",
+        "type": "펀딩",
+        "detail": "Mistral·xAI·NVIDIA. Mistral $3.5B 펀딩 €20B (~$23B) 6월 완료 - 유럽 사상 최대 AI 라운드·3월 2026 $830M 부채 Paris DC 클러스터 동조 완료 베이스·Mistral·Cohere 파트너십 부재 잔존 (경쟁자 유지)·메가측 LLM 듀오 OpenAI·Anthropic 외 3대 플레이어 첫 가시화. xAI Grok 5 6/30 11:59 PM ET 출시 베팅 Polymarket 7% 단계 - Q1·Q2 윈도우 도달 못함 Q3 슬립 가시화·Grok 4.3 현재 플래그쉭·H1 출시: Grok Voice·Grok Imagine (video)·Grok V9-Medium 1.5T 코딩 (3x prior, 학습 완료, 중순 가이던스)·Colossus 2 Memphis 2 GW 555K GPU ($18B) 1월 2026 확장 (3번째 빌딩)·xAI·SpaceX 협력 Colossus 1 Anthropic 전체 활용. NVIDIA Vera Rubin TSMC N3 풀생산·50 PF inference 5x Blackwell·H2 2026 파트너 가용 (AWS·GCP·Azure·Oracle)·중국 미승인 (22x permitted China-spec chips)·H200 China 1월 Trump 25% US fee 승인 + 베이징 미승인 0대 판매·Vera CPU 중국 buyers early access (8월 출하 가이던스). 단기 시그널 - Q3 Grok 5 슬립·Memphis 2 GW 확장 후속·NVDA Vera Rubin H2 2026·Mistral Paris DC 가동·Anthropic 6/30 컴퍼런스. 매크로 - xAI Series J $200B 밸류·Mistral €20B 밸류·forward EV/매출 LLM sector 15~20x premium·hyperscaler $470B 2026 capex 컨센 첫 시그널·VIX 16.4 변동성 정상·DXY 강세·실질금리 200bp.",
+        "sector": "Mistral"
       }
     ]
   }
