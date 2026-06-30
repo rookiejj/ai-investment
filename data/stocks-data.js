@@ -18,7 +18,7 @@ const data = [
         "p2": "148",
         "r1": "403",
         "r2": "455",
-        "rs": "6/29 Dow Jones 편입 데뷔 +4~5%·Workspace Gemini 3.1 Flash TTS 53 presets·Gemini Canvas Classroom 통합·forward P/E 18",
+        "rs": "6/29 ~$350 +4.94% Dow Jones 편입 데뷔 Verizon 22년 만에 교체·Gemini 3.1·forward P/E 18",
         "tk": "GOOGL"
       },
       {
@@ -78,7 +78,7 @@ const data = [
         "p2": "192",
         "r1": "216",
         "r2": "337",
-        "rs": "$194 6/29 +1% 반등·Vera Rubin H2 2026 TSMC N3 풀생산·H200 China 0대 판매·8/26 Q2 D-58·forward P/E 32",
+        "rs": "6/29 $194.54 +1.30% 반등·SOX +3.83% 6/23 $1.3T 매도 회복·Vera Rubin H2 2026·8/26 Q2 D-57",
         "tk": "NVDA"
       },
       {
@@ -699,7 +699,7 @@ const data = [
         "p2": "7.2",
         "r1": "95",
         "r2": "109",
-        "rs": "Q1 2026 콘콜에서 Cybercab Giga Texas 양산 공식 개시 확인·NHTSA 2,500대 자율차 연 한도 적용 면제·Musk 무인 FSD 고객 전개 'Q4 추정'·실질 매출은 2027년 이후·6월 자체 라이드헤일링 런치 목표 유지",
+        "rs": "6/29 $411.84 +8.49% Q2 인도 7/2 임박·Barclays 추정 418k vs 컨센 396k·FSD·Robotaxi 모멘텀·시총 $1.32T",
         "tk": "TSLA"
       },
       {
