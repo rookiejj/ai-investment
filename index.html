@@ -1739,6 +1739,14 @@ function buildNarrative(){
 // ═══════════════════════════════════════════════════════════
 // Event Calendar
 // ═══════════════════════════════════════════════════════════
+// 미국 증시(NYSE) 휴장일 — 영업일 계산·정기 이벤트 시프트에 사용.
+// 휴장일엔 지표 발표가 밀리므로(예: 독립기념일 주간 ISM 서비스업이 셋째 영업일=7/6),
+// 영업일 카운트에서 제외하고 nth요일 이벤트가 휴장일에 걸리면 그날엔 표시하지 않는다.
+const US_MARKET_HOLIDAYS = new Set([
+  '2026-01-01','2026-01-19','2026-02-16','2026-04-03','2026-05-25',
+  '2026-06-19','2026-07-03','2026-09-07','2026-11-26','2026-12-25',
+]);
+
 // 정기 이벤트 패턴을 다음 60일 윈도우로 expansion
 function expandRecurring(recurring, fromDate, days){
   const out=[];
@@ -1750,22 +1758,23 @@ function expandRecurring(recurring, fromDate, days){
       let match=false;
       if(s.type==='weekly' && s.dow===dow){match=true}
       else if(s.type==='monthly_nth_dow' && s.dow===dow){
-        // n번째 dow of this month?
+        // n번째 dow of this month? (단, 그날이 휴장일이면 발표가 밀리므로 표시 안 함)
         const firstDay=new Date(Date.UTC(y,m-1,1));
         let firstDow=firstDay.getUTCDay();
         let firstOfDow=1+((s.dow-firstDow+7)%7);
         const target=firstOfDow+(s.n-1)*7;
-        if(day===target)match=true;
+        if(day===target && !US_MARKET_HOLIDAYS.has(fmtKSTDate(d)))match=true;
       }
       else if(s.type==='monthly_day' && s.day===day){match=true}
       else if(s.type==='monthly_business_day'){
-        // 매월 N번째 영업일 (월~금)
+        // 매월 N번째 영업일 (월~금, 휴장일 제외)
         let bd=0;
         for(let dd=1;dd<=day;dd++){
-          const dy=new Date(Date.UTC(y,m-1,dd)).getUTCDay();
-          if(dy>=1&&dy<=5)bd++;
+          const dt=new Date(Date.UTC(y,m-1,dd));
+          const dy=dt.getUTCDay();
+          if(dy>=1&&dy<=5 && !US_MARKET_HOLIDAYS.has(fmtKSTDate(dt)))bd++;
         }
-        if(bd===s.n && dow>=1 && dow<=5)match=true;
+        if(bd===s.n && dow>=1 && dow<=5 && !US_MARKET_HOLIDAYS.has(fmtKSTDate(d)))match=true;
       }
       if(match){
         out.push({date:fmtKSTDate(d),title:ev.title,cat:ev.cat,impact:ev.impact||1,source:'recurring'});
