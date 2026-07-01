@@ -699,7 +699,7 @@ const data = [
         "p2": "7.2",
         "r1": "95",
         "r2": "109",
-        "rs": "6/29 $411.84 +8.49% Q2 인도 7/2 임박·Barclays 추정 418k vs 컨센 396k·FSD·Robotaxi 모멘텀·시총 $1.32T",
+        "rs": "7/1 $297 -5% 급락·Trump-Musk 재점화 EV 세액공제 폐지·Q2 인도 7/2 D-1 컨센 406k·FSD·Robotaxi 방어선",
         "tk": "TSLA"
       },
       {
