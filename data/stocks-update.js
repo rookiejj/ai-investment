@@ -1,25 +1,25 @@
 const updates = [
   {
-    "date": "2026-07-01 07:35 KST",
-    "summary": "S&P 7,499 +0.79% 사상 최고가 종가·Q2 best in 6년 분기 마감 확정\nJOLTS 5월 7.60M 2년래 최고 구인·노동시장 강세 vs Fed 인하 후퇴 카운터\nNATO 5% GDP 2035 합의 - LMT $194B·RTX·NOC·GD 방산 capex 2x 후방\nTSLA Q2 인도 7/2 D-2 컨센 406k 카운트다운·6/29 $411.84 +8.49% 신고가\nAVGO Anthropic $10B+$11B 칩 주문·OpenAI 10GW 협업·AI 인프라 가속",
+    "date": "2026-07-01 19:10 KST",
+    "summary": "TSLA $297 -5%~-6% 급락 - Trump-Musk 재점화·상원 통과 세제법안 EV 세액공제 폐지 위협\nPowell ECB Sintra Forum - 관세 없었으면 이미 인하했다·인하 재개 신호 vs 물가 상방 카운터\nISM 제조업 6월 22:00 KST 발표 D-day·컨센 49~50 vs 5월 54%·2년래 첫 확장→위축 시프트 관건\nJOLTS 5월 7.60M 2년래 최고 노동시장 강세·6/2 ADP·NFP 7/2 카운트다운\nS&P 500 7,471 -0.38% 인트라데이·6/30 사상 최고가 7,499 종가 후 첫 조정",
     "changes": [
+      {
+        "time": "2026-07-01 06:00 KST",
+        "type": "이벤트",
+        "detail": "Tesla(TSLA). 7/1 -5%~-6.4% 급락 $297.35 인트라데이 저점 - Trump-Musk 재점화·상원 6/30 '빅뷰티풀법' 마지막 변경으로 EV 세액공제 폐지 조항 포함되자 Musk 주말 공개 비판 - Trump Truth Social '엔론 없이 문 닫아야 할 것' 발언·SpaceX·Tesla 등 Musk 사업체 정부 보조금 삭감 위협 - EV 세액공제 삭감은 Tesla 현재 이익의 약 52% 영향 추정·규제 승인·연방 계약도 리스크 - Q2 인도 발표 7/2 D-1 컨센 406,024대 (392,626대 Model 3/Y·12,978대 기타)·Goldman Sachs 420k 낙관적·에너지 저장 13.8GWh 컨센 (17명 애널리스트)·6/29 종가 $411.84 +8.49%에서 7/1 개장 -5% 하방 시프트 - 카탈리스트 상실 우려 카운터. 단기 시그널 - 7/2 Q2 인도 D-1·7/3 휴장·7/22 Q2 어닝 AMC·법안 하원 통과 여부·유럽·중국 판매 흐름·FSD v13.3 전개·Robotaxi Austin 확장. 매크로 - EV 세액공제 폐지는 TSLA·GM·F·LCID·RIVN sector 전방 압박·hyperscaler AI capex 지속·forward P/E 130 sector premium 잔존이 밸류 카운터·VIX 상승 리스크 오프 잔존.",
+        "sector": "자동차·모빌리티"
+      },
+      {
+        "time": "2026-07-01 05:30 KST",
+        "type": "정책",
+        "detail": "Fed·ECB Sintra Forum·매크로. Powell ECB Sintra Forum 6/29~7/1 발언 - '관세가 그렇게 크지 않았다면 이미 인하했을 것' 명시적 표현·'우리는 관세 규모를 봤을 때 사실상 hold로 갔고 미국 인플레 전망이 실질적으로 상방 시프트' - Fed 인하 재개 조건 시그널이나 서비스 가격은 rents·insurance·hotel 냉각 진행 명시·Fed 독립성 재확인 'nonpolitical' 강조·Trump 6월 Powell 해임 검토 발언 vs Powell '헌법상 명확치 않다' 우회 배경 - Fed funds 3.50~3.75% 동결 잔존·dot plot 2026 median 3.8%·1회 인하 잔존·인플레 headline 3.6%·core 3.3% 상향 전망 유지 - ISM 제조업 6월 22:00 KST 발표 D-day 컨센 49~50 vs 5월 54% 2년래 최고에서 반전 여부 sector rotation 분기점·7/2 ADP·NFP·7/3 휴장 (독립기념일 관례로 조기)·7/14 어닝시즌 개막 JPM·BAC·C·WFC·7/30 FOMC. 단기 시그널 - ISM 제조업 오늘·ADP·NFP 7/2·FOMC 7/30·잭슨홀 8월. cross-asset - S&P forward P/E 22 +1σ premium·earnings yield 4.5% 10y 4.30% gap 20bp·Treasury 10y 4.30% Powell 인하 시그널 후 하락·DXY 약세 시프트·VIX 정상·WTI $70 Q2 -30% 최대 낙폭·BTC $59,750.",
+        "sector": "지표"
+      },
       {
         "time": "2026-07-01 05:00 KST",
         "type": "흐름",
-        "detail": "지수·메가캡·Q2 분기 마감 사이클. S&P 500 7,499.36 +0.79% 사상 최고가 종가 - Q2 best in ~6년 최고 분기 마감 확정·Dow Jones 52,000+ 사상 첫 돌파 후 연장·Nasdaq Composite 상승 마감 - tech 리더십 지속·QQQ $731.91 +1.1% 분기말 메가캡 윈도드레싱·NVDA 6/29 $194.97 시총 $4.7T 잔존 - 5/14 최고가 $235.47 대비 -17% 잔존·Vera Rubin 풀생산 GTC 타이베이 6/1 확정·Blackwell 대비 10x 추론 토큰 비용 절감·4x 적은 GPU MoE 학습·AWS·Google Cloud·Microsoft·OCI + CoreWeave·Lambda·Nebius·Nscale 런치 파트너·GOOGL Dow 데뷔 첫 풀 세션 - 시총 $4.63T·AAPL $4.53T·MSFT $3.11T·TSM +46% YTD NVDA·AMD·AAPL·AVGO 2026 매출 강세 모멘텀·VIX 정상 단계 회복·sector rotation tech 유지 + 방산 진입. 단기 시그널 - 7/1 ISM 제조업·ADP·NFP 7/2(휴장 시프트)·7/3 휴장 Independence Day·7/14 JPM·BAC·C·WFC Q2 어닝 시즌 개막·7/22 TSLA Q2·7/30 FOMC·8/26 NVDA Q2. cross-asset - S&P forward P/E 22 +1σ premium·earnings yield 4.5% 10y 4.39% gap 11bp·Treasury 10y 4.39%·DXY 박스권·WTI $70.7 Q2 -30% 분기 낙폭·Brent $73.7·VIX 정상·BTC $59,750 +0.5%·sector rotation defense + tech 동조.",
+        "detail": "지수·메가캡·Q2 어닝 카운트다운. S&P 500 7,471 -0.38% 인트라데이 - 6/30 종가 7,499.36 +0.79% 사상 최고가·Q2 best in 6년 확정 후 첫 조정·Dow Jones 52,319 신고가 지지·Nasdaq 조정 - TSLA -5% 반영이 인덱스 압박·Q2 강한 랠리 S&P +14%·Nasdaq +20%·Dow +12% 확정 이후 차익실현·NVDA $194.97 시총 $4.7T 잔존 5/14 최고 $235.47 대비 -17% 갭·Vera Rubin 풀생산 GTC 타이베이 6/1 확정·Blackwell 대비 10x 추론 토큰 비용·GOOGL Dow 데뷔 시총 $4.63T·AAPL $4.53T·MSFT $3.11T·TSM +46% YTD·NVDA·AMD·AAPL·AVGO 매출 강세 모멘텀 유지·AVGO Anthropic $10B+$11B 칩 주문·OpenAI 10GW 커스텀 가속기 협업·NATO 5% GDP 2035 합의 LMT·RTX·NOC·GD sector premium 유지·hyperscaler $470B 2026 capex 후방·VIX 정상. 단기 시그널 - 7/1 ISM 제조업·7/2 ADP·NFP·TSLA Q2 인도·7/3 휴장 조기·7/14 JPM·BAC·C·WFC Q2·7/22 TSLA Q2 어닝·7/30 FOMC·8/26 NVDA Q2·9/4 AVGO Q3. cross-asset - S&P forward P/E 22·earnings yield 4.5% 10y 4.30% gap 20bp·Treasury 10y 4.30%·DXY 약세 시프트·WTI $70.7·Brent $73.7·VIX 정상·BTC $59,750·sector rotation defense·tech 유지 vs TSLA sub-sector 압박.",
         "sector": "AI 플랫폼"
-      },
-      {
-        "time": "2026-07-01 05:00 KST",
-        "type": "이벤트",
-        "detail": "NATO 5% GDP 2035·방산 sector premium. NATO 회원국 5% of GDP 방위비 2035 합의 - 기존 2% 대비 2.5배 상향·캐나다 5% GDP 2035 동조 합의 - WWII 이래 최대 군비 증액·LMT 백로그 $194B 매출 2.5년치·NOC B-21 첫 흑자 $305M·RTX 매출 +10% YoY $6.95B·백로그 $271B 사상 최대·GD Combat Systems +4.9% $2.28B·백로그 $188.4B·sector 동반 신고가 진입·forward EV/매출 7x premium·hyperscaler $470B AI capex 후방 방산 capex 첫 2x 가속도 첫 가시화·美 행정부 트럼프 NATO 5% 푸시 1년 만 결실·러시아 우크라이나 정상화 협상 분기점·중동 평화 사이클 vs NATO 군비 2x 카운터 양극화·AVGO Anthropic $10B + $11B 칩 주문·OpenAI 10GW 커스텀 가속기 협업 발표·Street 2026 매출 +66% 모델·sector premium AI infra dominance 첫 사이클. 단기 시그널 - 7/14 LMT Q2·7/22 RTX·NOC Q2·8/9 GD Q2·NATO 7/1 정상회의 결과·NVDA Q2 8/26·AVGO Q3 9/4·Anthropic 10월 listing 카운트다운. 매크로 - 방산 sector forward P/E 22 +1.5σ premium·earnings yield 4.5% 10y 4.39% gap 11bp·VIX 정상·DXY 박스권·forward 백로그/매출 비율 사상 최대·실질금리 200bp·hyperscaler AI infra $470B 후방·NATO 5% GDP capex 2x 2035 사이클 첫 진입.",
-        "sector": "방산"
-      },
-      {
-        "time": "2026-07-01 05:00 KST",
-        "type": "지표",
-        "detail": "JOLTS·노동시장·매크로·Q2 어닝 카운트다운. JOLTS 5월 구인 7.60M 2년래 최고 vs 컨센 ~7.59M - 노동시장 강세 잔존 'Iran 전쟁 불확실성 shrug off' CNN 코멘트·Fed funds 3.50~3.75% 동결 (Warsh 시대 데뷔 6/17 12-0) 후속 dot plot 2026 median 3.8%·9/19 멤버 ≥1회 추가 인상 가능성·1회 인하 dot 유지·인플레 2026 headline 3.6%·core 3.3% 상향 - 노동 강세 + 인플레 끈끈 = Fed 인하 후퇴 카운터·ECB Sintra Forum 6/29~7/1 진행 - Lagarde 'Monetary policy back to basics' 새 플레이북 시그널·NKE Q4 FY26 6/30 AMC 발표 - 컨센 EPS $0.11~0.13·매출 $10.85B -2.2% YoY·Greater China -20% 분기점·CEO Elliott Hill 'Win Now' 첫 사이클·KMX FY26 EPS $1.68 -48% YoY 컨센 쇼크·STZ Q1 FY27 6/30 BMO - 컨센 EPS $3.30 매출 $2.55B·美·Iran Doha 평화회담 6/30 진행·WTI ~$70 Q2 -30% 가장 큰 분기 낙폭 (2020 이후) 확정. 단기 시그널 - 7/1 ISM 제조업·7/2 ADP·NFP·7/3 휴장·7/14 JPM·BAC·C·WFC 어닝 시즌 개막·7/22 TSLA·7/30 FOMC·8/26 NVDA·9/4 AVGO. 매크로 - JOLTS 7.60M 2년래 최고·S&P Q2 EPS +21.2% YoY 컨센 +1.8σ premium·forward P/E 22·earnings yield 4.5% 10y 4.39% gap 11bp·VIX 정상·DXY 박스권·BTC $59,750·Treasury 10y 4.39%·WTI $70.7·Brent $73.7·sector rotation defense + tech 동조·Fed 인하 1회 path 잔존.",
-        "sector": "지표"
       }
     ]
   }
