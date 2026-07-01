@@ -150,6 +150,7 @@ const fixed = [
   // === 7월 매크로 ===
   { cat:'macro', impact:3, title:'미국 6월 NFP 비농업 고용', date:'2026-07-02', desc:'독립기념일 관측 휴장 전 목요일로 앞당겨 발표' },
   { cat:'policy', impact:1, title:'미국 독립기념일 관측 (휴장)', date:'2026-07-03', desc:'NYSE·Nasdaq 휴장 (7/4 토요일)·채권시장 7/2 조기 마감' },
+  { cat:'macro', impact:3, title:'6월 FOMC 의사록 공개', date:'2026-07-08', desc:'6/16-17 회의 톤·향후 금리 인하 경로 가이드' },
   { cat:'macro', impact:2, title:'중국 6월 CPI·PPI', date:'2026-07-09', desc:'NBS 발표·내수 물가·디플레 우려 점검' },
   { cat:'macro', impact:3, title:'미국 6월 CPI', date:'2026-07-14', desc:'BLS 8:30 ET·6월 FOMC 후 첫 인플레 확인대' },
   { cat:'macro', impact:2, title:'중국 6월 무역수지', date:'2026-07-14', desc:'수출입·관세 영향 단일 점검' },
@@ -162,6 +163,7 @@ const fixed = [
   { cat:'macro', impact:3, title:'미국 6월 PCE 물가', date:'2026-07-31', desc:'Fed 선호 인플레 지표' },
 
   // === Q2 어닝 시즌 ===
+  { cat:'earnings', impact:2, title:'Delta 항공 Q2 실적 (어닝 시즌 킥오프)', date:'2026-07-10', desc:'항공 여객 수요 벨웨더·실적 시즌 비공식 개막', tickers:['DAL'] },
   { cat:'earnings', impact:2, title:'JPMorgan Q2 실적 (어닝 시즌 개막)', date:'2026-07-14', desc:'장전 발표·대형 은행 일제 시작', tickers:['JPM'] },
   { cat:'earnings', impact:2, title:'TSMC Q2 실적', date:'2026-07-16', desc:'AI 반도체 수요·HBM·파운드리 가이던스', tickers:['TSM'] },
   { cat:'earnings', impact:2, title:'Netflix Q2 실적', date:'2026-07-16', desc:'장후 발표·구독·광고 성장 점검', tickers:['NFLX'] },
