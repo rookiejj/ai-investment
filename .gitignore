@@ -20,3 +20,6 @@ scripts/promo/out/
 supabase/.branches
 supabase/.temp
 reference/
+
+# /stocks 한글명 번역 캐시 (로컬 재생성용, 재현 가능)
+stocks/.ko-cache.json

@@ -33,18 +33,11 @@
 
 <!-- Filter bar -->
 <div class="filterbar">
-  <div class="chipset">
-    <span class="lab">유형</span>
-    <button class="chip on" data-type="all">전체</button>
-    <button class="chip" data-type="stock">주식</button>
-    <button class="chip" data-type="etf">ETF</button>
-  </div>
-  <select class="fsel" id="exchSel"><option value="">모든 거래소</option></select>
-  <span class="fspacer"></span>
   <div class="viewtoggle" id="viewtoggle" role="group" aria-label="보기 방식">
     <button class="vbtn on" data-layout="list" title="리스트 보기">☰ 리스트</button>
     <button class="vbtn" data-layout="bubble" title="버블 보기">⬢ 버블</button>
   </div>
+  <span class="fspacer"></span>
   <span class="fcount" id="fcount">로딩 중…</span>
 </div>
 
@@ -56,10 +49,9 @@
       <tr>
         <th class="num" style="width:64px" data-sort="idx">#</th>
         <th data-sort="t" style="width:140px">티커 <span class="arrow" data-for="t"></span></th>
-        <th data-sort="n">종목명 <span class="arrow" data-for="n"></span></th>
+        <th data-sort="k">종목명 <span class="arrow" data-for="k"></span></th>
         <th data-sort="e" style="width:130px">거래소 <span class="arrow" data-for="e"></span></th>
         <th class="num" data-sort="cap" style="width:120px">시총 <span class="arrow" data-for="cap"></span></th>
-        <th data-sort="ty" style="width:84px">유형 <span class="arrow" data-for="ty"></span></th>
       </tr>
     </thead>
     <tbody id="tbody"></tbody>

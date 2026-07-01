@@ -98,8 +98,9 @@ tr.row:hover .tsym{color:var(--acc2)}
   font:600 12px/1 var(--mono);cursor:pointer;white-space:nowrap;transition:background .1s,border-color .1s}
 .bub:hover{border-color:var(--acc);background:var(--panel2);color:var(--acc2)}
 .bub .bflag{font-size:11px;opacity:.85}
-.bub.etf{border-color:#5a4a16;background:#1c1707;color:var(--amber)}
-.bub.etf:hover{border-color:var(--amber)}
+.bub .bsym{font-weight:700}
+.bub .bname{color:var(--fg2);font-family:var(--sans);font-weight:500;max-width:180px;overflow:hidden;text-overflow:ellipsis}
+.bub:hover .bname{color:var(--acc2)}
 .bub.kr{border-style:solid}
 
 .sentinel{height:1px}
@@ -131,15 +132,14 @@ tr.row:hover .tsym{color:var(--acc2)}
   .fsel{padding:6px 8px;max-width:44vw}
   .fcount{font-size:11px;margin-left:auto} /* 둘째 줄 우측 정렬 */
 
-  /* 리스트: # · 거래소 열 숨김 → 티커·종목명·시총·유형만 */
+  /* 리스트: # · 거래소 열 숨김 → 티커·종목명·시총만 */
   table.grid th:nth-child(1),table.grid td:nth-child(1),
   table.grid th:nth-child(4),table.grid td:nth-child(4){display:none}
   table.grid th{padding:9px 10px;font-size:9px}
   table.grid td{padding:9px 10px;font-size:13px}
   /* 좁은 폭에서 고정열 축소 → 종목명(3열)이 남는 공간 차지 */
   table.grid th:nth-child(2),table.grid td:nth-child(2){width:84px}  /* 티커 */
-  table.grid th:nth-child(5),table.grid td:nth-child(5){width:78px}  /* 시총 */
-  table.grid th:nth-child(6),table.grid td:nth-child(6){width:56px}  /* 유형 */
+  table.grid th:nth-child(5),table.grid td:nth-child(5){width:82px}  /* 시총 */
   .tname{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .flag{margin-right:4px}
 

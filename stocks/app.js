@@ -1,6 +1,6 @@
 /* Briefick Stocks — 전 상장 종목 브라우저
- * 데이터: ./us.json · ./kr.json (scripts/build-all-stocks.py 로 생성)
- * 레코드: { t:티커, n:종목명, e:거래소/시장, ty:"stock"|"etf", c:"US"|"KR" }
+ * 데이터: ./us.json · ./kr.json (scripts/build-all-stocks.py 로 생성, ETF 제외)
+ * 레코드: { t:티커, n:영문/국문명, k:한글명, e:거래소/시장, c:"US"|"KR", m:시총 }
  *
  * 종목 클릭 시 동작은 차차 구현 — 지금은 onPick() 스텁만 연결.
  */
@@ -17,12 +17,13 @@
   var DATA = { us: [], kr: [] };
   var state = {
     tab: 'all',          // all | us | kr
-    type: 'all',         // all | stock | etf
     q: '',
-    exch: '',
     sort: { key: 'cap', dir: -1 }, // 기본: 시가총액 내림차순. idx = 원본 순서
     layout: loadLayout(),// list | bubble  (localStorage 에 저장)
   };
+
+  // 표시용 한글명 (없으면 원문 fallback)
+  function knm(r) { return r.k || r.n; }
 
   function loadLayout() {
     try { return localStorage.getItem(LS_LAYOUT) === 'bubble' ? 'bubble' : 'list'; }
@@ -32,7 +33,7 @@
   var rendered = 0;  // 지금까지 DOM 에 그린 행 수
 
   var $ = function (id) { return document.getElementById(id); };
-  var tbody, listview, bubbleview, scrollarea, sentinel, loading, endmsg, fcount, exchSel, qInput, searchwrap;
+  var tbody, listview, bubbleview, scrollarea, sentinel, loading, endmsg, fcount, qInput, searchwrap;
 
   /* ---------- 데이터 로드 ---------- */
   function load() {
@@ -46,7 +47,6 @@
       $('cnt-all').textContent = fmt(DATA.us.length + DATA.kr.length);
       $('cnt-us').textContent = fmt(DATA.us.length);
       $('cnt-kr').textContent = fmt(DATA.kr.length);
-      buildExchOptions();
       apply();
     }).catch(function (e) {
       loading.innerHTML = '데이터를 불러오지 못했습니다.<br><span style="color:#64748b">' + (e && e.message || e) + '</span>';
@@ -60,18 +60,6 @@
     return DATA.us.concat(DATA.kr);
   }
 
-  /* ---------- 거래소 드롭다운 ---------- */
-  function buildExchOptions() {
-    var set = {};
-    pool().forEach(function (r) { set[r.e] = (set[r.e] || 0) + 1; });
-    var keys = Object.keys(set).sort();
-    var html = '<option value="">모든 거래소</option>';
-    keys.forEach(function (k) { html += '<option value="' + esc(k) + '">' + esc(k) + ' (' + fmt(set[k]) + ')</option>'; });
-    exchSel.innerHTML = html;
-    if (state.exch && set[state.exch] == null) state.exch = '';
-    exchSel.value = state.exch;
-  }
-
   /* ---------- 필터 + 정렬 ---------- */
   function apply() {
     var q = state.q.trim().toLowerCase();
@@ -79,10 +67,11 @@
     var out = [];
     for (var i = 0; i < src.length; i++) {
       var r = src[i];
-      if (state.type !== 'all' && r.ty !== state.type) continue;
-      if (state.exch && r.e !== state.exch) continue;
       if (q) {
-        if (r.t.toLowerCase().indexOf(q) === -1 && r.n.toLowerCase().indexOf(q) === -1) continue;
+        // 티커 · 원문명 · 한글명 매칭
+        if (r.t.toLowerCase().indexOf(q) === -1 &&
+            r.n.toLowerCase().indexOf(q) === -1 &&
+            (r.k || '').toLowerCase().indexOf(q) === -1) continue;
       }
       out.push(r);
     }
@@ -128,7 +117,7 @@
     if (!view.length) {
       var msg = '조건에 맞는 종목이 없습니다.';
       if (state.layout === 'bubble') bubbleview.innerHTML = '<div class="empty" style="width:100%">' + msg + '</div>';
-      else tbody.innerHTML = '<tr><td colspan="6"><div class="empty">' + msg + '</div></td></tr>';
+      else tbody.innerHTML = '<tr><td colspan="5"><div class="empty">' + msg + '</div></td></tr>';
       return;
     }
     more();
@@ -165,9 +154,12 @@
 
   function bubbleEl(r) {
     var b = document.createElement('button');
-    b.className = 'bub' + (r.ty === 'etf' ? ' etf' : '') + (r.c === 'KR' ? ' kr' : '');
-    b.title = r.n + ' · ' + r.e + (r.ty === 'etf' ? ' · ETF' : '');
-    b.innerHTML = '<span class="bflag">' + (r.c === 'KR' ? '🇰🇷' : '🇺🇸') + '</span>' + esc(r.t);
+    b.className = 'bub' + (r.c === 'KR' ? ' kr' : '');
+    b.title = knm(r) + ' · ' + r.e;
+    // 티커 + 한글명 (한국은 k=n 이므로 동일)
+    b.innerHTML = '<span class="bflag">' + (r.c === 'KR' ? '🇰🇷' : '🇺🇸') + '</span>' +
+      '<span class="bsym">' + esc(r.t) + '</span>' +
+      '<span class="bname">' + esc(knm(r)) + '</span>';
     b.addEventListener('click', function () { onPick(r); });
     return b;
   }
@@ -178,16 +170,12 @@
     tr.dataset.t = r.t;
     tr.dataset.c = r.c;
     var flag = r.c === 'KR' ? '🇰🇷' : '🇺🇸';
-    var badge = r.ty === 'etf'
-      ? '<span class="badge etf">ETF</span>'
-      : '<span class="badge stock">주식</span>';
     tr.innerHTML =
       '<td class="num">' + (i + 1) + '</td>' +
       '<td><span class="flag">' + flag + '</span><span class="tsym">' + esc(r.t) + '</span></td>' +
-      '<td><span class="tname">' + esc(r.n) + '</span></td>' +
+      '<td><span class="tname">' + esc(knm(r)) + '</span></td>' +
       '<td><span class="exch">' + esc(r.e) + '</span></td>' +
-      '<td class="num cap">' + capFmt(r) + '</td>' +
-      '<td>' + badge + '</td>';
+      '<td class="num cap">' + capFmt(r) + '</td>';
     tr.addEventListener('click', function () { onPick(r); });
     return tr;
   }
@@ -238,19 +226,8 @@
       document.querySelectorAll('.tab').forEach(function (t) { t.classList.remove('on'); });
       b.classList.add('on');
       state.tab = b.dataset.tab;
-      buildExchOptions();
       apply();
     });
-    // 유형 칩
-    document.querySelector('.filterbar').addEventListener('click', function (e) {
-      var c = e.target.closest('.chip'); if (!c) return;
-      document.querySelectorAll('.chip').forEach(function (x) { x.classList.remove('on'); });
-      c.classList.add('on');
-      state.type = c.dataset.type;
-      apply();
-    });
-    // 거래소
-    exchSel.addEventListener('change', function () { state.exch = exchSel.value; apply(); });
     // 뷰 토글 (리스트 / 버블) — 선택 저장
     $('viewtoggle').addEventListener('click', function (e) {
       var b = e.target.closest('.vbtn'); if (!b) return;
@@ -298,7 +275,7 @@
     tbody = $('tbody'); listview = $('listview'); bubbleview = $('bubbleview');
     scrollarea = $('scrollarea'); sentinel = $('sentinel');
     loading = $('loading'); endmsg = $('endmsg'); fcount = $('fcount');
-    exchSel = $('exchSel'); qInput = $('q'); searchwrap = $('searchwrap');
+    qInput = $('q'); searchwrap = $('searchwrap');
     applyLayout(); // 저장된 선택 반영
     bind();
     load();

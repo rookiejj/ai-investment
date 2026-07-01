@@ -1,11 +1,10 @@
 {
   "us": {
-    "total": 12884,
-    "etf": 5421
+    "total": 7463
   },
   "kr": {
-    "total": 4017,
-    "etf": 1142
+    "total": 2873
   },
-  "total": 16901
+  "total": 10336,
+  "etf": "excluded"
 }
