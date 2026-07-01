@@ -54,6 +54,7 @@ ai-investment/
 │   ├── snapshot-tabs-to-storage.js ← read-tab-data·read-tab-archive 응답을 정적 JSON으로 Storage(tabs/latest.json·archive.json)에 업로드 — 헤드라인 read 경로 CDN 캐시화 (db-sync.yml이 sync 직후 호출)
 │   ├── lint-jargon.sh            ← 트레이더 은어·편집자 메타 표현 lint
 │   ├── lint-finmap-pool.js       ← sector-pool 한글명 lookup·dual-list lint
+│   ├── build-all-stocks.py       ← /stocks 전 상장 종목 정적 JSON 생성기 (미국 NASDAQ Trader 파일 + 시총 screener API · 한국 FinanceDataReader, 시총순 정렬)
 │   ├── subscribers.example.json
 │   ├── cartoon/
 │   │   ├── generate.js           ← 신문 1면 PNG 자동 생성 (Playwright HTML→PNG, 5/14~) · Supabase Storage cartoon/today.png 업로드
@@ -103,6 +104,12 @@ ai-investment/
 │   ├── server/server.js         ← 로컬/Docker 정적 서빙 + Yahoo 프록시 (의존성 0)
 │   ├── Dockerfile · docker-compose.yml · .env.example
 │   └── README.md                ← 실행/배포/API키/제공자/Gemini/브로커/보안/레이아웃 문서
+├── stocks/                      ← 🆕 전 상장 종목 브라우저 (/stocks) — 메인과 코드 공유 0
+│   ├── index.html               ← 전체·미국·한국 탭 + 유형·거래소 필터 + 검색 + 리스트/버블 토글
+│   ├── app.js                   ← 필터·정렬(시총순)·무한스크롤·뷰 토글(localStorage 저장)
+│   ├── styles.css               ← 다크 터미널 스타일 + 모바일 반응형
+│   ├── us.json · kr.json        ← 정적 종목 데이터 (미국 ~12.9k · 한국 ~4k, ETF 포함, build-all-stocks.py 생성)
+│   └── meta.json                ← 개수 요약
 ├── docs/
 │   ├── kakao-subscription-plan.md        ← 서비스 기획서
 │   └── friendtalk-dispatch-runbook.md    ← 발송 파이프라인 E2E 매뉴얼
@@ -253,6 +260,14 @@ ai-investment/
 - **수동 점검**: `/publish dry` 또는 Actions UI에서 `dry_run=true`로 아티팩트(PNG·mp4·캡션)만 검수, 게시는 X
 - **버킷 분리**: `cartoon` 버킷은 cartoon-generate가 쓰는 마스터 저장소(`today.png` 1장), `instagram-carousel` 버킷은 publish.js가 게시 시 image_url로 Meta API에 전달할 영구 아카이브(`posts/YYYY-MM-DD/HHMMSS/`)
 
+### 전 상장 종목 브라우저 (`/stocks`)
+- **성격**: 큐레이션(140종목)과 별개로 **미국·한국에 상장된 모든 주식·ETF**를 한 페이지에 나열하는 독립 페이지. 메인(`index.html`)·데이터·함수와 코드 공유 0. `stocks/` 자체 완결형(`/trading`과 같은 패턴).
+- **데이터**: 정적 JSON(`stocks/us.json`·`kr.json`). 레코드 `{t:티커, n:종목명, e:거래소/시장, ty:"stock"|"etf", c:"US"|"KR", m:시가총액}`. 미국 ~12.9k(NASDAQ·NYSE·AMEX·Arca, ETF ~5.4k) + 한국 ~4k(KOSPI·KOSDAQ·KONEX + 국내 ETF ~1.1k).
+- **생성**: `scripts/build-all-stocks.py` (재현 가능). 미국 = NASDAQ Trader 공개 파일(`nasdaqlisted.txt`·`otherlisted.txt`, 인증 불필요) + 시총은 NASDAQ screener API. 한국 = FinanceDataReader(KRX 직접 호출은 anti-bot으로 막혀 라이브러리 경유), 시총은 Marcap. 시총 내림차순 정렬 후 저장.
+- **UI**: 전체·미국·한국 탭(개수 뱃지) + 유형 칩(주식·ETF)·거래소 드롭다운 + 실시간 검색(티커·한글명, `/` 단축키) + 컬럼 정렬. **기본 정렬 = 시총순**(통합 탭은 원화 시총을 달러 환산해 혼합 정렬, `FX_KRW` 상수). 리스트↔버블(티커만) 뷰 토글은 `localStorage`(`briefick_stocks_layout`) 저장.
+- **성능**: ~1.7만 행을 200개씩 윈도잉 무한 스크롤(현재 스크롤 위치 기준 버퍼 채움 + IntersectionObserver 이중 안전망). `table-layout:fixed` + 셀 말줄임으로 가로 스크롤 방지. 모바일 반응형(상단바 줄바꿈·필터바 2줄·# 거래소 열 숨김).
+- **라우팅**: `_redirects`에 `/stocks → /stocks/index.html`. 클릭 시 상세 동작(`onPick`)은 스캐폴드(추후 구현).
+
 ## 발송·상태 동기화 파이프라인
 
 ### pg_cron 등록된 작업 (UTC 기준)
@@ -398,6 +413,11 @@ admin_settings (단일 행, id=1)
 - **스케줄 변경**: `cron.schedule` 표현식은 UTC 기준 (KST = UTC+9). 월~토 한정은 UTC dow `0-5` 사용 (KST 월~토 = UTC 일~금). 평일만이면 `0-4`(KST 월~금).
 
 ## Changelog
+
+- **2026-07-01**: **전 상장 종목 브라우저 `/stocks` 신설 + Vercel 호스팅 정리 + 캘린더 휴장일 인식 버그 수정**.
+  - **`/stocks` 페이지 신설** — 큐레이션(140종목)과 별개로 **미국·한국 전 상장 주식·ETF ~1.7만 종목**을 한 페이지에 나열하는 독립 페이지(`stocks/`, 메인과 코드 공유 0, `/trading` 패턴). 데이터는 정적 JSON(`us.json` ~12.9k·`kr.json` ~4k, ETF 포함, 레코드 `{t,n,e,ty,c,m}`). 생성기 `scripts/build-all-stocks.py`(재현 가능): 미국 = NASDAQ Trader 공개 파일 + 시총 screener API, 한국 = FinanceDataReader(KRX 직접 호출은 anti-bot `LOGOUT`으로 막혀 라이브러리 경유) + Marcap. **UI**: 전체·미국·한국 탭 + 유형·거래소 필터 + 검색(티커·한글명·`/`단축키) + 컬럼 정렬, **기본 시총순**(통합 탭은 원화 시총을 달러 환산해 혼합, `FX_KRW` 상수), 리스트↔버블 뷰 토글(`localStorage`). **성능**: ~1.7만 행 200개씩 윈도잉 무한 스크롤(스크롤 위치 기준 버퍼 채움 + IntersectionObserver 이중 안전망 — 절대높이 기준이라 한 청크만 로드되던 버그 수정), `table-layout:fixed`+셀 말줄임으로 가로 스크롤 방지(인라인 `span` `max-width` 미적용이 원인이던 가로 넘침 해결). 모바일 반응형(레이아웃 flexbox 전환·상단바 줄바꿈·필터바 2줄·#/거래소 열 숨김). 라우팅 `_redirects`에 `/stocks` 추가. 종목 클릭(`onPick`)은 스캐폴드. Playwright로 375~1920px 전 폭 가로 넘침 0 검증.
+  - **Vercel 호스팅 정리** — `vercel.json` 삭제, **Cloudflare Pages 단독**으로 확정. 라우팅 source of truth는 `_redirects` 하나. README 파일 트리·라우팅·호스팅 표 + `trading/README.md`의 현재-구조 설명에서 Vercel 병행 표현 제거(날짜 박힌 변경이력은 history로 보존).
+  - **캘린더 정기 이벤트 휴장일 인식 버그 수정** — `index.html` `expandRecurring`의 "N번째 영업일" 계산이 휴장일을 영업일로 세서 ISM 서비스업(셋째 영업일)이 7/3 독립기념일에 잘못 표시되던 버그(NFP도 7/3에 중복). **`US_MARKET_HOLIDAYS` Set(2026 NYSE 휴장일) 추가** → 영업일 카운트에서 제외 + nth요일 이벤트가 휴장일이면 억제. ISM 서비스업 7/6 정정·NFP 7/3 중복 제거. 모든 휴장일 낀 달에 자동 적용. 함께 `data/calendar-events.js`에 7월 fixed 이벤트 보강(FOMC 7/30·의사록 7/8·CPI 7/14·PPI 7/15·소매판매 7/16·PCE 7/31·BOK 7/16·한국 Q2 GDP 7/23 + Q2 어닝 JPM·TSMC·NFLX·TSLA·Delta·빅테크 주간).
 
 - **2026-06-06**: **실결제 라이브 전환 + 결제 webhook 안전망 + 운영 매칭 + 알림톡 누락 수정**. 갤럭시아(빌게이트) 실연동 채널로 전환(테스트→라이브 `channelKey`, 테스트 배너 제거, `index.html`·`views/renew.html`). 전환 직후 카드·간편결제가 "알 수 없는 에러"로 실패 → 원인은 **실연동 채널에 테스트용 암호화키/IV가 그대로** 있던 것(포트원 콘솔에서 실연동 암호화키·IV로 교체해 해결 — MID `POS260605721` 는 콘솔 설정 값이라 코드 무관). `requestPayment` 에 `customData:{phone,plan}` 추가 — PG 콘솔·webhook 전화번호 매칭. **`payment-webhook` Edge Function 신설**: 포트원 결제 이벤트를 서버→서버로 받아 단건조회 API 로 권위 검증 후 `payments` 멱등 기록(paid/failed/refunded, `payment_id` UNIQUE 락), 클라이언트 미복귀(orphan) 결제 **구독 자동 복구 + 알림톡**, **전체 취소(CANCELLED) 자동 회수**(plan 개월 + 보너스 일수 차감, 부분취소는 기록만, redemption 기록은 유지해 재취득 차단). `prevStatus` 가드로 webhook 재전송/재호출 시 이중 처리 방지. `payment-confirm` 에 멱등 가드(같은 `last_payment_id` 면 재처리 skip). **알림톡 누락 수정**: webhook 이 payment-confirm 보다 먼저 처리하면 알림톡이 안 나가던 race — `sendPaymentAlimtalk` 을 `_shared/alimtalk.ts` 로 추출(단일 소스), webhook orphan 복구 경로에서도 발송 → 멱등 가드로 **정확히 1회** 발송. **운영 매칭**: admin 결제탭에 **"주문번호(PG 콘솔 매칭)" 컬럼** 추가(클릭 복사) — PG 콘솔 "주문번호" 와 동일 값(우리 `payment_id`). 성공/실패/환불 상태 배지로 구분. **프로모 이벤트 `all` 전환**: 런칭 이벤트(`launch-first-payment-7d-2026q2`)를 `first_payment`→`all`("지금 결제 시 7일")로 변경 — `promo_redemptions` 한 줄 삭제로 결제이력 무관 재허용 가능. 보너스 배너 문구 "첫 결제"→"지금 결제"(`index.html` 4곳). **🔴 운영 룰: 결제 취소는 반드시 포트원 콘솔에서** — 하위 PG(빌게이트)에서 직접 취소하면 포트원이 모르고 webhook 도 안 와 DB 동기화 누락(이 경우 admin 결제ID 로 찾아 수동 동기화). 새 함수 verify_jwt=false 는 `config.toml` 에 박음. README/CLAUDE.md verify_jwt 목록 갱신.
 
