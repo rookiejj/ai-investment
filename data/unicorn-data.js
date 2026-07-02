@@ -1,7 +1,7 @@
 const data = [
   {
     "tag": "결제·등킹·HR·SMB",
-    "title": "💳 핀테크",
+    "title": "💳 핑테크",
     "stocks": [
       {
         "nm": "Stripe",
@@ -21,19 +21,19 @@ const data = [
       },
       {
         "nm": "Ramp",
-        "rs": "5/7~21 GIC·Iconiq 공동 리드 $750M $40B+ 협상 - 6개월 만 +25% 업라운드·14개월 5단계 밸류 점프·ARR $1B AI 우선 차별화 Brex 추월",
+        "rs": "$44B 밸류 확정 ($750M 6월 초 발표)·ICONIQ·GIC·OTPP 리드·ARR $1.5B·14개월 전 $13B → $44B 3.4배 점프",
         "ipo": "미정",
-        "val": "$40B+ 협상",
-        "round": "Series F+ $750M (2026-05)·GIC·Iconiq",
-        "sector": "법인 핀테크"
+        "val": "$44B",
+        "round": "Series F+ $750M (2026-06)·ICONIQ·GIC·OTPP",
+        "sector": "법인 핑테크"
       },
       {
         "nm": "Plaid",
-        "rs": "Q2 2026 IPO $6.1B 타깃 - 26년 핀테크 인프라 단독 최대 IPO 카운트다운·4월 텍더 $8B 모멘텀 회복·GS 리드 인수단·오픈등킹·연결 인프라 단일 채널 지배력·美·英·EU 동시 트랙",
-        "ipo": "2026 Q2",
+        "rs": "US IPO 검토 7/1 Bloomberg 보도·예비 은행 접촉 단계·$8B tender 회복 (2021 $13.4B peak 대비 -40%)·크램다운 회복 시그널",
+        "ipo": "2026 Q3~ 검토",
         "val": "$8B",
-        "round": "텍더오퍼 (업라운드)·GS 리드",
-        "sector": "핀테크 인프라"
+        "round": "텍더오퍼 (2026-04)·GS 리드",
+        "sector": "핑테크 인프라"
       },
       {
         "nm": "Gusto",
@@ -41,7 +41,7 @@ const data = [
         "ipo": "미정 (IPO 후보)",
         "val": "$10B",
         "round": "Series F ($175M, 2025-10)",
-        "sector": "HR·급여 핀테크"
+        "sector": "HR·급여 핑테크"
       },
       {
         "nm": "Checkout.com",
