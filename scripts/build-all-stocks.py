@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-전 상장 종목(미국 + 한국, ETF 제외) 정적 데이터 생성기.
+전 상장 종목(미국 + 한국, ETF·우선주·워런트·유닛 제외 = 보통주만) 정적 데이터 생성기.
 
 출력:
   stocks/us.json  — 미국 전 보통주 (NASDAQ·NYSE·AMEX·Arca 등, ETF 제외)
@@ -45,6 +45,11 @@ UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/120 Safari/537.36")
 
 EXCH = {"A": "NYSE American", "N": "NYSE", "P": "NYSE Arca", "Z": "Cboe BZX", "V": "IEX"}
+
+# 보통주가 아닌 증권 (우선주·워런트·유닛·권리·채권) — 제외.
+# 이름 기준 (ADR·보통주는 유지, 'Preferred'가 우선주 ADR 도 걸러줌).
+NONCOMMON_RE = re.compile(
+    r'\b(Warrants?|Rights?|Units?|Preferred|Pfd|Notes|Debentures?)\b', re.I)
 
 # 주식 종류·증권 설명 — 여기서부터 잘라내 코어 회사명만 남긴다 (영문 fallback·override용).
 DESC_RE = re.compile(
@@ -151,8 +156,9 @@ def _save_cache(cache):
 def koreanize_us(rows):
     """US rows 에 k(한글명): 네이버 → company-ko.js override → 영문 fallback."""
     overrides = load_overrides()
-    cache = _load_cache()  # {ticker: 한글명 or ""}  ("" = 조회했으나 없음)
-    todo = [r["t"] for r in rows if r["t"] not in cache]
+    cache = _load_cache()  # {ticker: 한글명 or ""}
+    # 빈 값("")은 일시적 실패일 수 있어 매 실행 재조회 (성공한 것만 캐시 재사용)
+    todo = [r["t"] for r in rows if not cache.get(r["t"])]
     if todo:
         print(f"  네이버 한글명 조회 {len(todo)} 종목 (캐시 {len(rows) - len(todo)} 재사용)…")
         lock = threading.Lock()
@@ -193,6 +199,8 @@ def build_us():
         if etf == "Y":
             return  # ETF 제외
         s = sym.strip()
+        if "$" in s or NONCOMMON_RE.search(name):
+            return  # 우선주·워런트·유닛·권리·채권 제외 (보통주만)
         rows.append({"t": s, "n": clean_name(name.strip()), "e": exch,
                      "c": "US", "m": caps.get(s, 0)})
 

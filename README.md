@@ -262,9 +262,9 @@ ai-investment/
 
 ### 전 상장 종목 브라우저 (`/stocks`)
 - **성격**: 큐레이션(140종목)과 별개로 **미국·한국에 상장된 모든 주식·ETF**를 한 페이지에 나열하는 독립 페이지. 메인(`index.html`)·데이터·함수와 코드 공유 0. `stocks/` 자체 완결형(`/trading`과 같은 패턴).
-- **데이터**: 정적 JSON(`stocks/us.json`·`kr.json`, **ETF 제외**). 레코드 `{t:티커, n:영문/국문명, k:한글명, e:거래소/시장, c:"US"|"KR", m:시가총액}`. 미국 ~7.5k(NASDAQ·NYSE·AMEX·Arca 보통주) + 한국 ~2.9k(KOSPI·KOSDAQ·KONEX).
+- **데이터**: 정적 JSON(`stocks/us.json`·`kr.json`, **ETF·우선주·워런트·유닛 제외 = 보통주만**). 레코드 `{t:티커, n:영문/국문명, k:한글명, e:거래소/시장, c:"US"|"KR", m:시가총액}`. 미국 ~5.9k(NASDAQ·NYSE·AMEX·Arca) + 한국 ~2.9k(KOSPI·KOSDAQ·KONEX).
 - **생성**: `scripts/build-all-stocks.py` (재현 가능). 미국 = NASDAQ Trader 공개 파일(`nasdaqlisted.txt`·`otherlisted.txt`, 인증 불필요) + 시총은 NASDAQ screener API. 한국 = FinanceDataReader(KRX 직접 호출은 anti-bot으로 막혀 라이브러리 경유), 시총은 Marcap. 시총 내림차순 정렬 후 저장.
-- **미국 종목 한글명(k)**: **네이버 증권 autocomplete API**(`ac.stock.naver.com`)에서 티커별 증권사 표준 한글명 조회(병렬 8스레드 + `.ko-cache.json` 캐싱, git 제외). 네이버 미매칭 시 `company-ko.js` override → 영문 fallback. 기계 번역(의역·오역) 대신 표준 표기 사용 — TSMC·ASML 등 약어는 영문 유지. 한국 종목은 n 이 이미 한글이라 k=n. 커버리지 미국 ~87%.
+- **미국 종목 한글명(k)**: **네이버 증권 autocomplete API**(`ac.stock.naver.com`)에서 티커별 증권사 표준 한글명 조회(병렬 8스레드 + `.ko-cache.json` 캐싱, git 제외). 네이버 미매칭 시 `company-ko.js` override → 영문 fallback. 기계 번역(의역·오역) 대신 표준 표기 사용 — TSMC·ASML 등 약어는 영문 유지. 한국 종목은 n 이 이미 한글이라 k=n. 커버리지 미국 ~98%(잔존은 폐쇄형 펀드·일부 ADR).
 - **UI**: 전체·미국·한국 탭(개수 뱃지) + 실시간 검색(티커·영문명·한글명, `/` 단축키) + 컬럼 정렬. **기본 정렬 = 시총순**(통합 탭은 원화 시총을 달러 환산해 혼합 정렬, `FX_KRW` 상수). 리스트↔버블(티커+한글명) 뷰 토글은 `localStorage`(`briefick_stocks_layout`) 저장.
 - **성능**: ~1.7만 행을 200개씩 윈도잉 무한 스크롤(현재 스크롤 위치 기준 버퍼 채움 + IntersectionObserver 이중 안전망). `table-layout:fixed` + 셀 말줄임으로 가로 스크롤 방지. 모바일 반응형(상단바 줄바꿈·필터바 2줄·# 거래소 열 숨김).
 - **라우팅**: `_redirects`에 `/stocks → /stocks/index.html`. 클릭 시 상세 동작(`onPick`)은 스캐폴드(추후 구현).
@@ -415,7 +415,7 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
-- **2026-07-02**: **`/stocks` ETF 제외 + 미국 종목 한글명 네이버 증권 소스로 전환 + 거래소/유형 필터 제거**. 기계 번역(Google) 방식이 의역·오역 다발("Space Exploration Technologies"→"우주 탐사 기술 공사", 수백 개 어색) → **네이버 증권 autocomplete API**(`ac.stock.naver.com`, 티커별 증권사 표준 한글명, 병렬 조회 + `.ko-cache.json` 캐싱)로 전면 교체. 미국 한글명 커버리지 ~87%(SPCX→스페이스X·TSM→TSMC·LLY→일라이 릴리 등 정확), 미매칭은 `company-ko.js` override→영문. **ETF 전면 제외**(16,901→10,336 종목). 거래소 필터·유형 필터·유형 컬럼 제거, 리스트 종목명·버블에 한글명 표시, 검색은 티커·영문·한글 매칭. `build-all-stocks.py` 네이버 기반 재작성.
+- **2026-07-02**: **`/stocks` ETF 제외 + 미국 종목 한글명 네이버 증권 소스로 전환 + 거래소/유형 필터 제거**. 기계 번역(Google) 방식이 의역·오역 다발("Space Exploration Technologies"→"우주 탐사 기술 공사", 수백 개 어색) → **네이버 증권 autocomplete API**(`ac.stock.naver.com`, 티커별 증권사 표준 한글명, 병렬 조회 + `.ko-cache.json` 캐싱)로 전면 교체. 미국 한글명 커버리지 ~98%(SPCX→스페이스X·TSM→TSMC·LLY→일라이 릴리 등 정확), 미매칭(폐쇄형 펀드·일부 ADR)은 `company-ko.js` override→영문. **ETF·우선주·워런트·유닛 제외 = 보통주만**(16,901→8,769 종목, 미국 5.9k·한국 2.9k). 거래소 필터·유형 필터·유형 컬럼 제거, 리스트 종목명·버블에 한글명 표시, 검색은 티커·영문·한글 매칭. `build-all-stocks.py` 네이버 기반 재작성.
 
 - **2026-07-01**: **전 상장 종목 브라우저 `/stocks` 신설 + Vercel 호스팅 정리 + 캘린더 휴장일 인식 버그 수정**.
   - **`/stocks` 페이지 신설** — 큐레이션(140종목)과 별개로 **미국·한국 전 상장 주식·ETF ~1.7만 종목**을 한 페이지에 나열하는 독립 페이지(`stocks/`, 메인과 코드 공유 0, `/trading` 패턴). 데이터는 정적 JSON(`us.json` ~12.9k·`kr.json` ~4k, ETF 포함, 레코드 `{t,n,e,ty,c,m}`). 생성기 `scripts/build-all-stocks.py`(재현 가능): 미국 = NASDAQ Trader 공개 파일 + 시총 screener API, 한국 = FinanceDataReader(KRX 직접 호출은 anti-bot `LOGOUT`으로 막혀 라이브러리 경유) + Marcap. **UI**: 전체·미국·한국 탭 + 유형·거래소 필터 + 검색(티커·한글명·`/`단축키) + 컬럼 정렬, **기본 시총순**(통합 탭은 원화 시총을 달러 환산해 혼합, `FX_KRW` 상수), 리스트↔버블 뷰 토글(`localStorage`). **성능**: ~1.7만 행 200개씩 윈도잉 무한 스크롤(스크롤 위치 기준 버퍼 채움 + IntersectionObserver 이중 안전망 — 절대높이 기준이라 한 청크만 로드되던 버그 수정), `table-layout:fixed`+셀 말줄임으로 가로 스크롤 방지(인라인 `span` `max-width` 미적용이 원인이던 가로 넘침 해결). 모바일 반응형(레이아웃 flexbox 전환·상단바 줄바꿈·필터바 2줄·#/거래소 열 숨김). 라우팅 `_redirects`에 `/stocks` 추가. 종목 클릭(`onPick`)은 스캐폴드. Playwright로 375~1920px 전 폭 가로 넘침 0 검증.
