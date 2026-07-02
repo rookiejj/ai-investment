@@ -24,21 +24,16 @@
   <a class="tophome" href="/">← 브리픽 홈</a>
 </header>
 
-<!-- Tabs: 전체 / 미국 / 한국 -->
+<!-- Tabs: 미국 / 한국 + 카운트 + 뷰 토글(우측) -->
 <div class="tabs" id="tabs">
-  <button class="tab on" data-tab="all">전체 <span class="cnt" id="cnt-all">–</span></button>
-  <button class="tab" data-tab="us">🇺🇸 미국 <span class="cnt" id="cnt-us">–</span></button>
-  <button class="tab" data-tab="kr">🇰🇷 한국 <span class="cnt" id="cnt-kr">–</span></button>
-</div>
-
-<!-- Filter bar -->
-<div class="filterbar">
+  <button class="tab on" data-tab="us">미국 <span class="cnt" id="cnt-us">–</span></button>
+  <button class="tab" data-tab="kr">한국 <span class="cnt" id="cnt-kr">–</span></button>
+  <span class="tabspacer"></span>
+  <span class="fcount" id="fcount">로딩 중…</span>
   <div class="viewtoggle" id="viewtoggle" role="group" aria-label="보기 방식">
     <button class="vbtn on" data-layout="list" title="리스트 보기">☰ 리스트</button>
     <button class="vbtn" data-layout="bubble" title="버블 보기">⬢ 버블</button>
   </div>
-  <span class="fspacer"></span>
-  <span class="fcount" id="fcount">로딩 중…</span>
 </div>
 
 <!-- Scrollable content (list + bubble) -->

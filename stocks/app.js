@@ -16,7 +16,7 @@
 
   var DATA = { us: [], kr: [] };
   var state = {
-    tab: 'all',          // all | us | kr
+    tab: 'us',           // us | kr  (기본 미국)
     q: '',
     sort: { key: 'cap', dir: -1 }, // 기본: 시가총액 내림차순. idx = 원본 순서
     layout: loadLayout(),// list | bubble  (localStorage 에 저장)
@@ -44,7 +44,6 @@
       DATA.us = res[0];
       DATA.kr = res[1];
       loading.style.display = 'none';
-      $('cnt-all').textContent = fmt(DATA.us.length + DATA.kr.length);
       $('cnt-us').textContent = fmt(DATA.us.length);
       $('cnt-kr').textContent = fmt(DATA.kr.length);
       apply();
@@ -55,9 +54,7 @@
 
   /* ---------- 탭별 원본 풀 ---------- */
   function pool() {
-    if (state.tab === 'us') return DATA.us;
-    if (state.tab === 'kr') return DATA.kr;
-    return DATA.us.concat(DATA.kr);
+    return state.tab === 'kr' ? DATA.kr : DATA.us;
   }
 
   /* ---------- 필터 + 정렬 ---------- */
@@ -157,8 +154,7 @@
     b.className = 'bub' + (r.c === 'KR' ? ' kr' : '');
     b.title = knm(r) + ' · ' + r.e;
     // 티커 + 한글명 (한국은 k=n 이므로 동일)
-    b.innerHTML = '<span class="bflag">' + (r.c === 'KR' ? '🇰🇷' : '🇺🇸') + '</span>' +
-      '<span class="bsym">' + esc(r.t) + '</span>' +
+    b.innerHTML = '<span class="bsym">' + esc(r.t) + '</span>' +
       '<span class="bname">' + esc(knm(r)) + '</span>';
     b.addEventListener('click', function () { onPick(r); });
     return b;
@@ -169,10 +165,9 @@
     tr.className = 'row';
     tr.dataset.t = r.t;
     tr.dataset.c = r.c;
-    var flag = r.c === 'KR' ? '🇰🇷' : '🇺🇸';
     tr.innerHTML =
       '<td class="num">' + (i + 1) + '</td>' +
-      '<td><span class="flag">' + flag + '</span><span class="tsym">' + esc(r.t) + '</span></td>' +
+      '<td><span class="tsym">' + esc(r.t) + '</span></td>' +
       '<td><span class="tname">' + esc(knm(r)) + '</span></td>' +
       '<td><span class="exch">' + esc(r.e) + '</span></td>' +
       '<td class="num cap">' + capFmt(r) + '</td>';
