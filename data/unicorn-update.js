@@ -1,13 +1,13 @@
 const updates = [
   {
     "date": "2026-07-02 18:50 KST",
-    "summary": "Bending Spoons 7/1 Nasdaq IPO $19B·2026 최대 앱 지주사 데뷔\nPlaid US IPO 검토 7/1 보도·$8B tender 회복·크램다운 회복 시그널\nRamp $44B ICONIQ·GIC·OTPP $750M·14개월 3.4배 밸류 점프\nDatabricks $134B S-1 Q3·ARR $5.4B +65%·상장 late-2026 카운튰\nAnduril $61B·Helsing $18B repricing·YTD $8.75B 방산 자금 러시",
+    "summary": "Bending Spoons 7/1 Nasdaq IPO $19B·2026 최대 앱 지주사 데뷔\nPlaid US IPO 검토 7/1 보도·$8B tender 회복·크램다운 회복 시그널\nRamp $44B ICONIQ·GIC·OTPP $750M·14개월 3.4배 밸류 점프\nDatabricks $134B S-1 Q3·ARR $5.4B +65%·상장 late-2026 카운트다운\nAnduril $61B·Helsing $18B repricing·YTD $8.75B 방산 자금 러시",
     "changes": [
       {
         "time": "2026-07-02 15:30 KST",
         "type": "펀딩",
-        "detail": "IPO 윈도우 재개통 시그널. Bending Spoons(BSP) 7/1 Nasdaq 데뷔 - IPO 프라이싱 $29/주 (밴드 $26~28 상단 돌파)·총 57.97M주 발행·조달 $1.68B·목표 시총 ~$19B·오퍼링 클로징 7/2 예정 - AOL·Brightcove·Evernote·Vimeo·WeTransfer 보유 이탈리아 앱 지주회사·2026 최대 앱 지주사 IPO 데뷔·소비자 SaaS·컴슈머 앱 sector 카타리스트 - Plaid US IPO 검토 (Bloomberg 7/1 보도) - 예비 은행 접촉 단계·최근 $8B 밸류 tender offer 완료 (2021 $13.4B peak 대비 -40%지만 5월 $6B 저점에서 회복 사이클)·크램다운 라운드 회복 시그널 - Ramp $44B 밸류 확정 ($750M 라운드 6월 초 발표)·ICONIQ·GIC·Ontario Teachers 리드·Goldman Alt·Morgan Stanley IM·Insight 합류·ARR $1.5B·14개월 전 $13B → $44B 3.4배 밸류 점프 사이클·Anduril·Figma·Shopify 고객 - Stripe $159B (2월 tender YoY +74%)·Mercury $5.2B Series D $200M TCV 리드 5/20·ARR $650M 4년 흑자·CEO 'IPO 직접 타깃' 잔존 - Kraken Q3 2026 재조준 (3/18 Q1 계획 중단 후)·11월 $800M @ $20B·Forge 세컨더리 $12.2B discount. 단기 시그널 - Bending Spoons 7/2 오퍼링 클로징·Plaid Q3 상장·Databricks S-1 Q3·Kraken 재가동·Anduril 후속·Helsing 클로징. cross-asset - SaaS forward EV/매출 12x sector premium·VIX 16.4 정상·DXY 101.19~101.60 강세·실질금리 200bp 카운터·hyperscaler $470B 2026 capex 후방·private tech multiple 회복 사이클·H2 2026 IPO 윈도우 개막.",
-        "sector": "핑테크"
+        "detail": "IPO 윈도우 재개통 시그널. Bending Spoons(BSP) 7/1 Nasdaq 데뷔 - IPO 프라이싱 $29/주 (밴드 $26~28 상단 돌파)·총 57.97M주 발행·조달 $1.68B·목표 시총 ~$19B·오퍼링 클로징 7/2 예정 - AOL·Brightcove·Evernote·Vimeo·WeTransfer 보유 이탈리아 앱 지주회사·2026 최대 앱 지주사 IPO 데뷔·소비자 SaaS·컨슈머 앱 sector 카타리스트 - Plaid US IPO 검토 (Bloomberg 7/1 보도) - 예비 은행 접촉 단계·최근 $8B 밸류 tender offer 완료 (2021 $13.4B peak 대비 -40%지만 5월 $6B 저점에서 회복 사이클)·크램다운 라운드 회복 시그널 - Ramp $44B 밸류 확정 ($750M 라운드 6월 초 발표)·ICONIQ·GIC·Ontario Teachers 리드·Goldman Alt·Morgan Stanley IM·Insight 합류·ARR $1.5B·14개월 전 $13B → $44B 3.4배 밸류 점프 사이클·Anduril·Figma·Shopify 고객 - Stripe $159B (2월 tender YoY +74%)·Mercury $5.2B Series D $200M TCV 리드 5/20·ARR $650M 4년 흑자·CEO 'IPO 직접 타깃' 잔존 - Kraken Q3 2026 재조준 (3/18 Q1 계획 중단 후)·11월 $800M @ $20B·Forge 세컨더리 $12.2B discount. 단기 시그널 - Bending Spoons 7/2 오퍼링 클로징·Plaid Q3 상장·Databricks S-1 Q3·Kraken 재가동·Anduril 후속·Helsing 클로징. cross-asset - SaaS forward EV/매출 12x sector premium·VIX 16.4 정상·DXY 101.19~101.60 강세·실질금리 200bp 카운터·hyperscaler $470B 2026 capex 후방·private tech multiple 회복 사이클·H2 2026 IPO 윈도우 개막.",
+        "sector": "핀테크"
       },
       {
         "time": "2026-07-02 15:35 KST",
