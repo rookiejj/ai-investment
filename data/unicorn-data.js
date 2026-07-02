@@ -1,23 +1,23 @@
 const data = [
   {
-    "tag": "결제·등킹·HR·SMB",
-    "title": "💳 핑테크",
+    "tag": "결제·뱅킹·HR·SMB",
+    "title": "💳 핀테크",
     "stocks": [
       {
         "nm": "Stripe",
         "rs": "$159B 2월 tender vs 2025 $91.5B +73% 업라운드·FCF $2.2B 자체 운영·Collison 'no rush'·H1 2026 IPO Polymarket 13%",
         "ipo": "2026 말~2027 후보",
         "val": "$159B",
-        "round": "텍더오퍼 (2026-02)",
+        "round": "텐더오퍼 (2026-02)",
         "sector": "결제"
       },
       {
         "nm": "Revolut",
-        "rs": "2H 2026 세컨더리 $100B+ 진행 - 향후 IPO 타깃 $150~200B 범위·11월 2025 세컨더리 $75B 대비 2.6배·3/11 영국 PRA 풀 등킹 라이센스 후 모기지·소비자 신용 진입·CEO Storonsky 'NASDAQ 美 상장 1순위' 공식 입장",
+        "rs": "2H 2026 세컨더리 $100B+ 진행 - 향후 IPO 타깃 $150~200B 범위·11월 2025 세컨더리 $75B 대비 2.6배·3/11 영국 PRA 풀 뱅킹 라이센스 후 모기지·소비자 신용 진입·CEO Storonsky 'NASDAQ 美 상장 1순위' 공식 입장",
         "ipo": "2028+ 연기",
         "val": "$75B",
         "round": "세컨더리 2H26 $100B+",
-        "sector": "네오등크"
+        "sector": "네오뱅크"
       },
       {
         "nm": "Ramp",
@@ -25,15 +25,15 @@ const data = [
         "ipo": "미정",
         "val": "$44B",
         "round": "Series F+ $750M (2026-06)·ICONIQ·GIC·OTPP",
-        "sector": "법인 핑테크"
+        "sector": "법인 핀테크"
       },
       {
         "nm": "Plaid",
         "rs": "US IPO 검토 7/1 Bloomberg 보도·예비 은행 접촉 단계·$8B tender 회복 (2021 $13.4B peak 대비 -40%)·크램다운 회복 시그널",
         "ipo": "2026 Q3~ 검토",
         "val": "$8B",
-        "round": "텍더오퍼 (2026-04)·GS 리드",
-        "sector": "핑테크 인프라"
+        "round": "텐더오퍼 (2026-04)·GS 리드",
+        "sector": "핀테크 인프라"
       },
       {
         "nm": "Gusto",
@@ -41,7 +41,7 @@ const data = [
         "ipo": "미정 (IPO 후보)",
         "val": "$10B",
         "round": "Series F ($175M, 2025-10)",
-        "sector": "HR·급여 핑테크"
+        "sector": "HR·급여 핀테크"
       },
       {
         "nm": "Checkout.com",
@@ -53,11 +53,11 @@ const data = [
       },
       {
         "nm": "Mercury",
-        "rs": "5/20 Series D $200M $5.2B 클로징 - 14개월 +49% 업라운드·TCV 리드 a16z·Coatue·Sequoia·CRV·Sapphire·Spark 참여·OCC 풀 차터 내셔널등크 전환 진행·ARR $650M·4년 연속 흑자·누적 펀딩 ~$700M",
+        "rs": "5/20 Series D $200M $5.2B 클로징 - 14개월 +49% 업라운드·TCV 리드 a16z·Coatue·Sequoia·CRV·Sapphire·Spark 참여·OCC 풀 차터 내셔널뱅크 전환 진행·ARR $650M·4년 연속 흑자·누적 펀딩 ~$700M",
         "ipo": "미정",
         "val": "$5.2B",
         "round": "Series D ($200M, 2026-05)·TCV 리드",
-        "sector": "SMB 등킹·재무관리"
+        "sector": "SMB 뱅킹·재무관리"
       }
     ]
   },
@@ -107,7 +107,7 @@ const data = [
       },
       {
         "nm": "Cursor",
-        "rs": "SpaceX $60B 옵션·불발 시 $10B 브레이크업·4/24 Business Insider xAI·Mistral 3자 파트너식 협의 보도·Colossus에서 모델 학습 진행 중",
+        "rs": "SpaceX $60B 옵션·불발 시 $10B 브레이크업·4/24 Business Insider xAI·Mistral 3자 파트너십 협의 보도·Colossus에서 모델 학습 진행 중",
         "ipo": "SpaceX 인수 검토",
         "val": "$60B (SpaceX 옵션)",
         "round": "SpaceX 옵션 계약 (2026-04)",
@@ -186,8 +186,8 @@ const data = [
     ]
   },
   {
-    "tag": "AI 신약·BCI·디지털 헤심",
-    "title": "🧬 바이오·헤심",
+    "tag": "AI 신약·BCI·디지털 헬스",
+    "title": "🧬 바이오·헬스",
     "stocks": [
       {
         "nm": "Insitro",
@@ -203,7 +203,7 @@ const data = [
         "ipo": "미정",
         "val": "$4.6B",
         "round": "Series E",
-        "sector": "디지털 헤심"
+        "sector": "디지털 헬스"
       },
       {
         "nm": "Xaira Therapeutics",
@@ -223,7 +223,7 @@ const data = [
       },
       {
         "nm": "Verily",
-        "rs": "Alphabet 지분 축소·독립법인 전환·AI 정밀 헤심 플랫폼",
+        "rs": "Alphabet 지분 축소·독립법인 전환·AI 정밀 헬스 플랫폼",
         "ipo": "미정",
         "val": "미공개",
         "round": "Series X ($300M, 2026-03)",
@@ -239,7 +239,7 @@ const data = [
       },
       {
         "nm": "Sword Health",
-        "rs": "AI 기반 근과격 치료·Hinge Health 5/22 IPO 데뷔 후 비상장 단독 MSK 채널·글로벌 확장",
+        "rs": "AI 기반 근골격 치료·Hinge Health 5/22 IPO 데뷔 후 비상장 단독 MSK 채널·글로벌 확장",
         "ipo": "미정",
         "val": "$3B",
         "round": "Series E ($130M, 2024-06)",
@@ -261,7 +261,7 @@ const data = [
       },
       {
         "nm": "Ripple",
-        "rs": "4/15 한국 교보생명 토큰화 국채 결제 파트너식·한국 최초 대형 보험사 협업·Citadel 투자",
+        "rs": "4/15 한국 교보생명 토큰화 국채 결제 파트너십·한국 최초 대형 보험사 협업·Citadel 투자",
         "ipo": "IPO 미정 (경영진 부정)",
         "val": "$40B",
         "round": "$500M (Citadel·Fortress)",
