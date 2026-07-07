@@ -21,7 +21,7 @@ const data = [
       },
       {
         "nm": "Ramp",
-        "rs": "$44B 밸류 확정 ($750M 6월 초 발표)·ICONIQ·GIC·OTPP 리드·ARR $1.5B·14개월 전 $13B → $44B 3.4배 점프",
+        "rs": "$44B 확정·ARR $1.5B·CEO Glyman '연말 IPO-ready'·Brex → Capital One 인수 완료 후 독립 legal fintech 대표주",
         "ipo": "미정",
         "val": "$44B",
         "round": "Series F+ $750M (2026-06)·ICONIQ·GIC·OTPP",
@@ -161,7 +161,7 @@ const data = [
       },
       {
         "nm": "Waymo",
-        "rs": "연 1,500만 트립·11개 도시 확장·자율주행 최대 유니콘",
+        "rs": "$16B 메가 라운드·연 1,500만 트립·런던·도쿄 20+ 신도시 확장·자율주행 최대 유니콘",
         "ipo": "미정 (2027 흑자 목표)",
         "val": "$126B",
         "round": "Series D ($16B, 2026-02)",
