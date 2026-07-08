@@ -2173,7 +2173,15 @@ function daysAgoLabel(dateStr){
 function getDomainTodayData(domain){
   if(domain==='ai'){
     const e=STATE.upd.ai?.[0]; if(!e) return null;
-    return { domain, date:e.date, changes:e.changes||[] };
+    // AI 탭은 entries:[{text,time}] 형식이 표준(changes는 비어있음).
+    // pulse 패널은 buildChangeRows({sector,detail})를 쓰므로 entries를 changes 형태로 어댑트.
+    let changes=e.changes||[];
+    if(!changes.length && Array.isArray(e.entries)){
+      changes=e.entries
+        .filter(en=>en && (en.text||'').trim())
+        .map(en=>({ sector:'', detail:en.text, time:en.time }));
+    }
+    return { domain, date:e.date, changes };
   }
   if(domain==='unicorn'){
     const e=STATE.upd.unicorn?.[0]; if(!e) return null;
