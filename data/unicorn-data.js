@@ -261,7 +261,7 @@ const data = [
       },
       {
         "nm": "Ripple",
-        "rs": "4/15 한국 교보생명 토큰화 국채 결제 파트너십·한국 최초 대형 보험사 협업·Citadel 투자",
+        "rs": "7/6 룩셈부르크 CSSF 전면 MiCA CASP 승인 - EEA 30개국 크립토·스테이블코인 자유 이동·RLUSD 유럽 진출·Open USD 컨소시엄 앵커",
         "ipo": "IPO 미정 (경영진 부정)",
         "val": "$40B",
         "round": "$500M (Citadel·Fortress)",
