@@ -78,7 +78,7 @@ const data = [
         "p2": "192",
         "r1": "216",
         "r2": "337",
-        "rs": "$204.30 +3.7% 반등 - 中 Alibaba·ByteDance·DeepSeek H200 200K 이하 승인 임박·시총 $4.98T·Vera Rubin 7월 첫 배송 확정",
+        "rs": "$204.30 시총 $4.98T 유지·中 H200 승인 임박·Vera Rubin 7월 첫 배송·FOMC 매파 미니츠 후 forward P/E 32 sector premium 재조명",
         "tk": "NVDA"
       },
       {
