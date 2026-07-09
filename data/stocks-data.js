@@ -78,7 +78,7 @@ const data = [
         "p2": "192",
         "r1": "216",
         "r2": "337",
-        "rs": "$204.30 시총 $4.98T 유지·中 H200 승인 임박·Vera Rubin 7월 첫 배송·FOMC 매파 미니츠 후 forward P/E 32 sector premium 재조명",
+        "rs": "$204 SOX 반도체 rally 주도·7/10 SK하이닉스 ADR $28B 상장 HBM 공급망 후방·8/26 Q2 어닝",
         "tk": "NVDA"
       },
       {
@@ -123,7 +123,7 @@ const data = [
         "p2": "23",
         "r1": "37",
         "r2": "79",
-        "rs": "$938 -6.6% 반도체 조정 지속·삼성 실적 트리거 메모리 로테이션·FQ3 $41.46B GM 84.9% 사상 최대 안커·8/28 Q4 어닝 D-51",
+        "rs": "SK하이닉스 ADR $28B 상장 HBM 밸류 재조명·FQ3 $41.46B GM 84.9% 안커·8/28 Q4 어닝",
         "tk": "MU"
       },
       {
@@ -699,7 +699,7 @@ const data = [
         "p2": "7.2",
         "r1": "95",
         "r2": "109",
-        "rs": "$419.77 +6.7% Robotaxi 마이애미 확대 - 텍사스·플로리다 3개주 5개시 무인 Model Y 운행·7/22 Q2 어닝·FSD·Optimus 촉매 대기",
+        "rs": "$394 개장 -12% YTD·Robotaxi 마이애미 14대 fleet 확대·Citizens Hold - robotaxi 수익성 원거리·7/22 Q2",
         "tk": "TSLA"
       },
       {
