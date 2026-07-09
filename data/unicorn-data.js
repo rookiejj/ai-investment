@@ -107,7 +107,7 @@ const data = [
       },
       {
         "nm": "Cursor",
-        "rs": "SpaceX $60B 옵션·불발 시 $10B 브레이크업·4/24 Business Insider xAI·Mistral 3자 파트너십 협의 보도·Colossus에서 모델 학습 진행 중",
+        "rs": "xAI Grok 4.5 7/9 배포 - Cursor 개발자 데이터 supplemental 훈련 통합 확정·SpaceX $60B 옵션·Colossus 훈련 유입·coding·에이전트 SDK 통합 로드맵",
         "ipo": "SpaceX 인수 검토",
         "val": "$60B (SpaceX 옵션)",
         "round": "SpaceX 옵션 계약 (2026-04)",

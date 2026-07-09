@@ -1,8 +1,14 @@
 const updates = [
   {
-    "date": "2026-07-09 07:45 KST",
-    "summary": "Stifel SpaceX(SPCX) Buy 개시 $190 PT - 6/12 IPO 후 첫 대형 셀사이드 커버리지 진입\nAnthropic Polymarket 87% 연내 상장 프라이싱 - S-1 confidential 6/1 접수·ARR $47B\nDatabricks $165~175B 라운드 협상 재확인 - 기존 $134B 대비 +23~31% 업라운드\nPerplexity 2028 IPO 타깃 유지 - OpenAI·Anthropic 상장과 독립 - Google Search 통합 카운터\n유럽 defense tech Q2 신기록 유지 - Helsing €12B·Quantum Systems $8B·YTD $17.4B 누계",
+    "date": "2026-07-09 19:50 KST",
+    "summary": "Cursor xAI Grok 4.5 supplemental 훈련 데이터 통합 확정 - SpaceX $60B 옵션 유지 후속 로테이션\nAnthropic Series H $965B 재확인 - Fable 5 재배포·Cowork 웹·모바일 확장·ARR $47B 유지\nStifel SpaceX(SPCX) Buy 개시 $190 PT - 6/12 IPO 후 첫 대형 셀사이드 커버리지 진입\nDatabricks $165~175B 라운드 협상 재확인 - 기존 $134B 대비 +23~31% 업라운드 유지\nHelsing €12B·Quantum Systems $8B 유럽 defense tech Q2 신기록 유지 - YTD $17.4B 누계",
     "changes": [
+      {
+        "time": "2026-07-09 10:00 KST",
+        "type": "펀딩",
+        "detail": "Cursor xAI Grok 4.5 파트너십·SpaceX 통합 재점화. Cursor - xAI Grok 4.5 7/9 배포 - Cursor 개발자 데이터 supplemental 훈련 통합 확정 - SpaceXAI 소프트웨어 개발 능력 최우선 로드맵·Colossus 멤피스 슈퍼컴퓨터 훈련 재사용·SpaceX $60B 옵션 유지 - 불발 시 $10B 브레이크업·xAI·Mistral 3자 파트너십 협의 이어짐·1M+ 개발자 사용·enterprise coding sector 지배력 확대·Cursor·Windsurf·Claude Code Sonnet 5 3파 전쟁 심화·GitHub Copilot 시장 점유 압축·에이전트 SDK 통합 로드맵 - AutoGen·LangGraph 대체 시나리오·enterprise coding sector 지배력 강화 - Anthropic Sonnet 5 기본 vs Grok 4.5 Cursor 통합 카운터·연말 SpaceX Cursor 인수 확정 시 xAI·SpaceXAI 완전 통합·Nasdaq 상장 시 발행량 확대 시나리오. 단기 시그널 - Grok 4.5 벤치마크 - 코딩 최우선 시나리오·SpaceX Cursor 최종 옵션 행사 결정·xAI Grok 5 로드맵·enterprise coding sector 3파 전쟁·Cursor 매출 성장률.",
+        "sector": "AI 코딩"
+      },
       {
         "time": "2026-07-08 14:00 EDT",
         "type": "펀딩",
