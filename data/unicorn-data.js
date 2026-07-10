@@ -5,10 +5,10 @@ const data = [
     "stocks": [
       {
         "nm": "Stripe",
-        "rs": "$159B 2월 tender vs 2025 $91.5B +73% 업라운드·FCF $2.2B 자체 운영·Collison 'no rush'·H1 2026 IPO Polymarket 13%",
+        "rs": "$159B 최신 tender +74% YoY·Tempo L1 블록체인 2026 롤아웃·Anthropic·Coupang·OpenAI·Shopify·Klarna 파트너·Collison 'no rush'",
         "ipo": "2026 말~2027 후보",
         "val": "$159B",
-        "round": "텐더오퍼 (2026-02)",
+        "round": "텐더오퍼 (2026-06)",
         "sector": "결제"
       },
       {
