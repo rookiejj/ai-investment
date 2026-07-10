@@ -253,9 +253,9 @@ const data = [
     "stocks": [
       {
         "nm": "Kraken",
-        "rs": "11월 confidential S-1·Q3 2026 listing 타깃·Deutsche Börse 4/26 $13.3B 재평가·CLARITY Polymarket 42% 대기·Tim Scott '2026 통과' 가이던스",
-        "ipo": "2026 Q3 후보",
-        "val": "$13.3B",
+        "rs": "H1 2026 IPO 타깃 $20B 재평가·CLARITY Act 상원 통과 후 규제 명확성·GS·JPM 주관·크립토 거래소 시장 확대",
+        "ipo": "2026 H1 후보",
+        "val": "$20B",
         "round": "$800M Pre-IPO (2025-11)",
         "sector": "크립토 거래소"
       },
@@ -269,7 +269,7 @@ const data = [
       },
       {
         "nm": "ConsenSys",
-        "rs": "이더리움 인프라·MetaMask",
+        "rs": "H2 2026 IPO 협의 확정 - JPM·GS 주관·MetaMask·Infura 이더리움 인프라·CLARITY Act 상원 통과 후 로드쇼 개막",
         "ipo": "2026 H2",
         "val": "$10B",
         "round": "IPO 협의 (GS·JPM)",

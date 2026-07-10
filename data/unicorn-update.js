@@ -1,25 +1,31 @@
 const updates = [
   {
-    "date": "2026-07-10 09:00 KST",
-    "summary": "Ripple 7/6 룩셈부르크 CSSF 전면 MiCA CASP 승인 - EEA 30개국 크립토·스테이블코인 자유 이동\nOpen USD 컨소시엄 6/30 출범 - 140+ 파트너 Visa·Mastercard·BlackRock·Stripe·Coinbase 최대 연합\nPrometheus $12B Series B $41B - 2026 H1 최대 단일 라운드·Bezos 공동창업 물리 AI 인프라\nEven Realities 중국 스마트글래스 $150M pre-B $1B 유니콘 등극 - Meituan·Tencent 리드\nDatabricks ARR $6.9B +80% YoY - secondary $165~175B·CEO Ghodsi 2027 IPO 확정 연기",
+    "date": "2026-07-10 16:00 KST",
+    "summary": "Kraken H1 2026 IPO 타깃 $20B 재평가·CLARITY 통과 후 규제 명확성\nConsenSys H2 2026 IPO 협의 확정 - JPM·GS 주관·이더리움 인프라\nPhysical Intelligence $1B 라운드 협의 - $11B+ 밸류·CapitalG 리드\nRipple MiCA 후속 Open USD 컨소시엄 앵커·CLARITY 상원 통과 시너지\n7월 신규 유니콘 러시 - Prime Intellect·Venice AI·Beeline 등 $1B 진입",
     "changes": [
       {
-        "time": "2026-07-09 09:00 KST",
-        "type": "펀딩",
-        "sector": "핀테크",
-        "detail": "Ripple(비상장) 룩셈부르크 CSSF 전면 MiCA CASP 승인 - 7/6 확정·EEA 30개국 크립토·스테이블코인 서비스 자유 이동 확보·RLUSD 스테이블코인 유럽 진출 base·XRP Ledger 에이전트 AI 결제 프레임 - Anthropic·OpenAI 에이전트 결제 표준 후보·Open USD 컨소시엄 6/30 출범 - Ripple·Fireblocks·Visa·Mastercard·Amex·Stripe·BlackRock·Coinbase·Google 등 140+ 파트너 사상 최대 스테이블코인 얼라이언스·달러 헤게모니 유지 백엔드·GENIUS Act·CLARITY Act 후속 규제 프레임 부합·Fireblocks - 2,400+ 기관 고객·Forbes Fintech 50 5년 연속 유지·Ramp $44B - 6/4 $750M 라운드 확정·ARR $1.5B 2배 성장·FCF 흑자·연말 IPO-ready·Brex - 4/7 Capital One $5.15B 인수 클로징 - 상장 트랙 소멸·비상장 리스트에서 제거·Chime - Nasdaq CHYM $27 프라이싱 $11.6B FDV·비상장 리스트 이탈·Stripe $159B - 2월 tender·ARR $18B 유지·H2 2026 IPO 윈도우 후반. 단기 시그널 - Ripple RLUSD 유럽 발행 확정·Open USD 프로토콜 표준·Chime CHYM 첫 실적 - IPO 트랙·Stripe S-1·Ramp 연말 S-1. 매크로 - 핀테크 sector forward EV/매출 12배 premium·스테이블코인 CTB $180B·에이전트 AI 결제 TAM $500B+·GENIUS·CLARITY Act 대통령 서명.",
+        "time": "2026-07-10 12:00 KST",
+        "type": "IPO",
+        "sector": "크립토·Web3",
+        "detail": "Kraken·ConsenSys 상장 로드맵 재확정. Kraken(비상장) - H1 2026 IPO 타깃 $20B 재평가 - Deutsche Börse 4월 $13.3B 마크에서 +50% 상향·CLARITY Act 상원 통과 후 규제 명확성 확보로 상장 윈도우 개방·GS·JPM 주관 - $800M Pre-IPO 라운드 이후 밸류 재점검·크립토 거래소 시장 지배력 유지·규제 인증 CFTC·CFTC 이중 규제 프레임 대비·Coinbase 상장 후 프리미엄 축소 - Kraken 상대적 discount 축소 시나리오·ConsenSys(비상장) $10B - H2 2026 IPO 협의 확정 - JPM·GS 주관 - MetaMask·Infura 이더리움 인프라 앵커·CLARITY Act 스테이킹 명확성 후속 이더리움 스테이킹 인프라 재평가·Fireblocks $8B - 2,400+ 기관 고객·Forbes Fintech 50 5년 연속·2027 IPO 트랙·Chainalysis $8.6B - Series G 컴플라이언스·Anchorage Digital $3B - 풀 차터·OCC 유일 인가·Alchemy Web3 개발자 인프라·크립토 유니콘 상장 러시 - Coinbase·Circle 이후 두 번째 웨이브·Ripple $40B - 7/6 MiCA CASP 후속 Open USD 컨소시엄 앵커·140+ 파트너 스테이블코인 얼라이언스 최대. 단기 시그널 - Kraken S-1 공개·ConsenSys 로드쇼 개막·CLARITY 하원 최종 통과·GENIUS Act 대통령 서명. 매크로 - 크립토 유니콘 상장 러시·private 크립토 시가총액 $200B+·규제 명확성 backdrop·spot ETF AUM $135B.",
       },
       {
-        "time": "2026-07-09 11:00 KST",
-        "type": "펀딩",
-        "sector": "엔터프라이즈 SW",
-        "detail": "Databricks·Canva·SaaS 상장 이연 - H2 2026 IPO 윈도우 재정렬. Databricks(비상장) - ARR $6.9B +80% YoY 6월 공개·Series L 앵커 $134B·secondary implied $165~175B·CEO Ghodsi '2026 상장 최악의 해' - IPO 2027 정식 연기 확정·NRR 140%+·20,000+ 고객·FCF 흑자·Canva(비상장) - ARR $3.3B·secondary $42B·240M MAU·27M 유료 시트·B2B IPO 2026 최유력 후보·Prometheus(비상장) - Bezos 공동창업·$12B Series B·$18.2B 총 조달·$41B 밸류 - 2026 H1 최대 단일 라운드·물리 AI 인프라·초대형 컴퓨트 그리드 - Anthropic·xAI·OpenAI 인프라 임차 로드맵·Notion(비상장) - MCP usage 10x MoM·Mercury·Mixpanel·Miro·Box·ClickHouse 커넥터 확대·Custom Agents 확대·Perplexity $21.21B Series E-6 확정·ARR $500M +335% YoY·2028 IPO 타깃 유지·Rippling ARR $1B·$16.8B·Mercury Series D $200M $5.2B·OCC 풀 차터·ARR $650M·Figma 상장 후 비상장 리스트 이탈·Anthropic Series H $965B 재확인·10월 로드쇼 유지. 단기 시그널 - Anthropic 10월 로드쇼·Databricks 2027 IPO·Canva Q3 S-1·Notion H2 tender·Perplexity 2028 IPO. 매크로 - SaaS forward EV/매출 12배·private AI 시가총액 $1T+·hyperscaler CapEx $725B 후방·H2 2026 IPO 윈도우 이연 재정렬.",
-      },
-      {
-        "time": "2026-07-09 13:00 KST",
+        "time": "2026-07-10 12:00 KST",
         "type": "펀딩",
         "sector": "우주·모빌리티·방산",
-        "detail": "defense tech 사상 최대 - Anduril $61B·Shield AI $12.7B·Skydio $4.4B. Anduril(비상장) - 5월 Series H $5B·post-money $61B·Thrive Capital·a16z 리드·Golden Dome·Space Force 계약 앵커·NATO 5% GDP 2035 후방 지속·Shield AI(비상장) - 5/19 Series G $2B·$12.7B·Advent·JPMorgan 리드·Blackstone $500M non-dilutive·Pentagon 저비용 드론 프로그램 진입·V-BAT·Nova·Hivemind 자율 시스템 확장·Skydio(비상장) - 4월 $4.4B 밸류·60,000+ 드론 출하·미군·경찰 시장 지배·자율 정찰 카테고리 리더십·SpaceX - 4/1 S-1 confidential 접수·$1.75T 밸류 타깃·$75B 조달 - 사상 최대 IPO·H2 2026 실행 윈도우·Helsing €12B - Q2 유럽 defense tech 확장·Quantum Systems $8B - Blackstone·Airbus 리드·YTD defense tech VC 펀딩 $14.6B - 2025 전년 기록 5개월 만에 초과·글로벌 활성 유니콘 1,776개·신규 유니콘 YTD ~90개·AI 23.3% 최대 비중. 단기 시그널 - SpaceX H2 IPO 실행·Anduril Golden Dome 추가 계약·Shield AI Nova 배치·Skydio H2 라운드·Helsing 클로징·NATO 5% GDP 2035. 매크로 - defense tech VC $14.6B YTD - 2025 전년 초과·private AI 시가총액 $1T+·NATO 5% GDP 후방·SPCX 나스닥-100 편입 sector rotation.",
+        "detail": "Physical Intelligence $11B+ 라운드 협의 - CapitalG 리드. Physical Intelligence(비상장) - $1B 라운드 협의 확정 단계·$11B+ 밸류 - 2025년 11월 CapitalG 리드 $5.6B 대비 2배 업라운드·Figure AI·1X와 함께 physical AI 삼파전 재편·Foundation model π-series - 로봇 매니퓰레이션 오픈 벤치마크·프론티어 모델 대비 실체 노동 확장 트랙·Figure AI $48B - BotQ 시간당 1대 양산 도달·누적 350대 출하·패키지 소팅 50시간 무인 라이브스트림·Amazon 20K + Mercedes 50K 누적 주문·BMW 90K+ 파트 로딩·Anduril $61B - 5월 Series H $5B·Golden Dome $3.2B + 美 우주군 $1.8B·NATO 5% GDP 2035 후방·Helsing €18B - 5월 Dragoneer·Lightspeed $1.2B 라운드 - 유럽 방산 확장·Shield AI $12.7B - 3월 Series G $2B·2026 매출 $540M+·V-BAT·Nova·Hivemind 자율 시스템·Waymo $126B - 연 1,500만 트립·런던·도쿄 20+ 신도시 확장·Saronic Technologies $9.25B - 3월 Series D $1.75B·2027 연 20+척 양산 가이던스·중국 해군 카운터. 단기 시그널 - Physical Intelligence 라운드 클로징·Figure AI Series D 확대·Anduril H2 추가 계약·Helsing 클로징·Waymo 2027 흑자 목표. 매크로 - private 로보틱스 시가총액 $200B+·NATO 5% GDP 후방·defense tech VC $14.6B YTD - 2025 전년 초과·physical AI TAM $500B+.",
+      },
+      {
+        "time": "2026-07-10 12:00 KST",
+        "type": "펀딩",
+        "sector": "바이오·헬스",
+        "detail": "AI 신약 유니콘 확장·Beeline·Chai·Xaira 러시. Beeline Medicines(비상장) - 7/9 Series A 연장 $126.3M·Bain Capital·CPPIB·BMY 참여 - AI 설계 자가면역 신약 파이프라인 상용화 단계·Chai Discovery $1.3B - 12월 Series B $130M OpenAI 백트·Lilly 협력 - 프로틴 폴딩·신약 발굴 AI·Xaira Therapeutics $3.5B - AI 신약 발굴·ARCH·NVIDIA 백트·프론티어 파이프라인 확장·Insitro $2.4B - AI 기반 신약 발굴 플랫폼·Color Health $4.6B - 유전체·예방의학·AI 진단·Devoted Health $13B - 메디케어 어드밴티지 46.6만 멤버·전년 +121%·29개주·AI 진단·Neuralink $9B - 12명 이식 완료·Blindsight 시각 복원 착수·Sword Health $3B - AI 근골격 치료·Hinge Health 5월 IPO 데뷔 후 비상장 단독 채널·Verily 독립법인 전환·AI 정밀 헬스 플랫폼·바이오 유니콘 IPO 이연 - 금리·규제 환경 리스크·H2 2026 윈도우 재정렬. 단기 시그널 - Beeline 임상 진행·Chai Discovery Series C·Xaira 파이프라인 확장·Neuralink Blindsight 첫 이식·Xaira Series B. 매크로 - AI 바이오 sector forward P/E N/A·private 바이오 시가총액 $150B+·AI 신약 TAM 재편·Neuralink BCI 카테고리 창출.",
+      },
+      {
+        "time": "2026-07-10 12:00 KST",
+        "type": "펀딩",
+        "sector": "핀테크",
+        "detail": "Ramp·Mercury·Stripe·Ripple 4파 - Open USD·CLARITY 후속 재편. Ramp $44B - 6/4 $750M·ICONIQ·GIC·Ontario Teachers'·ARR $1.5B 2배 성장·FCF 흑자·연말 IPO-ready·Mercury $5.2B - 5월 Series D $200M·TCV 리드·OCC 풀 차터·ARR $650M Q3·Stripe $159B - 2월 tender·ARR $18B 유지·창업자 '서두르지 않음' 발언·2027+ 상장 시나리오·Ripple $40B - 7/6 룩셈부르크 CSSF 전면 MiCA CASP 승인·EEA 30개국 크립토·스테이블코인 자유 이동·Open USD 컨소시엄 6/30 출범 앵커 - Visa·Mastercard·BlackRock·Stripe·Coinbase 140+ 파트너·Circle CRCL 6/30 -17% Open USD 충격·USDC 위협·Fireblocks $8B - 2,400+ 기관 고객·Plaid $13.5B - 금융 데이터 API·Revolut $65B - Sequoia $56M·Checkout.com $40B·Gusto $9.6B·Wise 상장 이후 비상장 리스트 이탈·CLARITY Act 상원 통과 후 스테이블코인 명확성. 단기 시그널 - Stripe S-1·Ramp 연말 S-1·Ripple RLUSD 유럽 발행·Open USD 프로토콜 표준·GENIUS Act 대통령 서명. 매크로 - 핀테크 sector forward EV/매출 12배·스테이블코인 CTB $180B·에이전트 AI 결제 TAM $500B+·GENIUS·CLARITY Act.",
       }
     ]
   }
