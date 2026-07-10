@@ -1,31 +1,31 @@
 const UPDATES = [
   {
-    "date": "2026-07-10 16:00 KST",
-    "summary": "OpenAI GPT-5.6 GA·Sol $5/$30·Terra $2.50/$15·Luna $1/$6 3층 라인업\nxAI Grok 4.5 공개 - 1.5T V9·Colossus 2 Grok 5 6~10T 훈련 병행\nAnthropic Fable 5 7/12까지 유지·프리페이드 $10/$50·사이버시큐리티 필터\n프론티어 벤치마크 Opus 4.8 61.4 리더·GPT-5.6 61.0 par\nAI 반도체 스타트업 자금 러시 - SambaNova $1B·Together $800M·Cerebras $40B",
+    "date": "2026-07-11 07:00 KST",
+    "summary": "OpenAI ChatGPT Work 에이전트 워크스페이스 GA·Sol 24h 글로벌 롤아웃\nAnthropic Sonnet 5 인트로 $2/$10 8/31까지·Cowork Max 웹모바일 확장\nGoogle Gemini 3.5 Pro 7/17 GA 확정·2M ctx·Deep Think reasoning\nNVIDIA Vera Rubin 6/1 양산 - 288GB HBM4·B300 Foundry GA\nAWS Trainium 3 출하 개시·Bedrock AgentCore Web Search GA",
     "entries": [
       {
         "time": "2026-07-09 09:00 KST",
         "type": "제품 출시",
-        "text": "OpenAI GPT-5.6 - Sol·Terra·Luna 3층 라인업 GA. OpenAI 7/9 GPT-5.6 general availability - Sol 플래그십 $5 입력·$30 출력 per M tokens·Terra $2.50·$15·Luna $1·$6 - 가격 세그멘테이션 재편·기존 GPT-5.5 대비 코딩·수학·에이전트 지속 개선·Artificial Analysis Intelligence Index 61.0 - Claude Opus 4.8 61.4에 근접 par·ChatGPT Work 신규 에이전트 출시 - 엔터프라이즈 워크플로우 자동 실행·데스크톱 앱 Codex 통합 업그레이드·hosted sites 서비스 - 개발자 배포 원스톱·Microsoft 365 Copilot 지정 - GPT-5.6가 Copilot 기본 모델로 확정 - MAI 내부 모델과 병용 갈등 이슈 지속 - Satya 발언 재조명·API·Enterprise·ChatGPT 3채널 동시 배포·Q3 2026 매출 러런레이트 $12B+ 예상. 단기 시그널 - 8월 GPT-5.7 소스·Sora·DALL-E 3.5·Codex 확장·Agents 2 프레임워크·GPT-5.6 인퍼런스 비용 -20% 로드맵. 매크로 - LLM API 가격 공세 - Grok 4.5 $2/$6 대비 Sol 여전히 프리미엄·Opus 4.8 $5/$25 대비 par·Meta Muse Spark 오픈웨이트 카운터·Google Gemini 3.5 Pro 7/17 대응·Artificial Analysis 순위 매주 재편·custom silicon TAM 재편 지속.",
+        "text": "OpenAI GPT-5.6 GA + ChatGPT Work 에이전트 워크스페이스 동시 출시. OpenAI 7/9 GPT-5.6 general availability - Sol 플래그십·Terra 밸런스·Luna 최저가/최속 3층 라인업·ChatGPT·Codex·API 3채널 24시간 글로벌 롤아웃 완료·Sam Altman CNBC 발언 - Sol 에이전틱 코딩 54% 토큰 효율 개선·Cerebras 인프라 인퍼런스 최대 750 tokens/sec 지원 7월 개시·ChatGPT Work 신규 - 파일·앱·커넥터를 딜리버러블로 변환하는 에이전틱 워크스페이스·기업 고객 파일럿 대상 GA·Google Workspace·Microsoft 365 카운터·gov 리뷰 종료 후 상업 배포·Microsoft 365 Copilot GPT-5.6 기본 모델 유지 - MAI 3세대 병용 갈등 지속·API·Enterprise·ChatGPT 3채널 동시 배포·Q3 2026 러런레이트 $12B+ 예상. 단기 시그널 - 8월 GPT-5.7 소스·Sora 2·DALL-E 3.5·Codex 확장·Agents 2 프레임워크·인퍼런스 비용 -20% 로드맵. 매크로 - LLM API 가격 스펙트럼 확대 - Sonnet 5 $2/$10·Grok 4.5 $2/$6·Opus 4.8 $5/$25·Artificial Analysis 순위 매주 재편·hyperscaler CapEx $754B 후방·에이전트 워크플로우 TAM $500B+.",
         "sector": "OpenAI"
       },
       {
-        "time": "2026-07-08 22:00 KST",
-        "type": "모델 출시",
-        "text": "xAI Grok 4.5 공개 - 1.5T V9 GA·Colossus 2 Grok 5 훈련. xAI 7/8 Grok 4.5 public launch - 1.5조 파라미터 V9 아키텍처·Cursor 기반 학습·Grok Build·Cursor·xAI 콘솔 즉시 접근·API 배포 - Anthropic·OpenAI 대비 60% 저렴 $2 입력·$6 출력 per M tokens·경쟁 pricing 최전방·Grok 5 6~10T 파라미터 Colossus 2에서 훈련 중 - 다른 6개 실행 병행·월별 V9 마이너 배포 - 4.6·4.7 Q4까지·Artificial Analysis Intelligence Index 54·Coding Agent Index 76 - GPT-5.5 par·Fable 5 하회이나 Agent AI 51.4% Opus 4.8 상회 - 에이전틱 워크플로우 우위·SpaceXAI $400B+ 시가총액·2027 나스닥 상장 로드쇼·SpaceX 결합 밸류 재편·이번 데비 계기 monthly cadence 유지 압력 - 리소스 병목 관건. 단기 시그널 - Grok 5 프리뷰 Q3 말·xAI DevDay 8월·Colossus 2 3GW 완전 가동·SpaceXAI IPO 로드쇼 확정. 매크로 - LLM sector forward EV/매출 20배 premium·오픈웨이트 vs 클로즈 프론티어 분화·저가 공세 API 마진 압박·custom silicon TAM 재편·frontier 3파 재편 - Anthropic·OpenAI·SpaceXAI vs Google·Meta·Mistral 진영.",
-        "sector": "xAI"
-      },
-      {
-        "time": "2026-07-09 15:00 KST",
-        "type": "펀딩",
-        "text": "AI 반도체·인프라 스타트업 자금 러시 - SambaNova·Together·Cerebras·Prime Intellect. 7/9 SambaNova $1B Series F 1차 클로즈 확정 - $11B 밸류에이션·General Atlantic·BlackRock·Intel Capital 리드·오픈 소스 인퍼런스 인프라 확대·Together AI $800M Series C 확정 - $8.3B 밸류에이션·Aramco Ventures 리드 - 사우디 국부 자금 AI 인프라 진입 마일스톤·GPU 클라우드 서비스 확장·Cerebras 상장 후 시가총액 $40B+·Artificial Analysis 벤치마크 gpt-oss-120B 인퍼런스 Groq 대비 3~6배 tokens/sec 우위 발표·Prime Intellect $130M Series A - $1B 밸류·Radical·Nvidia Ventures·Dell·Iconiq 참여 - 분산 훈련 프로토콜·Mercor $10B 밸류 - Deeptune 인수 - 에이전트 시뮬레이션 환경 확보·8090 Solutions $135M Salesforce Ventures - 엔터프라이즈 자동화·Groq H2 IPO 시나리오 재부상. 단기 시그널 - SambaNova·Together 밸류 재산정·Nebius·CoreWeave·Lambda GPU 클라우드 4파전 재편·Groq·Cerebras·Tenstorrent·SambaNova 인퍼런스 4파·H2 AI IPO 윈도우 개막. 매크로 - private AI TAM $1T+·GPU 클라우드 TAM $200B·custom silicon TAM 재편·hyperscaler CapEx $754B 후방 지속·오픈웨이트 인퍼런스 optimize 스타트업 프리미엄 확대.",
-        "sector": "생태계"
-      },
-      {
-        "time": "2026-07-09 20:00 KST",
+        "time": "2026-07-10 22:00 KST",
         "type": "가격",
-        "text": "Anthropic Fable 5 7/12까지 유료 플랜 유지·프리페이드 $10/$50 전환·사이버시큐리티 필터. Anthropic 7/9 발표 - Claude Fable 5 유료 플랜(Pro·Max·Team) 접근 7/12까지 연장(기존 7/7) - Grok 4.5 GA·GPT-5.6 GA 프론티어 경쟁 대응 유동성 방어·7/12 이후 프리페이드 크레딧으로 전환 $10 입력·$50 출력 per M tokens - 산업 최고가 프리미엄 유지 - 리소스 제약 우선 관리·정규 구독 복귀는 캐파 확보 후·신규 사이버시큐리티 분류기 배포 - 6월 수출통제 트리거 jailbreak 익스플로잇 99%+ 차단 - 산업 최고 방어 벤치마크·EU AI Act·중국 수출통제 준수 체계 강화·Artificial Analysis Intelligence Index Opus 4.8 61.4 리더 유지 - GPT-5.6 61.0에 근접 par·SWE-bench Pro 69.2%·Online-Mind2Web 84% - 에이전트 벤치마크 우위·엔터프라이즈 Fortune 500 침투 지속·Series H $965B post-money 조달 완료. 단기 시그널 - 7/12 프리페이드 전환·10월 IPO 로드쇼 개막·Fable 5.1·Opus 4.9·Sonnet 5 순차 로드맵·에이전트 프레임워크 v2 배포. 매크로 - LLM 프론티어 3파 재편·API 가격 스펙트럼 확대 - Grok 4.5 $2/$6·Sol $5/$30·Fable 5 $10/$50·custom silicon TAM 재편·오픈웨이트 vs 클로즈 프론티어 분화 심화.",
+        "text": "Anthropic Sonnet 5 인트로 가격 $2/$10 8/31까지·Cowork Max 웹모바일 확장·HackerOne 취약점 심각도 프로그램. Anthropic Sonnet 5 6/30 출시 후 인트로 프로모 $2 입력·$10 출력 per M tokens - 8/31까지 유지·9/1 이후 표준 $3/$15로 조정·Grok 4.5 $2/$6·GPT-5.6 Terra $2.50/$15 대비 프로모 구간 최저가 스팟·Fable 5 - Mythos 6/12 미 상무부 지시 일시 정지 후 7/1 복구 완료 - 사이버시큐리티 필터 신규 배포·jailbreak 익스플로잇 99%+ 차단 - 산업 최고 방어 벤치마크·EU AI Act 8/2 발효 준수 체계 강화·HackerOne 신규 AI jailbreak 심각도 프로그램 - 실전 리워드 확대·Cowork - Max 플랜 웹·모바일 전면 확장 - Fortune 500 침투 지속·Artificial Analysis Intelligence Index Opus 4.8 61.4 리더 유지 - GPT-5.6 61.0에 근접·SWE-bench Pro Mythos 5 80.3%·Fable 5 80% - 에이전트 벤치마크 우위·Series H $965B post-money 5월 조달. 단기 시그널 - 9/1 Sonnet 5 표준 가격·10월 IPO 로드쇼 개막·Fable 5.1·Opus 4.9·Haiku 5 순차·에이전트 프레임워크 v2·프리페이드 크레딧 확장. 매크로 - LLM 프론티어 3파 재편·custom silicon TAM 재편·오픈웨이트 vs 클로즈 프론티어 분화 심화.",
         "sector": "Anthropic"
+      },
+      {
+        "time": "2026-07-10 15:00 KST",
+        "type": "모델 출시 예정",
+        "text": "Google DeepMind Gemini 3.5 Pro 7/17 GA 확정·2M ctx·Deep Think·Nano Banana Pro 준비. Google DeepMind Gemini 3.5 Pro 정식 GA 7/17로 재확정 - 4월 지연 이후 로드맵 안정·2M 컨텍스트 창·Deep Think 추론 레이어 - 복합 태스크 자율 문제 해결·SVG 렌더링 정확도 30% 개선·사운드·뮤직 생성 Fable 5 통합·Vertex AI·Gemini App·Workspace 3채널 동시 배포·Gemini 3.5 Flash 이미 GA - 저가 세그먼트 커버·현재 내부 프리뷰 한정·프론티어 벤치마크 컨센 Artificial Analysis Intelligence Index 60+ 목표·Opus 4.8·GPT-5.6 par 시나리오·Nano Banana Pro 신규 이미지 모델 병렬 준비·DeepMind AlphaFold 4 - 7/9 프리프린트 - RNA·리간드·라이브 세포 예측 확장·과학·바이오 sector 트리거·TPU v6 백엔드 전면 전환. 단기 시그널 - 7/17 Gemini 3.5 Pro·Nano Banana Pro 8월·Gemini 3.5 Ultra 로드맵·TPU v7 프리뷰·Q3 Google I/O Extended. 매크로 - LLM 프론티어 4파 재편 - Anthropic·OpenAI·Google·xAI·hyperscaler CapEx $754B 후방·custom silicon TAM 재편·Google Cloud AI 매출 러런레이트 $32B - Azure·AWS 격차 축소·NVIDIA 의존도 낮추는 커스텀 실리콘 전략 유일 프론티어.",
+        "sector": "Google DeepMind"
+      },
+      {
+        "time": "2026-07-08 16:00 EDT",
+        "type": "인프라",
+        "text": "NVIDIA Vera Rubin 6/1 양산 + AWS Trainium 3 출하 개시·Bedrock AgentCore Web Search GA. NVIDIA Vera Rubin 6/1 풀 프로덕션 진입 확정 - 파트너 출하 H2 2026 개막·패키지당 50 PFLOPS NVFP4 인퍼런스·35 PFLOPS 훈련 성능·288GB HBM4 22TB/s·TSMC 3nm 공정·Blackwell Ultra B300 Azure AI Foundry GA - Anthropic Claude 호스팅 병렬·클라우드 온디맨드 시간당 $9.16·288GB 티어 수요 공급 초과·GB300 DGX 8-GPU 시스템 $300~350K·AWS Trainium 3 출하 개시 - Andy Jassy 콜 확인 30~40% 가격 성능 개선 T2 대비·거의 완판·2027 초 볼륨 램프·타이완 파트너 H2 램프·Anthropic-AWS 멀티 GW Trainium 확장 진행 최대 5GW·Bedrock AgentCore Web Search GA - 제로 데이터 egress 웹 검색·Bedrock Fully Managed Knowledge Bases GA·hyperscaler 커스텀 실리콘 재편 지속. 단기 시그널 - Vera Rubin 파트너 배포 - CoreWeave·Nebius·Lambda·Meta Cloud·Trainium 3 볼륨 램프·Google TPU v7 프리뷰·MSFT MAI-Thinking-2. 매크로 - custom silicon TAM $500B+·hyperscaler CapEx $754B 후방 지속·NVIDIA 시가총액 $5.3T 유지·AWS AI 매출 러런레이트 $40B - Azure $35B·Google Cloud AI $32B 격차 재편.",
+        "sector": "인프라"
       }
     ]
   }
