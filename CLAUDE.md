@@ -611,6 +611,16 @@ retail news 단순 나열에 머무르지 말고 institutional research(FRED·Ya
 - 크립토 카테고리(BTC·ETH·SOL·XRP)는 미국·한국 마켓 탭과 정보 중복을 피하면서 디지털 자산 단독 관점 제공
 - 스키마: `{ tk, nm, rs, price, ytd, y1, range }`
 
+**🔴 update.js `changes[].sector` = 데이터 카테고리 (엄수 — 크립토 패널 분리에 직결)**
+
+`index.html` 대안 자산 페이지는 commodity의 `changes`를 **`sector` 필드로 판정해 "원자재" 패널과 "크립토" 패널로 나눠 렌더**한다 (`CRYPTO_SECTOR_RE` = 크립토·crypto·비트·이더·솔라나·리플). 따라서:
+
+- `changes[].sector`는 반드시 **데이터 카테고리**(`크립토`·`귀금속`·`에너지`·`산업금속`·`배터리소재`·`농산물`) 중 하나. `type` 값인 **`"가격"`을 sector에 넣지 말 것** — 크립토 콘텐츠가 sector="가격"으로 뭉뚱그려지면 크립토 판정에 걸리지 않아 전부 원자재 패널로 가고 **크립토 패널이 "갱신 내역 없음"으로 빈다**.
+- **매 갱신마다 크립토 콘텐츠는 `sector:"크립토"` 인 별도 change 로 분리**한다. 귀금속·에너지·산업금속 등 나머지는 자기 카테고리 sector 로. 즉 한 change 에 metals+crypto 를 섞지 말고 **최소 2개 change**(크립토 1 + 비크립토 1)로 쪼갠다.
+- 참조 정답 형식: 2026-07-02 commodity-update.js — `sector:"크립토"`(BTC·ETH·SOL·XRP) + `sector:"에너지"`(WTI·구리·리튬 등) 로 분리됨. 이 형태를 표준으로.
+
+**사고 이력**: 2026-07-05~08 commodity 자동 갱신이 sector 에 `type` 값 `"가격"` 을 넣어 metals+crypto 를 단일 change 로 뭉뚱그림 → 대안 자산 크립토 패널이 나흘간 "오늘 0건". 렌더는 정상, 생성 측 회귀였음.
+
 ### 유니콘·프리IPO (unicorn)
 
 - 파일: `data/unicorn-data.js`, `data/unicorn-update.js`

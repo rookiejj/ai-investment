@@ -13,6 +13,7 @@
    - date: `TZ=Asia/Seoul date +"%Y-%m-%d %H:%M KST"`
    - 사용자향 자연어 문체 (내부 필드명 금지)
    - 동일 날짜 누적 원칙
+   - 🔴 **`changes[].sector` = 데이터 카테고리** (`크립토`·`귀금속`·`에너지`·`산업금속`·`배터리소재`·`농산물`). `type` 값 `"가격"` 을 sector 에 넣지 말 것. **크립토 콘텐츠는 반드시 `sector:"크립토"` 인 별도 change 로 분리** (metals+crypto 한 change 로 뭉치면 대안 자산 크립토 패널이 빈다). 최소 2개 change(크립토 1 + 비크립토 1). 자세한 이유·정답 예시는 CLAUDE.md [원자재·크립토 (commodity)] 참조.
 
 5. **버전** — `data/version.js`를 `TZ=Asia/Seoul date +"%Y%m%d-%H%M"`로 갱신.
 
