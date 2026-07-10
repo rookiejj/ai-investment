@@ -1,25 +1,31 @@
 const UPDATES = [
   {
-    "date": "2026-07-10 09:00 KST",
-    "summary": "Mistral Robostral Navigate 8B VLA 로보틱스 - 단일 RGB 76.6% R2R-CE 벤치마크·물리 AI 시장 첫 진입\n하이퍼스케일러 CapEx $725B 재확정 - Amazon $200B·MSFT $190B·Alphabet $190B·Meta $115~135B\nGemini 3.5 Pro 7/17 확정 - 2M context·Deep Think·2.5 아키텍처 완전 재작성\nNVIDIA Kyber 랙 시스템 2028로 지연 - 제조 병목·Vera Rubin 첫 배송 병행\nAnthropic·OpenAI·SpaceX 시가총액 지난 25년 테크 엑싯 총합 초과 - 프론티어 3파 재편",
+    "date": "2026-07-10 16:00 KST",
+    "summary": "OpenAI GPT-5.6 GA·Sol $5/$30·Terra $2.50/$15·Luna $1/$6 3층 라인업\nxAI Grok 4.5 공개 - 1.5T V9·Colossus 2 Grok 5 6~10T 훈련 병행\nAnthropic Fable 5 7/12까지 유지·프리페이드 $10/$50·사이버시큐리티 필터\n프론티어 벤치마크 Opus 4.8 61.4 리더·GPT-5.6 61.0 par\nAI 반도체 스타트업 자금 러시 - SambaNova $1B·Together $800M·Cerebras $40B",
     "entries": [
       {
         "time": "2026-07-09 09:00 KST",
         "type": "제품 출시",
-        "text": "Mistral AI Robostral Navigate - 8B VLA 로보틱스 모델 출시. Mistral AI 7/8 Robostral Navigate 공개 - 8B 파라미터 vision-language-action 모델·단일 RGB 카메라 자연어 프롬프트 네비게이션·하드웨어 무관 - Boston Dynamics·Figure·Agility·Sanctuary·Physical Intelligence 계 협업 확장 유효·시뮬레이션 훈련 - 400K trajectory·6K scene 커버·R2R-CE unseen environment 벤치마크 76.6% - 단일 카메라 peer 대비 +9.7pt·다중 센서 시스템 +4.5pt outperform·초기 파트너 - 제조·물류·배송·hospitality 파일럿·프랑스 정부 산업 자립 전략 후방 - Mistral 물리 AI 확장 상용 트랙·경쟁 - NVIDIA GR00T N·Figure Helix·Physical Intelligence π0.5·xAI Optimus Neuralnet 4파 정면 충돌·오픈웨이트 공개 정책 시사 - Anthropic·OpenAI 클로즈 모델 대비 차별화. 단기 시그널 - Robostral 오픈웨이트 공개·Sanofi·Renault·Airbus 파일럿·유럽 AI Act 준수 프레임·H2 2026 Robostral Manipulate·2027 Robostral Reason·Series G 라운드 - 물리 AI TAM 재점검.",
-        "sector": "Mistral"
+        "text": "OpenAI GPT-5.6 - Sol·Terra·Luna 3층 라인업 GA. OpenAI 7/9 GPT-5.6 general availability - Sol 플래그십 $5 입력·$30 출력 per M tokens·Terra $2.50·$15·Luna $1·$6 - 가격 세그멘테이션 재편·기존 GPT-5.5 대비 코딩·수학·에이전트 지속 개선·Artificial Analysis Intelligence Index 61.0 - Claude Opus 4.8 61.4에 근접 par·ChatGPT Work 신규 에이전트 출시 - 엔터프라이즈 워크플로우 자동 실행·데스크톱 앱 Codex 통합 업그레이드·hosted sites 서비스 - 개발자 배포 원스톱·Microsoft 365 Copilot 지정 - GPT-5.6가 Copilot 기본 모델로 확정 - MAI 내부 모델과 병용 갈등 이슈 지속 - Satya 발언 재조명·API·Enterprise·ChatGPT 3채널 동시 배포·Q3 2026 매출 러런레이트 $12B+ 예상. 단기 시그널 - 8월 GPT-5.7 소스·Sora·DALL-E 3.5·Codex 확장·Agents 2 프레임워크·GPT-5.6 인퍼런스 비용 -20% 로드맵. 매크로 - LLM API 가격 공세 - Grok 4.5 $2/$6 대비 Sol 여전히 프리미엄·Opus 4.8 $5/$25 대비 par·Meta Muse Spark 오픈웨이트 카운터·Google Gemini 3.5 Pro 7/17 대응·Artificial Analysis 순위 매주 재편·custom silicon TAM 재편 지속.",
+        "sector": "OpenAI"
       },
       {
-        "time": "2026-07-09 14:00 KST",
-        "type": "인프라",
-        "text": "하이퍼스케일러 CapEx 2026 $725B 재확정·H200 中 승인 임박·Kyber 2028 지연. 4대 하이퍼스케일러 2026 CapEx 총합 $725B 확정 - 전년 $410B 대비 +77% YoY 상향·Amazon $200B - CFO Jassy 확인·Microsoft $190B - Amy Hood +$25B 메모리·부품 코스트 인플레 추가·Alphabet $190B - Google Cloud Q1 백로그 $460B 두 배 확대 후 +$5B 상향·Meta $115~135B - Prometheus 클러스터 3GW 초과 - 초기 1GW 대비 3배·중국 정부 Alibaba·ByteDance·DeepSeek H200 승인 임박 - 200K 이하 상한·요청량 절반 이하·훈련 워크로드 한정·추론은 화웨이 어센드 국내 우선·Beijing 자립 서사 vs 상업적 필요성 dual-track·NVIDIA Kyber 차세대 랙 시스템 2028 지연 확정 - SemiAnalysis 특종·제조 병목·TSMC 3nm 캐파 Vera Rubin 우선 배정·Vera Rubin 첫 배송 유효 - Foxconn·Quanta·Wistron·MSFT·GOOG·AWS·Meta·Oracle 5대 CSP·CoreWeave·Lambda·Nebius·Nscale·Dell·HPE·Lenovo·Supermicro 가을 확장·Google Cloud Q1 매출 $20B +63% YoY 최강 성장·Anthropic Series H $965B post-money 확정·5GW Trainium + 5GW TPU + SpaceX GPU + xAI Colossus 전량 임차 유지. 단기 시그널 - 7/17 Gemini 3.5 Pro·8/16 HBM3E 12H 승인·中 H200 공식 발표·Vera Rubin H2 풀 프로덕션·Kyber 로드맵 재산정. 매크로 - hyperscaler CapEx $725B 재확정·+77% YoY·custom silicon TAM 재편·Google 백로그 $460B 서플라이 쇼티지·private AI TAM $1T+·H2 2026 AI IPO 윈도우 개막.",
-        "sector": "NVIDIA"
+        "time": "2026-07-08 22:00 KST",
+        "type": "모델 출시",
+        "text": "xAI Grok 4.5 공개 - 1.5T V9 GA·Colossus 2 Grok 5 훈련. xAI 7/8 Grok 4.5 public launch - 1.5조 파라미터 V9 아키텍처·Cursor 기반 학습·Grok Build·Cursor·xAI 콘솔 즉시 접근·API 배포 - Anthropic·OpenAI 대비 60% 저렴 $2 입력·$6 출력 per M tokens·경쟁 pricing 최전방·Grok 5 6~10T 파라미터 Colossus 2에서 훈련 중 - 다른 6개 실행 병행·월별 V9 마이너 배포 - 4.6·4.7 Q4까지·Artificial Analysis Intelligence Index 54·Coding Agent Index 76 - GPT-5.5 par·Fable 5 하회이나 Agent AI 51.4% Opus 4.8 상회 - 에이전틱 워크플로우 우위·SpaceXAI $400B+ 시가총액·2027 나스닥 상장 로드쇼·SpaceX 결합 밸류 재편·이번 데비 계기 monthly cadence 유지 압력 - 리소스 병목 관건. 단기 시그널 - Grok 5 프리뷰 Q3 말·xAI DevDay 8월·Colossus 2 3GW 완전 가동·SpaceXAI IPO 로드쇼 확정. 매크로 - LLM sector forward EV/매출 20배 premium·오픈웨이트 vs 클로즈 프론티어 분화·저가 공세 API 마진 압박·custom silicon TAM 재편·frontier 3파 재편 - Anthropic·OpenAI·SpaceXAI vs Google·Meta·Mistral 진영.",
+        "sector": "xAI"
       },
       {
-        "time": "2026-07-09 11:00 KST",
-        "type": "생태계",
-        "text": "프론티어 3파 재편·Anthropic·OpenAI·SpaceX 시가총액 25년 테크 엑싯 초과. TechCrunch 7/9 분석 - Anthropic + OpenAI + SpaceX 결합 시가총액 지난 25년 벤처 tech 엑싯 총합 초과 - 프론티어 3파 재편·엑싯 없이 프라이빗 자본 시장 유동성 완결 구조 시사·Anthropic Series H $965B post-money·OpenAI 마지막 라운드 $500B+·SpaceX·SpaceXAI $400B+·7/9 첫날 3사 프론티어 프론티어 모델 동시 배포 - OpenAI GPT-5.6 Sol·Terra·Luna·Anthropic Fable 5 재배포·xAI Grok 4.5·Artificial Analysis Intelligence Index 순위 - Fable 5 60·Opus 4.8 56·GPT-5.5 55·Grok 4.5 54·Coding Agent Index Grok 4.5 76 - GPT-5.5 par·Fable 5 하회·Grok 4.5 Agent AI 51.4% - Fable 5·Opus 4.8 상회·가격 공세 Grok 4.5 $2/$6 - Opus 4.8 $5/$25 대비 60% 저렴·Gemini 3.5 Pro 7/17 - 2M context·Deep Think Reasoning Layer 대응·2.5 Pro 기반 완전 재작성 - 아키텍처 처음부터·수학·SVG·이미지·자율 워크플로우 강화·Gemini CLI v0.50.0 정식·Interactions API 비동기 background·MCP 서버 직접 연결·custom function calling·Meta Muse Spark 배포 유효·MSL 3,000 엔지니어 RL 태스크·환경 재편·Prometheus 3GW 초과. 단기 시그널 - 7/17 Gemini 3.5 Pro·매주 새 벤치마크 경쟁·Anthropic 로드쇼 10월·OpenAI 2027 IPO·SpaceXAI 2027 Nasdaq·Meta MSL Muse 2 로드맵. 매크로 - LLM sector forward EV/매출 20배 premium·모델 리더십 매주 재편·저가 공세 API 마진 압박·custom silicon TAM 재편·오픈웨이트 vs 클로즈 프론티어 분화 심화.",
+        "time": "2026-07-09 15:00 KST",
+        "type": "펀딩",
+        "text": "AI 반도체·인프라 스타트업 자금 러시 - SambaNova·Together·Cerebras·Prime Intellect. 7/9 SambaNova $1B Series F 1차 클로즈 확정 - $11B 밸류에이션·General Atlantic·BlackRock·Intel Capital 리드·오픈 소스 인퍼런스 인프라 확대·Together AI $800M Series C 확정 - $8.3B 밸류에이션·Aramco Ventures 리드 - 사우디 국부 자금 AI 인프라 진입 마일스톤·GPU 클라우드 서비스 확장·Cerebras 상장 후 시가총액 $40B+·Artificial Analysis 벤치마크 gpt-oss-120B 인퍼런스 Groq 대비 3~6배 tokens/sec 우위 발표·Prime Intellect $130M Series A - $1B 밸류·Radical·Nvidia Ventures·Dell·Iconiq 참여 - 분산 훈련 프로토콜·Mercor $10B 밸류 - Deeptune 인수 - 에이전트 시뮬레이션 환경 확보·8090 Solutions $135M Salesforce Ventures - 엔터프라이즈 자동화·Groq H2 IPO 시나리오 재부상. 단기 시그널 - SambaNova·Together 밸류 재산정·Nebius·CoreWeave·Lambda GPU 클라우드 4파전 재편·Groq·Cerebras·Tenstorrent·SambaNova 인퍼런스 4파·H2 AI IPO 윈도우 개막. 매크로 - private AI TAM $1T+·GPU 클라우드 TAM $200B·custom silicon TAM 재편·hyperscaler CapEx $754B 후방 지속·오픈웨이트 인퍼런스 optimize 스타트업 프리미엄 확대.",
         "sector": "생태계"
+      },
+      {
+        "time": "2026-07-09 20:00 KST",
+        "type": "가격",
+        "text": "Anthropic Fable 5 7/12까지 유료 플랜 유지·프리페이드 $10/$50 전환·사이버시큐리티 필터. Anthropic 7/9 발표 - Claude Fable 5 유료 플랜(Pro·Max·Team) 접근 7/12까지 연장(기존 7/7) - Grok 4.5 GA·GPT-5.6 GA 프론티어 경쟁 대응 유동성 방어·7/12 이후 프리페이드 크레딧으로 전환 $10 입력·$50 출력 per M tokens - 산업 최고가 프리미엄 유지 - 리소스 제약 우선 관리·정규 구독 복귀는 캐파 확보 후·신규 사이버시큐리티 분류기 배포 - 6월 수출통제 트리거 jailbreak 익스플로잇 99%+ 차단 - 산업 최고 방어 벤치마크·EU AI Act·중국 수출통제 준수 체계 강화·Artificial Analysis Intelligence Index Opus 4.8 61.4 리더 유지 - GPT-5.6 61.0에 근접 par·SWE-bench Pro 69.2%·Online-Mind2Web 84% - 에이전트 벤치마크 우위·엔터프라이즈 Fortune 500 침투 지속·Series H $965B post-money 조달 완료. 단기 시그널 - 7/12 프리페이드 전환·10월 IPO 로드쇼 개막·Fable 5.1·Opus 4.9·Sonnet 5 순차 로드맵·에이전트 프레임워크 v2 배포. 매크로 - LLM 프론티어 3파 재편·API 가격 스펙트럼 확대 - Grok 4.5 $2/$6·Sol $5/$30·Fable 5 $10/$50·custom silicon TAM 재편·오픈웨이트 vs 클로즈 프론티어 분화 심화.",
+        "sector": "Anthropic"
       }
     ]
   }
