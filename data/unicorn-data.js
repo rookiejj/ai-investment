@@ -253,10 +253,10 @@ const data = [
     "stocks": [
       {
         "nm": "Kraken",
-        "rs": "H1 2026 IPO 타깃 $20B 재평가·CLARITY Act 상원 통과 후 규제 명확성·GS·JPM 주관·크립토 거래소 시장 확대",
-        "ipo": "2026 H1 후보",
+        "rs": "3월 IPO 로드쇼 일시 중단 - 시장 여건 사유·co-CEO Sethi 재개 시점 미정 - 11월 confidential S-1 유지·CLARITY Act 7/13 상원 재개 후 규제 명확성 대기",
+        "ipo": "2026 재개 검토 (일시 중단)",
         "val": "$20B",
-        "round": "$800M Pre-IPO (2025-11)",
+        "round": "confidential S-1 (2025-11)",
         "sector": "크립토 거래소"
       },
       {
