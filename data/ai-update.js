@@ -1,8 +1,26 @@
 const UPDATES = [
   {
-    "date": "2026-07-11 19:30 KST",
-    "summary": "OpenAI GPT-5.6 Sol·Terra·Luna 3층 라인업 GA + ChatGPT Work 에이전트 워크스페이스\nAnthropic Series H $65B·post-money $965B·Amazon 5GW Trainium 확장 계약\nGoogle Gemini 3.5 Pro 7/17 GA 확정·2M ctx·Deep Think reasoning\nxAI Grok 4.5 - Musk Tesla 전사 채택 명령·SpaceX·Tesla 배포 확대\nNVIDIA Vera Rubin 6/1 양산 + AWS Trainium 3 출하 개시",
+    "date": "2026-07-12 07:30 KST",
+    "summary": "OpenAI IPO 9월 컨피덴셜 S-1 진행·Goldman·MS·$730~850B 밸류·Anthropic 병렬\nNVIDIA Rubin 릴리스 지연 루머·H2 2026 로드맵 재확인 필요·Blackwell 70% 유지\nMeta Muse Spark 1.1 첫 유료 모델 $1.25/$4.25·Watermelon 미공개 프론티어 준비\nAlphabet AI 인재 이탈 후폭풍·Shazeer OpenAI·Jumper Anthropic·6월 -5% 주가 재현\nAmazon Trainium 3 정식 배포·Anthropic 5GW 인프라 파트너십 앵커",
     "entries": [
+      {
+        "time": "2026-07-11 22:00 KST",
+        "type": "IPO",
+        "text": "OpenAI - 9월 컨피덴셜 S-1 IPO 프로세스 진행 - Goldman Sachs·Morgan Stanley 언더라이터 확정·9월 목표 데뷔·밸류에이션 $730~850B·직전 프라이빗 라운드 $852B post-money·Anthropic 6/1 컨피덴셜 S-1 filing $965B post-money·양사 동시 상장 시나리오 로드맵·OpenAI 3월 러런레이트 매출 $24B - 월 매출 $2B·Reuters 6월 말 보도 - 2027 IPO 지연 옵션 잔존·SEC 리뷰 프로세스 통상 4~6개월·시장 여건에 따라 이연 가능성·5% 미 정부 스테이크 제안 - 밸류 $42.6B·AI governance 재편 시나리오·Sam Altman Fortune 인터뷰 - '새로운 세계 질서' 발언·OpenAI vs Anthropic 매출 재편 - Anthropic 러런레이트 $30B YTD·2029 $47B·profitability 시나리오·GPT-5.6 Sol·Terra·Luna GA·ChatGPT Work 앵커·Deployment Company $4B commitment·Northslope forward-deployed engineering M&A 후속. 단기 시그널 - S-1 로드쇼 개막·SEC 코멘트·Softbank Vision Fund·Microsoft 준비 스테이크 확정·프리IPO 라운드 클로징 병행·10월 로드쇼 옵션. 매크로 - 프론티어 AI 4파 IPO 트랙·private AI 시가총액 $2T+ 진입·hyperscaler CapEx 상위 4사 $725B 2026 컨센·LLM API 가격 스펙트럼 확대·글로벌 IPO 파이프라인 SpaceX·SK하이닉스 ADR 이후 최대.",
+        "sector": "OpenAI"
+      },
+      {
+        "time": "2026-07-11 12:00 KST",
+        "type": "인프라",
+        "text": "NVIDIA - Rubin 릴리스 지연 루머 재부상 H2 2026 로드맵 재확인 필요. 애널리스트 Citrini X 플랫폼 7/11 포스팅 - Rubin 6개월+ 지연 가능성 시사·NVIDIA 공식 반박 없음·6월 GTC에서 풀 프로덕션 진입 발표 후 조정 소지·Blackwell CY26 GPU 출하 70%+ 유지 - TrendForce·Vera Rubin 첫 클라우드 인스턴스 파트너 확정 - AWS·Google Cloud·Microsoft·OCI·CoreWeave·Lambda·Nebius·Nscale·SK Hynix ADR 7/10 데뷔 - HBM4 공급 사슬 재검증 병행·삼성전자 HBM4 11.7Gbps 세계 최초 양산 $10억 매출 돌파·Blackwell → Rubin 4년 $500B 파이프라인 컨센·중국 제한 완화 시 상단·custom silicon TAM 재편 - Meta Iris·Google TPU v7·AWS Trainium 3·Anthropic Amazon 10년 $100B 인프라 병렬·주가 NVDA $210.96 +4.0% 7/10 - Rubin 지연 시나리오 이미 부분 반영·Q2 어닝 8/26 확정 - 컨센 EPS $1.15·매출 $54.7B·H100 → Blackwell 전환 마무리·Rubin 지연 시 hyperscaler CapEx 스케줄 재조정 논거. 단기 시그널 - NVIDIA 공식 로드맵 확인·Q2 어닝 컨퍼런스 콜·Rubin 첫 배치 시점·Blackwell 지속 여부·중국 재개 라이센스. 매크로 - hyperscaler CapEx 상위 4사 $725B 2026 컨센·custom silicon vs 범용 GPU 재편·NVDA forward P/E 32배·sector premium 유지·earnings yield 3.1%.",
+        "sector": "NVIDIA"
+      },
+      {
+        "time": "2026-07-11 09:00 KST",
+        "type": "모델 출시",
+        "text": "Meta AI - Muse Spark 1.1 첫 유료 모델 API 정식 $1.25/$4.25·Watermelon 미공개 프론티어. Meta AI 7/9 Muse Spark 1.1 첫 유료 API 모델 출시 - 인풋 $1.25/M·아웃풋 $4.25/M·이미지 생성·비디오 프리뷰·오픈웨이트 Llama 5 병렬·저가 세그먼트 GPT-5.6 Luna·Sonnet 5 카운터·Meta 7/2 타운홀 Zuckerberg - AI 에이전트 4개월 정체 인정·AI Chief 미공개 Watermelon 모델 GPT-5.5 파 시나리오 발언·오픈웨이트 프론티어 지속 유지·MTIA 3세대 커스텀 실리콘 - Iris ASIC + Broadcom + TSMC 3nm 9월 양산 앵커·14GW 컴퓨트 목표 2026·2027 데이터센터 캐파 2배 확장·Wolfe Research FY26 CapEx $200B 상향·Meta Compute Cloud 사업 유닛 신설 - AWS·Azure·GCP 3파전 도전·주가 META $831.15 +5.94% 7/10 Iris ASIC 뉴스 랠리·Q2 어닝 7/24 - 컨센 매출 $58.4B·EPS $9.42. 단기 시그널 - Q2 어닝·8월 Iris 첫 배치·9월 양산 개시·Q3 커스텀 실리콘 로드맵·Muse Spark 2 로드맵·Watermelon 공식 발표. 매크로 - 오픈웨이트 vs 클로즈드 프론티어 분화 심화·Meta forward P/E 26배·hyperscaler CapEx $725B 후방·LLM 프론티어 5파 재편 - Meta Watermelon 진입 시.",
+        "sector": "Meta AI"
+      },
       {
         "time": "2026-07-09 09:00 KST",
         "type": "제품 출시",
