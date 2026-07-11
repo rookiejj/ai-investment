@@ -1,8 +1,26 @@
 const updates = [
   {
-    "date": "2026-07-11 19:40 KST",
-    "summary": "Circle CRCL OCC 내셔널 트러스트 은행 인가 - 스테이블코인 발행자 최초\nMercor $20B 밸류 협상·Deeptune 인수·ARR $2B 12개월 2배 성장\nAnthropic Series H $65B·post-money $965B·비상장 AI 최대 밸류 재확정\nRamp $32B → $44B 트랙·ARR $1.5B·연말 IPO-ready 자세 유지\nKraken IPO 3월 일시 중단 - CLARITY 7/13 재개 후 재평가 대기",
+    "date": "2026-07-12 07:40 KST",
+    "summary": "OpenAI 9월 IPO 컨피덴셜 S-1 진행·$730~850B 밸류·Goldman·Morgan Stanley 인수단\nCLARITY Act 상원 7/13 재개·8/7 데드라인·Kraken IPO 재개 시나리오 재점화\nDatabricks $100B 밸류에이션 - 9개월간 +$38B·유니콘 보드 6위 진입\nAnthropic Series H $65B post-money $965B 프리IPO 로드쇼 병렬 진행\nMercor $500M $20B 밸류 협상 지속·ARR $2B 12개월 2배·Deeptune 인수",
     "changes": [
+      {
+        "time": "2026-07-11 22:00 KST",
+        "type": "IPO",
+        "sector": "엔터프라이즈 SW",
+        "detail": "OpenAI 컨피덴셜 S-1 IPO 9월 데뷔 목표 - $730~850B 밸류·Goldman·Morgan Stanley 인수단·직전 프라이빗 라운드 $852B post-money·3월 매출 러런레이트 $24B - 월 매출 $2B·SEC 리뷰 프로세스 통상 4~6개월·시장 여건에 따라 2027 이연 옵션 잔존·Anthropic 6/1 컨피덴셜 S-1 filing $965B post-money·양사 동시 상장 시나리오·5% 미 정부 스테이크 제안 - 밸류 $42.6B·Anthropic 러런레이트 매출 $30B YTD·2029 $47B·profitability 시나리오·비상장 AI 최대 밸류 재확정·OpenAI vs Anthropic 매출 재편·GPT-5.6 Sol·Terra·Luna GA·Claude Sonnet 5·Fable 5·Opus 4.8 프론티어·Deployment Company $4B commitment·Amazon 5GW Trainium 확장·Google/Broadcom 5GW TPU 이중 계약·SpaceX GPU 액세스·10월 Anthropic 로드쇼·11월 OpenAI 프라이싱·Sam Altman Fortune 인터뷰 - '새 세계 질서' 발언·Softbank·Microsoft 스테이크 정리 준비. 단기 시그널 - S-1 로드쇼·SEC 코멘트 사이클·프리IPO 라운드 클로징·10월 Anthropic·11월 OpenAI. 매크로 - 프론티어 AI 4파 IPO 트랙·비상장 AI 시가총액 $2T+ 진입·SpaceX·SK하이닉스 ADR 이후 최대 IPO 파이프라인·hyperscaler CapEx $725B 후방."
+      },
+      {
+        "time": "2026-07-11 09:00 KST",
+        "type": "정책",
+        "sector": "크립토·Web3",
+        "detail": "CLARITY Act 상원 7/13 재개·8/7 데드라인·Kraken IPO 재개 시나리오 재점화. Digital Asset Market CLARITY Act 상원 리세스 7/13 재개 - 3주 사용 가능 기간·8월 상원 리세스 8/7 데드라인·상원 캘린더 423번 안건·60vote 필리버스터 임계 - 민주당 7~9표 필요·3중 이슈 잔존 - 이해상충·DeFi/AML·스테이블코인 이자·Coinbase USDC 리워드 $1.35B ARR - GENIUS Act 이자 금지 조항 우회 논쟁·GENIUS Act 규정 7/18 마감 - Treasury FinCEN·OFAC NPRM 발행·AML·제재 컴플라이언스·Kraken(비상장) 3월 confidential S-1 IPO 일시 중단 - co-CEO Sethi 재개 시점 미정 - CLARITY 통과 시 재개 시나리오 재점화·Ripple $40B - RLUSD 미국 발행 은행 인가 신청 준비 - Circle 7/10 OCC 내셔널 트러스트 은행 인가 후속·Paxos·Gemini 유사 인가 시나리오·Fireblocks $8B·Stripe Tempo L1 블록체인 2026 롤아웃·Open USD 컨소시엄 6/30 출범 앵커·Fireblocks·Anchorage Digital 리스트업 대기·spot BTC ETF 7/10 +$90.4M 유입·8주 아웃플로우 종료·Trump 크립토 소득 $1.4B 공개 후 CLARITY 통과 확률 39~50%로 하락. 단기 시그널 - 7/13 상원 재개·7/18 GENIUS 규정 마감·8/7 CLARITY 데드라인·Kraken S-1 재개·Ripple RLUSD 은행 인가. 매크로 - 스테이블코인 시가총액 $312B·GENIUS Act 규제 명확성·핀테크 sector forward EV/매출 12배·on-chain 결제 TAM $500B+."
+      },
+      {
+        "time": "2026-07-11 09:00 KST",
+        "type": "펀딩",
+        "sector": "엔터프라이즈 SW",
+        "detail": "Databricks $100B 밸류 - 9개월 +$38B·유니콘 보드 6위 진입·Mercor $20B 협상 지속. Databricks $100B 밸류에이션 도달 - 9개월간 $62B → $100B, +$38B 상승 - 유니콘 보드 6위 진입·매출 러런레이트 $6.9B +80% YoY·CEO Ghodsi '2026 IPO 최악' - 2027 타깃 유지·엔터프라이즈 AI 데이터 플랫폼 카테고리 리더·Snowflake 카운터 지속·MosaicML 통합·Lakehouse 아키텍처 앵커·Mercor(비상장) $500M 라운드 $20B 밸류 협상 지속 확정 단계 - 9개월 전 밸류 대비 2배·Deeptune 인수 7/9 확정 - a16z 백트 RL 환경 스타트업·에이전트 시뮬레이션 환경 카테고리 창출·ARR $2B 12개월 2배·Tesla·프론티어 랩·마그니피센트 세븐 고객·Scale AI Meta 편입 이후 독립 대안·창업자 Foody·Hiremath·Midha 3인 $4.3B 각각 몸값·8090 Solutions $135M Series A 병렬·Ollama Series B $65M·Physical Intelligence 라운드 협의 지속 $11B+·상반기 신규 유니콘 90개 - AI 카테고리 절반 이상 점유·Figure AI $39B 18개월 +1,300% - 상위 20 편입·humanoid robotics 카테고리 리더. 단기 시그널 - Databricks 2027 IPO 로드쇼·Mercor 라운드 클로징·Figure AI 후속·Physical Intelligence 클로징·8090 파이프라인 확장. 매크로 - AI 훈련 데이터 TAM $50B+·에이전트 시뮬레이션 환경 카테고리 창출·비상장 AI 시가총액 $2T+·엔터프라이즈 SW forward EV/매출 15배 premium."
+      },
       {
         "time": "2026-07-10 22:00 KST",
         "type": "규제",
