@@ -1,8 +1,26 @@
 const updates = [
   {
-    "date": "2026-07-11 19:25 KST",
-    "summary": "S&P 7,575.39 신고가·나스닥 26,281·다우 52,637 주간 +1% 견고 마감\nMETA +5.94% Iris ASIC 9월 양산·Broadcom·TSMC 파트너·14GW 컴퓨트\nDAL Q2 EPS $1.56 컨센 $1.48 상회·매출 $17.7B·배당 +15% 인상\n8/1 상호관세 하드 데드라인 확정·Trump 브라질 50% 관세 통보\n7/14 CPI 헤드라인 3.96% 컨센 + JPM·WFC·BAC·C 4대 은행 개막",
+    "date": "2026-07-12 07:25 KST",
+    "summary": "7/14 JPM·BAC·C·WFC 4대 은행 개막 + 6월 CPI 3.96% 컨센 동시 발표\nJPM Q2 EPS $5.49·매출 $48.7B 컨센 +10.7% YoY·옵션 4.4% 무브 프라이싱\nTrump 관세 letters 23개국 발송·EU·멕시코 30%·일본·한국 25%·8/1 발효\nNVIDIA Rubin 릴리스 지연 루머 - 애널리스트 X 포스팅·H2 2026 로드맵 유지\n7/16 TSM Q2·7/22 TSLA·7/28~29 FOMC·7/31 AAPL FQ3 이어지는 어닝 러시",
     "changes": [
+      {
+        "time": "2026-07-11 10:00 EDT",
+        "type": "어닝 프리뷰",
+        "sector": "금융·은행",
+        "detail": "JPMorgan(JPM)·Wells Fargo(WFC)·Citigroup(C)·Bank of America(BAC). 7/14 개장 전 4대 은행 Q2 어닝 동시 발표 - 6월 CPI 헤드라인 3.96% 컨센과 겹쳐 macro + earnings 이중 트리거·JPM Q2 컨센 EPS $5.49 +10.7% YoY·매출 $48.7B +8.5% YoY·직전 3개월 컨센 +3%·옵션 마켓 4.4% 임플라이드 무브 프라이싱·Goldman Sachs 6.0%·Citi 5.5%·Wells 5.5%·BAC 4.5% 옵션 무브 프라이싱·NIM(net interest margin) 최중요 지표 - Fed 인하 경로 불확실 backdrop·JPM 트레이딩 매출 컨센 재확인 - Q1 사상 최고 $11.6B 유지 여부 관건·투자은행 IB 매출 - Q1 GS +48% 이후 재상승 트렌드·Citi 컨센 소폭 상향 3개월 조정·Wells 컨센 -1% 조정 마진 압축 자산 캡 해제 후 확장 페이스·소비대출 delinquency·C&I 대출 성장 컨센·M&A pipeline 재확인·주주환원 - 배당 CCAR 스트레스 테스트 통과 후 강화 시나리오·Fed CCAR 통과 결과 재확정·crypto 관련 - GENIUS Act 7/18 규정 마감 후 스테이블코인 커스터디 채널 논의 병행. 단기 시그널 - 7/14 CPI + 4대 은행 개장 전·7/15 GS + BAC + BLK·7/16 MS 개장 전·7/17 지역은행 러시·7/28~29 FOMC. 매크로 - Fed funds 3.50~3.75%·CME FedWatch 7/28~29 동결 70.1%·bank sector forward P/E 12배·earnings yield 8.3%·10y 4.56%·yield curve 40bp+ steepening·delinquency rate 3.4% cycle-high·commercial real estate exposure 재점검."
+      },
+      {
+        "time": "2026-07-11 08:00 EDT",
+        "type": "정책",
+        "sector": "지표",
+        "detail": "Trump 상호관세 letters 확장·23개국 통보 완료. Trump 7/9~11 관세 letters 23개국 발송 완료 - 8/1 발효 하드 데드라인 재확인·EU 30% 8월 발효 - 7/11 letter·멕시코 30% 8월 발효 - 7/11 letter·일본 25% 재확정 - 종전 24%에서 +1%p·한국 25% 재확정 - 종전 26%에서 -1%p·브라질 50% 통보·캐나다 letter 예정·필리핀·인도네시아·태국 각각 개별 letter·SCOTUS IEEPA 근거 무효 판결 후 법적 여지 남아있음·Lutnick 상무 CBS Face the Nation 재확인 - 'no deals means letters land'·시장 반응 - S&P 7,575.39 신고가 유지·10년물 4.56% 매파 뉴트럴 프라이싱·달러 인덱스 100.887 -0.24% 약세·VIX 17.65 저변동·8/1 발효 시 관세 실효세율 15%p 상승 시나리오·Q3 GDP -0.5%p 헤드윈드 컨센·CPI 3.96%→4.2%대 재점화 리스크·기업 실적 가이던스 관세 시나리오 반영 정도 관건. 단기 시그널 - 캐나다·인도·아세안 개별 letter·7/28~29 FOMC 관세 시나리오 반영·8/1 발효 확정 vs 이연 협상·유럽 보복관세 자동차·와인·항공·상호 서비스 세.",
+      },
+      {
+        "time": "2026-07-11 12:00 EDT",
+        "type": "제품",
+        "sector": "AI 플랫폼",
+        "detail": "NVIDIA(NVDA). Rubin 릴리스 지연 루머 - 시장 재프라이싱 단기. NVIDIA Rubin 아키텍처 릴리스 지연 가능성 재부상 - 애널리스트 Citrini X 플랫폼 7/11 포스팅 - Rubin 6개월+ 지연 가능성 시사·NVIDIA 공식 반박 없음·H2 2026 정식 로드맵 유지·풀 프로덕션 진입 마일스톤 공식 발표 6월 GTC 이후 재확인 필요·Blackwell CY26 GPU 출하 70%+ 전망 - TrendForce 리포트 재소환·Vera Rubin 첫 클라우드 인스턴스 파트너 - AWS·Google Cloud·Microsoft·OCI·CoreWeave·Lambda·Nebius·Nscale·SK Hynix ADR 상장 후속 HBM4 공급 사슬 재검증·Blackwell → Rubin 4년 $500B 파이프라인 컨센 - 중국 제한 완화 시 상단·custom silicon TAM 재편 - Meta Iris·Google TPU v7·AWS Trainium 3·Anthropic Amazon 10년 $100B 인프라 병렬·주가 NVDA $210.96 +4.0% 7/10 - Rubin 지연 시나리오 이미 부분 반영·Q2 어닝 8/26 확정 - 컨센 EPS $1.15·매출 $54.7B. 단기 시그널 - NVIDIA 공식 로드맵 확인·Q2 어닝 컨퍼런스 콜·Rubin 첫 하이퍼스케일러 배치 시점·Blackwell 컨티뉴이티 재확인. 매크로 - hyperscaler CapEx 상위 4사 $725B 2026 컨센 - +77% YoY·custom silicon vs 범용 GPU 재편·NVDA forward P/E 32배 sector premium·earnings yield 3.1%·10y gap 150bp."
+      },
       {
         "time": "2026-07-10 16:00 EDT",
         "type": "제품",
