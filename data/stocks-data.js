@@ -27,7 +27,7 @@ const data = [
         "p2": "72",
         "r1": "201",
         "r2": "235",
-        "rs": "7/10 +18% Muse Spark 1.1 코딩 특화 launch·AI Cloud GPU 렌탈 진입·CapEx $125~145B FY26 87% YoY·14GW 컴퓨트 로드맵",
+        "rs": "주간 +15% 2024 이래 최고·Iris ASIC AVGO+TSMC 3nm 9월 양산·Meta Compute Cloud 신설·FY26 CapEx $200B 상향",
         "tk": "META"
       },
       {
@@ -1182,7 +1182,7 @@ const data = [
         "p2": "58",
         "r1": "186",
         "r2": "193",
-        "rs": "7/14 개장 전 Q2 컨센 EPS $5.49 +10.7% YoY·매출 $48.7B +8.5%·CPI 동시 발표 옵션 4.4% 무브 프라이싱",
+        "rs": "7/14 개장 전 Q2 컨센 EPS $5.59 +12.7% YoY·매출 $51.09B +13%·CPI 동시 발표 옵션 4.4% 무브 프라이싱",
         "tk": "JPM"
       },
       {
