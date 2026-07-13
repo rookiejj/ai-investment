@@ -78,7 +78,7 @@ const data = [
         "p2": "192",
         "r1": "216",
         "r2": "337",
-        "rs": "SOX ETF +5.2% 반도체 랠리·시총 $4.98T 유지·Vera Rubin 양산·MU $250B 美 투자 후방·forward P/E 32배 sector premium",
+        "rs": "7/13 프리마켓 하락·SKHY Q2 8% 컨센 하향 셀프 반도체 셀오프 확대·Vera Rubin 양산 스케줄 유지·시총 $5T 근접·forward P/E 32배 sector premium",
         "tk": "NVDA"
       },
       {
@@ -123,7 +123,7 @@ const data = [
         "p2": "23",
         "r1": "37",
         "r2": "79",
-        "rs": "$250B 美 투자 확대 발표 +$50B·2035년까지 DRAM 40% 美 생산·GlobalWafers Texas $3B 파트너·7/9 +8.87% SOX 랠리 주도",
+        "rs": "7/13 프리마켓 -6.16%·SKHY Q2 컨센 하향 셀프 반사·글로벌 메모리 피크아웃 리스크·$250B 美 투자 로드맵 유효·26 DRAM 이익률 80%+ 유지 컨센",
         "tk": "MU"
       },
       {
