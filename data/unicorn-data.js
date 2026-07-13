@@ -75,9 +75,9 @@ const data = [
       },
       {
         "nm": "Perplexity AI",
-        "rs": "AI 검색·Computer 에이전트·ARR $500M +335% YoY·2028 IPO 타깃 - OpenAI·Anthropic 상장과 무관 유지·Google Search 통합 카운터",
+        "rs": "AI 검색·Computer 에이전트·ARR $450~500M·EV/매출 45~50x·NVDA·Bezos·SoftBank 투자자·2028 IPO 타깃",
         "ipo": "2028",
-        "val": "$21.21B",
+        "val": "$22.6B",
         "round": "Series E-6",
         "sector": "AI 검색"
       },
