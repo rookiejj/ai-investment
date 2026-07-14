@@ -13,6 +13,7 @@
    - date: `TZ=Asia/Seoul date +"%Y-%m-%d %H:%M KST"`
    - 사용자향 자연어 문체 (내부 필드명·"rs 갱신"·"~반영" 금지)
    - 동일 날짜 누적 원칙 (덮어쓰기 금지)
+   - 🔴 **현재가·등락률은 라이브 피드 대조 필수**: summary 첫 줄 대표 종목의 가격·등락률·방향(±)을 `prices/latest.json`과 대조(티커로 lookup)해 일치시킨다. 피드와 ±3% 이상 벌어지거나 부호가 반대면 피드 우선. 자세한 이유·명령은 CLAUDE.md [현재가·등락률은 라이브 피드와 대조] 참조.
 
 5. **버전** — `data/version.js`를 `TZ=Asia/Seoul date +"%Y%m%d-%H%M"`로 갱신.
 
