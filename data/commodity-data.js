@@ -5,7 +5,7 @@ const data = [
     "stocks": [
       {
         "nm": "비트코인",
-        "rs": "7/14 $62,578 double-top 저항·spot BTC ETF 7/13 순유입 1,439 BTC($89.7M) 10일 순유출 종료·CLARITY Act 상원 재개 D-Day·8/7 데드라인 D-24",
+        "rs": "7/14 $62,578 double-top·spot BTC ETF 10일 순유출 종료 $221.7M 2개월 최대 유입·Galaxy CLARITY 60% Polymarket 48% 하향",
         "tk": "BTC",
         "y1": "-35%",
         "ytd": "-37%",
@@ -47,11 +47,11 @@ const data = [
     "stocks": [
       {
         "nm": "금 (Gold)",
-        "rs": "7/14 $4,020 -2% 2일 연속 조정·인플레 재점화 시나리오·달러 강세·실질금리 +180bp·PBoC 20개월 연속 매수·JPM $4,500·Goldman $4,600 연말 컨센 유지",
+        "rs": "7/14 $4,001 -2.90% 2일 연속 조정·중동 인플레 재점화·달러 강세·실질금리 +180bp·PBoC 20개월 연속·JPM $4,500·Goldman $4,600 연말 컨센",
         "tk": "GC",
         "y1": "+15%",
         "ytd": "-8%",
-        "price": "$4,020",
+        "price": "$4,001",
         "range": "$3,123–5,626"
       },
       {
@@ -88,7 +88,7 @@ const data = [
     "title": "🛢️ 에너지",
     "stocks": [
       {
-        "rs": "7/14 $74/bbl 유지·호르무즈 봉쇄 지속·美 대이란 재공습 dual-track·트럼프 봉쇄 재개 발언·리스크 프리미엄 +$10/bbl 재프라이싱·OPEC+ 8월 증산 상쇄",
+        "rs": "7/14 $74+ 상방 시프트·Brent $85+ 주간 10%+·美-이란 미사일 교환 지속·호르무즈 개폐 상반 발표·OPEC 2026 수요 800K bpd 하향",
         "nm": "원유 WTI",
         "tk": "CL",
         "y1": "-8%",
@@ -131,7 +131,7 @@ const data = [
     "stocks": [
       {
         "nm": "구리 (Copper)",
-        "rs": "7/11 COMEX $6.26/lb LME 3M $13,795/t 반등 - 주간 손실 만회·중국 TC/RC $0/t 사상 저점·GS·S&P 118kt 서플러스 2026·hyperscaler CapEx $725B 후방",
+        "rs": "7/14 COMEX $6.25/lb 3주 고점 재접근·전일 $6.16에서 반등·중국 TC/RC $0/t 사상 저점·GS·S&P 118kt 서플러스 2026·hyperscaler CapEx $725B 후방",
         "tk": "HG",
         "y1": "+32%",
         "ytd": "+28%",
