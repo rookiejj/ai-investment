@@ -39,6 +39,22 @@ function json(body: unknown, init: ResponseInit & { cors: Record<string, string>
   });
 }
 
+// 결제 raw_response(포트원 결제객체)에서 전화번호 추출 — payment-webhook parsePhone 과 동일 규칙.
+// 실패·취소 결제는 구독자를 안 만들어 subscriber 조인이 비므로, 이걸 fallback 으로 씀.
+function phoneFromRaw(raw: unknown): string | null {
+  if (!raw || typeof raw !== "object") return null;
+  const p = raw as Record<string, unknown>;
+  let cd: unknown = p.customData;
+  if (typeof cd === "string") { try { cd = JSON.parse(cd); } catch { cd = null; } }
+  const cdPhone = (cd && typeof cd === "object") ? (cd as Record<string, unknown>).phone : undefined;
+  const custPhone = (p.customer && typeof p.customer === "object")
+    ? (p.customer as Record<string, unknown>).phoneNumber : undefined;
+  const rawPhone = cdPhone ?? custPhone ?? null;
+  if (!rawPhone) return null;
+  const cleaned = String(rawPhone).replace(/[^0-9]/g, "");
+  return /^01[016789]\d{7,8}$/.test(cleaned) ? cleaned : null;
+}
+
 // ───── Token ─────
 
 async function hmacHex(key: string, data: string): Promise<string> {
@@ -279,7 +295,7 @@ Deno.serve(async (req) => {
     if (action === "payments") {
       const f = (body.filters ?? {}) as Record<string, unknown>;
       let q = supabase.from("payments").select(
-        "id, subscriber_id, payment_id, provider, amount, currency, status, order_name, paid_at, created_at",
+        "id, subscriber_id, payment_id, provider, amount, currency, status, order_name, paid_at, created_at, raw_response",
         { count: "exact" },
       );
       if (typeof f.status === "string" && f.status) q = q.eq("status", f.status);
@@ -301,9 +317,13 @@ Deno.serve(async (req) => {
         }
       }
       const rows = (data ?? []).map((r) => {
-        const row = r as { subscriber_id: string | null };
+        const row = r as { subscriber_id: string | null; raw_response?: unknown };
         const sub = row.subscriber_id ? subMap[row.subscriber_id] : null;
-        return { ...r, phone: sub?.phone ?? null, name: sub?.name ?? null };
+        // 실패·취소 결제는 subscriber 조인이 비므로 raw_response 에서 전화번호 fallback.
+        const phone = sub?.phone ?? phoneFromRaw(row.raw_response) ?? null;
+        // raw_response 는 응답 페이로드에서 제거 — 전화번호만 뽑고 원본은 노출/전송 안 함.
+        const { raw_response: _omit, ...rest } = r as Record<string, unknown>;
+        return { ...rest, phone, name: sub?.name ?? null };
       });
 
       return json({ ok: true, rows, total: count ?? 0, limit, offset }, { cors });
