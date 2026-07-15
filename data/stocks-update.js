@@ -1,25 +1,25 @@
 const updates = [
   {
-    "date": "2026-07-15 07:20 KST",
-    "summary": "6월 CPI -0.4% MoM 6년래 최대 하락·YoY 3.5% 컨센 3.8% 하회·core 2.6%\nFed 7월 인상 확률 42%→17% 급락 - CME FedWatch 급전환·2y 4.15% 하락\nS&P 500 7,543.59 +0.38%·나스닥 26,107.01 +0.9% 반도체 랠리\nJPM Q2 EPS $7.70 vs 컨센 $5.59 압도·매출 $58B +27% 트레이딩 +86%\nWTI $74+ 호르무즈 프리미엄 지속·달러 인덱스 100.9·gold $4,020 실질금리 카운터",
+    "date": "2026-07-15 19:20 KST",
+    "summary": "6월 PPI 발표 D-Day 8:30 ET·헤드라인 -0.1% MoM·YoY 6.2% 컨센 5월 6.5%→하향\nBAC·GS·MS 개장 전 Q2 발표 - 컨센 EPS 각 +27%·+33%·+36% 자본시장 부활 후방\nWarsh Fed 의장 상원 은행위 청문회 - 화요일 하원 dovish 이어 상원 톤 관건\nBrazil 25% Section 301 관세 데드라인 7/15 - USTR 최종 결정·$14.9B·4,100품목·1,600+ 면제\nASML 7/16 개장 전 Q2 D-1 매출 $10.3B +17.8%·EPS $7.94 +75.4% EUV 슈퍼사이클",
     "changes": [
       {
-        "time": "2026-07-14 08:30 EDT",
+        "time": "2026-07-15 08:30 EDT",
         "type": "지표",
         "sector": "매크로",
-        "detail": "6월 CPI 서프라이즈 하락. 헤드라인 -0.4% MoM (6년 6개월 만의 최대 월간 하락)·YoY 3.5% (컨센 3.8% 하회·5월 4.2%에서 급락)·core 0.0% MoM·2.6% YoY. 드라이버 - 6월 휘발유 -10% MoM·주거비 서비스 완만 냉각·의료 서비스 diffuse 하방·관세 pass-through 첫 확인에서 core goods 시프트 제한. 정책 렌즈 - Fed 7월 인상 확률 42%→17% 급락·CME FedWatch 급전환·9/17 25bp 인하 컨센 55%→70% 상향·Warsh Fed 의장 하원 청문회 dovish 신호 확인. cross-asset - 2y 4.15%·10y 4.56%·yield curve 40bp 스티프닝·달러 인덱스 100.9 소폭 하락·gold $4,020 실질금리 하락 카운터. 시장 임팩트 - S&P 500 +0.38% 7,543.59·나스닥 +0.9% 26,107.01·반도체 랠리 견인·VIX 17.65→15 수준 안정."
+        "detail": "6월 PPI 발표 D-Day. 컨센 - 헤드라인 -0.1% MoM (5월 +1.1% 반락)·YoY 6.2% (5월 6.5% 하향)·core +0.4% MoM·YoY 5.2% (5월 4.9% 상승). 정책 렌즈 - 헤드라인 dovish 시 CPI 서프에 이어 Fed 7월 인상 확률 17%→10%대 추가 하락·9/17 25bp 인하 컨센 70%→80% 상향·Warsh Fed 의장 상원 은행위 청문회 dovish 톤 정합. cross-asset 시나리오 - PPI dovish 시 2y 4.10% 추가 하락·10y 4.50% 테스트·달러 인덱스 100.5 지지·gold $4,050 재접근. 반대 시나리오 - core PPI 상방 서프 시 스티키 인플레 우려 재점화·성장주 밸류에이션 압박. 시장 임팩트 - 8/7 상호관세 15% 발효 D-23·pass-through 서비스 sector 관측 관건·PCE 7/31 발표 궁극 판정."
       },
       {
-        "time": "2026-07-14 07:00 EDT",
+        "time": "2026-07-15 07:00 EDT",
         "type": "종목",
         "sector": "금융·은행",
-        "detail": "JPMorgan Q2 압도적 컨센 상회. EPS $7.70 (컨센 $5.59·+38%)·매출 $58.0B +27% YoY (컨센 $50B·+16%)·전 사업부 사상 최고 매출·순이익 $21.2B 분기 최대. 트레이딩 슈퍼 서프라이즈 - 주식 트레이딩 +86% YoY $6.0B·FICC +6% total Markets $12.1B·투자은행 수수료 $3.3B +30% 2021년 이후 최고. 매크로 렌즈 - 관세 볼륨·금리 변동성 확대가 트레이딩 데스크 우호 환경·NIM 가이던스 견고. 밸류에이션 - forward P/E 14 sector median 15 discount·earnings yield 7.1% 10y gap 250bp·자사주 매입 확대 여력·시장 반응 옵션 4.4% 임플라이드 대비 상회. 시장 임팩트 - 금융 sector 리레이팅·Wells·Citi·BAC 후속 Q2 어닝 상향 유도·5대 은행 어닝 D-1."
+        "detail": "BAC·GS·MS 개장 전 Q2 발표 - 자본시장 부활 검증. Bank of America - 컨센 EPS $1.13 +26.97% YoY·매출 $30.62B +15.69%·NIM 확대·자사주 매입 재개 관측. Goldman Sachs - 컨센 EPS $14.47 +32.63%·매출 $16.49B +13.10%·M&A·IPO 트레이딩 데스크 부활·JPM 트레이딩 +86% 스필오버. Morgan Stanley - 컨센 EPS $2.89 +35.68%·매출 $19.38B +15.43%·WM 자산 $10T 목표 근접·트레이딩 강세 반복. 매크로 렌즈 - Fed 4.50% hold·JPM 이미 트레이딩 슈퍼서프·5대 은행 25% 어닝 성장 컨센·자본시장 붐 가속. 밸류에이션 - 금융 sector forward P/E 14배 discount·earnings yield 7% 10y gap 240bp·자사주 매입 여력 확대. 시장 영향 - 어닝 상회 시 XLF 리레이팅 지속·JPM Q2 트레이딩 +86% 벤치마크 대비 상대 강도."
       },
       {
-        "time": "2026-07-14 16:00 EDT",
-        "type": "섹터",
-        "sector": "반도체",
-        "detail": "CPI 서프 이후 반도체 sector 강세 재개. NVDA +2%대 시총 $5T 근접·MU·SNDK 저가매수 유입 SKHY 스필오버 반전·AMD·AVGO 동반 상승. 매크로 렌즈 - 실질금리 하락 (10y 4.56%·CPI 3.5% real yield 1.06% 안정)·달러 인덱스 100.9 소폭 하락·성장주 밸류에이션 재리레이팅. 이벤트 캘린더 - 7/22 SK하이닉스 Q2·7/30 삼성전자 컨퍼런스콜·NVDA WWDC 스타일 GTC 가을 발표·Vera Rubin 양산 온트랙. 밸류에이션 - NVDA forward P/E 32 sector premium 유지·earnings yield 3.1% 10y gap 150bp·MU forward P/E 12 discount HBM4 램프 catalyst. 시장 영향 - 반도체 sector가 나스닥 26,107 +0.9% 견인·7/28~29 FOMC dovish pivot 시 리레이팅 가속."
+        "time": "2026-07-15 09:00 EDT",
+        "type": "정책",
+        "sector": "매크로",
+        "detail": "Warsh Fed 의장 상원 은행위 청문회 + Brazil Section 301 관세 데드라인. Warsh - 화요일 하원 청문회 \"지속된 인플레 무관용\" 발언 후 상원 은행위 재청문·dovish 톤 강도·9월 인하 시그널 확인 여부가 채권시장 pivot 관건·2y 4.15%·10y 4.56%·yield curve 스티프닝 지속 여부. Brazil 관세 - USTR 25% Section 301 관세 최종 결정 데드라인 7/15·대상 $14.9B·4,100+품목·1,600+ 면제 (커피·소고기·오렌지주스·항공기 부품·의약품·희토류 등)·발효 지연 가능성 존재. 매크로 렌즈 - EU 15% 관세 7/1 발효 완료·8/7 상호관세 15% 발효 D-23·중국 관세 협상 8월 재개 관측·연방정부 부채 상한 8월 데드라인 병존. 시장 영향 - 관세 인플레 pass-through 서비스 sector 확대 시 core PCE 상방·Brazil 원자재 sector 커피·에탄올 후방·항공 sector 부품 후방·XLE·XLB 로테이션 카운터."
       }
     ]
   }
