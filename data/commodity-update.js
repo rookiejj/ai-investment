@@ -1,19 +1,19 @@
 const updates = [
   {
-    "date": "2026-07-15 19:30 KST",
-    "summary": "BTC $62,900 ETH $1,870 CPI 서프 후 반등 지속 - spot ETH ETF 유입 재개·6월 순유출 $4.5B 잔재\nGold $4,037 소폭 조정·Silver $59 안정 - PPI 발표 앞두고 실질금리 하락 카운터 지속\nWTI $77~79 호르무즈 프리미엄 유지·구리 COMEX $6.33/lb 3주 고점 재확정\nBrazil 25% Section 301 관세 데드라인 7/15 - 커피·에탄올·철강·pig iron 후방·1,600+ 면제\n리튁 $22,000/t·니켈 $16,802/t·인니 RKAB -31% 공급 타이트 - hyperscaler CAPEX $725B 후방",
+    "date": "2026-07-16 07:30 KST",
+    "summary": "BTC $64,752 +3.3% CPI·PPI 이중 서프 후 랠리 - spot BTC ETF 7/15 -$425M 유출로 취약 시그널\nETH $1,879 +5.3% 반등 - spot ETH ETF 주간 +$84.4M 8주 연속 유출 후 첫 순유입\nGold $4,076 소폭 조정·Silver $57.87 -1.35% - PBoC 6월 +14.93t 20개월 연속 매수·폴란드 +64t YTD\nWTI $79.60~80.40 +1.4% Brent $86 재돌파 - 美 재봉쇄·Hormuz 해군 작전 7시간 프리미엄 유지\n인니 RKAB 광범위 인상 거부·니켈 $16,500~16,700 C1 현금원가 하회 - CATL 장하와오 광산 재개 리튁 카운터",
     "changes": [
       {
-        "time": "2026-07-15 06:00 EDT",
+        "time": "2026-07-15 16:00 EDT",
         "type": "가격",
         "sector": "크립토",
-        "detail": "BTC·ETH·SOL·XRP. Bitcoin(BTC) $62,865 → 소폭 반등 range 지속·CPI 서프 이후 Fed dovish pivot 재기대·spot BTC ETF 7/13 -$424.7M 유출·6월 순유출 $4.5B (ETF 사상 최악의 달)·MSTR·PLTR·COIN 크립토 프록시 후방. Ethereum(ETH) $1,870.00 +5.4% CPI 서프 후 반등 지속·시가총액 $226B·spot ETH ETF 유입 재개·Solana(SOL) $77 유지·SOL ETF 7월 매영업일 유입 지속·Ripple(XRP) $1.10 유지·XRP ETF 10주 연속 유입·EU MiCA 컴플라이언스 지속. 정책 렌즈 - CLARITY Act 8/7 리세스 데드라인 D-24·GENIUS Act 규정 7/18 마감 D-3·Polymarket 통과 확률 48%·GS Digital 2026 60% 확률 유지. 매크로 - spot BTC ETF AUM $131B·stablecoin 시가총액 $315B·CPI 3.5% real yield 하락·6월 PPI 발표 D-Day 8:30 ET·Fed 7월 인상 확률 17%·9월 25bp 인하 컨센 70%·gold vs BTC 상관관계 0.4·DXY 100.9. 단기 시그널 - 7/15 PPI·7/18 GENIUS Act 규정·7/28~29 FOMC·8/7 CLARITY Act·8/9 Atlas 종료·10월 Anthropic 로드쇼·11월 프라이싱."
+        "detail": "BTC·ETH·SOL·XRP. Bitcoin(BTC) $64,752 +3.3% - 6월 CPI 3.5%·PPI -0.3% MoM 이중 컨센 하회 후 Fed 인하 window 재개 랠리·시가총액 $1.28T·spot BTC ETF 7/15 -$425M 유출 (7월 최대 단일일 유출·Fidelity·BlackRock 리딩)·기관 지지 취약 시그널. Ethereum(ETH) $1,879 +5.3% ($95 상승)·시가총액 $233B·spot ETH ETF 7/11 마감 주간 +$84.4M 순유입·8주 연속 유출 후 첫 순유입·역전 시그널이나 광범위 반전 확인 필요. Solana(SOL) $78.30 저항선 근접·주간 +2%·SOL ETF 매영업일 유입 지속. Ripple(XRP) $1.09 컨솔리데이션·$1.10 근접·XRP ETF 10주 연속 유입 유지. 정책 렌즈 - CLARITY Act 8/7 리세스 데드라인·GENIUS Act 규정 7/18 마감 D-2·Polymarket 통과 확률 48%. 매크로 - spot BTC ETF AUM $131B·stablecoin 시가총액 $315B·gold vs BTC 상관관계 0.4·DXY 100.9 소프트 유지·real yield 하락 debasement trade 후방. 단기 시그널 - 7/18 GENIUS 규정 마감·7/28~29 FOMC·8/7 CLARITY 데드라인."
       },
       {
-        "time": "2026-07-15 06:30 EDT",
+        "time": "2026-07-15 16:00 EDT",
         "type": "가격",
         "sector": "에너지",
-        "detail": "원유·금·구리·산업금속. WTI $77~79 범위·Brent $84 부근·주간 상승률 10%+ 여진·美-이란 미사일 교환 지속·트럼프 호르무즈 통항 재봉쇄 EO 여진·재무부 이란 원유 라이센스 취소 EO 임박·OPEC 2026 수요 성장 800K bpd 하향·에너지 sector S&P 로테이션·XOM·CVX·COP·EOG 후방. 천연가스 - Henry Hub $3.01/MMBtu·Freeport LNG 8월 말까지 정비. 금 - Gold $4,037 -0.4% 소폭 조정 (CPI 서프 후 반등 소화)·PBoC 20개월 연속 매수 (6월 14.93t 2023년 이후 최대)·중국 준비금 75.44M troy oz·JPM $4,500·Goldman $4,600·UBS $4,700 연말 컨센 유지·debasement trade 재점화·PPI 발표 후 방향성. 산업금속 - 구리 COMEX $6.33/lb 3주 고점 재확정 (전일 $6.25에서 안정)·니켈 LME 3M $16,802/t·리튁 158,500 CNY/t·hyperscaler CAPEX $725B 후방 전선 CapEx 유지·우라늄 spot $85.85/lb 안정. 단기 시그널 - 7/15 PPI·7/15 Brazil 25% 관세 데드라인 (커피·에탄올·pig iron·철강)·7/28~29 FOMC·OPEC+ 8월 회의. 매크로 - Brent $85 저항 재돌파·에너지 sector forward P/E 12배·earnings yield 8.3%·gold vs S&P 상관관계 -0.3."
+        "detail": "원유·금·구리·산업금속. WTI $79.60~80.40 +1.4%·Brent $86 상방 재돌파 - 美 재봉쇄 Hormuz 인근 해군 작전 7시간·이란 군사 자산 수십 곳 타격·트럼프 20% Hormuz 화물 수수료 제안 철회 (제한적 완화)·S&P Global WTI·Brent 가정치 상향 (Hormuz 사실상 폐쇄 반영). OPEC+ - 8월 188 kbpd 증산 (5개월 연속)·러시아 6월 -61 kbpd·8.928 mbpd·쿼터 대비 -834 kbpd. Gold $4,076 +0.16% 소폭 조정 - 이란 공습에도 미진행·PBoC 6월 +14.93t 20개월 연속 매수·2023년 이후 최대·폴란드 +64t YTD (월 18t·700t 다년 목표)·WGC 서베이 89% 중앙은행 향후 12M 준비금 확대 전망·기록적 45% 자기 기관 매수. Silver $57.87~$58.41 -1.35% - 60달러 하회 지속·중동 긴장이 인플레·금리 우려 유지. 구리 COMEX $6.33/lb -0.05%·MoM -2.5%·YoY +15.29%. 니켈 $16,500~16,700/t - 인니 MEMR 7/10 광범위 2026 RKAB 인상 거부·6개월 저점 반전·현재 C1 현금원가 $17,870~18,650 (75~90 백분위) 하회·7/1~31 보완 쿼터 window·7/31 결과. 리튁 154,000 CNY/t (~$21,500) flat·6/29 저점 151,750에서 반등 후 되돌림·CATL 장하와오 광산 재개 보안 승인 공급측 부담. 밀 $6.65/bu +3.14%·옥수수 $4.40/bu·아라비카 커피 ~$3.40/lb (+16% YTD 2000년 이후 최대). 정책 - Brazil 25% Section 301 관세 7/15 데드라인·1,600+ 면제 (커피·소고기·오렌지주스·아이언·석유·의약품·항공기 부품)·에탄올·철강 유지. 매크로 - real rate·CPI 냉각 후방·중앙은행 flow·중국·폴란드 de-dollarization·gold 방어 시그널·DXY 100.9 카운터·geopolitics Hormuz 프리미엄·OPEC+ 5개월 연속 증산 상방 억제·니켈·리튁 공급 사이클 재조정. 단기 시그널 - 7/18 GENIUS Act 규정·7/28~29 FOMC·7/31 RKAB 쿼터 결과·OPEC+ 8월 회의."
       }
     ]
   }
