@@ -280,6 +280,16 @@ jobs:
           IG_SLIDES: cartoon.png,02.png,03.png,04.png,05.png,06.png,07.png
         run: node scripts/instagram/publish.js
 
+      - name: 오래된 발행 원본 정리 (instagram-carousel)
+        if: always()
+        continue-on-error: true
+        env:
+          SUPABASE_URL: https://ytvcgoldauysvnqckzze.supabase.co
+          BRIEFICK_SUPABASE_SECRET_KEY: ${{ secrets.BRIEFICK_SUPABASE_SECRET_KEY }}
+          IG_CAROUSEL_BUCKET: ${{ secrets.IG_CAROUSEL_BUCKET }}
+          IG_KEEP_DAYS: '7'
+        run: node scripts/instagram/cleanup-old.js
+
       - name: 종료 알림 (항상 실행)
         if: always()
         run: |
