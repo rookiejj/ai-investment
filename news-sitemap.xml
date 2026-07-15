@@ -2,6 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://briefick.com/daily/2026-07-16</loc>
+    <news:news>
+      <news:publication>
+        <news:name>브리픽</news:name>
+        <news:language>ko</news:language>
+      </news:publication>
+      <news:publication_date>2026-07-16T07:00:00+09:00</news:publication_date>
+      <news:title>2026년 7월 16일 (목) 시황 — 미국·한국 주식·AI·원자재·유니콘</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://briefick.com/daily/2026-07-15</loc>
     <news:news>
       <news:publication>
@@ -10,17 +21,6 @@
       </news:publication>
       <news:publication_date>2026-07-15T07:00:00+09:00</news:publication_date>
       <news:title>2026년 7월 15일 (수) 시황 — 미국·한국 주식·AI·원자재·유니콘</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://briefick.com/daily/2026-07-14</loc>
-    <news:news>
-      <news:publication>
-        <news:name>브리픽</news:name>
-        <news:language>ko</news:language>
-      </news:publication>
-      <news:publication_date>2026-07-14T07:00:00+09:00</news:publication_date>
-      <news:title>2026년 7월 14일 (화) 시황 — 미국·한국 주식·AI·원자재·유니콘</news:title>
     </news:news>
   </url>
 </urlset>
