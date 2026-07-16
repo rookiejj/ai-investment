@@ -1,37 +1,31 @@
 const UPDATES = [
   {
-    "date": "2026-07-16 07:25 KST",
-    "summary": "OpenAI - 트럼프 행정부에 5% 정부 지분 제안 - $852B 밸류에이션 기준 $42.6B 규모\n Gemini 3.5 Pro 7/17 D-1 - 2M 토큰 컨텍스트·Deep Think Reasoning Layer·완전 재설계 완료\nApple - iOS 27 퍼블릭 베타에 Siri AI 대중 공개 - 개인 컨텍스트·화면 인식·전용 앱\nNVIDIA Jensen 도쿄 컨퍼런스 - Vera Rubin 1GW H2 2026·차세대 AI 시스템 양산 진입\nAnthropic Claude Cowork 웹·모바일 확장 완료 - 삼성 2nm 인퍼런스 칩 협상 후속",
+    "date": "2026-07-16 19:25 KST",
+    "summary": "Google DeepMind - Gemini 3.5 Pro 7/17 D-Day 임박·2M 토큰·Deep Think·자율 워크플로 완전 재설계\nAnthropic·Blackstone Ode $1.5B 조인트 벤처 - 다음 1조$ AI 사업은 구현·SI 스토리\nOpenAI GPT-5.6 Sol/Terra/Luna 3파전 - $5/$30·$2.50/$15·$1/$6 프론티어 가격 분산\nMeta Muse Spark 1.1 - 1M 토큰 컨텍스트·컴퓨터 사용·JobBench·Finance Agent V2 #1\nCoreWeave 메모리 헤지 검토 + 中 CXMT 14조$ IPO - AI CAPEX 사이클 재조정 카운터",
     "entries": [
       {
-        "time": "2026-07-14 14:00 EDT",
-        "type": "거버넌스",
-        "text": "OpenAI - 미 정부에 5% 지분 제안. Sam Altman이 트럼프·상무장관 Lutnick·재무장관 Bessent에게 직접 피칭·5% 정부 지분 = $852B 밸류에이션 기준 약 $42.6B 규모·프론티어 AI 자율 표준 협상 중 새 거버넌스 구조 제안. 배경 - 백악관 자율 안전 표준 최종 협상 단계·30일 프리릴리스 리뷰 window·threshold 정의가 핵심 논점 (AI 랩 상향·정부 하향)·6월 EO 프레임워크 이어짐. Anthropic 위상 - $200M 펜타곤 계약 조기 종료 (자율 무기 언어 거부) 이후 발언권 확대·삼성 커스텀 칩 협상까지 병행. GPT-5.6 (Sol/Terra/Luna) 7/9 이미 출시 - Sol $5/$30, Terra $2.50/$15, Luna $1/$6 per 1M tokens·Sol는 Cerebras 인프라 750 tok/s·54% 토큰 효율 개선 (에이전틱 코딩). 매크로 - OpenAI $852B vs Anthropic $65B 프론티어 밸류에이션 격차 확대·xAI Grok 4.5 $2/$6 저가 공세로 프론티어 가격 분산. 단기 시그널 - 8월 OpenAI S-1 amendment·8/9 GPT-4o Atlas 종료·9월 백악관 최종 표준 서명.",
-        "sector": "OpenAI"
-      },
-      {
-        "time": "2026-07-15 09:00 EDT",
+        "time": "2026-07-16 09:00 EDT",
         "type": "모델 출시 예정",
-        "text": "Google DeepMind - Gemini 3.5 Pro 7/17 재출시 D-1. 아키텍처 재설계 완료 (Gemini 2.5 Pro base 폐기)·2M 토큰 컨텍스트·신규 Deep Think Reasoning Layer·자율 워크플로 (코딩·툴·실행)·6월 지연 후 3주 만 재타깃. 벤치마크·프라이싱 미공개 상태 - 모델 카드는 출시 당일 공개 예정. 병행 준비 - Nano Banana Pro (LLM), Gemini Omni Flash API preview (이미지·비디오 엔터프라이즈 확산). 카운터 파트 - OpenAI GPT-5.6 Sol (7/9 출시)·Anthropic Claude Opus 5.2·xAI Grok 4.5 (7/8 출시 $2/$6, Cursor 파트너십)와 프론티어 3파전 재격돌. 밸류에이션 - Alphabet 6월 -$225B 시총 조정 후 재접근 시도·Cloud Q2 $18B YoY +32% 관측·OP 마진 15%. 매크로 - 백악관 자율 표준 30일 프리릴리스 리뷰 window 첫 적용 대상·threshold 정의 진통 지속·엔터프라이즈 딜 3분기 재편. 단기 시그널 - 7/17 정식 출시·7/22 Alphabet Q2·8월 OpenAI S-1 amendment·8/9 Atlas 종료.",
+        "text": "Google DeepMind - Gemini 3.5 Pro 7/17 재출시 D-Day 임박. 아키텍처 완전 재설계 (Gemini 2.5 Pro base 폐기)·2M 토큰 컨텍스트·신규 Deep Think Reasoning Layer·자율 워크플로 (코딩·툴·실행)·6월 지연 후 3주 만 재타깃. 벤치마크·프라이싱 미공개 상태 - 모델 카드는 출시 당일 공개 예정·gemini-3.5-pro 리스팅 대기. 병행 준비 - Nano Banana Pro (LLM), Gemini Omni Flash API preview (이미지·비디오 엔터프라이즈 확산). 카운터 파트 - OpenAI GPT-5.6 Sol (7/9 출시)·Anthropic Claude Fable 5 (7/1 재개)·xAI Grok 4.5 (7/8 $2/$6 Cursor 파트너)와 프론티어 3파전 재격돌. 밸류에이션 - Alphabet 6월 -$225B 시총 조정 후 재접근·Cloud Q2 $18B YoY +32% 관측·OP 마진 15%. 매크로 - 백악관 자율 표준 30일 프리릴리스 리뷰 window 첫 적용 대상·threshold 정의 진통 지속·엔터프라이즈 딜 3분기 재편. 단기 시그널 - 7/17 정식 출시·7/22 Alphabet Q2·8월 OpenAI S-1 amendment.",
         "sector": "Google DeepMind"
       },
       {
-        "time": "2026-07-14 12:00 EDT",
-        "type": "제품 출시",
-        "text": "Apple - iOS 27 퍼블릭 베타 Siri AI 대중 공개. 애플 사상 최대 Siri 오버홀·개인 컨텍스트 이해 (메시지·이메일·사진 크로스)·화면 인식·전용 Siri 앱 (iCloud 동기화 대화 이력)·영어권 우선 공개·EU 미공개·iPhone 15 Pro 이상 요구. Apple Intelligence 후방 - 7/15 중국 사이버공간관리국(CAC) 알리바바 Qwen + 바이두 파트너십 승인으로 중국 시장 전개 관문 통과·AAPL $326.19 +3.60% 사상 최고가·YTD +20%. 대칭 구도 - 애플은 non-CAPEX AI 수익화 스토리 (무료 배포 + 파트너 모델 활용)·hyperscaler $725B CAPEX 부담 회피·on-device inference 우선. 매크로 - iPhone 17 시리즈 중국 판매 촉진 후방·중국 매출 15% 재개 시그널. 단기 시그널 - 7/30 AAPL Q3 D-14·8월 iOS 27 정식 출시·9월 iPhone 18 이벤트.",
-        "sector": "Apple"
+        "time": "2026-07-15 12:00 EDT",
+        "type": "전략",
+        "text": "Anthropic·Blackstone - Ode $1.5B AI 구현 조인트 벤처. 다음 1조$ AI 사업은 모델이 아니라 엔터프라이즈 구현·SI 사업 논지·5월 발표 Ode with Anthropic 상세 공개·Blackstone·Hellman & Friedman·Goldman Sachs 컨소시엄 참여·Accenture·Deloitte·IBM Consulting 카운터 포지셔닝. 러런레이트 - Anthropic $47B·Q2 매출 $10.9B·OP $559M 첫 흑자 유지·Claude for Teachers 미국 K-12 무료 확대 (인프라 확산 후방). 밸류에이션 - Anthropic $65B (5월 Series H) vs OpenAI $852B 프론티어 격차 확대·Claude 엔터프라이즈 매출 비중 60%+·API 매출 40%. 매크로 - AI shift '베스트 모델' → '베스트 fit' (가격·속도·접근성·일상 사용)·엔터프라이즈 채택 병목이 구현·통합·데이터 준비로 이동. 단기 시그널 - 10월 Nasdaq IPO 로드쇼·11월 프라이싱·2027년 삼성 2nm 커스텀 칩 tape-out.",
+        "sector": "Anthropic"
       },
       {
-        "time": "2026-07-15 15:00 JST",
+        "time": "2026-07-16 14:00 EDT",
         "type": "인프라",
-        "text": "NVIDIA - 도쿄 컨퍼런스 Jensen Huang 차세대 AI 시스템 양산 진입 확인. 특수 회로 기판 관련 제조 지연설 진화 발언·Vera Rubin 플랫폼 첫 1GW H2 2026 배포 확정·Vera CPU 로드맵 갱신·DSX OS 신규 공개 (AI 리소스 관리)·데이터센터 이더넷 스위칭 시장에서 경쟁사 추월. 병행 - TSMC Q2 NT$1.27T ($39.62B) 사상 최고·N3 sold out·CoWoS 25 병목 지속·SoIC 3D 패키징 확장. 밸류에이션 - NVDA $211.66 -0.07% flat (섹터 로테이션 XLK→XLF)·forward P/E 32배·earnings yield 3.1% 10y gap 150bp·hyperscaler CAPEX $725B +77% YoY 후방. 매크로 - 시진핑 7/17~20 상하이 WAIC (2018년 이후 첫 오프라인) 참석·AI 지정학 신호·xAI Grok 4.5 Long-Horizon Terminal-Bench #1 클레임. 단기 시그널 - 7/16 TSMC 컨퍼런스콜·8월 Rubin R100 파일럿 배포·9월 GB300 볼륨 램프.",
+        "text": "AI CAPEX 사이클 재조정 트리거 - CoreWeave 메모리 헤지 + CXMT IPO. CoreWeave 메모리 가격 헤지 검토 - AI 클라우드 최대 고객이 D램·HBM 장기 공급계약(LTA) 대신 헤지 상품으로 리스크 이전·LTA 프리미엄 약화 시그널·Meta $21B (2032년 12월까지) 파트너십 후방. 중국 CXMT 14조원 IPO 실탄 - 차세대 D램·HBM 개발 가속·중장기 공급 카운터·10월 홍콩 상장 예정. 후방 - 워런 버핏 AI 거품 경고 (Berkshire 현금 $397.4B 사상 최대)·IBM 115년 사상 최대 낙폭 (7/14)·듀얼 버블 관측. 시장 반응 - Micron -9% (7/15 장중)·SanDisk -14%·WDC -12%·SOX -10% 근접·SK하이닉스 -11.53%·삼성전자 -8.77% (7/16 마감)·SOX $1T+ 시총 증발. 매크로 - hyperscaler CAPEX $725B +77% YoY 유지에도 개별 계약 형태 변화·스팟 노출 확대 시 HBM 프리미엄 훼손·중국 공급 사이클 3~4년 앞당김 우려. 단기 시그널 - 7/22 GOOGL·MSFT·META Q2·7/23 SK하이닉스 Q2·8월 Micron Q4·9월 CXMT 홍콩 상장.",
         "sector": "NVIDIA"
       },
       {
-        "time": "2026-07-14 06:00 EDT",
-        "type": "인프라",
-        "text": "Anthropic - Claude Cowork 웹·모바일 클라우드 전환 완료. 7/7 클라우드 베이스로 웹·모바일 확장·Max 플랜 우선 배포·점진 롤아웃·Chat과 Cowork 홈 탭 통합. 삼성 2nm 커스텀 인퍼런스 칩 협상 - 여전히 초기 단계 (설계·테스트 전)·첫 칩 2027년 말 이후 관측·목표 월 $1.25B (연 $15B) 컴퓨트 청구서 절감. 병행 인프라 - Amazon Trainium (5GW) + Google/Broadcom TPU (5GW) + SpaceXAI Colossus + Meta Compute Cloud 다중 계약·삼성 파운드리 SF2/SF3 활용·HBM4 시너지 검토. 러런레이트 - Anthropic $47B·Q2 매출 $10.9B·OP $559M 첫 흑자·$65B Series H (2026년 5월) 삼성·SK하이닉스·마이크론 참여. 매크로 - AI ASIC 시장 2028년 $200B·NVDA 80% 지배 도전 시그널·OpenAI/Broadcom Jalapeño 6/24 로드맵과 대칭. 단기 시그널 - 10월 Nasdaq IPO 로드쇼·11월 프라이싱·2027년 첫 tape-out.",
-        "sector": "Anthropic"
+        "time": "2026-07-15 15:00 EDT",
+        "type": "모델 출시",
+        "text": "Meta AI - Muse Spark 1.1 컴퓨터 사용 + 1M 컨텍스트. 1M 토큰 컨텍스트 확대·컴퓨터 사용 (툴·에이전트 자율 실행)·JobBench 벤치마크 1위·Finance Agent V2 1위·전 세대 대비 코드·추론·툴 사용 광범위 개선. 병행 - Muse Reason 모델 8월 공개 예정·Meta Compute Cloud CAPEX 유지·Threads Agent 파일럿 확대. 매크로 - AI shift '베스트 모델 wins' → '베스트 fit wins' (가격·속도·접근성·일상 사용) 시장 프레임 정착·엔터프라이즈 5각 (OpenAI·Anthropic·Google·Meta·xAI) 확립. 밸류에이션 - Meta $1.7T·forward P/E 26배·CAPEX $80B (YoY +45%)·AI 인프라 lock-in 강화. 단기 시그널 - 7/22 Meta Q2·8월 Muse Reason 공개·9월 Meta Connect (신규 하드웨어).",
+        "sector": "Meta AI"
       }
     ]
   }
