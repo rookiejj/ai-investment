@@ -78,7 +78,7 @@ const data = [
         "p2": "192",
         "r1": "216",
         "r2": "337",
-        "rs": "7/14 CPI -0.4% MoM 6년래 최대 하락·Fed 7월 인상 확률 42%→17% 급락·반도체 랠리·Vera Rubin 양산 온트랙·시총 $5T 근접·forward P/E 32 sector premium",
+        "rs": "7/15 $211.66 -0.07% flat·SOX 대비 아웃퍼폼 - AI ASIC 커스텀 실리콘 sell-off Nvidia 저항 유지·Vera Rubin 1GW H2 2026·forward P/E 32 sector premium",
         "tk": "NVDA"
       },
       {
@@ -96,7 +96,7 @@ const data = [
         "p2": "70",
         "r1": "117",
         "r2": "153",
-        "rs": "Q1 $35.7B 확정·Q2 가이던스 $39~40.2B 상향·GM 65.5~67.5%·26년 USD +30%·CapEx 상단",
+        "rs": "Q2 매출 $40.2B +36% YoY 컨센 상회·EPS $4.31/ADR +77% YoY·GM 67.7%·OM 60.3%·N3 sold out·CoWoS 25 병목·FY26 USD +30% 재확인",
         "tk": "TSM"
       },
       {
@@ -105,7 +105,7 @@ const data = [
         "p2": "12",
         "r1": "33",
         "r2": "42",
-        "rs": "7/16 개장 전 Q2 발표 D-1 컨센 매출 $10.3B +17.8%·EPS $7.94 +75.4% - EUV 60기 딜리버리·8% 무브 프라이싱",
+        "rs": "Q2 매출 €9.3B 가이던스 상회·GM 54%·FY26 €43~45B 가이던스 상향·EUV YoY +45%·low-NA 65대·booking 비공개 전환",
         "tk": "ASML"
       },
       {
@@ -123,7 +123,7 @@ const data = [
         "p2": "23",
         "r1": "37",
         "r2": "79",
-        "rs": "7/14 CPI 서프 후 메모리 반등·SKHY 7/23 Q2 D-8 컨센 OP 60~70조·26 DRAM 이익률 80%+ 컨센·HBM4 램프",
+        "rs": "7/15 -9% 급락·SanDisk -14%·CoreWeave 메모리 헤지 검토 LTA 균열 + 中 CXMT 14조원 IPO 실탄 3중 부담·8월 FY25 Q4 D-14",
         "tk": "MU"
       },
       {
