@@ -253,10 +253,10 @@ const data = [
     "stocks": [
       {
         "nm": "Kraken",
-        "rs": "3월 IPO 로드쇼 일시 중단 - 시장 여건 사유·co-CEO Sethi 재개 시점 미정 - 11월 confidential S-1 유지·CLARITY Act 7/13 상원 재개 후 규제 명확성 대기",
-        "ipo": "2026 재개 검토 (일시 중단)",
-        "val": "$20B",
-        "round": "confidential S-1 (2025-11)",
+        "rs": "밸류 $13.3B 하향 조정 (기존 $20B)·JPM·GS 주관·xStocks 통해 SpaceX IPO Access 지원 개시·CLARITY Act 8/7 데드라인 후 로드쇼 재타깃",
+        "ipo": "2026 재개 검토 (밸류 하향)",
+        "val": "$13.3B",
+        "round": "confidential S-1 유지",
         "sector": "크립토 거래소"
       },
       {
