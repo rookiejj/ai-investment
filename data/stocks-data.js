@@ -78,7 +78,7 @@ const data = [
         "p2": "192",
         "r1": "216",
         "r2": "337",
-        "rs": "7/15 $211.66 -0.07% flat·SOX 대비 아웃퍼폼 - AI ASIC 커스텀 실리콘 sell-off Nvidia 저항 유지·Vera Rubin 1GW H2 2026·forward P/E 32 sector premium",
+        "rs": "7/16 SOX -4% chip rout에 동반 조정·CAPEX 사이클 확신 시그널 vs 공급 과잉 우려·forward P/E 32 sector premium",
         "tk": "NVDA"
       },
       {
@@ -96,7 +96,7 @@ const data = [
         "p2": "70",
         "r1": "117",
         "r2": "153",
-        "rs": "Q2 매출 $40.2B +36% YoY 컨센 상회·EPS $4.31/ADR +77% YoY·GM 67.7%·OM 60.3%·N3 sold out·CoWoS 25 병목·FY26 USD +30% 재확인",
+        "rs": "Q2 매출 $40.2B +36%·EPS $4.31 +77% 컨센 상회 -2% - CAPEX $60-64B ($52-56B) 상향에 공급 과잉 우려",
         "tk": "TSM"
       },
       {
@@ -123,7 +123,7 @@ const data = [
         "p2": "23",
         "r1": "37",
         "r2": "79",
-        "rs": "7/15 -9% 급락·SanDisk -14%·CoreWeave 메모리 헤지 검토 LTA 균열 + 中 CXMT 14조원 IPO 실탄 3중 부담·8월 FY25 Q4 D-14",
+        "rs": "7/16 -8% 이틀 연속 급락·SMH -4%·ARM -5%·TSMC CAPEX $8B 상향 공급 과잉 우려·8월 FY25 Q4 D-13",
         "tk": "MU"
       },
       {
