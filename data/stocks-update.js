@@ -1,25 +1,25 @@
 const updates = [
   {
-    "date": "2026-07-17 19:20 KST",
-    "summary": "반도체 매도 이틀째 확산 · Nasdaq 선물 -1.9% · SMH -3.7% 프리마켓 매도\nNFLX -8% 애프터 · 3Q 가이던스 +12% (컨센 +13%) 실망 · 광고 detail 부족\nAMAT·LRCX -5% · INTC·KLAC -4% · TSMC CAPEX $60-64B 스필오버\nAXP Q2 EPS $4.28 컨센 $4.00 상회 · 카드 결제 강세 재확인\n7/22 GOOGL·MSFT·META·TSLA · 7/28~29 FOMC · 7/30 AAPL Q3",
+    "date": "2026-07-18 07:25 KST",
+    "summary": "S&P 7,457.69 -1.01%·나스닥 25,520.24 -1.40%·다우 52,146.42 -0.77% 반도체·콘텐츠 매도 심화\nNetflix -11% Q3 가이던스 $12.86B 컨센 $13B 하회·streaming peer 프리미엄 축소\nTSMC 매출 $40.2B 사상 최고·GM 67.7% 사상 최고에도 CapEx $60~64B 상향 -4.6% 프리마켓\n필라 반도체 SOX -20% 베어마켓 근접·2025 4월 관세 쇼크 이후 최대 주간 낙폭\n유가 브렌트 $80 +2% 이란 지정학 재부각·에너지 sector 역주행 상승",
     "changes": [
       {
-        "time": "2026-07-17 05:30 EDT",
+        "time": "2026-07-17 16:00 EDT",
         "type": "지수",
         "sector": "매크로",
-        "detail": "프리마켓 반도체 매도 지속. Nasdaq-100 선물 -1.9%·S&P 500 선물 -0.9%·다우 선물 -335p (-0.6%) - 전일 반도체 낙폭 확대가 이틀째 이어짐. iShares Semiconductor ETF (SOXX) -3.7%·VanEck Semi (SMH) -3.4%·AMAT -5%·LRCX -5%·INTC -4%·KLAC -4% - TSMC CAPEX $60-64B 상향 (기존 $52-56B)이 AI 하이퍼스케일러 지출 확신 재확인이지만 파운드리·메모리 공급 과잉 우려로 부정 해석. NFLX -8% 애프터마켓 (Q2 컨센 부합·3Q +12% 가이던스 실망) - streaming peer premium 축소·광고 tier engagement 축소 실망. 크로스 애셋 - 10y 4.55% 하락 지속·DXY 100.7 약세·gold $4,085 신고가 근접·oil $73.5. 매크로 렌즈 - AI 밸류에이션 rerating 사이클 진입·forward P/E 24배·earnings yield 4.1% 10y gap 40bp - MSCI World 반도체 sector premium 재조정 지속. 단기 시그널 - 7/17 개장 반도체 방향·미시간 소비자심리 예비치·주택착공·산업생산 6월·7/22 GOOGL·MSFT·META·TSLA Q2 CAPEX 가이던스."
+        "detail": "S&P 500·나스닥 반도체·콘텐츠 매도로 마감. 뉴욕 종가 - S&P 500 7,457.69 -1.01%·나스닥 25,520.24 -1.40%·다우 52,146.42 -406.55p -0.77%·러셀 2000 -1.7% 소형주 낙폭 확대. 필라델피아 반도체 지수 (SOX) -1.8%·6월말 사상 최고 대비 -20% 근접 - 2025년 4월 관세 쇼크 이후 최대 주간 낙폭. 밸류에이션 렌즈 - S&P forward P/E 24.3배·earnings yield 4.1% 10y 4.55% gap 45bp·sector rotation 반도체·콘텐츠 - 에너지·방어주. 크로스 애셋 - 10y 국채 4.55% 하락 지속·달러 인덱스 100.7 약세·gold $4,085 신고가 근접·oil 브렌트 $80 +2% 이란·이스라엘 긴장 재부각. 매크로 렌즈 - AI 밸류에이션 rerating 사이클 진입·hyperscaler CAPEX 성장 UBS 시나리오 76% (2026) - 6% (2028) 감속 관측·deceleration 압력. 단기 시그널 - 7/22 GOOGL·MSFT·META CAPEX 가이던스·7/23 TSLA Q2·7/28~29 FOMC·7/30 AAPL Q3."
       },
       {
-        "time": "2026-07-17 06:00 EDT",
+        "time": "2026-07-17 09:30 EDT",
         "type": "실적",
-        "sector": "핀테크·결제",
-        "detail": "American Express(AXP) Q2 컨센 압도. 매출 $18.91B (컨센 $18.61B $300M 상회)·EPS $4.28 (컨센 $4.00 7% 상회)·카드 결제 볼륨 +12% YoY - 프리미엄 카드 세그먼트·트래블 서비스 매출 견조. 매크로 렌즈 - 소비자 실질 지출 견고 재확인·페이먼트 인터체인지 수수료 강세·트래블·엔터테인먼트 부문 정상화 지속. 다만 애프터마켓 -1.4% 소폭 하락 - 매크로 헤드윈드 우려 (실업률 상승 시나리오·리세션 리스크)·forward P/E 20배로 밸류에이션 부담 반영. 크로스 애셋 - V·MA 결제 peer도 소폭 강세 재조정·핀테크 sector 상대 강도 확인. 단기 시그널 - 7/22 TRV·TFC·FITB 지역은행 실적·7/24 V Q3 발표·8월 M·MA Q3 (결제 트래픽 후속 확인)·9월 SIFI 자본비율 스트레스 테스트 결과."
+        "sector": "AI 플랫폼",
+        "detail": "Netflix(NFLX) -11% Q3 가이던스 감속. Q2 실적 - 매출 $12.56B (컨센 $12.59B 소폭 하회·+13% YoY)·EPS $0.80 (컨센 $0.79 소폭 상회)·OP 마진 33% 가이던스 부합·순이익 $3.4B. Q3 가이던스 - 매출 $12.86B +11.7% YoY (컨센 $13B 미달)·streaming peer 프리미엄 축소 시그널·광고 tier engagement 확장 detail 부족. FY26 매출 가이던스 - $51.0~51.4B로 좁힘 (기존 $50.7~51.7B). 밸류에이션 렌즈 - forward P/E 40배 → 36배 재조정·streaming sector premium 재축소. 크로스 애셋 - Roblox·Uber·Airbnb 등 소비재 그로스 동반 매도·Meta·Google 광고 매출 파장 우려. 매크로 렌즈 - AI 카타야 콘텐츠 크리에이션 자동화 시나리오에도 monetization 감속·컨센 하향 사이클 진입 시그널·Netflix 1년 최저치 근접. 단기 시그널 - 7/23 GOOGL YouTube 매출·7/29 META Reality Labs·8월 초 광고 tier 지표."
       },
       {
-        "time": "2026-07-17 06:15 EDT",
+        "time": "2026-07-17 12:00 EDT",
         "type": "실적",
         "sector": "반도체",
-        "detail": "반도체 sector 매도 이틀째 확산. Applied Materials(AMAT) -5%·Lam Research(LRCX) -5%·Intel(INTC) -4%·KLA Corp(KLAC) -4%·Micron(MU) -8% (이틀 누적 -17%) - TSMC CAPEX 가이던스 $60-64B 상향의 후방 파장 - (a) 장비주 AMAT·LRCX·KLAC 매출 확신 시그널이지만 파운드리 CAPEX 배분 쏠림 우려로 매도 (b) 메모리 MU 중국 CXMT DDR5 진출 뉴스 스필오버 (c) INTC 파운드리 전략 재검토 부담. 밸류에이션 - SMH forward P/E 32배·SOX P/E 30배로 sector premium 재조정 - AI 밸류에이션 낙관에서 신중으로 전환 시그널. 크로스 애셋 - NVDA 프리마켓 -1.5% 방어·AVGO -2% 소폭·SK하이닉스 ADR 프리미엄 형성 (한국 본주 대비 상단) - 개별 스토리 차별화 뚜렷. 단기 시그널 - 7/22 GOOGL·MSFT·META CAPEX 가이던스 (하이퍼스케일러 지출 방향 확정)·7/23 TSLA Q2·8월 초 KLA·LRCX·AMAT Q4 (장비 수주 방향)."
+        "detail": "TSMC(TSM) CapEx 상향에 매도 확산. Q2 매출 $40.2B (+38.6% YoY·컨센 상회·가이던스 상단)·순이익 $22B 사상 최고·GM 67.7% 사상 최고·EPS $4.31 +77%. CapEx 가이던스 - $60~64B (기존 $52~56B)·$8B 상향·연간 매출 성장 40%+ 재확인·3Q 매출 12% QoQ 성장 가이던스. 매도 사유 - AI 수요 견고 재확인이지만 hyperscaler CAPEX 감속 UBS 시나리오 76% (2026) - 6% (2028)와 결합해 파운드리 공급 과잉 카운터 부각·마진·현금흐름 우려. 프리마켓 -4.6%·Taipei -3.6%. 필라 파장 - AMAT -5%·LRCX -5%·INTC -4%·KLAC -4%·MU -8%·ASML -3.8%·ASMI -4.6%·NXP -2.8%. 밸류에이션 렌즈 - SMH forward P/E 32배·SOX P/E 30배로 sector premium 재조정·earnings revision cycle 하향 진입. 단기 시그널 - 7/23 TSLA Q2·8월 초 KLA·LRCX·AMAT Q4 (장비 수주 방향)·8월 GOOGL·MSFT·META CAPEX 가이던스 후속 확정."
       }
     ]
   }
