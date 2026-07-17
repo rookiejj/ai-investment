@@ -107,7 +107,7 @@ const data = [
       },
       {
         "nm": "Cursor",
-        "rs": "xAI Grok 4.5 7/9 배포 - Cursor 개발자 데이터 supplemental 훈련 통합 확정·SpaceX $60B 옵션·Colossus 훈련 유입·coding·에이전트 SDK 통합 로드맵",
+        "rs": "SpaceX·xAI 통합 상장 첫 주 $2T 돌파로 $60B 옵션 가치 재확장·인도 Emergent $1.5B 카운터·코딩 카테고리 3파전 (Anthropic·xAI·Google)",
         "ipo": "SpaceX 인수 검토",
         "val": "$60B (SpaceX 옵션)",
         "round": "SpaceX 옵션 계약 (2026-04)",

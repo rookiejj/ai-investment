@@ -1,25 +1,25 @@
 const updates = [
   {
-    "date": "2026-07-17 19:40 KST",
-    "summary": "Databricks $188B Coatue 리드 $3B 확정 - 5개월 전 $134B에서 +40%\nPrometheus $12B Series B $41B - Jeff Bezos 공동창업 총 조달 $18.2B\nOpenAI·Anthropic H1 2026 $217B 조달 · 스타트업 펀딩 전체 43% 집중\n방산 유니콘 확장 - Anduril $61B · Shield AI $12.7B · Helsing €12B\nQ2 mega round 16개 · $108.6B 프론티어랩·방산·인프라 클러스터",
+    "date": "2026-07-18 07:35 KST",
+    "summary": "SpaceX·xAI 통합 상장 첫 주 $2T 돌파·시초가 $135 → $2T 시가총액\nOpenAI $852B·연 매출 $25B·Anthropic 세컨더리 $965B 지속 - 3사 합산 $3T 돌파\nAnthropic 리쿠르팅 Karpathy·Blomfield 확보·프리IPO 라운드 프리미엄 강화\n인도 AI 코딩 Emergent $130M Series C $1.5B - 6개월 5배 valuation 인상\n한국 $880B (10년) AI 계획 - 메모리 $518B + DC $550B + 8.4GW 파이프 유니콘 카운터",
     "changes": [
       {
-        "time": "2026-07-16 18:00 EDT",
-        "type": "펀딩",
-        "sector": "엔터프라이즈 SW",
-        "detail": "Databricks - $188B 신규 프라이빗 라운드 확정. 7/16 term sheet 서명·기존 투자자 Coatue 리드·투자 규모 ~$3B·여름 클로징 예정·기존·신규 투자자 추가 참여. 2026년 초 $5B 라운드 ($134B 밸류) 대비 5개월 만 +40% 재평가. 자본 사용 - (1) Unity AI Gateway - 멀티 AI 거버넌스·엔터프라이즈 AI 비용 통제 (2) Genie - 비즈니스 데이터를 신뢰 답변·액션으로 전환하는 AI 코워커 (3) Lakebase - AI 에이전트용 서버리스 Postgres DB. CEO Ali Ghodsi 6/4 블룸버그 '2026년은 IPO 하기 끔찍한 해' 발언·IPO 2027 재연기 확정. 러런레이트 - ARR $6.9B +80% YoY·NRR 140%+·FCF 양전 지속·유일한 흑자 AI 파이프라인. 매크로 렌즈 - 사모 mega round가 IPO 대체하는 패턴 (Stripe·Canva·SpaceX 유사)·프라이빗 프리미엄 vs 공모 discount 상반·AI 인프라 forward EV/매출 22배 premium 유지. 밸류에이션 대비 - Databricks $188B > OpenAI $730B < Anthropic $965B < SpaceX $1.75T (7/24 IPO 프라이싱 예정). 단기 시그널 - 8월 Databricks 클로징·9월 OpenAI S-1 amendment·10월 Anthropic 로드쇼·11월 프라이싱.",
-      },
-      {
-        "time": "2026-07-16 12:00 EDT",
-        "type": "펀딩",
-        "sector": "엔터프라이즈 SW",
-        "detail": "Prometheus - $12B Series B $41B post-money. Jeff Bezos 공동창업·2026 최대 단일 라운드·총 조달 $18.2B·현재 유니콘 코호트 최대 밸류·AI 기반 physical industry engineering·JPMorgan·Goldman Sachs·BlackRock·DST Global·Arch Venture 참여·Vik Bajaj (전 Google) 공동 리드·jet engine·신약 물질 등 복잡 물리 시스템 설계·제조 자동화. Fora - $60M Series D (7/16)·Forerunner Ventures 리드·트래블 어드바이저 플랫폼 SaaS. Emergent Labs (인도) - $130M Series C $1.5B (7/15)·Creaegis 리드·6개월 5배·10개월 3라운드·vibe coding 카테고리 인도 발 진입. Chai Discovery - $400M Series C (7/14) Index·Kleiner·Sequoia·Dimension 리드·OpenAI·Bain Capital 코인베스터·Bio+AI 신약 발견. AIsphere - $439M Series C (7/14)·Alibaba 리드·비디오 AI. 매크로 렌즈 - OpenAI·Anthropic H1 2026 $217B 조달 (스타트업 펀딩 전체 43% 집중)·Q2 mega round 16개 총 $108.6B·프론티어랩·방산·인프라·로봇·헬스 클러스터 집중·2026년 상반기 40개+ AI 유니콘 신규 (역대 최다). 밸류에이션 - 엔터프라이즈 SW forward EV/매출 15배 premium·프리IPO 프리미엄 vs 공모 discount 상반·인도 SaaS 유니콘 3분기 3개 신규. 단기 시그널 - 7/22 Alphabet Q2 이후 프라이빗 라운드 프라이싱 재조정·8월 Databricks 클로징."
-      },
-      {
-        "time": "2026-07-15 12:00 CET",
+        "time": "2026-07-17 09:30 EDT",
         "type": "펀딩",
         "sector": "우주·모빌리티·방산",
-        "detail": "Helsing (독일) - €12B 밸류·$1.8B 신규 라운드 (7/13) - 유럽 방산 스타트업 사상 최대. AI 기반 방위 시스템·전자전·자율 무기·EU·나토·우크라이나 배치 확대·Anduril $61B 대칭 구도. 매크로 렌즈 - 유럽 방산 CAPEX 파도 - EU 방위 지출 GDP 2%→3% 목표·독일 €1T 방위 특별 예산·프랑스 €413B·영국 €70B 다년 확대. 유럽 방산 유니콘 3개 (Helsing·Quantum Systems·Preligens)·미국 방산 유니콘 4개 (Anduril·Shield AI·Skydio·Saronic). Shield AI - $12.7B·Series G $1.5B·V-BAT 미 해군 계약. Skydio - $2.5B·자율 드론 미 육군 계약. Quantum Systems - €2.4B·독일·유럽 방산 후방. Saronic - $8B·해상 자율 시스템. 밸류에이션 - 방산 forward EV/매출 8배·성장주 discount 유지·정책 CAPEX 사이클 다년 지속·MSCI World 방산 sector 리레이팅 카운터. 단기 시그널 - 7월 말 나토 정상회의·8월 독일 방위 예산 확정·9월 우크라이나 지원 재검토."
+        "detail": "SpaceX·xAI 통합 IPO 첫 주 $2T 돌파. 7/14 프라이싱 $135 시초가 - 시가총액 $1.77T·개장 후 랠리로 첫 주 $2T 시가총액 돌파·Starlink 단독 매출 연 $10B+·xAI 통합 $1.75T 결합 밸류에이션 정당화. IPO 파장 - Anthropic·OpenAI 프리IPO 라운드 프리미엄 재확장 - 세컨더리 밸류 급등·프리IPO 프리미엄 vs 공모 discount 상반 계속. 밸류에이션 렌즈 - SpaceX forward EV/매출 40배·xAI 통합 후 forward EV/매출 55배·Google·Amazon peer 대비 4~5배 premium 유지. 크로스 애셋 - Cloudflare·Fastly·Datadog 엔터프라이즈 딜 파이프 확장·CoreWeave·Nebius GPU 클라우드 카운터플로. 매크로 렌즈 - 미국 벤처 exit 25년 누적을 SpaceX + OpenAI + Anthropic 3사 합산이 상회할 시나리오 - $3T 이상 콘센트레이션·IPO 시장 정상화 시그널. 단기 시그널 - 7/25 SpaceX 첫 실적 프리뷰·8월 OpenAI S-1 amendment·10월 Anthropic 로드쇼·11월 프라이싱."
+      },
+      {
+        "time": "2026-07-16 21:00 EDT",
+        "type": "펀딩",
+        "sector": "엔터프라이즈 SW",
+        "detail": "OpenAI·Anthropic 프리IPO 정례화. OpenAI - $852B 밸류에이션·연매출 (annualized) $25B·프리IPO 로드쇼 8월 개시 예상·S-1 amendment 8월말·11월 프라이싱 관측. Anthropic - $965B 세컨더리·2/26 Series G $30B ($380B post-money) 대비 세컨더리 3배 리레이팅·8월 프리IPO 라운드 후속 예상·Karpathy·Blomfield 리쿠르팅 성공으로 인재 프리미엄 재확장. 인도 AI 코딩 Emergent - $130M Series C $1.5B post-money (7/15)·Creaegis 리드·6개월 5배 재평가·10개월 3라운드 - 인도 vibe coding 카테고리 진입. 다른 라운드 - Fora $60M Series D (7/16 Forerunner Ventures)·Chai Discovery $400M Series C (7/14 Index·Kleiner·Sequoia 리드)·AIsphere $439M Series C (7/14 Alibaba 리드). 매크로 렌즈 - 2026 상반기 40개+ AI 유니콘 신규 (역대 최다)·Q2 mega round 16개 총 $108.6B·프론티어랩·방산·인프라·로봇·헬스 클러스터 집중. 밸류에이션 - 엔터프라이즈 SW forward EV/매출 15배 premium·프리IPO 프리미엄 vs 공모 discount 상반. 단기 시그널 - 8월 OpenAI S-1·9월 Anthropic 프리IPO·10월 Databricks 클로징."
+      },
+      {
+        "time": "2026-07-17 07:00 EDT",
+        "type": "정책",
+        "sector": "엔터프라이즈 SW",
+        "detail": "한국 $880B AI 10년 계획 발표. 총 1,350조원 ($880B) 규모 - 메모리 반도체 $518B (58%)·AI 데이터센터 $550B (63%)·2029년 8.4GW DC 용량 목표·humanoid 시장 점유율 1% → 20% (2028) 확대. 유니콘 파장 - 한국·미국·중국 3파전 시그널·미국 프리IPO 밸류 견인 요인 확장 (OpenAI·Anthropic 파트너쉽 예상)·중국 WAIC 2026 (7/17~20) 카운터에도 지정학 dispersion 시나리오. 크로스 애셋 - 삼성·SK 하이닉스 CAPEX 정당성 확보·MSCI Korea 지수 지지 요인·엔터프라이즈 SW 유니콘 인수·파트너십 파이프 확장. 매크로 렌즈 - AI 지정학 3파전 (미·중·한) 재편·엔터프라이즈 딜 국가 정렬 압박·프리IPO 유니콘 정치화 심화. 밸류에이션 - 방산 유니콘 카운터 - Anduril $61B·Shield AI $12.7B·Helsing €12B - 국가 정렬 프리미엄 확장 지속. 단기 시그널 - 8월 한국 AI 계획 세부 안·9월 대통령 방문 (OpenAI·Anthropic)·10월 미중 정상 AI 의제·11월 UN AI Safety Summit."
       }
     ]
   }
