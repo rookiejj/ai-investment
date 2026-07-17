@@ -1,24 +1,24 @@
 const UPDATES = [
   {
-    "date": "2026-07-17 19:30 KST",
-    "summary": "Gemini 3.5 Pro 정식 출시 - 2M 토큰·Deep Think Reasoning·6월 지연 극복\nXi Jinping WAIC 2026 상하이 첫 keynote - 중국 AI 거버넌스 프레임 공식화\nFLI AI Safety Index - Anthropic C+ 1위·OpenAI·DeepMind C·xAI 7위 실패\nH1 2026 OpenAI·Anthropic $217B 조달 · 스타트업 전체 43% 집중\nHuawei Atlas 950 · ZTE AI Agent Phone WAIC 발표 - 중국 AI 하드웨어 세대 교체",
+    "date": "2026-07-18 07:30 KST",
+    "summary": "Karpathy Anthropic 합류 - 사전학습팀 (Nick Joseph 산하) 자체 Claude 활용 프리트레이닝 가속\nHuawei Atlas 950 SuperPoD 공개 - Ascend 950DT 8,192 칩·NVL144 대비 6.7x 컴퓨트\nMiniMax M3·Jieyue Agent OS·AI Agent Phone 등 WAIC 300+ 신제품 공식 데뷔\n한국 $880B AI 10년 계획 - 메모리 $518B + DC $550B + 8.4GW·humanoid 20% 목표\n중국 랩 (DeepSeek·Moonshot·Alibaba) adversarial distillation 미국 제소 - 지정학 격돌 재점화",
     "entries": [
       {
         "time": "2026-07-17 09:00 EDT",
-        "type": "모델 출시",
-        "text": "Google DeepMind - Gemini 3.5 Pro 정식 출시 D-Day 성사. 아키텍처 완전 재설계 (Gemini 2.5 Pro base 폐기·3주 지연 극복)·2M 토큰 컨텍스트·Deep Think Reasoning Layer·자율 워크플로 (코딩·툴·실행). 재구조화 사유 - recursive tool-calling·SVG generation 구조적 실패. Google Ultra tier ($250/월) 통해 Deep Think 우선 배포·gemini-3.5-pro API 오늘 리스팅. 벤치마크 목표 - 수학 추론·SVG 씬 생성·이미지 품질 개선·GPT-5.6 Sol·Claude Fable 5 대비 프론티어 경쟁. 병행 - Nano Banana Pro (LLM), Gemini Omni Flash API preview (이미지·비디오 엔터프라이즈). 카운터 - OpenAI GPT-5.6 Sol (7/9)·Anthropic Claude Fable 5 (7/1)·xAI Grok 4.5 (7/8) - 프론티어 4파전 재격돌. 밸류에이션 - Alphabet forward P/E 20배·Cloud Q2 $18B YoY +32% 관측·OP 마진 15%·Gemini API 매출 비중 확대. 매크로 - 백악관 자율 표준 30일 프리릴리스 리뷰 window 첫 적용·엔터프라이즈 딜 3분기 재편. 단기 시그널 - 7/22 Alphabet Q2·8월 OpenAI S-1 amendment·9월 Anthropic 로드쇼.",
-        "sector": "Google DeepMind"
+        "type": "리더십",
+        "text": "Anthropic - Andrej Karpathy 사전학습팀 합류. Tesla AI Director·OpenAI 창립 멤버 출신 Karpathy가 Anthropic 프리트레이닝 리드 Nick Joseph 산하로 이번 주 시작·Claude를 활용해 사전학습 리서치 자체를 가속하는 신규 팀 구성 예정. 병행 - Monzo 공동창업자·전 CEO Tom Blomfield AI 컴퓨트 팀 합류. 매크로 렌즈 - AI 랩 talent war 재격화·Claude Fable 5 성공 후 Anthropic 인재 인력 프리미엄 확장·OpenAI·Google DeepMind 카운터 리쿠르팅 예상. 밸류에이션 - Anthropic 프리IPO 라운드 $500B 밸류 시나리오 강화·FLI Safety Index 1위 지위 인재 유입과 결합. 카운터 - OpenAI GPT-5.6 Sol 성숙기·Google DeepMind Gemini 3.5 Pro 출시 후 competitive dynamic 재편. 크로스 애셋 - NVDA·AVGO CAPEX 수요 후속 계약·Cloudflare·Fastly 엔터프라이즈 딜 파이프 확장. 단기 시그널 - 8월 Anthropic 로드쇼·9월 프리IPO 라운드 클로징·11월 Claude Fable 6 개발 로드맵.",
+        "sector": "Anthropic"
       },
       {
         "time": "2026-07-17 10:00 CST",
-        "type": "생태계",
-        "text": "WAIC 2026 상하이 개막 - Xi Jinping 첫 keynote. 세계인공지능대회 (World AI Conference) 7/17~20 개최·시진핑 첫 참석·개막 연설에서 중국 AI 정책·거버넌스·비전 체계적 발표. 규모 - 전시 면적 10만 평방미터 (사상 최대)·1,100개 기업 참여·3,000개 전시·9명 노벨·튜링상 수상자 (Geoffrey Hinton·Yoshua Bengio·Richard Sutton·Andrew Yao). 슬로건 - 'Intelligent Partners, Co-create the Future'·AI를 '긍정적·선한 목적·인류를 위한' 방향으로 유도. 중국 발표 예정 - Huawei Atlas 950 (신형 AI 가속기 - NVIDIA H100 카운터)·ZTE AI Agent Phone (2026 온디바이스 AI 폰)·중국 AI 거버넌스 프레임워크. 매크로 렌즈 - 미중 AI 3강 구도 재편 시그널·중국 AI 자립 CAPEX $200B+ (2026)·미국 수출통제 우회 자체 스택 정렬·NVIDIA 중국 매출 회복 시나리오 재검증. 크로스 애셋 - NVDA·AMD 중국 매출 커버리지 재조정·SMIC 파운드리 sector premium·Baidu·Alibaba·Tencent AI 밸류에이션 상방. 단기 시그널 - 7/18 Huawei Atlas 950 사양 공개·7/19 중국 AI 안전 프레임워크·7/20 폐막 선언·8월 미중 AI 규제 라운드.",
-        "sector": "Google DeepMind"
+        "type": "인프라",
+        "text": "Huawei - Atlas 950 SuperPoD 실물 공개. WAIC 2026 상하이 개막 (7/17~20) - Xi Jinping 첫 keynote 참석 - Atlas 950 SuperPoD 세계 최대 슈퍼노드 실물 첫 공개. 사양 - Ascend 950DT AI 프로세서 8,192개 연결·독자 UnifiedBus 2.0 프로토콜·NVIDIA NVL144 대비 6.7배 컴퓨트 파워·Huawei 자체 실리콘 스택 완성. 병행 신제품 - MiniMax M3 멀티모달 LLM·Jieyue Agent OS (에이전트 운영 체제)·near-memory 3D 칩·세계 첫 AI Agent 스마트폰·휴머노이드 로봇 - WAIC 300+ 신제품 데뷔. 매크로 렌즈 - 중국 AI 자립 CAPEX $200B+ (2026) 정당성 확보·미국 수출통제 우회 자체 스택 정렬·NVIDIA·AMD 중국 매출 카운터플로 지속. 크로스 애셋 - NVDA·AMD·AVGO forward P/E 재조정·SMIC 파운드리 sector premium 확장·Baidu·Alibaba·Tencent AI 밸류에이션 상방. 지정학 - 미중 AI 3강 구도 재편 시그널·미국 수출통제 라운드 재점화 관측. 단기 시그널 - 7/18 Huawei Atlas 950 상세 벤치마크·7/19 중국 AI 안전 프레임워크·8월 미국 대응 라운드·9월 미중 정상 AI 대화.",
+        "sector": "NVIDIA"
       },
       {
-        "time": "2026-07-17 07:00 EDT",
+        "time": "2026-07-17 14:00 EDT",
         "type": "거버넌스",
-        "text": "Future of Life Institute - Summer 2026 AI Safety Index 발표. 9개 프론티어 랩 (Anthropic·OpenAI·Google DeepMind·xAI·Z.ai·Meta·DeepSeek·Alibaba·Mistral) 6개 도메인·37개 지표 평가. 순위 - (1) Anthropic C+ 6개 중 5개 도메인 1위 (transparency·safety framework·기술 연구·거버넌스) (2) OpenAI C (3) Google DeepMind C (4) Meta D+ (6위→4위 개선) (5) Z.ai (6) DeepSeek 실패 (7) xAI 실패 (4위→7위 후퇴) (8) Alibaba (9) Mistral 실패. 핵심 우려 - Anthropic·OpenAI·DeepMind·Meta가 시스템이 위험 임계치에 근접해도 개발 중단 약속을 약화·삭제. Existential safety 카테고리 전 업계 최약. 인터프리터빌리티·CoT 모니터링·loss-of-control 조치는 인정하지만 충분히 강력한 시스템을 통제할 정도로 부족. 매크로 렌즈 - EU AI Act 시행 6개월차 dissonance·미국 백악관 self-regulation 프레임 강화 압박·중국 WAIC 거버넌스 프레임 카운터 - 3자 표준화 경쟁 격화. 밸류에이션 - safety 순위가 엔터프라이즈 딜 선택 기준 부상·Anthropic 프리미엄 시나리오 강화·xAI 정부·규제 리스크 확대. 단기 시그널 - 8월 EU AI Act 검토·9월 미국 AI 안전 워크숍·11월 UN AI Safety Summit.",
+        "text": "Anthropic·OpenAI - 중국 랩 adversarial distillation 미 연방 공식 제소. 6월말 Anthropic 백악관·연방 관계자에 알리바바가 '최대 산업 규모 distillation 캠페인' 실행 - DeepSeek·Moonshot AI·Alibaba가 미국 프론티어 모델 대상 대규모 adversarial distillation 공격 지속. 파장 - 미국 프론티어 모델 IP 방어 프레임 강화·EU AI Act·미국 백악관 self-regulation 리스크 관리 압박·수출통제 라운드 재점화 예상. 병행 - 한국 $880B (10년) AI 계획 발표 - 메모리 반도체 $518B·AI 데이터센터 $550B·2029년 8.4GW DC 용량·humanoid 시장 점유율 1%→20% (2028) 확대 - 미중 3강에 한국 참전 시그널. 매크로 렌즈 - AI 지정학 3파전 (미·중·한) 재편·엔터프라이즈 딜 국가 정렬 압박·CAPEX 정치화 심화. 밸류에이션 - Anthropic·OpenAI 방어 모드 진입·safety 프리미엄 재확장·Chinese lab 밸류에이션 카운터 (DeepSeek·Moonshot 국내 상장 계획 유예 관측). 단기 시그널 - 8월 EU AI Act 검토·9월 미국 AI 안전 워크숍·10월 미중 정상회담 AI 의제·11월 UN AI Safety Summit.",
         "sector": "Anthropic"
       }
     ]
