@@ -169,7 +169,7 @@ const data = [
       },
       {
         "nm": "Anduril",
-        "rs": "5/13 Series H $5B 종결 $61B 밸류 - 1년 만 30.5→61B 더블·Thrive Capital·a16z 공동 주도·누적 펀딩 $11B+·2025 매출 $2.2B·Golden Dome $3.2B + 美 우주군 $1.8B + 美 육군 10년 $20B 한도 계약 누적 수주",
+        "rs": "Helsing $1.8B 라운드 카운터 - 방산 AI 유니콘 IPO 파이프 견고·5/13 Series H $5B $61B·2025 매출 $2.2B·Golden Dome·美 우주군·美 육군 10년 $20B 한도",
         "ipo": "단기 아닐(Luckey)",
         "val": "$61B",
         "round": "Series H $5B (2026-05)",
