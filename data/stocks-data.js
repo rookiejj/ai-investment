@@ -18,7 +18,7 @@ const data = [
         "p2": "148",
         "r1": "403",
         "r2": "455",
-        "rs": "6/29 ~$350 +4.94% Dow Jones 편입 데뷔 Verizon 22년 만에 교체·Gemini 3.1·forward P/E 18",
+        "rs": "7/22 Q2 D-3·CAPEX 가이던스가 hyperscaler CAPEX $725B 정당성 확인·Gemini 3.1·Dow Jones 편입 후 첫 어닝",
         "tk": "GOOGL"
       },
       {
@@ -78,7 +78,7 @@ const data = [
         "p2": "192",
         "r1": "216",
         "r2": "337",
-        "rs": "7/17 SOX 사상 최고 대비 -20% 베어마켓 근접·중국 신규 AI 모델 리스크 부각·forward P/E 32 sector premium 재조정",
+        "rs": "SOX -20% 베어마켓 근접·Moonshot Kimi 신모델 파장 지속·8/26 Q2 D-38 마지막 어닝 - AI 슈퍼사이클 재판정",
         "tk": "NVDA"
       },
       {
@@ -699,7 +699,7 @@ const data = [
         "p2": "7.2",
         "r1": "95",
         "r2": "109",
-        "rs": "$394 개장 -12% YTD·Robotaxi 마이애미 14대 fleet 확대·Citizens Hold - robotaxi 수익성 원거리·7/22 Q2",
+        "rs": "7/22 Q2 D-3·2026 CapEx $25B AI·로보틱스·배터리·480K 딜리버리 확정·Cybercab 마진·Optimus 로드맵 관건",
         "tk": "TSLA"
       },
       {
