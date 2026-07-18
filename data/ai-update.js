@@ -1,13 +1,13 @@
 const UPDATES = [
   {
-    "date": "2026-07-18 19:25 KST",
-    "summary": "Oracle 3만명 감원 - $500B Stargate 재원 확보·OpenAI 파트너십 CAPEX 정당화\nMicrosoft Project Perception 출시 - Anthropic·OpenAI·자체 모델 통합 AI 보안 플랫폼\n7/19 Anthropic Fable 5 마감 D-1 - Claude 신모델 랜딩 임박·경쟁 랩 카운터 예상\nHuawei WAIC 2026 마무리 (7/20 폐막) - Atlas 950 SuperPoD 벤치마크·중국 3강 정렬\n한국 $880B AI 계획 후속 - 메모리·DC·humanoid 파이프 CAPEX 정치화 재확산",
+    "date": "2026-07-19 07:25 KST",
+    "summary": "Moonshot Kimi K3 - 2.8조 파라미터 사상 최대 오픈소스·Fable 5 근접·Opus 4.8·GPT-5.6 Sol 상회\n7/19 PT Anthropic Fable 5 무료 액세스 종료 - Pro·Max·Team 유료 플랜 usage credits 전환\nHuawei Atlas 950 SuperPoD WAIC 공개 - 중국 도메스틱 HW 자립·NVDA 대체 시나리오 부각\nMeta Muse Image 출시 - MSL 첫 이미지 생성 모델·프롬프트 편집 통합·크리에이터 진영 확장\nxAI·Anysphere Cursor 협력 신모델 - GPT-5.5·Opus 4.8 카운터 코딩 특화 릴리스",
     "entries": [
       {
-        "time": "2026-07-18 08:00 EDT",
-        "type": "인프라",
-        "text": "Oracle - 3만명 감원 Stargate $500B AI 인프라 자금 조달 시그널. 7/18 오후 Oracle이 최대 30,000명 (전체 15%) 감축안 공식화 - $500B Stargate 파트너십 (OpenAI·SoftBank·Oracle 3사) 자금 조달 명분·AI 인프라 CAPEX 정당성 재확인 시그널. 병행 - Microsoft Project Perception 출시 - Anthropic·OpenAI·자체 모델 통합 AI 보안 툴·Mythos 5 대비 저가 대안·글로벌 유통 우위·Anthropic 프리미엄 카운터. 7/19 Anthropic Fable 5 마감 D-1 - Claude 신모델 랜딩 임박·경쟁 랩 카운터 예상. 매크로 렌즈 - AI 인프라 monetization 재편·Big Tech 비용 절감·인력 재배분 사이클 진입·hyperscaler CAPEX $725B (2026) 유지 시그널·SK하이닉스·삼성전자 HBM 후방 수요 지지. 밸류에이션 - Oracle forward P/E 22배·CAPEX 회계 재조정 시나리오·OpenAI $852B 프리IPO 밸류 재확장 여지·Anthropic $965B 세컨더리 프리미엄 강화. 크로스 애셋 - NVDA·AVGO·AMD 후속 계약 파이프 재확대·CoreWeave·Nebius GPU 클라우드 카운터플로. 지정학 - 미중 AI 3파전 (미·중·한) 재편 지속·WAIC 2026 (7/20 폐막) 마무리 벤치마크. 단기 시그널 - 7/19 Anthropic Fable 5 마감·7/22 GOOGL·MSFT·META CAPEX 가이던스·7/23 TSLA Q2·7/28~29 FOMC·8월 Anthropic 로드쇼·9월 미중 정상 AI 대화.",
-        "sector": "Microsoft"
+        "time": "2026-07-17 09:00 CST",
+        "type": "모델 출시",
+        "text": "Moonshot Kimi K3 - 사상 최대 오픈웨이트 AI 2.8조 파라미터 - WAIC 2026 Shanghai 공개. 7/17 Moonshot AI Kimi K3 발표 - 2.8조 파라미터 오픈소스 사상 최대·Frontend Code Arena 벤치마크에서 Anthropic Fable 5 상회·Anthropic Opus 4.8·OpenAI GPT-5.6 Sol 유의미 상회·시각 이해 네이티브 지원·1M 토큰 컨텍스트. Huawei 파트너십 - 중국 국산 HW 스택 위에 학습·Atlas 950 SuperPoD WAIC 공개 - 미국 반도체 수출 규제 우회 시그널. 가격 정책 - 중국 AI 모델 사상 최고가에도 GPT-5.6 Sol 대비 절반 수준·경쟁 랩 프리미엄 압박. 매크로 렌즈 - DeepSeek R2 이후 두 번째 '차이나 쇼크' - 미국 AI 리드 재평가·hyperscaler CAPEX $725B 정당성 재점검·NVDA 필라 셀오프 (-20%) 트리거·Moonshot Kimi shock으로 명명. 크로스 애셋 - SOX -20% 베어마켓 근접·NVDA·AVGO·AMD 후속 계약 파이프 재조정·오픈소스 vs 클로즈드 monetization 사이클 재편. 병행 이벤트 - 7/19 23:59 PT Anthropic Fable 5 무료 액세스 종료 - Pro·Max·Team·Enterprise 플랜 usage credits ($10/1M input·$50/1M output) 전환·Opus 5 Cursor 리크 확인·Meta Muse Image (MSL 첫 이미지 생성 모델) 프롬프트 편집·크리에이터 진영 확장·xAI·Anysphere Cursor 협력 신모델 (GPT-5.5·Opus 4.8 카운터 코딩 특화) 수요일 릴리스. WAIC 2026 마무리 - 1,100개 기업·3,000개 전시·260개 대형 AI 모델 데뷔. 단기 시그널 - 7/22 GOOGL·MSFT·META CAPEX 가이던스 (Kimi 파장 대응 관건)·7/23 TSLA Q2·7/28~29 FOMC·8/26 NVDA Q2 D-38 (AI 슈퍼사이클 재판정).",
+        "sector": "Moonshot AI"
       }
     ]
   }
