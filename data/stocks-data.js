@@ -18,7 +18,7 @@ const data = [
         "p2": "148",
         "r1": "403",
         "r2": "455",
-        "rs": "7/22 Q2 D-3·CAPEX 가이던스가 hyperscaler CAPEX $725B 정당성 확인·Gemini 3.1·Dow Jones 편입 후 첫 어닝",
+        "rs": "7/22 Q2 D-3·컨센 EPS $2.88 +25%·매출 $116.5B +21%·backlog $462B 재확대·CAPEX $150B+ 가이던스",
         "tk": "GOOGL"
       },
       {
@@ -78,7 +78,7 @@ const data = [
         "p2": "192",
         "r1": "216",
         "r2": "337",
-        "rs": "SOX -20% 베어마켓 근접·Moonshot Kimi 신모델 파장 지속·8/26 Q2 D-38 마지막 어닝 - AI 슈퍼사이클 재판정",
+        "rs": "SOX -22% 베어마켓 확정·Kimi K3 파장 CAPEX pullback vs Jevons 분열·8/26 Q2 D-38 AI 슈퍼사이클 재판정",
         "tk": "NVDA"
       },
       {
