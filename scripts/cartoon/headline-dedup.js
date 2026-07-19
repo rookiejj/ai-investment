@@ -44,12 +44,23 @@ function tokenize(line) {
 // 두 헤드라인이 "같은 사건"인지 판정.
 // 식별 토큰 2개 이상 공유 → 중복으로 본다.
 // (서로 다른 사건이 고유명사 2개를 우연히 공유할 확률은 낮음)
-function isDuplicate(tokensA, tokensB) {
-  if (!tokensA.size || !tokensB.size) return false;
+function sharedCount(tokensA, tokensB) {
   let shared = 0;
   for (const t of tokensA) if (tokensB.has(t)) shared++;
-  return shared >= 2;
+  return shared;
 }
+
+function isDuplicate(tokensA, tokensB) {
+  if (!tokensA.size || !tokensB.size) return false;
+  return sharedCount(tokensA, tokensB) >= 2;
+}
+
+// 강한 중복 임계 — 이 이상이면 프레이밍 도메인이 달라도 "같은 사건"으로 병합한다.
+// 약한 중복(정확히 2개, 예: 배경 사건 G7 한 토큰 + 우연 겹침)은 도메인 예외로 각 줄 유지하되,
+// 3개 이상 공유하면 꼬리말만 자기 탭용으로 바꾼 동일 사건이므로 1면에 한 번만 노출.
+// (사고: 2026-07-18 Oracle 감원·Stargate $500B 를 kr·stocks·ai·unicorn 4탭이 첫 줄로 올려
+//  각 owner 가 달라 4중복 통과 → 1면 5줄 중 4줄 도배. STRONG 병합으로 차단.)
+const STRONG_DUP = 3;
 
 function summaryLines(entry) {
   if (!entry) return [];
@@ -118,20 +129,28 @@ function dedupeBulletsByTab(updates, order = PREEMPT_ORDER, max = 5) {
       instances.push({ tab, idx, line, tokens, owner: classifyOwner(tokens, tab) });
     });
   }
-  // 2) (소유 도메인 동일 + 토큰 중복) 기준으로 클러스터링 — 같은 사건·같은 프레이밍끼리만 묶임
+  // 2) 클러스터링. 두 줄은 다음 중 하나면 같은 그룹:
+  //    (a) 강한 중복(공유 토큰 ≥ STRONG_DUP) — 프레이밍 도메인 달라도 병합 (동일 사건 도배 차단)
+  //    (b) 같은 소유 도메인 + 약한 중복(≥2) — 같은 사건·같은 프레이밍
+  // (a) 덕에 "Oracle 감원+Stargate" 를 탭마다 꼬리말만 바꿔 올려도 1면엔 한 번만 남는다.
+  // (b) 덕에 "G7-이재명 출국"(kr)·"G7-AI 3강"(ai) 처럼 배경만 겹치는 다른 사건은 각각 유지.
   const groups = [];
   for (const inst of instances) {
-    const g = groups.find(gr => gr.owner === inst.owner
-      && gr.members.some(m => isDuplicate(m.tokens, inst.tokens)));
+    const g = groups.find(gr => gr.members.some(m => {
+      const sh = sharedCount(m.tokens, inst.tokens);
+      return sh >= STRONG_DUP || (m.owner === inst.owner && sh >= 2);
+    }));
     if (g) g.members.push(inst);
-    else groups.push({ owner: inst.owner, members: [inst] });
+    else groups.push({ members: [inst] });
   }
-  // 3) 그룹마다 keeper 선정 — 소유 탭 인스턴스 우선, 없으면 선점 우선순위 높은 탭
+  // 3) 그룹마다 keeper 선정 — 자기 도메인을 소유한 "홈" 줄(tab===owner) 우선,
+  //    그중 선점 우선순위 높은 탭. 홈 줄이 없으면 선점 우선순위만으로.
   const prio = t => { const i = order.indexOf(t); return i < 0 ? 999 : i; };
   const keep = new Set();
   for (const g of groups) {
-    let keeper = g.members.find(m => m.tab === g.owner);
-    if (!keeper) keeper = g.members.slice().sort((a, b) => prio(a.tab) - prio(b.tab))[0];
+    const home = g.members.filter(m => m.tab === m.owner);
+    const pool = home.length ? home : g.members;
+    const keeper = pool.slice().sort((a, b) => prio(a.tab) - prio(b.tab))[0];
     keep.add(keeper);
   }
   // 4) 탭별로 원래 순서대로 keeper만 추려 반환
