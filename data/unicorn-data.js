@@ -169,7 +169,7 @@ const data = [
       },
       {
         "nm": "Anduril",
-        "rs": "Helsing $1.8B 라운드 카운터 - 방산 AI 유니콘 IPO 파이프 견고·5/13 Series H $5B $61B·2025 매출 $2.2B·Golden Dome·美 우주군·美 육군 10년 $20B 한도",
+        "rs": "Helsing 7/13 $1.8B $18B 유럽 사상 최대 방산 라운드 카운터·5/13 Series H $5B $61B·2025 매출 $2.2B·美 육군 10년 $20B 한도",
         "ipo": "단기 아닐(Luckey)",
         "val": "$61B",
         "round": "Series H $5B (2026-05)",
