@@ -34,6 +34,10 @@ const CATCHPHRASE_FILE = path.resolve(__dirname, '..', '..', 'data', '.catchphra
 const args = process.argv.slice(2);
 const noUpload = args.includes('--no-upload');
 const forceUpload = args.includes('--upload');
+// --output <path>: 렌더 결과를 지정 경로에도 복사. 인스타 워크플로 stale 폴백이
+// scripts/instagram/out/cartoon.png 를 기대하므로 이 플래그를 존중해야 함(미존중 시 ls 실패).
+const outIdx = args.indexOf('--output');
+const outputPath = outIdx !== -1 && args[outIdx + 1] ? args[outIdx + 1] : null;
 
 // ─── 데이터 ─────────────────────────────────────────────
 async function fetchUpdates() {
@@ -192,6 +196,13 @@ async function main() {
     console.log('[newspaper] 3. 업로드 skip (BRIEFICK_SUPABASE_SECRET_KEY 없음)');
   } else {
     console.log('[newspaper] 3. 업로드 skip (--no-upload)');
+  }
+
+  if (outputPath) {
+    const dst = path.resolve(process.cwd(), outputPath);
+    fs.mkdirSync(path.dirname(dst), { recursive: true });
+    fs.copyFileSync(OUT_PNG, dst);
+    console.log(`[newspaper] --output → ${outputPath}`);
   }
 
   console.log(`[newspaper] done in ${Date.now() - t0}ms`);
