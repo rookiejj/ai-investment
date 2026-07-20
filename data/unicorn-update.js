@@ -1,6 +1,6 @@
 const updates = [
   {
-    "date": "2026-07-20 07:35 KST",
+    "date": "2026-07-20 19:28 KST",
     "summary": "Databricks $188B strategic 라운드 7/16 발표 - Coatue 리드 $3B·12월 $134B 대비 +40% 상향\nAnthropic S-1 6/1 컨피덴셜 접수 - 10월 나스닥 IPO 조준·$965B post-money·run-rate $47B 5배 성장\nHelsing $1.8B $18B 유럽 사상 최대 방산 라운드 7/13 - Dragoneer 리드·유럽 Anduril 위상\nOpenAI S-1 6/8~9 컨피덴셜 접수·IPO 밸류 $1T 타깃 - 3월 $852B post-money 대비\nSpaceX 상장 후 8/6~17 Q2 첫 어닝 D-17~28·직원 lock-up 20% 첫 해제 트리거",
     "changes": [
       {
