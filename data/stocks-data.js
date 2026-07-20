@@ -123,7 +123,7 @@ const data = [
         "p2": "23",
         "r1": "37",
         "r2": "79",
-        "rs": "7/17 이틀 누적 -17%·CoreWeave 메모리 헤지 검토 LTA 재협상 압력·CXMT DDR5 진출 스필오버·8월 FY25 Q4 D-12",
+        "rs": "$880.78 주간 -17%·CoreWeave 메모리 헤지 LTA 재협상·CXMT DDR5 스필오버·8월 FY25 Q4 D-12",
         "tk": "MU"
       },
       {
