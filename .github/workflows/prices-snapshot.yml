@@ -1,0 +1,51 @@
+name: Prices Snapshot
+
+# 사내 시세 피드를 레포 안 data/prices-snapshot.json 으로 커밋한다.
+# 왜: 자동 갱신 원격 sandbox 는 proxy 가 Supabase(피드 호스트)를 차단해 시세에 못 닿는다.
+# 그래서 프리마켓(07시) 갱신 때 KR 등락률을 창작하는 사고가 반복됨(2026-07-14·07-20).
+# GitHub Actions runner 는 피드에 닿으므로, 여기서 떠서 git 에 박으면 sandbox 가 그 파일을
+# 읽어 "실제 마지막 종가"를 그대로 쓴다. → db-sync 와 동일한 "runner 가 대신 fetch" 패턴.
+#
+# 크론: 15:45 KST (06:45 UTC) 평일 — KR 장 마감(15:30) 직후 당일 종가 확정 시점.
+# 이 스냅샷 하나가 그날 19시 갱신 + 다음날 07시 갱신의 KR/US 마지막 종가를 모두 커버.
+# (US 는 이 시각 이미 폐장이라 c=직전 미국장 종가.) 휴장일 실행돼도 무해(피드=직전 종가).
+
+on:
+  schedule:
+    - cron: '45 6 * * 1-5'   # 06:45 UTC = 15:45 KST, Mon–Fri
+  workflow_dispatch:
+
+concurrency:
+  group: prices-snapshot
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 시세 스냅샷 생성
+        run: node scripts/snapshot-prices.js
+
+      - name: 변경 시 커밋·푸시
+        run: |
+          if git diff --quiet -- data/prices-snapshot.json; then
+            echo "[prices-snapshot] 변경 없음 — 커밋 skip"
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/prices-snapshot.json
+          git commit -m "시세 스냅샷 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M KST')"
+          git push origin HEAD:main
