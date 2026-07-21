@@ -18,7 +18,7 @@ const data = [
         "p2": "148",
         "r1": "403",
         "r2": "455",
-        "rs": "7/22 AMC Q2 D-1·컨센 EPS $2.88 +25%·매출 $116.5B +21%·Google Cloud·Gemini 3.5 Pro·CAPEX $150B+ 관건",
+        "rs": "7/22 AMC Q2 D-day·컨센 EPS $2.88 +25%·매출 $116.5B +21%·Google Cloud·Gemini 3.5 Pro·CAPEX $150B+ 관건",
         "tk": "GOOGL"
       },
       {
@@ -78,7 +78,7 @@ const data = [
         "p2": "192",
         "r1": "216",
         "r2": "337",
-        "rs": "$205.59 +1.1%·SOX 저가매수 반등·8/26 Q2 D-36 슈퍼사이클 재판정·forward P/E 32배 sector premium",
+        "rs": "$205.59 종가·SOX 저가매수 반등 지속·8/26 Q2 D-35 슈퍼사이클 재판정·forward P/E 32배 sector premium",
         "tk": "NVDA"
       },
       {
@@ -123,7 +123,7 @@ const data = [
         "p2": "23",
         "r1": "37",
         "r2": "79",
-        "rs": "$915.52 +5.8% 급반등·SOX 저가매수 심리 회복·CoreWeave 메모리 헤지 LTA 재협상·8월 FY25 Q4 D-12",
+        "rs": "야간 +12% 급등·BofA 목표가 $1,550 대폭 상향·오픈웨이트 AI 메모리 수요 확대 카운터·8월 FY25 Q4 D-11",
         "tk": "MU"
       },
       {
@@ -132,7 +132,7 @@ const data = [
         "p2": "5.5",
         "r1": "26",
         "r2": "34",
-        "rs": "$525.44 +4.3% 반등·SOX 저가매수 랠리·DC 매출 $5.8B +57% Q1 안커·8/5 Q2 D-15·forward P/E 28배 sector premium",
+        "rs": "$525.44 종가·SOX 저가매수 랠리 지속·DC 매출 $5.8B +57% Q1 안커·8/5 Q2 D-14·forward P/E 28배 sector premium",
         "tk": "AMD"
       }
     ]
@@ -699,7 +699,7 @@ const data = [
         "p2": "7.2",
         "r1": "95",
         "r2": "109",
-        "rs": "$374.30 +1.3%·7/22 AMC Q2 D-1·컨센 EPS $0.52 +30%·매출 $25.99B·480K 딜리버리·로보택시·Optimus 관건",
+        "rs": "$374.30 종가·7/22 AMC Q2 D-day·컨센 EPS $0.53 +33%·매출 $26.4B·480,126 딜리버리·로보택시·Optimus 관건",
         "tk": "TSLA"
       },
       {
