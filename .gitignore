@@ -23,3 +23,6 @@ reference/
 
 # /stocks 한글명 번역 캐시 (로컬 재생성용, 재현 가능)
 stocks/.ko-cache.json
+
+# 친구톡 프롬프트 실험용 로컬 스크래치 (커밋·push 안 함 — 프로덕션 격리)
+scratch/
