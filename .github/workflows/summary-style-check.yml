@@ -1,0 +1,53 @@
+name: Summary Style Check
+
+# 자동 갱신(리모트 07/19시 KST)이 data/*-update.js 를 push 하면, summary 줄이
+# [주체+핵심숫자]-[쉬운 풀이말]·줄당 metric 숫자 ≤2·한글 단위 규칙을 지키는지 검사.
+# 위반 시에만 텔레그램 알림(어기면 알려주도록). 통과면 조용(silence=good) + Actions 초록.
+# 발송·DB 안 건드림 — 순수 검사·알림. db-sync 와 같은 push 트리거라 매 갱신마다 함께 돈다.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/kr-stocks-update.js'
+      - 'data/stocks-update.js'
+      - 'data/ai-update.js'
+      - 'data/commodity-update.js'
+      - 'data/unicorn-update.js'
+  workflow_dispatch:
+
+concurrency:
+  group: summary-style-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: summary 스타일 검사
+        id: lint
+        run: |
+          OUT=$(node scripts/lint-summary-style.js)
+          echo "$OUT"
+          STATUS=$(echo "$OUT" | grep '^TELEGRAM_STATUS=' | head -1 | cut -d= -f2-)
+          DETAIL=$(echo "$OUT" | grep '^TELEGRAM_DETAIL=' | head -1 | cut -d= -f2-)
+          echo "status=$STATUS" >> $GITHUB_OUTPUT
+          echo "detail=$DETAIL"  >> $GITHUB_OUTPUT
+
+      - name: 위반 시 텔레그램 알림
+        if: steps.lint.outputs.status == 'failure'
+        run: |
+          curl -s -o /dev/null -X POST \
+            "https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/notify-telegram" \
+            -H "X-Notify-Secret: ${{ secrets.NOTIFY_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -d "$(node -e "console.log(JSON.stringify({source:'Summary Style Check',status:'failure',detail:process.argv[1]}))" "${{ steps.lint.outputs.detail }}")" || true
