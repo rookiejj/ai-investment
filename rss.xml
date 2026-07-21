@@ -6,8 +6,15 @@
     <description>한국·미국 주식, AI 기업, 원자재·크립토, 유니콘 5개 도메인의 일일 헤드라인. 매일 KST 07시·19시 자동 업데이트.</description>
     <language>ko-KR</language>
     <atom:link href="https://briefick.com/rss.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Tue, 21 Jul 2026 10:27:33 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 21 Jul 2026 22:26:56 GMT</lastBuildDate>
     <ttl>60</ttl>
+    <item>
+      <title>2026년 7월 22일 (수) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
+      <link>https://briefick.com/daily/2026-07-22</link>
+      <guid isPermaLink="true">https://briefick.com/daily/2026-07-22</guid>
+      <pubDate>Tue, 21 Jul 2026 22:00:00 GMT</pubDate>
+      <description>KOSPI 6,748 +3.56% 반등 후 오늘 - 미국 야간 반도체 랠리 후방 상승 출발 예고 · S&amp;P 500·나스닥 3일 연속 하락 종료 - 나스닥 +1.29% 상승, 반도체 랠리가 되돌림 견인 · 철광석 161달러/톤 +21% 급등 - 주간 최대, 중국 부양책·감산 완화·수급 타이트 3중 카운터</description>
+    </item>
     <item>
       <title>2026년 7월 21일 (화) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
       <link>https://briefick.com/daily/2026-07-21</link>
@@ -420,13 +427,6 @@
       <guid isPermaLink="true">https://briefick.com/daily/2026-05-22</guid>
       <pubDate>Thu, 21 May 2026 22:00:00 GMT</pubDate>
       <description>삼성전자 5/22 노조 찬반투표 개시·DX부문 부결 운동 결집 · 엔비디아 Q1 매출 $81.6B +85% 압도·자사주 $80B·종가 -1.77% 가이던스 논쟁 · WTI $99.08 +2.9%·Brent $104.52 +1.89% 3일 하락 후 반등 - Hormuz 평행선</description>
-    </item>
-    <item>
-      <title>2026년 5월 21일 (목) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
-      <link>https://briefick.com/daily/2026-05-21</link>
-      <guid isPermaLink="true">https://briefick.com/daily/2026-05-21</guid>
-      <pubDate>Wed, 20 May 2026 22:00:00 GMT</pubDate>
-      <description>KOSPI 7,844.01 사상 최고가 마감 - 노사 잠정합의·반도체 동시 강세 · 3대 지수 동반 신고가 - S&amp;P 7,432.97 +1.08%·나스닥 26,270.36 +1.54% · WTI $98.26·Brent $105.02 -5% 100불 라인 하향 이탈 - 이란 협상 '최종 단계'</description>
     </item>
   </channel>
 </rss>
