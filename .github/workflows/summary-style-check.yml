@@ -6,14 +6,13 @@ name: Summary Style Check
 # 발송·DB 안 건드림 — 순수 검사·알림. db-sync 와 같은 push 트리거라 매 갱신마다 함께 돈다.
 
 on:
+  # 마커 커밋(전 탭 완료 신호)에만 발사 — 갱신은 탭을 순차 push하므로 각 tab-update.js를
+  # 트리거로 잡으면 "아직 갱신 안 된 뒤 탭의 어제 내용"을 위반으로 오탐(false alarm)한다.
+  # 마커는 5탭 다 끝난 뒤 마지막에 push되므로 이 시점엔 5탭 모두 최신 → 완전한 최종 상태 검사.
   push:
     branches: [main]
     paths:
-      - 'data/kr-stocks-update.js'
-      - 'data/stocks-update.js'
-      - 'data/ai-update.js'
-      - 'data/commodity-update.js'
-      - 'data/unicorn-update.js'
+      - 'data/.cartoon-marker'
   workflow_dispatch:
 
 concurrency:
