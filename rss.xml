@@ -6,8 +6,15 @@
     <description>한국·미국 주식, AI 기업, 원자재·크립토, 유니콘 5개 도메인의 일일 헤드라인. 매일 KST 07시·19시 자동 업데이트.</description>
     <language>ko-KR</language>
     <atom:link href="https://briefick.com/rss.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Wed, 22 Jul 2026 10:25:08 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 22 Jul 2026 22:29:37 GMT</lastBuildDate>
     <ttl>60</ttl>
+    <item>
+      <title>2026년 7월 23일 (목) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
+      <link>https://briefick.com/daily/2026-07-23</link>
+      <guid isPermaLink="true">https://briefick.com/daily/2026-07-23</guid>
+      <pubDate>Wed, 22 Jul 2026 22:00:00 GMT</pubDate>
+      <description>SK하이닉스 오늘 Q2 D-day - HBM4 가이던스와 매출 22조 컨센이 방향 결정 · 테슬라 Q2 EPS 0.33달러 컨센 대폭 하회 - 마진 정상화 실패, 시간외 -3% · 브렌트 94달러 +3.4% 급등 - 후티 홍해 봉쇄 위협, 미·이란 10일 연속 교전</description>
+    </item>
     <item>
       <title>2026년 7월 22일 (수) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
       <link>https://briefick.com/daily/2026-07-22</link>
@@ -420,13 +427,6 @@
       <guid isPermaLink="true">https://briefick.com/daily/2026-05-23</guid>
       <pubDate>Fri, 22 May 2026 22:00:00 GMT</pubDate>
       <description>SK하이닉스 forward PER 6.79 삼성 첫 역전 - 밸류 프리미엄 확보 · 트럼프 $2B 양자 9개사 지분 - 리게티·QBTS +30%·아이온큐 +12% 정책 충격 · 트럼프 5/23 對이란 합의 대체로 타결·호르무즈 재개방 발언 - 유가 하방 분기점</description>
-    </item>
-    <item>
-      <title>2026년 5월 22일 (금) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
-      <link>https://briefick.com/daily/2026-05-22</link>
-      <guid isPermaLink="true">https://briefick.com/daily/2026-05-22</guid>
-      <pubDate>Thu, 21 May 2026 22:00:00 GMT</pubDate>
-      <description>삼성전자 5/22 노조 찬반투표 개시·DX부문 부결 운동 결집 · 엔비디아 Q1 매출 $81.6B +85% 압도·자사주 $80B·종가 -1.77% 가이던스 논쟁 · WTI $99.08 +2.9%·Brent $104.52 +1.89% 3일 하락 후 반등 - Hormuz 평행선</description>
     </item>
   </channel>
 </rss>
