@@ -169,7 +169,7 @@ const data = [
       },
       {
         "nm": "Anduril",
-        "rs": "Helsing 7/13 $1.8B $18B 유럽 사상 최대 방산 라운드 카운터·5/13 Series H $5B $61B·2025 매출 $2.2B·美 육군 10년 $20B 한도",
+        "rs": "Series H $5B $61B(직전 $30.5B 2배)·2025 매출 $2.2B·美 육군 10년 $20B 한도·Helsing 유럽 카운터·방산 스타트업 H1 record $14.6B",
         "ipo": "단기 아닐(Luckey)",
         "val": "$61B",
         "round": "Series H $5B (2026-05)",
