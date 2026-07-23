@@ -1,0 +1,49 @@
+name: Earnings Calendar
+
+# 우리 유니버스(stocks/kr-stocks-data.js)의 다음 실적일을 Yahoo에서 긁어
+# data/calendar-events.js 의 autoEarnings 배열로 자동 반영. sandbox는 외부망 차단이라
+# GitHub Actions 러너가 대행 (시세 스냅샷과 동일 패턴). 손 큐레이션 fixed는 안 건드림.
+#
+# 주 2회(일·수) 15:00 KST — 실적일은 접근할수록 확정/변경되므로 주기 갱신.
+# 자동 갱신 에이전트 윈도우(07/19시 KST = 22/10시 UTC)와 겹치지 않는 시간.
+
+on:
+  schedule:
+    - cron: '0 6 * * 0,3'   # 06:00 UTC = 15:00 KST, 일·수
+  workflow_dispatch:
+
+concurrency:
+  group: earnings-calendar
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 실적 캘린더 수집
+        run: node scripts/fetch-earnings-calendar.js
+
+      - name: 변경 시 커밋·푸시
+        run: |
+          if git diff --quiet -- data/calendar-events.js; then
+            echo "[earnings-calendar] 변경 없음 — 커밋 skip"
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
+          git add data/calendar-events.js
+          git commit -m "실적 캘린더 자동 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d')"
+          git push origin HEAD:main
