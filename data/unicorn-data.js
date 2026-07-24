@@ -4,8 +4,8 @@ const data = [
     "title": "💳 핀테크",
     "stocks": [
       {
+        "rs": "PayPal $53B 인수 제안(Advent 공동)·주당 $60.50 프리미엄 28%·자체 tender $159B·2025 결제 $1.9T +34%·Tempo L1 2026 롤아웃",
         "nm": "Stripe",
-        "rs": "$159B 최신 tender +74% YoY·Tempo L1 블록체인 2026 롤아웃·Anthropic·Coupang·OpenAI·Shopify·Klarna 파트너·Collison 'no rush'",
         "ipo": "2026 말~2027 후보",
         "val": "$159B",
         "round": "텐더오퍼 (2026-06)",
@@ -75,7 +75,7 @@ const data = [
       },
       {
         "nm": "Perplexity AI",
-        "rs": "AI 검색·Computer 에이전트·ARR $450~500M·EV/매출 45~50x·NVDA·Bezos·SoftBank 투자자·2028 IPO 타깃",
+        "rs": "AI 검색·Comet 브라우저·엔터프라이즈 tier Stripe·Databricks·Fortune 100 확산·ARR $450~500M·NVDA·Bezos·SoftBank 투자자",
         "ipo": "2028",
         "val": "$22.6B",
         "round": "Series E-6",
