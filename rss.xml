@@ -6,8 +6,15 @@
     <description>한국·미국 주식, AI 기업, 원자재·크립토, 유니콘 5개 도메인의 일일 헤드라인. 매일 KST 07시·19시 자동 업데이트.</description>
     <language>ko-KR</language>
     <atom:link href="https://briefick.com/rss.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Sat, 25 Jul 2026 10:23:25 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 25 Jul 2026 22:26:20 GMT</lastBuildDate>
     <ttl>60</ttl>
+    <item>
+      <title>2026년 7월 26일 (일) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
+      <link>https://briefick.com/daily/2026-07-26</link>
+      <guid isPermaLink="true">https://briefick.com/daily/2026-07-26</guid>
+      <pubDate>Sat, 25 Jul 2026 22:00:00 GMT</pubDate>
+      <description>코스피 6,691 -5.7% 마감 - 다음주 FOMC·SK하이닉스 실적이 반등 분기점 · 나스닥 주간 -2% 조정 - 다음주 마이크로소프트·메타·애플·아마존 어닝 러시가 방향타 · 브렌트 91.7달러 되돌림 - 주말 이란 협상 관측, 중동 프리미엄 일부 완화</description>
+    </item>
     <item>
       <title>2026년 7월 25일 (토) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
       <link>https://briefick.com/daily/2026-07-25</link>
@@ -420,13 +427,6 @@
       <guid isPermaLink="true">https://briefick.com/daily/2026-05-27</guid>
       <pubDate>Tue, 26 May 2026 22:00:00 GMT</pubDate>
       <description>코스피 첫 8,000 종가 안착 - 5/26 8,047.51 +2.55% 사상 최고 · 마이크론 +18% $886.6 시총 $1조 첫 돌파 - UBS 목표가 $535→$1,625 · WTI $92.17 -4.59% 5주 저점권 - 이란 휴전 연장 기대 공급 하방</description>
-    </item>
-    <item>
-      <title>2026년 5월 26일 (화) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
-      <link>https://briefick.com/daily/2026-05-26</link>
-      <guid isPermaLink="true">https://briefick.com/daily/2026-05-26</guid>
-      <pubDate>Mon, 25 May 2026 22:00:00 GMT</pubDate>
-      <description>코스피 사상 첫 8,000 종가 - 8,047.51 +2.55% 장중 8,131 · 美 증시 메모리얼데이 후 5/26 재개장 - 선물 사상 최고권 유지 · WTI 5/26 NYMEX 재개 $91.65 - 5/25 ~6% 급락 이란 휴전 연장 기대</description>
     </item>
   </channel>
 </rss>
