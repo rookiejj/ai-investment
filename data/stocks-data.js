@@ -78,7 +78,7 @@ const data = [
         "p2": "192",
         "r1": "216",
         "r2": "337",
-        "rs": "$205.59 종가·SOX 랠리 심화·8/26 Q2 D-35 슈퍼사이클 재판정·Rubin 로드맵 재점검·forward P/E 32배 sector premium",
+        "rs": "$211.47 종가·8/26 Q2 D-32 슈퍼사이클 재판정·Vera Rubin NVL72 GA 램프·Rubin 로드맵 재점검·forward P/E 32배 sector premium",
         "tk": "NVDA"
       },
       {
@@ -132,7 +132,7 @@ const data = [
         "p2": "5.5",
         "r1": "26",
         "r2": "34",
-        "rs": "$525.44 종가·SOX 저가매수 랠리 지속·DC 매출 $5.8B +57% Q1 안커·8/5 Q2 D-14·forward P/E 28배 sector premium",
+        "rs": "$558.12 종가·8/5 Q2 D-11·MI400·Helios 12GW OpenAI·Meta 계약 훈풍·DC 매출 $5.8B +57% 재확인 대기·forward P/E 28배 sector premium",
         "tk": "AMD"
       }
     ]
