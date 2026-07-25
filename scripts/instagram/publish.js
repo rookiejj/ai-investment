@@ -163,10 +163,15 @@ async function waitContainerReady(igUserId, containerId, token, label, maxSec = 
 //   - code -1: 내부 서버 오류 (subcode 2207085 등과 동반 출현)
 //   - code 4 / 17 / 32: throttling·일시 서버 오류
 //   - "Application request limit reached": app-level rate limit (보통 5~15분 윈도우)
+//   - code 36001 / error_subcode 2207084 "The image format is not supported" (PNG→JPEG 변환기
+//     Telephoto 일시 실패). Meta가 is_transient:false로 오분류하나 실제론 transient — 파일은
+//     유효(로컬·Storage 모두 디코드 OK)한데 변환만 순간 실패. 재발행하면 같은 파일로 성공.
+//     (사고: 2026-07-25 아침 캐러셀 — cartoon.png 등 7장 전부 유효했으나 변환 실패로 발행 실패.)
 // Meta가 직접 `is_transient: true` 플래그를 줄 때도 있으므로 그것도 함께 검증.
 const TRANSIENT_PATTERNS = [
   /"is_transient"\s*:\s*true/,
-  /"error_subcode"\s*:\s*(99|2207027|2207085)\b/,
+  /"error_subcode"\s*:\s*(99|2207027|2207085|2207084)\b/,
+  /Telephoto|이미지 전환 실패|JPEG로 변환하지 못/i,
   /"code"\s*:\s*9007\b/,
   /"code"\s*:\s*-1(?!\d)/,
   /"code"\s*:\s*1(?!\d)/,
