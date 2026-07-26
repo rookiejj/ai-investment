@@ -43,7 +43,8 @@ jobs:
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main
+          # add·commit 먼저 → working tree 깨끗해진 뒤 rebase (dirty tree면 rebase 거부됨)
           git add data/calendar-events.js
           git commit -m "실적 캘린더 자동 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d')"
+          git pull --rebase origin main
           git push origin HEAD:main
