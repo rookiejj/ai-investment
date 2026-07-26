@@ -173,239 +173,9 @@ const fixed = [
 
 // 외부에서 접근할 변수명 (다른 update.js와 일관성)
 
+
 // === AUTO-EARNINGS (scripts/fetch-earnings-calendar.js 자동 생성 — 손대지 말 것) ===
 const autoEarnings = [
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "Digital Realty 실적",
-    "date": "2026-07-23",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "DLR"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "HDC현대산업개발 실적",
-    "date": "2026-07-23",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "294870"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "KB금융 실적",
-    "date": "2026-07-23",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "105560"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "Lockheed Martin 실적",
-    "date": "2026-07-23",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "LMT"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "LS일렉트릭 실적",
-    "date": "2026-07-23",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "010120"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "Mobileye 실적",
-    "date": "2026-07-23",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "MBLY"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "OCI홀딩스 실적",
-    "date": "2026-07-23",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "010060"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "Roper Tech 실적",
-    "date": "2026-07-23",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "ROP"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "RTX Corp 실적",
-    "date": "2026-07-23",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "RTX"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "삼성바이오로직스 실적",
-    "date": "2026-07-23",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "207940"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "신한지주 실적",
-    "date": "2026-07-23",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "055550"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "현대자동차 실적",
-    "date": "2026-07-23",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "005380"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "American Express 실적",
-    "date": "2026-07-24",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "AXP"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "NextEra 실적",
-    "date": "2026-07-24",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "NEE"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "Schlumberger 실적",
-    "date": "2026-07-24",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "SLB"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "우리금융 실적",
-    "date": "2026-07-24",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "316140"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "하나금융 실적",
-    "date": "2026-07-24",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "086790"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "현대로템 실적",
-    "date": "2026-07-24",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "064350"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "현대모비스 실적",
-    "date": "2026-07-24",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "012330"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "현대위아 실적",
-    "date": "2026-07-24",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "011210"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "현대제철 실적",
-    "date": "2026-07-24",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "004020"
-    ],
-    "src": "auto-earnings"
-  },
   {
     "cat": "earnings",
     "impact": 2,
@@ -1223,6 +993,17 @@ const autoEarnings = [
   {
     "cat": "earnings",
     "impact": 2,
+    "title": "현대제철 실적",
+    "date": "2026-08-03",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "004020"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
     "title": "AMD 실적",
     "date": "2026-08-04",
     "desc": "실적 발표 예정",
@@ -1250,17 +1031,6 @@ const autoEarnings = [
     "desc": "실적 발표 예정",
     "tickers": [
       "ANET"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "Centrus 실적",
-    "date": "2026-08-04",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "LEU"
     ],
     "src": "auto-earnings"
   },
@@ -1415,6 +1185,17 @@ const autoEarnings = [
     "desc": "실적 발표 예정",
     "tickers": [
       "XYZ"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "Centrus 실적",
+    "date": "2026-08-05",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "LEU"
     ],
     "src": "auto-earnings"
   },
@@ -1740,6 +1521,17 @@ const autoEarnings = [
   {
     "cat": "earnings",
     "impact": 2,
+    "title": "Rigetti 실적",
+    "date": "2026-08-06",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "RGTI"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
     "title": "넷마블 실적",
     "date": "2026-08-06",
     "desc": "실적 발표 예정",
@@ -1943,17 +1735,6 @@ const autoEarnings = [
     "desc": "실적 발표 예정",
     "tickers": [
       "CRWV"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "Rigetti 실적",
-    "date": "2026-08-12",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "RGTI"
     ],
     "src": "auto-earnings"
   },
@@ -2207,6 +1988,28 @@ const autoEarnings = [
     "desc": "실적 발표 예정",
     "tickers": [
       "PATH"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "Oracle 실적",
+    "date": "2026-09-09",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "ORCL"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "Planet Labs 실적",
+    "date": "2026-09-09",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "PL"
     ],
     "src": "auto-earnings"
   }
