@@ -48,3 +48,14 @@ jobs:
           git commit -m "실적 캘린더 자동 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d')"
           git pull --rebase origin main
           git push origin HEAD:main
+
+      # 다른 워크플로(db-sync·instagram·style-check)와 동일하게 실패 시에만 텔레그램 알림.
+      # 통과면 조용(silence=good). 이 워크플로만 알림이 없어 첫 실패를 GitHub 이메일로만 알았음.
+      - name: 실패 시 텔레그램 알림
+        if: failure()
+        run: |
+          curl -s -o /dev/null -X POST \
+            "https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/notify-telegram" \
+            -H "X-Notify-Secret: ${{ secrets.NOTIFY_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -d '{"source":"Earnings Calendar","status":"failure"}' || true
