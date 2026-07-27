@@ -1,31 +1,31 @@
 const updates = [
   {
-    "date": "2026-07-27 07:25 KST",
-    "summary": "나스닥 이번 주 빅테크 실적 러시 - MSFT·META 7/29 카운트다운 D-2\n알파벳 -7% 급락 여진 - 프리캐시 훼손이 CAPEX 정당성 심판대\n테슬라 -12% 폭락 여진 - EV 마진 붕괴로 로보택시 스토리 재검증\nRTX·록히드 백로그 사상 최대 - 재무장 스토리 이번 주 지속\nFOMC 7/29~30 동결 컨센 - 파월 톤이 성장주 밸류 방향타",
+    "date": "2026-07-27 19:30 KST",
+    "summary": "빅테크 실적 대주간 D-2 - MSFT·META 수요일, AAPL·AMZN 목요일 CAPEX 심판대\n국제유가 급락 반전 - 이란 긴장 완화로 위험선호 회복, 선물 강세\n알파벳 -7%·테슬라 -14% 여진 - CAPEX·EV 마진 논쟁 이번 주도 지속\nFOMC 7/29~30 금리 동결 컨센 - 파월 톤이 성장주 밸류 방향타\n방산 백로그 사상 최대 - RTX·록히드 재무장 서사 실적 시즌 견인",
     "changes": [
       {
-        "time": "2026-07-27 07:25 KST",
+        "time": "2026-07-27 19:30 KST",
         "type": "실적 프리뷰",
         "sector": "AI 플랫폼",
-        "detail": "MSFT·META·AAPL·AMZN. 이번 주 빅테크 어닝 러시가 이번 분기 최대 매크로 방향타. 7/29 MSFT FY Q4 컨센 EPS $4.22~4.24·매출 875~877억달러, Azure 39~40% 성장 가이던스 유지 여부가 핵심. Q3 CAPEX 319억달러 +49% YoY·프리캐시 158억달러 -22% YoY로 프리캐시 훼손 논쟁 재점화, FY27 CAPEX 2,200억달러 상향 여부가 AI 트레이드 전체 톤 결정. 같은 날 META Q2 컨센 EPS $7.18~7.24·매출 447억달러·Reality Labs 손실·Muse Spark 1.1 첫 실적·AI 광고 툴 ad conversion 상회 기대. 7/30 AAPL FY Q3 컨센 EPS $1.86·매출 900억달러·iPhone Air·9월 iPhone Event 프리뷰·Apple Intelligence 커머셜라이제이션 진도, AMZN Q2 컨센 EPS $1.85·매출 1,653억달러·AWS +19% YoY·Rufus·Alexa+ 채택. 알파벳 CAPEX 2,050억달러 상향의 프리캐시 훼손이 벤치마크. 매크로 렌즈 - 7/29 FOMC 3.50~3.75% 동결 컨센(dot plot·파월 톤이 real rate·성장주 밸류 결정)·10y 4.66% 2개월 고점. 밸류에이션 - MSFT forward P/E 33배·META 25배·AAPL 30배·AMZN 38배. 단기 시그널 - 7/29 FOMC·MSFT·META·7/30 AAPL·AMZN·8/5 AMD·8/26 NVDA·9/9 iPhone Event."
+        "detail": "MSFT·META·AAPL·AMZN. 이번 주 빅테크 어닝 러시가 이번 분기 최대 매크로 방향타. 7/29 MSFT FY Q4 컨센 EPS $4.22·매출 $87.6B, Azure 39~40% 성장 가이던스 유지 여부가 핵심. Q3 CAPEX $31.9B +49% YoY·프리캐시 $15.8B -22% YoY로 프리캐시 훼손 논쟁 재점화, FY27 CAPEX $220B 상향 여부가 AI 트레이드 전체 톤 결정. 같은 날 META Q2 컨센 EPS $7.18·매출 $44.7B·Reality Labs 손실·Muse Spark 1.1 첫 실적·AI 광고 툴 ad conversion 상회 기대. 7/30 AAPL FY Q3 컨센 EPS $1.86·매출 $90.0B·iPhone Air·9월 이벤트 프리뷰·Apple Intelligence 상용화 진도, AMZN Q2 컨센 EPS $1.85·매출 $165.3B·AWS +19% YoY·Rufus·Alexa+ 채택. 알파벳 CAPEX $205B 상향의 프리캐시 훼손이 벤치마크. 매크로 렌즈 - 7/29~30 FOMC 3.50~3.75% 동결 컨센, dot plot·파월 톤이 real rate·성장주 밸류 결정. 10y 4.66% 2개월 고점 유지가 부담. 밸류에이션 - MSFT forward P/E 33배·META 25배·AAPL 30배·AMZN 38배."
       },
       {
-        "time": "2026-07-27 07:25 KST",
-        "type": "실적",
+        "time": "2026-07-27 19:30 KST",
+        "type": "실적 여진",
         "sector": "AI 플랫폼",
-        "detail": "Alphabet(GOOGL)·Tesla(TSLA)·IBM. 지난주 실적 릴레이 여파 잔존·CAPEX·마진 논쟁 이번 주도 부각. GOOGL 주간 -3.7%·Q2 매출 1,198억달러 +24% YoY 컨센 상회·EPS $2.85 소폭 하회·Google Cloud 248억달러 +82% YoY 사상 최고, Q2 자본지출 449억달러 2배 확대·free cash flow 급락, 2026 CAPEX 1,950~2,050억달러 상향에 프리캐시 훼손 우려로 -7.1% 급락(2025년 5월 이후 최대). TSLA 시간외 -12% 폭락 시총 1,400억달러 증발 - Q2 매출 282억달러 +26% YoY 컨센 상회·조정 EPS $0.33 vs 컨센 $0.53 대폭 하회, 순이익 11.1억달러 -5% YoY·free cash flow -11억달러·CAPEX 58억달러 +142% YoY, 자동차 GM 16.9%(Q1 21.1% 붕괴)·EV 가격 인하·규제 크레디트 감소·비용 상승 3중 압박, 머스크 콜 로보택시·Optimus 반복·EV 세제혜택 폐지 여파 'few rough quarters' 경고. IBM Q2 매출 172억달러 +1% YoY 컨센 175억달러 하회·2026 매출 가이던스 5%+ → 4~5% 하향. 매크로 렌즈 - hyperscaler CAPEX aggregate 7,250억달러 유지되나 프리캐시 균형 논쟁, MAGS ETF 주간 -5% 조정. 밸류에이션 - GOOGL forward P/E 21배 sector 저평가 유지·TSLA forward P/E 100배+ 프리미엄 부담. 단기 시그널 - 7/29 FOMC·MSFT·META·7/30 AAPL·AMZN."
+        "detail": "Alphabet(GOOGL)·Tesla(TSLA). 지난주 실적 릴레이 여파 이번 주도 부각. GOOGL 주간 -3.7%·Q2 매출 $119.8B +24% YoY 컨센 상회·EPS $2.85 소폭 하회·Google Cloud $24.8B +82% YoY 사상 최고, Q2 자본지출 $44.9B 2배 확대·free cash flow 급락, 2026 CAPEX $195~205B 상향에 프리캐시 훼손 우려로 -7.1% 급락(2025년 5월 이후 최대). TSLA 시간외 -14% 폭락 시총 $140B 증발 - Q2 매출 $28.2B +26% YoY 컨센 상회·조정 EPS $0.33 vs 컨센 $0.53 대폭 하회, 순이익 $1.11B -5% YoY·free cash flow -$1.1B·CAPEX $5.8B +142% YoY, 자동차 GM 16.9%(Q1 21.1% 붕괴)·EV 가격 인하·규제 크레디트 감소·비용 상승 3중 압박, 머스크 콜 로보택시·옵티머스 반복·EV 세제혜택 폐지 여파 'few rough quarters' 경고. 매그니피센트 세븐 목요일 하루 $800B 시총 증발, 2025년 4월 관세 쇼크 이후 최대 낙폭. 크로스에셋 렌즈 - MAGS ETF 주간 -5% 조정."
       },
       {
-        "time": "2026-07-27 07:25 KST",
-        "type": "시황",
-        "sector": "반도체",
-        "detail": "NVDA·AMD·MU·AVGO·INTC. AI CAPEX 논쟁 국면 반도체 실적 시즌 대기. 주간 종가 NVDA $207.98·AMD $541.60·MU $977.51·AVGO $390.56·INTC $105.17 반도체 조정이 나스닥 -2% 주간 하락 견인, 하이퍼스케일러 CAPEX 지속 여부 우려가 매도 압력. 인텔 Q2 매출 161억달러 vs 컨센 144억달러 12% 상회·조정 EPS $0.42 vs 컨센 $0.21 두 배 상회, Foundry 매출 58억달러 +31% YoY이나 21억달러 영업손실, CEO Lip-Bu Tan 취임 후 7분기 연속 자체 가이던스 상회·Panther Lake 소비자 프로세서 출하 재확인·정규장 +4.9% 마감. NVDA 8/26 Q2 D-30·Vera Rubin NVL72 GA 램프·CoreWeave 배치·Blackwell 대비 컴퓨트 5배·NVDA-CoreWeave 지분 36억달러 11% 유지. AMD 8/5 Q2 D-9·MI400·Helios 12GW OpenAI·Meta 계약 훈풍·MI350·MI400 로드맵. MU forward P/E 6배 sector 최저·earnings yield 3.1%·AVGO Iris ASIC 9월 양산. 매크로 렌즈 - 10y 4.66%·real rate 확대·VIX 20 완화, hyperscaler CAPEX 7,250억달러 aggregate 유지되나 프리캐시 균형 논쟁 부상. 밸류에이션 - NVDA forward P/E 32배·MU 6배·AVGO 30배. 단기 시그널 - 7/29 FOMC·MSFT·META·8/5 AMD·8/26 NVDA·10월 Anthropic 나스닥."
+        "time": "2026-07-27 19:30 KST",
+        "type": "매크로",
+        "sector": "에너지",
+        "detail": "WTI·브렌트유. 이란 긴장 완화 시그널로 국제유가 급락 반전, 지난주 급등 국면 되돌림. 미-이란 호르무즈 협상 재개 관측·긴급 공격 유예 기류로 지정학 프리미엄 축소. 위험선호 회복으로 미국 주식 선물 강세 전환·S&P·나스닥 선물 상승. 오일 리트리트가 성장주 매수 재점화 트리거로 작동, 이번 주 빅테크 실적 시즌과 겹치며 리스크온 재개 시도. 다만 트럼프 '더 큰 공격' 시사·후티 홍해 위협 재개 시나리오는 여전히 남아 있어 프리미엄 급반등 리스크 잔존. 방산·에너지 섹터는 프리미엄 축소로 상대 약세, 성장주·소비주는 상대 강세 로테이션 신호."
       },
       {
-        "time": "2026-07-27 07:25 KST",
+        "time": "2026-07-27 19:30 KST",
         "type": "실적",
         "sector": "방산",
-        "detail": "RTX(RTX)·Lockheed Martin(LMT)·Northrop Grumman(NOC). 방산 실적 릴레이 상회·백로그 사상 최대 스토리 이번 주 지속. RTX $209.76 +0.3%·Q2 EPS $1.89 vs 컨센 $1.66 상회 13.9%·매출 247억달러 +14.5% YoY vs 컨센 228억달러 상회 8.2%·backlog 2,890억달러 +22% YoY(상업 1,700억·방산 1,190억달러) 사상 최대. 2026 가이던스 매출 950~960억달러·EPS $7.10~7.25 상향, book-to-bill 1.5+ 유지. LMT $569.09·Q2 EPS $7.94 vs 컨센 $7.19 상회·매출 200억달러 vs 컨센 193억달러 상회. Aeronautics 81억달러 +9% F-35 인도 페이스 재개 재확인, 신규 오더 650억달러·book-to-bill 3.2·backlog 2,304억달러 사상 최대. 2026 가이던스 매출 797.5~817.5억달러·EPS $29.95~30.65 상향. NOC $528.84 -0.9%·B-21 램프·핵 3원체계 현대화·8월 초 Q2 발표 예정. 매크로 렌즈 - 트럼프 이란 향해 '더 큰 대규모 공격' 시사·후티 홍해 위협 재개·유럽 NATO 재무장·중동 재고 보충 지속 스토리. 크로스 애셋 - 브렌트 100달러대 진입으로 지정학 프리미엄 재확대. 밸류에이션 - RTX forward P/E 22배 premium 정당화·LMT 18배 재확장 여지. 단기 시그널 - 8월 초 GD·NOC·HII·9월 파리 에어쇼."
+        "detail": "RTX(RTX)·Lockheed Martin(LMT)·Northrop Grumman(NOC). 방산 실적 릴레이 컨센 상회·백로그 사상 최대 스토리 이번 주 지속. RTX $209.76 +0.3%·Q2 EPS $1.89 vs 컨센 $1.66 상회 13.9%·매출 $24.7B +14.5% YoY vs 컨센 $22.8B 상회 8.2%·backlog $289B +22% YoY 상업 $170B·방산 $119B 사상 최대. 2026 가이던스 매출 $95.0~96.0B·EPS $7.10~7.25 상향, book-to-bill 1.5+ 유지. LMT $569.09·Q2 EPS $7.94 vs 컨센 $7.19 상회·매출 $20.0B vs 컨센 $19.3B 상회. 에어로노틱스 $8.1B +9% F-35 인도 페이스 재개 재확인, 신규 오더 $65B·book-to-bill 3.2·backlog $230.4B 사상 최대. 2026 가이던스 매출 $79.75~81.75B·EPS $29.95~30.65 상향. NOC $528.84 -0.9%·B-21 램프·핵 3원체계 현대화·8월 초 Q2 발표 예정. 매크로 렌즈 - 유럽 NATO 재무장·중동 재고 보충 지속 스토리, 유가 급락에도 백로그 서사가 밸류 지지. 밸류에이션 - RTX forward P/E 22배 프리미엄 정당화·LMT 18배 재확장 여지."
       }
     ]
   }
