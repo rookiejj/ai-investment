@@ -1,31 +1,31 @@
 const updates = [
   {
-    "date": "2026-07-28 07:25 KST",
-    "summary": "애플 시총 1위 탈환 - AI CAPEX 절제 재평가\n엔비디아 -2.6% - OpenAI 순환 금융 우려\n다우 51,947 신고가 - 오일 하락 방어 강세\n샌디스크 -12% - 중국 CXMT 공급 과잉\nMSFT·META 7/29 실적 - CAPEX 심판 주간",
+    "date": "2026-07-28 19:25 KST",
+    "summary": "엔비디아 194달러 -1.2% - 오픈AI 초대형 데이터센터 지급보증으로 순환 금융 재부상\n마이크론·SanDisk 동반 급락 - 중국 CXMT 712조원 상장 쇼크로 D램 매도 확산\n다우 52,210 사상 최고 - 오일 하락에 방어주 매수 견인\nMSFT·META 7/29 실적 D-1 - AI 자본 지출 규율이 이번 분기 심판대\nFOMC 7/28~29 - 금리 동결 컨센, 워시 신임 의장 첫 회의 톤 관건",
     "changes": [
       {
-        "time": "2026-07-28 07:20 KST",
-        "type": "시총 리레이팅",
+        "time": "2026-07-28 07:00 KST",
+        "type": "메가딜",
         "sector": "AI 플랫폼",
-        "detail": "Apple(AAPL)·NVIDIA(NVDA). Apple $336.22 +0.96% 상승으로 시총 4.94조달러, NVIDIA $201.38 -2.6% 하락으로 시총 4.87조달러, 애플이 세계 최대 기업 자리 탈환. NVIDIA는 주말 750억달러+ 규모 메가딜 발표 후 자본 배분 우려로 조정 - Wall Street Journal 보도 OpenAI 데이터센터 임대 대금 2,500억달러 지급보증 논의, SK그룹과 500억달러+ AI 이니셔티브, Safe Superintelligence 50억달러 투자 확정. 순환 금융(circular financing) 논쟁 재부상 - NVIDIA가 고객에게 자금 대주고 그 돈으로 자사 칩 사는 구조 지속가능성 의문. Apple은 상대적 AI CAPEX 절제·iPhone 기저 수요 견고로 YTD +22% 매그니피센트 세븐 최상위 성과, 안정성 프리미엄 재평가. 밸류에이션 - AAPL forward P/E 30배·NVDA 32배, 프리캐시·CAPEX 규율이 상대 매력 갈림길."
+        "detail": "NVIDIA(NVDA)·OpenAI. Wall Street Journal 보도 - 엔비디아가 오픈AI 오하이오 10GW 데이터센터 리스·건설 부채 최대 2,500억달러 지급보증 논의 중, SoftBank 자회사가 부지 개발. 전체 프로젝트 규모 5,000억달러+ 예상(엔비디아 칩은 별도 협상). OpenAI 관점에선 마이크로소프트·아마존·오라클 의존 탈피 첫 걸음, 엔비디아 관점에선 다년간 칩 수요 락인. 다만 순환 금융 논란 재점화 - 엔비디아가 고객사 자금 대주고 그 돈으로 칩 사는 구조 지속가능성 의문, SK그룹 500억달러·Safe Superintelligence 50억달러 등 최근 메가 커밋 누적. NVDA $194.22 -1.2% 정리 매물 국면. 밸류에이션 렌즈 - forward P/E 32배 sector premium 유지, 매크로 렌즈 - 10년물 4.66% 부담·MAGS ETF 주간 -5% 조정, 이번 주 MSFT·META 실적에서 AI 매출 성장률이 CAPEX 정당화 프레임 결정."
       },
       {
-        "time": "2026-07-28 07:20 KST",
-        "type": "실적 프리뷰",
-        "sector": "AI 플랫폼",
-        "detail": "MSFT·META·AAPL·AMZN. 이번 주 빅테크 어닝 슈퍼위크가 이번 분기 최대 매크로 방향타. 7/29 MSFT FY Q4 컨센 EPS $4.22 +15.6% YoY·매출 $87.6B, Azure 39~40% 성장 가이던스와 FY27 CapEx $220B 상향 여부가 AI 트레이드 전체 톤 결정. 같은 날 META Q2 컨센 EPS $7.18·매출 $44.7B·Reality Labs 손실 규모·Muse Spark 1.1 첫 매출 기여. 7/30 AAPL FY Q3 컨센 EPS $1.86·매출 $90.0B·iPhone Air 프리뷰·Apple Intelligence 상용화 진도, AMZN Q2 컨센 EPS $1.85·매출 $165.3B·AWS +19% YoY. 알파벳 CAPEX $205B 상향 후 -6% 급락이 벤치마크로 - 매출 상회로도 부족, 프리캐시 훼손이 페널티 트리거. 매크로 렌즈 - 7/29~30 FOMC 3.50~3.75% 동결 컨센, dot plot·파월 톤이 real rate·성장주 밸류 결정. 10y 4.66% 유지가 부담."
-      },
-      {
-        "time": "2026-07-28 07:20 KST",
+        "time": "2026-07-28 07:00 KST",
         "type": "섹터 쇼크",
         "sector": "반도체",
-        "detail": "SanDisk(SNDK)·Micron(MU)·Western Digital(WDC). 중국 CXMT 상해 과창판 상장(6.5조원 조달, DRAM 4위·시장점유율 8%) 소식으로 메모리 공급 과잉 우려 재부상, SanDisk -12% 급락 5월 초 이후 최저, Micron -5%, Western Digital -6% 동반 하락. Roundhill Memory ETF(DRAM) 단일 세션 -14% 급락, 한국 코스피 -10% 폭락과 연동. 다만 SanDisk YTD +505%·Micron +223%·WDC +202% 등 이미 대폭 상승 국면 조정 성격. HBM 대비 범용 DRAM 노출 큰 기업 타격 집중, HBM3E·HBM4 강자는 방어. 매크로 렌즈 - CXMT 리스크는 2028년 이후 시나리오라 원거리 인식이나 밸류 확장 국면에서 조정 트리거로 작동, 8월 Micron FY25 Q4 발표가 HBM 매출 비중 확인 카드."
+        "detail": "Micron(MU)·SanDisk(SNDK)·NVIDIA(NVDA)·AMD. 중국 창신메모리(CXMT) 상하이 과창판 상장 첫날 시초가 대비 466% 폭등, 시총 3.28조위안(712조원)으로 중국 본토 시총 1위(중국공상은행 추월), IPO 조달액 579억위안(12.5조원)으로 2026 아시아 최대. 여파로 마이크론 $858.9 -4.6%·SanDisk -12% 5월 이후 최저·Western Digital -6% 동반 하락, Roundhill Memory ETF 단일 세션 -14%. 아시아 확산 - SK하이닉스 -14.6%·삼성전자 -13.4% 검은화요일 동조. 中 심자외선(DUV) 노광장비 국산화 착수 뉴스가 트리거 가중. HBM3E·HBM4 강자는 상대 방어, 범용 DRAM 노출 큰 기업 타격 집중. 밸류에이션 렌즈 - SanDisk YTD +505%·Micron +223%·WDC +202% 급등 후 조정 성격, 크로스에셋 렌즈 - CXMT 리스크는 2028년 이후 시나리오지만 밸류 확장 국면 조정 트리거로 즉시 작동."
       },
       {
-        "time": "2026-07-28 07:20 KST",
+        "time": "2026-07-28 07:00 KST",
+        "type": "실적 프리뷰",
+        "sector": "AI 플랫폼",
+        "detail": "MSFT·META·AAPL·AMZN. 빅테크 어닝 슈퍼위크 - 7/29 MSFT FY Q4 컨센 EPS $4.22 +15.6% YoY·매출 $87.6B, Azure 39~40% 성장 유지 여부와 FY27 CapEx $220B 상향이 AI 트레이드 톤 결정. 같은 날 META Q2 컨센 EPS $7.18·매출 $44.7B·Reality Labs 손실 규모·Muse Spark 1.1 첫 매출 기여. 7/30 AAPL FY Q3 컨센 EPS $1.86·매출 $90.0B·iPhone Air 프리뷰·Apple Intelligence 상용화 진도, AMZN Q2 컨센 EPS $1.85·매출 $165.3B·AWS +19% YoY. 알파벳 CAPEX $205B 상향 후 -7.1% 급락이 벤치마크 - 매출 상회로도 부족, 프리캐시 훼손이 페널티 트리거. 매그니피센트 세븐 4사 합계 CAPEX 2026년 7,250억달러 계획(2025년 4,100억달러 대비 +77%). 매크로 렌즈 - 7/28~29 FOMC 3.50~3.75% 동결 컨센, 워시 신임 의장 첫 회의 톤·성명서 문구가 real rate·성장주 밸류 향방 결정."
+      },
+      {
+        "time": "2026-07-28 07:00 KST",
         "type": "시황",
         "sector": "AI 플랫폼",
-        "detail": "S&P 500·Nasdaq·Dow. 지수 혼조 마감 - S&P 500 7,411.98 +0.05% 소폭 상승·Nasdaq 24,932 -0.18% 후퇴·Dow 51,947.25 +0.5% 사상 최고. NVIDIA 주도 반도체 조정에 나스닥이 발목, 다우는 오일 하락(WTI 배럴당 $89대)에 방어주·산업재 강세로 신고가. 실적 시즌 슈퍼위크 앞두고 자본 배분·free cash flow가 밸류 결정 프레임으로 굳어짐 - 알파벳 CAPEX 상향에 -6% 페널티 이후 시장이 매출 상회만으로는 만족 안 하는 톤. 매그니피센트 세븐 지난주 목요일 하루 8,000억달러 시총 증발이 참고 벤치. 크로스에셋 렌즈 - 10y 4.66% 2개월 고점·MAGS ETF 주간 -5% 조정, FOMC 파월 톤이 real rate·성장주 밸류 방향타."
+        "detail": "S&P 500·Nasdaq·Dow. 지수 혼조 마감 - S&P 500 7,413 +0.02% 4거래일 연속 하락 마감 종료·Nasdaq 24,932 -0.18% 후퇴·Dow 52,210 +0.5% 사상 최고. NVIDIA 조정과 중국 반도체 쇼크로 나스닥 발목, 다우는 오일 하락(WTI 배럴당 $81대 진입)과 방어주·산업재 강세로 신고가. 실적 시즌 슈퍼위크 앞두고 자본 배분·free cash flow가 밸류 결정 프레임 - 알파벳 CAPEX 상향에 -7.1% 페널티 이후 시장이 매출 상회만으로는 만족 안 하는 톤. 크로스에셋 렌즈 - 10y 4.66% 2개월 고점 유지·MAGS ETF 주간 -5% 조정, VIX 완만 상승, 워시 FOMC 첫 회의 성명서 문구가 real rate·성장주 밸류 방향타. 아시아 폭락 여파는 미국 프리마켓에도 반도체 섹터 압력으로 전이 가능성."
       }
     ]
   }
