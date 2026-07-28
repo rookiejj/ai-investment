@@ -704,6 +704,7 @@ retail news 단순 나열에 머무르지 말고 institutional research(FRED·Ya
 - 카테고리 (5): 핀테크 · 엔터프라이즈 SW · 우주·모빌리티·방산 · 바이오·헬스 · 크립토·Web3
 - 스키마: `{ nm, rs, val, round, sector, ipo }`
 - 비상장 전용 — 상장·피인수 시 즉시 대체 기업 편입.
+- **🔴 SpaceX(SPCX)는 상장 완료된 공개 기업 — 유니콘 탭(카드·summary·changes) 등장 절대 금지 (엄수)**. 티커 SPCX로 거래 중이고 실적·락업·주가가 있는 상장사다. 상장 후 이벤트(첫 어닝·락업 해제·주가)를 유니콘 프리IPO 뉴스로 쓰지 말 것 — 그건 미국 주식(stocks) 도메인. 우주·모빌리티·방산 프리IPO는 **비상장** Anduril·Helsing·Shield AI·Saronic·Vast·Relativity Space·Stoke Space·Impulse Space 등으로 채운다. (사고: 2026-07-28 unicorn summary 첫 줄·대표 change가 "SpaceX 상장 후 첫 실적·락업 해제"로 나감 — 공개 기업을 비상장 탭 대표로 노출.)
 - **AI 전업 기업은 제외** — AI 기업 탭과 정보 중복 방지. 엔터프라이즈 SW·바이오·헬스 등 다른 카테고리 본질에 부합하면서 AI를 부분 활용하는 회사는 가능.
 
 ### 일본 주식 (jp) — ⚠️ UI·자동 갱신 제외

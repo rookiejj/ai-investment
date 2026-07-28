@@ -1,13 +1,13 @@
 const updates = [
   {
     "date": "2026-07-28 07:40 KST",
-    "summary": "SpaceX 락업 해제 D-9 - 1,160억달러 매도 여력\nAnduril 1,000억달러 협상 - 방산 사상 최고\nDatabricks 1,880억달러 클로징 임박\nPayPal 530억달러 인수 시도 - 결제 재편\nPI 110억달러 - Anthropic 인수설 잔존",
+    "summary": "Anduril 1,000억달러 협상 - 미 국방 스타트업 사상 최고\nHelsing 180억달러 - 유럽 사상 최대 방산 라운드\nDatabricks 1,880억달러 클로징 임박\nPayPal 530억달러 인수 시도 - 결제 재편\nPI 110억달러 - Anthropic 인수설 잔존",
     "changes": [
       {
         "time": "2026-07-28 07:35 KST",
-        "type": "락업 해제",
+        "type": "펀딩",
         "sector": "우주·모빌리티·방산",
-        "detail": "SpaceX(SPCX)·Anduril·Helsing·Shield AI. 방산·우주 프리IPO 밸류 최고구간 재편·SpaceX 상장 후 첫 실적 카운트다운. SpaceX SPCX 116.43달러 -1.5% - 상장 후 최고가 225.64달러 대비 -48%, Starship 13차 서브오비탈 테스트 7/24 성공 - 스타링크 V3 위성 20기 첫 프로덕션 배포·전 위성 지상국 교신 확인·부스터 사상 최소 파괴 스플래시다운·Raptor 엔진 재점화·통제된 재진입·heat shield 이미징 4대 주요 목표 달성. Starlink V3는 다운링크 1Tbps(V2 대비 10배)·업링크 160Gbps(22배) 성능 확장. 8/4 첫 Q2 어닝 D-7 상장 후 첫 실적, 8/6 락업 첫 해제 D-9 - 9억1,150만주(1,160억달러) 매도 여력 트리거. Musk·최고위 락업은 2027년 중반까지 유지. Anduril 신규 라운드 협상 1,000억달러(7/24 TechCrunch 특종) - 5월 시리즈 H 610억달러 대비 3개월 만에 3배 확장, 미 국방 스타트업 사상 최고 밸류 국면, 록히드 마틴 1,300억달러와 근접. Helsing 7/13 시리즈 E 18억달러 180억달러 유럽 사상 최대 방산 라운드, Shield AI 3월 시리즈 G 15억달러 127억달러·Applied Intuition 150억달러. 매크로 렌즈 - 방산 스타트업 2026 H1 record 146억달러 raised 사상 최대·유럽 재무장 축·중동 재고 보충. 단기 시그널 - 8/4 SpaceX Q2·8/6 SpaceX 락업 첫 해제·8~10월 트랜치 릴레이·9월 Anduril S-1 잠재."
+        "detail": "Anduril·Helsing·Shield AI·Applied Intuition. 방산·우주 프리IPO 밸류 최고구간 재편. Anduril 신규 라운드 협상 1,000억달러(7/24 TechCrunch 특종) - 5월 시리즈 H 610억달러 대비 3개월 만에 3배 확장, 미 국방 스타트업 사상 최고 밸류 국면, 록히드 마틴 1,300억달러와 근접. Helsing 7/13 시리즈 E 18억달러 180억달러 유럽 사상 최대 방산 라운드, Shield AI 3월 시리즈 G 15억달러 127억달러·Applied Intuition 150억달러. 매크로 렌즈 - 방산 스타트업 2026 H1 record 146억달러 raised 사상 최대·유럽 재무장 축·중동 재고 보충. 단기 시그널 - 8~10월 방산 프리IPO 트랜치 릴레이·9월 Anduril S-1 잠재."
       },
       {
         "time": "2026-07-28 07:35 KST",
