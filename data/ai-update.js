@@ -1,31 +1,37 @@
 const UPDATES = [
   {
-    "date": "2026-07-29 19:30 KST",
-    "summary": "Anthropic Opus 5 확산 - Frontier-Bench 43.3% SOTA, 10월 IPO 대기\nDeepSeek V4·Grok 4.5 오픈웨이트 확산 - 프론티어 프리미엄 갭 축소\nMeta·Microsoft 오늘 밤 실적 - CapEx 정당화 서사 심판대\nCXMT 中 D램 자립 부상 - 미중 AI 스택 분리 심화\nOpenAI 오하이오 10GW - 2,500억달러 지급보증 순환 금융 논쟁",
+    "date": "2026-07-30 07:35 KST",
+    "summary": "Microsoft Azure +43% 연간 100조 돌파 - CapEx 정당화 서사 확보\nMeta CapEx 상단 1,450억달러 확대 - 시간외 -5% EPS 하회 재점화\nOpenAI·Anthropic AI 페이싱 서한 - 국제 조율 감속 메커니즘 요청\nAnthropic Claude Sonnet 5 출시 - 에이전트 특화 서브 프론티어\nGPT-5.6 Luna·Terra·Sol 3티어 - 100만 토큰당 1~5달러 가격 압박",
     "entries": [
       {
-        "time": "2026-07-29 19:30 KST",
+        "time": "2026-07-30 07:35 KST",
+        "type": "인프라 정당화",
+        "sector": "Microsoft",
+        "text": "Microsoft(MSFT). FY Q4 매출 900억달러(컨센 877억달러 상회, +18% YoY)·EPS 4.74달러(컨센 4.25달러 상회) 발표 - Azure 및 클라우드 서비스 매출 +43% YoY로 시장 기대 40% 상회, 연간 Azure 매출 1,000억달러 첫 돌파 마일스톤. Intelligent Cloud 393억달러·Productivity 378억달러·More Personal Computing 129억달러 세 부문 모두 상회, 시간외 +3% 상승 마감. 하이퍼스케일러 렌즈 - Azure 성장 40% 상단 유지가 FY27 CapEx 2,550~2,600억달러 상향 소화 카운터 논리 확보, 알파벳 -7% 실적 후 급락 벤치마크 회피. capability 렌즈 - OpenAI 제휴 유지·모델 접근권 우선 활용·Copilot Enterprise 도입 확대가 매출 성장 뒷받침, 매그니피센트 세븐 CapEx 2026 7,250억달러 프레임 안에서 정당화 서사 3강 중 우위 확보."
+      },
+      {
+        "time": "2026-07-30 07:35 KST",
+        "type": "실적 혼조",
+        "sector": "Meta",
+        "text": "Meta Platforms(META). Q2 매출 608억달러(컨센 595억달러 상회, +28% YoY - 광고 노출 +14%·단가 +12%)·EPS 6.18달러(컨센 7.13달러 하회)로 매출·이익 방향 엇갈림 발표. CapEx 가이던스 하단 상향 1,300~1,450억달러(직전 1,250~1,450억달러), FY 비용 전망 1,650~1,690억달러로 확대. 시간외 -5.06% 하락 556달러 - EPS 하회와 CapEx 상단 유지가 자본 효율성 서사 훼손, 알파벳 -7% 급락 패턴 재현 리스크. 인프라 렌즈 - Reality Labs 손실·Muse Spark 1.1 수익화 지연 병행 노출, AI 인프라 지출은 확장 유지되나 광고 매출 성장이 CapEx 흡수 속도 불충분. capability 렌즈 - Llama·Muse Spark 시리즈 오픈웨이트 전략 유지, 프론티어 SOTA는 Anthropic·OpenAI 대비 후순위지만 광고·AI 통합 유닛 이코노믹스가 진정한 심판대."
+      },
+      {
+        "time": "2026-07-30 07:35 KST",
+        "type": "거버넌스",
+        "sector": "OpenAI",
+        "text": "OpenAI·Anthropic. AI 페이싱 서한 - OpenAI·Anthropic·Google·Meta 4개사 임직원 1,100명 이상 7/28 서명 공개서한 배포, 미 정부에 국제 페이싱 메커니즘 구축 요청. AI 발전이 안전 감독 속도 초과 시 검증 가능한 감속 조율 도구 요구, OpenAI·Anthropic 공식 지지 표명 - 두 회사가 Trump 행정부와 함께 강력 모델 대상 일관 연방 심사 프로세스 형성 논의 중, Meta·xAI 등 경쟁사에도 동일 적용 대상. Anthropic은 개별로 실리콘밸리 스테이크홀더 비판 직면 - 경쟁 전술·안전 가드레일·오픈웨이트 미지원 3축 지적. 거버넌스 렌즈 - 프론티어 랩 자율 조율 실험이 규제 프레임화되면 신규 진입 장벽·기존 리더 우위 강화 이중 효과, 10월 Anthropic IPO 로드쇼 서사 축으로도 활용 가능."
+      },
+      {
+        "time": "2026-07-30 07:35 KST",
         "type": "모델 확산",
         "sector": "Anthropic",
-        "text": "Anthropic·Claude Opus 5. 7/24 출시 후 확산 국면 지속·10월 IPO 로드쇼 캐패빌리티 프루프-포인트 활용. Artificial Analysis 인텔리전스 지수 61 최상위·ARC-AGI-3 30.2% 신기록·Frontier-Bench 43.3% SOTA·OSWorld 2.0 리더보드 상단·CursorBench 3.2 최대 effort 시 Claude Fable 5 대비 0.5% 이내 접근하며 태스크당 비용 절반. 1M 토큰 컨텍스트·cost/capability 토글 첫 프론티어 모델, 가격 100만 토큰당 인풋 5달러·아웃풋 25달러 Claude Fable 5 대비 절반. 시리즈 H 밸류 9,650억달러·6/1 컨피덴셜 S-1 SEC 파일링·7월 중순 뱅커 미팅·10월 나스닥 상장 로드맵 유효. capability 렌즈 - 인스티튜셔널 인베스터 대상 서사 두 축이 프론티어 SOTA 방어와 매출 성장 지속가능성(2026 5월 애뉴얼라이즈 450~470억달러로 OpenAI 첫 상회), S-1 amendment 8월 초 파일링 예상."
+        "text": "Anthropic·Claude Sonnet 5. 최신 에이전트 특화 서브 프론티어 모델 출시 - 미 정부의 Fable 5·Mythos 5 국가안보 제한 해제 병행 발표로 정부 워크로드 채택 여지 확대. Opus 5(7/24 출시) 확산 국면 지속 - Artificial Analysis 인텔리전스 지수 61 최상위·Frontier-Bench 43.3% SOTA·CursorBench 3.2 최대 effort 시 Fable 5 대비 0.5% 이내 접근·태스크당 비용 절반, 1M 토큰 컨텍스트·cost/capability 토글 첫 프론티어 모델. capability 렌즈 - Sonnet 5는 에이전트 워크플로우 특화 세그먼트 방어 축으로 Opus 5의 프론티어 SOTA와 이중 라인업, 저비용 워크로드 이전 카운터. 시리즈 H 밸류 9,650억달러·8월 초 S-1 amendment 파일링 예상·10월 나스닥 상장 로드맵 유효, capability 프루프-포인트로 활용."
       },
       {
-        "time": "2026-07-29 19:30 KST",
+        "time": "2026-07-30 07:35 KST",
         "type": "가격 압박",
-        "sector": "DeepSeek",
-        "text": "DeepSeek·xAI Grok 4.5. 오픈웨이트·저가 프론티어 모델 확산으로 프리미엄 클로즈드 랩 서사 압박. DeepSeek V4는 SF 에이전트 스타트업 Lindy가 매니지드 에이전트 트래픽을 Claude에서 이전해 인퍼런스 비용 -90% 절감 사례 보고, 실전 워크로드에서 대체재로 자리매김. xAI Grok 4.5(7/8 출시) 1.5조 파라미터·100만 토큰당 인풋 2달러·아웃풋 6달러로 GPT-5.6 Sol(5달러/30달러)·Claude Opus 5(5달러/25달러) 대비 절반 이하 가격. 코딩 벤치마크에서 Grok 4.5 상위권 진입으로 오픈 프론티어 성능·가격 두 축에서 클로즈드 프리미엄 정당화 서사 심판. capability 렌즈 - 프론티어 SOTA 방어와 비용 효율 격차가 엔터프라이즈 도입 채택 결정 요인, Anthropic·OpenAI는 컨텍스트 윈도우·안전성·에이전트 도구 통합으로 상대 우위 유지 시도."
-      },
-      {
-        "time": "2026-07-29 19:30 KST",
-        "type": "실적 D-Day",
-        "sector": "Meta",
-        "text": "Meta·Microsoft. Q2 실적 오늘 미국 장 마감 후 두 회사 동시 발표 - Muse Spark 1.1 수익화 시험대와 Azure AI 성장률 병행 심판. Meta 컨센 EPS 7.18달러·매출 602억달러(+27% YoY), 옵션시장 ±7% 스윙 반영·2026 CapEx 700억달러+ 계획으로 매그니피센트 세븐 CapEx 7,250억달러 프레임 진입. Muse Spark 1.1 가격 공세로 프론티어 클로즈드 랩 대비 저가 차별화, 광고 성장률 둔화 폭·Reality Labs 손실·Anthropic 클라우드 협의 언급 여부가 관건. Microsoft Azure 30~40% 성장 유지와 FY27 CapEx 2,200억달러 가이던스 톤이 하이퍼스케일러 3강 상대 포지션 결정. 인프라 렌즈 - 알파벳 CapEx 2,050억달러 상향 후 -7.1% 급락이 벤치마크, 매출 상회로도 부족·프리캐시 훼손이 페널티 트리거. 오늘 밤 결과가 AI 트레이드 방향 결정 변곡점."
-      },
-      {
-        "time": "2026-07-29 19:30 KST",
-        "type": "생태계",
-        "sector": "NVIDIA",
-        "text": "NVIDIA·CXMT·중국 AI 스택. 중국 창신메모리(CXMT) 상하이 과창판 상장 첫날 시초가 대비 466% 폭등·시총 3.28조위안(712조원) 중국 본토 1위 등극 여파가 AI 인프라 서사 재편. 中 D램 자립 서사 - CXMT DDR4 반값 공급 압박·심자외선(DUV) 노광장비 국산화 착수, 미중 AI 스택 분리 흐름 심화. NVIDIA 197달러 프리마켓 보합 상대 방어 - HBM3E·HBM4 강자로 범용 DRAM 노출 상대적 낮음. OpenAI 오하이오 10GW 데이터센터 리스·건설 부채 최대 2,500억달러 지급보증 논의 지속(SoftBank 자회사 부지 개발, 전체 5,000억달러+ 프로젝트) - 순환 금융 논쟁 재점화. GLM-5.2·Qwen 3.6 오픈웨이트 확산 병행. 인프라 렌즈 - 하이퍼스케일러 CapEx 2026 7,250억달러(2025 4,100억달러 대비 +77%) 시나리오와 신규 논플레이어 백스톱 방식 부채성 파이낸싱 프레임 병존."
+        "sector": "OpenAI",
+        "text": "OpenAI·GPT-5.6 Luna·Terra·Sol. 3티어 모델 패밀리 100만 토큰당 인풋 1~5달러 가격대 정착으로 프론티어 프리미엄 갭 축소. Sol 최상위 티어 5달러/30달러로 Claude Opus 5 5달러/25달러·xAI Grok 4.5 2달러/6달러와 3파전 - 오픈웨이트(DeepSeek V4·Grok 4.5 1.5조 파라미터) 저가 확산이 클로즈드 프리미엄 정당화 서사 심판. 컨텍스트 윈도우 100만 토큰·에이전트 도구 통합·안전성 3축이 프리미엄 유지 차별화 포인트. capability 렌즈 - Lindy 등 에이전트 스타트업이 Claude→DeepSeek V4 이전으로 인퍼런스 비용 -90% 절감 사례 보고, 프론티어 SOTA 방어와 비용 효율 격차가 엔터프라이즈 채택 결정 요인. Amazon Q2 오늘 밤 실적으로 AWS Bedrock·Anthropic 파트너십 성장률 추가 확인 예정."
       }
     ]
   }
