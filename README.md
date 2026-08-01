@@ -43,7 +43,8 @@ ai-investment/
 │   ├── commodity-{data,update}.js← 원자재·크립토 (6 × 4 = 24)
 │   ├── unicorn-{data,update}.js  ← 유니콘 (5 × 7 = 35, AI 전업 기업 제외)
 │   ├── *-update.js               ← sandbox 작업 컨텍스트(직전 1건 참조용). DB의 tab_updates가 실제 read 진실 소스 + history 보존
-│   ├── calendar-events.js        ← 메인 14일 이벤트 캘린더용 (recurring 패턴 + fixed 알려진 일정)
+│   ├── calendar-events.js        ← 메인 14일 이벤트 캘린더용 (recurring 패턴 + fixed 알려진 일정 + autoEarnings 자동 생성)
+│   ├── prices-snapshot.json      ← KR/US 종목 종가 스냅샷 (prices-snapshot.yml이 매 거래일 장 마감 후 자동 갱신, sandbox 가격 검증 1차 소스)
 │   └── company-ko.js             ← 영문 회사명·티커 → 한글 매핑 (index.html·daily-send 단일 소스)
 ├── scripts/
 │   ├── generate-message.js       ← 로컬 친구톡 메시지 미리보기
@@ -54,13 +55,21 @@ ai-investment/
 │   ├── snapshot-tabs-to-storage.js ← read-tab-data·read-tab-archive 응답을 정적 JSON으로 Storage(tabs/latest.json·archive.json)에 업로드 — 헤드라인 read 경로 CDN 캐시화 (db-sync.yml이 sync 직후 호출)
 │   ├── lint-jargon.sh            ← 트레이더 은어·편집자 메타 표현 lint
 │   ├── lint-finmap-pool.js       ← sector-pool 한글명 lookup·dual-list lint
+│   ├── lint-summary-style.js     ← summary 스타일 자동 검사 (줄당 숫자 ≤2개·합산 ≤150자·구조 룰, summary-style-check.yml이 호출)
 │   ├── build-all-stocks.py       ← /stocks 전 상장 종목 정적 JSON 생성기 (미국 NASDAQ Trader 파일 + 시총 screener API · 한국 FinanceDataReader, 시총순 정렬)
+│   ├── fetch-earnings-calendar.js← /stocks 유니버스 277종목 실적일 Yahoo에서 긁어 calendar-events.js의 autoEarnings 배열 자동 주입 (earnings-calendar.yml이 호출)
+│   ├── snapshot-prices.js        ← 매 거래일 장 마감 후 KR/US 종목 종가를 Yahoo에서 가져와 data/prices-snapshot.json 갱신 (prices-snapshot.yml이 호출)
+│   ├── preview-friendtalk.js     ← 친구톡 문구 미리보기 (scratch/summaries.json → 콘솔 출력, 프로덕션 미반영)
 │   ├── subscribers.example.json
 │   ├── cartoon/
 │   │   ├── generate.js           ← 신문 1면 PNG 자동 생성 (Playwright HTML→PNG, 5/14~) · Supabase Storage cartoon/today.png 업로드
 │   │   ├── template.html         ← 신문 1면 production template (사이트 산세리프 thin 톤)
+│   │   ├── normalize.js          ← 신문 1면·catchphrase 금융용어 오타 기계 교정 (조스피→코스피·나스닥 깨짐 등, generate.js가 호출)
+│   │   ├── headline-dedup.js     ← 5탭 summary 첫 줄 간 탭 충돌 제거 (공유 토큰 3+이면 도메인 달라도 병합, cartoon-generate.yml이 호출)
+│   │   ├── cleanup-old.js        ← Supabase Storage instagram-carousel/posts/ 7일 이상 된 폴더 자동 삭제 (cartoon-generate.yml이 호출)
 │   │   └── render-newspaper.js   ← 디자인 mockup 반복 검증용 (scripts/cartoon/out/preview-*.html → PNG)
-│   └── instagram/                ← 인스타그램 캐러셀·Reels 자동 게시
+│   ├── instagram/                ← 인스타그램 캐러셀·Reels 자동 게시
+│   │   ├── promo/                ← 마케팅 프로모 캐러셀 (훅→문제→해결→증거→차별점→CTA 6장, 수동 발행)
 │       ├── template.html         ← 1080×1350 슬라이드 HTML 템플릿 (다크 + 사진 BG)
 │       ├── render-slides.js      ← Playwright로 5탭 최신 summary → PNG 7장 렌더
 │       ├── render-reels.js      ← ffmpeg slideshow + crossfade로 1080×1920 Reels mp4 생성
@@ -70,10 +79,13 @@ ai-investment/
 │       ├── music/                ← Reels 배경음악 (royalty-free mp3)
 │       └── SETUP.md              ← 시크릿·버킷 셋업 가이드
 ├── .github/workflows/
-│   ├── cartoon-generate.yml      ← `data/.cartoon-marker` push 트리거 (자동 갱신 sandbox가 마지막 단계로 마커 push)
+│   ├── cartoon-generate.yml      ← `data/.cartoon-marker` push 트리거 (자동 갱신 sandbox가 마지막 단계로 마커 push). 신문 1면 PNG 생성·normalize·headline-dedup·cleanup-old 순 실행
 │   ├── instagram-post.yml        ← cartoon-generate workflow_run chain (KST 07~18시 캐러셀 / 그 외 Reels, 모두 7장 슬라이드 공유)
 │   ├── db-sync.yml               ← `data/*-data.js`·`data/*-update.js` push 트리거 (GitHub Actions runner가 scripts/sync-to-db.js 실행 → Supabase tab_data·tab_updates upsert. sandbox 프록시가 Supabase 차단해서 GH Actions 경유 필수. sync 직후 scripts/snapshot-tabs-to-storage.js로 정적 스냅샷도 업로드 — best-effort)
-│   └── daily-seo.yml             ← `data/.cartoon-marker`·`data/company-ko.js`·`scripts/build-daily-page.js` push 트리거 (cartoon-generate 와 같은 마커 단일 신호 — 사이클 완료 시점 1회. build-daily-page.js 실행 → /daily/·sitemap.xml·rss.xml·news-sitemap.xml·robots.txt 자동 commit·push)
+│   ├── daily-seo.yml             ← `data/.cartoon-marker`·`data/company-ko.js`·`scripts/build-daily-page.js` push 트리거 (cartoon-generate 와 같은 마커 단일 신호 — 사이클 완료 시점 1회. build-daily-page.js 실행 → /daily/·sitemap.xml·rss.xml·news-sitemap.xml·robots.txt 자동 commit·push)
+│   ├── earnings-calendar.yml     ← 월·목 KST 08시 cron. fetch-earnings-calendar.js 실행 → autoEarnings 배열 갱신 후 자동 commit·push
+│   ├── prices-snapshot.yml       ← 매 거래일 장 마감 후 cron. snapshot-prices.js 실행 → data/prices-snapshot.json 갱신·커밋·푸시
+│   └── summary-style-check.yml   ← `data/.cartoon-marker` push 트리거. lint-summary-style.js 실행 → 위반 시 텔레그램 알림
 ├── supabase/
 │   ├── config.toml               ← 공개 호출 함수에 verify_jwt=false 영구 박음 (publishable key 통과 보장)
 │   ├── migrations/               ← 스키마 이력 (init / payment / message_type / delivery_state / admin_settings / template_code / tab_data·tab_updates / promo_events·promo_redemptions / drop tab_updates_main 뷰)
@@ -104,12 +116,17 @@ ai-investment/
 │   ├── server/server.js         ← 로컬/Docker 정적 서빙 + Yahoo 프록시 (의존성 0)
 │   ├── Dockerfile · docker-compose.yml · .env.example
 │   └── README.md                ← 실행/배포/API키/제공자/Gemini/브로커/보안/레이아웃 문서
-├── stocks/                      ← 🆕 전 상장 종목 브라우저 (/stocks) — 메인과 코드 공유 0
-│   ├── index.html               ← 전체·미국·한국 탭 + 유형·거래소 필터 + 검색 + 리스트/버블 토글
+├── stocks/                      ← 전 상장 종목 브라우저 (/stocks) — 메인과 코드 공유 0
+│   ├── index.html               ← 미국·한국 탭 토글 + 검색 + 리스트/버블 토글 (전체 탭 제거, 기본 미국)
 │   ├── app.js                   ← 필터·정렬(시총순)·무한스크롤·뷰 토글(localStorage 저장)
 │   ├── styles.css               ← 다크 터미널 스타일 + 모바일 반응형
-│   ├── us.json · kr.json        ← 정적 종목 데이터 (미국 ~12.9k · 한국 ~4k, ETF 포함, build-all-stocks.py 생성)
+│   ├── us.json · kr.json        ← 정적 종목 데이터 (미국 ~5.9k · 한국 ~2.9k, 보통주만, build-all-stocks.py 생성)
 │   └── meta.json                ← 개수 요약
+├── scratch/                     ← 친구톡 문구 실험용 (gitignore — 프로덕션 미반영)
+│   ├── README.md                ← 미리보기 하니스 사용법
+│   ├── PROMPT.md                ← 문구 실험용 프롬프트
+│   ├── summaries.json           ← 미리보기 결과 (preview-friendtalk.js가 출력)
+│   └── input/                   ← 탭별 고정 팩트 입력 (없으면 data/*-update.js에서 자동 생성)
 ├── docs/
 │   ├── kakao-subscription-plan.md        ← 서비스 기획서
 │   └── friendtalk-dispatch-runbook.md    ← 발송 파이프라인 E2E 매뉴얼
@@ -414,6 +431,33 @@ admin_settings (단일 행, id=1)
 - **스케줄 변경**: `cron.schedule` 표현식은 UTC 기준 (KST = UTC+9). 월~토 한정은 UTC dow `0-5` 사용 (KST 월~토 = UTC 일~금). 평일만이면 `0-4`(KST 월~금).
 
 ## Changelog
+
+- **2026-07-28**: **유니콘 SpaceX 제거 → 비상장 방산·우주로 교체**. SPCX 티커로 정규 거래 시작(상장 완료 공개기업) → 유니콘·프리IPO 탭 정의상 퇴출. 우주·모빌리티·방산 슬롯을 비상장 방산·우주 기업(Anduril·Helsing 등)으로 교체. CLAUDE.md에 "SpaceX 등장 절대 금지" 사고 이력 항목 추가.
+
+- **2026-07-24**: **실적 캘린더 자동 수집 파이프라인 신설 — 277종목 실적일 Yahoo에서 긁어 autoEarnings로 주 2회 채움**. `scripts/fetch-earnings-calendar.js`(Yahoo Finance earnings API, 향후 45일)가 `stocks-data.js`·`kr-stocks-data.js` 유니버스 전 종목의 실적발표일을 긁어 `data/calendar-events.js`의 `const autoEarnings` 배열에 자동 주입. `.github/workflows/earnings-calendar.yml`(월·목 KST 08시 cron)이 실행 → 변경 있으면 자동 commit·push. `calendarEvents = fixed.concat(autoEarnings)` 로 렌더 — 에이전트가 `fixed`에 개별 종목 실적을 수동으로 넣는 것은 이제 중복이므로 CLAUDE.md에 금지 항목 추가. 워크플로 실패 시 텔레그램 알림.
+
+- **2026-07-21**: **시세 스냅샷 파이프라인 신설 + summary 스타일 자동 검사 — 자동 갱신 sandbox의 가격 창작 사고 구조 차단**.
+  - **시세 스냅샷 (`prices-snapshot.yml`)** — `scripts/snapshot-prices.js`가 매 거래일 장 마감 직후 KR/US 전 종목 실제 종가를 Yahoo에서 가져와 `data/prices-snapshot.json`에 커밋·푸시. sandbox는 Supabase 피드 직접 접근이 차단돼 있어 이 파일을 KR·US 개별 종목 가격·등락률의 1차 소스로 쓴다. 형식: `{asOfKst, session, prices:{ticker:{c,pc,chg}}}`. 기존 사고(2026-07-14 kr summary가 창작 시세·존재않는 토요일 마감 → 실제 급락 방향과 정반대)의 구조적 대응. CLAUDE.md에 sandbox 실행 환경별 검증 소스 섹션 보강, 프리마켓 장중 표현 금지·거래일 확인 룰 추가.
+  - **summary 스타일 자동 검사 (`summary-style-check.yml`, `scripts/lint-summary-style.js`)** — 마커 커밋 push 시 발화. `[주체+핵심숫자]-[쉬운 풀이말]`·줄당 숫자 ≤2개·탭당 합산 ≤150자 룰 위반 시 텔레그램 알림. CLAUDE.md에 summary 작성 규칙 공식화 (기관급 렌즈를 summary에선 정성 표현으로 절제).
+
+- **2026-07-22**: **친구톡 문구 미리보기 하니스 신설 — 프로덕션 사고 차단**. `scratch/` 디렉터리(`.gitignore`) + `scripts/preview-friendtalk.js` + `scratch/PROMPT.md`. 대화형 세션에서 "문구 바꿔줘" 요청 시 기본 동작을 `data/*-update.js` 직접 편집 + push가 아닌 `scratch/summaries.json` 로컬 미리보기로 고정. CLAUDE.md에 기본값 박음 — 세션이 새로 시작돼도 프로덕션으로 안 나감. 프로덕션 반영은 명시적 지시 + push 전 확인 단계 추가.
+
+- **2026-07-07 ~ 07-10**: **1면 헤드라인 dedup 강화 + commodity 크립토 분리 강제 + 대안 자산 AI 패널 수정 + `/stocks` UI 개선**.
+  - **1면 헤드라인 dedup 강화** (`scripts/cartoon/headline-dedup.js`) — 공유 토큰 3개 이상이면 도메인이 달라도 병합(꼬리말만 바꾼 다탭 도배 차단). 기존 소유 도메인 기반 선점 방식과 결합. CLAUDE.md에 커밋 직전 첫 줄 대조 자기검증 의무화.
+  - **commodity changes.sector 크립토 분리 강제** — `changes[].sector`를 `"가격"` 같은 type 값이 아닌 데이터 카테고리(`크립토`·`귀금속` 등)로 명시하지 않으면 대안 자산 크립토 패널이 "오늘 0건"으로 비는 사고(7/05~08 4일간) → CLAUDE.md에 규칙·사고 이력 추가.
+  - **대안 자산 AI 패널 수정** — `entries` 형식을 `changes`로 어댑트 (`갱신 내역 없음` 버그 해결).
+  - **`/stocks` UI 개선** — 전체 탭 제거·기본 미국·토글 탭줄 우측·국기 제거. 보통주만 필터 재적용·kr.json 동기화(총 8,769종목).
+
+- **2026-06-07 ~ 06-30**: **친구톡 가독성 개선 + 오늘의 주요 일정 블록 + 1면 dedup 초기 도입 + 마케팅 캐러셀 + 신문 normalize + 운영 수정 다수**.
+  - **친구톡 가독성 개선** — 탭당 상위 3줄 + 줄 사이 빈 줄 (`daily-send`). 오늘의 주요 일정 블록 추가(캘린더 fixed 이벤트 당일 14일 내 3개 인라인).
+  - **1면 헤드라인 dedup 첫 도입** — `scripts/cartoon/headline-dedup.js` 신설(3c8d47c~803791b). 탭 슬라이드 2~6면 첫 불릿 탭 간 분산·전역 dedup.
+  - **마케팅 프로모 캐러셀** (`scripts/instagram/promo/`) — 훅→문제→해결→증거→차별점→CTA 6장 인스타 캐러셀. 디자인 수차례 개편(모닝 페이퍼·다크 네이비+골드·풀블리드 히어로).
+  - **신문 1면 오타 교정 normalize** (`scripts/cartoon/normalize.js`) — 금융용어 오타 기계 교정(조스피→코스피·코스닥/나스닥 깨짐 패턴 등). `data/.catchphrase`·헤드라인 생성 후 자동 적용.
+  - **instagram-carousel 7일 retention** — `scripts/cartoon/cleanup-old.js`가 Storage `instagram-carousel/posts/` 7일 지난 폴더 자동 삭제. cartoon PNG는 최신 30장 보존.
+  - **daily-send `verify_jwt=false` 추가** — 내부 함수 호출(X-Cron-Secret)도 게이트웨이가 막던 401 해결. admin-api 공지/즉시발송 인증을 서비스키로 전환(ce0752d).
+  - **하단 구독 CTA 바 상시 표시** — 헤더 "매일 카톡으로 받기" 버튼 제거, 하단 고정 CTA 바로 일원화. 푸터 비가림 처리.
+  - **종목 모달 최근 사건 없으면 섹션 숨김** — `'언급 없음'` 텍스트 제거, 섹션 자체 hide.
+  - **admin 결제 목록** — 실패·취소 결제도 전화번호 표시.
 
 - **2026-07-02**: **`/stocks` ETF 제외 + 미국 종목 한글명 네이버 증권 소스로 전환 + 거래소/유형 필터 제거**. 기계 번역(Google) 방식이 의역·오역 다발("Space Exploration Technologies"→"우주 탐사 기술 공사", 수백 개 어색) → **네이버 증권 autocomplete API**(`ac.stock.naver.com`, 티커별 증권사 표준 한글명, 병렬 조회 + `.ko-cache.json` 캐싱)로 전면 교체. 미국 한글명 커버리지 ~98%(SPCX→스페이스X·TSM→TSMC·LLY→일라이 릴리 등 정확), 미매칭(폐쇄형 펀드·일부 ADR)은 `company-ko.js` override→영문. **ETF·우선주·워런트·유닛 제외 = 보통주만**(16,901→8,769 종목, 미국 5.9k·한국 2.9k). 거래소 필터·유형 필터·유형 컬럼 제거, 리스트 종목명·버블에 한글명 표시, 검색은 티커·영문·한글 매칭. `build-all-stocks.py` 네이버 기반 재작성.
 
