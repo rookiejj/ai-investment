@@ -195,7 +195,10 @@ ai-investment/
 - 미수신자 안내 알림톡 버튼 도착지
 
 ### 콘텐츠 자동 갱신
-- Claude Opus 4.7 원격 에이전트(`trig_016nvC9rVppRnQ9nFZeDjnP8`)가 매일 2회(KST 07:00 / 19:00)로 5개 탭 데이터 갱신·커밋·푸시 — 13시 슬롯은 2026-05-02부터 비활성화
+- **메인 갱신**: Claude Opus 4.7 원격 에이전트(`trig_016nvC9rVppRnQ9nFZeDjnP8`)가 매일 2회(KST 07:00 / 19:00)로 5개 탭 데이터 갱신·커밋·푸시 — 13시 슬롯은 2026-05-02부터 비활성화
+- **실적 캘린더**: `earnings-calendar.yml` (월·목 KST 08시 cron) — 유니버스 277종목 실적일을 Yahoo에서 긁어 `data/calendar-events.js`의 `autoEarnings` 배열 자동 갱신
+- **시세 스냅샷**: `prices-snapshot.yml` (매 거래일 장 마감 후) — KR/US 종목 종가를 `data/prices-snapshot.json`에 커밋. sandbox가 이 파일을 1차 소스로 써서 가격 창작 차단
+- **summary 품질 검사**: `summary-style-check.yml` (마커 push 시) — `lint-summary-style.js`로 줄당 숫자·글자 수·구조 위반 감지, 위반 시 텔레그램 알림
 
 ### SEO 정적 페이지 (`/daily/`)
 - **목적**: 매일 갱신되는 5탭 헤드라인을 정적 HTML로 publish해 구글·네이버의 일일 색인 트래픽을 누적으로 잡는다. 비용 0, 운영 0 — GitHub Actions 한 단계가 모든 걸 처리.
