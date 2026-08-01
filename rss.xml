@@ -6,8 +6,15 @@
     <description>한국·미국 주식, AI 기업, 원자재·크립토, 유니콘 5개 도메인의 일일 헤드라인. 매일 KST 07시·19시 자동 업데이트.</description>
     <language>ko-KR</language>
     <atom:link href="https://briefick.com/rss.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Sat, 01 Aug 2026 10:18:45 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 01 Aug 2026 22:24:59 GMT</lastBuildDate>
     <ttl>60</ttl>
+    <item>
+      <title>2026년 8월 2일 (일) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
+      <link>https://briefick.com/daily/2026-08-02</link>
+      <guid isPermaLink="true">https://briefick.com/daily/2026-08-02</guid>
+      <pubDate>Sat, 01 Aug 2026 22:00:00 GMT</pubDate>
+      <description>삼성전자 특별배당 공식 검토 - 3개년 주주환원 이행 곧 공개 · 팔란티어 Q2 매출 18.1억달러 예상 - 8/3 실적 대기, +81% 성장 · OPEC+ 8월 188K bpd 증산 개시 - 5개월 연속 완화·유가 상단 제한</description>
+    </item>
     <item>
       <title>2026년 8월 1일 (토) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
       <link>https://briefick.com/daily/2026-08-01</link>
@@ -420,13 +427,6 @@
       <guid isPermaLink="true">https://briefick.com/daily/2026-06-04</guid>
       <pubDate>Wed, 03 Jun 2026 22:00:00 GMT</pubDate>
       <description>KOSPI 8,639.41 -1.84% 8,800선 후퇴 - 외국인 19일 연속 -6.95조 사상 두 번째 · 브로드컴 AH -14% Q2 매출 $22.2B 컨센 하회 - AI 반도체 +143% 견조에도 가이던스 보수 · BTC $63,367 2월 이후 최저 - 1주 -14%·4주 -21% 가속 후퇴</description>
-    </item>
-    <item>
-      <title>2026년 6월 3일 (수) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
-      <link>https://briefick.com/daily/2026-06-03</link>
-      <guid isPermaLink="true">https://briefick.com/daily/2026-06-03</guid>
-      <pubDate>Tue, 02 Jun 2026 22:00:00 GMT</pubDate>
-      <description>6/3 지방선거 휴장 + 출구조사 18시 광역단체장 16곳 결과 분기점 · 엔트로픽 S-1 6/1 컨피덴셜 $965B 발표 - 10월 NASDAQ 상장 타깃 AI IPO 분기점 · BTC $67~68K -5.4% 24h $70K 하향 이탈 - 5월 spot ETF -$2.3B 사상 최대 분배</description>
     </item>
   </channel>
 </rss>
