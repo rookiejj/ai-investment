@@ -934,7 +934,7 @@ body.sub-modal-open{overflow:hidden}
   border-left:3px solid var(--acc-deep);border-radius:12px;
   padding:24px 28px;max-width:760px;
 }
-.insight-body{font:400 16px/1.75 'Inter',sans-serif;color:var(--fg2)}
+.insight-body{color:var(--fg2)}.insight-body p{font:400 16px/1.75 'Inter',sans-serif;margin:0 0 14px}.insight-body p:last-child{margin-bottom:0}
 .insight-assets{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
 .insight-asset{
   font:500 12px/1 'Geist Mono',monospace;padding:5px 11px;
@@ -1160,7 +1160,7 @@ body.sub-modal-open{overflow:hidden}
     </div>
   </div>
   <div class="insight-card">
-    <p class="insight-body" id="insightBody"></p>
+    <div class="insight-body" id="insightBody"></div>
     <div class="insight-assets" id="insightAssets"></div>
   </div>
 </section>
@@ -2980,7 +2980,8 @@ function renderWeeklyInsight(insight){
   const weekEl=document.getElementById('insightWeek');
 
   titleEl.textContent=insight.title||'';
-  bodyEl.textContent=insight.body||'';
+  const paras=(insight.body||'').split('\n\n').filter(Boolean);
+  bodyEl.innerHTML=paras.map(p=>`<p>${escapeHtml(p)}</p>`).join('');
 
   // 주차 레이블 계산 (예: "8월 2주차")
   if(insight.date){
