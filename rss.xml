@@ -6,8 +6,15 @@
     <description>한국·미국 주식, AI 기업, 원자재·크립토, 유니콘 5개 도메인의 일일 헤드라인. 매일 KST 07시·19시 자동 업데이트.</description>
     <language>ko-KR</language>
     <atom:link href="https://briefick.com/rss.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Sun, 02 Aug 2026 10:23:30 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 02 Aug 2026 22:25:19 GMT</lastBuildDate>
     <ttl>60</ttl>
+    <item>
+      <title>2026년 8월 3일 (월) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
+      <link>https://briefick.com/daily/2026-08-03</link>
+      <guid isPermaLink="true">https://briefick.com/daily/2026-08-03</guid>
+      <pubDate>Sun, 02 Aug 2026 22:00:00 GMT</pubDate>
+      <description>코스피 6,595 +17.91% 후 첫 개장 - 사상 최대 반등 유지 시험대 · S&amp;P500 7,437 사상 최고 - 8월 첫 주 실적·매크로 릴레이 · BTC 63,629달러 정체 - CLARITY Act 8/7 데드라인 D-4</description>
+    </item>
     <item>
       <title>2026년 8월 2일 (일) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
       <link>https://briefick.com/daily/2026-08-02</link>
@@ -420,13 +427,6 @@
       <guid isPermaLink="true">https://briefick.com/daily/2026-06-05</guid>
       <pubDate>Thu, 04 Jun 2026 22:00:00 GMT</pubDate>
       <description>KOSPI 8,160.59 -5.54% 사상 최대 낙폭 · circuit breaker · KOSDAQ 1,000 이탈 · 브로드컴 프리마켓 -15% 추가 하회 · 인프라 SW 매출 컨센 하회 · AI sector 차익실현 · BTC $60,500 영역 후퇴 - 글로벌 risk-off 동조 가속·alternative 자산성 신뢰 후퇴</description>
-    </item>
-    <item>
-      <title>2026년 6월 4일 (목) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
-      <link>https://briefick.com/daily/2026-06-04</link>
-      <guid isPermaLink="true">https://briefick.com/daily/2026-06-04</guid>
-      <pubDate>Wed, 03 Jun 2026 22:00:00 GMT</pubDate>
-      <description>KOSPI 8,639.41 -1.84% 8,800선 후퇴 - 외국인 19일 연속 -6.95조 사상 두 번째 · 브로드컴 AH -14% Q2 매출 $22.2B 컨센 하회 - AI 반도체 +143% 견조에도 가이던스 보수 · BTC $63,367 2월 이후 최저 - 1주 -14%·4주 -21% 가속 후퇴</description>
     </item>
   </channel>
 </rss>
