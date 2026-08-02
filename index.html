@@ -970,7 +970,22 @@ body.sub-modal-open{overflow:hidden}
 .psc-accuracy{font:600 13px/1 'Geist Mono',monospace;color:var(--acc-deep)}
 .psc-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px}
 .psc-legend-item{display:flex;align-items:center;gap:5px;font:400 12px/1 'Inter',sans-serif;color:var(--mut2)}
-.psc-list{display:flex;flex-direction:column;gap:12px}
+/* layout */
+.psc-layout{display:grid;grid-template-columns:156px 1fr;gap:16px;align-items:start}
+.psc-nav{display:flex;flex-direction:column;gap:3px}
+.psc-nav-item{padding:10px 12px;border-radius:10px;cursor:pointer;border:1px solid transparent;transition:background .12s,border-color .12s}
+.psc-nav-item:hover{background:var(--panel-tint)}
+.psc-nav-item.psc-active{background:var(--panel);border-color:var(--border-md);box-shadow:var(--shadow-card)}
+.psc-nav-date{font:600 13px/1 'Inter',sans-serif;color:var(--fg1);margin-bottom:6px}
+.psc-nav-badge{display:flex;align-items:center;gap:6px}
+.psc-dots{display:flex;gap:4px;align-items:center}
+.psc-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.psc-dot.hit{background:#1fb872}
+.psc-dot.miss{background:#cc4040}
+.psc-dot.push{background:var(--mut2)}
+.psc-dot.pending{background:var(--border-lt);border:1px dashed var(--border-md)}
+.psc-nav-score{font:500 11px/1 'Geist Mono',monospace;color:var(--mut2)}
+@media(max-width:640px){.psc-layout{grid-template-columns:1fr}.psc-nav{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:2px}.psc-nav-item{flex-shrink:0}}
 .psc-card{background:var(--panel-tint);border:1px solid var(--border-md);border-radius:12px;overflow:hidden}
 .psc-card-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border-lt)}
 .psc-card-date{font:600 13px/1 'Inter',sans-serif;color:var(--fg1)}
@@ -1243,7 +1258,10 @@ body.sub-modal-open{overflow:hidden}
     <span class="psc-legend-item"><span style="background:#f7c8c8;color:#5a1414;font:600 11px/1.4 Inter,sans-serif;padding:1px 7px;border-radius:4px">✗ 미스</span> 예측 반대 방향으로 움직임</span>
     <span class="psc-legend-item"><span style="background:var(--border-lt);color:var(--mut2);font:600 11px/1.4 Inter,sans-serif;padding:1px 7px;border-radius:4px">→ 보합</span> 등락률 ±0.5% 미만 (무승부)</span>
   </div>
-  <div class="psc-list" id="pscList"></div>
+  <div class="psc-layout">
+    <nav class="psc-nav" id="pscNav"></nav>
+    <div id="pscDetail"></div>
+  </div>
 </section>
 
 <!-- 섹터 로테이션 -->
@@ -3117,104 +3135,119 @@ async function loadPredictionScorecard(){
 }
 
 function _pscMarketCtx(market, madeStr){
-  // madeStr: "2026-07-30 07:15 KST" or "2026-07-30"
-  const hourMatch = madeStr && madeStr.match(/\s(\d{1,2}):\d{2}/);
-  const hour = hourMatch ? parseInt(hourMatch[1]) : null;
+  const hourMatch=madeStr&&madeStr.match(/\s(\d{1,2}):\d{2}/);
+  const hour=hourMatch?parseInt(hourMatch[1]):null;
   if(market==='KR'){
-    if(hour!==null&&hour<9)  return {cls:'kr',label:'🇰🇷 KR · 장 전'};
+    if(hour!==null&&hour<9)   return {cls:'kr',label:'🇰🇷 KR · 장 전'};
     if(hour!==null&&hour>=15) return {cls:'kr',label:'🇰🇷 KR · 장 후'};
     return {cls:'kr',label:'🇰🇷 KR'};
   }
   if(market==='US'){
-    // 07:xx and 19:xx KST are both before US open (22:30 KST)
     if(hour!==null&&hour<22) return {cls:'us',label:'🇺🇸 US · 장 전'};
     return {cls:'us',label:'🇺🇸 US'};
   }
   return {cls:'',label:market||''};
 }
 
+let _pscData=null;
+
 function renderPredictionScorecard(data){
   if(!data||!data.length) return;
+  _pscData=data;
 
   let hits=0, total=0;
-  data.forEach(entry=>entry.predictions.forEach(p=>{
+  data.forEach(e=>e.predictions.forEach(p=>{
     if(p.result==='hit'){ hits++; total++; }
     else if(p.result==='miss'||p.result==='push'){ total++; }
   }));
   const accEl=document.getElementById('pscAccuracy');
   if(total>0) accEl.textContent=`${hits}/${total} 적중 (${Math.round(hits/total*100)}%)`;
 
-  const listEl=document.getElementById('pscList');
-  listEl.innerHTML=data.map(entry=>{
+  // 날짜 리스트
+  const navEl=document.getElementById('pscNav');
+  navEl.innerHTML=data.map((entry,i)=>{
     const d=new Date(entry.date+'T00:00:00+09:00');
-    const dateStr=`${d.getMonth()+1}월 ${d.getDate()}일`;
-
-    // made 시간 파싱 — "2026-07-30 07:15 KST" or "2026-07-30"
-    const madeDatePart=(entry.made||'').split(' ')[0];
-    const madeTimeMatch=entry.made&&entry.made.match(/(\d{1,2}:\d{2})\s*KST/);
-    const madeTimeStr=madeTimeMatch?madeTimeMatch[1]:null;
-    const madeD=new Date(madeDatePart+'T00:00:00+09:00');
-    const madeDateLabel=`${madeD.getMonth()+1}/${madeD.getDate()}`;
-
-    const preds=entry.predictions;
-    const scored=preds.filter(p=>p.result!==null);
+    const dateStr=`${d.getMonth()+1}/${d.getDate()}`;
+    const dots=entry.predictions.map(p=>`<span class="psc-dot ${p.result||'pending'}"></span>`).join('');
+    const scored=entry.predictions.filter(p=>p.result!==null);
     const entryHits=scored.filter(p=>p.result==='hit').length;
-    const entryMiss=scored.filter(p=>p.result==='miss').length;
-    const isPending=scored.length<preds.length;
-    const isAllHit=!isPending&&entryHits===preds.length;
-    const isAllMiss=!isPending&&entryMiss===preds.length;
-
-    const scoreLabel=scored.length===0?'채점 대기'
-      :isPending?`${entryHits}/${scored.length} 적중 (채점 중)`
-      :`${entryHits}/${preds.length} 적중`;
-    const scoreCls=scored.length===0?'pending':isAllHit?'all-hit':isAllMiss?'miss-all':'partial';
-
-    const rows=preds.map(p=>{
-      const dirLabel=p.direction==='up'?'↑ 상승':p.direction==='down'?'↓ 하락':'→ 보합';
-      const dirCls=p.direction==='up'?'up':p.direction==='down'?'down':'neutral';
-      const mkt=_pscMarketCtx(p.market, entry.made);
-      const mktBadge=mkt.label?`<span class="psc-mkt ${mkt.cls}">${mkt.label}</span>`:'';
-      let verdictStr='채점 대기', verdictCls='pending';
-      let outcomeStr='', outcomeCls='';
-      if(p.result!==null){
-        const sign=p.actual>0?'+':'';
-        const actStr=sign+p.actual.toFixed(1)+'%';
-        outcomeStr=`실제 ${actStr}`;
-        outcomeCls=p.actual>=0.5?'up':p.actual<=-0.5?'down':'push';
-        if(p.result==='hit'){ verdictStr='✓ 적중'; verdictCls='hit'; }
-        else if(p.result==='miss'){ verdictStr='✗ 미스'; verdictCls='miss'; }
-        else{ verdictStr='→ 보합'; verdictCls='push'; }
-      }
-      return `<div class="psc-row">
-        <div class="psc-row-top">
-          <div class="psc-predict">
-            ${mktBadge}
-            <span class="psc-dir-badge ${dirCls}">${dirLabel}</span>
-            <span class="psc-ticker">${escapeHtml(p.label)}</span>
-          </div>
-          <div class="psc-row-result">
-            <span class="psc-verdict ${verdictCls}">${verdictStr}</span>
-            ${outcomeStr?`<span class="psc-outcome ${outcomeCls}">${outcomeStr}</span>`:''}
-          </div>
-        </div>
-        <div class="psc-rationale">${escapeHtml(p.rationale)}</div>
-      </div>`;
-    }).join('');
-
-    const madeLabel=madeTimeStr
-      ?`${madeDateLabel} <span class="psc-made-time">${madeTimeStr} KST 예측</span>`
-      :`${madeDateLabel} 예측`;
-
-    return `<div class="psc-card">
-      <div class="psc-card-head">
-        <span class="psc-card-date">${madeLabel} → <strong>${dateStr}</strong> 결과</span>
-        <span class="psc-card-score ${scoreCls}">${scoreLabel}</span>
-      </div>
-      <div class="psc-rows">${rows}</div>
+    const scoreStr=scored.length===0?'―':`${entryHits}/${entry.predictions.length}`;
+    return `<div class="psc-nav-item${i===0?' psc-active':''}" onclick="_selectPscEntry(${i})">
+      <div class="psc-nav-date">${dateStr}</div>
+      <div class="psc-nav-badge"><div class="psc-dots">${dots}</div><span class="psc-nav-score">${scoreStr}</span></div>
     </div>`;
   }).join('');
 
+  _selectPscEntry(0);
   document.getElementById('pscSection').hidden=false;
+}
+
+function _selectPscEntry(idx){
+  if(!_pscData) return;
+  document.querySelectorAll('#pscNav .psc-nav-item').forEach((el,i)=>el.classList.toggle('psc-active',i===idx));
+  const entry=_pscData[idx];
+
+  const d=new Date(entry.date+'T00:00:00+09:00');
+  const dateStr=`${d.getMonth()+1}월 ${d.getDate()}일`;
+  const madeDatePart=(entry.made||'').split(' ')[0];
+  const madeTimeMatch=entry.made&&entry.made.match(/(\d{1,2}:\d{2})\s*KST/);
+  const madeTimeStr=madeTimeMatch?madeTimeMatch[1]:null;
+  const madeD=new Date(madeDatePart+'T00:00:00+09:00');
+  const madeDateLabel=`${madeD.getMonth()+1}/${madeD.getDate()}`;
+
+  const preds=entry.predictions;
+  const scored=preds.filter(p=>p.result!==null);
+  const entryHits=scored.filter(p=>p.result==='hit').length;
+  const entryMiss=scored.filter(p=>p.result==='miss').length;
+  const isPending=scored.length<preds.length;
+  const isAllHit=!isPending&&entryHits===preds.length;
+  const isAllMiss=!isPending&&entryMiss===preds.length;
+  const scoreLabel=scored.length===0?'채점 대기'
+    :isPending?`${entryHits}/${scored.length} 적중 (채점 중)`
+    :`${entryHits}/${preds.length} 적중`;
+  const scoreCls=scored.length===0?'pending':isAllHit?'all-hit':isAllMiss?'miss-all':'partial';
+
+  const rows=preds.map(p=>{
+    const dirLabel=p.direction==='up'?'↑ 상승':p.direction==='down'?'↓ 하락':'→ 보합';
+    const dirCls=p.direction==='up'?'up':p.direction==='down'?'down':'neutral';
+    const mkt=_pscMarketCtx(p.market,entry.made);
+    const mktBadge=mkt.label?`<span class="psc-mkt ${mkt.cls}">${mkt.label}</span>`:'';
+    let verdictStr='채점 대기', verdictCls='pending', outcomeStr='', outcomeCls='';
+    if(p.result!==null){
+      const sign=p.actual>0?'+':'';
+      outcomeStr=`실제 ${sign}${p.actual.toFixed(1)}%`;
+      outcomeCls=p.actual>=0.5?'up':p.actual<=-0.5?'down':'push';
+      if(p.result==='hit'){ verdictStr='✓ 적중'; verdictCls='hit'; }
+      else if(p.result==='miss'){ verdictStr='✗ 미스'; verdictCls='miss'; }
+      else { verdictStr='→ 보합'; verdictCls='push'; }
+    }
+    return `<div class="psc-row">
+      <div class="psc-row-top">
+        <div class="psc-predict">
+          ${mktBadge}
+          <span class="psc-dir-badge ${dirCls}">${dirLabel}</span>
+          <span class="psc-ticker">${escapeHtml(p.label)}</span>
+        </div>
+        <div class="psc-row-result">
+          <span class="psc-verdict ${verdictCls}">${verdictStr}</span>
+          ${outcomeStr?`<span class="psc-outcome ${outcomeCls}">${outcomeStr}</span>`:''}
+        </div>
+      </div>
+      <div class="psc-rationale">${escapeHtml(p.rationale)}</div>
+    </div>`;
+  }).join('');
+
+  const madeLabel=madeTimeStr
+    ?`${madeDateLabel} <span class="psc-made-time">${madeTimeStr} KST 예측</span>`
+    :`${madeDateLabel} 예측`;
+
+  document.getElementById('pscDetail').innerHTML=`<div class="psc-card">
+    <div class="psc-card-head">
+      <span class="psc-card-date">${madeLabel} → <strong>${dateStr}</strong> 결과</span>
+      <span class="psc-card-score ${scoreCls}">${scoreLabel}</span>
+    </div>
+    <div class="psc-rows">${rows}</div>
+  </div>`;
 }
 
 // Sector Rotation
