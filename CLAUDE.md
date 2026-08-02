@@ -169,7 +169,7 @@ ai-investment/
 4. **이력 prepend**: `data/<탭>-update.js` 맨 앞에 새 엔트리 추가 (아래 [update.js 누적 원칙] 참조).
 5. **캘린더 이벤트 점검**: 조사 중 발견한 향후 60일 안 알려진 일정(어닝·매크로·IPO·컨퍼런스)을 `data/calendar-events.js`의 `fixed` 배열에 append. 자세한 정책은 [캘린더 이벤트 운영] 참조.
 5-1. **🆕 오늘의 연결고리**: `data/daily-insight.js` 배열 맨 앞에 오늘자 항목 prepend. 7건 초과 시 오래된 것 제거. 자세한 정책은 아래 [오늘의 연결고리] 참조.
-5-2. **🆕 섹터 로테이션**: `node scripts/calc-sector-rotation.js` 실행 → 출력 JSON을 `data/sector-rotation.js` 배열 맨 앞에 prepend. 30건 초과 시 제거. `prices-snapshot.json`이 없거나 stale(최근 거래일 아님)하면 skip. 자세한 정책은 아래 [섹터 로테이션] 참조.
+5-2. **🆕 섹터 로테이션**: `node scripts/calc-sector-rotation.js` 실행 → 출력 JSON을 `data/sector-rotation.js` 배열 맨 앞에 prepend. 7건 초과 시 제거 (daily-insight와 동일). `prices-snapshot.json`이 없거나 stale(최근 거래일 아님)하면 skip. 자세한 정책은 아래 [섹터 로테이션] 참조.
 6. **버전 갱신**: `data/version.js`의 `DATA_VERSION`을 VERSION 값으로 갱신.
 7. **커밋·푸시**: `데이터 자동 갱신 YYYY-MM-DD` 메시지로 `git add data/` + commit + `git push origin main`.
 
@@ -616,6 +616,8 @@ const DAILY_INSIGHTS = [
 
 매일 자동 갱신 시 `node scripts/calc-sector-rotation.js` 실행 → 출력 JSON을 배열 맨 앞에 prepend. **index.html 전용 — 친구톡·일간 업데이트와 완전히 분리.**
 
+> **보여주는 것**: 당일 종가 기준 섹터 내 종목들의 평균 등락률. 어제 어느 섹터가 올랐고 내렸는지 한 장짜리 스냅샷. ▲▼는 전날 대비 방향 변화.
+
 **🔴 파이프라인 보호**: 계산 실패 시 skip. 메인 커밋 막으면 안 됨.
 
 **스키마**:
@@ -637,7 +639,7 @@ node scripts/calc-sector-rotation.js
 # stderr: 계산 완료 로그
 ```
 
-출력된 JSON을 `SECTOR_ROTATION` 배열 맨 앞에 prepend. 배열 길이 30 초과 시 뒤에서 제거.
+출력된 JSON을 `SECTOR_ROTATION` 배열 맨 앞에 prepend. 배열 길이 7 초과 시 뒤에서 제거 (daily-insight와 동일 보존 기간).
 
 **stale 판단**: `prices-snapshot.json`의 `asOfKst`가 오늘 날짜(KST) 또는 직전 거래일이 아니면 skip. 주말·휴장일에는 이 단계 자체를 skip.
 
