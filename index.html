@@ -968,6 +968,8 @@ body.sub-modal-open{overflow:hidden}
 
 /* ── 예측 스코어카드 ── */
 .psc-accuracy{font:600 13px/1 'Geist Mono',monospace;color:var(--acc-deep)}
+.psc-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.psc-legend-item{display:flex;align-items:center;gap:5px;font:400 12px/1 'Inter',sans-serif;color:var(--mut2)}
 .psc-list{display:flex;flex-direction:column;gap:12px}
 .psc-card{background:var(--panel-tint);border:1px solid var(--border-md);border-radius:12px;overflow:hidden}
 .psc-card-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border-lt)}
@@ -975,25 +977,29 @@ body.sub-modal-open{overflow:hidden}
 .psc-card-score{font:600 12px/1 'Geist Mono',monospace;padding:3px 10px;border-radius:9999px}
 .psc-card-score.all-hit{background:#c5f2dc;color:#054d2e}
 .psc-card-score.partial{background:#fef9c3;color:#713f12}
+.psc-card-score.miss-all{background:#f7c8c8;color:#5a1414}
 .psc-card-score.pending{background:var(--border-lt);color:var(--mut2)}
 .psc-rows{display:flex;flex-direction:column}
-.psc-row{display:grid;grid-template-columns:22px 80px 1fr 56px 22px;gap:6px;align-items:center;padding:9px 16px;border-bottom:1px solid var(--border-lt)}
+.psc-row{padding:14px 16px;border-bottom:1px solid var(--border-lt)}
 .psc-row:last-child{border-bottom:none}
-.psc-dir{font:700 14px/1 'Inter',sans-serif;text-align:center}
-.psc-dir.up{color:#1fb872}
-.psc-dir.down{color:#cc4040}
-.psc-dir.neutral{color:var(--mut2)}
-.psc-name{font:600 12px/1 'Inter',sans-serif;color:var(--fg1)}
-.psc-rationale{font:400 11px/1.4 'Inter',sans-serif;color:var(--mut2);overflow:hidden;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical}
-.psc-actual{font:600 12px/1 'Geist Mono',monospace;text-align:right}
-.psc-actual.up{color:#1fb872}
-.psc-actual.down{color:#cc4040}
-.psc-actual.pending{color:var(--mut2)}
-.psc-icon{font:600 13px/1 'Inter',sans-serif;text-align:center}
-.psc-icon.hit{color:#1fb872}
-.psc-icon.miss{color:#cc4040}
-.psc-icon.push{color:var(--mut2)}
-@media(max-width:640px){.psc-row{grid-template-columns:20px 68px 1fr 48px 20px;gap:4px;padding:8px 12px}.psc-rationale{display:none}}
+.psc-row-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.psc-row-result{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.psc-predict{display:flex;align-items:center;gap:8px}
+.psc-dir-badge{font:600 11px/1.4 'Inter',sans-serif;padding:2px 8px;border-radius:4px;flex-shrink:0}
+.psc-dir-badge.up{background:#c5f2dc;color:#054d2e}
+.psc-dir-badge.down{background:#f7c8c8;color:#5a1414}
+.psc-dir-badge.neutral{background:var(--border-lt);color:var(--mut2)}
+.psc-ticker{font:600 13px/1 'Inter',sans-serif;color:var(--fg1)}
+.psc-verdict{font:600 12px/1 'Geist Mono',monospace;padding:2px 10px;border-radius:9999px;flex-shrink:0}
+.psc-verdict.hit{background:#c5f2dc;color:#054d2e}
+.psc-verdict.miss{background:#f7c8c8;color:#5a1414}
+.psc-verdict.push{background:var(--border-lt);color:var(--mut2)}
+.psc-verdict.pending{background:var(--border-lt);color:var(--mut2)}
+.psc-rationale{font:400 12px/1.5 'Inter',sans-serif;color:var(--mut2);margin-bottom:6px}
+.psc-outcome{font:600 12px/1 'Geist Mono',monospace}
+.psc-outcome.up{color:#1fb872}
+.psc-outcome.down{color:#cc4040}
+.psc-outcome.push{color:var(--mut2)}
 
 /* ── Why Subscribe (전환 섹션) ── */
 .why{text-align:center}
@@ -1224,9 +1230,14 @@ body.sub-modal-open{overflow:hidden}
     <div>
       <div class="sec-label">Prediction scorecard</div>
       <h2 class="sec-title">예측 스코어카드</h2>
-      <p class="sec-desc">종목 방향 예측 → 다음날 종가로 자동 채점 · ✓ 적중 · ✗ 미스 · → 보합</p>
+      <p class="sec-desc">AI가 매일 종목 3개의 다음날 방향을 예측하고, 다음날 종가로 자동 채점합니다</p>
     </div>
     <span id="pscAccuracy" class="psc-accuracy"></span>
+  </div>
+  <div class="psc-legend">
+    <span class="psc-legend-item"><span style="background:#c5f2dc;color:#054d2e;font:600 11px/1.4 Inter,sans-serif;padding:1px 7px;border-radius:4px">✓ 적중</span> 예측 방향과 실제 일치 (±0.5% 이상)</span>
+    <span class="psc-legend-item"><span style="background:#f7c8c8;color:#5a1414;font:600 11px/1.4 Inter,sans-serif;padding:1px 7px;border-radius:4px">✗ 미스</span> 예측 반대 방향으로 움직임</span>
+    <span class="psc-legend-item"><span style="background:var(--border-lt);color:var(--mut2);font:600 11px/1.4 Inter,sans-serif;padding:1px 7px;border-radius:4px">→ 보합</span> 등락률 ±0.5% 미만 (무승부)</span>
   </div>
   <div class="psc-list" id="pscList"></div>
 </section>
@@ -3116,43 +3127,57 @@ function renderPredictionScorecard(data){
 
   const listEl=document.getElementById('pscList');
   listEl.innerHTML=data.map(entry=>{
-    const d=new Date(entry.date);
+    const d=new Date(entry.date+'T00:00:00+09:00');
     const dateStr=`${d.getMonth()+1}월 ${d.getDate()}일`;
+    const madeD=new Date(entry.made+'T00:00:00+09:00');
+    const madeStr=`${madeD.getMonth()+1}/${madeD.getDate()} 예측`;
     const preds=entry.predictions;
     const scored=preds.filter(p=>p.result!==null);
     const entryHits=scored.filter(p=>p.result==='hit').length;
-    const isPending=scored.length===0;
-    const isAllHit=!isPending&&entryHits===scored.length&&scored.length===preds.length;
+    const entryMiss=scored.filter(p=>p.result==='miss').length;
+    const isPending=scored.length<preds.length;
+    const isAllHit=!isPending&&entryHits===preds.length;
+    const isAllMiss=!isPending&&entryMiss===preds.length;
 
-    const scoreLabel=isPending
-      ?'진행 중'
-      :`${entryHits}/${scored.length} 적중`;
-    const scoreCls=isPending?'pending':isAllHit?'all-hit':'partial';
+    const scoreLabel=scored.length===0
+      ?'채점 대기'
+      :isPending
+        ?`${entryHits}/${scored.length} 적중 (채점 중)`
+        :`${entryHits}/${preds.length} 적중`;
+    const scoreCls=scored.length===0?'pending':isAllHit?'all-hit':isAllMiss?'miss-all':'partial';
 
     const rows=preds.map(p=>{
-      const dirSym=p.direction==='up'?'↑':p.direction==='down'?'↓':'→';
+      const dirLabel=p.direction==='up'?'↑ 상승 예측':p.direction==='down'?'↓ 하락 예측':'→ 보합 예측';
       const dirCls=p.direction==='up'?'up':p.direction==='down'?'down':'neutral';
-      let actualStr='—', actualCls='pending', iconStr='⏳', iconCls='';
+      let verdictStr='채점 대기', verdictCls='pending';
+      let outcomeStr='', outcomeCls='';
       if(p.result!==null){
         const sign=p.actual>0?'+':'';
-        actualStr=sign+p.actual.toFixed(1)+'%';
-        actualCls=p.actual>=0.5?'up':p.actual<=-0.5?'down':'pending';
-        if(p.result==='hit'){ iconStr='✓'; iconCls='hit'; }
-        else if(p.result==='miss'){ iconStr='✗'; iconCls='miss'; }
-        else{ iconStr='→'; iconCls='push'; }
+        const actStr=sign+p.actual.toFixed(1)+'%';
+        outcomeStr=`실제 ${actStr}`;
+        outcomeCls=p.actual>=0.5?'up':p.actual<=-0.5?'down':'push';
+        if(p.result==='hit'){ verdictStr='✓ 적중'; verdictCls='hit'; }
+        else if(p.result==='miss'){ verdictStr='✗ 미스'; verdictCls='miss'; }
+        else{ verdictStr='→ 보합'; verdictCls='push'; }
       }
       return `<div class="psc-row">
-        <div class="psc-dir ${dirCls}">${dirSym}</div>
-        <div class="psc-name">${escapeHtml(p.label)}</div>
+        <div class="psc-row-top">
+          <div class="psc-predict">
+            <span class="psc-dir-badge ${dirCls}">${dirLabel}</span>
+            <span class="psc-ticker">${escapeHtml(p.label)}</span>
+          </div>
+          <div class="psc-row-result">
+            <span class="psc-verdict ${verdictCls}">${verdictStr}</span>
+            ${outcomeStr?`<span class="psc-outcome ${outcomeCls}">${outcomeStr}</span>`:''}
+          </div>
+        </div>
         <div class="psc-rationale">${escapeHtml(p.rationale)}</div>
-        <div class="psc-actual ${actualCls}">${actualStr}</div>
-        <div class="psc-icon ${iconCls}">${iconStr}</div>
       </div>`;
     }).join('');
 
     return `<div class="psc-card">
       <div class="psc-card-head">
-        <span class="psc-card-date">${dateStr}</span>
+        <span class="psc-card-date">${madeStr} → <strong>${dateStr}</strong> 결과</span>
         <span class="psc-card-score ${scoreCls}">${scoreLabel}</span>
       </div>
       <div class="psc-rows">${rows}</div>
