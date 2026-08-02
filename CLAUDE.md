@@ -169,7 +169,8 @@ ai-investment/
 4. **이력 prepend**: `data/<탭>-update.js` 맨 앞에 새 엔트리 추가 (아래 [update.js 누적 원칙] 참조).
 5. **캘린더 이벤트 점검**: 조사 중 발견한 향후 60일 안 알려진 일정(어닝·매크로·IPO·컨퍼런스)을 `data/calendar-events.js`의 `fixed` 배열에 append. 자세한 정책은 [캘린더 이벤트 운영] 참조.
 5-1. **🆕 오늘의 연결고리**: `data/daily-insight.js` 배열 맨 앞에 오늘자 항목 prepend. 7건 초과 시 오래된 것 제거. 자세한 정책은 아래 [오늘의 연결고리] 참조.
-5-2. **🆕 섹터 로테이션**: `node scripts/calc-sector-rotation.js` 실행 → 출력 JSON을 `data/sector-rotation.js` 배열 맨 앞에 prepend. 7건 초과 시 제거 (daily-insight와 동일). `prices-snapshot.json`이 없거나 stale(최근 거래일 아님)하면 skip. 자세한 정책은 아래 [섹터 로테이션] 참조.
+5-2. **🆕 예측 스코어카드 (채점)**: `node scripts/score-predictions.js` 실행 → stdout에 출력이 있으면 `data/prediction-scorecard.js`를 해당 내용으로 교체 (어제 예측 자동 채점). 그 다음, 오늘의 예측 3건을 배열 맨 앞에 prepend (result:null로). 7건 초과 시 제거. 자세한 정책은 아래 [예측 스코어카드] 참조.
+5-3. **🆕 섹터 로테이션**: `node scripts/calc-sector-rotation.js` 실행 → 출력 JSON을 `data/sector-rotation.js` 배열 맨 앞에 prepend. 7건 초과 시 제거 (daily-insight와 동일). `prices-snapshot.json`이 없거나 stale(최근 거래일 아님)하면 skip. 자세한 정책은 아래 [섹터 로테이션] 참조.
 6. **버전 갱신**: `data/version.js`의 `DATA_VERSION`을 VERSION 값으로 갱신.
 7. **커밋·푸시**: `데이터 자동 갱신 YYYY-MM-DD` 메시지로 `git add data/` + commit + `git push origin main`.
 
@@ -611,6 +612,56 @@ const DAILY_INSIGHTS = [
 - 예측·투자 조언 금지 ("지금 사야 한다" 류)
 
 **커밋**: 다른 데이터 갱신과 같은 커밋에 포함 (`git add data/daily-insight.js`). 작성 실패 시 이 파일만 빼고 커밋.
+
+### 🆕 예측 스코어카드 (data/prediction-scorecard.js)
+
+매일 자동 갱신 시 **① 어제 예측 채점 → ② 오늘 예측 3건 추가** 순서로 처리. **index.html 전용 — 친구톡 미반영.**
+
+**🔴 파이프라인 보호**: 실패 시 skip. 메인 커밋 막으면 안 됨.
+
+**스키마**:
+```js
+const PREDICTION_SCORECARD = [
+  {
+    date: "2026-08-04",       // 예측 대상 날짜 (내일)
+    made: "2026-08-03",       // 예측 생성일 (오늘)
+    predictions: [
+      {
+        label: "삼성전자",     // 표시 이름
+        ticker: "005930",     // prices-snapshot 에서 채점에 쓸 ticker
+        direction: "up",      // "up" | "down" | "neutral"
+        rationale: "...",     // 근거 한 줄 (사용자에게 노출)
+        result: null,         // null | "hit" | "miss" | "push"
+        actual: null,         // 채점 후 실제 등락률(%)
+      },
+      // 2개 더 (총 3건)
+    ],
+  },
+  // 이전 항목들...
+];
+```
+
+**채점 기준** (threshold ±0.5%):
+- 실제 등락률 ≥ +0.5% → "up"으로 분류: up예측=hit, down예측=miss, neutral=push
+- 실제 등락률 ≤ -0.5% → "down"으로 분류: down예측=hit, up예측=miss, neutral=push
+- 실제 등락률 -0.5%~+0.5% → "보합": neutral예측=hit, 나머지=push
+
+**① 채점 단계** (매일 실행):
+```bash
+node scripts/score-predictions.js > /tmp/scored.js
+# stdout 있으면 → data/prediction-scorecard.js 를 /tmp/scored.js 내용으로 교체
+```
+
+**② 예측 생성 단계** (오늘 예측 3건):
+- 예측 대상 날짜: 다음 거래일 (내일 또는 월요일)
+- 반드시 prices-snapshot.json 에 있는 ticker 3개 선택 (자동 채점 가능해야 함)
+- 추천 조합: `005930`(KOSPI 대장) + `NVDA`(US AI 대표) + 오늘 테마 관련 1종목
+- `result: null`, `actual: null` 로 시작
+- 예측 근거(`rationale`)는 오늘 데이터 조사 결과 기반으로 한 줄
+
+**트리밍**: prepend 후 7건 초과 시 제거 (daily-insight와 동일).
+
+**커밋**: `git add data/prediction-scorecard.js` 포함. 실패 시 이 파일만 빼고 커밋.
 
 ### 🆕 섹터 로테이션 (data/sector-rotation.js)
 

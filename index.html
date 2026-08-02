@@ -966,6 +966,35 @@ body.sub-modal-open{overflow:hidden}
 .sr-pct.sr-dn{color:#cc4040}
 @media(max-width:680px){.sr-panels{grid-template-columns:1fr}.sr-row{grid-template-columns:88px 1fr 50px}}
 
+/* ── 예측 스코어카드 ── */
+.psc-accuracy{font:600 13px/1 'Geist Mono',monospace;color:var(--acc-deep)}
+.psc-list{display:flex;flex-direction:column;gap:12px}
+.psc-card{background:var(--panel-tint);border:1px solid var(--border-md);border-radius:12px;overflow:hidden}
+.psc-card-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border-lt)}
+.psc-card-date{font:600 13px/1 'Inter',sans-serif;color:var(--fg1)}
+.psc-card-score{font:600 12px/1 'Geist Mono',monospace;padding:3px 10px;border-radius:9999px}
+.psc-card-score.all-hit{background:#c5f2dc;color:#054d2e}
+.psc-card-score.partial{background:#fef9c3;color:#713f12}
+.psc-card-score.pending{background:var(--border-lt);color:var(--mut2)}
+.psc-rows{display:flex;flex-direction:column}
+.psc-row{display:grid;grid-template-columns:22px 80px 1fr 56px 22px;gap:6px;align-items:center;padding:9px 16px;border-bottom:1px solid var(--border-lt)}
+.psc-row:last-child{border-bottom:none}
+.psc-dir{font:700 14px/1 'Inter',sans-serif;text-align:center}
+.psc-dir.up{color:#1fb872}
+.psc-dir.down{color:#cc4040}
+.psc-dir.neutral{color:var(--mut2)}
+.psc-name{font:600 12px/1 'Inter',sans-serif;color:var(--fg1)}
+.psc-rationale{font:400 11px/1.4 'Inter',sans-serif;color:var(--mut2);overflow:hidden;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical}
+.psc-actual{font:600 12px/1 'Geist Mono',monospace;text-align:right}
+.psc-actual.up{color:#1fb872}
+.psc-actual.down{color:#cc4040}
+.psc-actual.pending{color:var(--mut2)}
+.psc-icon{font:600 13px/1 'Inter',sans-serif;text-align:center}
+.psc-icon.hit{color:#1fb872}
+.psc-icon.miss{color:#cc4040}
+.psc-icon.push{color:var(--mut2)}
+@media(max-width:640px){.psc-row{grid-template-columns:20px 68px 1fr 48px 20px;gap:4px;padding:8px 12px}.psc-rationale{display:none}}
+
 /* ── Why Subscribe (전환 섹션) ── */
 .why{text-align:center}
 .why .sec-label{margin-bottom:8px}
@@ -1187,6 +1216,19 @@ body.sub-modal-open{overflow:hidden}
       <div class="insight-assets" id="insightAssets"></div>
     </div>
   </div>
+</section>
+
+<!-- 예측 스코어카드 -->
+<section id="pscSection" hidden>
+  <div class="sec-head">
+    <div>
+      <div class="sec-label">Prediction scorecard</div>
+      <h2 class="sec-title">예측 스코어카드</h2>
+      <p class="sec-desc">종목 방향 예측 → 다음날 종가로 자동 채점 · ✓ 적중 · ✗ 미스 · → 보합</p>
+    </div>
+    <span id="pscAccuracy" class="psc-accuracy"></span>
+  </div>
+  <div class="psc-list" id="pscList"></div>
 </section>
 
 <!-- 섹터 로테이션 -->
@@ -1500,6 +1542,7 @@ const URLS={
   companyKo: '/data/company-ko.js',
   dailyInsight: '/data/daily-insight.js',
   sectorRotation: '/data/sector-rotation.js',
+  predictionScorecard: '/data/prediction-scorecard.js',
 };
 const CALENDAR_URL='/data/calendar-events.js';
 const PRICES_URL='https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/prices/latest.json';
@@ -3048,6 +3091,77 @@ function selectDailyInsight(idx){
     .map(a=>`<span class="insight-asset">${escapeHtml(a)}</span>`).join('');
 }
 
+// Prediction Scorecard
+// ═══════════════════════════════════════════════════════════
+async function loadPredictionScorecard(){
+  try{
+    const r=await fetch(URLS.predictionScorecard+'?_='+Date.now());
+    const t=await r.text();
+    return new Function(t+';return typeof PREDICTION_SCORECARD!=="undefined"?PREDICTION_SCORECARD:null;')();
+  }catch(e){ return null; }
+}
+
+function renderPredictionScorecard(data){
+  if(!data||!data.length) return;
+
+  // 채점 완료된 항목으로 적중률 계산
+  let hits=0, total=0;
+  data.forEach(entry=>entry.predictions.forEach(p=>{
+    if(p.result==='hit'){ hits++; total++; }
+    else if(p.result==='miss'){ total++; }
+    else if(p.result==='push'){ total++; }
+  }));
+  const accEl=document.getElementById('pscAccuracy');
+  if(total>0) accEl.textContent=`${hits}/${total} 적중 (${Math.round(hits/total*100)}%)`;
+
+  const listEl=document.getElementById('pscList');
+  listEl.innerHTML=data.map(entry=>{
+    const d=new Date(entry.date);
+    const dateStr=`${d.getMonth()+1}월 ${d.getDate()}일`;
+    const preds=entry.predictions;
+    const scored=preds.filter(p=>p.result!==null);
+    const entryHits=scored.filter(p=>p.result==='hit').length;
+    const isPending=scored.length===0;
+    const isAllHit=!isPending&&entryHits===scored.length&&scored.length===preds.length;
+
+    const scoreLabel=isPending
+      ?'진행 중'
+      :`${entryHits}/${scored.length} 적중`;
+    const scoreCls=isPending?'pending':isAllHit?'all-hit':'partial';
+
+    const rows=preds.map(p=>{
+      const dirSym=p.direction==='up'?'↑':p.direction==='down'?'↓':'→';
+      const dirCls=p.direction==='up'?'up':p.direction==='down'?'down':'neutral';
+      let actualStr='—', actualCls='pending', iconStr='⏳', iconCls='';
+      if(p.result!==null){
+        const sign=p.actual>0?'+':'';
+        actualStr=sign+p.actual.toFixed(1)+'%';
+        actualCls=p.actual>=0.5?'up':p.actual<=-0.5?'down':'pending';
+        if(p.result==='hit'){ iconStr='✓'; iconCls='hit'; }
+        else if(p.result==='miss'){ iconStr='✗'; iconCls='miss'; }
+        else{ iconStr='→'; iconCls='push'; }
+      }
+      return `<div class="psc-row">
+        <div class="psc-dir ${dirCls}">${dirSym}</div>
+        <div class="psc-name">${escapeHtml(p.label)}</div>
+        <div class="psc-rationale">${escapeHtml(p.rationale)}</div>
+        <div class="psc-actual ${actualCls}">${actualStr}</div>
+        <div class="psc-icon ${iconCls}">${iconStr}</div>
+      </div>`;
+    }).join('');
+
+    return `<div class="psc-card">
+      <div class="psc-card-head">
+        <span class="psc-card-date">${dateStr}</span>
+        <span class="psc-card-score ${scoreCls}">${scoreLabel}</span>
+      </div>
+      <div class="psc-rows">${rows}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('pscSection').hidden=false;
+}
+
 // Sector Rotation
 // ═══════════════════════════════════════════════════════════
 let _srData=null;
@@ -3232,6 +3346,8 @@ async function boot(){
   loadArchives().catch(e=>console.warn('archive 로딩 실패:',e));
   // daily insight — 비차단, 도착 시 바로 렌더
   loadDailyInsight().then(insights=>renderDailyInsights(insights)).catch(()=>{});
+  // prediction scorecard — 비차단
+  loadPredictionScorecard().then(data=>renderPredictionScorecard(data)).catch(()=>{});
   // sector rotation — 비차단
   loadSectorRotation().then(data=>renderSectorRotation(data)).catch(()=>{});
 
