@@ -11,39 +11,6 @@
 //   push — 실제 등락률이 ±0.5% 미만 (보합 = 승부 없음)
 const PREDICTION_SCORECARD = [
   {
-    date: "2026-08-03",
-    made: "2026-08-03 07:15 KST",
-    predictions: [
-      {
-        label: "SK하이닉스",
-        ticker: "000660",
-        market: "KR",
-        direction: "up",
-        rationale: "HBM4 양산 일정 공식화 기대 + 외국인 반도체 순매수 흐름 지속",
-        result: null,
-        actual: null,
-      },
-      {
-        label: "META",
-        ticker: "META",
-        market: "US",
-        direction: "up",
-        rationale: "Q2 광고 매출 컨센 상회 + Llama 4 오픈소스 생태계 확장 모멘텀",
-        result: null,
-        actual: null,
-      },
-      {
-        label: "한화에어로스페이스",
-        ticker: "012450",
-        market: "KR",
-        direction: "up",
-        rationale: "NATO 회원국 K-9 자주포 추가 수주 협상 진척 + 방산 수출 밸류에이션 재평가",
-        result: null,
-        actual: null,
-      },
-    ],
-  },
-  {
     date: "2026-08-01",
     made: "2026-08-01 07:15 KST",
     predictions: [
