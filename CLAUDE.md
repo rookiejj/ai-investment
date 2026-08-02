@@ -660,7 +660,7 @@ node scripts/score-predictions.js > /tmp/scored.js
 ```
 
 **② 예측 생성 단계** (오늘 예측 3건):
-- 예측 대상 날짜: 다음 거래일 (내일 또는 월요일)
+- 예측 대상 날짜: **오늘(KST)** — 07시 갱신은 KR 장 전(09:00), US 장 전(22:30) 모두 당일 세션이 타겟. 주말·휴장이면 다음 거래일.
 - `made`: `TZ=Asia/Seoul date '+%Y-%m-%d %H:%M KST'` 로 현재 시각 포함 (형식 엄수)
 - 반드시 prices-snapshot.json 에 있는 ticker 3개 선택 (자동 채점 가능해야 함)
 - 추천 조합: `005930`(KOSPI 대장, `market:"KR"`) + `NVDA`(US AI 대표, `market:"US"`) + 오늘 테마 관련 1종목
