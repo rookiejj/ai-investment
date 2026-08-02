@@ -929,18 +929,27 @@ body.sub-modal-open{overflow:hidden}
 .disclaimer{padding:24px;border-radius:14px;background:var(--warn-bg);color:var(--warn);font:500 13px/1.5 'Inter',sans-serif;margin-top:24px;border:1px solid #f3e3c0}
 
 /* ── 이 주의 연결고리 ── */
-.insight-card{
-  background:var(--panel-tint);border:1px solid var(--border-md);
-  border-left:3px solid var(--acc-deep);border-radius:12px;
-  padding:24px 28px;max-width:760px;
-}
+.insight-layout{display:grid;grid-template-columns:172px 1fr;gap:16px;align-items:start}
+.insight-list{display:flex;flex-direction:column;gap:4px}
+.insight-list-item{padding:9px 12px;border-radius:8px;cursor:pointer;border:1px solid transparent;transition:background .15s}
+.insight-list-item:hover{background:var(--panel-tint)}
+.insight-list-item.ins-active{background:var(--acc-soft);border-color:var(--acc-deep)}
+.insight-list-date{font:400 11px/1 'Geist Mono',monospace;color:var(--mut2);display:block;margin-bottom:3px}
+.insight-list-title{font:500 12px/1.4 'Inter',sans-serif;color:var(--fg2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ins-active .insight-list-title{color:var(--acc-deep)}
+.insight-card{background:var(--panel-tint);border:1px solid var(--border-md);border-left:3px solid var(--acc-deep);border-radius:12px;padding:24px 28px}
+.insight-card-title{font:700 18px/1.4 'Inter',sans-serif;color:var(--fg1);margin:0 0 16px}
 .insight-body{color:var(--fg2)}.insight-body p{font:400 16px/1.75 'Inter',sans-serif;margin:0 0 14px}.insight-body p:last-child{margin-bottom:0}
 .insight-assets{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
-.insight-asset{
-  font:500 12px/1 'Geist Mono',monospace;padding:5px 11px;
-  background:var(--acc-soft);color:var(--acc-deep);border-radius:9999px;
+.insight-asset{font:500 12px/1 'Geist Mono',monospace;padding:5px 11px;background:var(--acc-soft);color:var(--acc-deep);border-radius:9999px}
+@media(max-width:640px){
+  .insight-layout{grid-template-columns:1fr}
+  .insight-list{flex-direction:row;overflow-x:auto;padding-bottom:8px;gap:8px}
+  .insight-list-item{min-width:72px;flex-shrink:0}
+  .insight-list-title{display:none}
+  .insight-card{padding:18px 20px}
+  .insight-body p{font-size:15px}
 }
-@media(max-width:640px){.insight-card{padding:18px 20px}.insight-body{font-size:15px}}
 
 /* ── Why Subscribe (전환 섹션) ── */
 .why{text-align:center}
@@ -1147,21 +1156,19 @@ body.sub-modal-open{overflow:hidden}
   </div>
 </section>
 
-<!-- 이 주의 연결고리 -->
-<section id="weeklyInsightSection" hidden>
+<!-- 오늘의 연결고리 -->
+<section id="dailyInsightSection" hidden>
   <div class="sec-head">
-    <div>
-      <div class="sec-label">이 주의 연결고리</div>
-      <h2 class="sec-title" id="insightTitle"></h2>
-    </div>
-    <div class="sec-aside">
-      <span id="insightWeek"></span>
-      <span style="color:var(--mut2);font-size:11px">매주 수요일 업데이트</span>
-    </div>
+    <div class="sec-label">오늘의 연결고리</div>
+    <span style="color:var(--mut2);font-size:11px">매일 업데이트</span>
   </div>
-  <div class="insight-card">
-    <div class="insight-body" id="insightBody"></div>
-    <div class="insight-assets" id="insightAssets"></div>
+  <div class="insight-layout">
+    <div class="insight-list" id="insightList"></div>
+    <div class="insight-card">
+      <h3 class="insight-card-title" id="insightTitle"></h3>
+      <div class="insight-body" id="insightBody"></div>
+      <div class="insight-assets" id="insightAssets"></div>
+    </div>
   </div>
 </section>
 
@@ -1452,7 +1459,7 @@ const SUPABASE_FN_URL='https://ytvcgoldauysvnqckzze.supabase.co/functions/v1';
 const URLS={
   sectorPool:'/data/sector-pool.js',
   companyKo: '/data/company-ko.js',
-  weeklyInsight: '/data/weekly-insight.js',
+  dailyInsight: '/data/daily-insight.js',
 };
 const CALENDAR_URL='/data/calendar-events.js';
 const PRICES_URL='https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/prices/latest.json';
@@ -2961,42 +2968,44 @@ document.getElementById('expSearch').addEventListener('input',e=>{
 });
 
 // ═══════════════════════════════════════════════════════════
-// Weekly Insight
+// Daily Insight
 // ═══════════════════════════════════════════════════════════
-async function loadWeeklyInsight(){
+let _dailyInsights=[];
+
+async function loadDailyInsight(){
   try{
-    const r=await fetch(URLS.weeklyInsight+'?_='+Date.now());
+    const r=await fetch(URLS.dailyInsight+'?_='+Date.now());
     const t=await r.text();
-    return new Function(t+';return typeof WEEKLY_INSIGHT!=="undefined"?WEEKLY_INSIGHT:null;')();
+    return new Function(t+';return typeof DAILY_INSIGHTS!=="undefined"?DAILY_INSIGHTS:null;')();
   }catch(e){ return null; }
 }
 
-function renderWeeklyInsight(insight){
-  if(!insight) return;
-  const sec=document.getElementById('weeklyInsightSection');
-  const titleEl=document.getElementById('insightTitle');
-  const bodyEl=document.getElementById('insightBody');
-  const assetsEl=document.getElementById('insightAssets');
-  const weekEl=document.getElementById('insightWeek');
+function renderDailyInsights(insights){
+  if(!insights||!insights.length) return;
+  _dailyInsights=insights;
+  const listEl=document.getElementById('insightList');
+  listEl.innerHTML=insights.map((item,i)=>{
+    const d=new Date(item.date);
+    const dateStr=`${d.getMonth()+1}월 ${d.getDate()}일`;
+    const short=item.title.length>20?item.title.slice(0,20)+'…':item.title;
+    return `<div class="insight-list-item${i===0?' ins-active':''}" onclick="selectDailyInsight(${i})">
+      <span class="insight-list-date">${dateStr}</span>
+      <span class="insight-list-title">${escapeHtml(short)}</span>
+    </div>`;
+  }).join('');
+  document.getElementById('dailyInsightSection').hidden=false;
+  selectDailyInsight(0);
+}
 
-  titleEl.textContent=insight.title||'';
-  const paras=(insight.body||'').split('\n\n').filter(Boolean);
-  bodyEl.innerHTML=paras.map(p=>`<p>${escapeHtml(p)}</p>`).join('');
-
-  // 주차 레이블 계산 (예: "8월 2주차")
-  if(insight.date){
-    const d=new Date(insight.date);
-    const month=d.getMonth()+1;
-    const day=d.getDate();
-    const weekOfMonth=Math.ceil(day/7);
-    weekEl.textContent=`${month}월 ${weekOfMonth}주차`;
-  }
-
-  assetsEl.innerHTML=(insight.assets||[]).map(a=>
-    `<span class="insight-asset">${escapeHtml(a)}</span>`
-  ).join('');
-
-  sec.hidden=false;
+function selectDailyInsight(idx){
+  const item=_dailyInsights[idx];
+  if(!item) return;
+  document.querySelectorAll('.insight-list-item').forEach((el,i)=>el.classList.toggle('ins-active',i===idx));
+  document.getElementById('insightTitle').textContent=item.title||'';
+  const paras=(item.body||'').split('\n\n').filter(Boolean);
+  document.getElementById('insightBody').innerHTML=paras.map(p=>`<p>${escapeHtml(p)}</p>`).join('');
+  document.getElementById('insightAssets').innerHTML=(item.assets||[])
+    .map(a=>`<span class="insight-asset">${escapeHtml(a)}</span>`).join('');
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -3135,8 +3144,8 @@ async function boot(){
   loadIndices().then(idx=>{ if(idx){ STATE.indices=idx; renderIndexWidget(idx); } }).catch(()=>{});
   // archive도 비차단 — 모달 mentions 깊이 ~30일 확장. 도착 전엔 main만으로 자연 폴백
   loadArchives().catch(e=>console.warn('archive 로딩 실패:',e));
-  // weekly insight — 비차단, 도착 시 바로 렌더
-  loadWeeklyInsight().then(insight=>renderWeeklyInsight(insight)).catch(()=>{});
+  // daily insight — 비차단, 도착 시 바로 렌더
+  loadDailyInsight().then(insights=>renderDailyInsights(insights)).catch(()=>{});
 
   try{
     const [tabResp,pool,calendar,companyKo]=await Promise.all([
