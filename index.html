@@ -952,7 +952,6 @@ body.sub-modal-open{overflow:hidden}
 }
 
 /* ── 섹터 로테이션 ── */
-.sr-meta{font:400 11px/1 'Inter',sans-serif;color:var(--mut2);margin-bottom:14px}
 .sr-panels{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
 .sr-panel-label{font:600 13px/1 'Inter',sans-serif;color:var(--fg1);margin-bottom:10px}
 .sr-grid{display:flex;flex-direction:column;gap:5px}
@@ -1175,8 +1174,10 @@ body.sub-modal-open{overflow:hidden}
 <!-- 오늘의 연결고리 -->
 <section id="dailyInsightSection" hidden>
   <div class="sec-head">
-    <div class="sec-label">오늘의 연결고리</div>
-    <span style="color:var(--mut2);font-size:11px">매일 업데이트</span>
+    <div>
+      <div class="sec-label">Cross-asset insight</div>
+      <h2 class="sec-title">오늘의 연결고리</h2>
+    </div>
   </div>
   <div class="insight-layout">
     <div class="insight-list" id="insightList"></div>
@@ -1191,10 +1192,13 @@ body.sub-modal-open{overflow:hidden}
 <!-- 섹터 로테이션 -->
 <section id="sectorRotationSection" hidden>
   <div class="sec-head">
-    <div class="sec-label">섹터 로테이션</div>
-    <span id="srDate" style="color:var(--mut2);font-size:11px"></span>
+    <div>
+      <div class="sec-label">Daily sector returns</div>
+      <h2 class="sec-title">섹터 로테이션</h2>
+      <p class="sec-desc">섹터 내 종목들의 당일 종가 기준 평균 등락률</p>
+    </div>
+    <span id="srDate" style="color:var(--mut2);font-size:11px;align-self:flex-end"></span>
   </div>
-  <p class="sr-meta">섹터 내 종목들의 당일 종가 기준 평균 등락률</p>
   <div class="sr-panels">
     <div>
       <div class="sr-panel-label">한국</div>
