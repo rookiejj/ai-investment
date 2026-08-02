@@ -151,6 +151,7 @@ ai-investment/
 │   ├── commodity-data.js       / commodity-update.js
 │   ├── unicorn-data.js         / unicorn-update.js
 │   ├── calendar-events.js      ← 이벤트 캘린더 데이터 (recurring 패턴 + fixed 단발)
+│   ├── weekly-insight.js       ← 이 주의 연결고리 (매주 수요일 에이전트 생성, index.html 전용 — 친구톡 미반영)
 │   ├── macro-data.js           ← FRED 매크로 지표 (scripts/fetch-macro.js 자동 생성, UI·DB sync 미와이어 — Phase 2 예정)
 │   └── company-ko.js           ← 영문 회사명·티커 → 한글 매핑 (index.html·daily-send 공용)
 └── README.md
@@ -167,6 +168,7 @@ ai-investment/
 3. **데이터 수정**: `data/<탭>-data.js`를 최소 diff로 Edit. 회계·거버넌스 이슈 기업은 즉시 제외하고 동일 섹터 대체주로 교체.
 4. **이력 prepend**: `data/<탭>-update.js` 맨 앞에 새 엔트리 추가 (아래 [update.js 누적 원칙] 참조).
 5. **캘린더 이벤트 점검**: 조사 중 발견한 향후 60일 안 알려진 일정(어닝·매크로·IPO·컨퍼런스)을 `data/calendar-events.js`의 `fixed` 배열에 append. 자세한 정책은 [캘린더 이벤트 운영] 참조.
+5-1. **🆕 이 주의 연결고리 (수요일만)**: 오늘이 수요일이면 `data/weekly-insight.js`를 갱신. 수요일이 아니면 건드리지 않는다. 자세한 정책은 아래 [이 주의 연결고리] 참조.
 6. **버전 갱신**: `data/version.js`의 `DATA_VERSION`을 VERSION 값으로 갱신.
 7. **커밋·푸시**: `데이터 자동 갱신 YYYY-MM-DD` 메시지로 `git add data/` + commit + `git push origin main`.
 
@@ -560,6 +562,38 @@ S&P500·나스닥 동반 신고가 - 실적 시즌 앞두고 위험선호 회복
 **Why:** 메인 캘린더가 update.js 자동 추출만으로는 빈 날이 많아 가치가 약함. recurring 패턴으로 매크로 정기 일정을 자동 채우고, fixed로 알려진 핵심 이벤트를 박아두면 14일 윈도우가 거의 매일 채워진다. 빈 평일을 의식적으로 점검하지 않으면 어닝 시즌 한가운데에도 캘린더가 듬성듬성 비어 보임.
 
 **How to apply:** 자동 갱신 에이전트가 조사 단계에서 향후 일정을 다룰 때, 종목 카드 `rs`에만 적지 말고 `data/calendar-events.js`의 `fixed` 배열에도 한 줄 추가. 한 사건이 여러 곳에 노출돼야 사용자가 만나는 채널(친구톡·캐러셀·캘린더) 모두에 일관되게 보인다. 특히 14일 윈도우 안 빈 평일이 보이면 그 날짜에 알려진 일정 후보(위 [빈 날짜 의식적 점검] 리스트)를 자동으로 한 번 더 확인.
+
+### 🆕 이 주의 연결고리 (data/weekly-insight.js)
+
+매주 수요일 07:00 KST 자동 갱신 시 생성·교체. **index.html 전용 — 친구톡·일간 업데이트와 완전히 분리.**
+
+**목적**: 사용자가 "몰랐던 자산 간 인과관계"를 매주 하나씩 배우는 코너. "왜 금리가 오르면 성장주가 내리나", "엔화 약세가 왜 삼성전자에 영향을 주나" 같은 연결고리. 뉴스 나열이 아니라 **메커니즘** 설명.
+
+**스키마**:
+```js
+const WEEKLY_INSIGHT = {
+  week: "2026-W32",           // ISO 주차 (겹침 방지용 key)
+  date: "2026-08-05",         // 해당 수요일 날짜
+  title: "...",               // 12단어 이내, 의문문 권장 ("왜 X면 Y가 내리나")
+  body: "...",                // 4~6문장. 일반인 눈높이. 메커니즘 → 사례 → 현재 관련성 순
+  assets: ["자산A", "자산B"], // 관련 자산·지표·섹터 2~4개
+};
+```
+
+**작성 기준**:
+- **의외성**: 이미 아는 상식(삼성전자가 반도체 기업) 말고, 두 자산의 연결이 비직관적일수록 좋다
+- **메커니즘 우선**: 가격이 얼마다가 아니라 "왜 그렇게 움직이는가"의 인과 설명
+- **현재 시장 연결**: 이번 주 실제 일어난 일과 연결되면 더 좋다 (단, 강제하지 않음)
+- **톤**: 친구에게 설명하듯. 전문 용어는 바로 풀어씀
+
+**금지**:
+- 친구톡 summary/changes에 weekly-insight 내용 언급 금지 (완전 분리)
+- 지난 주와 동일한 주제 반복 금지 (`week` 필드로 확인)
+- 예측·투자 조언 금지 ("지금 사야 한다" 류)
+
+**수요일이 아닌 날**: `data/weekly-insight.js` 건드리지 않는다. 파일이 없어도 사이트는 정상 동작(섹션 hidden).
+
+**커밋**: 다른 데이터 갱신과 같은 커밋에 포함 (`git add data/weekly-insight.js`).
 
 ### 🆕 기관급 톤 가이드 (institutional lens)
 

@@ -928,6 +928,20 @@ body.sub-modal-open{overflow:hidden}
 }
 .disclaimer{padding:24px;border-radius:14px;background:var(--warn-bg);color:var(--warn);font:500 13px/1.5 'Inter',sans-serif;margin-top:24px;border:1px solid #f3e3c0}
 
+/* ── 이 주의 연결고리 ── */
+.insight-card{
+  background:var(--panel-tint);border:1px solid var(--border-md);
+  border-left:3px solid var(--acc-deep);border-radius:12px;
+  padding:24px 28px;max-width:760px;
+}
+.insight-body{font:400 16px/1.75 'Inter',sans-serif;color:var(--fg2)}
+.insight-assets{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.insight-asset{
+  font:500 12px/1 'Geist Mono',monospace;padding:5px 11px;
+  background:var(--acc-soft);color:var(--acc-deep);border-radius:9999px;
+}
+@media(max-width:640px){.insight-card{padding:18px 20px}.insight-body{font-size:15px}}
+
 /* ── Why Subscribe (전환 섹션) ── */
 .why{text-align:center}
 .why .sec-label{margin-bottom:8px}
@@ -1130,6 +1144,24 @@ body.sub-modal-open{overflow:hidden}
     <span class="cal-legend-item"><span class="dot" style="background:#0ea5e9"></span>컨퍼런스</span>
     <span class="cal-legend-item"><span class="dot" style="background:var(--err)"></span>신제품·출시</span>
     <span class="cal-legend-item"><span class="dot" style="background:var(--mut2)"></span>기타</span>
+  </div>
+</section>
+
+<!-- 이 주의 연결고리 -->
+<section id="weeklyInsightSection" hidden>
+  <div class="sec-head">
+    <div>
+      <div class="sec-label">이 주의 연결고리</div>
+      <h2 class="sec-title" id="insightTitle"></h2>
+    </div>
+    <div class="sec-aside">
+      <span id="insightWeek"></span>
+      <span style="color:var(--mut2);font-size:11px">매주 수요일 업데이트</span>
+    </div>
+  </div>
+  <div class="insight-card">
+    <p class="insight-body" id="insightBody"></p>
+    <div class="insight-assets" id="insightAssets"></div>
   </div>
 </section>
 
@@ -1420,6 +1452,7 @@ const SUPABASE_FN_URL='https://ytvcgoldauysvnqckzze.supabase.co/functions/v1';
 const URLS={
   sectorPool:'/data/sector-pool.js',
   companyKo: '/data/company-ko.js',
+  weeklyInsight: '/data/weekly-insight.js',
 };
 const CALENDAR_URL='/data/calendar-events.js';
 const PRICES_URL='https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/prices/latest.json';
@@ -2928,6 +2961,44 @@ document.getElementById('expSearch').addEventListener('input',e=>{
 });
 
 // ═══════════════════════════════════════════════════════════
+// Weekly Insight
+// ═══════════════════════════════════════════════════════════
+async function loadWeeklyInsight(){
+  try{
+    const r=await fetch(URLS.weeklyInsight+'?_='+Date.now());
+    const t=await r.text();
+    return new Function(t+';return typeof WEEKLY_INSIGHT!=="undefined"?WEEKLY_INSIGHT:null;')();
+  }catch(e){ return null; }
+}
+
+function renderWeeklyInsight(insight){
+  if(!insight) return;
+  const sec=document.getElementById('weeklyInsightSection');
+  const titleEl=document.getElementById('insightTitle');
+  const bodyEl=document.getElementById('insightBody');
+  const assetsEl=document.getElementById('insightAssets');
+  const weekEl=document.getElementById('insightWeek');
+
+  titleEl.textContent=insight.title||'';
+  bodyEl.textContent=insight.body||'';
+
+  // 주차 레이블 계산 (예: "8월 2주차")
+  if(insight.date){
+    const d=new Date(insight.date);
+    const month=d.getMonth()+1;
+    const day=d.getDate();
+    const weekOfMonth=Math.ceil(day/7);
+    weekEl.textContent=`${month}월 ${weekOfMonth}주차`;
+  }
+
+  assetsEl.innerHTML=(insight.assets||[]).map(a=>
+    `<span class="insight-asset">${escapeHtml(a)}</span>`
+  ).join('');
+
+  sec.hidden=false;
+}
+
+// ═══════════════════════════════════════════════════════════
 // Boot
 // ═══════════════════════════════════════════════════════════
 async function loadCalendar(){
@@ -3063,6 +3134,8 @@ async function boot(){
   loadIndices().then(idx=>{ if(idx){ STATE.indices=idx; renderIndexWidget(idx); } }).catch(()=>{});
   // archive도 비차단 — 모달 mentions 깊이 ~30일 확장. 도착 전엔 main만으로 자연 폴백
   loadArchives().catch(e=>console.warn('archive 로딩 실패:',e));
+  // weekly insight — 비차단, 도착 시 바로 렌더
+  loadWeeklyInsight().then(insight=>renderWeeklyInsight(insight)).catch(()=>{});
 
   try{
     const [tabResp,pool,calendar,companyKo]=await Promise.all([
