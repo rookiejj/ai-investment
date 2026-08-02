@@ -1000,6 +1000,10 @@ body.sub-modal-open{overflow:hidden}
 .psc-outcome.up{color:#1fb872}
 .psc-outcome.down{color:#cc4040}
 .psc-outcome.push{color:var(--mut2)}
+.psc-mkt{font:600 11px/1.4 'Inter',sans-serif;padding:2px 7px;border-radius:4px;flex-shrink:0;white-space:nowrap}
+.psc-mkt.kr{background:#eef3ff;color:#2a4dbf}
+.psc-mkt.us{background:#fef3e8;color:#b35a00}
+.psc-made-time{font:500 12px/1 'Geist Mono',monospace;color:var(--mut2);margin-left:6px}
 
 /* ── Why Subscribe (전환 섹션) ── */
 .why{text-align:center}
@@ -1230,7 +1234,7 @@ body.sub-modal-open{overflow:hidden}
     <div>
       <div class="sec-label">Prediction scorecard</div>
       <h2 class="sec-title">예측 스코어카드</h2>
-      <p class="sec-desc">AI가 매일 종목 3개의 다음날 방향을 예측하고, 다음날 종가로 자동 채점합니다</p>
+      <p class="sec-desc">07:15 KST 예측 기준 · 🇰🇷 KR 장 전 2시간 · 🇺🇸 US 장 전 15시간 · 다음날 종가로 자동 채점</p>
     </div>
     <span id="pscAccuracy" class="psc-accuracy"></span>
   </div>
@@ -3112,15 +3116,30 @@ async function loadPredictionScorecard(){
   }catch(e){ return null; }
 }
 
+function _pscMarketCtx(market, madeStr){
+  // madeStr: "2026-07-30 07:15 KST" or "2026-07-30"
+  const hourMatch = madeStr && madeStr.match(/\s(\d{1,2}):\d{2}/);
+  const hour = hourMatch ? parseInt(hourMatch[1]) : null;
+  if(market==='KR'){
+    if(hour!==null&&hour<9)  return {cls:'kr',label:'🇰🇷 KR · 장 전'};
+    if(hour!==null&&hour>=15) return {cls:'kr',label:'🇰🇷 KR · 장 후'};
+    return {cls:'kr',label:'🇰🇷 KR'};
+  }
+  if(market==='US'){
+    // 07:xx and 19:xx KST are both before US open (22:30 KST)
+    if(hour!==null&&hour<22) return {cls:'us',label:'🇺🇸 US · 장 전'};
+    return {cls:'us',label:'🇺🇸 US'};
+  }
+  return {cls:'',label:market||''};
+}
+
 function renderPredictionScorecard(data){
   if(!data||!data.length) return;
 
-  // 채점 완료된 항목으로 적중률 계산
   let hits=0, total=0;
   data.forEach(entry=>entry.predictions.forEach(p=>{
     if(p.result==='hit'){ hits++; total++; }
-    else if(p.result==='miss'){ total++; }
-    else if(p.result==='push'){ total++; }
+    else if(p.result==='miss'||p.result==='push'){ total++; }
   }));
   const accEl=document.getElementById('pscAccuracy');
   if(total>0) accEl.textContent=`${hits}/${total} 적중 (${Math.round(hits/total*100)}%)`;
@@ -3129,8 +3148,14 @@ function renderPredictionScorecard(data){
   listEl.innerHTML=data.map(entry=>{
     const d=new Date(entry.date+'T00:00:00+09:00');
     const dateStr=`${d.getMonth()+1}월 ${d.getDate()}일`;
-    const madeD=new Date(entry.made+'T00:00:00+09:00');
-    const madeStr=`${madeD.getMonth()+1}/${madeD.getDate()} 예측`;
+
+    // made 시간 파싱 — "2026-07-30 07:15 KST" or "2026-07-30"
+    const madeDatePart=(entry.made||'').split(' ')[0];
+    const madeTimeMatch=entry.made&&entry.made.match(/(\d{1,2}:\d{2})\s*KST/);
+    const madeTimeStr=madeTimeMatch?madeTimeMatch[1]:null;
+    const madeD=new Date(madeDatePart+'T00:00:00+09:00');
+    const madeDateLabel=`${madeD.getMonth()+1}/${madeD.getDate()}`;
+
     const preds=entry.predictions;
     const scored=preds.filter(p=>p.result!==null);
     const entryHits=scored.filter(p=>p.result==='hit').length;
@@ -3139,16 +3164,16 @@ function renderPredictionScorecard(data){
     const isAllHit=!isPending&&entryHits===preds.length;
     const isAllMiss=!isPending&&entryMiss===preds.length;
 
-    const scoreLabel=scored.length===0
-      ?'채점 대기'
-      :isPending
-        ?`${entryHits}/${scored.length} 적중 (채점 중)`
-        :`${entryHits}/${preds.length} 적중`;
+    const scoreLabel=scored.length===0?'채점 대기'
+      :isPending?`${entryHits}/${scored.length} 적중 (채점 중)`
+      :`${entryHits}/${preds.length} 적중`;
     const scoreCls=scored.length===0?'pending':isAllHit?'all-hit':isAllMiss?'miss-all':'partial';
 
     const rows=preds.map(p=>{
-      const dirLabel=p.direction==='up'?'↑ 상승 예측':p.direction==='down'?'↓ 하락 예측':'→ 보합 예측';
+      const dirLabel=p.direction==='up'?'↑ 상승':p.direction==='down'?'↓ 하락':'→ 보합';
       const dirCls=p.direction==='up'?'up':p.direction==='down'?'down':'neutral';
+      const mkt=_pscMarketCtx(p.market, entry.made);
+      const mktBadge=mkt.label?`<span class="psc-mkt ${mkt.cls}">${mkt.label}</span>`:'';
       let verdictStr='채점 대기', verdictCls='pending';
       let outcomeStr='', outcomeCls='';
       if(p.result!==null){
@@ -3163,6 +3188,7 @@ function renderPredictionScorecard(data){
       return `<div class="psc-row">
         <div class="psc-row-top">
           <div class="psc-predict">
+            ${mktBadge}
             <span class="psc-dir-badge ${dirCls}">${dirLabel}</span>
             <span class="psc-ticker">${escapeHtml(p.label)}</span>
           </div>
@@ -3175,9 +3201,13 @@ function renderPredictionScorecard(data){
       </div>`;
     }).join('');
 
+    const madeLabel=madeTimeStr
+      ?`${madeDateLabel} <span class="psc-made-time">${madeTimeStr} KST 예측</span>`
+      :`${madeDateLabel} 예측`;
+
     return `<div class="psc-card">
       <div class="psc-card-head">
-        <span class="psc-card-date">${madeStr} → <strong>${dateStr}</strong> 결과</span>
+        <span class="psc-card-date">${madeLabel} → <strong>${dateStr}</strong> 결과</span>
         <span class="psc-card-score ${scoreCls}">${scoreLabel}</span>
       </div>
       <div class="psc-rows">${rows}</div>

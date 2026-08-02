@@ -2,6 +2,8 @@
 // 최신순, 최대 7건. 에이전트가 매일 prepend + 채점 + 트리밍.
 //
 // direction: "up" | "down" | "neutral"
+// market:    "KR" | "US"
+// made:      "YYYY-MM-DD HH:MM KST"  (예측 시각 — 07:xx = 한국 장 전, US 장 15시간 전)
 // result:    null(채점 전) | "hit" | "miss" | "push"
 //   hit  — 예측 방향과 실제 방향 일치 (|actual| ≥ 0.5%)
 //   miss — 예측 방향과 실제 방향 반대 (|actual| ≥ 0.5%)
@@ -9,11 +11,12 @@
 const PREDICTION_SCORECARD = [
   {
     date: "2026-07-31",
-    made: "2026-07-30",
+    made: "2026-07-30 07:15 KST",
     predictions: [
       {
         label: "삼성전자",
         ticker: "005930",
+        market: "KR",
         direction: "up",
         rationale: "블랙먼데이 과매도 구간 + 외국인 순매수 전환 기대",
         result: "hit",
@@ -22,6 +25,7 @@ const PREDICTION_SCORECARD = [
       {
         label: "NVDA",
         ticker: "NVDA",
+        market: "US",
         direction: "up",
         rationale: "Blackwell 출하 가속 + AI 인프라 CAPEX 사이클 유지",
         result: "hit",
@@ -30,6 +34,7 @@ const PREDICTION_SCORECARD = [
       {
         label: "MSFT",
         ticker: "MSFT",
+        market: "US",
         direction: "down",
         rationale: "달러 강세 환율 헤드윈드 + 클라우드 성장 컨센 하향 조정",
         result: "hit",

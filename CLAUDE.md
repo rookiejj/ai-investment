@@ -623,16 +623,17 @@ const DAILY_INSIGHTS = [
 ```js
 const PREDICTION_SCORECARD = [
   {
-    date: "2026-08-04",       // 예측 대상 날짜 (내일)
-    made: "2026-08-03",       // 예측 생성일 (오늘)
+    date: "2026-08-04",            // 예측 대상 날짜 — scores-predictions.js가 이 날짜로 채점
+    made: "2026-08-03 07:15 KST",  // 예측 생성 일시 (HH:MM KST 포함 — UI 타이밍 컨텍스트)
     predictions: [
       {
-        label: "삼성전자",     // 표시 이름
-        ticker: "005930",     // prices-snapshot 에서 채점에 쓸 ticker
-        direction: "up",      // "up" | "down" | "neutral"
-        rationale: "...",     // 근거 한 줄 (사용자에게 노출)
-        result: null,         // null | "hit" | "miss" | "push"
-        actual: null,         // 채점 후 실제 등락률(%)
+        label: "삼성전자",          // 표시 이름
+        ticker: "005930",          // prices-snapshot 에서 채점에 쓸 ticker
+        market: "KR",              // "KR" | "US" — UI에서 장 전/후 컨텍스트 표시
+        direction: "up",           // "up" | "down" | "neutral"
+        rationale: "...",          // 근거 한 줄 (사용자에게 노출)
+        result: null,              // null | "hit" | "miss" | "push"
+        actual: null,              // 채점 후 실제 등락률(%)
       },
       // 2개 더 (총 3건)
     ],
@@ -640,6 +641,12 @@ const PREDICTION_SCORECARD = [
   // 이전 항목들...
 ];
 ```
+
+**시장별 타이밍 컨텍스트 (UI 자동 표시)**:
+- `market: "KR"` + `made` 07:xx KST → "🇰🇷 KR · 장 전" (개장 09:00 KST까지 2시간)
+- `market: "KR"` + `made` 19:xx KST → "🇰🇷 KR · 장 후" (당일 장 마감 후)
+- `market: "US"` + `made` 07:xx KST → "🇺🇸 US · 장 전" (US 개장 22:30 KST까지 15시간)
+- `market: "US"` + `made` 19:xx KST → "🇺🇸 US · 장 전" (US 개장 22:30 KST까지 3.5시간)
 
 **채점 기준** (threshold ±0.5%):
 - 실제 등락률 ≥ +0.5% → "up"으로 분류: up예측=hit, down예측=miss, neutral=push
@@ -654,8 +661,10 @@ node scripts/score-predictions.js > /tmp/scored.js
 
 **② 예측 생성 단계** (오늘 예측 3건):
 - 예측 대상 날짜: 다음 거래일 (내일 또는 월요일)
+- `made`: `TZ=Asia/Seoul date '+%Y-%m-%d %H:%M KST'` 로 현재 시각 포함 (형식 엄수)
 - 반드시 prices-snapshot.json 에 있는 ticker 3개 선택 (자동 채점 가능해야 함)
-- 추천 조합: `005930`(KOSPI 대장) + `NVDA`(US AI 대표) + 오늘 테마 관련 1종목
+- 추천 조합: `005930`(KOSPI 대장, `market:"KR"`) + `NVDA`(US AI 대표, `market:"US"`) + 오늘 테마 관련 1종목
+- `market` 필드: KR = 6자리 숫자 ticker, US = 영문 대문자 ticker
 - `result: null`, `actual: null` 로 시작
 - 예측 근거(`rationale`)는 오늘 데이터 조사 결과 기반으로 한 줄
 
