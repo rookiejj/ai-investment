@@ -663,10 +663,23 @@ node scripts/score-predictions.js > /tmp/scored.js
 - 예측 대상 날짜: **오늘(KST)** — 07시 갱신은 KR 장 전(09:00), US 장 전(22:30) 모두 당일 세션이 타겟. 주말·휴장이면 다음 거래일.
 - `made`: `TZ=Asia/Seoul date '+%Y-%m-%d %H:%M KST'` 로 현재 시각 포함 (형식 엄수)
 - 반드시 prices-snapshot.json 에 있는 ticker 3개 선택 (자동 채점 가능해야 함)
-- 추천 조합: `005930`(KOSPI 대장, `market:"KR"`) + `NVDA`(US AI 대표, `market:"US"`) + 오늘 테마 관련 1종목
 - `market` 필드: KR = 6자리 숫자 ticker, US = 영문 대문자 ticker
 - `result: null`, `actual: null` 로 시작
 - 예측 근거(`rationale`)는 오늘 데이터 조사 결과 기반으로 한 줄
+
+**🔴 종목 선별 원칙 (매일 동적 선택 — 고정 종목 없음)**
+
+삼성전자·NVDA 등 특정 종목을 매일 고정으로 넣지 않는다. **오늘 데이터 조사를 마친 뒤, 그 결과에서 가장 임팩트 있었던 종목**을 동적으로 고른다.
+
+선별 우선순위 (이 순서로 판단):
+1. **오늘 조사에서 rs·summary·changes에 직접 다룬 종목** — 에이전트가 "오늘 가장 뜨겁다"고 이미 판단한 것이 가장 자연스러운 선택.
+2. **prices-snapshot.json 의 `|chg|` 상위 종목** — 전날 크게 움직인 종목은 모멘텀·반전 양방향으로 예측 근거가 생긴다. `node -e "const d=require('./data/prices-snapshot.json');const p=Object.entries(d.prices).sort((a,b)=>Math.abs(b[1].chg)-Math.abs(a[1].chg)).slice(0,10);p.forEach(([t,v])=>console.log(t,v.chg+'%'))"` 로 확인.
+3. **KR 1개 이상, US 1개 이상 반드시 포함** — 한쪽 시장만 3개 넣지 말 것.
+4. **7일 내 연속 등장 종목은 피하기** — `PREDICTION_SCORECARD` 배열의 최근 항목에서 반복 등장한 ticker는 제외하고 다른 종목으로. 다양성이 비교 가치를 높인다.
+
+**예측 확률(confidence score)은 출력하지 않는다**
+
+Claude의 자체 confidence 수치(예: "상승 확률 72%")는 캘리브레이션이 안 돼 숫자가 실제 적중률을 반영하지 못한다. 대신 **누적 실측 적중률이 확률 대리값**이 된다 — 30일+ 쌓이면 "상승 예측 적중률 68%" 같은 실측 기반 통계가 자동으로 나온다. 스코어카드 상단의 `hits/total` 표시가 그 역할을 한다.
 
 **트리밍**: prepend 후 7건 초과 시 제거 (daily-insight와 동일).
 
