@@ -484,7 +484,7 @@ const data = [
   },
   {
     "tag": "GLP-1·종양·로봇수술",
-    "title": "🧬 바이오·헤심케어",
+    "title": "🧬 바이오·헬스케어",
     "stocks": [
       {
         "nm": "Eli Lilly",

@@ -951,6 +951,23 @@ body.sub-modal-open{overflow:hidden}
   .insight-body p{font-size:15px}
 }
 
+/* ── 섹터 로테이션 ── */
+.sr-tabs{display:flex;gap:4px}
+.sr-tab{padding:4px 12px;border-radius:6px;font:500 12px/1 'Inter',sans-serif;border:1px solid var(--border-md);background:transparent;cursor:pointer;color:var(--mut2)}
+.sr-tab.sr-on{background:var(--acc-soft);color:var(--acc-deep);border-color:var(--acc-deep)}
+.sr-meta{font:400 11px/1 'Inter',sans-serif;color:var(--mut2);margin-bottom:14px}
+.sr-grid{display:flex;flex-direction:column;gap:5px}
+.sr-row{display:grid;grid-template-columns:128px 1fr 64px;gap:8px;align-items:center}
+.sr-name{font:500 12px/1.3 'Inter',sans-serif;color:var(--fg2);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sr-track{height:20px;background:var(--border-lt,#f0f0f0);border-radius:4px;overflow:hidden}
+.sr-fill{height:100%;border-radius:4px;transition:width .4s ease}
+.sr-fill.sr-up{background:#1fb872}
+.sr-fill.sr-dn{background:#cc4040}
+.sr-pct{font:600 12px/1 'Geist Mono',monospace;text-align:right}
+.sr-pct.sr-up{color:#1fb872}
+.sr-pct.sr-dn{color:#cc4040}
+@media(max-width:640px){.sr-row{grid-template-columns:96px 1fr 52px}.sr-name{font-size:11px}.sr-pct{font-size:11px}}
+
 /* ── Why Subscribe (전환 섹션) ── */
 .why{text-align:center}
 .why .sec-label{margin-bottom:8px}
@@ -1170,6 +1187,22 @@ body.sub-modal-open{overflow:hidden}
       <div class="insight-assets" id="insightAssets"></div>
     </div>
   </div>
+</section>
+
+<!-- 섹터 로테이션 -->
+<section id="sectorRotationSection" hidden>
+  <div class="sec-head">
+    <div class="sec-label">섹터 로테이션</div>
+    <div class="sec-aside" style="align-items:center;gap:12px">
+      <div class="sr-tabs">
+        <button class="sr-tab sr-on" data-tab="kr" onclick="switchSrTab('kr')">한국</button>
+        <button class="sr-tab" data-tab="us" onclick="switchSrTab('us')">미국</button>
+      </div>
+      <span id="srDate" style="color:var(--mut2);font-size:11px"></span>
+    </div>
+  </div>
+  <p class="sr-meta">전일 종가 기준 · 섹터 내 7종목 평균 등락률</p>
+  <div class="sr-grid" id="srBars"></div>
 </section>
 
 <!-- Sector Phase List + Stocks (merged) -->
@@ -1460,6 +1493,7 @@ const URLS={
   sectorPool:'/data/sector-pool.js',
   companyKo: '/data/company-ko.js',
   dailyInsight: '/data/daily-insight.js',
+  sectorRotation: '/data/sector-rotation.js',
 };
 const CALENDAR_URL='/data/calendar-events.js';
 const PRICES_URL='https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/prices/latest.json';
@@ -3008,6 +3042,62 @@ function selectDailyInsight(idx){
     .map(a=>`<span class="insight-asset">${escapeHtml(a)}</span>`).join('');
 }
 
+// Sector Rotation
+// ═══════════════════════════════════════════════════════════
+let _srData=null, _srTab='kr';
+
+async function loadSectorRotation(){
+  try{
+    const r=await fetch(URLS.sectorRotation+'?_='+Date.now());
+    const t=await r.text();
+    return new Function(t+';return typeof SECTOR_ROTATION!=="undefined"?SECTOR_ROTATION:null;')();
+  }catch(e){ return null; }
+}
+
+function renderSectorRotation(data){
+  if(!data||!data.length) return;
+  _srData=data;
+  document.getElementById('sectorRotationSection').hidden=false;
+  drawSrBars(_srTab);
+}
+
+function switchSrTab(tab){
+  _srTab=tab;
+  document.querySelectorAll('.sr-tab').forEach(el=>el.classList.toggle('sr-on',el.dataset.tab===tab));
+  drawSrBars(tab);
+}
+
+function drawSrBars(tab){
+  if(!_srData||!_srData.length) return;
+  const latest=_srData[0];
+  const prev=_srData[1]||null;
+  const sectors=latest[tab];
+  if(!sectors) return;
+
+  const d=new Date(latest.date);
+  document.getElementById('srDate').textContent=`${d.getMonth()+1}월 ${d.getDate()}일 기준`;
+
+  const entries=Object.entries(sectors).sort((a,b)=>b[1]-a[1]);
+  const maxAbs=Math.max(...entries.map(e=>Math.abs(e[1])),0.01);
+
+  document.getElementById('srBars').innerHTML=entries.map(([name,val])=>{
+    const cls=val>=0?'sr-up':'sr-dn';
+    const w=(Math.abs(val)/maxAbs*100).toFixed(1);
+    const pctStr=(val>0?'+':'')+val.toFixed(2)+'%';
+    let trend='';
+    if(prev&&prev[tab]&&prev[tab][name]!=null){
+      const diff=val-prev[tab][name];
+      if(diff>0.05) trend=' <span style="color:#1fb872;font-size:9px">▲</span>';
+      else if(diff<-0.05) trend=' <span style="color:#cc4040;font-size:9px">▼</span>';
+    }
+    return `<div class="sr-row">
+      <div class="sr-name">${escapeHtml(name)}${trend}</div>
+      <div class="sr-track"><div class="sr-fill ${cls}" style="width:${w}%"></div></div>
+      <div class="sr-pct ${cls}">${pctStr}</div>
+    </div>`;
+  }).join('');
+}
+
 // ═══════════════════════════════════════════════════════════
 // Boot
 // ═══════════════════════════════════════════════════════════
@@ -3146,6 +3236,8 @@ async function boot(){
   loadArchives().catch(e=>console.warn('archive 로딩 실패:',e));
   // daily insight — 비차단, 도착 시 바로 렌더
   loadDailyInsight().then(insights=>renderDailyInsights(insights)).catch(()=>{});
+  // sector rotation — 비차단
+  loadSectorRotation().then(data=>renderSectorRotation(data)).catch(()=>{});
 
   try{
     const [tabResp,pool,calendar,companyKo]=await Promise.all([
