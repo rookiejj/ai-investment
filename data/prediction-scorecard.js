@@ -11,6 +11,39 @@
 //   push — 실제 등락률이 ±0.5% 미만 (보합 = 승부 없음)
 const PREDICTION_SCORECARD = [
   {
+    date: "2026-08-03",
+    made: "2026-08-03 07:15 KST",
+    predictions: [
+      {
+        label: "SK하이닉스",
+        ticker: "000660",
+        market: "KR",
+        direction: "up",
+        rationale: "HBM3E 가격 20% 인상 계약 마무리 · HBM4 양산 확인 + 오너 매수 서포트",
+        result: null,
+        actual: null,
+      },
+      {
+        label: "기아",
+        ticker: "000270",
+        market: "KR",
+        direction: "up",
+        rationale: "8/4 미국 자동차 관세 25%→15% 발효 D-1 수혜 선반영 · 하이브리드 판매 모멘텀",
+        result: null,
+        actual: null,
+      },
+      {
+        label: "PLTR",
+        ticker: "PLTR",
+        market: "US",
+        direction: "up",
+        rationale: "오늘 마감 후 Q2 실적 D-day · 커머셜 AI ARR 40%+ 서사 컨센 선반영 기대",
+        result: null,
+        actual: null,
+      },
+    ],
+  },
+  {
     date: "2026-08-01",
     made: "2026-08-01 07:15 KST",
     predictions: [
