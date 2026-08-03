@@ -1267,27 +1267,6 @@ body.sub-modal-open{overflow:hidden}
   <div class="phase-list" id="healthList"></div>
 </section>
 
-<!-- 섹터 로테이션 -->
-<section id="sectorRotationSection" hidden>
-  <div class="sec-head">
-    <div>
-      <div class="sec-label">Daily sector returns</div>
-      <h2 class="sec-title">섹터 로테이션</h2>
-      <p class="sec-desc">시총 가중 섹터 평균 등락률 · 현재 시세 기준</p>
-    </div>
-  </div>
-  <div class="sr-panels">
-    <div>
-      <div class="sr-panel-label">한국</div>
-      <div class="sr-grid" id="srBarsKr"></div>
-    </div>
-    <div>
-      <div class="sr-panel-label">미국</div>
-      <div class="sr-grid" id="srBarsUs"></div>
-    </div>
-  </div>
-</section>
-
 <!-- ─── 시장 핀맵 — 섹터별 squarify 트리맵 ─── -->
 <section>
   <div class="sec-head">
@@ -1297,6 +1276,18 @@ body.sub-modal-open{overflow:hidden}
       <p class="sec-desc">셀 크기 = 시가총액 · 색상 = 오늘 등락률 · 시세 Yahoo Finance 15분 지연 · 장 시작 후 ~25분간 어제 종가 표시</p>
     </div>
     <div class="idx-meta" id="finmapMeta">불러오는 중…</div>
+  </div>
+  <div id="sectorRotationSection" hidden style="margin-bottom:20px">
+    <div class="sr-panels">
+      <div>
+        <div class="sr-panel-label">한국</div>
+        <div class="sr-grid" id="srBarsKr"></div>
+      </div>
+      <div>
+        <div class="sr-panel-label">미국</div>
+        <div class="sr-grid" id="srBarsUs"></div>
+      </div>
+    </div>
   </div>
   <div class="health-controls">
     <button class="health-tab on" data-fmap-market="kr">한국</button>
