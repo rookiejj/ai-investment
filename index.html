@@ -1250,28 +1250,6 @@ body.sub-modal-open{overflow:hidden}
   </div>
 </section>
 
-<!-- 섹터 로테이션 -->
-<section id="sectorRotationSection" hidden>
-  <div class="sec-head">
-    <div>
-      <div class="sec-label">Daily sector returns</div>
-      <h2 class="sec-title">섹터 로테이션</h2>
-      <p class="sec-desc">섹터 내 종목들의 당일 종가 기준 평균 등락률</p>
-    </div>
-    <span id="srDate" style="color:var(--mut2);font-size:11px;align-self:flex-end"></span>
-  </div>
-  <div class="sr-panels">
-    <div>
-      <div class="sr-panel-label">한국</div>
-      <div class="sr-grid" id="srBarsKr"></div>
-    </div>
-    <div>
-      <div class="sr-panel-label">미국</div>
-      <div class="sr-grid" id="srBarsUs"></div>
-    </div>
-  </div>
-</section>
-
 <!-- Sector Phase List + Stocks (merged) -->
 <section>
   <div class="sec-head">
@@ -1287,6 +1265,27 @@ body.sub-modal-open{overflow:hidden}
     <input class="exp-search" id="expSearch" placeholder="티커·기업명·키워드로 검색" />
   </div>
   <div class="phase-list" id="healthList"></div>
+</section>
+
+<!-- 섹터 로테이션 -->
+<section id="sectorRotationSection" hidden>
+  <div class="sec-head">
+    <div>
+      <div class="sec-label">Daily sector returns</div>
+      <h2 class="sec-title">섹터 로테이션</h2>
+      <p class="sec-desc">시총 가중 섹터 평균 등락률 · 현재 시세 기준</p>
+    </div>
+  </div>
+  <div class="sr-panels">
+    <div>
+      <div class="sr-panel-label">한국</div>
+      <div class="sr-grid" id="srBarsKr"></div>
+    </div>
+    <div>
+      <div class="sr-panel-label">미국</div>
+      <div class="sr-grid" id="srBarsUs"></div>
+    </div>
+  </div>
 </section>
 
 <!-- ─── 시장 핀맵 — 섹터별 squarify 트리맵 ─── -->
@@ -1560,7 +1559,6 @@ const URLS={
   sectorPool:'/data/sector-pool.js',
   companyKo: '/data/company-ko.js',
   dailyInsight: '/data/daily-insight.js',
-  sectorRotation: '/data/sector-rotation.js',
   predictionScorecard: '/data/prediction-scorecard.js',
 };
 const CALENDAR_URL='/data/calendar-events.js';
@@ -3221,48 +3219,63 @@ function _selectPscEntry(idx){
 
 // Sector Rotation
 // ═══════════════════════════════════════════════════════════
-let _srData=null;
-
-async function loadSectorRotation(){
-  try{
-    const r=await fetch(URLS.sectorRotation+'?_='+Date.now());
-    const t=await r.text();
-    return new Function(t+';return typeof SECTOR_ROTATION!=="undefined"?SECTOR_ROTATION:null;')();
-  }catch(e){ return null; }
-}
-
-function renderSectorRotation(data){
-  if(!data||!data.length) return;
-  _srData=data;
-  const latest=data[0], prev=data[1]||null;
-  const d=new Date(latest.date);
-  document.getElementById('srDate').textContent=`${d.getMonth()+1}월 ${d.getDate()}일 기준`;
-  _drawSrPanel('kr', latest, prev);
-  _drawSrPanel('us', latest, prev);
-  document.getElementById('sectorRotationSection').hidden=false;
-}
-
-function _drawSrPanel(tab, latest, prev){
-  const sectors=latest[tab];
-  if(!sectors) return;
-  const entries=Object.entries(sectors).sort((a,b)=>b[1]-a[1]);
-  const maxAbs=Math.max(...entries.map(e=>Math.abs(e[1])),0.01);
-  document.getElementById(tab==='kr'?'srBarsKr':'srBarsUs').innerHTML=entries.map(([name,val])=>{
-    const cls=val>=0?'sr-up':'sr-dn';
-    const w=(Math.abs(val)/maxAbs*100).toFixed(1);
-    const pctStr=(val>0?'+':'')+val.toFixed(2)+'%';
-    let trend='';
-    if(prev&&prev[tab]&&prev[tab][name]!=null){
-      const diff=val-prev[tab][name];
-      if(diff>0.05) trend=' <span style="color:#1fb872;font-size:9px">▲</span>';
-      else if(diff<-0.05) trend=' <span style="color:#cc4040;font-size:9px">▼</span>';
+function renderSectorRotationLive(){
+  const markets=[{key:'kr',panelId:'srBarsKr'},{key:'stocks',panelId:'srBarsUs'}];
+  let anyData=false;
+  for(const {key,panelId} of markets){
+    const cats=STATE.data[key];
+    if(!cats||!cats.length) continue;
+    const poolMarket=STATE.pool?.[key]||{};
+    const allCurated=STATE.allCurated?.[key]||{};
+    const sectors=[];
+    for(const cat of cats){
+      const stocks=cat.stocks||[];
+      const poolTks=poolMarket[cat.title];
+      let displayTks;
+      if(poolTks&&poolTks.length){
+        const candidates=poolTks
+          .map(tk=>({tk,mc:Number(STATE.prices?.[tk]?.marketCap||0)}))
+          .filter(c=>c.mc>0).sort((a,b)=>b.mc-a.mc);
+        displayTks=candidates.slice(0,7).map(c=>c.tk);
+        if(displayTks.length<7){
+          for(const s of stocks){
+            if(!displayTks.includes(s.tk)) displayTks.push(s.tk);
+            if(displayTks.length>=7) break;
+          }
+        }
+      } else {
+        displayTks=stocks.map(s=>s.tk);
+      }
+      const curated=new Map(stocks.map(s=>[s.tk,s]));
+      let wSum=0,vSum=0;
+      for(const tk of displayTks){
+        const c=curated.get(tk);
+        const xc=allCurated[tk];
+        const px=STATE.prices?.[tk];
+        const chg=(px&&px.changePct!=null)?Number(px.changePct):null;
+        const mcap=(px&&px.marketCap)?Number(px.marketCap):null;
+        const r2=c?parseFloat(c.r2):(xc?parseFloat(xc.r2):0);
+        const w=Math.sqrt(mcap!=null?mcap:(r2>0?r2:0.5));
+        if(chg!=null){wSum+=w;vSum+=w*chg;}
+      }
+      if(wSum>0) sectors.push({name:cat.title,avg:vSum/wSum});
     }
-    return `<div class="sr-row">
-      <div class="sr-name">${escapeHtml(name)}${trend}</div>
-      <div class="sr-track"><div class="sr-fill ${cls}" style="width:${w}%"></div></div>
-      <div class="sr-pct ${cls}">${pctStr}</div>
-    </div>`;
-  }).join('');
+    if(!sectors.length) continue;
+    anyData=true;
+    sectors.sort((a,b)=>b.avg-a.avg);
+    const maxAbs=Math.max(...sectors.map(s=>Math.abs(s.avg)),0.01);
+    document.getElementById(panelId).innerHTML=sectors.map(({name,avg})=>{
+      const cls=avg>=0?'sr-up':'sr-dn';
+      const w=(Math.abs(avg)/maxAbs*100).toFixed(1);
+      const pctStr=(avg>0?'+':'')+avg.toFixed(2)+'%';
+      return `<div class="sr-row">
+        <div class="sr-name">${escapeHtml(name)}</div>
+        <div class="sr-track"><div class="sr-fill ${cls}" style="width:${w}%"></div></div>
+        <div class="sr-pct ${cls}">${pctStr}</div>
+      </div>`;
+    }).join('');
+  }
+  if(anyData) document.getElementById('sectorRotationSection').hidden=false;
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -3377,7 +3390,7 @@ function startPricePolling(){
     if(Object.keys(fresh).length){
       STATE.prices=fresh;
       if(STATE.data[STATE.healthMarket]) renderHealth();
-      renderFinmap();
+      renderFinmap(); renderSectorRotationLive();
     }
     if(freshIdx){ STATE.indices=freshIdx; renderIndexWidget(freshIdx); }
     updateHeroTimeLabel();
@@ -3405,8 +3418,6 @@ async function boot(){
   loadDailyInsight().then(insights=>renderDailyInsights(insights)).catch(()=>{});
   // prediction scorecard — 비차단
   loadPredictionScorecard().then(data=>renderPredictionScorecard(data)).catch(()=>{});
-  // sector rotation — 비차단
-  loadSectorRotation().then(data=>renderSectorRotation(data)).catch(()=>{});
 
   try{
     const [tabResp,pool,calendar,companyKo]=await Promise.all([
@@ -3444,7 +3455,7 @@ async function boot(){
     buildNarrative();
     renderCalendar();
     renderHealth();
-    renderFinmap();
+    renderFinmap(); renderSectorRotationLive();
     renderPulse();
   }catch(e){
     console.error('boot error:',e);
@@ -3455,7 +3466,7 @@ async function boot(){
   pricesPromise.then(prices=>{
     STATE.prices=prices;
     if(STATE.data[STATE.healthMarket]) renderHealth();
-    renderFinmap();
+    renderFinmap(); renderSectorRotationLive();
     startPricePolling();
   });
 
