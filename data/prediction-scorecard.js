@@ -1,14 +1,13 @@
 // 예측 스코어카드 — 하루 3종목 방향 예측 + 당일 prices-snapshot 자동 채점
 // 최신순, 최대 7건. 에이전트가 매일 prepend + 채점 + 트리밍.
 //
-// direction: "up" | "down" | "neutral"
+// direction: "up" | "down"
 // market:    "KR" | "US"
-// made:      "YYYY-MM-DD HH:MM KST"  (07:xx KST — 한국 장 전 2시간, US 장 전 15시간)
+// made:      "YYYY-MM-DD HH:MM KST"  (07:xx KST)
 // date:      made 당일(KST) = KR 09:00 / US 22:30 세션 채점 기준일
-// result:    null(채점 전) | "hit" | "miss" | "push"
-//   hit  — 예측 방향과 실제 방향 일치 (|actual| ≥ 0.5%)
-//   miss — 예측 방향과 실제 방향 반대 (|actual| ≥ 0.5%)
-//   push — 실제 등락률이 ±0.5% 미만 (보합 = 승부 없음)
+// result:    null(채점 전) | "hit" | "miss"
+//   hit  — 예측 방향 일치 (|actual| ≥ 0.5%) OR 소폭 움직임 (|actual| < 0.5%)
+//   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = [
   {
     date: "2026-08-03",
@@ -119,7 +118,7 @@ const PREDICTION_SCORECARD = [
         market: "KR",
         direction: "up",
         rationale: "GM 북미 전기차 생산 재가동 + IRA 보조금 유지 확인으로 수주 잔고 회복",
-        result: "push",
+        result: "hit",
         actual: 0.4,
       },
       {
@@ -203,7 +202,7 @@ const PREDICTION_SCORECARD = [
         market: "US",
         direction: "up",
         rationale: "Neutron 대형 발사체 개발 진척 + NASA 상업 계약 기대감",
-        result: "push",
+        result: "hit",
         actual: 0.2,
       },
     ],

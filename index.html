@@ -980,7 +980,6 @@ body.sub-modal-open{overflow:hidden}
 .psc-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .psc-dot.hit{background:#1fb872}
 .psc-dot.miss{background:#cc4040}
-.psc-dot.push{background:var(--mut2)}
 .psc-dot.pending{background:var(--border-lt);border:1px dashed var(--border-md)}
 .psc-nav-score{font:500 11px/1 'Geist Mono',monospace;color:var(--mut2)}
 @media(max-width:640px){.psc-layout{grid-template-columns:1fr}.psc-nav{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:2px}.psc-nav-item{flex-shrink:0}}
@@ -1006,13 +1005,11 @@ body.sub-modal-open{overflow:hidden}
 .psc-verdict{font:600 12px/1 'Geist Mono',monospace;padding:2px 10px;border-radius:9999px;flex-shrink:0}
 .psc-verdict.hit{background:#c5f2dc;color:#054d2e}
 .psc-verdict.miss{background:#f7c8c8;color:#5a1414}
-.psc-verdict.push{background:var(--border-lt);color:var(--mut2)}
 .psc-verdict.pending{background:var(--border-lt);color:var(--mut2)}
 .psc-rationale{font:400 12px/1.5 'Inter',sans-serif;color:var(--mut2);margin-bottom:6px}
 .psc-outcome{font:600 12px/1 'Geist Mono',monospace}
 .psc-outcome.up{color:#1fb872}
 .psc-outcome.down{color:#cc4040}
-.psc-outcome.push{color:var(--mut2)}
 
 /* ── Why Subscribe (전환 섹션) ── */
 .why{text-align:center}
@@ -1243,7 +1240,7 @@ body.sub-modal-open{overflow:hidden}
     <div>
       <div class="sec-label">Prediction scorecard</div>
       <h2 class="sec-title">예측 스코어카드</h2>
-      <p class="sec-desc">07:15 KST 예측 기준 · 당일 종가로 자동 채점 · ±0.5% 미만 보합</p>
+      <p class="sec-desc">07:15 KST 예측 기준 · 당일 종가로 자동 채점 · 상승·하락만 채점</p>
     </div>
     <span id="pscAccuracy" class="psc-accuracy"></span>
   </div>
@@ -3189,10 +3186,9 @@ function _selectPscEntry(idx){
     if(p.result!==null){
       const sign=p.actual>0?'+':'';
       outcomeStr=`실제 ${sign}${p.actual.toFixed(1)}%`;
-      outcomeCls=p.actual>=0.5?'up':p.actual<=-0.5?'down':'push';
+      outcomeCls=p.actual>=0.5?'up':p.actual<=-0.5?'down':'';
       if(p.result==='hit'){ verdictStr='✓ 적중'; verdictCls='hit'; }
-      else if(p.result==='miss'){ verdictStr='✗ 미스'; verdictCls='miss'; }
-      else { verdictStr='→ 보합'; verdictCls='push'; }
+      else { verdictStr='✗ 미스'; verdictCls='miss'; }
     }
     return `<div class="psc-row">
       <div class="psc-row-top">

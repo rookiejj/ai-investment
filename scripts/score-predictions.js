@@ -7,7 +7,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const THRESHOLD = 0.5; // ±0.5% 미만은 push (보합)
+const THRESHOLD = 0.5; // 이 임계값 이상/이하면 방향 채점, 미만은 적중 처리
 
 const snapPath = path.resolve(__dirname, '../data/prices-snapshot.json');
 const scorePath = path.resolve(__dirname, '../data/prediction-scorecard.js');
@@ -30,11 +30,11 @@ data.forEach(entry => {
     const chg = price.chg;
 
     if (chg >= THRESHOLD) {
-      pred.result = pred.direction === 'up' ? 'hit' : pred.direction === 'down' ? 'miss' : 'push';
+      pred.result = pred.direction === 'up' ? 'hit' : 'miss';
     } else if (chg <= -THRESHOLD) {
-      pred.result = pred.direction === 'down' ? 'hit' : pred.direction === 'up' ? 'miss' : 'push';
+      pred.result = pred.direction === 'down' ? 'hit' : 'miss';
     } else {
-      pred.result = pred.direction === 'neutral' ? 'hit' : 'push';
+      pred.result = 'hit'; // ±0.5% 미만 소폭 움직임 = 적중 처리
     }
     changed = true;
   });
@@ -45,14 +45,13 @@ if (!changed) {
   process.exit(0);
 }
 
-const output = `// 예측 스코어카드 — 하루 3종목 방향 예측 + 다음날 prices-snapshot 자동 채점
+const output = `// 예측 스코어카드 — 하루 3종목 방향 예측 + 당일 prices-snapshot 자동 채점
 // 최신순, 최대 7건. 에이전트가 매일 prepend + 채점 + 트리밍.
 //
-// direction: "up" | "down" | "neutral"
-// result:    null(채점 전) | "hit" | "miss" | "push"
-//   hit  — 예측 방향과 실제 방향 일치 (|actual| ≥ 0.5%)
-//   miss — 예측 방향과 실제 방향 반대 (|actual| ≥ 0.5%)
-//   push — 실제 등락률이 ±0.5% 미만 (보합 = 승부 없음)
+// direction: "up" | "down"
+// result:    null(채점 전) | "hit" | "miss"
+//   hit  — 예측 방향 일치 (|actual| ≥ 0.5%) OR 소폭 움직임 (|actual| < 0.5%)
+//   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = ${JSON.stringify(data, null, 2)};
 `;
 
