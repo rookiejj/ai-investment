@@ -3180,8 +3180,9 @@ function _selectPscEntry(idx){
   const scoreCls=scored.length===0?'pending':isAllHit?'all-hit':isAllMiss?'miss-all':'partial';
 
   const rows=preds.map(p=>{
-    const dirLabel=p.direction==='up'?'↑ 상승':p.direction==='down'?'↓ 하락':'→ 보합';
-    const dirCls=p.direction==='up'?'up':p.direction==='down'?'down':'neutral';
+    const dirLabel=p.direction==='up'?'↑ 상승':'↓ 하락';
+    const dirCls=p.direction==='up'?'up':'down';
+    const koName=p.market==='US'?(COMPANY_KO[p.ticker]||p.label):p.label;
     let verdictStr='채점 대기', verdictCls='pending', outcomeStr='', outcomeCls='';
     if(p.result!==null){
       const sign=p.actual>0?'+':'';
@@ -3194,7 +3195,7 @@ function _selectPscEntry(idx){
       <div class="psc-row-top">
         <div class="psc-predict">
           <span class="psc-dir-badge ${dirCls}">${dirLabel}</span>
-          <span class="psc-ticker">${escapeHtml(p.label)}</span>
+          <span class="psc-ticker">${escapeHtml(koName)}</span>
         </div>
         <div class="psc-row-result">
           <span class="psc-verdict ${verdictCls}">${verdictStr}</span>

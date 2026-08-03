@@ -627,12 +627,12 @@ const PREDICTION_SCORECARD = [
     made: "2026-08-03 07:15 KST",  // 예측 생성 일시 (HH:MM KST 포함 — UI 타이밍 컨텍스트)
     predictions: [
       {
-        label: "삼성전자",          // 표시 이름
+        label: "삼성전자",          // KR: 한글 종목명 / US: 티커 (UI는 COMPANY_KO 한글명으로 자동 변환)
         ticker: "005930",          // prices-snapshot 에서 채점에 쓸 ticker
-        market: "KR",              // "KR" | "US" — UI에서 장 전/후 컨텍스트 표시
-        direction: "up",           // "up" | "down" | "neutral"
+        market: "KR",              // "KR" | "US"
+        direction: "up",           // "up" | "down"  (neutral 없음)
         rationale: "...",          // 근거 한 줄 (사용자에게 노출)
-        result: null,              // null | "hit" | "miss" | "push"
+        result: null,              // null | "hit" | "miss"  (push 없음)
         actual: null,              // 채점 후 실제 등락률(%)
       },
       // 2개 더 (총 3건)
@@ -642,16 +642,10 @@ const PREDICTION_SCORECARD = [
 ];
 ```
 
-**시장별 타이밍 컨텍스트 (UI 자동 표시)**:
-- `market: "KR"` + `made` 07:xx KST → "🇰🇷 KR · 장 전" (개장 09:00 KST까지 2시간)
-- `market: "KR"` + `made` 19:xx KST → "🇰🇷 KR · 장 후" (당일 장 마감 후)
-- `market: "US"` + `made` 07:xx KST → "🇺🇸 US · 장 전" (US 개장 22:30 KST까지 15시간)
-- `market: "US"` + `made` 19:xx KST → "🇺🇸 US · 장 전" (US 개장 22:30 KST까지 3.5시간)
-
-**채점 기준** (threshold ±0.5%):
-- 실제 등락률 ≥ +0.5% → "up"으로 분류: up예측=hit, down예측=miss, neutral=push
-- 실제 등락률 ≤ -0.5% → "down"으로 분류: down예측=hit, up예측=miss, neutral=push
-- 실제 등락률 -0.5%~+0.5% → "보합": neutral예측=hit, 나머지=push
+**채점 기준**:
+- 실제 등락률 ≥ +0.5% → up예측=hit, down예측=miss
+- 실제 등락률 ≤ -0.5% → down예측=hit, up예측=miss
+- 실제 등락률 -0.5%~+0.5% (소폭) → 방향 무관 **hit** (보합·push 없음)
 
 **① 채점 단계** (매일 실행):
 ```bash
