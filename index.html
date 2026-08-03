@@ -968,8 +968,6 @@ body.sub-modal-open{overflow:hidden}
 
 /* ── 예측 스코어카드 ── */
 .psc-accuracy{font:600 13px/1 'Geist Mono',monospace;color:var(--acc-deep)}
-.psc-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px}
-.psc-legend-item{display:flex;align-items:center;gap:5px;font:400 12px/1 'Inter',sans-serif;color:var(--mut2)}
 /* layout */
 .psc-layout{display:grid;grid-template-columns:156px 1fr;gap:16px;align-items:start}
 .psc-nav{display:flex;flex-direction:column;gap:3px}
@@ -1015,10 +1013,6 @@ body.sub-modal-open{overflow:hidden}
 .psc-outcome.up{color:#1fb872}
 .psc-outcome.down{color:#cc4040}
 .psc-outcome.push{color:var(--mut2)}
-.psc-mkt{font:600 11px/1.4 'Inter',sans-serif;padding:2px 7px;border-radius:4px;flex-shrink:0;white-space:nowrap}
-.psc-mkt.kr{background:#eef3ff;color:#2a4dbf}
-.psc-mkt.us{background:#fef3e8;color:#b35a00}
-.psc-made-time{font:500 12px/1 'Geist Mono',monospace;color:var(--mut2);margin-left:6px}
 
 /* ── Why Subscribe (전환 섹션) ── */
 .why{text-align:center}
@@ -1249,14 +1243,9 @@ body.sub-modal-open{overflow:hidden}
     <div>
       <div class="sec-label">Prediction scorecard</div>
       <h2 class="sec-title">예측 스코어카드</h2>
-      <p class="sec-desc">07:15 KST 예측 기준 · 🇰🇷 KR 장 전 2시간 · 🇺🇸 US 장 전 15시간 · 다음날 종가로 자동 채점</p>
+      <p class="sec-desc">07:15 KST 예측 기준 · 당일 종가로 자동 채점 · ±0.5% 미만 보합</p>
     </div>
     <span id="pscAccuracy" class="psc-accuracy"></span>
-  </div>
-  <div class="psc-legend">
-    <span class="psc-legend-item"><span style="background:#c5f2dc;color:#054d2e;font:600 11px/1.4 Inter,sans-serif;padding:1px 7px;border-radius:4px">✓ 적중</span> 예측 방향과 실제 일치 (±0.5% 이상)</span>
-    <span class="psc-legend-item"><span style="background:#f7c8c8;color:#5a1414;font:600 11px/1.4 Inter,sans-serif;padding:1px 7px;border-radius:4px">✗ 미스</span> 예측 반대 방향으로 움직임</span>
-    <span class="psc-legend-item"><span style="background:var(--border-lt);color:var(--mut2);font:600 11px/1.4 Inter,sans-serif;padding:1px 7px;border-radius:4px">→ 보합</span> 등락률 ±0.5% 미만 (무승부)</span>
   </div>
   <div class="psc-layout">
     <nav class="psc-nav" id="pscNav"></nav>
@@ -3134,20 +3123,6 @@ async function loadPredictionScorecard(){
   }catch(e){ return null; }
 }
 
-function _pscMarketCtx(market, madeStr){
-  const hourMatch=madeStr&&madeStr.match(/\s(\d{1,2}):\d{2}/);
-  const hour=hourMatch?parseInt(hourMatch[1]):null;
-  if(market==='KR'){
-    if(hour!==null&&hour<9)   return {cls:'kr',label:'🇰🇷 KR · 장 전'};
-    if(hour!==null&&hour>=15) return {cls:'kr',label:'🇰🇷 KR · 장 후'};
-    return {cls:'kr',label:'🇰🇷 KR'};
-  }
-  if(market==='US'){
-    if(hour!==null&&hour<22) return {cls:'us',label:'🇺🇸 US · 장 전'};
-    return {cls:'us',label:'🇺🇸 US'};
-  }
-  return {cls:'',label:market||''};
-}
 
 let _pscData=null;
 
@@ -3161,7 +3136,7 @@ function renderPredictionScorecard(data){
     else if(p.result==='miss'||p.result==='push'){ total++; }
   }));
   const accEl=document.getElementById('pscAccuracy');
-  if(total>0) accEl.textContent=`${hits}/${total} 적중 (${Math.round(hits/total*100)}%)`;
+  if(total>0) accEl.textContent=`7일간 적중률 ${Math.round(hits/total*100)}%`;
 
   // 날짜 리스트
   const navEl=document.getElementById('pscNav');
@@ -3210,8 +3185,6 @@ function _selectPscEntry(idx){
   const rows=preds.map(p=>{
     const dirLabel=p.direction==='up'?'↑ 상승':p.direction==='down'?'↓ 하락':'→ 보합';
     const dirCls=p.direction==='up'?'up':p.direction==='down'?'down':'neutral';
-    const mkt=_pscMarketCtx(p.market,entry.made);
-    const mktBadge=mkt.label?`<span class="psc-mkt ${mkt.cls}">${mkt.label}</span>`:'';
     let verdictStr='채점 대기', verdictCls='pending', outcomeStr='', outcomeCls='';
     if(p.result!==null){
       const sign=p.actual>0?'+':'';
@@ -3224,7 +3197,6 @@ function _selectPscEntry(idx){
     return `<div class="psc-row">
       <div class="psc-row-top">
         <div class="psc-predict">
-          ${mktBadge}
           <span class="psc-dir-badge ${dirCls}">${dirLabel}</span>
           <span class="psc-ticker">${escapeHtml(p.label)}</span>
         </div>
