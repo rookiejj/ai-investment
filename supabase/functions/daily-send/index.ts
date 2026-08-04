@@ -41,9 +41,7 @@ type Subscriber = { id: string; phone: string; name: string | null };
 const TABS: Tab[] = [
   { id: "kr",        emoji: "🇰🇷", label: "한국 마켓" },
   { id: "stocks",    emoji: "🇺🇸", label: "미국 마켓" },
-  { id: "ai",        emoji: "🤖", label: "AI 기업" },
   { id: "commodity", emoji: "🛢️", label: "원자재·크립토" },
-  { id: "unicorn",   emoji: "🦄", label: "유니콘" },
 ];
 
 // ═══ 영문 회사명·티커 → 한글 치환 ═════════════════════
@@ -83,6 +81,37 @@ function localizeText(text: string): string {
     r = r.replace(new RegExp("(?<![A-Za-z0-9])" + esc + "(?![A-Za-z0-9])", "g"), ko);
   }
   return r;
+}
+
+// ═══ 오늘의 연결고리 (data/daily-insight.js) ══════════════
+// 최신 항목 title 1건만 가져와 메시지 말미 티저로 노출.
+// 실패 시 null → 티저 블록 없이 조용히 skip.
+
+type DailyInsight = { title: string; body: string };
+
+async function loadDailyInsight(): Promise<DailyInsight | null> {
+  try {
+    const url = GITHUB_TOKEN
+      ? `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/data/daily-insight.js?ref=${GITHUB_BRANCH}`
+      : `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/data/daily-insight.js`;
+    const headers: Record<string, string> = {};
+    if (GITHUB_TOKEN) {
+      headers["Authorization"] = `token ${GITHUB_TOKEN}`;
+      headers["Accept"] = "application/vnd.github.raw";
+    }
+    const res = await fetch(url, { headers });
+    if (!res.ok) throw new Error(`status=${res.status}`);
+    const src = await res.text();
+    const insights = new Function(
+      `${src};return typeof DAILY_INSIGHTS!=="undefined"?DAILY_INSIGHTS:[];`
+    )() as Array<{ date: string; title: string; body: string }>;
+    const latest = insights[0];
+    if (!latest?.title) return null;
+    return { title: latest.title, body: latest.body ?? "" };
+  } catch (e) {
+    console.warn("[warn] daily-insight load failed, teaser skipped", e);
+    return null;
+  }
 }
 
 // ═══ 오늘의 주요 일정 (data/calendar-events.js) ════════════
@@ -236,17 +265,31 @@ function buildTabBlock(tab: TabWithEntries): string {
   // 제목 아래 빈 줄 + 글머리표 사이마다 빈 줄(\n\n)로 가독성 확보
   return [`${tab.emoji} ${tab.label}`, "", bullets.join("\n\n")].join("\n");
 }
-function buildMessage(tabs: TabWithEntries[], scheduleBlock = ""): string {
+// body에서 첫 단락(첫 \n\n 이전)을 추출해 말줄임표 처리
+function firstParagraph(body: string, maxLen = 120): string {
+  const para = (body ?? "").split("\n\n")[0].trim();
+  if (para.length <= maxLen) return para;
+  // 마지막 마침표·물음표 뒤에서 자르기
+  const cut = para.slice(0, maxLen);
+  const lastPunct = Math.max(cut.lastIndexOf("다."), cut.lastIndexOf("요?"), cut.lastIndexOf("요."));
+  return lastPunct > 60 ? para.slice(0, lastPunct + 2) + ".." : cut.trimEnd() + "..";
+}
+function buildInsightBlock(insight: DailyInsight): string {
+  const preview = firstParagraph(insight.body);
+  return [`📚 투자 지식 +1`, insight.title, "", preview].join("\n");
+}
+function buildMessage(tabs: TabWithEntries[], scheduleBlock = "", insight: DailyInsight | null = null): string {
   const parts = [`📊 브리픽 · ${kstDateLabel()}`];
   if (scheduleBlock) parts.push(scheduleBlock);
   for (const t of tabs) if (t.entries.length) parts.push(buildTabBlock(t));
+  if (insight) parts.push(buildInsightBlock(insight));
   return parts.join("\n\n");
 }
 
 // 합산이 한도 초과 시 모든 탭 보존하며 줄 단위로 균등 cut.
 // 각 탭에 동일 budget 분배 → 한도 초과한 탭은 끝 줄부터 제거 (중간 자르기·"…" 없음)
-function fitToLimit(tabs: TabWithEntries[], max: number, scheduleBlock = ""): string {
-  const full = buildMessage(tabs, scheduleBlock);
+function fitToLimit(tabs: TabWithEntries[], max: number, scheduleBlock = "", insight: DailyInsight | null = null): string {
+  const full = buildMessage(tabs, scheduleBlock, insight);
   if (full.length <= max) return full;
   const valid = tabs.filter((t) => t.entries.length > 0);
   if (!valid.length) return full;
@@ -255,9 +298,10 @@ function fitToLimit(tabs: TabWithEntries[], max: number, scheduleBlock = ""): st
   const headerLen = header.length;
   const sepLen = 2; // "\n\n"
   const scheduleLen = scheduleBlock ? scheduleBlock.length + sepLen : 0;
+  const insightLen = insight ? buildInsightBlock(insight).length + sepLen : 0;
   const tabHeaderLen = valid.map((t) => `${t.emoji} ${t.label}\n\n`.length);
   const tabHeaderTotal = tabHeaderLen.reduce((a, b) => a + b, 0);
-  const remaining = max - headerLen - scheduleLen - sepLen * valid.length - tabHeaderTotal;
+  const remaining = max - headerLen - scheduleLen - insightLen - sepLen * valid.length - tabHeaderTotal;
   if (remaining <= 0) return full.slice(0, max);
 
   // 1차 패스: 탭별 평균 budget 적용
@@ -304,7 +348,7 @@ function fitToLimit(tabs: TabWithEntries[], max: number, scheduleBlock = ""): st
     ...t,
     entries: [{ ...t.entries[0], summary: taken[i].join("\n") }],
   }));
-  return buildMessage(trimmedTabs, scheduleBlock);
+  return buildMessage(trimmedTabs, scheduleBlock, insight);
 }
 
 // 알리고는 SOLAPI와 달리 표준화된 실패 사유 코드를 제공하지 않음 (rslt_message 자연어만).
@@ -336,7 +380,6 @@ type AligoSendResult = {
 
 // VPS 프록시가 button 미전달 시 기본 버튼(name: '1분 브리핑 보러가기',
 // URL: vercel.app)을 자동 추가하는 동작이 있어, 매번 명시 전달해 덮어씀.
-const DAILY_BUTTON_NAME = "더 자세한 브리핑 보러가기";
 const DAILY_BUTTON_URL  = "https://briefick.com";
 
 async function aligoSendFriendtalk(opts: {
@@ -344,12 +387,13 @@ async function aligoSendFriendtalk(opts: {
   proxySecret: string;
   receivers: Subscriber[];
   message: string;
+  buttonName: string;
 }): Promise<AligoSendResult> {
-  const { proxyUrl, proxySecret, receivers, message } = opts;
+  const { proxyUrl, proxySecret, receivers, message, buttonName } = opts;
   const phones = receivers.map((r) => r.phone);
   const button = {
     button: [{
-      name: DAILY_BUTTON_NAME,
+      name: buttonName,
       linkType: "WL",
       linkTypeName: "웹링크",
       linkMo: DAILY_BUTTON_URL,
@@ -430,6 +474,7 @@ Deno.serve(async (req) => {
     let rawMessage: string;
     let truncated = false;
     let tabCount = 0;
+    let insight: DailyInsight | null = null;
     if (customMessage) {
       message = customMessage;
       rawMessage = customMessage;
@@ -444,8 +489,10 @@ Deno.serve(async (req) => {
       tabCount = tabs.length;
       // 오늘의 주요 일정 블록 (이벤트 없으면 빈 문자열 → 미노출)
       const scheduleBlock = buildScheduleBlock(await loadCalendarEvents());
-      rawMessage = buildMessage(tabs, scheduleBlock);
-      message = fitToLimit(tabs, LIMIT, scheduleBlock);
+      // 오늘의 연결고리 티저 (없으면 빈 문자열 → 미노출, 버튼 기본 텍스트로)
+      insight = await loadDailyInsight();
+      rawMessage = buildMessage(tabs, scheduleBlock, insight);
+      message = fitToLimit(tabs, LIMIT, scheduleBlock, insight);
       truncated = message.length < rawMessage.length;
       if (truncated) {
         console.warn(`[warn] message truncated even-share: ${rawMessage.length}→${message.length}`);
@@ -521,6 +568,7 @@ Deno.serve(async (req) => {
         result = await aligoSendFriendtalk({
           proxyUrl, proxySecret,
           receivers: batch, message,
+          buttonName: insight ? "투자 지식 전문 보기 →" : "더 자세한 브리핑 보러가기",
         });
         if (result.code !== 0) {
           errMsg = `aligo code=${result.code}: ${result.message}`;
