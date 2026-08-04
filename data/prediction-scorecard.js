@@ -10,6 +10,39 @@
 //   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = [
   {
+    date: "2026-08-04",
+    made: "2026-08-04 07:15 KST",
+    predictions: [
+      {
+        label: "삼성전자",
+        ticker: "005930",
+        market: "KR",
+        direction: "up",
+        rationale: "어제 -8.8% 급락 과매도 구간 · 낙폭과대 기술적 반등 + HBM4 서사 유효",
+        result: null,
+        actual: null,
+      },
+      {
+        label: "LG화학",
+        ticker: "051910",
+        market: "KR",
+        direction: "down",
+        rationale: "WTI -6% 크래시 여진 · 납사 원가 헤지 효과 상쇄, 리튬 약세 배터리 소재 마진 압박",
+        result: null,
+        actual: null,
+      },
+      {
+        label: "AMD",
+        ticker: "AMD",
+        market: "US",
+        direction: "up",
+        rationale: "내일(8/5) 실적 D-1 기대감 · MI350X 데이터센터 GPU 가이던스 상향 선반영",
+        result: null,
+        actual: null,
+      },
+    ],
+  },
+  {
     date: "2026-08-03",
     made: "2026-08-03 07:15 KST",
     predictions: [
@@ -19,8 +52,8 @@ const PREDICTION_SCORECARD = [
         market: "KR",
         direction: "up",
         rationale: "HBM3E 가격 20% 인상 계약 마무리 · HBM4 양산 확인 + 오너 매수 서포트",
-        result: null,
-        actual: null,
+        result: "miss",
+        actual: -8.8,
       },
       {
         label: "기아",
@@ -28,8 +61,8 @@ const PREDICTION_SCORECARD = [
         market: "KR",
         direction: "up",
         rationale: "8/4 미국 자동차 관세 25%→15% 발효 D-1 수혜 선반영 · 하이브리드 판매 모멘텀",
-        result: null,
-        actual: null,
+        result: "miss",
+        actual: -1.7,
       },
       {
         label: "PLTR",
@@ -204,39 +237,6 @@ const PREDICTION_SCORECARD = [
         rationale: "Neutron 대형 발사체 개발 진척 + NASA 상업 계약 기대감",
         result: "hit",
         actual: 0.2,
-      },
-    ],
-  },
-  {
-    date: "2026-07-25",
-    made: "2026-07-25 07:15 KST",
-    predictions: [
-      {
-        label: "한화시스템",
-        ticker: "272210",
-        market: "KR",
-        direction: "up",
-        rationale: "저궤도 위성통신 체계 수출 협상 진척 + 방산 전자 부문 수주 잔고 사상 최대",
-        result: "hit",
-        actual: 4.9,
-      },
-      {
-        label: "IONQ",
-        ticker: "IONQ",
-        market: "US",
-        direction: "up",
-        rationale: "양자 오류 수정 논문 발표 + 글로벌 클라우드 사업자 파트너십 확대 기대",
-        result: "miss",
-        actual: -3.2,
-      },
-      {
-        label: "기아",
-        ticker: "000270",
-        market: "KR",
-        direction: "down",
-        rationale: "미국 관세 불확실성 재부각 + 7월 유럽 판매 둔화 우려",
-        result: "hit",
-        actual: -2.1,
       },
     ],
   },
