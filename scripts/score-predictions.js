@@ -17,10 +17,16 @@ const src = fs.readFileSync(scorePath, 'utf8');
 const data = new Function(src + ';return PREDICTION_SCORECARD;')();
 
 const snapDate = snap.asOfKst.slice(0, 10);
+// 오늘 KST 날짜 (채점 실행 시각 기준)
+const nowKst = new Date(Date.now() + 9 * 3600 * 1000);
+const todayKst = nowKst.toISOString().slice(0, 10);
 let changed = false;
 
 data.forEach(entry => {
-  if (entry.date !== snapDate) return;
+  // 채점 대상: 스냅샷 날짜와 일치(같은 날 19시 KR 채점) OR 오늘 이전 날짜의 미채점 항목(다음날 07시 US 채점)
+  const isSnapDay = entry.date === snapDate;
+  const isPrevDay = entry.date < todayKst;
+  if (!isSnapDay && !isPrevDay) return;
   entry.predictions.forEach(pred => {
     if (pred.result !== null || !pred.ticker) return;
     const price = snap.prices[pred.ticker];
@@ -41,7 +47,7 @@ data.forEach(entry => {
 });
 
 if (!changed) {
-  process.stderr.write('채점할 항목 없음 (날짜 불일치 또는 이미 채점 완료)\n');
+  process.stderr.write('채점할 항목 없음 (대상 날짜 없음 또는 이미 채점 완료)\n');
   process.exit(0);
 }
 
