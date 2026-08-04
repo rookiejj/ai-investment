@@ -44,7 +44,9 @@ ai-investment/
 │   ├── unicorn-{data,update}.js  ← 유니콘 (5 × 7 = 35, AI 전업 기업 제외)
 │   ├── *-update.js               ← sandbox 작업 컨텍스트(직전 1건 참조용). DB의 tab_updates가 실제 read 진실 소스 + history 보존
 │   ├── calendar-events.js        ← 메인 14일 이벤트 캘린더용 (recurring 패턴 + fixed 알려진 일정 + autoEarnings 자동 생성)
-│   ├── prices-snapshot.json      ← KR/US 종목 종가 스냅샷 (prices-snapshot.yml이 매 거래일 장 마감 후 자동 갱신, sandbox 가격 검증 1차 소스)
+│   ├── prices-snapshot.json      ← KR/US 종목 종가 스냅샷 (prices-snapshot.yml이 매 거래일 2회 자동 갱신, sandbox 가격 검증 1차 소스)
+│   ├── daily-insight.js          ← 오늘의 연결고리 (매일 에이전트 생성, 최근 7건 유지, cross-asset 인과 메커니즘 설명, index.html 전용)
+│   ├── prediction-scorecard.js   ← 방향 예측 스코어카드 (매일 3종목 up/down 예측 + 자동 채점, 최근 7건 유지, index.html 전용)
 │   └── company-ko.js             ← 영문 회사명·티커 → 한글 매핑 (index.html·daily-send 단일 소스)
 ├── scripts/
 │   ├── generate-message.js       ← 로컬 친구톡 메시지 미리보기
@@ -59,6 +61,7 @@ ai-investment/
 │   ├── build-all-stocks.py       ← /stocks 전 상장 종목 정적 JSON 생성기 (미국 NASDAQ Trader 파일 + 시총 screener API · 한국 FinanceDataReader, 시총순 정렬)
 │   ├── fetch-earnings-calendar.js← /stocks 유니버스 277종목 실적일 Yahoo에서 긁어 calendar-events.js의 autoEarnings 배열 자동 주입 (earnings-calendar.yml이 호출)
 │   ├── snapshot-prices.js        ← 매 거래일 장 마감 후 KR/US 종목 종가를 Yahoo에서 가져와 data/prices-snapshot.json 갱신 (prices-snapshot.yml이 호출)
+│   ├── score-predictions.js      ← 예측 스코어카드 자동 채점 (prices-snapshot 기준 hit/miss, ±0.5% 미만 소폭=hit, 이전 날짜 null 예측 소급 채점)
 │   ├── preview-friendtalk.js     ← 친구톡 문구 미리보기 (scratch/summaries.json → 콘솔 출력, 프로덕션 미반영)
 │   ├── subscribers.example.json
 │   ├── cartoon/
@@ -197,7 +200,8 @@ ai-investment/
 ### 콘텐츠 자동 갱신
 - **메인 갱신**: Claude Opus 4.7 원격 에이전트(`trig_016nvC9rVppRnQ9nFZeDjnP8`)가 매일 2회(KST 07:00 / 19:00)로 5개 탭 데이터 갱신·커밋·푸시 — 13시 슬롯은 2026-05-02부터 비활성화
 - **실적 캘린더**: `earnings-calendar.yml` (월·목 KST 08시 cron) — 유니버스 277종목 실적일을 Yahoo에서 긁어 `data/calendar-events.js`의 `autoEarnings` 배열 자동 갱신
-- **시세 스냅샷**: `prices-snapshot.yml` (매 거래일 장 마감 후) — KR/US 종목 종가를 `data/prices-snapshot.json`에 커밋. sandbox가 이 파일을 1차 소스로 써서 가격 창작 차단
+- **시세 스냅샷**: `prices-snapshot.yml` (매 거래일 2회 cron) — KR/US 종목 종가를 `data/prices-snapshot.json`에 커밋. ① 06:00 KST(미국 장 마감 05:00 직후, Sun–Thu) → 07:15 KST 자동 갱신이 전날 US 예측 채점에 사용. ② 15:45 KST(한국 장 마감 15:30 직후, Mon–Fri) → 당일 KR 데이터 서술 소스. sandbox는 이 파일을 1차 소스로 써서 가격 창작 차단
+- **예측·채점·연결고리**: 매일 `/update` 커맨드(step 5-1~5-3)에서 처리 — `score-predictions.js`로 전날 예측 채점 후 오늘 예측 3건 생성, 오늘의 연결고리(cross-asset 인과) 생성. 결과는 `data/prediction-scorecard.js`·`data/daily-insight.js`에 prepend
 - **summary 품질 검사**: `summary-style-check.yml` (마커 push 시) — `lint-summary-style.js`로 줄당 숫자·글자 수·구조 위반 감지, 위반 시 텔레그램 알림
 
 ### SEO 정적 페이지 (`/daily/`)
