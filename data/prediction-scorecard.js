@@ -8,23 +8,23 @@
 const PREDICTION_SCORECARD = [
   {
     "date": "2026-08-07",
-    "made": "2026-08-06 19:35 KST",
+    "made": "2026-08-07 07:35 KST",
     "predictions": [
       {
         "label": "SK하이닉스",
         "ticker": "000660",
         "market": "KR",
         "direction": "up",
-        "rationale": "오늘 -10.4% 급락 오버솔드 - 사상 최대 매출·영업이익률 76% 실적 유지·기술적 반등 여지",
+        "rationale": "직전 -10.4% 급락 오버솔드·사상 최대 매출 실증·기술적 반등 여지, KOSPI 6,300선 회복 시험 국면",
         "result": null,
         "actual": null
       },
       {
-        "label": "LG생활건강",
-        "ticker": "051900",
+        "label": "한화에어로스페이스",
+        "ticker": "012450",
         "market": "KR",
-        "direction": "down",
-        "rationale": "오늘 +10.8% 급등 후 차익실현 압력·2Q 실적 이미 반영 국면·평균 회귀",
+        "direction": "up",
+        "rationale": "KAI 지분 11.21% 확보로 방산 통합 밑그림·직전 +4.7% 상대 방어·방산 매도 속 지분 확보 카드",
         "result": null,
         "actual": null
       },
@@ -33,7 +33,7 @@ const PREDICTION_SCORECARD = [
         "ticker": "NVDA",
         "market": "US",
         "direction": "up",
-        "rationale": "머스크 SpaceX AI 인프라 엔비디아 독점 발표 재점화·Vera Rubin 8월 램프·시총 5조달러 임박",
+        "rationale": "WDC·SNDK·AMD 매도 확산 속 홀로 -0.2% 상대 방어·Vera Rubin 8월 램프·8/27 Q2 실적 D-20",
         "result": null,
         "actual": null
       }
@@ -238,4 +238,3 @@ const PREDICTION_SCORECARD = [
     ]
   },
 ];
-채점 완료: 2026-08-06 기준 변경된 항목 있음
