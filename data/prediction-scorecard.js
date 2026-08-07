@@ -7,6 +7,39 @@
 //   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = [
   {
+    "date": "2026-08-10",
+    "made": "2026-08-08 07:15 KST",
+    "predictions": [
+      {
+        "label": "삼성SDI",
+        "ticker": "006400",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "8/7 +7.5% 배터리 랠리 주도·북미 ESS 수주 확대·LG에너지솔루션 실적 발표 대기가 배터리 리레이팅 축 확장",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "BGF리테일",
+        "ticker": "282330",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "Q2 영업이익 849억 컨센 740억 상회·이달 +25.5% 아웃퍼폼·DB증권 목표가 상향이 편의점 리레이팅 모멘텀 지속 축",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "Cloudflare",
+        "ticker": "NET",
+        "market": "US",
+        "direction": "up",
+        "rationale": "Q2 매출·EPS 컨센 상회 후 +16.8% 급등·연간 EPS 가이던스 상향이 AI 워크로드 매출 재가속 실증, SaaS 리레이팅 흐름 지속",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
     "date": "2026-08-07",
     "made": "2026-08-07 07:35 KST",
     "predictions": [
@@ -201,39 +234,6 @@ const PREDICTION_SCORECARD = [
         "rationale": "달러 강세 환율 헤드윈드 + 클라우드 성장 컨센 하향 조정",
         "result": "hit",
         "actual": -0.6
-      }
-    ]
-  },
-  {
-    "date": "2026-07-30",
-    "made": "2026-07-30 07:15 KST",
-    "predictions": [
-      {
-        "label": "LG에너지솔루션",
-        "ticker": "373220",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "GM 북미 전기차 생산 재가동 + IRA 보조금 유지 확인으로 수주 잔고 회복",
-        "result": "hit",
-        "actual": 0.4
-      },
-      {
-        "label": "AMD",
-        "ticker": "AMD",
-        "market": "US",
-        "direction": "up",
-        "rationale": "MI300X 데이터센터 채택 확대 + NVDA 공급 부족 반사 수혜",
-        "result": "hit",
-        "actual": 3.7
-      },
-      {
-        "label": "PANW",
-        "ticker": "PANW",
-        "market": "US",
-        "direction": "down",
-        "rationale": "사이버보안 예산 긴축 우려 + 플랫폼화 전략 전환기 마진 압박",
-        "result": "miss",
-        "actual": 1.1
       }
     ]
   }
