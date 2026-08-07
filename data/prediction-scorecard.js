@@ -16,8 +16,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "직전 -10.4% 급락 오버솔드·사상 최대 매출 실증·기술적 반등 여지, KOSPI 6,300선 회복 시험 국면",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": -4.9
       },
       {
         "label": "한화에어로스페이스",
@@ -25,8 +25,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "KAI 지분 11.21% 확보로 방산 통합 밑그림·직전 +4.7% 상대 방어·방산 매도 속 지분 확보 카드",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 4.1
       },
       {
         "label": "NVDA",
@@ -34,8 +34,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "WDC·SNDK·AMD 매도 확산 속 홀로 -0.2% 상대 방어·Vera Rubin 8월 램프·8/27 Q2 실적 D-20",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 0.4
       }
     ]
   },
@@ -236,5 +236,5 @@ const PREDICTION_SCORECARD = [
         "actual": 1.1
       }
     ]
-  },
+  }
 ];
