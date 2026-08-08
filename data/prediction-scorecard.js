@@ -8,6 +8,39 @@
 const PREDICTION_SCORECARD = [
   {
     "date": "2026-08-10",
+    "made": "2026-08-09 07:30 KST",
+    "predictions": [
+      {
+        "label": "LG에너지솔루션",
+        "ticker": "373220",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "Q2 매출 7.56조·영업익 1,133억 흑자 전환·K-배터리 3사 동반 흑자 확인·북미 ESS 수주 확대가 리레이팅 축 지속",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "LIG넥스원",
+        "ticker": "079550",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "사우디 WDS 2026 8/8~12 개막·미 해군 비궁 유도로켓 FCT 통과 서사·상반기 방산 빅4 이익 +13.3% 흐름이 강세 카운터",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "CRWD",
+        "ticker": "CRWD",
+        "market": "US",
+        "direction": "up",
+        "rationale": "TEAM·NET·TWLO SaaS 랠리 광범위 확산·사이버보안 리레이팅 재점화·8/12 CPI 발표 대기 국면이 소프트웨어 프리미엄 카운터",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
+    "date": "2026-08-10",
     "made": "2026-08-08 07:15 KST",
     "predictions": [
       {
@@ -201,39 +234,6 @@ const PREDICTION_SCORECARD = [
         "rationale": "7월 글로벌 인도량 컨센 하회 우려 + 가격 인하 마진 압박 지속",
         "result": "miss",
         "actual": 1.8
-      }
-    ]
-  },
-  {
-    "date": "2026-07-31",
-    "made": "2026-07-31 07:15 KST",
-    "predictions": [
-      {
-        "label": "삼성전자",
-        "ticker": "005930",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "블랙먼데이 과매도 구간 + 외국인 순매수 전환 기대",
-        "result": "hit",
-        "actual": 26.8
-      },
-      {
-        "label": "NVDA",
-        "ticker": "NVDA",
-        "market": "US",
-        "direction": "up",
-        "rationale": "Blackwell 출하 가속 + AI 인프라 CAPEX 사이클 유지",
-        "result": "hit",
-        "actual": 1.6
-      },
-      {
-        "label": "MSFT",
-        "ticker": "MSFT",
-        "market": "US",
-        "direction": "down",
-        "rationale": "달러 강세 환율 헤드윈드 + 클라우드 성장 컨센 하향 조정",
-        "result": "hit",
-        "actual": -0.6
       }
     ]
   }
