@@ -21,8 +21,8 @@ const data = [
       },
       {
         "nm": "Ramp",
-        "rs": "$44B 확정·ARR $1.5B·CEO Glyman '연말 IPO-ready'·Brex → Capital One 인수 완료 후 독립 legal fintech 대표주",
-        "ipo": "미정",
+        "rs": "$44B 확정·ARR $1.5B·CEO Glyman '연말 IPO-ready' 재확인·cash flow positive·Brex → Capital One 인수 완료 후 독립 legal fintech 대표주",
+        "ipo": "2026 말 IPO-ready",
         "val": "$44B",
         "round": "Series F+ $750M (2026-06)·ICONIQ·GIC·OTPP",
         "sector": "법인 핀테크"
@@ -169,7 +169,7 @@ const data = [
       },
       {
         "nm": "Anduril",
-        "rs": "$100B 라운드 협상 확인 - 5월 $61B 시리즈 H 대비 3배 스텝업, FY25 매출 $2.2B 2배·美 육군 $20B 카운터드론 계약",
+        "rs": "$100B 라운드 협상 확인 - 5월 $61B 시리즈 H 대비 3배 스텝업, FY25 매출 $2.2B 2배·美 육군 $20B 카운터드론 계약·NATO 재무장 사이클 카운터",
         "ipo": "단기 아닐(Luckey)",
         "val": "$61B → $100B 협상",
         "round": "Series H $5B (2026-05)",
