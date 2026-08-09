@@ -8,6 +8,39 @@
 const PREDICTION_SCORECARD = [
   {
     "date": "2026-08-10",
+    "made": "2026-08-10 07:35 KST",
+    "predictions": [
+      {
+        "label": "삼성전자",
+        "ticker": "005930",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "반도체특별법 8/11 시행 D-1·주주환원 확대 기대·8월 -12% 조정 후 방어 국면에서 정책 카운터가 반등 축",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "현대자동차",
+        "ticker": "005380",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "7월 미 판매 사상 최대 8.9만대·하이브리드 +52%·8/26 인베스터 데이 대기가 이번 주 회복 카운터 축",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "AVGO",
+        "ticker": "AVGO",
+        "market": "US",
+        "direction": "up",
+        "rationale": "NVDA 랠리 동조·FY26 AI 매출 56억달러 가이던스 유지·SaaS 리레이팅과 병존 시나리오가 프리미엄 방어 축",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
+    "date": "2026-08-10",
     "made": "2026-08-09 07:30 KST",
     "predictions": [
       {
@@ -16,8 +49,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "Q2 매출 7.56조·영업익 1,133억 흑자 전환·K-배터리 3사 동반 흑자 확인·북미 ESS 수주 확대가 리레이팅 축 지속",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 4.3
       },
       {
         "label": "LIG넥스원",
@@ -25,8 +58,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "사우디 WDS 2026 8/8~12 개막·미 해군 비궁 유도로켓 FCT 통과 서사·상반기 방산 빅4 이익 +13.3% 흐름이 강세 카운터",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 5.6
       },
       {
         "label": "CRWD",
@@ -34,8 +67,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "TEAM·NET·TWLO SaaS 랠리 광범위 확산·사이버보안 리레이팅 재점화·8/12 CPI 발표 대기 국면이 소프트웨어 프리미엄 카운터",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 3.4
       }
     ]
   },
@@ -49,8 +82,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "8/7 +7.5% 배터리 랠리 주도·북미 ESS 수주 확대·LG에너지솔루션 실적 발표 대기가 배터리 리레이팅 축 확장",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 7.5
       },
       {
         "label": "BGF리테일",
@@ -58,8 +91,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "Q2 영업이익 849억 컨센 740억 상회·이달 +25.5% 아웃퍼폼·DB증권 목표가 상향이 편의점 리레이팅 모멘텀 지속 축",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 14.7
       },
       {
         "label": "Cloudflare",
@@ -67,8 +100,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "Q2 매출·EPS 컨센 상회 후 +16.8% 급등·연간 EPS 가이던스 상향이 AI 워크로드 매출 재가속 실증, SaaS 리레이팅 흐름 지속",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 5.6
       }
     ]
   },
@@ -201,39 +234,6 @@ const PREDICTION_SCORECARD = [
         "rationale": "오늘 마감 후 Q2 실적 D-day · 커머셜 AI ARR 40%+ 서사 컨센 선반영 기대",
         "result": "hit",
         "actual": 2.1
-      }
-    ]
-  },
-  {
-    "date": "2026-08-01",
-    "made": "2026-08-01 07:15 KST",
-    "predictions": [
-      {
-        "label": "현대차",
-        "ticker": "005380",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "7월 미국 하이브리드 판매 호조 + 환율 안정으로 수출 마진 회복 기대",
-        "result": "hit",
-        "actual": 2.3
-      },
-      {
-        "label": "AMZN",
-        "ticker": "AMZN",
-        "market": "US",
-        "direction": "up",
-        "rationale": "AWS Q2 성장률 회복 + 광고·프라임 구독 복합 수익 구조 견조",
-        "result": "hit",
-        "actual": 3.1
-      },
-      {
-        "label": "TSLA",
-        "ticker": "TSLA",
-        "market": "US",
-        "direction": "down",
-        "rationale": "7월 글로벌 인도량 컨센 하회 우려 + 가격 인하 마진 압박 지속",
-        "result": "miss",
-        "actual": 1.8
       }
     ]
   }
