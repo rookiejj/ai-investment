@@ -7,7 +7,7 @@
 //   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = [
   {
-    "date": "2026-08-10",
+    "date": "2026-08-11",
     "made": "2026-08-10 07:35 KST",
     "predictions": [
       {
@@ -40,40 +40,7 @@ const PREDICTION_SCORECARD = [
     ]
   },
   {
-    "date": "2026-08-10",
-    "made": "2026-08-09 07:30 KST",
-    "predictions": [
-      {
-        "label": "LG에너지솔루션",
-        "ticker": "373220",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "Q2 매출 7.56조·영업익 1,133억 흑자 전환·K-배터리 3사 동반 흑자 확인·북미 ESS 수주 확대가 리레이팅 축 지속",
-        "result": "hit",
-        "actual": 4.3
-      },
-      {
-        "label": "LIG넥스원",
-        "ticker": "079550",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "사우디 WDS 2026 8/8~12 개막·미 해군 비궁 유도로켓 FCT 통과 서사·상반기 방산 빅4 이익 +13.3% 흐름이 강세 카운터",
-        "result": "hit",
-        "actual": 5.6
-      },
-      {
-        "label": "CRWD",
-        "ticker": "CRWD",
-        "market": "US",
-        "direction": "up",
-        "rationale": "TEAM·NET·TWLO SaaS 랠리 광범위 확산·사이버보안 리레이팅 재점화·8/12 CPI 발표 대기 국면이 소프트웨어 프리미엄 카운터",
-        "result": "hit",
-        "actual": 3.4
-      }
-    ]
-  },
-  {
-    "date": "2026-08-10",
+    "date": "2026-08-08",
     "made": "2026-08-08 07:15 KST",
     "predictions": [
       {
