@@ -89,7 +89,7 @@ function localizeText(text: string): string {
 
 type DailyInsight = { title: string; body: string };
 
-async function loadDailyInsight(): Promise<DailyInsight | null> {
+async function loadDailyInsights(): Promise<DailyInsight[]> {
   try {
     const url = GITHUB_TOKEN
       ? `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/data/daily-insight.js?ref=${GITHUB_BRANCH}`
@@ -102,16 +102,44 @@ async function loadDailyInsight(): Promise<DailyInsight | null> {
     const res = await fetch(url, { headers });
     if (!res.ok) throw new Error(`status=${res.status}`);
     const src = await res.text();
-    const insights = new Function(
+    const arr = new Function(
       `${src};return typeof DAILY_INSIGHTS!=="undefined"?DAILY_INSIGHTS:[];`
     )() as Array<{ date: string; title: string; body: string }>;
-    const latest = insights[0];
-    if (!latest?.title) return null;
-    return { title: latest.title, body: latest.body ?? "" };
+    return arr.filter((x) => x?.title).map((x) => ({ title: x.title, body: x.body ?? "" }));
   } catch (e) {
-    console.warn("[warn] daily-insight load failed, teaser skipped", e);
-    return null;
+    console.warn("[warn] daily-insight load failed", e);
+    return [];
   }
+}
+
+async function loadDailyInsight(): Promise<DailyInsight | null> {
+  const arr = await loadDailyInsights();
+  return arr[0] ?? null;
+}
+
+// 일요일 전용 메시지: arr[0] 전체 + 공간 남으면 arr[1] 일부 (1000자 한도)
+function buildSundayMessage(insights: DailyInsight[]): string {
+  const header = "📚 주말 투자 지식 +1";
+  const sep = "\n\n";
+  const divider = "──────────────";
+  if (!insights.length) return header;
+
+  let msg = [header, insights[0].title, insights[0].body].join(sep);
+  if (insights[1]) {
+    const available = LIMIT - msg.length - sep.length - divider.length - sep.length - insights[1].title.length - sep.length;
+    if (available > 50) {
+      let slice = insights[1].body.slice(0, available);
+      const last = Math.max(slice.lastIndexOf("다."), slice.lastIndexOf("요."), slice.lastIndexOf("요?"));
+      if (last > available * 0.6) slice = insights[1].body.slice(0, last + 2) + "..";
+      msg = [msg, [divider, insights[1].title, slice].join(sep)].join(sep);
+    }
+  }
+  return msg.slice(0, LIMIT);
+}
+
+function isKstSunday(): boolean {
+  const kst = new Date(Date.now() + 9 * 3600 * 1000);
+  return kst.getUTCDay() === 0;
 }
 
 // ═══ 오늘의 주요 일정 (data/calendar-events.js) ════════════
@@ -478,6 +506,12 @@ Deno.serve(async (req) => {
     if (customMessage) {
       message = customMessage;
       rawMessage = customMessage;
+    } else if (isKstSunday()) {
+      // 일요일: 탭 요약 없이 투자 지식 +1 전체 발송
+      const insights = await loadDailyInsights();
+      rawMessage = buildSundayMessage(insights);
+      message = rawMessage;
+      insight = insights[0] ?? null;
     } else {
       // 한글 매핑 먼저 로드 — fetchTabEntries·일정 블록 localize 시 사용
       await loadCompanyKoMap();
@@ -489,7 +523,7 @@ Deno.serve(async (req) => {
       tabCount = tabs.length;
       // 오늘의 주요 일정 블록 (이벤트 없으면 빈 문자열 → 미노출)
       const scheduleBlock = buildScheduleBlock(await loadCalendarEvents());
-      // 오늘의 연결고리 티저 (없으면 빈 문자열 → 미노출, 버튼 기본 텍스트로)
+      // 투자 지식 +1 티저 (없으면 빈 문자열 → 미노출, 버튼 기본 텍스트로)
       insight = await loadDailyInsight();
       rawMessage = buildMessage(tabs, scheduleBlock, insight);
       message = fitToLimit(tabs, LIMIT, scheduleBlock, insight);
@@ -568,7 +602,7 @@ Deno.serve(async (req) => {
         result = await aligoSendFriendtalk({
           proxyUrl, proxySecret,
           receivers: batch, message,
-          buttonName: insight ? "투자 지식 전문 보기 →" : "더 자세한 브리핑 보러가기",
+          buttonName: isKstSunday() ? "브리픽 앱에서 더 보기 →" : insight ? "투자 지식 전문 보기 →" : "더 자세한 브리핑 보러가기",
         });
         if (result.code !== 0) {
           errMsg = `aligo code=${result.code}: ${result.message}`;
