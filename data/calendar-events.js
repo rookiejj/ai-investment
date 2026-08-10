@@ -169,6 +169,20 @@ const fixed = [
   { cat:'earnings', impact:2, title:'Netflix Q2 실적', date:'2026-07-16', desc:'장후 발표·구독·광고 성장 점검', tickers:['NFLX'] },
   { cat:'earnings', impact:2, title:'Tesla Q2 실적', date:'2026-07-22', desc:'장후 발표·인도량·마진·로보택시 진척', tickers:['TSLA'] },
   { cat:'earnings', impact:3, title:'빅테크 Q2 어닝 주간 (MSFT·GOOGL·META·AMZN·AAPL)', date:'2026-07-29', desc:'7월 마지막 주 메가캡 집중 발표·AI CAPEX 점검대' },
+
+  // === 8월 매크로 ===
+  { cat:'macro', impact:3, title:'미국 7월 CPI', date:'2026-08-12', desc:'BLS 8:30 ET·7월 FOMC 후 첫 인플레 확인대·연내 금리 경로 가름' },
+  { cat:'macro', impact:2, title:'미국 7월 PPI', date:'2026-08-13', desc:'근원 PPI 동반·CPI 다음날 생산자물가 크로스체크' },
+  { cat:'macro', impact:2, title:'미국 7월 소매판매', date:'2026-08-14', desc:'소비 모멘텀·서비스 vs 재화 지출 분기' },
+  { cat:'macro', impact:3, title:'7월 FOMC 의사록 공개', date:'2026-08-19', desc:'7/29-30 회의 토론 내용·9월 인하 여부 단서' },
+  { cat:'conf',  impact:3, title:'잭슨홀 연준 심포지엄 개막', date:'2026-08-27', desc:'캔자스시티 연준 주최·각국 중앙은행 총재·파월 연설 예정' },
+  { cat:'conf',  impact:3, title:'파월 잭슨홀 기조연설', date:'2026-08-28', desc:'연준 의장 금리 경로 시그널·시장 최대 이벤트' },
+  { cat:'macro', impact:3, title:'미국 7월 PCE 물가', date:'2026-08-28', desc:'Fed 선호 인플레 지표·잭슨홀 전날 사전 점검' },
+
+  // === 9월 매크로 ===
+  { cat:'macro', impact:3, title:'미국 8월 CPI', date:'2026-09-10', desc:'BLS 8:30 ET·9월 FOMC 전 최종 인플레 확인대' },
+  { cat:'macro', impact:2, title:'미국 8월 PPI', date:'2026-09-11', desc:'근원 PPI 동반 발표' },
+  { cat:'macro', impact:3, title:'9월 FOMC 결과', date:'2026-09-17', desc:'KST 오전 3시·점도표·SEP 동반 발표·연내 인하 경로 최종 확정' },
 ];
 
 // 외부에서 접근할 변수명 (다른 update.js와 일관성)
