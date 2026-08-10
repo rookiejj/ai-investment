@@ -1151,11 +1151,10 @@ body.sub-modal-open{overflow:hidden}
   <div class="hero-meta"><span class="dot"></span><span id="lastUpdated">데이터 로드 중…</span></div>
 </section>
 
-<!-- Market Pulse — 4 indices, KOSPI·KOSDAQ·S&P·NASDAQ 3-month sparkline -->
+<!-- Market Pulse — 4 indices, KOSPI·KOSDAQ·S&P·NASDAQ intraday chart -->
 <section>
   <div class="sec-head">
     <div>
-      <div class="sec-label">Market Today · 3 Months</div>
       <h2 class="sec-title">오늘의 마켓</h2>
     </div>
     <div class="idx-meta" id="idxMeta">불러오는 중…</div>
@@ -1197,7 +1196,6 @@ body.sub-modal-open{overflow:hidden}
 <section>
   <div class="sec-head">
     <div>
-      <div class="sec-label">Forward-looking events</div>
       <h2 class="sec-title">이벤트 캘린더 · 2주</h2>
     </div>
   </div>
@@ -1220,7 +1218,6 @@ body.sub-modal-open{overflow:hidden}
 <section id="dailyInsightSection" hidden>
   <div class="sec-head">
     <div>
-      <div class="sec-label">Investment knowledge</div>
       <h2 class="sec-title">투자 지식 +1</h2>
     </div>
   </div>
@@ -1238,7 +1235,6 @@ body.sub-modal-open{overflow:hidden}
 <section id="pscSection" hidden>
   <div class="sec-head">
     <div>
-      <div class="sec-label">Prediction scorecard</div>
       <h2 class="sec-title">예측 스코어카드</h2>
       <p class="sec-desc">07:15 KST 예측 기준 · 당일 종가로 자동 채점 · 상승·하락만 채점</p>
     </div>
@@ -1254,7 +1250,6 @@ body.sub-modal-open{overflow:hidden}
 <section style="display:none">
   <div class="sec-head">
     <div>
-      <div class="sec-label">Sector growth phases</div>
       <h2 class="sec-title">돈버는 섹터</h2>
       <p class="sec-desc">% = 전년 대비 매출 예상 성장률 (FY26E) · 시세는 Yahoo Finance 15분 지연 · 장 시작 후 ~25분간 어제 종가 표시</p>
     </div>
@@ -1271,7 +1266,6 @@ body.sub-modal-open{overflow:hidden}
 <section>
   <div class="sec-head">
     <div>
-      <div class="sec-label">Market heatmap</div>
       <h2 class="sec-title">시장 한눈에</h2>
       <p class="sec-desc">셀 크기 = 시가총액 · 색상 = 오늘 등락률 · 시세 Yahoo Finance 15분 지연 · 장 시작 후 ~25분간 어제 종가 표시</p>
     </div>
@@ -1300,7 +1294,6 @@ body.sub-modal-open{overflow:hidden}
 <section>
   <div class="sec-head">
     <div>
-      <div class="sec-label">Alternative assets</div>
       <h2 class="sec-title">대안 자산</h2>
     </div>
   </div>
@@ -1309,7 +1302,6 @@ body.sub-modal-open{overflow:hidden}
 
 <!-- Why Subscribe — 전환 섹션 (콘텐츠 다 본 뒤 구독 이유·가격·CTA) -->
 <section id="whySubscribe" class="why">
-  <div class="sec-label">Subscribe</div>
   <h2 class="sec-title">매일 아침, 안 찾아와도 옵니다</h2>
   <p class="why-lead">방금 보신 이 브리핑을 매일 아침 8시 카카오톡으로. 5개 시장 핵심만 1분이면 끝납니다.</p>
 
@@ -1555,6 +1547,8 @@ const URLS={
 const CALENDAR_URL='/data/calendar-events.js';
 const PRICES_URL='https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/prices/latest.json';
 const INDICES_URL='https://ytvcgoldauysvnqckzze.supabase.co/storage/v1/object/public/prices/indices.json';
+const MARKET_DATA_URL='https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/market-data';
+const IDX_YH_SYMBOLS={kospi:'^KS11',kosdaq:'^KQ11',sp500:'^GSPC',nasdaq:'^IXIC'};
 // 헤드라인·종목 데이터 정적 스냅샷 (db-sync 시 snapshot-tabs-to-storage.js가 생성).
 // CDN 캐시되는 정적 파일 — read-tab-data 함수(DB 직격, 캐시 안 됨)보다 빠르고 무료 플랜 컴퓨트를 우회.
 // 정적 파일이 없거나(초기 배포) 실패하면 함수로 폴백.
@@ -1607,7 +1601,7 @@ function defaultMarketByHour(){
 }
 const _DEFAULT_MARKET=defaultMarketByHour();
 
-const STATE={data:{},upd:{},prices:{},pool:null,market:'kr',healthMarket:_DEFAULT_MARKET,expQuery:''};
+const STATE={data:{},upd:{},prices:{},pool:null,market:'kr',healthMarket:_DEFAULT_MARKET,expQuery:'',intraday:{}};
 
 // ═══════════════════════════════════════════════════════════
 // Helpers
@@ -3310,6 +3304,42 @@ async function loadIndices(){
 }
 function _idxFmt(n,cur){if(n==null)return'—';return (cur==='USD'?'$':'')+n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
 function _idxSpark(s,w,h){if(!s||s.length<2)return'';const v=s.map(p=>p.c);const mn=Math.min(...v),mx=Math.max(...v),rg=mx-mn||1,dx=w/(s.length-1);return s.map((p,i)=>{const x=i*dx,y=h-((p.c-mn)/rg)*h;return(i===0?'M':'L')+x.toFixed(1)+','+y.toFixed(1);}).join(' ');}
+async function loadAllIntraday(){
+  const keys=Object.keys(IDX_YH_SYMBOLS);
+  const results=await Promise.allSettled(keys.map(async k=>{
+    const r=await fetch(`${MARKET_DATA_URL}?type=chart&symbol=${encodeURIComponent(IDX_YH_SYMBOLS[k])}&range=1d&interval=5m`);
+    if(!r.ok)throw new Error(r.status);
+    return{key:k,data:await r.json()};
+  }));
+  const out={};
+  results.forEach(r=>{if(r.status==='fulfilled'&&r.value)out[r.value.key]=r.value.data;});
+  return out;
+}
+function _idxIntradaySVG(d,w,h){
+  if(!d?.candles?.length||d.candles.length<2)return'';
+  const cc=d.candles, pc=d.meta?.previousClose;
+  if(!pc)return'';
+  const SESSION_S=6.5*3600; // KR(09:00-15:30) & US(09:30-16:00) 모두 6.5h
+  const s0=cc[0].t, sEnd=s0+SESSION_S, nowS=Date.now()/1000;
+  const vis=cc.filter(c=>c.t<=nowS);
+  if(!vis.length)return'';
+  const allC=cc.map(c=>c.c), yMin0=Math.min(pc,...allC), yMax0=Math.max(pc,...allC);
+  const pad=(yMax0-yMin0)*0.15||pc*0.005;
+  const yMin=yMin0-pad, yMax=yMax0+pad, yR=yMax-yMin||1;
+  const toX=t=>(Math.max(0,Math.min((t-s0)/SESSION_S,1))*w).toFixed(1);
+  const toY=p=>(h-(p-yMin)/yR*h).toFixed(1);
+  const z=toY(pc), last=vis[vis.length-1];
+  const up=last.c>=pc;
+  const col=up?'#0fa76e':'#d45656';
+  const gid='ig'+Math.random().toString(36).slice(2,8);
+  const path=vis.map((c,i)=>(i?'L':'M')+toX(c.t)+','+toY(c.c)).join(' ');
+  const lx=toX(last.t), fx=toX(cc[0].t);
+  const fill=path+`L${lx},${z}L${fx},${z}Z`;
+  return `<defs><linearGradient id="${gid}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity=".15"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>`+
+    `<line x1="0" y1="${z}" x2="${w}" y2="${z}" stroke="rgba(0,0,0,.09)" stroke-width=".8" stroke-dasharray="3 3"/>`+
+    `<path d="${fill}" fill="url(#${gid})"/>`+
+    `<path d="${path}" stroke="${col}" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+}
 function _idxPartsIn(tz){
   const s=new Date().toLocaleString('en-US',{timeZone:tz,hour12:false,hour:'2-digit',minute:'2-digit',weekday:'short'});
   const hm=s.match(/(\d{2}):(\d{2})/), dow=s.match(/^([A-Za-z]+)/);
@@ -3349,15 +3379,15 @@ function renderIndexWidget(data){
     const k=c.dataset.key, d=data.indices[k];
     if(!d){c.innerHTML=`<div class="idx-label">${_IDX_LABELS[k]||k}</div><div class="idx-value">—</div>`;continue;}
     const up=(d.changePct??0)>=0, col=up?UP:DN;
-    const p=_idxSpark(d.series,200,50), pf=p+' L 200 50 L 0 50 Z';
-    const gid='idxG_'+k;
+    // 인트라데이 차트 우선, 없으면 3개월 일별 스파크라인 폴백
+    let svgInner=_idxIntradaySVG(STATE.intraday[k],200,50);
+    if(!svgInner){
+      const p=_idxSpark(d.series,200,50);
+      if(p){const pf=p+' L 200 50 L 0 50 Z';const gid='idxG_'+k;svgInner=`<defs><linearGradient id="${gid}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity=".16"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs><path d="${pf}" fill="url(#${gid})"/><path d="${p}" stroke="${col}" stroke-width="1.6" fill="none"/>`;}}
     c.innerHTML=`
       <div class="idx-card-row"><span class="idx-label">${_IDX_LABELS[k]||k}</span><span class="idx-delta ${up?'':'neg'}">${up?'+':''}${d.changePct?.toFixed(2)}%</span></div>
       <div class="idx-value">${_idxFmt(d.current,d.currency)}</div>
-      <svg viewBox="0 0 200 50" preserveAspectRatio="none">
-        <defs><linearGradient id="${gid}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity=".16"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>
-        <path d="${pf}" fill="url(#${gid})"/><path d="${p}" stroke="${col}" stroke-width="1.6" fill="none"/>
-      </svg>`;
+      <svg viewBox="0 0 200 50" preserveAspectRatio="none">${svgInner}</svg>`;
   }
   // 메타
   const t=new Date(data.updatedAt);
@@ -3377,12 +3407,13 @@ const PRICE_REFRESH_MS=5*60*1000;
 function startPricePolling(){
   setInterval(async ()=>{
     if(document.hidden)return; // 백그라운드 탭은 skip
-    const [fresh, freshIdx]=await Promise.all([loadPrices(), loadIndices()]);
+    const [fresh, freshIdx, freshIntra]=await Promise.all([loadPrices(), loadIndices(), loadAllIntraday().catch(()=>null)]);
     if(Object.keys(fresh).length){
       STATE.prices=fresh;
       if(STATE.data[STATE.healthMarket]) renderHealth();
       renderFinmap(); renderSectorRotationLive();
     }
+    if(freshIntra&&Object.keys(freshIntra).length) STATE.intraday=freshIntra;
     if(freshIdx){ STATE.indices=freshIdx; renderIndexWidget(freshIdx); }
     updateHeroTimeLabel();
   }, PRICE_REFRESH_MS);
@@ -3403,6 +3434,8 @@ async function boot(){
   const pricesPromise=loadPrices();
   // 4 지수 시계열도 비차단 — STATE.indices 캐시 + DOM 도착했으면 즉시 렌더, 아니면 buildNarrative에서 재호출
   loadIndices().then(idx=>{ if(idx){ STATE.indices=idx; renderIndexWidget(idx); } }).catch(()=>{});
+  // 인트라데이 차트 — 비차단, 도착 시 차트만 갱신
+  loadAllIntraday().then(intra=>{ STATE.intraday=intra; if(STATE.indices) renderIndexWidget(STATE.indices); }).catch(()=>{});
   // archive도 비차단 — 모달 mentions 깊이 ~30일 확장. 도착 전엔 main만으로 자연 폴백
   loadArchives().catch(e=>console.warn('archive 로딩 실패:',e));
   // daily insight — 비차단, 도착 시 바로 렌더
