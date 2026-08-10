@@ -178,6 +178,7 @@ const fixed = [
   { cat:'conf',  impact:3, title:'잭슨홀 연준 심포지엄 개막', date:'2026-08-27', desc:'캔자스시티 연준 주최·각국 중앙은행 총재·파월 연설 예정' },
   { cat:'conf',  impact:3, title:'파월 잭슨홀 기조연설', date:'2026-08-28', desc:'연준 의장 금리 경로 시그널·시장 최대 이벤트' },
   { cat:'macro', impact:3, title:'미국 7월 PCE 물가', date:'2026-08-28', desc:'Fed 선호 인플레 지표·잭슨홀 전날 사전 점검' },
+  { cat:'other', impact:3, title:'현대차 인베스터 데이', date:'2026-08-26', desc:'HMGMA 가동 이후 첫 투자자 컨퍼런스·중장기 EV·하이브리드 전략 공개' },
 
   // === 9월 매크로 ===
   { cat:'macro', impact:3, title:'미국 8월 CPI', date:'2026-09-10', desc:'BLS 8:30 ET·9월 FOMC 전 최종 인플레 확인대' },
