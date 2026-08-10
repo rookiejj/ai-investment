@@ -8,6 +8,39 @@
 const PREDICTION_SCORECARD = [
   {
     "date": "2026-08-11",
+    "made": "2026-08-11 07:31 KST",
+    "predictions": [
+      {
+        "label": "LIG넥스원",
+        "ticker": "079550",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "823,000원 마감 +11.1% 급등 후 사우디 WDS 2026 오늘 마지막날 대형 계약 서명 대기·SAMI·GAMI 현지 생산 협력·비궁 유도로켓 FCT 통과 3중 카운터가 프리미엄 확장 축",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "알테오젠",
+        "ticker": "196170",
+        "market": "KR",
+        "direction": "down",
+        "rationale": "348,000원 마감 +14.1% 급등 후 7거래일 연속 상승 피로도 축적·차익실현 압력 대기, 블랙록 매입 서사도 단기 소진 국면",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "CRWV",
+        "ticker": "CRWV",
+        "market": "US",
+        "direction": "up",
+        "rationale": "오늘 AMC Q2 실적 발표·매출 컨센 26억달러·백로그 994억달러·NVDA 5,000억달러 AI 인프라 파이낸싱 후방 카운터가 서프라이즈 카드",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
+    "date": "2026-08-11",
     "made": "2026-08-10 07:35 KST",
     "predictions": [
       {
@@ -16,8 +49,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "반도체특별법 8/11 시행 D-1·주주환원 확대 기대·8월 -12% 조정 후 방어 국면에서 정책 카운터가 반등 축",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": -0.4
       },
       {
         "label": "현대자동차",
@@ -25,8 +58,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "7월 미 판매 사상 최대 8.9만대·하이브리드 +52%·8/26 인베스터 데이 대기가 이번 주 회복 카운터 축",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 3.2
       },
       {
         "label": "AVGO",
@@ -34,8 +67,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "NVDA 랠리 동조·FY26 AI 매출 56억달러 가이던스 유지·SaaS 리레이팅과 병존 시나리오가 프리미엄 방어 축",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": -0.2
       }
     ]
   },

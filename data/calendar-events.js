@@ -171,6 +171,7 @@ const fixed = [
   { cat:'earnings', impact:3, title:'빅테크 Q2 어닝 주간 (MSFT·GOOGL·META·AMZN·AAPL)', date:'2026-07-29', desc:'7월 마지막 주 메가캡 집중 발표·AI CAPEX 점검대' },
 
   // === 8월 매크로 ===
+  { cat:'policy', impact:3, title:'한국 반도체특별법 시행', date:'2026-08-11', desc:'대통령 직속 반도체산업경쟁력강화특별위원회 신설·클러스터 산업기반시설 조성비 50~100% 국고 지원·수도권 외 지역 우선 배려' },
   { cat:'macro', impact:3, title:'미국 7월 CPI', date:'2026-08-12', desc:'BLS 8:30 ET·7월 FOMC 후 첫 인플레 확인대·연내 금리 경로 가름' },
   { cat:'macro', impact:2, title:'미국 7월 PPI', date:'2026-08-13', desc:'근원 PPI 동반·CPI 다음날 생산자물가 크로스체크' },
   { cat:'macro', impact:2, title:'미국 7월 소매판매', date:'2026-08-14', desc:'소비 모멘텀·서비스 vs 재화 지출 분기' },
