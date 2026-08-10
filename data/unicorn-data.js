@@ -75,10 +75,10 @@ const data = [
       },
       {
         "nm": "Perplexity AI",
-        "rs": "AI 검색·Comet 브라우저·엔터프라이즈 tier Stripe·Databricks·Fortune 100 확산·ARR $450~500M·NVDA·Bezos·SoftBank 투자자",
+        "rs": "AI 검색·Comet 브라우저·엔터프라이즈 tier Stripe·Databricks·Fortune 100 확산·ARR 4.5~5억달러·NVDA·Bezos·SoftBank 투자자",
         "ipo": "2028",
-        "val": "$22.6B",
-        "round": "Series E-6",
+        "val": "$24.8B",
+        "round": "Series E-7",
         "sector": "AI 검색"
       },
       {
@@ -169,9 +169,9 @@ const data = [
       },
       {
         "nm": "Anduril",
-        "rs": "$100B 라운드 협상 확인 - 5월 $61B 시리즈 H 대비 3배 스텝업, FY25 매출 $2.2B 2배·美 육군 $20B 카운터드론 계약·NATO 재무장 사이클 카운터",
+        "rs": "1,000억달러 라운드 협상 확인·Augment 추정 마켓캡 883억달러 - 5월 610억달러 시리즈 H 대비 스텝업, FY25 매출 22억달러 2배·美 육군 200억달러 카운터드론·NATO 재무장 사이클 카운터",
         "ipo": "단기 아닐(Luckey)",
-        "val": "$61B → $100B 협상",
+        "val": "$88.3B",
         "round": "Series H $5B (2026-05)",
         "sector": "방산 AI"
       },
