@@ -3143,7 +3143,8 @@ function _selectPscEntry(idx){
   const entry=_pscData[idx];
 
   const d=new Date(entry.date+'T00:00:00+09:00');
-  const dateStr=`${d.getMonth()+1}월 ${d.getDate()}일`;
+  const resultD=new Date(d.getTime()+24*60*60*1000);
+  const dateStr=`${resultD.getMonth()+1}월 ${resultD.getDate()}일`;
   const madeDatePart=(entry.made||'').split(' ')[0];
   const madeTimeMatch=entry.made&&entry.made.match(/(\d{1,2}:\d{2})\s*KST/);
   const madeTimeStr=madeTimeMatch?madeTimeMatch[1]:null;
@@ -3195,7 +3196,7 @@ function _selectPscEntry(idx){
 
   document.getElementById('pscDetail').innerHTML=`<div class="psc-card">
     <div class="psc-card-head">
-      <span class="psc-card-date">${madeLabel} → <strong>${dateStr}</strong> 결과</span>
+      <span class="psc-card-date">${madeLabel} → <strong>${dateStr}</strong> 결과 발표</span>
       <span class="psc-card-score ${scoreCls}">${scoreLabel}</span>
     </div>
     <div class="psc-rows">${rows}</div>
