@@ -8,6 +8,39 @@
 const PREDICTION_SCORECARD = [
   {
     "date": "2026-08-12",
+    "made": "2026-08-12 07:40 KST",
+    "predictions": [
+      {
+        "label": "SK하이닉스",
+        "ticker": "000660",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "1,425,000원 +0.4% 8/11 마감·삼성 +4.13% 랠리 동조·8월 상순 반도체 수출 +155% 서프라이즈 후광, HBM 사이클 확장이 매출 확장 카운터",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "셀트리온",
+        "ticker": "068270",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "210,500원 +4.7% 8/11 마감·대형 헬스케어 순환 매수 유입·5조 매출 목표·Q1 신규 고마진 +67% 서사, 방산·조선 조정에서 자금 로테이션 지속",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "NVDA",
+        "ticker": "NVDA",
+        "market": "US",
+        "direction": "up",
+        "rationale": "217.83달러 +0.2% 8/11 마감·CoreWeave Q2 매출 +112% 서프라이즈·백로그 1,040억달러 확장이 AI 인프라 매출 확장 카운터, CPI 컨센 부합 시 성장주 프리미엄 재확장",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
+    "date": "2026-08-12",
     "made": "2026-08-11 19:30 KST",
     "predictions": [
       {
@@ -16,8 +49,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "239,500원 +4.10% 마감 후 8월 상순 반도체 수출 +155% YoY 서프라이즈·외국인 5,841억 순매수 1위 흐름이 CPI 8/12 발표 앞두고 반등 지속 서사, HBM 사이클 확장이 밸류 방어 축",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 4.1
       },
       {
         "label": "AMD",
@@ -25,8 +58,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "down",
         "rationale": "469.56달러 -2.9% 되돌림 후 AI 서킷 파이낸싱 우려 재점화·SpaceX 스타마인드 프로그램 NVIDIA 독점 지정이 AMD 대비 격차 확산 카운터, CPI 대기 관망이 압력 지속",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": -0.1
       },
       {
         "label": "LLY",
@@ -34,8 +67,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "1,231.94달러 +3.9% 강세 후 GLP-1 파이프라인 확장·CPI 대기 속 실질금리 하락 시나리오가 헬스케어 리레이팅 카운터, 방어주 순환매 흐름이 프리미엄 방어 축",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 0
       }
     ]
   },
@@ -201,39 +234,6 @@ const PREDICTION_SCORECARD = [
         "rationale": "전일 -8.6% Q2 어닝 쇼크 낙폭과대 · 기술적 반등 구간, MI350X 데이터센터 수요 서사는 중장기 유효",
         "result": "miss",
         "actual": -1.1
-      }
-    ]
-  },
-  {
-    "date": "2026-08-04",
-    "made": "2026-08-04 07:15 KST",
-    "predictions": [
-      {
-        "label": "삼성전자",
-        "ticker": "005930",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "어제 -8.8% 급락 과매도 구간 · 낙폭과대 기술적 반등 + HBM4 서사 유효",
-        "result": "hit",
-        "actual": 0.2
-      },
-      {
-        "label": "LG화학",
-        "ticker": "051910",
-        "market": "KR",
-        "direction": "down",
-        "rationale": "WTI -6% 크래시 여진 · 납사 원가 헤지 효과 상쇄, 리튬 약세 배터리 소재 마진 압박",
-        "result": "miss",
-        "actual": 3.8
-      },
-      {
-        "label": "AMD",
-        "ticker": "AMD",
-        "market": "US",
-        "direction": "up",
-        "rationale": "내일(8/5) 실적 D-1 기대감 · MI350X 데이터센터 GPU 가이던스 상향 선반영",
-        "result": "miss",
-        "actual": -8.6
       }
     ]
   }
