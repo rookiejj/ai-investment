@@ -7,6 +7,39 @@
 //   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = [
   {
+    "date": "2026-08-12",
+    "made": "2026-08-11 19:30 KST",
+    "predictions": [
+      {
+        "label": "삼성전자",
+        "ticker": "005930",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "239,500원 +4.10% 마감 후 8월 상순 반도체 수출 +155% YoY 서프라이즈·외국인 5,841억 순매수 1위 흐름이 CPI 8/12 발표 앞두고 반등 지속 서사, HBM 사이클 확장이 밸류 방어 축",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "AMD",
+        "ticker": "AMD",
+        "market": "US",
+        "direction": "down",
+        "rationale": "469.56달러 -2.9% 되돌림 후 AI 서킷 파이낸싱 우려 재점화·SpaceX 스타마인드 프로그램 NVIDIA 독점 지정이 AMD 대비 격차 확산 카운터, CPI 대기 관망이 압력 지속",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "LLY",
+        "ticker": "LLY",
+        "market": "US",
+        "direction": "up",
+        "rationale": "1,231.94달러 +3.9% 강세 후 GLP-1 파이프라인 확장·CPI 대기 속 실질금리 하락 시나리오가 헬스케어 리레이팅 카운터, 방어주 순환매 흐름이 프리미엄 방어 축",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
     "date": "2026-08-11",
     "made": "2026-08-11 07:31 KST",
     "predictions": [
@@ -16,8 +49,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "823,000원 마감 +11.1% 급등 후 사우디 WDS 2026 오늘 마지막날 대형 계약 서명 대기·SAMI·GAMI 현지 생산 협력·비궁 유도로켓 FCT 통과 3중 카운터가 프리미엄 확장 축",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": -7.7
       },
       {
         "label": "알테오젠",
@@ -25,8 +58,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "down",
         "rationale": "348,000원 마감 +14.1% 급등 후 7거래일 연속 상승 피로도 축적·차익실현 압력 대기, 블랙록 매입 서사도 단기 소진 국면",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": -5.9
       },
       {
         "label": "CRWV",
@@ -34,8 +67,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "오늘 AMC Q2 실적 발표·매출 컨센 26억달러·백로그 994억달러·NVDA 5,000억달러 AI 인프라 파이낸싱 후방 카운터가 서프라이즈 카드",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": -2.7
       }
     ]
   },
@@ -201,39 +234,6 @@ const PREDICTION_SCORECARD = [
         "rationale": "내일(8/5) 실적 D-1 기대감 · MI350X 데이터센터 GPU 가이던스 상향 선반영",
         "result": "miss",
         "actual": -8.6
-      }
-    ]
-  },
-  {
-    "date": "2026-08-03",
-    "made": "2026-08-03 07:15 KST",
-    "predictions": [
-      {
-        "label": "SK하이닉스",
-        "ticker": "000660",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "HBM3E 가격 20% 인상 계약 마무리 · HBM4 양산 확인 + 오너 매수 서포트",
-        "result": "miss",
-        "actual": -8.8
-      },
-      {
-        "label": "기아",
-        "ticker": "000270",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "8/4 미국 자동차 관세 25%→15% 발효 D-1 수혜 선반영 · 하이브리드 판매 모멘텀",
-        "result": "miss",
-        "actual": -1.7
-      },
-      {
-        "label": "PLTR",
-        "ticker": "PLTR",
-        "market": "US",
-        "direction": "up",
-        "rationale": "오늘 마감 후 Q2 실적 D-day · 커머셜 AI ARR 40%+ 서사 컨센 선반영 기대",
-        "result": "hit",
-        "actual": 2.1
       }
     ]
   }
