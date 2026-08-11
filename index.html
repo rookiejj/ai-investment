@@ -3334,12 +3334,18 @@ function _idxIntradaySVG(d,w,h){
   const col=up?'#0fa76e':'#d45656';
   const gid='ig'+Math.random().toString(36).slice(2,8);
   const path=vis.map((c,i)=>(i?'L':'M')+toX(c.t)+','+toY(c.c)).join(' ');
-  const lx=toX(last.t), fx=toX(cc[0].t);
-  const fill=path+`L${lx},${z}L${fx},${z}Z`;
+  // 장마감 후(세션 종료)엔 마지막 캔들에서 오른쪽 끝까지 수평선 연장
+  const sessionOver=nowS>=sEnd;
+  const lastDataX=+toX(last.t);
+  const ext=(sessionOver&&lastDataX<w)?` L${w},${toY(last.c)}`:'';
+  const endX=sessionOver?w:lastDataX;
+  const fx=toX(cc[0].t);
+  const fill=path+ext+`L${endX},${z}L${fx},${z}Z`;
+  const stroke=path+ext;
   return `<defs><linearGradient id="${gid}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity=".15"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>`+
     `<line x1="0" y1="${z}" x2="${w}" y2="${z}" stroke="rgba(0,0,0,.09)" stroke-width=".8" stroke-dasharray="3 3"/>`+
     `<path d="${fill}" fill="url(#${gid})"/>`+
-    `<path d="${path}" stroke="${col}" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+    `<path d="${stroke}" stroke="${col}" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
 }
 function _idxPartsIn(tz){
   const s=new Date().toLocaleString('en-US',{timeZone:tz,hour12:false,hour:'2-digit',minute:'2-digit',weekday:'short'});
