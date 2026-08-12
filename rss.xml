@@ -6,8 +6,15 @@
     <description>한국·미국 주식, AI 기업, 원자재·크립토, 유니콘 5개 도메인의 일일 헤드라인. 매일 KST 07시·19시 자동 업데이트.</description>
     <language>ko-KR</language>
     <atom:link href="https://briefick.com/rss.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Wed, 12 Aug 2026 10:43:15 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 12 Aug 2026 22:39:09 GMT</lastBuildDate>
     <ttl>60</ttl>
+    <item>
+      <title>2026년 8월 13일 (목) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
+      <link>https://briefick.com/daily/2026-08-13</link>
+      <guid isPermaLink="true">https://briefick.com/daily/2026-08-13</guid>
+      <pubDate>Wed, 12 Aug 2026 22:00:00 GMT</pubDate>
+      <description>반도체 수출 상순 +155% 급증 - 213억달러 역대 최대로 K증시 대세 상승 축 · 시스코 Q4 매출 176억달러 - AI 인프라 오더 40억달러 급증·FY27 가이던스 상향 · 금 4,424달러 +1.24% - CPI 냉각·달러 약세로 실질금리 하락 시나리오 재점화</description>
+    </item>
     <item>
       <title>2026년 8월 12일 (수) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
       <link>https://briefick.com/daily/2026-08-12</link>
@@ -420,13 +427,6 @@
       <guid isPermaLink="true">https://briefick.com/daily/2026-06-15</guid>
       <pubDate>Sun, 14 Jun 2026 22:00:00 GMT</pubDate>
       <description>G7 에비앙 개막 - 이재명 6/16 출국 1박 3일 첫 다자 데뷔 카운트다운 · G7 에비앙 개막 D-day - Altman·Hassabis·Amodei AI 3강 첫 동시 참석 · 美·이란 서명 6/19 제네바 확정 - WTI $88 -3.2%·브렌트 $86.5 -4% 8주 저점</description>
-    </item>
-    <item>
-      <title>2026년 6월 14일 (일) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
-      <link>https://briefick.com/daily/2026-06-14</link>
-      <guid isPermaLink="true">https://briefick.com/daily/2026-06-14</guid>
-      <pubDate>Sat, 13 Jun 2026 22:00:00 GMT</pubDate>
-      <description>삼성전자 시총 2,000조 사상 최초 돌파 - 6/12 종가 322,500원 +7.86% · SPCX 6/12 첫날 +19% $160.95 시총 $2.1T 사상 최대 IPO 마무리 · WTI $84.88 -3.2% 8주 저점·美·이란 위크엔드 서명 임박 - 호르무즈 30일 재개</description>
     </item>
   </channel>
 </rss>
