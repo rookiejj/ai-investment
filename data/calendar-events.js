@@ -194,118 +194,9 @@ const fixed = [
 
 
 
+
 // === AUTO-EARNINGS (scripts/fetch-earnings-calendar.js 자동 생성 — 손대지 말 것) ===
 const autoEarnings = [
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "Archer Aviation 실적",
-    "date": "2026-08-10",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "ACHR"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "AST SpaceMobile 실적",
-    "date": "2026-08-10",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "ASTS"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "KT 실적",
-    "date": "2026-08-10",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "030200"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "Riot Platforms 실적",
-    "date": "2026-08-10",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "RIOT"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "Rocket Lab 실적",
-    "date": "2026-08-10",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "RKLB"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "CJ제일제당 실적",
-    "date": "2026-08-11",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "097950"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "CoreWeave 실적",
-    "date": "2026-08-11",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "CRWV"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "엔씨소프트 실적",
-    "date": "2026-08-11",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "036570"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "펄어비스 실적",
-    "date": "2026-08-11",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "263750"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "한국타이어 실적",
-    "date": "2026-08-11",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "161390"
-    ],
-    "src": "auto-earnings"
-  },
   {
     "cat": "earnings",
     "impact": 2,
@@ -336,6 +227,17 @@ const autoEarnings = [
     "desc": "실적 발표 예정",
     "tickers": [
       "LUNR"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "KT 실적",
+    "date": "2026-08-13",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "030200"
     ],
     "src": "auto-earnings"
   },
@@ -574,7 +476,7 @@ const autoEarnings = [
     "cat": "earnings",
     "impact": 2,
     "title": "Oracle 실적",
-    "date": "2026-09-09",
+    "date": "2026-09-10",
     "desc": "실적 발표 예정",
     "tickers": [
       "ORCL"
@@ -589,6 +491,17 @@ const autoEarnings = [
     "desc": "실적 발표 예정",
     "tickers": [
       "MU"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "Costco 실적",
+    "date": "2026-09-24",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "COST"
     ],
     "src": "auto-earnings"
   }
