@@ -7,6 +7,39 @@
 //   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = [
   {
+    "date": "2026-08-13",
+    "made": "2026-08-12 19:39 KST",
+    "predictions": [
+      {
+        "label": "삼성전자",
+        "ticker": "005930",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "255,500원 +6.70% 사상 최고 마감·테마섹 K증시 첫 투자 삼전닉스 담기 소식이 트리거·외국인 2.8조 순매수 폭발이 익일 추가 상승 서사 축, 오늘 밤 미 CPI 컨센 부합 시 추가 강세 카운터",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "LG전자",
+        "ticker": "066570",
+        "market": "KR",
+        "direction": "down",
+        "rationale": "205,000원 +13.1% 폭등 마감·엔비디아 CDU 인증 확보 리레이팅 후 단기 급등분 소화 국면·이수페타시스·삼성전기 등 어제 급등주 되돌림 패턴이 익일 조정 카운터",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "NVDA",
+        "ticker": "NVDA",
+        "market": "US",
+        "direction": "up",
+        "rationale": "218.06달러 마감·CoreWeave Q2 매출 +112%·백로그 1,040억달러 서프라이즈가 AI 인프라 서사 재확산, 오늘 밤 CPI 컨센 부합 시 성장주 프리미엄 재확장 카운터",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
     "date": "2026-08-12",
     "made": "2026-08-12 07:40 KST",
     "predictions": [
@@ -16,8 +49,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "1,425,000원 +0.4% 8/11 마감·삼성 +4.13% 랠리 동조·8월 상순 반도체 수출 +155% 서프라이즈 후광, HBM 사이클 확장이 매출 확장 카운터",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 5.5
       },
       {
         "label": "셀트리온",
@@ -25,8 +58,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "210,500원 +4.7% 8/11 마감·대형 헬스케어 순환 매수 유입·5조 매출 목표·Q1 신규 고마진 +67% 서사, 방산·조선 조정에서 자금 로테이션 지속",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": -4
       },
       {
         "label": "NVDA",
@@ -34,8 +67,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "217.83달러 +0.2% 8/11 마감·CoreWeave Q2 매출 +112% 서프라이즈·백로그 1,040억달러 확장이 AI 인프라 매출 확장 카운터, CPI 컨센 부합 시 성장주 프리미엄 재확장",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 0.3
       }
     ]
   },
@@ -201,39 +234,6 @@ const PREDICTION_SCORECARD = [
         "rationale": "WDC·SNDK·AMD 매도 확산 속 홀로 -0.2% 상대 방어·Vera Rubin 8월 램프·8/27 Q2 실적 D-20",
         "result": "hit",
         "actual": 0.4
-      }
-    ]
-  },
-  {
-    "date": "2026-08-06",
-    "made": "2026-08-06 09:58 KST",
-    "predictions": [
-      {
-        "label": "삼성전자",
-        "ticker": "005930",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "240,000원 지지 확인 + 외국인 순매수 전환 기대 · HBM4 양산 서사 재점화",
-        "result": "miss",
-        "actual": -6.3
-      },
-      {
-        "label": "한국항공우주",
-        "ticker": "047810",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "K-방산 수출 모멘텀 지속 · 글로벌 재무장 사이클 가속, 전일 +11.2% 상승세 연속",
-        "result": "hit",
-        "actual": 2.5
-      },
-      {
-        "label": "AMD",
-        "ticker": "AMD",
-        "market": "US",
-        "direction": "up",
-        "rationale": "전일 -8.6% Q2 어닝 쇼크 낙폭과대 · 기술적 반등 구간, MI350X 데이터센터 수요 서사는 중장기 유효",
-        "result": "miss",
-        "actual": -1.1
       }
     ]
   }
