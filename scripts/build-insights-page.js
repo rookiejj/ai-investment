@@ -9,7 +9,6 @@ const path = require('path');
 const root = path.resolve(__dirname, '..');
 const src = fs.readFileSync(path.join(root, 'data/daily-insight.js'), 'utf8');
 
-// eval로 DAILY_INSIGHTS 추출
 const mod = new Function(src + '\nreturn DAILY_INSIGHTS;')();
 if (!Array.isArray(mod) || !mod.length) {
   console.error('DAILY_INSIGHTS 파싱 실패');
@@ -24,16 +23,26 @@ function esc(s) {
     .replace(/"/g, '&quot;');
 }
 
-// 단락 분리 (\n\n) → <p> 태그
+function firstSentence(body) {
+  const first = body.split(/\n\n+/)[0] || '';
+  return first.length > 80 ? first.slice(0, 80) + '…' : first;
+}
+
 function bodyToHtml(body) {
   return body
     .split(/\n\n+/)
-    .map(p => `<p>${esc(p.trim())}</p>`)
-    .join('\n    ');
+    .map(p => `    <p>${esc(p.trim())}</p>`)
+    .join('\n');
+}
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00+09:00');
+  const days = ['일', '월', '화', '수', '목', '금', '토'];
+  return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일 (${days[d.getDay()]})`;
 }
 
 const latest = mod[0];
-const pageTitle = `투자 지식 — ${esc(latest.title)}`;
+const pageTitle = '투자 지식 — 자산 간 인과관계 | 브리픽';
 const pageDesc = mod.slice(0, 3).map(d => d.title).join(' · ');
 
 // FAQPage 스키마
@@ -55,53 +64,83 @@ const schema = {
   mainEntity: faqItems,
 };
 
-const articles = mod.map(d => `  <article>
+// 목록 아이템
+const listItems = mod.map(d => `    <li><a href="#insight-${esc(d.date)}"><strong>${esc(d.title)}</strong><span>${esc(d.assets && d.assets.length ? d.assets.join(' · ') + ' · ' : '') + esc(firstSentence(d.body))}</span></a></li>`).join('\n');
+
+// 본문 아티클
+const articles = mod.map(d => `  <article id="insight-${esc(d.date)}">
     <h2>${esc(d.title)}</h2>
-    <p class="meta"><time datetime="${esc(d.date)}">${esc(d.date)}</time>${d.assets && d.assets.length ? ` · ${d.assets.map(esc).join(' · ')}` : ''}</p>
-    ${bodyToHtml(d.body)}
+    <p class="meta"><time datetime="${esc(d.date)}">${formatDate(d.date)}</time>${d.assets && d.assets.length ? ` · ${d.assets.map(esc).join(' · ')}` : ''}</p>
+${bodyToHtml(d.body)}
   </article>`).join('\n\n');
 
-const html = `<!DOCTYPE html>
+const html = `<!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>${pageTitle}</title>
-  <meta name="description" content="${esc(pageDesc)}">
-  <link rel="canonical" href="https://briefick.com/insights.html">
-  <meta property="og:title" content="${pageTitle}">
-  <meta property="og:description" content="${esc(pageDesc)}">
-  <meta property="og:url" content="https://briefick.com/insights.html">
-  <meta property="og:type" content="website">
-  <script type="application/ld+json">${JSON.stringify(schema, null, 2)}</script>
-  <style>
-    body { font-family: -apple-system, 'Noto Sans KR', sans-serif; max-width: 720px; margin: 0 auto; padding: 24px 16px; color: #1a1a1a; line-height: 1.7; }
-    header { margin-bottom: 40px; border-bottom: 2px solid #0fa76e; padding-bottom: 16px; }
-    header a { text-decoration: none; color: inherit; }
-    h1 { font-size: 1.4rem; font-weight: 700; margin: 0 0 6px; }
-    .tagline { font-size: 0.9rem; color: #555; margin: 0; }
-    article { margin-bottom: 48px; }
-    h2 { font-size: 1.2rem; font-weight: 700; margin: 0 0 8px; color: #111; }
-    .meta { font-size: 0.8rem; color: #888; margin: 0 0 14px; }
-    p { margin: 0 0 12px; font-size: 0.95rem; }
-    footer { margin-top: 48px; border-top: 1px solid #eee; padding-top: 16px; font-size: 0.8rem; color: #888; }
-    footer a { color: #0fa76e; text-decoration: none; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${pageTitle}</title>
+<meta name="description" content="${esc(pageDesc)}">
+<link rel="canonical" href="https://briefick.com/insights.html">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<meta property="og:title" content="${pageTitle}">
+<meta property="og:description" content="${esc(pageDesc)}">
+<meta property="og:url" content="https://briefick.com/insights.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://briefick.com/assets/og-image-20260513.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://briefick.com/assets/og-image-20260513.png">
+<script type="application/ld+json">${JSON.stringify(schema, null, 2)}</script>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css">
+<style>
+:root{--bg:#fafafa;--panel:#fff;--fg:#0d0d0d;--fg2:#333;--mut:#666;--sub:#999;--border:rgba(0,0,0,0.06);--acc:#18E299;--acc-deep:#0fa76e}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg2);font:15px/1.55 Pretendard,-apple-system,sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.back-home{display:inline-flex;padding:14px 20px;color:var(--mut);font-size:14px}
+.wrap{min-height:calc(100vh - 48px);display:flex;flex-direction:column;align-items:center;padding:8px 20px 60px;gap:16px}
+.card{background:var(--panel);border-radius:20px;padding:32px 28px;width:100%;max-width:720px;box-shadow:0 8px 28px rgba(0,0,0,0.06)}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.brand img{width:36px;height:36px;border-radius:50%;object-fit:cover}
+.brand span{font:700 16px/1 Pretendard,sans-serif;color:var(--fg)}
+h1{font:700 24px/1.3 Pretendard,sans-serif;color:var(--fg);margin-bottom:8px;letter-spacing:-0.5px}
+.lead{color:var(--mut);font-size:14px;margin-bottom:28px;line-height:1.55}
+ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+li a{display:block;padding:14px 16px;border-radius:10px;background:#f6f7f6;transition:background 0.15s}
+li a:hover{background:#d4fae8}
+li a strong{display:block;font-size:14px;color:var(--fg);font-weight:600;margin-bottom:4px}
+li a span{display:block;font-size:13px;color:var(--mut);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cta{margin-top:28px;padding-top:22px;border-top:1px solid var(--border);text-align:center}
+.cta a{display:inline-block;padding:12px 22px;background:var(--acc);color:#001a0e;border-radius:12px;font-weight:700}
+.cta a:hover{background:var(--acc-deep);color:#fff}
+article{scroll-margin-top:24px}
+article h2{font:700 20px/1.35 Pretendard,sans-serif;color:var(--fg);margin-bottom:10px;letter-spacing:-0.3px}
+.meta{font-size:13px;color:var(--mut);margin-bottom:18px}
+article p{font-size:15px;line-height:1.75;color:var(--fg2);margin-bottom:14px}
+@media(max-width:520px){.card{padding:24px 18px}h1{font-size:22px}article h2{font-size:18px}}
+</style>
 </head>
 <body>
-<header>
-  <a href="https://briefick.com">
-    <h1>브리픽 투자 지식</h1>
-    <p class="tagline">왜 그런지 아는 투자. 자산 간 인과관계를 매일 하나씩.</p>
-  </a>
-</header>
-<main>
+<a class="back-home" href="/">← 실시간 대시보드</a>
+<main class="wrap">
+<div class="card">
+  <header class="brand">
+    <img src="/assets/briefick_profile_640.jpeg" alt="브리픽" width="36" height="36" loading="lazy">
+    <span>브리픽 · 투자 지식</span>
+  </header>
+  <h1>투자 지식 아카이브</h1>
+  <p class="lead">왜 그런지 아는 투자. 자산 간 인과관계를 매일 하나씩. 달러·금리·환율·주식의 연결 메커니즘.</p>
+  <ul>
+${listItems}
+  </ul>
+  <div class="cta"><a href="/">실시간 대시보드 보기 →</a></div>
+</div>
+
 ${articles}
 </main>
-<footer>
-  <p><a href="https://briefick.com">브리픽</a> — 매일 아침 카카오톡으로 받는 1분 마켓 브리핑</p>
-  <p>최근 갱신: ${esc(latest.date)}</p>
-</footer>
 </body>
 </html>`;
 
