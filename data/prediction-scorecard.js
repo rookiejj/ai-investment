@@ -8,6 +8,39 @@
 const PREDICTION_SCORECARD = [
   {
     "date": "2026-08-13",
+    "made": "2026-08-13 07:15 KST",
+    "predictions": [
+      {
+        "label": "한화에어로스페이스",
+        "ticker": "012450",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "직전 종가 1,156,000원 +5.3%·아리온스멧 496억원 8월 양산 계약·비츠로넥스텍 누리호 엔진 535억원 후속 발주가 K-방산 미래전력 카테고리 진입 서사 축, 방산 순환매 재개·NATO 국방예산 확장 사이클이 익일 강세 카운터",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "HD현대중공업",
+        "ticker": "329180",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "직전 종가 496,000원·상반기 수주 148억달러가 연간 목표 204억달러의 72% 조기 달성·수주잔고 609억달러 견고·원달러 1,415원 10개월 최저가 마진 방어 축, 조선주 상대적 부진 해소 국면이 반등 카드",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "CRWV",
+        "ticker": "CRWV",
+        "market": "US",
+        "direction": "up",
+        "rationale": "$103.83 시간외 +14% 급등·Q2 매출 25.75억달러 +112% 컨센 상회·백로그 6주 만에 1,042→1,292억달러로 250억달러 추가 계약 서프라이즈, CPI 부합·연준 동결 시나리오가 성장주 프리미엄 재확산 카운터",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
+    "date": "2026-08-13",
     "made": "2026-08-12 19:39 KST",
     "predictions": [
       {
@@ -16,8 +49,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "255,500원 +6.70% 사상 최고 마감·테마섹 K증시 첫 투자 삼전닉스 담기 소식이 트리거·외국인 2.8조 순매수 폭발이 익일 추가 상승 서사 축, 오늘 밤 미 CPI 컨센 부합 시 추가 강세 카운터",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 6.7
       },
       {
         "label": "LG전자",
@@ -25,8 +58,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "down",
         "rationale": "205,000원 +13.1% 폭등 마감·엔비디아 CDU 인증 확보 리레이팅 후 단기 급등분 소화 국면·이수페타시스·삼성전기 등 어제 급등주 되돌림 패턴이 익일 조정 카운터",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": 13.1
       },
       {
         "label": "NVDA",
@@ -34,8 +67,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "218.06달러 마감·CoreWeave Q2 매출 +112%·백로그 1,040억달러 서프라이즈가 AI 인프라 서사 재확산, 오늘 밤 CPI 컨센 부합 시 성장주 프리미엄 재확장 카운터",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": -0.2
       }
     ]
   },
@@ -201,39 +234,6 @@ const PREDICTION_SCORECARD = [
         "rationale": "Q2 매출·EPS 컨센 상회 후 +16.8% 급등·연간 EPS 가이던스 상향이 AI 워크로드 매출 재가속 실증, SaaS 리레이팅 흐름 지속",
         "result": "hit",
         "actual": 5.6
-      }
-    ]
-  },
-  {
-    "date": "2026-08-07",
-    "made": "2026-08-07 07:35 KST",
-    "predictions": [
-      {
-        "label": "SK하이닉스",
-        "ticker": "000660",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "직전 -10.4% 급락 오버솔드·사상 최대 매출 실증·기술적 반등 여지, KOSPI 6,300선 회복 시험 국면",
-        "result": "miss",
-        "actual": -4.9
-      },
-      {
-        "label": "한화에어로스페이스",
-        "ticker": "012450",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "KAI 지분 11.21% 확보로 방산 통합 밑그림·직전 +4.7% 상대 방어·방산 매도 속 지분 확보 카드",
-        "result": "hit",
-        "actual": 4.1
-      },
-      {
-        "label": "NVDA",
-        "ticker": "NVDA",
-        "market": "US",
-        "direction": "up",
-        "rationale": "WDC·SNDK·AMD 매도 확산 속 홀로 -0.2% 상대 방어·Vera Rubin 8월 램프·8/27 Q2 실적 D-20",
-        "result": "hit",
-        "actual": 0.4
       }
     ]
   }
