@@ -7,6 +7,39 @@
 //   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = [
   {
+    "date": "2026-08-14",
+    "made": "2026-08-13 19:45 KST",
+    "predictions": [
+      {
+        "label": "SK하이닉스",
+        "ticker": "000660",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "1,593,000원 +5.9% 오늘 사상 최고·CoreWeave·Nebius 실적 서프라이즈 후방·HBM4 전환 서사 확산·외국인 2.4조 순매수 폭발이 익일 추가 강세 카운터, 미 CPI 부합·연준 9월 동결 시나리오가 성장주 프리미엄 확장",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "이수페타시스",
+        "ticker": "007660",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "96,800원 +7.4% 오늘 폭등·AI 기판 쇼티지 재확인·대구 5공장 증설 완료·목표주가 상향이 후속 매수 축, AI 서버 CAPEX 초확대 사이클과 결합해 하이퍼스케일러 후방 수혜 지속",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "HUBB",
+        "ticker": "HUBB",
+        "market": "US",
+        "direction": "up",
+        "rationale": "$548.18 +6.9% 오늘 급등·Q2 매출 17.1억달러·EPS $5.52 컨센 상회·FY26 가이던스 상향이 전력 인프라 리레이팅 축, AI 데이터센터 CAPEX 초확대 사이클과 결합해 전력 유틸 후방 매출화 지속",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
     "date": "2026-08-13",
     "made": "2026-08-13 07:15 KST",
     "predictions": [
@@ -16,8 +49,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "직전 종가 1,156,000원 +5.3%·아리온스멧 496억원 8월 양산 계약·비츠로넥스텍 누리호 엔진 535억원 후속 발주가 K-방산 미래전력 카테고리 진입 서사 축, 방산 순환매 재개·NATO 국방예산 확장 사이클이 익일 강세 카운터",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 2.5
       },
       {
         "label": "HD현대중공업",
@@ -25,8 +58,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "직전 종가 496,000원·상반기 수주 148억달러가 연간 목표 204억달러의 72% 조기 달성·수주잔고 609억달러 견고·원달러 1,415원 10개월 최저가 마진 방어 축, 조선주 상대적 부진 해소 국면이 반등 카드",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 0
       },
       {
         "label": "CRWV",
@@ -34,8 +67,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "$103.83 시간외 +14% 급등·Q2 매출 25.75억달러 +112% 컨센 상회·백로그 6주 만에 1,042→1,292억달러로 250억달러 추가 계약 서프라이즈, CPI 부합·연준 동결 시나리오가 성장주 프리미엄 재확산 카운터",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": -2.9
       }
     ]
   },
@@ -201,39 +234,6 @@ const PREDICTION_SCORECARD = [
         "rationale": "NVDA 랠리 동조·FY26 AI 매출 56억달러 가이던스 유지·SaaS 리레이팅과 병존 시나리오가 프리미엄 방어 축",
         "result": "hit",
         "actual": -0.2
-      }
-    ]
-  },
-  {
-    "date": "2026-08-08",
-    "made": "2026-08-08 07:15 KST",
-    "predictions": [
-      {
-        "label": "삼성SDI",
-        "ticker": "006400",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "8/7 +7.5% 배터리 랠리 주도·북미 ESS 수주 확대·LG에너지솔루션 실적 발표 대기가 배터리 리레이팅 축 확장",
-        "result": "hit",
-        "actual": 7.5
-      },
-      {
-        "label": "BGF리테일",
-        "ticker": "282330",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "Q2 영업이익 849억 컨센 740억 상회·이달 +25.5% 아웃퍼폼·DB증권 목표가 상향이 편의점 리레이팅 모멘텀 지속 축",
-        "result": "hit",
-        "actual": 14.7
-      },
-      {
-        "label": "Cloudflare",
-        "ticker": "NET",
-        "market": "US",
-        "direction": "up",
-        "rationale": "Q2 매출·EPS 컨센 상회 후 +16.8% 급등·연간 EPS 가이던스 상향이 AI 워크로드 매출 재가속 실증, SaaS 리레이팅 흐름 지속",
-        "result": "hit",
-        "actual": 5.6
       }
     ]
   }

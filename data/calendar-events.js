@@ -180,6 +180,11 @@ const fixed = [
   { cat:'conf',  impact:3, title:'파월 잭슨홀 기조연설', date:'2026-08-28', desc:'연준 의장 금리 경로 시그널·시장 최대 이벤트' },
   { cat:'macro', impact:3, title:'미국 7월 PCE 물가', date:'2026-08-28', desc:'Fed 선호 인플레 지표·잭슨홀 전날 사전 점검' },
   { cat:'other', impact:3, title:'현대차 인베스터 데이', date:'2026-08-26', desc:'HMGMA 가동 이후 첫 투자자 컨퍼런스·중장기 EV·하이브리드 전략 공개' },
+  { cat:'macro', impact:2, title:'미국 7월 산업생산·설비가동률', date:'2026-08-15', desc:'제조업 시황·설비 활용률 지표' },
+  { cat:'macro', impact:2, title:'미국 8월 미시간대 소비자심리 1차', date:'2026-08-15', desc:'소비자 기대 인플레·심리 지표' },
+  { cat:'macro', impact:2, title:'일본 Q2 GDP 1차 추정', date:'2026-08-18', desc:'BOJ 9월 회의 가이드 후방 지표' },
+  { cat:'macro', impact:2, title:'미국 8월 S&P 마킷 PMI 1차', date:'2026-08-21', desc:'제조업·서비스 PMI 1차 추정' },
+  { cat:'macro', impact:2, title:'미국 7월 신규주택판매', date:'2026-08-25', desc:'주택시장 모멘텀 지표' },
 
   // === 9월 매크로 ===
   { cat:'macro', impact:3, title:'미국 8월 CPI', date:'2026-09-10', desc:'BLS 8:30 ET·9월 FOMC 전 최종 인플레 확인대' },
