@@ -75,10 +75,10 @@ const data = [
       },
       {
         "nm": "Perplexity AI",
-        "rs": "AI 검색·Comet 브라우저·엔터프라이즈 tier Stripe·Databricks·Fortune 100 확산·ARR 4.5~5억달러·NVDA·Bezos·SoftBank 투자자",
+        "rs": "Forge 세컨더리 주당 65.54달러 - 210억달러 밸류 접근·월 4,500만 사용자·NVDA·Bezos·SoftBank 투자자군",
         "ipo": "2028",
-        "val": "$24.8B",
-        "round": "Series E-7",
+        "val": "$21B",
+        "round": "Series E-7 / Forge 세컨더리",
         "sector": "AI 검색"
       },
       {
