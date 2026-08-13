@@ -151,7 +151,7 @@ ai-investment/
 │   ├── commodity-data.js       / commodity-update.js
 │   ├── unicorn-data.js         / unicorn-update.js
 │   ├── calendar-events.js      ← 이벤트 캘린더 데이터 (recurring 패턴 + fixed 단발)
-│   ├── daily-insight.js        ← 투자 지식 +1 (매일 에이전트 생성, 최근 7건 유지, index.html 전용 — 친구톡 미반영)
+│   ├── daily-insight.js        ← 투자 지식 +1 (매일 에이전트 생성, 최근 180건 유지, index.html·insights.html 전용 — 친구톡 미반영)
 │   ├── macro-data.js           ← FRED 매크로 지표 (scripts/fetch-macro.js 자동 생성, UI·DB sync 미와이어 — Phase 2 예정)
 │   └── company-ko.js           ← 영문 회사명·티커 → 한글 매핑 (index.html·daily-send 공용)
 └── README.md
@@ -168,7 +168,7 @@ ai-investment/
 3. **데이터 수정**: `data/<탭>-data.js`를 최소 diff로 Edit. 회계·거버넌스 이슈 기업은 즉시 제외하고 동일 섹터 대체주로 교체.
 4. **이력 prepend**: `data/<탭>-update.js` 맨 앞에 새 엔트리 추가 (아래 [update.js 누적 원칙] 참조).
 5. **캘린더 이벤트 점검**: 조사 중 발견한 향후 60일 안 알려진 일정(어닝·매크로·IPO·컨퍼런스)을 `data/calendar-events.js`의 `fixed` 배열에 append. 자세한 정책은 [캘린더 이벤트 운영] 참조.
-5-1. **🆕 투자 지식 +1**: `data/daily-insight.js` 배열 맨 앞에 오늘자 항목 prepend. 7건 초과 시 오래된 것 제거. 자세한 정책은 아래 [투자 지식 +1] 참조.
+5-1. **🆕 투자 지식 +1**: `data/daily-insight.js` 배열 맨 앞에 오늘자 항목 prepend. 180건 초과 시 오래된 것 제거. 자세한 정책은 아래 [투자 지식 +1] 참조.
 5-2. **🆕 예측 스코어카드 (채점)**: `node scripts/score-predictions.js` 실행 → stdout에 출력이 있으면 `data/prediction-scorecard.js`를 해당 내용으로 교체 (어제 예측 자동 채점). 그 다음, 오늘의 예측 3건을 배열 맨 앞에 prepend (result:null로). 7건 초과 시 제거. 자세한 정책은 아래 [예측 스코어카드] 참조.
 5-3. **🆕 섹터 로테이션**: `node scripts/calc-sector-rotation.js` 실행 → 출력 JSON을 `data/sector-rotation.js` 배열 맨 앞에 prepend. 7건 초과 시 제거 (daily-insight와 동일). `prices-snapshot.json`이 없거나 stale(최근 거래일 아님)하면 skip. 자세한 정책은 아래 [섹터 로테이션] 참조.
 6. **버전 갱신**: `data/version.js`의 `DATA_VERSION`을 VERSION 값으로 갱신.
@@ -586,7 +586,7 @@ const DAILY_INSIGHTS = [
 ];
 ```
 
-**트리밍**: prepend 후 배열 길이가 7 초과 시 뒤에서 제거해 최근 7건만 유지.
+**트리밍**: prepend 후 배열 길이가 180 초과 시 뒤에서 제거해 최근 180건만 유지 (약 6개월치 — GEO 콘텐츠 축적 목적).
 
 **🔴 주제 선정 기준 (이 순서로 판단)**:
 
