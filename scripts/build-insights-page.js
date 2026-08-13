@@ -23,7 +23,7 @@ function esc(s) {
     .replace(/"/g, '&quot;');
 }
 
-function firstSentence(body) {
+function firstSnippet(body) {
   const first = body.split(/\n\n+/)[0] || '';
   return first.length > 80 ? first.slice(0, 80) + '…' : first;
 }
@@ -31,7 +31,7 @@ function firstSentence(body) {
 function bodyToHtml(body) {
   return body
     .split(/\n\n+/)
-    .map(p => `    <p>${esc(p.trim())}</p>`)
+    .map(p => `      <p>${esc(p.trim())}</p>`)
     .join('\n');
 }
 
@@ -45,7 +45,7 @@ const latest = mod[0];
 const pageTitle = '투자 지식 — 자산 간 인과관계 | 브리픽';
 const pageDesc = mod.slice(0, 3).map(d => d.title).join(' · ');
 
-// FAQPage 스키마
+// FAQPage 스키마 (크롤러용)
 const faqItems = mod.map(d => ({
   '@type': 'Question',
   name: d.title,
@@ -64,15 +64,18 @@ const schema = {
   mainEntity: faqItems,
 };
 
-// 목록 아이템
-const listItems = mod.map(d => `    <li><a href="#insight-${esc(d.date)}"><strong>${esc(d.title)}</strong><span>${esc(d.assets && d.assets.length ? d.assets.join(' · ') + ' · ' : '') + esc(firstSentence(d.body))}</span></a></li>`).join('\n');
-
-// 본문 아티클
-const articles = mod.map(d => `  <article id="insight-${esc(d.date)}">
-    <h2>${esc(d.title)}</h2>
-    <p class="meta"><time datetime="${esc(d.date)}">${formatDate(d.date)}</time>${d.assets && d.assets.length ? ` · ${d.assets.map(esc).join(' · ')}` : ''}</p>
+// 아코디언 리스트 아이템 — 클릭 시 펼쳐짐
+const listItems = mod.map((d, i) => `    <li>
+      <button class="insight-btn" aria-expanded="false" aria-controls="body-${i}">
+        <span class="insight-title">${esc(d.title)}</span>
+        <span class="insight-sub">${esc(d.assets && d.assets.length ? d.assets.join(' · ') + '  ·  ' : '')}${esc(firstSnippet(d.body))}</span>
+        <span class="chevron" aria-hidden="true">›</span>
+      </button>
+      <div class="insight-body" id="body-${i}" hidden>
+        <p class="meta"><time datetime="${esc(d.date)}">${formatDate(d.date)}</time>${d.assets && d.assets.length ? ` · ${d.assets.map(esc).join(' · ')}` : ''}</p>
 ${bodyToHtml(d.body)}
-  </article>`).join('\n\n');
+      </div>
+    </li>`).join('\n');
 
 const html = `<!doctype html>
 <html lang="ko">
@@ -96,12 +99,12 @@ const html = `<!doctype html>
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css">
 <style>
-:root{--bg:#fafafa;--panel:#fff;--fg:#0d0d0d;--fg2:#333;--mut:#666;--sub:#999;--border:rgba(0,0,0,0.06);--acc:#18E299;--acc-deep:#0fa76e}
+:root{--bg:#fafafa;--panel:#fff;--fg:#0d0d0d;--fg2:#333;--mut:#666;--border:rgba(0,0,0,0.06);--acc:#18E299;--acc-deep:#0fa76e}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--fg2);font:15px/1.55 Pretendard,-apple-system,sans-serif;min-height:100vh}
 a{color:inherit;text-decoration:none}
 .back-home{display:inline-flex;padding:14px 20px;color:var(--mut);font-size:14px}
-.wrap{min-height:calc(100vh - 48px);display:flex;flex-direction:column;align-items:center;padding:8px 20px 60px;gap:16px}
+.wrap{min-height:calc(100vh - 48px);display:flex;align-items:flex-start;justify-content:center;padding:8px 20px 60px}
 .card{background:var(--panel);border-radius:20px;padding:32px 28px;width:100%;max-width:720px;box-shadow:0 8px 28px rgba(0,0,0,0.06)}
 .brand{display:flex;align-items:center;gap:10px;margin-bottom:20px}
 .brand img{width:36px;height:36px;border-radius:50%;object-fit:cover}
@@ -109,24 +112,27 @@ a{color:inherit;text-decoration:none}
 h1{font:700 24px/1.3 Pretendard,sans-serif;color:var(--fg);margin-bottom:8px;letter-spacing:-0.5px}
 .lead{color:var(--mut);font-size:14px;margin-bottom:28px;line-height:1.55}
 ul{list-style:none;display:flex;flex-direction:column;gap:6px}
-li a{display:block;padding:14px 16px;border-radius:10px;background:#f6f7f6;transition:background 0.15s}
-li a:hover{background:#d4fae8}
-li a strong{display:block;font-size:14px;color:var(--fg);font-weight:600;margin-bottom:4px}
-li a span{display:block;font-size:13px;color:var(--mut);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.insight-btn{width:100%;display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;column-gap:12px;row-gap:4px;align-items:start;padding:14px 16px;border-radius:10px;background:#f6f7f6;border:none;cursor:pointer;text-align:left;font-family:inherit;transition:background 0.15s}
+.insight-btn:hover{background:#d4fae8}
+.insight-btn[aria-expanded="true"]{background:#e8faf2;border-radius:10px 10px 0 0}
+.insight-title{grid-column:1;font-size:14px;color:var(--fg);font-weight:600}
+.insight-sub{grid-column:1;font-size:13px;color:var(--mut);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.chevron{grid-column:2;grid-row:1/3;align-self:center;font-size:20px;color:var(--mut);transform:rotate(0deg);transition:transform 0.2s;line-height:1}
+.insight-btn[aria-expanded="true"] .chevron{transform:rotate(90deg)}
+.insight-body{padding:16px 16px 18px;background:#e8faf2;border-radius:0 0 10px 10px;margin-bottom:0}
+.insight-body .meta{font-size:13px;color:var(--mut);margin-bottom:14px}
+.insight-body p{font-size:14px;line-height:1.75;color:var(--fg2);margin-bottom:12px}
+.insight-body p:last-child{margin-bottom:0}
 .cta{margin-top:28px;padding-top:22px;border-top:1px solid var(--border);text-align:center}
 .cta a{display:inline-block;padding:12px 22px;background:var(--acc);color:#001a0e;border-radius:12px;font-weight:700}
 .cta a:hover{background:var(--acc-deep);color:#fff}
-article{scroll-margin-top:24px}
-article h2{font:700 20px/1.35 Pretendard,sans-serif;color:var(--fg);margin-bottom:10px;letter-spacing:-0.3px}
-.meta{font-size:13px;color:var(--mut);margin-bottom:18px}
-article p{font-size:15px;line-height:1.75;color:var(--fg2);margin-bottom:14px}
-@media(max-width:520px){.card{padding:24px 18px}h1{font-size:22px}article h2{font-size:18px}}
+@media(max-width:520px){.card{padding:24px 18px}h1{font-size:22px}}
 </style>
 </head>
 <body>
 <a class="back-home" href="/">← 실시간 대시보드</a>
 <main class="wrap">
-<div class="card">
+<article class="card">
   <header class="brand">
     <img src="/assets/briefick_profile_640.jpeg" alt="브리픽" width="36" height="36" loading="lazy">
     <span>브리픽 · 투자 지식</span>
@@ -137,10 +143,24 @@ article p{font-size:15px;line-height:1.75;color:var(--fg2);margin-bottom:14px}
 ${listItems}
   </ul>
   <div class="cta"><a href="/">실시간 대시보드 보기 →</a></div>
-</div>
-
-${articles}
+</article>
 </main>
+<script>
+document.querySelectorAll('.insight-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    // 다른 열린 항목 닫기
+    document.querySelectorAll('.insight-btn[aria-expanded="true"]').forEach(b => {
+      if (b !== btn) {
+        b.setAttribute('aria-expanded', 'false');
+        document.getElementById(b.getAttribute('aria-controls')).hidden = true;
+      }
+    });
+    btn.setAttribute('aria-expanded', String(!expanded));
+    document.getElementById(btn.getAttribute('aria-controls')).hidden = expanded;
+  });
+});
+</script>
 </body>
 </html>`;
 
