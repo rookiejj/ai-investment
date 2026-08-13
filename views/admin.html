@@ -2314,13 +2314,40 @@ $('pwSubmit').addEventListener('click', async ()=>{
 
 // ─── 경력서 ───
 const RSM_DEFAULT = {
-  profile: { name:'박도현', title:'마케팅 전략가 · 브랜드 빌더', email:'', phone:'', location:'서울, 대한민국' },
-  summary: '',
-  entries: [],
-  edu: [],
-  skills: '',
-  languages: '한국어 (모국어)',
-  links: [],
+  profile: { name:'박도현', title:'앱 개발자 · PM/기획', email:'rookiejj@gmail.com', phone:'+82 10-6396-3280', location:'' },
+  summary: '앱 개발 및 PM/기획 업무 경험이 많은 개발자입니다.',
+  entries: [
+    {role:'안드로이드/iOS/PHP 개발 · 기획', company:'주식회사몬스터짐', period:'2020.05 - 재직중', bullets:'이커머스 사이트 운영 및 앱 운영\n안드로이드, 아이폰 이슈 처리 및 새로운 기능 개발\n이커머스 사이트 프론트/백엔드 이슈 처리 및 새로운 기능 개발\nJava, Swift, Flutter, PHP, Laravel\n이커머스 웹 서비스 사이트 기획\n코칭 서비스\n커뮤니티 서비스\n간편 결제 서비스\nFigma'},
+    {role:'안드로이드/iOS 개발', company:'주식회사 메디컬데이터마이닝센터', period:'2017.04 - 2020.05', bullets:'이커머스 사이트 운영 및 앱 운영\n현재 재직중인 회사와 같은 법인이었으며 이름만 현재 회사명으로 변경됨'},
+    {role:'안드로이드/iOS 개발', company:'（주）싸이월드', period:'2016.11 - 2017.03', bullets:'기존 싸이월드 앱 리뉴얼\n안드로이드/아이폰 레거시 이슈 처리 및 새로운 기능 개발\nJava, Swift'},
+    {role:'안드로이드/iOS 개발', company:'주식회사팀익스', period:'2016.06 - 2016.11', bullets:'SM 엔터테인먼트 팬클럽 SNS 앱 개발 (외주)\n1인 개발로 전체 안드로이드/아이폰 앱 개발 담당\nJava, Swift'},
+    {role:'SNS 앱 개발 (PM)', company:'주식회사팀익스', period:'2014.12 - 2016.05', bullets:'SNS 앱 개발 (PM)\n1인 개발로 전체 안드로이드/아이폰 앱 개발 담당\n디자인, 마케팅, 기획과의 협업까지 담당\nJava, Swift'},
+    {role:'핀테크 간편 결제 앱 개발', company:'주식회사더테크빌', period:'2014.07 - 2014.12', bullets:'간편 결제를 위한 안드로이드/아이폰 앱 개발 초기 프로젝트 세팅 및 기획\nJava, Swift'},
+    {role:'멀티미디어 파트 PL', company:'(주)위자드랩', period:'2012.09 - 2014.06', bullets:'LG 버라이즌향 피처폰 개발 (멀티미디어 파트 PL)\nQtv, 비디오 플레이어 등 멀티미디어 프레임워크 개발\nC++\nLG X3 유럽 모델 안드로이드 ICS 업그레이드 (멀티미디어 파트 PL)\nvideo, music, streaming 등 멀티미디어 프레임워크\ndrm, divx, memory 관리 등 개발\nJava\nLG Victor 유럽 모델 안드로이드 JB 업그레이드 (멀티미디어 파트 PL)\nvideo, music, streaming 등 멀티미디어 프레임워크\ndrm, divx, memory 관리 등 개발\nJava'},
+    {role:'위치기반 직원관리 앱 개발 (PM)', company:'주식회사비앤디넷', period:'2011.11 - 2012.07', bullets:'한국정보공학 위치기반 비즈니스용 직원관리 어플리케이션 개발 (PM)\n센차터치를 이용한 안드로이드 기반 웹앱 개발\nJava'},
+    {role:'안드로이드 앱 개발 (PL)', company:'야마이아(주)', period:'2009.08 - 2011.10', bullets:'안드로이드용 KT 올레마켓 어플리케이션 개발 2차 지원 (PL)\n검수 및 상용화 지원\nJava\n아이나비 네비게이션 안드로이드 플랫폼 변경 지원\nGUI, 프레임워크 수정, 테스트 어플리케이션 개발\nJava\n삼성 갤럭시탭 멀티미디어 어플리케이션 개발\n초기 프로젝트 셋팅 및 소스 코드 설계, GUI, 서비스 부분 개발\nJava\n안드로이드용 KT 올레마켓 어플리케이션 개발 (PL)\n초기 프로젝트 셋팅 및 소스 코드 설계, 네트워크 및 GUI, 서비스 부분 개발\nJava\n유럽향 삼성 갤럭시S 플랫폼 변경 (PL)\n키보드, 메시징, 셋팅, 알람 등의 프레임워크 수정\nJava'},
+    {role:'안드로이드 앱 개발 (PM)', company:'(주)제니텀', period:'2008.11 - 2009.08', bullets:'ETRI 국책 과제 — 안드로이드 지역 기반 모바일 가상현실 어플리케이션 개발 (PM)\n안드로이드 기반의 모바일용 어플리케이션 개발\n서버와의 통신 및 GUI, 센서계 제어 등의 활용 부분\nJava'},
+    {role:'DVR 소프트웨어 개발', company:'(주)홈캐스트', period:'2007.02 - 2007.06', bullets:'DVR (감시 영상 녹화 장치)의 소프트웨어 개발\nGUI 개발\n영상/음성 멀티미디어 미들웨어 개발\nC++'},
+    {role:'DVR 소프트웨어 개발', company:'주식회사오라바이오틱스', period:'2006.03 - 2007.01', bullets:'DVR (감시 영상 녹화 장치)의 소프트웨어 개발\nGUI 개발\n영상/음성 멀티미디어 미들웨어 개발\nC++'},
+    {role:'DVR 소프트웨어 개발', company:'(주)위닉스', period:'2005.08 - 2006.03', bullets:'DVR (감시 영상 녹화 장치)의 소프트웨어 개발\nGUI 개발\n영상/음성 멀티미디어 미들웨어 개발\nC++'},
+    {role:'DVR 소프트웨어 개발', company:'(주)투온', period:'2005.01 - 2005.08', bullets:'DVR (감시 영상 녹화 장치)의 소프트웨어 개발\nGUI 개발\n영상/음성 멀티미디어 미들웨어 개발\nC++'},
+    {role:'DVR 소프트웨어 개발', company:'（주）옴니뷰', period:'2004.04 - 2005.01', bullets:'DVR (감시 영상 녹화 장치)의 소프트웨어 개발\nGUI 개발\n영상/음성 멀티미디어 미들웨어 개발\nC++'},
+    {role:'DVR 소프트웨어 개발 (병역특례)', company:'(주)실트로닉', period:'2003.05 - 2004.02', bullets:'DVR (감시 영상 녹화 장치)의 소프트웨어 개발\nGUI 개발\n영상/음성 멀티미디어 미들웨어 개발\nC++'},
+    {role:'DVR 소프트웨어 개발 (병역특례)', company:'(주)에코페트로시스템', period:'2002.02 - 2003.03', bullets:'DVR (감시 영상 녹화 장치)의 소프트웨어 개발\nGUI 개발\n원거리에서 웹으로 라이브 또는 녹화영상을 볼 수 있는 윈도우용 툴 개발\n수십 가지 카메라 동작을 제어하는 프로토콜 개발 및 양산 완료\nC++'},
+    {role:'IMT-2000 기지국 모뎀 개발 (병역특례)', company:'동원시스템즈주식회사', period:'1999.03 - 2002.02', bullets:'차세대 통신 수단과 규격에 맞는 IMT-2000용 기지국 모뎀 개발\n디지털 신호의 빠른 처리를 위한 알고리즘 개발\n모뎀과 통신하는 보드와의 신호 처리 및 프로토콜 개발\nC++'},
+  ],
+  edu: [
+    {school:'한국항공대학교대학원', major:'통신공학 석사 — Adaptive Array를 사용한 전파 수신율 향상', period:'1997.03 - 1999.02'},
+  ],
+  skills: 'Android, Java, Swift, iOS, PHP, C++, Git, Figma',
+  languages: '영어 (일상 회화), 일본어 (일상 회화)',
+  links: [
+    {label:'몬스터짐 이커머스 쇼핑몰 사이트 및 안드로이드/아이폰 앱 개발, 운영 - 현재 재직 중', url:'https://www.monsterzym.com/'},
+    {label:'아소비 아이폰 앱 개발 및 운영 - 프리랜서', url:'https://apps.apple.com/kr/app/id6449076561'},
+    {label:'아소비 안드로이드 앱 개발 및 운영 - 프리랜서', url:'https://play.google.com/store/apps/details?id=com.asobiapp'},
+    {label:'아소비 관리자 사이트 개발 및 운영 - 프리랜서', url:'https://www.asobi.co.kr/jsp/main.jsp'},
+    {label:'SAMG 이커머스 쇼핑몰 사이트 개발 및 운영 - 프리랜서', url:'https://www.emotioncastle.com/'},
+  ],
 };
 let rsm = JSON.parse(JSON.stringify(RSM_DEFAULT));
 
