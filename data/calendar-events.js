@@ -185,6 +185,8 @@ const fixed = [
   { cat:'macro', impact:2, title:'일본 Q2 GDP 1차 추정', date:'2026-08-18', desc:'BOJ 9월 회의 가이드 후방 지표' },
   { cat:'macro', impact:2, title:'미국 8월 S&P 마킷 PMI 1차', date:'2026-08-21', desc:'제조업·서비스 PMI 1차 추정' },
   { cat:'macro', impact:2, title:'미국 7월 신규주택판매', date:'2026-08-25', desc:'주택시장 모멘텀 지표' },
+  { cat:'macro', impact:2, title:'중국 7월 산업생산·소매판매·고정자산투자', date:'2026-08-15', desc:'중국 경기 모멘텀·부양책 효과 확인' },
+  { cat:'macro', impact:2, title:'미국 7월 주택착공·건축허가', date:'2026-08-19', desc:'주택 신규 공급 사이클·건축 자재 후방 수요' },
 
   // === 9월 매크로 ===
   { cat:'macro', impact:3, title:'미국 8월 CPI', date:'2026-09-10', desc:'BLS 8:30 ET·9월 FOMC 전 최종 인플레 확인대' },

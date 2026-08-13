@@ -8,6 +8,39 @@
 const PREDICTION_SCORECARD = [
   {
     "date": "2026-08-14",
+    "made": "2026-08-14 07:31 KST",
+    "predictions": [
+      {
+        "label": "삼성전자",
+        "ticker": "005930",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "직전 종가 268,000원 사상 최고·8월 상순 반도체 수출 99.5억달러 +155% 역대 최대·야간 미증시 S&P 500 7,800 첫 돌파·연준 9월 동결 시나리오 확정이 프리마켓 강세 지속 카운터, 원달러 1,410원대 유지가 외국인 순매수 자기강화 사이클",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "한화오션",
+        "ticker": "042660",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "직전 종가 90,700원 +0.7%·미 해군 MRO 2건 3개월 만 작년 초과·VLCC 3척 5,722억원 수주·2026 외국인 최대 순매수 종목 유지가 조선주 순환매 확산 카운터, MASGA·SHIPS Act 지속 서사가 K-조선 상단 축",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "AMAT",
+        "ticker": "AMAT",
+        "market": "US",
+        "direction": "up",
+        "rationale": "507.97달러 시간외 -5% 조정 후 되돌림 기대·Q3 매출 91.2억달러 컨센 상회·EPS $3.50 컨센 $3.36 상회·record OP 30.8억달러·2026 반도체 장비 성장 30%+ 상향 가이던스가 재평가 축, HBM·advanced packaging 재확대 사이클과 결합해 후방 매출화 지속",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
+    "date": "2026-08-14",
     "made": "2026-08-13 19:45 KST",
     "predictions": [
       {
@@ -16,8 +49,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "1,593,000원 +5.9% 오늘 사상 최고·CoreWeave·Nebius 실적 서프라이즈 후방·HBM4 전환 서사 확산·외국인 2.4조 순매수 폭발이 익일 추가 강세 카운터, 미 CPI 부합·연준 9월 동결 시나리오가 성장주 프리미엄 확장",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 5.9
       },
       {
         "label": "이수페타시스",
@@ -25,8 +58,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "96,800원 +7.4% 오늘 폭등·AI 기판 쇼티지 재확인·대구 5공장 증설 완료·목표주가 상향이 후속 매수 축, AI 서버 CAPEX 초확대 사이클과 결합해 하이퍼스케일러 후방 수혜 지속",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 7.4
       },
       {
         "label": "HUBB",
@@ -34,8 +67,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "$548.18 +6.9% 오늘 급등·Q2 매출 17.1억달러·EPS $5.52 컨센 상회·FY26 가이던스 상향이 전력 인프라 리레이팅 축, AI 데이터센터 CAPEX 초확대 사이클과 결합해 전력 유틸 후방 매출화 지속",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": -1.1
       }
     ]
   },
