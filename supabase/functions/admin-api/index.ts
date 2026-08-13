@@ -770,6 +770,28 @@ Deno.serve(async (req) => {
       return json({ ok: true }, { cors });
     }
 
+    if (action === "resume_load") {
+      const { data, error } = await supabase
+        .from("resume_data")
+        .select("content, updated_at")
+        .eq("id", "park-dohyeon")
+        .maybeSingle();
+      if (error) throw error;
+      return json({ ok: true, content: data?.content ?? null, updated_at: data?.updated_at ?? null }, { cors });
+    }
+
+    if (action === "resume_save") {
+      const content = body.content;
+      if (!content || typeof content !== "object") {
+        return json({ ok: false, error: "content 가 없습니다." }, { status: 400, cors });
+      }
+      const { error } = await supabase
+        .from("resume_data")
+        .upsert({ id: "park-dohyeon", content, updated_at: new Date().toISOString() }, { onConflict: "id" });
+      if (error) throw error;
+      return json({ ok: true }, { cors });
+    }
+
     return json({ ok: false, error: `unknown action: ${action}` }, { status: 400, cors });
   } catch (err) {
     console.error("[admin-api]", err);

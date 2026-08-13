@@ -298,6 +298,42 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
   .surv-row-bar{flex:1 1 60%}
   .surv-row-stat{flex:1 1 30%;text-align:right}
 }
+
+/* ─── 경력서 ─── */
+.rsm-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+@media(max-width:900px){.rsm-layout{grid-template-columns:1fr}}
+.rsm-block{background:var(--bg2);border-radius:10px;padding:16px;margin-bottom:12px}
+.rsm-block-title{font-size:13px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+.rsm-label{display:block;font-size:12px;color:var(--mut);margin:8px 0 3px}
+.rsm-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:13px;color:var(--fg);font-family:inherit;resize:vertical}
+.rsm-input:focus{outline:none;border-color:var(--acc)}
+.rsm-add-btn{margin-top:8px;font-size:13px}
+.rsm-entry{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px;position:relative}
+.rsm-entry-del{position:absolute;top:8px;right:8px;background:none;border:none;cursor:pointer;color:var(--mut);font-size:16px;line-height:1;padding:2px 4px}
+.rsm-entry-del:hover{color:#e55}
+/* 미리보기 */
+.rsm-preview{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:28px;font-size:13px;line-height:1.6;position:sticky;top:16px}
+.rsm-prev-header{border-bottom:2px solid var(--acc);padding-bottom:14px;margin-bottom:16px}
+.rsm-prev-name{font-size:22px;font-weight:700;color:var(--fg)}
+.rsm-prev-title{font-size:14px;color:var(--mut);margin-top:4px}
+.rsm-prev-contact{font-size:12px;color:var(--mut);margin-top:6px;display:flex;flex-wrap:wrap;gap:8px}
+.rsm-prev-section{margin-bottom:18px}
+.rsm-prev-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--acc-deep,#0fa76e);margin-bottom:8px;border-bottom:1px solid var(--border);padding-bottom:4px}
+.rsm-prev-exp{margin-bottom:12px}
+.rsm-prev-exp-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.rsm-prev-exp-role{font-weight:600;color:var(--fg);font-size:13px}
+.rsm-prev-exp-period{font-size:12px;color:var(--mut)}
+.rsm-prev-exp-company{font-size:12px;color:var(--mut);margin:2px 0 6px}
+.rsm-prev-exp-bullets{padding-left:16px;margin:0}
+.rsm-prev-exp-bullets li{font-size:12px;margin-bottom:3px}
+.rsm-prev-tags{display:flex;flex-wrap:wrap;gap:6px}
+.rsm-prev-tag{background:#e8faf2;color:#0a5c3a;border-radius:4px;padding:2px 8px;font-size:11px}
+@media print{
+  .sidebar,.nav,.filter-bar,[data-view]:not([data-view="resume"]),.rsm-editor,#rsmStatus{display:none!important}
+  .rsm-layout{grid-template-columns:1fr}
+  .rsm-preview{border:none;padding:0;position:static}
+  body{background:white}
+}
 </style>
 </head>
 <body>
@@ -335,6 +371,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
       <button class="nav-item" data-view="events"><span class="icon">🎁</span>이벤트</button>
       <button class="nav-item" data-view="surveys"><span class="icon">📊</span>설문</button>
       <button class="nav-item" data-view="system"><span class="icon">🛠️</span>시스템</button>
+      <button class="nav-item" data-view="resume"><span class="icon">📄</span>경력서</button>
     </nav>
     <div class="sidebar-footer">
       <a href="/" target="_blank">← 브리픽 홈</a>
@@ -681,6 +718,100 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
         <div id="sysIgResult" style="margin-top:12px;padding:12px 14px;border-radius:8px;font-size:13px;display:none"></div>
       </div>
     </section>
+
+    <!-- 경력서 뷰 -->
+    <section class="view hidden" data-view="resume">
+      <div id="rsmStatus" style="margin-bottom:12px;font-size:13px;color:var(--mut)"></div>
+      <div class="rsm-layout">
+        <!-- 편집 패널 -->
+        <div class="rsm-editor">
+          <div class="rsm-block">
+            <div class="rsm-block-title">기본 정보</div>
+            <label class="rsm-label">이름</label>
+            <input class="rsm-input" id="rsm-name" placeholder="박도현">
+            <label class="rsm-label">직함</label>
+            <input class="rsm-input" id="rsm-title" placeholder="마케팅 전략가 · 브랜드 빌더">
+            <label class="rsm-label">이메일</label>
+            <input class="rsm-input" id="rsm-email" placeholder="email@example.com">
+            <label class="rsm-label">연락처</label>
+            <input class="rsm-input" id="rsm-phone" placeholder="010-0000-0000">
+            <label class="rsm-label">위치</label>
+            <input class="rsm-input" id="rsm-location" placeholder="서울, 대한민국">
+          </div>
+
+          <div class="rsm-block">
+            <div class="rsm-block-title">한 줄 요약</div>
+            <textarea class="rsm-input" id="rsm-summary" rows="3" placeholder="브랜드 론칭부터 팀 리드까지..."></textarea>
+          </div>
+
+          <div class="rsm-block">
+            <div class="rsm-block-title">경력</div>
+            <div id="rsm-entries"></div>
+            <button class="btn rsm-add-btn" id="rsm-add-entry">+ 경력 추가</button>
+          </div>
+
+          <div class="rsm-block">
+            <div class="rsm-block-title">학력</div>
+            <div id="rsm-edu"></div>
+            <button class="btn rsm-add-btn" id="rsm-add-edu">+ 학력 추가</button>
+          </div>
+
+          <div class="rsm-block">
+            <div class="rsm-block-title">스킬</div>
+            <input class="rsm-input" id="rsm-skills" placeholder="콤마로 구분: 브랜드 전략, 디지털 마케팅">
+          </div>
+
+          <div class="rsm-block">
+            <div class="rsm-block-title">언어</div>
+            <input class="rsm-input" id="rsm-languages" placeholder="한국어 (모국어), 영어 (비즈니스)">
+          </div>
+
+          <div class="rsm-block">
+            <div class="rsm-block-title">링크</div>
+            <div id="rsm-links"></div>
+            <button class="btn rsm-add-btn" id="rsm-add-link">+ 링크 추가</button>
+          </div>
+
+          <div style="margin-top:16px;display:flex;gap:8px">
+            <button class="btn" id="rsm-save-btn">저장</button>
+            <button class="btn ghost" onclick="window.print()">인쇄</button>
+          </div>
+        </div>
+
+        <!-- 미리보기 패널 -->
+        <div class="rsm-preview" id="rsm-preview">
+          <div class="rsm-prev-header">
+            <div class="rsm-prev-name" id="prev-name"></div>
+            <div class="rsm-prev-title" id="prev-title"></div>
+            <div class="rsm-prev-contact" id="prev-contact"></div>
+          </div>
+          <div class="rsm-prev-section" id="prev-summary-section">
+            <div class="rsm-prev-section-title">요약</div>
+            <div class="rsm-prev-summary" id="prev-summary"></div>
+          </div>
+          <div class="rsm-prev-section" id="prev-exp-section">
+            <div class="rsm-prev-section-title">경력</div>
+            <div id="prev-entries"></div>
+          </div>
+          <div class="rsm-prev-section" id="prev-edu-section">
+            <div class="rsm-prev-section-title">학력</div>
+            <div id="prev-edu"></div>
+          </div>
+          <div class="rsm-prev-section" id="prev-skills-section">
+            <div class="rsm-prev-section-title">스킬</div>
+            <div id="prev-skills"></div>
+          </div>
+          <div class="rsm-prev-section" id="prev-lang-section">
+            <div class="rsm-prev-section-title">언어</div>
+            <div id="prev-languages"></div>
+          </div>
+          <div class="rsm-prev-section" id="prev-links-section">
+            <div class="rsm-prev-section-title">링크</div>
+            <div id="prev-links"></div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 </div>
 
@@ -744,8 +875,8 @@ const SURVEY_API = 'https://ytvcgoldauysvnqckzze.supabase.co/functions/v1/survey
 const SITE_BASE = location.origin;
 const KEY_TOKEN = 'briefick_admin_token';
 const KEY_EXPIRES = 'briefick_admin_expires';
-const VIEWS = ['overview','subscribers','payments','sends','notice','events','surveys','system'];
-const TITLES = { overview:'대시보드', subscribers:'구독자', payments:'결제', sends:'발송', notice:'공지', events:'이벤트', surveys:'설문', system:'시스템' };
+const VIEWS = ['overview','subscribers','payments','sends','notice','events','surveys','system','resume'];
+const TITLES = { overview:'대시보드', subscribers:'구독자', payments:'결제', sends:'발송', notice:'공지', events:'이벤트', surveys:'설문', system:'시스템', resume:'경력서' };
 
 const $ = (id)=>document.getElementById(id);
 const loginView = $('loginView');
@@ -865,6 +996,7 @@ function loadView(name){
   else if(name === 'events'){ eventsLoadList(); }
   else if(name === 'surveys'){ surveyLoadList(); }
   else if(name === 'system'){ /* 버튼 클릭 시 lazy fetch — 즉시 fetch는 안 함 */ }
+  else if(name === 'resume'){ resumeLoad(); }
 }
 
 // ─── 프로모 이벤트 ───
@@ -2178,6 +2310,242 @@ $('pwSubmit').addEventListener('click', async ()=>{
     st.textContent = err.message || '변경 실패';
     $('pwSubmit').disabled = false;
   }
+});
+
+// ─── 경력서 ───
+const RSM_DEFAULT = {
+  profile: { name:'박도현', title:'마케팅 전략가 · 브랜드 빌더', email:'', phone:'', location:'서울, 대한민국' },
+  summary: '',
+  entries: [],
+  edu: [],
+  skills: '',
+  languages: '한국어 (모국어)',
+  links: [],
+};
+let rsm = JSON.parse(JSON.stringify(RSM_DEFAULT));
+
+function rsmEsc(s){ return escapeHtml(s||''); }
+
+function rsmRenderEntries(){
+  const el = $('rsm-entries');
+  if(!el) return;
+  el.innerHTML = rsm.entries.map((e,i)=>`
+    <div class="rsm-entry" data-idx="${i}">
+      <button class="rsm-entry-del" data-type="entry" data-idx="${i}" title="삭제">✕</button>
+      <label class="rsm-label">직함</label>
+      <input class="rsm-input" data-field="entry-role" data-idx="${i}" value="${rsmEsc(e.role)}" placeholder="마케팅 총괄">
+      <label class="rsm-label">회사</label>
+      <input class="rsm-input" data-field="entry-company" data-idx="${i}" value="${rsmEsc(e.company)}" placeholder="(주)브랜드컴퍼니">
+      <label class="rsm-label">기간</label>
+      <input class="rsm-input" data-field="entry-period" data-idx="${i}" value="${rsmEsc(e.period)}" placeholder="2022.03 – 현재">
+      <label class="rsm-label">주요 업무 (줄바꿈으로 구분)</label>
+      <textarea class="rsm-input" data-field="entry-bullets" data-idx="${i}" rows="4" placeholder="브랜드 전략 수립 및 실행&#10;SNS 채널 운영">${rsmEsc(e.bullets||'')}</textarea>
+    </div>`).join('');
+}
+
+function rsmRenderEdu(){
+  const el = $('rsm-edu');
+  if(!el) return;
+  el.innerHTML = rsm.edu.map((e,i)=>`
+    <div class="rsm-entry" data-idx="${i}">
+      <button class="rsm-entry-del" data-type="edu" data-idx="${i}" title="삭제">✕</button>
+      <label class="rsm-label">학교</label>
+      <input class="rsm-input" data-field="edu-school" data-idx="${i}" value="${rsmEsc(e.school)}" placeholder="한국대학교">
+      <label class="rsm-label">전공</label>
+      <input class="rsm-input" data-field="edu-major" data-idx="${i}" value="${rsmEsc(e.major)}" placeholder="경영학과">
+      <label class="rsm-label">기간</label>
+      <input class="rsm-input" data-field="edu-period" data-idx="${i}" value="${rsmEsc(e.period)}" placeholder="2016.03 – 2020.02">
+    </div>`).join('');
+}
+
+function rsmRenderLinks(){
+  const el = $('rsm-links');
+  if(!el) return;
+  el.innerHTML = rsm.links.map((l,i)=>`
+    <div class="rsm-entry" data-idx="${i}">
+      <button class="rsm-entry-del" data-type="link" data-idx="${i}" title="삭제">✕</button>
+      <label class="rsm-label">라벨</label>
+      <input class="rsm-input" data-field="link-label" data-idx="${i}" value="${rsmEsc(l.label)}" placeholder="LinkedIn">
+      <label class="rsm-label">URL</label>
+      <input class="rsm-input" data-field="link-url" data-idx="${i}" value="${rsmEsc(l.url)}" placeholder="https://...">
+    </div>`).join('');
+}
+
+function rsmFillForm(){
+  const p = rsm.profile;
+  ['name','title','email','phone','location'].forEach(k=>{
+    const el = $('rsm-'+k); if(el) el.value = p[k]||'';
+  });
+  const sum = $('rsm-summary'); if(sum) sum.value = rsm.summary||'';
+  const sk = $('rsm-skills'); if(sk) sk.value = rsm.skills||'';
+  const ln = $('rsm-languages'); if(ln) ln.value = rsm.languages||'';
+  rsmRenderEntries();
+  rsmRenderEdu();
+  rsmRenderLinks();
+  rsmPreview();
+}
+
+function rsmReadForm(){
+  const p = rsm.profile;
+  ['name','title','email','phone','location'].forEach(k=>{
+    const el = $('rsm-'+k); if(el) p[k] = el.value;
+  });
+  const sum = $('rsm-summary'); if(sum) rsm.summary = sum.value;
+  const sk = $('rsm-skills'); if(sk) rsm.skills = sk.value;
+  const ln = $('rsm-languages'); if(ln) rsm.languages = ln.value;
+}
+
+function rsmPreview(){
+  const p = rsm.profile;
+  const set = (id,html)=>{ const el=$(id); if(el) el.innerHTML=html; };
+  set('prev-name', rsmEsc(p.name));
+  set('prev-title', rsmEsc(p.title));
+  const contacts = [p.email,p.phone,p.location].filter(Boolean).map(rsmEsc);
+  set('prev-contact', contacts.map(c=>`<span>${c}</span>`).join(''));
+  set('prev-summary', rsmEsc(rsm.summary));
+  const sumSec = $('prev-summary-section');
+  if(sumSec) sumSec.style.display = rsm.summary ? '' : 'none';
+
+  const expEl = $('prev-entries');
+  if(expEl) expEl.innerHTML = rsm.entries.map(e=>`
+    <div class="rsm-prev-exp">
+      <div class="rsm-prev-exp-head">
+        <span class="rsm-prev-exp-role">${rsmEsc(e.role)}</span>
+        <span class="rsm-prev-exp-period">${rsmEsc(e.period)}</span>
+      </div>
+      <div class="rsm-prev-exp-company">${rsmEsc(e.company)}</div>
+      ${e.bullets ? `<ul class="rsm-prev-exp-bullets">${(e.bullets||'').split('\n').filter(Boolean).map(b=>`<li>${rsmEsc(b)}</li>`).join('')}</ul>` : ''}
+    </div>`).join('');
+  const expSec = $('prev-exp-section');
+  if(expSec) expSec.style.display = rsm.entries.length ? '' : 'none';
+
+  const eduEl = $('prev-edu');
+  if(eduEl) eduEl.innerHTML = rsm.edu.map(e=>`
+    <div class="rsm-prev-exp">
+      <div class="rsm-prev-exp-head">
+        <span class="rsm-prev-exp-role">${rsmEsc(e.school)}</span>
+        <span class="rsm-prev-exp-period">${rsmEsc(e.period)}</span>
+      </div>
+      <div class="rsm-prev-exp-company">${rsmEsc(e.major)}</div>
+    </div>`).join('');
+  const eduSec = $('prev-edu-section');
+  if(eduSec) eduSec.style.display = rsm.edu.length ? '' : 'none';
+
+  const skills = rsm.skills ? rsm.skills.split(',').map(s=>s.trim()).filter(Boolean) : [];
+  set('prev-skills', `<div class="rsm-prev-tags">${skills.map(s=>`<span class="rsm-prev-tag">${rsmEsc(s)}</span>`).join('')}</div>`);
+  const skillSec = $('prev-skills-section');
+  if(skillSec) skillSec.style.display = skills.length ? '' : 'none';
+
+  const langs = rsm.languages ? rsm.languages.split(',').map(s=>s.trim()).filter(Boolean) : [];
+  set('prev-languages', langs.map(s=>`<div>${rsmEsc(s)}</div>`).join(''));
+  const langSec = $('prev-lang-section');
+  if(langSec) langSec.style.display = langs.length ? '' : 'none';
+
+  const linksEl = $('prev-links');
+  if(linksEl) linksEl.innerHTML = rsm.links.map(l=>`<div><a href="${rsmEsc(l.url)}" target="_blank" rel="noopener">${rsmEsc(l.label||l.url)}</a></div>`).join('');
+  const linksSec = $('prev-links-section');
+  if(linksSec) linksSec.style.display = rsm.links.length ? '' : 'none';
+}
+
+function rsmHandleInput(e){
+  const t = e.target;
+  if(!t.dataset.field) return;
+  const [type,...rest] = t.dataset.field.split('-');
+  const key = rest.join('-');
+  const idx = parseInt(t.dataset.idx,10);
+  if(type==='entry'){ rsm.entries[idx][key==='bullets'?'bullets':key] = t.value; }
+  else if(type==='edu'){ rsm.edu[idx][key] = t.value; }
+  else if(type==='link'){ rsm.links[idx][key] = t.value; }
+  rsmReadForm();
+  rsmPreview();
+}
+
+function rsmHandleDel(e){
+  const btn = e.target.closest('[data-type]');
+  if(!btn) return;
+  const idx = parseInt(btn.dataset.idx,10);
+  const type = btn.dataset.type;
+  if(type==='entry') rsm.entries.splice(idx,1);
+  else if(type==='edu') rsm.edu.splice(idx,1);
+  else if(type==='link') rsm.links.splice(idx,1);
+  rsmRenderEntries();
+  rsmRenderEdu();
+  rsmRenderLinks();
+  rsmPreview();
+}
+
+async function resumeLoad(){
+  const st = $('rsmStatus');
+  if(st) st.textContent = '불러오는 중…';
+  try{
+    const r = await api('resume_load');
+    if(r.content){
+      rsm = Object.assign(JSON.parse(JSON.stringify(RSM_DEFAULT)), r.content);
+    }
+    rsmFillForm();
+    if(st) st.textContent = r.updated_at ? `마지막 저장: ${fmtDateTime(r.updated_at)}` : '저장된 데이터 없음 — 기본값으로 시작';
+  }catch(err){
+    if(st) st.textContent = '불러오기 실패: '+err.message;
+  }
+}
+
+async function resumeSave(){
+  const btn = $('rsm-save-btn');
+  const st = $('rsmStatus');
+  rsmReadForm();
+  if(btn) btn.disabled=true;
+  if(st) st.textContent = '저장 중…';
+  try{
+    await api('resume_save', {
+      content: {
+        profile: rsm.profile,
+        summary: rsm.summary,
+        entries: rsm.entries,
+        edu: rsm.edu,
+        skills: rsm.skills,
+        languages: rsm.languages,
+        links: rsm.links,
+      }
+    });
+    if(st) st.textContent = '저장 완료 ✓';
+  }catch(err){
+    if(st) st.textContent = '저장 실패: '+err.message;
+  }finally{
+    if(btn) btn.disabled=false;
+  }
+}
+
+// 경력서 이벤트 바인딩 (이벤트 위임 + 직접 바인딩)
+document.addEventListener('input', e=>{
+  if(!e.target.closest('[data-view="resume"]')) return;
+  const t = e.target;
+  // profile 필드
+  if(['rsm-name','rsm-title','rsm-email','rsm-phone','rsm-location'].some(id=>t.id===id)){
+    const key = t.id.replace('rsm-','');
+    rsm.profile[key] = t.value;
+    rsmPreview(); return;
+  }
+  if(t.id==='rsm-summary'){ rsm.summary=t.value; rsmPreview(); return; }
+  if(t.id==='rsm-skills'){ rsm.skills=t.value; rsmPreview(); return; }
+  if(t.id==='rsm-languages'){ rsm.languages=t.value; rsmPreview(); return; }
+  rsmHandleInput(e);
+});
+document.addEventListener('click', e=>{
+  if(!e.target.closest('[data-view="resume"]')) return;
+  if(e.target.id==='rsm-save-btn'){ resumeSave(); return; }
+  if(e.target.id==='rsm-add-entry'){
+    rsm.entries.push({role:'',company:'',period:'',bullets:''});
+    rsmRenderEntries(); return;
+  }
+  if(e.target.id==='rsm-add-edu'){
+    rsm.edu.push({school:'',major:'',period:''});
+    rsmRenderEdu(); return;
+  }
+  if(e.target.id==='rsm-add-link'){
+    rsm.links.push({label:'',url:''});
+    rsmRenderLinks(); return;
+  }
+  if(e.target.closest('.rsm-entry-del')){ rsmHandleDel(e); return; }
 });
 
 // ─── 부트 ───
