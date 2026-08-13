@@ -2663,7 +2663,9 @@ function rsmCopyOutput(){
 // DB 저장/불러오기
 async function resumeLoad(){
   const st = document.getElementById("rsmStatus");
-  if(st) st.textContent="불러오는 중…";
+  // 기본 데이터로 즉시 렌더링 — DB 응답 기다리지 않음
+  rsmBuildAll(); rsmRenderPreview();
+  if(st) st.textContent="DB에서 불러오는 중…";
   try{
     const r = await api("resume_load");
     if(r.content){
@@ -2675,12 +2677,11 @@ async function resumeLoad(){
       if(c.skills!==undefined) rsmSkillsText=c.skills;
       if(c.languages!==undefined) rsmLanguagesText=c.languages;
       if(c.links) rsmLinks=c.links;
+      rsmBuildAll(); rsmRenderPreview();
     }
-    rsmBuildAll(); rsmRenderPreview();
     if(st) st.textContent = r.content ? (r.updated_at?"마지막 저장: "+fmtDateTime(r.updated_at):"DB에 데이터 있음") : "DB에 저장된 데이터 없음 — 기본값으로 시작";
   }catch(err){
-    rsmBuildAll(); rsmRenderPreview();
-    if(st) st.textContent="불러오기 실패: "+err.message;
+    if(st) st.textContent="DB 불러오기 실패 (기본값 사용): "+err.message;
   }
 }
 async function resumeSave(){
