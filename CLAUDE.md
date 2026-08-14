@@ -654,7 +654,8 @@ node scripts/score-predictions.js > /tmp/scored.js
 ```
 
 **② 예측 생성 단계** (오늘 예측 3건):
-- 예측 대상 날짜: **오늘(KST)** — 07시 갱신은 KR 장 전(09:00), US 장 전(22:30) 모두 당일 세션이 타겟. 주말·휴장이면 다음 거래일.
+- **🔴 중복 방지 — skip 조건 (엄수)**: 예측 생성 전, `PREDICTION_SCORECARD` 배열에 `date`가 오늘 KST 날짜(YYYY-MM-DD)인 항목이 이미 있으면 **이 단계 전체를 skip**한다. 07시·19시 둘 다 실행되더라도 같은 날짜에 두 번 추가되지 않는다.
+- 예측 대상 날짜: **오늘(KST)** — `TZ=Asia/Seoul date '+%Y-%m-%d'` 로 확인. 주말·휴장이면 다음 거래일을 날짜로 쓰되, 이미 그 날짜 항목이 있으면 역시 skip.
 - `made`: `TZ=Asia/Seoul date '+%Y-%m-%d %H:%M KST'` 로 현재 시각 포함 (형식 엄수)
 - 반드시 prices-snapshot.json 에 있는 ticker 3개 선택 (자동 채점 가능해야 함)
 - `market` 필드: KR = 6자리 숫자 ticker, US = 영문 대문자 ticker
