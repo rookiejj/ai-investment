@@ -2553,15 +2553,15 @@ function rsmProcessCheckbox(el){
   else if(chk==="links") rsmState.links=el.checked;
   else if(chk==="entry"){
     const st=rsmState.entries[el.dataset.entry];
-    if(!st) return;
-    st.checked=el.checked; st.projects=st.projects.map(()=>el.checked);
+    if(st){ st.checked=el.checked; st.projects=st.projects.map(()=>el.checked); }
     if(root) root.querySelectorAll(`#rcard-${el.dataset.entry} [data-chk="project"]`).forEach(pc=>pc.checked=el.checked);
   } else if(chk==="project"){
     const st=rsmState.entries[el.dataset.entry];
-    if(!st) return;
-    st.projects[+el.dataset.proj]=el.checked;
-    const any=st.projects.some(v=>v); st.checked=any;
-    if(root){ const hc=root.querySelector(`#rcard-${el.dataset.entry} [data-chk="entry"]`); if(hc) hc.checked=any; }
+    if(st){
+      st.projects[+el.dataset.proj]=el.checked;
+      const any=st.projects.some(v=>v); st.checked=any;
+      if(root){ const hc=root.querySelector(`#rcard-${el.dataset.entry} [data-chk="entry"]`); if(hc) hc.checked=any; }
+    }
   }
   if(el.closest(".check-row")) el.closest(".check-row").classList.toggle("on",el.checked);
   rsmRenderPreview();
@@ -2751,6 +2751,14 @@ async function resumeSave(){
 // ─── 부트 ───
 if(getToken()) showApp();
 else showLogin();
+
+// 인라인 onchange/oninput 핸들러용 전역 노출 (IIFE 안이라 직접 접근 불가)
+window.rsmProcessCheckbox = rsmProcessCheckbox;
+window.rsmProcessInput    = rsmProcessInput;
+window.rsmSetAll          = rsmSetAll;
+window.rsmSelectRecent    = rsmSelectRecent;
+window.rsmSelectByKeyword = rsmSelectByKeyword;
+window.rsmCopyOutput      = rsmCopyOutput;
 })();
 </script>
 </body>
