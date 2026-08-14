@@ -2491,17 +2491,18 @@ function rsmRenderPreview(){
     if(!rsmState.entries[e.id])
       rsmState.entries[e.id]={checked:true,projects:(e.projects||[]).map(()=>true)};
   });
-  const selected = rsmData.filter(e => rsmState.entries[e.id].checked);
+  const selected = rsmData.filter(e => rsmState.entries[e.id]?.checked !== false);
   if(selected.length){
     html += `<div class="doc-section-title">경력</div>`;
     selected.forEach(e=>{
       html += `<div class="doc-company-row"><span class="doc-company">${rsmEsc(e.company)}</span><span class="doc-period">${rsmEsc(e.period)} · ${rsmEsc(e.duration)}</span></div>`;
       if(e.note) html += `<div class="doc-note">${rsmEsc(e.note)}</div>`;
+      const prjState=rsmState.entries[e.id]?.projects;
       (e.projects||[]).forEach((p,pi)=>{
-        const show = !rsmState.entries[e.id].projects || rsmState.entries[e.id].projects[pi] !== false;
+        const show=!prjState||prjState[pi]!==false;
         if(!show) return;
-        html += `<div class="doc-project-title">${rsmEsc(p.title)}</div>`;
-        html += `<ul class="doc-bullets">`+p.bullets.map(b=>`<li>${rsmEsc(b)}</li>`).join("")+`</ul>`;
+        html += `<div class="doc-project-title">${rsmEsc(p.title||'')}</div>`;
+        html += `<ul class="doc-bullets">`+(p.bullets||[]).map(b=>`<li>${rsmEsc(b)}</li>`).join("")+`</ul>`;
       });
     });
   }
@@ -2723,15 +2724,20 @@ async function resumeLoad(){
       if(c.summary!==undefined) rsmSummaryText=c.summary;
       // entries: 비어있으면 시드 유지, 있으면 교체
       if(c.entries && c.entries.length > 0){
-        // projects 누락된 엔트리 정규화 (DB 저장 오류 방어)
-        rsmData=c.entries.map(e=>({...e,projects:Array.isArray(e.projects)?e.projects:[]}));
+        // projects 누락된 엔트리 정규화 — 비어있으면 시드 데이터에서 복원 (DB 저장 오류 방어)
+        const seedById=Object.fromEntries(RSM_SEED_ENTRIES.map(s=>[s.id,s]));
+        rsmData=c.entries.map(e=>{
+          const raw=Array.isArray(e.projects)?e.projects:[];
+          const projects=raw.length>0?raw:(seedById[e.id]?.projects?JSON.parse(JSON.stringify(seedById[e.id].projects)):[]);
+          return {...e,projects};
+        });
         // state 먼저 초기화 후 DB 상태 덮기
         rsmState.entries={};
         rsmData.forEach(e=>{ rsmState.entries[e.id]={checked:true,projects:e.projects.map(()=>true)}; });
         if(c.state&&c.state.entries){
-          // DB state에 있는 ID만 덮어쓰기 (rsmData에 없는 오래된 ID는 무시)
+          // DB state에 있는 ID만 덮어쓰기 (rsmData에 없는 오래된 ID는 무시, null 방어)
           Object.entries(c.state.entries).forEach(([id,st])=>{
-            if(rsmState.entries[id]) rsmState.entries[id]=st;
+            if(rsmState.entries[id]&&st&&typeof st==='object') rsmState.entries[id]=st;
           });
           // projects 배열 길이 보정
           rsmData.forEach(e=>{
