@@ -2482,51 +2482,39 @@ function rsmProfileFieldRow(label,field,value,checked){
 }
 
 function rsmRenderPreview(){
-  // DOM에서 직접 체크박스 상태를 읽음 — rsmState 의존 제거로 동기화 문제 원천 차단
-  const root = document.getElementById("rsmPickerRoot");
-  function domCb(sel, fallback){
-    const cb = root && root.querySelector(sel);
-    return cb ? cb.checked : fallback;
-  }
-
-  // 선택된 경력: 회사 체크박스 기준
-  const selected = rsmData.filter(e=>{
-    const cb = root && root.querySelector(`[data-chk="entry"][data-entry="${e.id}"]`);
-    return cb ? cb.checked : (rsmState.entries[e.id] ? rsmState.entries[e.id].checked : true);
-  });
-
+  // rsmState 가 유일한 진실의 원천 — DOM에서 체크박스 상태를 읽지 않음
   let html = "";
-  if(domCb('[data-chk="profile"][data-field="name"]', rsmState.profile.name))
+  if(rsmState.profile.name)
     html += `<div class="doc-name">${rsmEsc(rsmProfile.name)}</div>`;
   const parts = [];
-  if(domCb('[data-chk="profile"][data-field="phone"]', rsmState.profile.phone)) parts.push(rsmEsc(rsmProfile.phone));
-  if(domCb('[data-chk="profile"][data-field="email"]', rsmState.profile.email)) parts.push(rsmEsc(rsmProfile.email));
+  if(rsmState.profile.phone) parts.push(rsmEsc(rsmProfile.phone));
+  if(rsmState.profile.email) parts.push(rsmEsc(rsmProfile.email));
   if(parts.length) html += `<div class="doc-contact">${parts.join("  ·  ")}</div>`;
-  if(domCb('[data-chk="summary"]', rsmState.summary) && rsmSummaryText.trim())
+  if(rsmState.summary && rsmSummaryText.trim())
     html += `<div class="doc-summary">${rsmEsc(rsmSummaryText.trim())}</div>`;
 
+  const selected = rsmData.filter(e => rsmState.entries[e.id] && rsmState.entries[e.id].checked);
   if(selected.length){
     html += `<div class="doc-section-title">경력</div>`;
     selected.forEach(e=>{
       html += `<div class="doc-company-row"><span class="doc-company">${rsmEsc(e.company)}</span><span class="doc-period">${rsmEsc(e.period)} · ${rsmEsc(e.duration)}</span></div>`;
       if(e.note) html += `<div class="doc-note">${rsmEsc(e.note)}</div>`;
       e.projects.forEach((p,pi)=>{
-        const projCb = root && root.querySelector(`[data-chk="project"][data-entry="${e.id}"][data-proj="${pi}"]`);
-        const show = projCb ? projCb.checked : (rsmState.entries[e.id] ? rsmState.entries[e.id].projects[pi] : true);
+        const show = !rsmState.entries[e.id].projects || rsmState.entries[e.id].projects[pi] !== false;
         if(!show) return;
         html += `<div class="doc-project-title">${rsmEsc(p.title)}</div>`;
         html += `<ul class="doc-bullets">`+p.bullets.map(b=>`<li>${rsmEsc(b)}</li>`).join("")+`</ul>`;
       });
     });
   }
-  if(domCb('[data-chk="edu"]', rsmState.edu)){
+  if(rsmState.edu){
     html += `<div class="doc-section-title">학력</div>`;
     html += `<div class="doc-edu-row"><span><b>${rsmEsc(rsmEdu.title)}</b> · ${rsmEsc(rsmEdu.degree)}</span><span class="doc-period">${rsmEsc(rsmEdu.period)}</span></div>`;
     html += `<div class="doc-edu-degree">${rsmEsc(rsmEdu.detail)}</div>`;
   }
-  if(domCb('[data-chk="skills"]', rsmState.skills)) html += `<div class="doc-section-title">스킬</div><div class="doc-tags">${rsmEsc(rsmSkillsText)}</div>`;
-  if(domCb('[data-chk="languages"]', rsmState.languages)) html += `<div class="doc-section-title">언어</div><div class="doc-tags">${rsmEsc(rsmLanguagesText)}</div>`;
-  if(domCb('[data-chk="links"]', rsmState.links)){
+  if(rsmState.skills) html += `<div class="doc-section-title">스킬</div><div class="doc-tags">${rsmEsc(rsmSkillsText)}</div>`;
+  if(rsmState.languages) html += `<div class="doc-section-title">언어</div><div class="doc-tags">${rsmEsc(rsmLanguagesText)}</div>`;
+  if(rsmState.links){
     html += `<div class="doc-section-title">링크</div><div class="doc-links">`;
     rsmLinks.forEach(l=>{ html += `<div class="doc-link-item"><div class="doc-link-title">${rsmEsc(l.t)}</div><a href="${rsmEsc(l.u)}" target="_blank">${rsmEsc(l.u)}</a></div>`; });
     html += `</div>`;
@@ -2698,12 +2686,10 @@ function rsmCopyOutput(){
 // DB 저장/불러오기
 async function resumeLoad(){
   const st = document.getElementById("rsmStatus");
-  // 기본 데이터로 즉시 렌더링 — DB 응답 기다리지 않음
-  rsmBuildAll(); rsmRenderPreview();
   if(st) st.textContent="DB에서 불러오는 중…";
   try{
     const r = await api("resume_load");
-    if(r.content){
+    if(r && r.content){
       const c = r.content;
       if(c.profile) rsmProfile={...RSM_SEED_PROFILE,...c.profile};
       if(c.summary!==undefined) rsmSummaryText=c.summary;
@@ -2725,10 +2711,11 @@ async function resumeLoad(){
         if(c.state.languages!==undefined) rsmState.languages=c.state.languages;
         if(c.state.links!==undefined) rsmState.links=c.state.links;
       }
-      rsmBuildAll(); rsmRenderPreview();
     }
-    if(st) st.textContent = r.content ? (r.updated_at?"마지막 저장: "+fmtDateTime(r.updated_at):"DB에 데이터 있음") : "DB에 저장된 데이터 없음 — 기본값으로 시작";
+    rsmBuildAll(); rsmRenderPreview();
+    if(st) st.textContent = (r&&r.content) ? (r.updated_at?"마지막 저장: "+fmtDateTime(r.updated_at):"DB에 데이터 있음") : "DB에 저장된 데이터 없음 — 기본값으로 시작";
   }catch(err){
+    rsmBuildAll(); rsmRenderPreview();
     if(st) st.textContent="DB 불러오기 실패 (기본값 사용): "+err.message;
   }
 }
@@ -2749,22 +2736,21 @@ async function resumeSave(){
 // ─── 경력서 이벤트 위임 — IIFE 클로저로 rsmProcess* 직접 참조 ───
 // document 레벨이라 rsmPickerRoot.innerHTML 교체 후에도 살아남음
 // capture=true: 하위 요소가 stopPropagation 해도 반드시 실행
-let _rsmEvtCount = 0;
 document.addEventListener('change', function(e){
-  const inRoot = e.target && e.target.closest && e.target.closest('#rsmPickerRoot');
-  if(!inRoot) return;
+  if(!e.target || !e.target.closest || !e.target.closest('#rsmPickerRoot')) return;
   if(e.target.type === 'checkbox'){
-    _rsmEvtCount++;
-    const st = document.getElementById('rsmStatus');
-    if(st) st.textContent = '[디버그] 체크박스 이벤트 #' + _rsmEvtCount + ': ' + (e.target.dataset.chk||'?') + ' → ' + (e.target.checked?'ON':'OFF');
     try { rsmProcessCheckbox(e.target); }
-    catch(err){ console.error('[rsm] rsmProcessCheckbox 오류:', err); if(st) st.textContent = '[오류] ' + err.message; }
+    catch(err){
+      console.error('[rsm] error in rsmProcessCheckbox:', err);
+      const st = document.getElementById('rsmStatus');
+      if(st) st.textContent = '[오류] ' + err.message;
+    }
   }
 }, true);
 document.addEventListener('input', function(e){
   if(!e.target || !e.target.closest || !e.target.closest('#rsmPickerRoot')) return;
   try { rsmProcessInput(e.target); }
-  catch(err){ console.error('[rsm] rsmProcessInput 오류:', err); }
+  catch(err){ console.error('[rsm] error in rsmProcessInput:', err); }
 }, true);
 
 // ─── 부트 ───
