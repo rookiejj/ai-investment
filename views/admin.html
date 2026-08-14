@@ -2468,12 +2468,25 @@ function rsmBuildAll(){
   });
   html += `<button class="add-btn" data-act="add-link">+ 링크 추가</button></div>`;
   root.innerHTML = html;
+
+  // 체크박스 직접 바인딩 — innerHTML 교체마다 새로 붙임 (위임 방식 버그 근절)
+  root.querySelectorAll('input[type="checkbox"]').forEach(cb=>{
+    cb.addEventListener('change', ()=>rsmProcessCheckbox(cb));
+  });
+
+  // 텍스트 입력 직접 바인딩
+  root.querySelectorAll('input[type="text"],textarea').forEach(inp=>{
+    inp.addEventListener('input', ()=>rsmProcessInput(inp));
+  });
+
+  // 카드 헤더 접기/펴기
   root.querySelectorAll("[data-toggle]").forEach(head=>{
     head.addEventListener("click",(e)=>{
-      if(e.target.closest("input,button")) return;
+      if(e.target.closest("input,button,textarea")) return;
       document.getElementById("rcard-"+head.dataset.toggle).classList.toggle("open");
     });
   });
+
   rsmAttachListeners(root);
 }
 
@@ -2534,6 +2547,7 @@ function rsmRenderPreview(){
 
 // 체크박스/인풋 상태 처리 — rsmBuildAll 후 직접 바인딩으로 신뢰성 확보
 function rsmProcessCheckbox(el){
+  _rsmUserInteracted = true;
   const chk=el.dataset.chk, root=document.getElementById("rsmPickerRoot");
   if(!chk) return;
   if(chk==="profile") rsmState.profile[el.dataset.field]=el.checked;
@@ -2559,6 +2573,7 @@ function rsmProcessCheckbox(el){
 }
 
 function rsmProcessInput(el){
+  _rsmUserInteracted = true;
   const role=el.dataset.role;
   if(role==="summary") rsmSummaryText=el.value;
   else if(role==="profile") rsmProfile[el.dataset.field]=el.value;
@@ -2761,28 +2776,8 @@ async function resumeSave(){
     if(btn) btn.disabled=false;
   }
 }
-// ─── 경력서 이벤트 위임 — IIFE 클로저로 rsmProcess* 직접 참조 ───
-// document 레벨이라 rsmPickerRoot.innerHTML 교체 후에도 살아남음
-// capture=true: 하위 요소가 stopPropagation 해도 반드시 실행
+// 이벤트 바인딩은 rsmBuildAll() 내 직접 바인딩으로 처리 (위임 방식 제거)
 let _rsmUserInteracted = false;
-document.addEventListener('change', function(e){
-  if(!e.target || !e.target.closest || !e.target.closest('#rsmPickerRoot')) return;
-  if(e.target.type === 'checkbox'){
-    _rsmUserInteracted = true;
-    try { rsmProcessCheckbox(e.target); }
-    catch(err){
-      console.error('[rsm] error in rsmProcessCheckbox:', err);
-      const st = document.getElementById('rsmStatus');
-      if(st) st.textContent = '[오류] ' + err.message;
-    }
-  }
-}, true);
-document.addEventListener('input', function(e){
-  if(!e.target || !e.target.closest || !e.target.closest('#rsmPickerRoot')) return;
-  _rsmUserInteracted = true;
-  try { rsmProcessInput(e.target); }
-  catch(err){ console.error('[rsm] error in rsmProcessInput:', err); }
-}, true);
 
 // ─── 부트 ───
 if(getToken()) showApp();
