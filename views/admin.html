@@ -2686,10 +2686,16 @@ function rsmCopyOutput(){
 // DB 저장/불러오기
 async function resumeLoad(){
   const st = document.getElementById("rsmStatus");
+  _rsmUserInteracted = false;
+  // 즉시 기본값 렌더 — API 응답 전에도 사용 가능
+  rsmBuildAll(); rsmRenderPreview();
   if(st) st.textContent="DB에서 불러오는 중…";
   try{
-    const r = await api("resume_load");
-    if(r && r.content){
+    const r = await Promise.race([
+      api("resume_load"),
+      new Promise((_,rej)=>setTimeout(()=>rej(new Error("DB 응답 없음 — 기본값으로 시작")),6000))
+    ]);
+    if(r && r.content && !_rsmUserInteracted){
       const c = r.content;
       if(c.profile) rsmProfile={...RSM_SEED_PROFILE,...c.profile};
       if(c.summary!==undefined) rsmSummaryText=c.summary;
@@ -2711,12 +2717,13 @@ async function resumeLoad(){
         if(c.state.languages!==undefined) rsmState.languages=c.state.languages;
         if(c.state.links!==undefined) rsmState.links=c.state.links;
       }
+      rsmBuildAll(); rsmRenderPreview();
     }
-    rsmBuildAll(); rsmRenderPreview();
-    if(st) st.textContent = (r&&r.content) ? (r.updated_at?"마지막 저장: "+fmtDateTime(r.updated_at):"DB에 데이터 있음") : "DB에 저장된 데이터 없음 — 기본값으로 시작";
+    if(st) st.textContent = (r&&r.content)
+      ? (_rsmUserInteracted ? "DB 데이터 있음 (수정 중)" : (r.updated_at?"마지막 저장: "+fmtDateTime(r.updated_at):"DB에 데이터 있음"))
+      : "DB에 저장된 데이터 없음 — 기본값으로 시작";
   }catch(err){
-    rsmBuildAll(); rsmRenderPreview();
-    if(st) st.textContent="DB 불러오기 실패 (기본값 사용): "+err.message;
+    if(st) st.textContent = err.message.includes("응답 없음") ? err.message : "DB 불러오기 실패 (기본값 사용): "+err.message;
   }
 }
 async function resumeSave(){
@@ -2736,9 +2743,11 @@ async function resumeSave(){
 // ─── 경력서 이벤트 위임 — IIFE 클로저로 rsmProcess* 직접 참조 ───
 // document 레벨이라 rsmPickerRoot.innerHTML 교체 후에도 살아남음
 // capture=true: 하위 요소가 stopPropagation 해도 반드시 실행
+let _rsmUserInteracted = false;
 document.addEventListener('change', function(e){
   if(!e.target || !e.target.closest || !e.target.closest('#rsmPickerRoot')) return;
   if(e.target.type === 'checkbox'){
+    _rsmUserInteracted = true;
     try { rsmProcessCheckbox(e.target); }
     catch(err){
       console.error('[rsm] error in rsmProcessCheckbox:', err);
@@ -2749,6 +2758,7 @@ document.addEventListener('change', function(e){
 }, true);
 document.addEventListener('input', function(e){
   if(!e.target || !e.target.closest || !e.target.closest('#rsmPickerRoot')) return;
+  _rsmUserInteracted = true;
   try { rsmProcessInput(e.target); }
   catch(err){ console.error('[rsm] error in rsmProcessInput:', err); }
 }, true);
