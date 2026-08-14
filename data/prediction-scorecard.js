@@ -7,6 +7,39 @@
 //   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = [
   {
+    "date": "2026-08-17",
+    "made": "2026-08-14 19:40 KST",
+    "predictions": [
+      {
+        "label": "현대차",
+        "ticker": "005380",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "453,000원 +8.2% 8/14 마감·자동차 관세 15% 인하로 4조원 이상 비용 절감 기대·8/26 인베스터 데이 대기가 모멘텀 카운터, HMGMA 미국 가동 확대·현지 생산 상향 서사가 마진 회복 축",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "LG에너지솔루션",
+        "ticker": "373220",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "369,500원 +1.1% 8/14 마감·반도체 편중 완화로 배터리 순환매 확산 국면·북미 ESS 수주 흑자 전환 궤도 지속이 리레이팅 축, 미 IRA 유지 시나리오와 실질금리 하락이 배터리 프리미엄 방어 근거",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "마이크론",
+        "ticker": "MU",
+        "market": "US",
+        "direction": "up",
+        "rationale": "961.21달러 +1.2% 강세·AMAT record 매출과 8월 상순 반도체 수출 155% 급증이 HBM·DRAM 판가 인상 사이클 검증 축, 엔비디아 8/26 실적 D-12 카운트다운이 반도체 프리미엄 방어 카운터",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
     "date": "2026-08-14",
     "made": "2026-08-14 07:31 KST",
     "predictions": [
@@ -16,8 +49,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "직전 종가 268,000원 사상 최고·8월 상순 반도체 수출 99.5억달러 +155% 역대 최대·야간 미증시 S&P 500 7,800 첫 돌파·연준 9월 동결 시나리오 확정이 프리마켓 강세 지속 카운터, 원달러 1,410원대 유지가 외국인 순매수 자기강화 사이클",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 2.4
       },
       {
         "label": "한화오션",
@@ -25,8 +58,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "직전 종가 90,700원 +0.7%·미 해군 MRO 2건 3개월 만 작년 초과·VLCC 3척 5,722억원 수주·2026 외국인 최대 순매수 종목 유지가 조선주 순환매 확산 카운터, MASGA·SHIPS Act 지속 서사가 K-조선 상단 축",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 5.6
       },
       {
         "label": "AMAT",
@@ -34,8 +67,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "507.97달러 시간외 -5% 조정 후 되돌림 기대·Q3 매출 91.2억달러 컨센 상회·EPS $3.50 컨센 $3.36 상회·record OP 30.8억달러·2026 반도체 장비 성장 30%+ 상향 가이던스가 재평가 축, HBM·advanced packaging 재확대 사이클과 결합해 후방 매출화 지속",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": -5.2
       }
     ]
   },
@@ -139,3 +172,4 @@ const PREDICTION_SCORECARD = [
     ]
   }
 ];
+채점 완료: 2026-08-14 기준 변경된 항목 있음
