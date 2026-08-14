@@ -364,8 +364,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 .rsm-view #rsmPdfBtn:hover{background:#264c42}
 .rsm-view #rsmSaveBtn{background:#18E299;color:#001a0e}
 .rsm-view #rsmSaveBtn:hover{background:#0fa76e;color:#fff}
-.rsm-view .preview-body{flex:1;overflow-y:auto;padding:24px 0 60px;display:flex;justify-content:center}
-.rsm-view #doc{width:100%;max-width:640px;background:#ffffff;box-shadow:0 1px 3px rgba(0,0,0,.06),0 8px 24px rgba(31,36,33,.06);border:1px solid var(--line);padding:44px 48px 56px;color:var(--ink)}
+.rsm-view .preview-body{flex:1;overflow-y:auto;padding:24px 0 60px;display:flex;justify-content:center;align-items:flex-start}
+.rsm-view #doc{width:100%;max-width:640px;min-height:calc(100vh - 220px);background:#ffffff;box-shadow:0 1px 3px rgba(0,0,0,.06),0 8px 24px rgba(31,36,33,.06);border:1px solid var(--line);padding:44px 48px 56px;color:var(--ink)}
 .rsm-view #doc .doc-name{font-family:Georgia,serif;font-size:28px;font-weight:700;letter-spacing:-.01em;margin:0 0 6px;color:var(--ink)}
 .rsm-view #doc .doc-contact{font-size:12.5px;color:var(--ink-soft);margin:0 0 20px;letter-spacing:.01em}
 .rsm-view #doc .doc-summary{font-size:13.5px;line-height:1.7;color:#3c433e;margin:0 0 28px;padding:14px 16px;background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:2px;white-space:pre-wrap}
@@ -2672,11 +2672,24 @@ async function resumeLoad(){
       const c = r.content;
       if(c.profile) rsmProfile={...RSM_SEED_PROFILE,...c.profile};
       if(c.summary!==undefined) rsmSummaryText=c.summary;
-      if(c.entries) { rsmData=c.entries; rsmState.entries={}; rsmData.forEach(e=>{ rsmState.entries[e.id]={checked:true,projects:e.projects.map(()=>true)}; }); }
+      if(c.entries) {
+        rsmData=c.entries;
+        rsmState.entries={};
+        rsmData.forEach(e=>{ rsmState.entries[e.id]={checked:true,projects:e.projects.map(()=>true)}; });
+        if(c.state&&c.state.entries) rsmState.entries=c.state.entries;
+      }
       if(c.edu) rsmEdu=c.edu;
       if(c.skills!==undefined) rsmSkillsText=c.skills;
       if(c.languages!==undefined) rsmLanguagesText=c.languages;
       if(c.links) rsmLinks=c.links;
+      if(c.state){
+        if(c.state.profile) Object.assign(rsmState.profile,c.state.profile);
+        if(c.state.summary!==undefined) rsmState.summary=c.state.summary;
+        if(c.state.edu!==undefined) rsmState.edu=c.state.edu;
+        if(c.state.skills!==undefined) rsmState.skills=c.state.skills;
+        if(c.state.languages!==undefined) rsmState.languages=c.state.languages;
+        if(c.state.links!==undefined) rsmState.links=c.state.links;
+      }
       rsmBuildAll(); rsmRenderPreview();
     }
     if(st) st.textContent = r.content ? (r.updated_at?"마지막 저장: "+fmtDateTime(r.updated_at):"DB에 데이터 있음") : "DB에 저장된 데이터 없음 — 기본값으로 시작";
@@ -2690,7 +2703,7 @@ async function resumeSave(){
   if(btn) btn.disabled=true;
   if(st) st.textContent="저장 중…";
   try{
-    await api("resume_save",{content:{profile:rsmProfile,summary:rsmSummaryText,entries:rsmData,edu:rsmEdu,skills:rsmSkillsText,languages:rsmLanguagesText,links:rsmLinks}});
+    await api("resume_save",{content:{profile:rsmProfile,summary:rsmSummaryText,entries:rsmData,edu:rsmEdu,skills:rsmSkillsText,languages:rsmLanguagesText,links:rsmLinks,state:rsmState}});
     if(st) st.textContent="저장 완료 ✓";
   }catch(err){
     if(st) st.textContent="저장 실패: "+err.message;
