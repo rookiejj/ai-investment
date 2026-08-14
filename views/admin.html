@@ -301,7 +301,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 
 /* ─── 경력서 ─── */
 .rsm-view{--ink:#1f2421;--ink-soft:#5b635e;--paper:#f7f5f0;--panel:#ffffff;--line:#dedad0;--accent:#2f5d50;--accent-soft:#e7efe9;--accent-hot:#c76b3f}
-.rsm-view .rsm-app{display:grid;grid-template-columns:1.25fr 1fr;gap:0;min-height:calc(100vh - 120px)}
+.rsm-view .rsm-app{display:grid;grid-template-columns:1.25fr 1fr;gap:0;min-height:calc(100vh - 120px);align-items:start}
 @media(max-width:920px){.rsm-view .rsm-app{grid-template-columns:1fr}}
 .rsm-view .rsm-status{font-size:13px;color:var(--mut);margin-bottom:12px;display:flex;gap:8px;align-items:center}
 /* editor */
@@ -352,7 +352,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 .rsm-view .link-block{border:1px solid #ece9e0;border-radius:9px;padding:10px;margin-bottom:8px;background:#fcfbf8;position:relative}
 .rsm-view .link-block .icon-btn{position:absolute;top:4px;right:4px}
 /* 미리보기 패널 */
-.rsm-view .preview{position:sticky;top:0;height:calc(100vh - 120px);display:flex;flex-direction:column;background:#fbfaf7}
+.rsm-view .preview{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;background:#fbfaf7}
 .rsm-view .preview-head{padding:16px 20px 12px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}
 .rsm-view .preview-head h2{font-size:13px;margin:0;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft)}
 .rsm-view .preview-actions{display:flex;gap:8px}
