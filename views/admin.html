@@ -2469,7 +2469,7 @@ function rsmBuildAll(){
       document.getElementById("rcard-"+head.dataset.toggle).classList.toggle("open");
     });
   });
-  rsmAttachListeners();
+  rsmAttachListeners(root);
 }
 
 function rsmProfileFieldRow(label,field,value,checked){
@@ -2534,103 +2534,113 @@ function rsmRenderPreview(){
   if(stats) stats.innerHTML = `<span><b>${selected.length}</b>개 회사 선택됨</span><span><b>${Math.floor(totalMonths/12)}년 ${totalMonths%12}개월</b> 합산 경력</span>`;
 }
 
-// 이벤트 위임 — rsmPickerRoot에 직접 바인딩 (document 레벨 충돌 방지)
-function rsmAttachListeners(){
-  const root = document.getElementById("rsmPickerRoot");
+// 체크박스/인풋 상태 처리 — rsmBuildAll 후 직접 바인딩으로 신뢰성 확보
+function rsmProcessCheckbox(el){
+  const chk=el.dataset.chk, root=document.getElementById("rsmPickerRoot");
+  if(!chk) return;
+  if(chk==="profile") rsmState.profile[el.dataset.field]=el.checked;
+  else if(chk==="summary") rsmState.summary=el.checked;
+  else if(chk==="edu") rsmState.edu=el.checked;
+  else if(chk==="skills") rsmState.skills=el.checked;
+  else if(chk==="languages") rsmState.languages=el.checked;
+  else if(chk==="links") rsmState.links=el.checked;
+  else if(chk==="entry"){
+    const st=rsmState.entries[el.dataset.entry];
+    if(!st) return;
+    st.checked=el.checked; st.projects=st.projects.map(()=>el.checked);
+    if(root) root.querySelectorAll(`#rcard-${el.dataset.entry} [data-chk="project"]`).forEach(pc=>pc.checked=el.checked);
+  } else if(chk==="project"){
+    const st=rsmState.entries[el.dataset.entry];
+    if(!st) return;
+    st.projects[+el.dataset.proj]=el.checked;
+    const any=st.projects.some(v=>v); st.checked=any;
+    if(root){ const hc=root.querySelector(`#rcard-${el.dataset.entry} [data-chk="entry"]`); if(hc) hc.checked=any; }
+  }
+  if(el.closest(".check-row")) el.closest(".check-row").classList.toggle("on",el.checked);
+  rsmRenderPreview();
+}
+
+function rsmProcessInput(el){
+  const role=el.dataset.role;
+  if(role==="summary") rsmSummaryText=el.value;
+  else if(role==="profile") rsmProfile[el.dataset.field]=el.value;
+  else if(role==="field"){ const ent=rsmFindEntry(el.dataset.entry); if(ent) ent[el.dataset.field]=el.value; }
+  else if(role==="ptitle"){ const ent=rsmFindEntry(el.dataset.entry); if(ent) ent.projects[+el.dataset.proj].title=el.value; }
+  else if(role==="bullet"){ const ent=rsmFindEntry(el.dataset.entry); if(ent) ent.projects[+el.dataset.proj].bullets[+el.dataset.bullet]=el.value; }
+  else if(role==="edu") rsmEdu[el.dataset.field]=el.value;
+  else if(role==="skills") rsmSkillsText=el.value;
+  else if(role==="languages") rsmLanguagesText=el.value;
+  else if(role==="link") rsmLinks[+el.dataset.link][el.dataset.field==="title"?"t":"u"]=el.value;
+  rsmRenderPreview();
+}
+
+let _rsmClickAC = null;
+function rsmAttachListeners(root){
+  if(!root) root = document.getElementById("rsmPickerRoot");
   if(!root) return;
-  // 이미 리스너가 붙어 있으면 중복 방지
-  if(root._rsmListened) return;
-  root._rsmListened = true;
 
-  root.addEventListener("input",(e)=>{
-    const el = e.target, role = el.dataset.role;
-    if(role==="summary") rsmSummaryText=el.value;
-    else if(role==="profile") rsmProfile[el.dataset.field]=el.value;
-    else if(role==="field"){ const ent=rsmFindEntry(el.dataset.entry); if(ent) ent[el.dataset.field]=el.value; }
-    else if(role==="ptitle"){ const ent=rsmFindEntry(el.dataset.entry); if(ent) ent.projects[+el.dataset.proj].title=el.value; }
-    else if(role==="bullet"){ const ent=rsmFindEntry(el.dataset.entry); if(ent) ent.projects[+el.dataset.proj].bullets[+el.dataset.bullet]=el.value; }
-    else if(role==="edu") rsmEdu[el.dataset.field]=el.value;
-    else if(role==="skills") rsmSkillsText=el.value;
-    else if(role==="languages") rsmLanguagesText=el.value;
-    else if(role==="link") rsmLinks[+el.dataset.link][el.dataset.field==="title"?"t":"u"]=el.value;
-    rsmRenderPreview();
+  // 체크박스: innerHTML 교체 후 새 요소에 직접 바인딩 — 위임 대신 직접
+  root.querySelectorAll('input[type="checkbox"]').forEach(cb=>{
+    cb.addEventListener("change", ()=>rsmProcessCheckbox(cb));
   });
 
-  root.addEventListener("change",(e)=>{
-    const el=e.target, chk=el.dataset.chk;
-    if(!chk) return;
-    if(chk==="profile") rsmState.profile[el.dataset.field]=el.checked;
-    else if(chk==="summary") rsmState.summary=el.checked;
-    else if(chk==="edu") rsmState.edu=el.checked;
-    else if(chk==="skills") rsmState.skills=el.checked;
-    else if(chk==="languages") rsmState.languages=el.checked;
-    else if(chk==="links") rsmState.links=el.checked;
-    else if(chk==="entry"){
-      const st=rsmState.entries[el.dataset.entry];
-      if(!st) return;
-      st.checked=el.checked; st.projects=st.projects.map(()=>el.checked);
-      root.querySelectorAll(`#rcard-${el.dataset.entry} [data-chk="project"]`).forEach(pc=>pc.checked=el.checked);
-    } else if(chk==="project"){
-      const st=rsmState.entries[el.dataset.entry];
-      if(!st) return;
-      st.projects[+el.dataset.proj]=el.checked;
-      const any=st.projects.some(v=>v); st.checked=any;
-      const hc=root.querySelector(`#rcard-${el.dataset.entry} [data-chk="entry"]`);
-      if(hc) hc.checked=any;
-    }
-    if(el.closest(".check-row")) el.closest(".check-row").classList.toggle("on",el.checked);
-    rsmRenderPreview();
+  // 텍스트 인풋/textarea: 직접 바인딩
+  root.querySelectorAll('input[type="text"],textarea').forEach(el=>{
+    el.addEventListener("input", ()=>rsmProcessInput(el));
   });
 
+  // 버튼 클릭: AbortController로 매번 새로 붙여 중복 방지
+  if(_rsmClickAC) _rsmClickAC.abort();
+  _rsmClickAC = new AbortController();
   root.addEventListener("click",(e)=>{
     const btn=e.target.closest("[data-act]");
     if(!btn) return;
     const act=btn.dataset.act;
-  if(act==="del-entry"){
-    if(!confirm("이 회사 경력 전체를 삭제할까요?")) return;
-    const idx=rsmData.findIndex(x=>x.id===btn.dataset.entry);
-    if(idx>-1){ rsmData.splice(idx,1); delete rsmState.entries[btn.dataset.entry]; }
-    rsmBuildAll(); rsmRenderPreview();
-  } else if(act==="add-entry"){
-    const id=rsmNewId("entry");
-    rsmData.unshift({id,company:"새 회사명",period:"YYYY.MM - YYYY.MM",duration:"0개월",note:"",tags:[],projects:[{title:"새 프로젝트",bullets:["새 항목을 입력하세요"]}]});
-    rsmState.entries[id]={checked:true,projects:[true]};
-    rsmBuildAll(); rsmRenderPreview();
-  } else if(act==="add-project"){
-    const ent=rsmFindEntry(btn.dataset.entry);
-    ent.projects.push({title:"새 프로젝트",bullets:["새 항목을 입력하세요"]});
-    rsmState.entries[ent.id].projects.push(true);
-    rsmBuildAll(); rsmRenderPreview();
-  } else if(act==="del-project"){
-    const ent=rsmFindEntry(btn.dataset.entry);
-    ent.projects.splice(+btn.dataset.proj,1);
-    rsmState.entries[ent.id].projects.splice(+btn.dataset.proj,1);
-    rsmBuildAll(); rsmRenderPreview();
-  } else if(act==="add-bullet"){
-    const ent=rsmFindEntry(btn.dataset.entry);
-    ent.projects[+btn.dataset.proj].bullets.push("새 항목을 입력하세요");
-    rsmBuildAll(); rsmRenderPreview();
-  } else if(act==="del-bullet"){
-    const ent=rsmFindEntry(btn.dataset.entry);
-    ent.projects[+btn.dataset.proj].bullets.splice(+btn.dataset.bullet,1);
-    rsmBuildAll(); rsmRenderPreview();
-  } else if(act==="move-up"){
-    const idx=rsmData.findIndex(x=>x.id===btn.dataset.entry);
-    if(idx>0){[rsmData[idx-1],rsmData[idx]]=[rsmData[idx],rsmData[idx-1]];}
-    rsmBuildAll(); rsmRenderPreview();
-  } else if(act==="move-down"){
-    const idx=rsmData.findIndex(x=>x.id===btn.dataset.entry);
-    if(idx>-1&&idx<rsmData.length-1){[rsmData[idx+1],rsmData[idx]]=[rsmData[idx],rsmData[idx+1]];}
-    rsmBuildAll(); rsmRenderPreview();
-  } else if(act==="add-link"){
-    rsmLinks.push({t:"새 링크 제목",u:"https://"});
-    rsmBuildAll(); rsmRenderPreview();
-  } else if(act==="del-link"){
-    rsmLinks.splice(+btn.dataset.link,1);
-    rsmBuildAll(); rsmRenderPreview();
-  }
-  });  // root click 핸들러 끝
-}  // rsmAttachListeners 끝
+    if(act==="del-entry"){
+      if(!confirm("이 회사 경력 전체를 삭제할까요?")) return;
+      const idx=rsmData.findIndex(x=>x.id===btn.dataset.entry);
+      if(idx>-1){ rsmData.splice(idx,1); delete rsmState.entries[btn.dataset.entry]; }
+      rsmBuildAll(); rsmRenderPreview();
+    } else if(act==="add-entry"){
+      const id=rsmNewId("entry");
+      rsmData.unshift({id,company:"새 회사명",period:"YYYY.MM - YYYY.MM",duration:"0개월",note:"",tags:[],projects:[{title:"새 프로젝트",bullets:["새 항목을 입력하세요"]}]});
+      rsmState.entries[id]={checked:true,projects:[true]};
+      rsmBuildAll(); rsmRenderPreview();
+    } else if(act==="add-project"){
+      const ent=rsmFindEntry(btn.dataset.entry);
+      ent.projects.push({title:"새 프로젝트",bullets:["새 항목을 입력하세요"]});
+      rsmState.entries[ent.id].projects.push(true);
+      rsmBuildAll(); rsmRenderPreview();
+    } else if(act==="del-project"){
+      const ent=rsmFindEntry(btn.dataset.entry);
+      ent.projects.splice(+btn.dataset.proj,1);
+      rsmState.entries[ent.id].projects.splice(+btn.dataset.proj,1);
+      rsmBuildAll(); rsmRenderPreview();
+    } else if(act==="add-bullet"){
+      const ent=rsmFindEntry(btn.dataset.entry);
+      ent.projects[+btn.dataset.proj].bullets.push("새 항목을 입력하세요");
+      rsmBuildAll(); rsmRenderPreview();
+    } else if(act==="del-bullet"){
+      const ent=rsmFindEntry(btn.dataset.entry);
+      ent.projects[+btn.dataset.proj].bullets.splice(+btn.dataset.bullet,1);
+      rsmBuildAll(); rsmRenderPreview();
+    } else if(act==="move-up"){
+      const idx=rsmData.findIndex(x=>x.id===btn.dataset.entry);
+      if(idx>0){[rsmData[idx-1],rsmData[idx]]=[rsmData[idx],rsmData[idx-1]];}
+      rsmBuildAll(); rsmRenderPreview();
+    } else if(act==="move-down"){
+      const idx=rsmData.findIndex(x=>x.id===btn.dataset.entry);
+      if(idx>-1&&idx<rsmData.length-1){[rsmData[idx+1],rsmData[idx]]=[rsmData[idx],rsmData[idx+1]];}
+      rsmBuildAll(); rsmRenderPreview();
+    } else if(act==="add-link"){
+      rsmLinks.push({t:"새 링크 제목",u:"https://"});
+      rsmBuildAll(); rsmRenderPreview();
+    } else if(act==="del-link"){
+      rsmLinks.splice(+btn.dataset.link,1);
+      rsmBuildAll(); rsmRenderPreview();
+    }
+  }, { signal: _rsmClickAC.signal });
+}
 
 // 저장 버튼은 preview-head 안에 있으므로 별도 처리
 document.addEventListener("click",(e)=>{
