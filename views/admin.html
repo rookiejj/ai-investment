@@ -2400,6 +2400,13 @@ function rsmEscAttr(s){ return rsmEsc(s).replace(/"/g,"&quot;"); }
 function rsmBuildAll(){
   const root = document.getElementById("rsmPickerRoot");
   if(!root) return;
+  // rsmState.entries 누락 항목 보완 — 미스매치로 인한 silent return 방지
+  rsmData.forEach(e=>{
+    if(!rsmState.entries[e.id])
+      rsmState.entries[e.id]={checked:true,projects:e.projects.map(()=>true)};
+  });
+  const OC = 'onchange="rsmProcessCheckbox(this)"';
+  const OI = 'oninput="rsmProcessInput(this)"';
   let html = "";
   html += `<div class="section-title">개인 정보</div>`;
   html += `<div class="profile-card">`;
@@ -2409,8 +2416,8 @@ function rsmBuildAll(){
   html += `</div>`;
   html += `<div class="section-title">요약</div>`;
   html += `<div class="misc-card">`;
-  html += `<label class="check-row ${rsmState.summary?'on':''}"><input type="checkbox" data-chk="summary" ${rsmState.summary?'checked':''}><span>요약 포함</span></label>`;
-  html += `<textarea class="f" data-role="summary" rows="3">${rsmEsc(rsmSummaryText)}</textarea>`;
+  html += `<label class="check-row ${rsmState.summary?'on':''}"><input type="checkbox" data-chk="summary" ${rsmState.summary?'checked':''} ${OC}><span>요약 포함</span></label>`;
+  html += `<textarea class="f" data-role="summary" rows="3" ${OI}>${rsmEsc(rsmSummaryText)}</textarea>`;
   html += `</div>`;
   html += `<div class="section-title">경력 항목</div>`;
   html += `<button class="add-btn" data-act="add-entry" style="width:100%;justify-content:center;padding:10px;margin-bottom:12px;">+ 새 회사 추가</button>`;
@@ -2418,21 +2425,21 @@ function rsmBuildAll(){
     const st = rsmState.entries[e.id];
     html += `<div class="entry-card open" id="rcard-${e.id}">`;
     html += `<div class="entry-card-head" data-toggle="${e.id}">`;
-    html += `<input type="checkbox" data-chk="entry" data-entry="${e.id}" ${st.checked?'checked':''}>`;
+    html += `<input type="checkbox" data-chk="entry" data-entry="${e.id}" ${st.checked?'checked':''} ${OC}>`;
     html += `<div class="reorder-btns"><button class="reorder-btn" data-act="move-up" data-entry="${e.id}" ${idx===0?'disabled':''}>▲</button><button class="reorder-btn" data-act="move-down" data-entry="${e.id}" ${idx===rsmData.length-1?'disabled':''}>▼</button></div>`;
-    html += `<input type="text" class="f entry-name-input" data-role="field" data-entry="${e.id}" data-field="company" value="${rsmEscAttr(e.company)}" style="flex:1;">`;
+    html += `<input type="text" class="f entry-name-input" data-role="field" data-entry="${e.id}" data-field="company" value="${rsmEscAttr(e.company)}" style="flex:1;" ${OI}>`;
     html += `<button class="icon-btn" data-act="del-entry" data-entry="${e.id}" title="삭제">🗑</button>`;
     html += `<span class="chevron">▸</span>`;
     html += `</div>`;
     html += `<div class="entry-card-body">`;
-    html += `<div class="entry-meta-row"><input type="text" class="f" data-role="field" data-entry="${e.id}" data-field="period" value="${rsmEscAttr(e.period)}" placeholder="2020.05 - 재직중" style="flex:1.4;"><input type="text" class="f" data-role="field" data-entry="${e.id}" data-field="duration" value="${rsmEscAttr(e.duration)}" placeholder="6년 4개월" style="flex:1;"></div>`;
-    html += `<div class="entry-meta-row"><input type="text" class="f" data-role="field" data-entry="${e.id}" data-field="note" value="${rsmEscAttr(e.note||'')}" placeholder="비고 (예: 병역특례) — 선택"></div>`;
+    html += `<div class="entry-meta-row"><input type="text" class="f" data-role="field" data-entry="${e.id}" data-field="period" value="${rsmEscAttr(e.period)}" placeholder="2020.05 - 재직중" style="flex:1.4;" ${OI}><input type="text" class="f" data-role="field" data-entry="${e.id}" data-field="duration" value="${rsmEscAttr(e.duration)}" placeholder="6년 4개월" style="flex:1;" ${OI}></div>`;
+    html += `<div class="entry-meta-row"><input type="text" class="f" data-role="field" data-entry="${e.id}" data-field="note" value="${rsmEscAttr(e.note||'')}" placeholder="비고 (예: 병역특례) — 선택" ${OI}></div>`;
     e.projects.forEach((p,pi)=>{
       html += `<div class="project-block">`;
-      html += `<div class="project-head"><input type="checkbox" data-chk="project" data-entry="${e.id}" data-proj="${pi}" ${st.projects[pi]?'checked':''}><input type="text" class="f project-title-input" data-role="ptitle" data-entry="${e.id}" data-proj="${pi}" value="${rsmEscAttr(p.title)}" style="flex:1;"><button class="icon-btn" data-act="del-project" data-entry="${e.id}" data-proj="${pi}">🗑</button></div>`;
+      html += `<div class="project-head"><input type="checkbox" data-chk="project" data-entry="${e.id}" data-proj="${pi}" ${st.projects[pi]?'checked':''} ${OC}><input type="text" class="f project-title-input" data-role="ptitle" data-entry="${e.id}" data-proj="${pi}" value="${rsmEscAttr(p.title)}" style="flex:1;" ${OI}><button class="icon-btn" data-act="del-project" data-entry="${e.id}" data-proj="${pi}">🗑</button></div>`;
       html += `<div class="bullets-wrap">`;
       p.bullets.forEach((b,bi)=>{
-        html += `<div class="bullet-row"><input type="text" class="f" data-role="bullet" data-entry="${e.id}" data-proj="${pi}" data-bullet="${bi}" value="${rsmEscAttr(b)}" style="flex:1;"><button class="icon-btn" data-act="del-bullet" data-entry="${e.id}" data-proj="${pi}" data-bullet="${bi}">×</button></div>`;
+        html += `<div class="bullet-row"><input type="text" class="f" data-role="bullet" data-entry="${e.id}" data-proj="${pi}" data-bullet="${bi}" value="${rsmEscAttr(b)}" style="flex:1;" ${OI}><button class="icon-btn" data-act="del-bullet" data-entry="${e.id}" data-proj="${pi}" data-bullet="${bi}">×</button></div>`;
       });
       html += `</div>`;
       html += `<button class="add-btn" data-act="add-bullet" data-entry="${e.id}" data-proj="${pi}">+ 항목 추가</button>`;
@@ -2442,23 +2449,23 @@ function rsmBuildAll(){
     html += `</div></div>`;
   });
   html += `<div class="section-title">학력</div>`;
-  html += `<div class="misc-card"><label class="check-row ${rsmState.edu?'on':''}"><input type="checkbox" data-chk="edu" ${rsmState.edu?'checked':''}><span>학력 포함</span></label>`;
-  html += `<div class="field-row"><input type="text" class="f" data-role="edu" data-field="title" value="${rsmEscAttr(rsmEdu.title)}" placeholder="학교명" style="flex:1.4;"><input type="text" class="f" data-role="edu" data-field="degree" value="${rsmEscAttr(rsmEdu.degree)}" placeholder="학위" style="flex:1;"></div>`;
-  html += `<div class="field-row"><input type="text" class="f" data-role="edu" data-field="period" value="${rsmEscAttr(rsmEdu.period)}" placeholder="재학 기간"></div>`;
-  html += `<div class="field-row"><input type="text" class="f" data-role="edu" data-field="detail" value="${rsmEscAttr(rsmEdu.detail)}" placeholder="논문/연구 주제 등"></div>`;
+  html += `<div class="misc-card"><label class="check-row ${rsmState.edu?'on':''}"><input type="checkbox" data-chk="edu" ${rsmState.edu?'checked':''} ${OC}><span>학력 포함</span></label>`;
+  html += `<div class="field-row"><input type="text" class="f" data-role="edu" data-field="title" value="${rsmEscAttr(rsmEdu.title)}" placeholder="학교명" style="flex:1.4;" ${OI}><input type="text" class="f" data-role="edu" data-field="degree" value="${rsmEscAttr(rsmEdu.degree)}" placeholder="학위" style="flex:1;" ${OI}></div>`;
+  html += `<div class="field-row"><input type="text" class="f" data-role="edu" data-field="period" value="${rsmEscAttr(rsmEdu.period)}" placeholder="재학 기간" ${OI}></div>`;
+  html += `<div class="field-row"><input type="text" class="f" data-role="edu" data-field="detail" value="${rsmEscAttr(rsmEdu.detail)}" placeholder="논문/연구 주제 등" ${OI}></div>`;
   html += `</div>`;
   html += `<div class="section-title">스킬</div>`;
-  html += `<div class="misc-card"><label class="check-row ${rsmState.skills?'on':''}"><input type="checkbox" data-chk="skills" ${rsmState.skills?'checked':''}><span>스킬 포함</span></label>`;
-  html += `<textarea class="f" data-role="skills" rows="2">${rsmEsc(rsmSkillsText)}</textarea></div>`;
+  html += `<div class="misc-card"><label class="check-row ${rsmState.skills?'on':''}"><input type="checkbox" data-chk="skills" ${rsmState.skills?'checked':''} ${OC}><span>스킬 포함</span></label>`;
+  html += `<textarea class="f" data-role="skills" rows="2" ${OI}>${rsmEsc(rsmSkillsText)}</textarea></div>`;
   html += `<div class="section-title">언어</div>`;
-  html += `<div class="misc-card"><label class="check-row ${rsmState.languages?'on':''}"><input type="checkbox" data-chk="languages" ${rsmState.languages?'checked':''}><span>언어 포함</span></label>`;
-  html += `<textarea class="f" data-role="languages" rows="2">${rsmEsc(rsmLanguagesText)}</textarea></div>`;
+  html += `<div class="misc-card"><label class="check-row ${rsmState.languages?'on':''}"><input type="checkbox" data-chk="languages" ${rsmState.languages?'checked':''} ${OC}><span>언어 포함</span></label>`;
+  html += `<textarea class="f" data-role="languages" rows="2" ${OI}>${rsmEsc(rsmLanguagesText)}</textarea></div>`;
   html += `<div class="section-title">링크</div>`;
-  html += `<div class="misc-card"><label class="check-row ${rsmState.links?'on':''}"><input type="checkbox" data-chk="links" ${rsmState.links?'checked':''}><span>링크 포함</span></label>`;
+  html += `<div class="misc-card"><label class="check-row ${rsmState.links?'on':''}"><input type="checkbox" data-chk="links" ${rsmState.links?'checked':''} ${OC}><span>링크 포함</span></label>`;
   rsmLinks.forEach((l,li)=>{
     html += `<div class="link-block"><button class="icon-btn" data-act="del-link" data-link="${li}">×</button>`;
-    html += `<div class="field-row"><input type="text" class="f" data-role="link" data-field="title" data-link="${li}" value="${rsmEscAttr(l.t)}" placeholder="링크 제목"></div>`;
-    html += `<div class="field-row"><input type="text" class="f" data-role="link" data-field="url" data-link="${li}" value="${rsmEscAttr(l.u)}" placeholder="https://"></div>`;
+    html += `<div class="field-row"><input type="text" class="f" data-role="link" data-field="title" data-link="${li}" value="${rsmEscAttr(l.t)}" placeholder="링크 제목" ${OI}></div>`;
+    html += `<div class="field-row"><input type="text" class="f" data-role="link" data-field="url" data-link="${li}" value="${rsmEscAttr(l.u)}" placeholder="https://" ${OI}></div>`;
     html += `</div>`;
   });
   html += `<button class="add-btn" data-act="add-link">+ 링크 추가</button></div>`;
@@ -2473,7 +2480,7 @@ function rsmBuildAll(){
 }
 
 function rsmProfileFieldRow(label,field,value,checked){
-  return `<div class="field-row"><input type="checkbox" data-chk="profile" data-field="${field}" ${checked?'checked':''}><span class="field-label">${label}</span><input type="text" class="f" data-role="profile" data-field="${field}" value="${rsmEscAttr(value)}"></div>`;
+  return `<div class="field-row"><input type="checkbox" data-chk="profile" data-field="${field}" ${checked?'checked':''} onchange="rsmProcessCheckbox(this)"><span class="field-label">${label}</span><input type="text" class="f" data-role="profile" data-field="${field}" value="${rsmEscAttr(value)}" oninput="rsmProcessInput(this)"></div>`;
 }
 
 function rsmRenderPreview(){
@@ -2574,20 +2581,11 @@ function rsmProcessInput(el){
   rsmRenderPreview();
 }
 
+// 체크박스/인풋은 HTML 인라인 onchange/oninput으로 처리 — 이 함수는 버튼 클릭만 담당
 let _rsmClickAC = null;
 function rsmAttachListeners(root){
   if(!root) root = document.getElementById("rsmPickerRoot");
   if(!root) return;
-
-  // 체크박스: innerHTML 교체 후 새 요소에 직접 바인딩 — 위임 대신 직접
-  root.querySelectorAll('input[type="checkbox"]').forEach(cb=>{
-    cb.addEventListener("change", ()=>rsmProcessCheckbox(cb));
-  });
-
-  // 텍스트 인풋/textarea: 직접 바인딩
-  root.querySelectorAll('input[type="text"],textarea').forEach(el=>{
-    el.addEventListener("input", ()=>rsmProcessInput(el));
-  });
 
   // 버튼 클릭: AbortController로 매번 새로 붙여 중복 방지
   if(_rsmClickAC) _rsmClickAC.abort();
