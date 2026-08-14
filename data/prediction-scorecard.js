@@ -172,4 +172,3 @@ const PREDICTION_SCORECARD = [
     ]
   }
 ];
-채점 완료: 2026-08-14 기준 변경된 항목 있음
