@@ -2477,34 +2477,51 @@ function rsmProfileFieldRow(label,field,value,checked){
 }
 
 function rsmRenderPreview(){
-  const selected = rsmData.filter(e=>rsmState.entries[e.id]&&rsmState.entries[e.id].projects.some(v=>v));
+  // DOM에서 직접 체크박스 상태를 읽음 — rsmState 의존 제거로 동기화 문제 원천 차단
+  const root = document.getElementById("rsmPickerRoot");
+  function domCb(sel, fallback){
+    const cb = root && root.querySelector(sel);
+    return cb ? cb.checked : fallback;
+  }
+
+  // 선택된 경력: 회사 체크박스 기준
+  const selected = rsmData.filter(e=>{
+    const cb = root && root.querySelector(`[data-chk="entry"][data-entry="${e.id}"]`);
+    return cb ? cb.checked : (rsmState.entries[e.id] ? rsmState.entries[e.id].checked : true);
+  });
+
   let html = "";
-  if(rsmState.profile.name) html += `<div class="doc-name">${rsmEsc(rsmProfile.name)}</div>`;
+  if(domCb('[data-chk="profile"][data-field="name"]', rsmState.profile.name))
+    html += `<div class="doc-name">${rsmEsc(rsmProfile.name)}</div>`;
   const parts = [];
-  if(rsmState.profile.phone) parts.push(rsmEsc(rsmProfile.phone));
-  if(rsmState.profile.email) parts.push(rsmEsc(rsmProfile.email));
+  if(domCb('[data-chk="profile"][data-field="phone"]', rsmState.profile.phone)) parts.push(rsmEsc(rsmProfile.phone));
+  if(domCb('[data-chk="profile"][data-field="email"]', rsmState.profile.email)) parts.push(rsmEsc(rsmProfile.email));
   if(parts.length) html += `<div class="doc-contact">${parts.join("  ·  ")}</div>`;
-  if(rsmState.summary && rsmSummaryText.trim()) html += `<div class="doc-summary">${rsmEsc(rsmSummaryText.trim())}</div>`;
+  if(domCb('[data-chk="summary"]', rsmState.summary) && rsmSummaryText.trim())
+    html += `<div class="doc-summary">${rsmEsc(rsmSummaryText.trim())}</div>`;
+
   if(selected.length){
     html += `<div class="doc-section-title">경력</div>`;
     selected.forEach(e=>{
       html += `<div class="doc-company-row"><span class="doc-company">${rsmEsc(e.company)}</span><span class="doc-period">${rsmEsc(e.period)} · ${rsmEsc(e.duration)}</span></div>`;
       if(e.note) html += `<div class="doc-note">${rsmEsc(e.note)}</div>`;
       e.projects.forEach((p,pi)=>{
-        if(!rsmState.entries[e.id].projects[pi]) return;
+        const projCb = root && root.querySelector(`[data-chk="project"][data-entry="${e.id}"][data-proj="${pi}"]`);
+        const show = projCb ? projCb.checked : (rsmState.entries[e.id] ? rsmState.entries[e.id].projects[pi] : true);
+        if(!show) return;
         html += `<div class="doc-project-title">${rsmEsc(p.title)}</div>`;
         html += `<ul class="doc-bullets">`+p.bullets.map(b=>`<li>${rsmEsc(b)}</li>`).join("")+`</ul>`;
       });
     });
   }
-  if(rsmState.edu){
+  if(domCb('[data-chk="edu"]', rsmState.edu)){
     html += `<div class="doc-section-title">학력</div>`;
     html += `<div class="doc-edu-row"><span><b>${rsmEsc(rsmEdu.title)}</b> · ${rsmEsc(rsmEdu.degree)}</span><span class="doc-period">${rsmEsc(rsmEdu.period)}</span></div>`;
     html += `<div class="doc-edu-degree">${rsmEsc(rsmEdu.detail)}</div>`;
   }
-  if(rsmState.skills) html += `<div class="doc-section-title">스킬</div><div class="doc-tags">${rsmEsc(rsmSkillsText)}</div>`;
-  if(rsmState.languages) html += `<div class="doc-section-title">언어</div><div class="doc-tags">${rsmEsc(rsmLanguagesText)}</div>`;
-  if(rsmState.links){
+  if(domCb('[data-chk="skills"]', rsmState.skills)) html += `<div class="doc-section-title">스킬</div><div class="doc-tags">${rsmEsc(rsmSkillsText)}</div>`;
+  if(domCb('[data-chk="languages"]', rsmState.languages)) html += `<div class="doc-section-title">언어</div><div class="doc-tags">${rsmEsc(rsmLanguagesText)}</div>`;
+  if(domCb('[data-chk="links"]', rsmState.links)){
     html += `<div class="doc-section-title">링크</div><div class="doc-links">`;
     rsmLinks.forEach(l=>{ html += `<div class="doc-link-item"><div class="doc-link-title">${rsmEsc(l.t)}</div><a href="${rsmEsc(l.u)}" target="_blank">${rsmEsc(l.u)}</a></div>`; });
     html += `</div>`;
