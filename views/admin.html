@@ -2724,14 +2724,21 @@ async function resumeLoad(){
       if(c.summary!==undefined) rsmSummaryText=c.summary;
       // entries: 비어있으면 시드 유지, 있으면 교체
       if(c.entries && c.entries.length > 0){
-        // projects 누락된 엔트리 정규화 — 비어있으면 시드 데이터에서 복원 (DB 저장 오류 방어)
+        // 엔트리 정규화 — id 누락 시 company 이름으로 seed 매칭, projects·duration 복원
         const seedById=Object.fromEntries(RSM_SEED_ENTRIES.map(s=>[s.id,s]));
+        const usedIds=new Set();
         rsmData=c.entries.map(e=>{
-          const seed=seedById[e.id];
+          let seed=seedById[e.id];
+          // id가 없거나 seed 매칭 실패 → company 이름으로 재매칭
+          if(!seed && e.company) seed=RSM_SEED_ENTRIES.find(s=>s.company===e.company);
+          // 고유 id 확보: seed id > 기존 e.id > 새 id 순
+          let id=seed?.id||e.id;
+          if(!id||usedIds.has(id)) id=rsmNewId("entry");
+          usedIds.add(id);
           const raw=Array.isArray(e.projects)?e.projects:[];
           const projects=raw.length>0?raw:(seed?.projects?JSON.parse(JSON.stringify(seed.projects)):[]);
           const duration=e.duration||seed?.duration||'';
-          return {...e,duration,projects};
+          return {...e,id,duration,projects};
         });
         // state 먼저 초기화 후 DB 상태 덮기
         rsmState.entries={};
