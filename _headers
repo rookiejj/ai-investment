@@ -1,0 +1,6 @@
+# admin 페이지는 JS 변경이 잦아 캐시 비활성화
+/admin
+  Cache-Control: no-store, must-revalidate
+
+/views/admin
+  Cache-Control: no-store, must-revalidate

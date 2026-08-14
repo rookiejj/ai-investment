@@ -2749,13 +2749,22 @@ async function resumeSave(){
 // ─── 경력서 이벤트 위임 — IIFE 클로저로 rsmProcess* 직접 참조 ───
 // document 레벨이라 rsmPickerRoot.innerHTML 교체 후에도 살아남음
 // capture=true: 하위 요소가 stopPropagation 해도 반드시 실행
+let _rsmEvtCount = 0;
 document.addEventListener('change', function(e){
-  if(!e.target.closest || !e.target.closest('#rsmPickerRoot')) return;
-  if(e.target.type === 'checkbox') rsmProcessCheckbox(e.target);
+  const inRoot = e.target && e.target.closest && e.target.closest('#rsmPickerRoot');
+  if(!inRoot) return;
+  if(e.target.type === 'checkbox'){
+    _rsmEvtCount++;
+    const st = document.getElementById('rsmStatus');
+    if(st) st.textContent = '[디버그] 체크박스 이벤트 #' + _rsmEvtCount + ': ' + (e.target.dataset.chk||'?') + ' → ' + (e.target.checked?'ON':'OFF');
+    try { rsmProcessCheckbox(e.target); }
+    catch(err){ console.error('[rsm] rsmProcessCheckbox 오류:', err); if(st) st.textContent = '[오류] ' + err.message; }
+  }
 }, true);
 document.addEventListener('input', function(e){
-  if(!e.target.closest || !e.target.closest('#rsmPickerRoot')) return;
-  rsmProcessInput(e.target);
+  if(!e.target || !e.target.closest || !e.target.closest('#rsmPickerRoot')) return;
+  try { rsmProcessInput(e.target); }
+  catch(err){ console.error('[rsm] rsmProcessInput 오류:', err); }
 }, true);
 
 // ─── 부트 ───
