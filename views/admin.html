@@ -2403,7 +2403,7 @@ function rsmBuildAll(){
   // rsmState.entries 누락 항목 보완 — 미스매치로 인한 silent return 방지
   rsmData.forEach(e=>{
     if(!rsmState.entries[e.id])
-      rsmState.entries[e.id]={checked:true,projects:e.projects.map(()=>true)};
+      rsmState.entries[e.id]={checked:true,projects:(e.projects||[]).map(()=>true)};
   });
   let html = "";
   html += `<div class="section-title">개인 정보</div>`;
@@ -2432,7 +2432,7 @@ function rsmBuildAll(){
     html += `<div class="entry-card-body">`;
     html += `<div class="entry-meta-row"><input type="text" class="f" data-role="field" data-entry="${e.id}" data-field="period" value="${rsmEscAttr(e.period)}" placeholder="2020.05 - 재직중" style="flex:1.4;"><input type="text" class="f" data-role="field" data-entry="${e.id}" data-field="duration" value="${rsmEscAttr(e.duration)}" placeholder="6년 4개월" style="flex:1;"></div>`;
     html += `<div class="entry-meta-row"><input type="text" class="f" data-role="field" data-entry="${e.id}" data-field="note" value="${rsmEscAttr(e.note||'')}" placeholder="비고 (예: 병역특례) — 선택"></div>`;
-    e.projects.forEach((p,pi)=>{
+    (e.projects||[]).forEach((p,pi)=>{
       html += `<div class="project-block">`;
       html += `<div class="project-head"><input type="checkbox" data-chk="project" data-entry="${e.id}" data-proj="${pi}" ${st.projects[pi]?'checked':''}><input type="text" class="f project-title-input" data-role="ptitle" data-entry="${e.id}" data-proj="${pi}" value="${rsmEscAttr(p.title)}" style="flex:1;"><button class="icon-btn" data-act="del-project" data-entry="${e.id}" data-proj="${pi}">🗑</button></div>`;
       html += `<div class="bullets-wrap">`;
@@ -2489,7 +2489,7 @@ function rsmRenderPreview(){
   // 방어적 초기화: state에 없는 항목은 checked:true로 만들어 절대 사라지지 않게
   rsmData.forEach(e=>{
     if(!rsmState.entries[e.id])
-      rsmState.entries[e.id]={checked:true,projects:e.projects.map(()=>true)};
+      rsmState.entries[e.id]={checked:true,projects:(e.projects||[]).map(()=>true)};
   });
   const selected = rsmData.filter(e => rsmState.entries[e.id].checked);
   if(selected.length){
@@ -2497,7 +2497,7 @@ function rsmRenderPreview(){
     selected.forEach(e=>{
       html += `<div class="doc-company-row"><span class="doc-company">${rsmEsc(e.company)}</span><span class="doc-period">${rsmEsc(e.period)} · ${rsmEsc(e.duration)}</span></div>`;
       if(e.note) html += `<div class="doc-note">${rsmEsc(e.note)}</div>`;
-      e.projects.forEach((p,pi)=>{
+      (e.projects||[]).forEach((p,pi)=>{
         const show = !rsmState.entries[e.id].projects || rsmState.entries[e.id].projects[pi] !== false;
         if(!show) return;
         html += `<div class="doc-project-title">${rsmEsc(p.title)}</div>`;
@@ -2538,11 +2538,12 @@ function rsmProcessCheckbox(el){
   else if(chk==="links") rsmState.links=el.checked;
   else if(chk==="entry"){
     const st=rsmState.entries[el.dataset.entry];
-    if(st){ st.checked=el.checked; st.projects=st.projects.map(()=>el.checked); }
+    if(st){ st.checked=el.checked; st.projects=(st.projects||[]).map(()=>el.checked); }
     if(root) root.querySelectorAll(`#rcard-${el.dataset.entry} [data-chk="project"]`).forEach(pc=>pc.checked=el.checked);
   } else if(chk==="project"){
     const st=rsmState.entries[el.dataset.entry];
     if(st){
+      if(!st.projects) st.projects=[];
       st.projects[+el.dataset.proj]=el.checked;
       const any=st.projects.some(v=>v); st.checked=any;
       if(root){ const hc=root.querySelector(`#rcard-${el.dataset.entry} [data-chk="entry"]`); if(hc) hc.checked=any; }
@@ -2688,7 +2689,7 @@ function rsmCopyOutput(){
     lines.push("경력");lines.push("");
     selected.forEach(e=>{
       lines.push(`${e.company}  |  ${e.period} (${e.duration})${e.note?"  ·  "+e.note:""}`);
-      e.projects.forEach((p,pi)=>{ if(!rsmState.entries[e.id].projects[pi]) return; lines.push(`  ${p.title}`); p.bullets.forEach(b=>lines.push(`    - ${b}`)); });
+      (e.projects||[]).forEach((p,pi)=>{ if(!rsmState.entries[e.id].projects[pi]) return; lines.push(`  ${p.title}`); p.bullets.forEach(b=>lines.push(`    - ${b}`)); });
       lines.push("");
     });
   }
@@ -2722,7 +2723,8 @@ async function resumeLoad(){
       if(c.summary!==undefined) rsmSummaryText=c.summary;
       // entries: 비어있으면 시드 유지, 있으면 교체
       if(c.entries && c.entries.length > 0){
-        rsmData=c.entries;
+        // projects 누락된 엔트리 정규화 (DB 저장 오류 방어)
+        rsmData=c.entries.map(e=>({...e,projects:Array.isArray(e.projects)?e.projects:[]}));
         // state 먼저 초기화 후 DB 상태 덮기
         rsmState.entries={};
         rsmData.forEach(e=>{ rsmState.entries[e.id]={checked:true,projects:e.projects.map(()=>true)}; });
