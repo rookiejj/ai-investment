@@ -319,8 +319,11 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 .rsm-view .section-title::after{content:"";flex:1;height:1px;background:var(--line)}
 .rsm-view .field-row{display:flex;gap:8px;align-items:center;margin-bottom:6px}
 .rsm-view .field-label{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);width:56px;flex-shrink:0}
-.rsm-view input[type=text].f,.rsm-view textarea.f{width:100%;font-family:inherit;font-size:13px;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:7px 10px;background:#fff}
-.rsm-view input[type=text].f:focus,.rsm-view textarea.f:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px rgba(47,93,80,.12)}
+.rsm-view input[type=text].f,.rsm-view input[type=month].f,.rsm-view textarea.f{width:100%;font-family:inherit;font-size:13px;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:7px 10px;background:#fff}
+.rsm-view input[type=text].f:focus,.rsm-view input[type=month].f:focus,.rsm-view textarea.f:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px rgba(47,93,80,.12)}
+.rsm-view .date-sep{color:var(--ink-soft);font-size:12px;align-self:center;flex-shrink:0;padding:0 2px}
+.rsm-view .current-label{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--ink-soft);white-space:nowrap;flex-shrink:0;cursor:pointer}
+.rsm-view input[type=month].f:disabled{background:#f5f4f0;color:#bbb}
 .rsm-view textarea.f{resize:vertical;min-height:56px;line-height:1.5}
 .rsm-view .icon-btn{border:none;background:transparent;color:#b9b3a4;cursor:pointer;font-size:15px;line-height:1;padding:4px 6px;flex-shrink:0;border-radius:6px}
 .rsm-view .icon-btn:hover{color:var(--accent-hot);background:#fdf1ea}
@@ -2413,6 +2416,44 @@ function rsmFindEntry(id){ return rsmData.find(e=>e.id===id); }
 function rsmEsc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 function rsmEscAttr(s){ return rsmEsc(s).replace(/"/g,"&quot;"); }
 
+// 날짜 헬퍼
+function rsmParsePeriod(period){
+  const parts=(period||'').split(' - ');
+  const toInput=s=>s.trim().replace(/^(\d{4})\.(\d{2})$/,'$1-$2');
+  const startRaw=parts[0]||'';
+  const endRaw=(parts[1]||'').trim();
+  const isCurrent=endRaw==='재직중'||!endRaw;
+  return {start:toInput(startRaw),end:isCurrent?'':toInput(endRaw),isCurrent};
+}
+function rsmMonthToDisplay(val){
+  return (val||'').replace(/^(\d{4})-(\d{2})$/,'$1.$2');
+}
+function rsmCalcDuration(startVal,endVal,isCurrent){
+  if(!startVal) return '';
+  const [sy,sm]=startVal.split('-').map(Number);
+  let ey,em;
+  if(isCurrent||!endVal){const n=new Date();ey=n.getFullYear();em=n.getMonth()+1;}
+  else{[ey,em]=endVal.split('-').map(Number);}
+  let months=(ey-sy)*12+(em-sm)+1;
+  if(months<1) months=1;
+  const y=Math.floor(months/12),m=months%12;
+  return y>0&&m>0?`${y}년 ${m}개월`:y>0?`${y}년`:`${m}개월`;
+}
+function rsmUpdateEntryPeriod(entryId){
+  const ent=rsmFindEntry(entryId);if(!ent) return;
+  const root=document.getElementById("rsmPickerRoot");
+  const sEl=root?.querySelector(`[data-role="date-start"][data-entry="${entryId}"]`);
+  const eEl=root?.querySelector(`[data-role="date-end"][data-entry="${entryId}"]`);
+  const cEl=root?.querySelector(`[data-chk="current-job"][data-entry="${entryId}"]`);
+  const sv=sEl?.value||'',isCur=cEl?.checked??false,ev=isCur?'':(eEl?.value||'');
+  const sd=rsmMonthToDisplay(sv),ed=isCur?'재직중':rsmMonthToDisplay(ev);
+  if(sd) ent.period=`${sd} - ${ed}`;
+  ent.duration=rsmCalcDuration(sv,ev,isCur);
+  const dEl=root?.querySelector(`[data-role="dur-display"][data-entry="${entryId}"]`);
+  if(dEl) dEl.value=ent.duration;
+  rsmRenderPreview();
+}
+
 function rsmBuildAll(){
   const root = document.getElementById("rsmPickerRoot");
   if(!root) return;
@@ -2446,7 +2487,14 @@ function rsmBuildAll(){
     html += `<span class="chevron">▸</span>`;
     html += `</div>`;
     html += `<div class="entry-card-body">`;
-    html += `<div class="entry-meta-row"><input type="text" class="f" data-role="field" data-entry="${e.id}" data-field="period" value="${rsmEscAttr(e.period)}" placeholder="2020.05 - 재직중" style="flex:1.4;"><input type="text" class="f" data-role="field" data-entry="${e.id}" data-field="duration" value="${rsmEscAttr(e.duration)}" placeholder="6년 4개월" style="flex:1;"></div>`;
+    const {start:_ds,end:_de,isCurrent:_dc}=rsmParsePeriod(e.period);
+    html += `<div class="entry-meta-row" style="flex-wrap:wrap;gap:4px;">`;
+    html += `<input type="month" class="f" data-role="date-start" data-entry="${e.id}" value="${_ds}" style="flex:1;min-width:120px;">`;
+    html += `<span class="date-sep">~</span>`;
+    html += `<input type="month" class="f" data-role="date-end" data-entry="${e.id}" value="${_de}" ${_dc?'disabled':''} style="flex:1;min-width:120px;">`;
+    html += `<label class="current-label"><input type="checkbox" data-chk="current-job" data-entry="${e.id}" ${_dc?'checked':''}><span>재직중</span></label>`;
+    html += `<input type="text" class="f" data-role="dur-display" data-entry="${e.id}" value="${rsmEscAttr(e.duration)}" readonly placeholder="자동" style="flex:0.7;min-width:80px;background:#f5f4f0;color:#777;cursor:default;text-align:center;">`;
+    html += `</div>`;
     html += `<div class="entry-meta-row"><input type="text" class="f" data-role="field" data-entry="${e.id}" data-field="note" value="${rsmEscAttr(e.note||'')}" placeholder="비고 (예: 병역특례) — 선택"></div>`;
     (e.projects||[]).forEach((p,pi)=>{
       html += `<div class="project-block">`;
@@ -2569,6 +2617,11 @@ function rsmProcessCheckbox(el){
       const any=st.projects.some(v=>v); st.checked=any;
       if(root){ const hc=root.querySelector(`#rcard-${el.dataset.entry} [data-chk="entry"]`); if(hc) hc.checked=any; }
     }
+  } else if(chk==="current-job"){
+    const endEl=root?.querySelector(`[data-role="date-end"][data-entry="${el.dataset.entry}"]`);
+    if(endEl){ endEl.disabled=el.checked; if(el.checked) endEl.value=''; }
+    rsmUpdateEntryPeriod(el.dataset.entry);
+    return;
   }
   if(el.closest(".check-row")) el.closest(".check-row").classList.toggle("on",el.checked);
   rsmRenderPreview();
@@ -2586,6 +2639,7 @@ function rsmProcessInput(el){
   else if(role==="skills") rsmSkillsText=el.value;
   else if(role==="languages") rsmLanguagesText=el.value;
   else if(role==="link") rsmLinks[+el.dataset.link][el.dataset.field==="title"?"t":"u"]=el.value;
+  else if(role==="date-start"||role==="date-end"){ rsmUpdateEntryPeriod(el.dataset.entry); return; }
   rsmRenderPreview();
 }
 
@@ -2597,9 +2651,11 @@ function rsmInitEvents(){
   const root = document.getElementById("rsmPickerRoot");
   if(!root) return;
 
-  // 체크박스 변경 — innerHTML 교체 후에도 컨테이너 위임으로 항상 살아남음
+  // 체크박스 변경 + date 입력 — innerHTML 교체 후에도 컨테이너 위임으로 항상 살아남음
   root.addEventListener("change", function(e){
     if(e.target.dataset.chk) rsmProcessCheckbox(e.target);
+    const r=e.target.dataset.role;
+    if(r==="date-start"||r==="date-end") rsmUpdateEntryPeriod(e.target.dataset.entry);
   });
 
   // 텍스트 입력
