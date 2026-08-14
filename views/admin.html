@@ -2493,7 +2493,12 @@ function rsmRenderPreview(){
   if(rsmState.summary && rsmSummaryText.trim())
     html += `<div class="doc-summary">${rsmEsc(rsmSummaryText.trim())}</div>`;
 
-  const selected = rsmData.filter(e => rsmState.entries[e.id] && rsmState.entries[e.id].checked);
+  // 방어적 초기화: state에 없는 항목은 checked:true로 만들어 절대 사라지지 않게
+  rsmData.forEach(e=>{
+    if(!rsmState.entries[e.id])
+      rsmState.entries[e.id]={checked:true,projects:e.projects.map(()=>true)};
+  });
+  const selected = rsmData.filter(e => rsmState.entries[e.id].checked);
   if(selected.length){
     html += `<div class="doc-section-title">경력</div>`;
     selected.forEach(e=>{
@@ -2699,11 +2704,27 @@ async function resumeLoad(){
       const c = r.content;
       if(c.profile) rsmProfile={...RSM_SEED_PROFILE,...c.profile};
       if(c.summary!==undefined) rsmSummaryText=c.summary;
-      if(c.entries) {
+      // entries: 비어있으면 시드 유지, 있으면 교체
+      if(c.entries && c.entries.length > 0){
         rsmData=c.entries;
+        // state 먼저 초기화 후 DB 상태 덮기
         rsmState.entries={};
         rsmData.forEach(e=>{ rsmState.entries[e.id]={checked:true,projects:e.projects.map(()=>true)}; });
-        if(c.state&&c.state.entries) rsmState.entries=c.state.entries;
+        if(c.state&&c.state.entries){
+          // DB state에 있는 ID만 덮어쓰기 (rsmData에 없는 오래된 ID는 무시)
+          Object.entries(c.state.entries).forEach(([id,st])=>{
+            if(rsmState.entries[id]) rsmState.entries[id]=st;
+          });
+          // projects 배열 길이 보정
+          rsmData.forEach(e=>{
+            const st=rsmState.entries[e.id];
+            if(st && (!st.projects || st.projects.length!==e.projects.length))
+              st.projects=e.projects.map((_,pi)=>st.projects?.[pi]??true);
+          });
+        }
+        // 전부 checked:false면 리셋 (실수로 전체 해제 후 저장된 경우)
+        const allOff=rsmData.every(e=>!rsmState.entries[e.id]?.checked);
+        if(allOff) rsmData.forEach(e=>{ rsmState.entries[e.id]={checked:true,projects:e.projects.map(()=>true)}; });
       }
       if(c.edu) rsmEdu=c.edu;
       if(c.skills!==undefined) rsmSkillsText=c.skills;
