@@ -349,7 +349,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 .rsm-view .project-title-input{font-weight:600;font-size:12.5px}
 .rsm-view .bullet-row{display:flex;align-items:center;gap:4px;margin-bottom:5px}
 .rsm-view .bullet-row input{font-size:12px}
-.rsm-view .link-block{border:1px solid #ece9e0;border-radius:9px;padding:10px;margin-bottom:8px;background:#fcfbf8;position:relative}
+.rsm-view .link-block{border:1px solid #ece9e0;border-radius:9px;padding:10px 32px 10px 10px;margin-bottom:8px;background:#fcfbf8;position:relative;display:flex;align-items:flex-start;gap:6px}
+.rsm-view .link-block .link-fields{flex:1;min-width:0}
 .rsm-view .link-block .icon-btn{position:absolute;top:4px;right:4px}
 /* 미리보기 패널 */
 .rsm-view .preview{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;background:#fbfaf7}
@@ -2476,9 +2477,13 @@ function rsmBuildAll(){
   html += `<div class="section-title">링크</div>`;
   html += `<div class="misc-card"><label class="check-row ${rsmState.links?'on':''}"><input type="checkbox" data-chk="links" ${rsmState.links?'checked':''}><span>링크 포함</span></label>`;
   rsmLinks.forEach((l,li)=>{
-    html += `<div class="link-block"><button class="icon-btn" data-act="del-link" data-link="${li}">×</button>`;
+    html += `<div class="link-block">`;
+    html += `<div class="reorder-btns"><button class="reorder-btn" data-act="move-link-up" data-link="${li}" ${li===0?'disabled':''}>▲</button><button class="reorder-btn" data-act="move-link-down" data-link="${li}" ${li===rsmLinks.length-1?'disabled':''}>▼</button></div>`;
+    html += `<div class="link-fields">`;
     html += `<div class="field-row"><input type="text" class="f" data-role="link" data-field="title" data-link="${li}" value="${rsmEscAttr(l.t)}" placeholder="링크 제목"></div>`;
     html += `<div class="field-row"><input type="text" class="f" data-role="link" data-field="url" data-link="${li}" value="${rsmEscAttr(l.u)}" placeholder="https://"></div>`;
+    html += `</div>`;
+    html += `<button class="icon-btn" data-act="del-link" data-link="${li}">×</button>`;
     html += `</div>`;
   });
   html += `<button class="add-btn" data-act="add-link">+ 링크 추가</button></div>`;
@@ -2649,6 +2654,14 @@ function rsmInitEvents(){
     } else if(act==="move-down"){
       const idx=rsmData.findIndex(x=>x.id===btn.dataset.entry);
       if(idx>-1&&idx<rsmData.length-1){[rsmData[idx+1],rsmData[idx]]=[rsmData[idx],rsmData[idx+1]];}
+      rsmBuildAll(); rsmRenderPreview();
+    } else if(act==="move-link-up"){
+      const li=+btn.dataset.link;
+      if(li>0){[rsmLinks[li-1],rsmLinks[li]]=[rsmLinks[li],rsmLinks[li-1]];}
+      rsmBuildAll(); rsmRenderPreview();
+    } else if(act==="move-link-down"){
+      const li=+btn.dataset.link;
+      if(li<rsmLinks.length-1){[rsmLinks[li+1],rsmLinks[li]]=[rsmLinks[li],rsmLinks[li+1]];}
       rsmBuildAll(); rsmRenderPreview();
     } else if(act==="add-link"){
       rsmLinks.push({t:"새 링크 제목",u:"https://"});
