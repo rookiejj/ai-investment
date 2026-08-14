@@ -2521,7 +2521,7 @@ function rsmRenderPreview(){
   const doc = document.getElementById("doc");
   if(doc) doc.innerHTML = html || `<div class="empty-note">왼쪽에서 항목을 선택하면 여기에 미리보기가 표시됩니다.</div>`;
   let totalMonths = 0;
-  selected.forEach(e=>{ const m=e.duration.match(/(?:(\d+)년)?\s*(?:(\d+)개월)?/); totalMonths+=(m&&m[1]?parseInt(m[1],10):0)*12+(m&&m[2]?parseInt(m[2],10):0); });
+  selected.forEach(e=>{ const m=(e.duration||'').match(/(?:(\d+)년)?\s*(?:(\d+)개월)?/); totalMonths+=(m&&m[1]?parseInt(m[1],10):0)*12+(m&&m[2]?parseInt(m[2],10):0); });
   const stats = document.getElementById("rsmStats");
   if(stats) stats.innerHTML = `<span><b>${selected.length}</b>개 회사 선택됨</span><span><b>${Math.floor(totalMonths/12)}년 ${totalMonths%12}개월</b> 합산 경력</span>`;
 }
@@ -2727,9 +2727,11 @@ async function resumeLoad(){
         // projects 누락된 엔트리 정규화 — 비어있으면 시드 데이터에서 복원 (DB 저장 오류 방어)
         const seedById=Object.fromEntries(RSM_SEED_ENTRIES.map(s=>[s.id,s]));
         rsmData=c.entries.map(e=>{
+          const seed=seedById[e.id];
           const raw=Array.isArray(e.projects)?e.projects:[];
-          const projects=raw.length>0?raw:(seedById[e.id]?.projects?JSON.parse(JSON.stringify(seedById[e.id].projects)):[]);
-          return {...e,projects};
+          const projects=raw.length>0?raw:(seed?.projects?JSON.parse(JSON.stringify(seed.projects)):[]);
+          const duration=e.duration||seed?.duration||'';
+          return {...e,duration,projects};
         });
         // state 먼저 초기화 후 DB 상태 덮기
         rsmState.entries={};
