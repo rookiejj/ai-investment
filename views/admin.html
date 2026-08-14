@@ -2469,6 +2469,7 @@ function rsmBuildAll(){
       document.getElementById("rcard-"+head.dataset.toggle).classList.toggle("open");
     });
   });
+  rsmAttachListeners();
 }
 
 function rsmProfileFieldRow(label,field,value,checked){
@@ -2476,7 +2477,7 @@ function rsmProfileFieldRow(label,field,value,checked){
 }
 
 function rsmRenderPreview(){
-  const selected = rsmData.filter(e=>rsmState.entries[e.id].projects.some(v=>v));
+  const selected = rsmData.filter(e=>rsmState.entries[e.id]&&rsmState.entries[e.id].projects.some(v=>v));
   let html = "";
   if(rsmState.profile.name) html += `<div class="doc-name">${rsmEsc(rsmProfile.name)}</div>`;
   const parts = [];
@@ -2516,53 +2517,58 @@ function rsmRenderPreview(){
   if(stats) stats.innerHTML = `<span><b>${selected.length}</b>개 회사 선택됨</span><span><b>${Math.floor(totalMonths/12)}년 ${totalMonths%12}개월</b> 합산 경력</span>`;
 }
 
-// 이벤트 위임
-document.addEventListener("input",(e)=>{
+// 이벤트 위임 — rsmPickerRoot에 직접 바인딩 (document 레벨 충돌 방지)
+function rsmAttachListeners(){
   const root = document.getElementById("rsmPickerRoot");
-  if(!root||!root.contains(e.target)) return;
-  const el = e.target, role = el.dataset.role;
-  if(role==="summary") rsmSummaryText=el.value;
-  else if(role==="profile") rsmProfile[el.dataset.field]=el.value;
-  else if(role==="field"){ const ent=rsmFindEntry(el.dataset.entry); if(ent) ent[el.dataset.field]=el.value; }
-  else if(role==="ptitle"){ const ent=rsmFindEntry(el.dataset.entry); if(ent) ent.projects[+el.dataset.proj].title=el.value; }
-  else if(role==="bullet"){ const ent=rsmFindEntry(el.dataset.entry); if(ent) ent.projects[+el.dataset.proj].bullets[+el.dataset.bullet]=el.value; }
-  else if(role==="edu") rsmEdu[el.dataset.field]=el.value;
-  else if(role==="skills") rsmSkillsText=el.value;
-  else if(role==="languages") rsmLanguagesText=el.value;
-  else if(role==="link") rsmLinks[+el.dataset.link][el.dataset.field==="title"?"t":"u"]=el.value;
-  rsmRenderPreview();
-});
-document.addEventListener("change",(e)=>{
-  const root = document.getElementById("rsmPickerRoot");
-  if(!root||!root.contains(e.target)) return;
-  const el=e.target, chk=el.dataset.chk;
-  if(chk==="profile") rsmState.profile[el.dataset.field]=el.checked;
-  else if(chk==="summary") rsmState.summary=el.checked;
-  else if(chk==="edu") rsmState.edu=el.checked;
-  else if(chk==="skills") rsmState.skills=el.checked;
-  else if(chk==="languages") rsmState.languages=el.checked;
-  else if(chk==="links") rsmState.links=el.checked;
-  else if(chk==="entry"){
-    const st=rsmState.entries[el.dataset.entry];
-    st.checked=el.checked; st.projects=st.projects.map(()=>el.checked);
-    document.querySelectorAll(`#rcard-${el.dataset.entry} [data-chk="project"]`).forEach(pc=>pc.checked=el.checked);
-  } else if(chk==="project"){
-    const st=rsmState.entries[el.dataset.entry];
-    st.projects[+el.dataset.proj]=el.checked;
-    const any=st.projects.some(v=>v); st.checked=any;
-    const hc=document.querySelector(`#rcard-${el.dataset.entry} [data-chk="entry"]`);
-    if(hc) hc.checked=any;
-  }
-  if(el.closest(".check-row")) el.closest(".check-row").classList.toggle("on",el.checked);
-  rsmRenderPreview();
-});
-document.addEventListener("click",(e)=>{
-  const root = document.getElementById("rsmPickerRoot");
-  if(e.target.id==="rsmSaveBtn"){ resumeSave(); return; }
   if(!root) return;
-  const btn=e.target.closest("[data-act]");
-  if(!btn||!root.contains(btn)) return;
-  const act=btn.dataset.act;
+  // 이미 리스너가 붙어 있으면 중복 방지
+  if(root._rsmListened) return;
+  root._rsmListened = true;
+
+  root.addEventListener("input",(e)=>{
+    const el = e.target, role = el.dataset.role;
+    if(role==="summary") rsmSummaryText=el.value;
+    else if(role==="profile") rsmProfile[el.dataset.field]=el.value;
+    else if(role==="field"){ const ent=rsmFindEntry(el.dataset.entry); if(ent) ent[el.dataset.field]=el.value; }
+    else if(role==="ptitle"){ const ent=rsmFindEntry(el.dataset.entry); if(ent) ent.projects[+el.dataset.proj].title=el.value; }
+    else if(role==="bullet"){ const ent=rsmFindEntry(el.dataset.entry); if(ent) ent.projects[+el.dataset.proj].bullets[+el.dataset.bullet]=el.value; }
+    else if(role==="edu") rsmEdu[el.dataset.field]=el.value;
+    else if(role==="skills") rsmSkillsText=el.value;
+    else if(role==="languages") rsmLanguagesText=el.value;
+    else if(role==="link") rsmLinks[+el.dataset.link][el.dataset.field==="title"?"t":"u"]=el.value;
+    rsmRenderPreview();
+  });
+
+  root.addEventListener("change",(e)=>{
+    const el=e.target, chk=el.dataset.chk;
+    if(!chk) return;
+    if(chk==="profile") rsmState.profile[el.dataset.field]=el.checked;
+    else if(chk==="summary") rsmState.summary=el.checked;
+    else if(chk==="edu") rsmState.edu=el.checked;
+    else if(chk==="skills") rsmState.skills=el.checked;
+    else if(chk==="languages") rsmState.languages=el.checked;
+    else if(chk==="links") rsmState.links=el.checked;
+    else if(chk==="entry"){
+      const st=rsmState.entries[el.dataset.entry];
+      if(!st) return;
+      st.checked=el.checked; st.projects=st.projects.map(()=>el.checked);
+      root.querySelectorAll(`#rcard-${el.dataset.entry} [data-chk="project"]`).forEach(pc=>pc.checked=el.checked);
+    } else if(chk==="project"){
+      const st=rsmState.entries[el.dataset.entry];
+      if(!st) return;
+      st.projects[+el.dataset.proj]=el.checked;
+      const any=st.projects.some(v=>v); st.checked=any;
+      const hc=root.querySelector(`#rcard-${el.dataset.entry} [data-chk="entry"]`);
+      if(hc) hc.checked=any;
+    }
+    if(el.closest(".check-row")) el.closest(".check-row").classList.toggle("on",el.checked);
+    rsmRenderPreview();
+  });
+
+  root.addEventListener("click",(e)=>{
+    const btn=e.target.closest("[data-act]");
+    if(!btn) return;
+    const act=btn.dataset.act;
   if(act==="del-entry"){
     if(!confirm("이 회사 경력 전체를 삭제할까요?")) return;
     const idx=rsmData.findIndex(x=>x.id===btn.dataset.entry);
@@ -2606,6 +2612,12 @@ document.addEventListener("click",(e)=>{
     rsmLinks.splice(+btn.dataset.link,1);
     rsmBuildAll(); rsmRenderPreview();
   }
+  });  // root click 핸들러 끝
+}  // rsmAttachListeners 끝
+
+// 저장 버튼은 preview-head 안에 있으므로 별도 처리
+document.addEventListener("click",(e)=>{
+  if(e.target.id==="rsmSaveBtn"){ resumeSave(); }
 });
 
 // 툴바 빠른 선택
