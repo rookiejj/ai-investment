@@ -386,7 +386,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 .rsm-view #doc .doc-edu-row{display:flex;justify-content:space-between;gap:12px;font-size:13px}
 .rsm-view #doc .doc-edu-degree{color:var(--ink-soft);font-size:12px;margin-top:2px}
 .rsm-view #doc .doc-links a{font-size:12px;color:var(--accent);text-decoration:none;word-break:break-all}
-.rsm-view #doc .doc-link-item{margin-bottom:8px}
+.rsm-view #doc .doc-link-item{margin-bottom:14px}
 .rsm-view #doc .doc-link-title{font-size:12.5px;color:#3c433e;margin-bottom:1px}
 .rsm-view #doc .doc-tags{font-size:12.5px;line-height:1.9;color:#3c433e;white-space:pre-wrap}
 .rsm-view .empty-note{color:var(--ink-soft);font-size:13px;text-align:center;padding:40px 10px}
@@ -2585,7 +2585,7 @@ function rsmRenderPreview(){
   if(rsmState.skills) html += `<div class="doc-section-title">스킬</div><div class="doc-tags">${rsmEsc(rsmSkillsText)}</div>`;
   if(rsmState.languages) html += `<div class="doc-section-title">언어</div><div class="doc-tags">${rsmEsc(rsmLanguagesText)}</div>`;
   if(rsmState.links){
-    html += `<div class="doc-section-title">링크</div><div class="doc-links">`;
+    html += `<div class="doc-section-title">프로젝트 링크</div><div class="doc-links">`;
     rsmLinks.forEach(l=>{ html += `<div class="doc-link-item"><div class="doc-link-title">${rsmEsc(l.t)}</div><a href="${rsmEsc(l.u)}" target="_blank">${rsmEsc(l.u)}</a></div>`; });
     html += `</div>`;
   }
@@ -2875,7 +2875,7 @@ function rsmShowToast(msg,isErr){
   el.className=isErr?"err":"";
   clearTimeout(_rsmToastTimer);
   requestAnimationFrame(()=>{ el.classList.add("show"); });
-  _rsmToastTimer=setTimeout(()=>el.classList.remove("show"),2500);
+  _rsmToastTimer=setTimeout(()=>el.classList.remove("show"),1000);
 }
 async function resumeSave(){
   const btn=document.getElementById("rsmSaveBtn");
