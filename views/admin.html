@@ -352,7 +352,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 .rsm-view .project-title-input{font-weight:600;font-size:12.5px}
 .rsm-view .bullet-row{display:flex;align-items:center;gap:4px;margin-bottom:5px}
 .rsm-view .bullet-row input{font-size:12px}
-.rsm-view .link-block{border:1px solid #ece9e0;border-radius:9px;padding:10px 32px 10px 10px;margin-bottom:8px;background:#fcfbf8;position:relative;display:flex;align-items:flex-start;gap:6px}
+.rsm-view .link-block{border:1px solid #ece9e0;border-radius:9px;padding:10px 32px 10px 10px;margin-bottom:16px;background:#fcfbf8;position:relative;display:flex;align-items:flex-start;gap:6px}
 .rsm-view .link-block .link-fields{flex:1;min-width:0}
 .rsm-view .link-block .icon-btn{position:absolute;top:4px;right:4px}
 /* 미리보기 패널 */
@@ -412,6 +412,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
   /* @page margin = 모든 페이지 상하좌우 여백 (페이지 브레이크 후 상단도 포함) */
   @page{size:A4;margin:20mm 16mm}
 }
+#rsmToast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);background:#1f2421;color:#fff;padding:12px 22px;border-radius:10px;font-size:14px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:9999;white-space:nowrap}
+#rsmToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#rsmToast.err{background:#b03a2e}
 </style>
 </head>
 <body>
@@ -2396,7 +2399,7 @@ const RSM_SEED_LINKS = [
   {t:"아소비 아이폰 앱 개발 및 운영 - 프리랜서", u:"https://apps.apple.com/kr/app/id6449076561"},
   {t:"아소비 안드로이드 앱 개발 및 운영 - 프리랜서", u:"https://play.google.com/store/apps/details?id=com.asobiapp"},
   {t:"아소비 관리자 사이트 개발 및 운영 - 프리랜서", u:"https://www.asobi.co.kr/jsp/main.jsp"},
-  {t:"SAMG 이커머스 쇼핑몰 사이트 개발 및 운영 - 프리랜서", u:"https://www.emotioncastle.com/"}
+  {t:"프로젝트 링크", u:"https://www.emotioncastle.com/"}
 ];
 
 // 작업용 mutable state (DB 로드 or 기본값)
@@ -2864,6 +2867,16 @@ async function resumeLoad(){
     if(st) st.textContent = err.message.includes("응답 없음") ? err.message : "DB 불러오기 실패 (기본값 사용): "+err.message;
   }
 }
+let _rsmToastTimer=null;
+function rsmShowToast(msg,isErr){
+  let el=document.getElementById("rsmToast");
+  if(!el){el=document.createElement("div");el.id="rsmToast";document.body.appendChild(el);}
+  el.textContent=msg;
+  el.className=isErr?"err":"";
+  clearTimeout(_rsmToastTimer);
+  requestAnimationFrame(()=>{ el.classList.add("show"); });
+  _rsmToastTimer=setTimeout(()=>el.classList.remove("show"),2500);
+}
 async function resumeSave(){
   const btn=document.getElementById("rsmSaveBtn");
   const st=document.getElementById("rsmStatus");
@@ -2872,8 +2885,10 @@ async function resumeSave(){
   try{
     await api("resume_save",{content:{profile:rsmProfile,summary:rsmSummaryText,entries:rsmData,edu:rsmEdu,skills:rsmSkillsText,languages:rsmLanguagesText,links:rsmLinks,state:rsmState}});
     if(st) st.textContent="저장 완료 ✓";
+    rsmShowToast("저장 완료 ✓");
   }catch(err){
     if(st) st.textContent="저장 실패: "+err.message;
+    rsmShowToast("저장 실패: "+err.message, true);
   }finally{
     if(btn) btn.disabled=false;
   }
