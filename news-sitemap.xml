@@ -12,15 +12,4 @@
       <news:title>2026년 8월 15일 (토) 시황 — 미국·한국 주식·AI·원자재·유니콘</news:title>
     </news:news>
   </url>
-  <url>
-    <loc>https://briefick.com/daily/2026-08-14</loc>
-    <news:news>
-      <news:publication>
-        <news:name>브리픽</news:name>
-        <news:language>ko</news:language>
-      </news:publication>
-      <news:publication_date>2026-08-14T07:00:00+09:00</news:publication_date>
-      <news:title>2026년 8월 14일 (금) 시황 — 미국·한국 주식·AI·원자재·유니콘</news:title>
-    </news:news>
-  </url>
 </urlset>
