@@ -203,49 +203,17 @@ const fixed = [
 
 
 
+
 // === AUTO-EARNINGS (scripts/fetch-earnings-calendar.js 자동 생성 — 손대지 말 것) ===
 const autoEarnings = [
   {
     "cat": "earnings",
     "impact": 2,
-    "title": "Cisco 실적",
-    "date": "2026-08-12",
+    "title": "Home Depot 실적",
+    "date": "2026-08-18",
     "desc": "실적 발표 예정",
     "tickers": [
-      "CSCO"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "한국전력 실적",
-    "date": "2026-08-12",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "015760"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "Intuitive Machines 실적",
-    "date": "2026-08-13",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "LUNR"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "KT 실적",
-    "date": "2026-08-13",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "030200"
+      "HD"
     ],
     "src": "auto-earnings"
   },
@@ -253,7 +221,7 @@ const autoEarnings = [
     "cat": "earnings",
     "impact": 2,
     "title": "SK스퀘어 실적",
-    "date": "2026-08-13",
+    "date": "2026-08-18",
     "desc": "실적 발표 예정",
     "tickers": [
       "034730"
@@ -264,43 +232,10 @@ const autoEarnings = [
     "cat": "earnings",
     "impact": 2,
     "title": "농심 실적",
-    "date": "2026-08-13",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "004370"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "삼성화재 실적",
-    "date": "2026-08-13",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "000810"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "위메이드 실적",
-    "date": "2026-08-14",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "112040"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "Home Depot 실적",
     "date": "2026-08-18",
     "desc": "실적 발표 예정",
     "tickers": [
-      "HD"
+      "004370"
     ],
     "src": "auto-earnings"
   },
@@ -417,22 +352,22 @@ const autoEarnings = [
   {
     "cat": "earnings",
     "impact": 2,
-    "title": "Dell Tech 실적",
-    "date": "2026-09-03",
+    "title": "HP Enterprise 실적",
+    "date": "2026-09-02",
     "desc": "실적 발표 예정",
     "tickers": [
-      "DELL"
+      "HPE"
     ],
     "src": "auto-earnings"
   },
   {
     "cat": "earnings",
     "impact": 2,
-    "title": "HP Enterprise 실적",
+    "title": "Dell Tech 실적",
     "date": "2026-09-03",
     "desc": "실적 발표 예정",
     "tickers": [
-      "HPE"
+      "DELL"
     ],
     "src": "auto-earnings"
   },
