@@ -45,8 +45,9 @@ ai-investment/
 │   ├── *-update.js               ← sandbox 작업 컨텍스트(직전 1건 참조용). DB의 tab_updates가 실제 read 진실 소스 + history 보존
 │   ├── calendar-events.js        ← 메인 14일 이벤트 캘린더용 (recurring 패턴 + fixed 알려진 일정 + autoEarnings 자동 생성)
 │   ├── prices-snapshot.json      ← KR/US 종목 종가 스냅샷 (prices-snapshot.yml이 매 거래일 2회 자동 갱신, sandbox 가격 검증 1차 소스)
-│   ├── daily-insight.js          ← 오늘의 연결고리 (매일 에이전트 생성, 최근 7건 유지, cross-asset 인과 메커니즘 설명, index.html 전용)
+│   ├── daily-insight.js          ← 오늘의 연결고리 (매일 에이전트 생성, 최근 180건 유지, cross-asset 인과 메커니즘 설명, index.html 전용)
 │   ├── prediction-scorecard.js   ← 방향 예측 스코어카드 (매일 3종목 up/down 예측 + 자동 채점, 최근 7건 유지, index.html 전용)
+│   ├── sector-rotation.js        ← 섹터별 평균 등락률 스냅샷 (calc-sector-rotation.js가 매일 생성, 최근 7건 유지, index.html 전용)
 │   └── company-ko.js             ← 영문 회사명·티커 → 한글 매핑 (index.html·daily-send 단일 소스)
 ├── scripts/
 │   ├── generate-message.js       ← 로컬 친구톡 메시지 미리보기
@@ -62,6 +63,7 @@ ai-investment/
 │   ├── fetch-earnings-calendar.js← /stocks 유니버스 277종목 실적일 Yahoo에서 긁어 calendar-events.js의 autoEarnings 배열 자동 주입 (earnings-calendar.yml이 호출)
 │   ├── snapshot-prices.js        ← 매 거래일 장 마감 후 KR/US 종목 종가를 Yahoo에서 가져와 data/prices-snapshot.json 갱신 (prices-snapshot.yml이 호출)
 │   ├── score-predictions.js      ← 예측 스코어카드 자동 채점 (prices-snapshot 기준 hit/miss, ±0.5% 미만 소폭=hit, 이전 날짜 null 예측 소급 채점)
+│   ├── calc-sector-rotation.js   ← prices-snapshot 기준 섹터별 평균 등락률 계산 → sector-rotation.js 갱신 (자동 갱신 매일 실행)
 │   ├── preview-friendtalk.js     ← 친구톡 문구 미리보기 (scratch/summaries.json → 콘솔 출력, 프로덕션 미반영)
 │   ├── subscribers.example.json
 │   ├── cartoon/
@@ -106,7 +108,7 @@ ai-investment/
 │   │   ├── stock-prices/         ← Yahoo Finance 15분 지연 시세 fetch + Storage `prices/latest.json` 갱신 (5분 cron)
 │   │   ├── market-data/          ← /trading 터미널용 시세 프록시 (Yahoo v8 chart, verify_jwt=false)
 │   │   ├── survey-api/           ← 설문 시스템 (공개 응답 + 관리자 CRUD)
-│   │   └── admin-api/            ← 운영 대시보드용 (login / change_password / stats / logs / subscribers / payments / expiring_soon / manual_send[알림톡] / daily_send_preview / daily_send_now / notice_send[공지 친구톡])
+│   │   └── admin-api/            ← 운영 대시보드용 (login / change_password / stats / logs / subscribers / payments / expiring_soon / manual_send[알림톡] / daily_send_preview / daily_send_now / notice_send[공지 친구톡] / resume_load / resume_save[경력서 DB 저장·불러오기])
 │   ├── schedule.sql              ← 매일 뉴스 cron (평일 08:00 KST)
 │   ├── schedule-expiry.sql       ← 만료 임박 cron (매일 20:00 KST)
 │   ├── schedule-prices.sql       ← 시세 갱신 cron (매 5분)
@@ -174,13 +176,14 @@ ai-investment/
 
 ### 운영 대시보드 `/admin`
 - 비밀번호 인증 (Edge Function `admin-api` · DB 해시 저장 · 최소 4자)
-- **사이드바 3-도메인 구조** + 상단 오버뷰 + 공지 (해시 라우팅 · 모바일 드로어 · 헤더 새로고침 버튼)
+- **사이드바 3-도메인 구조** + 상단 오버뷰 + 공지 + 경력서 (해시 라우팅 · 모바일 드로어 · 헤더 새로고침 버튼)
   - **📊 대시보드**: 3개 도메인 통합 카드(활성·7일 매출·14일 성공률·만료 임박·채널 미가입·결제 실패) + 14일 발송 차트 + 구독 상태 도넛 + 최근 결제 5건 + 만료 임박 5건
   - **👤 구독자**: 상태별 카운트 카드 + 구독 상태 분포 도넛 + 전체 목록(상태·구독 상태 필터)
   - **💳 결제**: 7일/30일 매출 카드 + 만료 임박(D-7) 리스트 + 결제 이력(상태·기간 필터 + 페이지네이션)
   - **📬 발송**: 14일 성공률 카드 + 일별 발송량 차트 + **매일 뉴스 즉시 발송**(미리보기→대상 선택→발송, 2x2 그리드 UI) + 미수신자 안내 알림톡 수동 발송 + 발송 이력(상태·타입·**용도**·번호·기간 필터)
   - **📢 공지**: 자유 본문 친구톡 발송 — 활성 구독자 선택 + textarea 입력(1000자 카운터) + 야간(KST 21~08) 발송 경고 + 발송 이력은 `template_code='notice'`로 분리 기록
   - **🎁 이벤트**: 프로모 이벤트 CRUD UI (5/21 추가) — 진행 중/예정/종료/비활성 필터 + 적용 건수·총 보너스일 집계 카드 + 새 이벤트 모달(코드·이름·보너스 일수·자격 조건·시작·종료·활성 토글) + 적용 이력 패널(번호 검색·페이지네이션·재허용 버튼). 코드 변경 없이 SQL 한 줄로 이벤트 발행·종료 가능. 자세한 정책은 [프로모 이벤트 시스템](#프로모-이벤트-시스템) 섹션 참조.
+  - **📄 경력서**: DB 기반 경력서 편집·미리보기·PDF 저장 도구 — 18개 경력 항목을 체크박스로 포함/제외 선택, 각 항목별 프로젝트 단위 on/off, 실시간 A4 미리보기(오른쪽 패널 sticky). 날짜 입력은 `input[type=month]` 피커 + 재직중 체크박스 + 기간 자동 계산. 링크 섹션은 ▲▼ 순서 변경. "DB 저장" 시 `admin-api` `resume_save` 액션으로 저장하고 완료 토스트 표시. "PDF 저장" 클릭 시 `@media print` 스타일로 A4 PDF 직접 출력 (사이드바·툴바 모두 숨김, `@page{margin:20mm 16mm}` 균일 여백).
 - **발송 이력 용도 분류** — `template_code` 컬럼 기반 색상 뱃지: 매일 뉴스 / 수동 발송 / 결제 완료 / 재구독 안내 / 공지
 - **수동 발송**: 친구톡 미도달 구독자(채널 미친구·광고 차단 등)에게 알림톡으로 안내 — 검수 승인 본문 고정, 미리보기 표시
 - **시각 표기**: 모두 브라우저 시스템 시간 기준
