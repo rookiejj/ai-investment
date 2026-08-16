@@ -16,8 +16,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "453,000원 +8.2% 8/14 마감·자동차 관세 15% 인하로 4조원 이상 비용 절감 기대·8/26 인베스터 데이 대기가 모멘텀 카운터, HMGMA 미국 가동 확대·현지 생산 상향 서사가 마진 회복 축",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 8.2
       },
       {
         "label": "LG에너지솔루션",
@@ -25,8 +25,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "369,500원 +1.1% 8/14 마감·반도체 편중 완화로 배터리 순환매 확산 국면·북미 ESS 수주 흑자 전환 궤도 지속이 리레이팅 축, 미 IRA 유지 시나리오와 실질금리 하락이 배터리 프리미엄 방어 근거",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 1.1
       },
       {
         "label": "마이크론",
@@ -34,8 +34,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "961.21달러 +1.2% 강세·AMAT record 매출과 8월 상순 반도체 수출 155% 급증이 HBM·DRAM 판가 인상 사이클 검증 축, 엔비디아 8/26 실적 D-12 카운트다운이 반도체 프리미엄 방어 카운터",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 2.3
       }
     ]
   },
@@ -172,3 +172,4 @@ const PREDICTION_SCORECARD = [
     ]
   }
 ];
+채점 완료: 2026-08-17 기준 변경된 항목 있음
