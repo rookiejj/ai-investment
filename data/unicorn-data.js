@@ -98,12 +98,12 @@ const data = [
         "sector": "소셜"
       },
       {
-        "nm": "Airtable",
-        "rs": "노코드 데이터베이스·자동화",
-        "ipo": "미정",
-        "val": "$4B",
-        "round": "세컨더리 (다운)",
-        "sector": "노코드"
+        "nm": "Databricks",
+        "rs": "8/13 Coatue 리드 50억달러 전략 라운드 - 1,900억달러 밸류(1,000억달러→90% 스텝업)·ARR 70억달러+·YoY 80%+·Lakebase·Genie·Unity AI Gateway 확장",
+        "ipo": "2027 후보",
+        "val": "$190B",
+        "round": "50억달러 전략 라운드 (2026-08)·Coatue 리드",
+        "sector": "AI 데이터 플랫폼"
       },
       {
         "nm": "Cursor",
@@ -114,12 +114,12 @@ const data = [
         "sector": "AI 코딩"
       },
       {
-        "nm": "Hugging Face",
-        "rs": "Google·NVIDIA·AMD 공동 투자·오픈 AI 모델 허브 표준",
+        "nm": "Lovable",
+        "rs": "8/12 Series C 4억달러 - 133억달러 밸류(5월 60억달러→2배 스텝업)·Menlo·EQT·Tencent 참여·8월 말 ARR 6억달러 궤도·유럽 vibe-coding 리더",
         "ipo": "미정",
-        "val": "$4.5B",
-        "round": "Series D ($235M, 2023-08)",
-        "sector": "오픈소스 AI 허브"
+        "val": "$13.3B",
+        "round": "Series C ($400M, 2026-08)·Menlo·EQT",
+        "sector": "AI 코딩·유럽"
       }
     ]
   },
@@ -169,7 +169,7 @@ const data = [
       },
       {
         "nm": "Anduril",
-        "rs": "1,000억달러 후속 라운드 협상 진행 - 5월 610억달러 시리즈H 대비 스텝업, DoD 10,000기 극초음속미사일 계약 배정·Barracuda-500M 3,000기 육군 공급",
+        "rs": "1,000억달러 후속 라운드 협상 지속 - Thrive·a16z 리드·5월 610억달러 시리즈H 대비 65% 스텝업 국면·DoD 10,000기 극초음속미사일 배정·Barracuda-500M 3,000기 육군 공급",
         "ipo": "단기 아닐(Luckey)",
         "val": "$100B (협상 중)",
         "round": "Series H $5B (2026-05)",
@@ -215,10 +215,10 @@ const data = [
       },
       {
         "nm": "Neuralink",
-        "rs": "12명 이식 완료·양산·Blindsight 시각 복원 착수",
+        "rs": "Nasdaq Private Market 세컨더리 420억달러 재평가·주당 230.18달러 7/29·9B Series E 대비 5배 스텝업·양산·Blindsight 시각 복원",
         "ipo": "미정",
-        "val": "$9B",
-        "round": "Series E ($650M, 2025-06)",
+        "val": "$42B (2차 시장)",
+        "round": "Series E ($650M, 2025-06)·세컨더리 상승",
         "sector": "BCI"
       },
       {
@@ -253,10 +253,10 @@ const data = [
     "stocks": [
       {
         "nm": "Kraken",
-        "rs": "밸류 $13.3B 하향 조정 (기존 $20B)·JPM·GS 주관·xStocks 통해 SpaceX IPO Access 지원 개시·CLARITY Act 8/7 데드라인 후 로드쇼 재타깃",
-        "ipo": "2026 재개 검토 (밸류 하향)",
-        "val": "$13.3B",
-        "round": "confidential S-1 유지",
+        "rs": "4/23 confidential S-1 재제출 - 200억달러 타깃 Q4 2026 상장 창구 확장·JPM·GS 주관·CLARITY Act 8/7 데드라인 후 로드쇼 재개",
+        "ipo": "2026 Q4 재개",
+        "val": "$20B",
+        "round": "confidential S-1 재제출 (2026-04)",
         "sector": "크립토 거래소"
       },
       {
