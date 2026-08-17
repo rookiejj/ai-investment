@@ -191,6 +191,8 @@ const fixed = [
   { cat:'product', impact:2, title:'OpenAI ChatGPT 광고 개시 (EEA·스위스)', date:'2026-08-25', desc:'Free·Go 티어 대화 흐름 컨텍스추얼 광고·소비자 매출화 첫 크랙' },
   { cat:'other', impact:2, title:'DeepSeek V4-Pro 가격 인상 발효', date:'2026-08-17', desc:'V4-Pro 아웃풋 3.96달러/1M(4배+)·V4-Flash 1.32달러(약 4배)·프론티어 랩 CAPA 크런치' },
   { cat:'policy', impact:3, title:'파라마운트·워너 인수 TRO 만료', date:'2026-08-18', desc:'캘리포니아 연방법원 12개 주 검찰총장 반독점 소송·1,110억달러 합병 예비 판결 임박·6/4/2027 미클로즈 시 70억달러 배상' },
+  { cat:'policy', impact:3, title:'미국 캐나다 Section 338 관세 50% 발효', date:'2026-08-19', desc:'다수 캐나다 상품 대상 50% 신규 관세 발효·홈디포·건자재·소매 마진 헤드윈드' },
+  { cat:'macro', impact:3, title:'MSCI 8월 리밸런싱 발표', date:'2026-08-26', desc:'MSCI 한국지수 신규 편입·삭제 결정·LG이노텍 등 편입 후보 종목 패시브 자금 유입 트리거' },
 
   // === 9월 매크로 ===
   { cat:'macro', impact:3, title:'미국 8월 CPI', date:'2026-09-10', desc:'BLS 8:30 ET·9월 FOMC 전 최종 인플레 확인대' },

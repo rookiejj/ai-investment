@@ -7,6 +7,39 @@
 //   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = [
   {
+    "date": "2026-08-18",
+    "made": "2026-08-18 07:30 KST",
+    "predictions": [
+      {
+        "label": "SK하이닉스",
+        "ticker": "000660",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "1,645,000원 +3.3% 월요일 마감·8월 상순 반도체 수출 100억달러 +155% 잠정치 HBM 슈퍼사이클 확정 축·외국인 5거래일 연속 순매수·HBM4 램프·데이터센터 CAPEX 730억달러+ 커밋이 지속 강세 카운터",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "LG이노텍",
+        "ticker": "011070",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "654,000원 +6.3% 월요일 마감·MSCI 한국지수 8/26 8월 리밸런싱 신규 편입 후보 진입·애플 폴더블 아이폰 카메라 모듈 락인·기판 가격 인상 서사가 forward 매출 재확장 카운터",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "NVDA",
+        "ticker": "NVDA",
+        "market": "US",
+        "direction": "up",
+        "rationale": "225.04달러 프리마켓 226달러 안정·8/26 Q2 실적 D-8 컨센 매출 918억달러·EPS 2.06달러·Blackwell Ultra 램프·Rubin 로드맵·하이퍼스케일러 CAPEX 730억달러+ 커밋이 프리미엄 방어 축",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
     "date": "2026-08-17",
     "made": "2026-08-14 19:40 KST",
     "predictions": [
