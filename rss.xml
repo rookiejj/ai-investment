@@ -6,8 +6,15 @@
     <description>한국·미국 주식, AI 기업, 원자재·크립토, 유니콘 5개 도메인의 일일 헤드라인. 매일 KST 07시·19시 자동 업데이트.</description>
     <language>ko-KR</language>
     <atom:link href="https://briefick.com/rss.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Mon, 17 Aug 2026 10:35:39 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 17 Aug 2026 22:33:03 GMT</lastBuildDate>
     <ttl>60</ttl>
+    <item>
+      <title>2026년 8월 18일 (화) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
+      <link>https://briefick.com/daily/2026-08-18</link>
+      <guid isPermaLink="true">https://briefick.com/daily/2026-08-18</guid>
+      <pubDate>Mon, 17 Aug 2026 22:00:00 GMT</pubDate>
+      <description>파월 잭슨홀 D-4 대기 - 코스피 반등 사이클 이번주 지속 여부 · S&amp;P 7,786 -0.2% 마감 - 나스닥 후행 조정 매파 시그널 리프라이싱 · 금 4,395달러 안전자산 랠리 - 잭슨홀 D-4 대기 실질금리 헤지</description>
+    </item>
     <item>
       <title>2026년 8월 17일 (월) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
       <link>https://briefick.com/daily/2026-08-17</link>
@@ -420,13 +427,6 @@
       <guid isPermaLink="true">https://briefick.com/daily/2026-06-19</guid>
       <pubDate>Thu, 18 Jun 2026 22:00:00 GMT</pubDate>
       <description>KOSPI 9,000선 안착 후 첫 거래일 개장 대기 - 美 Juneteenth 휴장 한국 단독 흐름 · 이란 6/19 제네바 14개 항목 정식 서명 D-day - Brent $78 영역 하방 압력 가속 · Brent $78 영역 안착·WTI $74.52 -3% 추가 하방 - 이란 6/19 제네바 서명 D-day</description>
-    </item>
-    <item>
-      <title>2026년 6월 18일 (목) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
-      <link>https://briefick.com/daily/2026-06-18</link>
-      <guid isPermaLink="true">https://briefick.com/daily/2026-06-18</guid>
-      <pubDate>Wed, 17 Jun 2026 22:00:00 GMT</pubDate>
-      <description>KOSPI 9,063.84 +2.25% 9,000선 첫 돌파 사상 최고 종가 - YTD +110% 안착 · FOMC 6/17 매파 도트 충격 - 9/18 위원 추가 인상 베팅·6명 복수 인상 베팅 · Brent $78.96 -5%·WTI $76.05 -5.8% 3월 이후 첫 $80 하향 - 이란 6/20 서명 D-2</description>
     </item>
   </channel>
 </rss>
