@@ -659,7 +659,7 @@ node scripts/score-predictions.js > /tmp/scored.js
 - `made`: `TZ=Asia/Seoul date '+%Y-%m-%d %H:%M KST'` 로 현재 시각 포함 (형식 엄수)
 - 반드시 prices-snapshot.json 에 있는 ticker 3개 선택 (자동 채점 가능해야 함)
 - `market` 필드: KR = 6자리 숫자 ticker, US = 영문 대문자 ticker
-- `result: null`, `actual: null` 로 시작
+- **🔴 `result: null`, `actual: null` 반드시 포함 (엄수)** — 이 두 필드가 없으면 UI에서 `undefined !== null`이 `true`로 평가돼 `actual.toFixed(1)` 호출 시 TypeError가 나고 예측 섹션 전체가 사라진다. 생략 절대 금지.
 - 예측 근거(`rationale`)는 오늘 데이터 조사 결과 기반으로 한 줄
 
 **🔴 rationale 가격·등락률은 prices-snapshot.json만 사용 (엄수 — 웹검색 금지)**
