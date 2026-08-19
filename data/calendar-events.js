@@ -176,8 +176,8 @@ const fixed = [
   { cat:'macro', impact:2, title:'미국 7월 PPI', date:'2026-08-13', desc:'근원 PPI 동반·CPI 다음날 생산자물가 크로스체크' },
   { cat:'macro', impact:2, title:'미국 7월 소매판매', date:'2026-08-14', desc:'소비 모멘텀·서비스 vs 재화 지출 분기' },
   { cat:'macro', impact:3, title:'7월 FOMC 의사록 공개', date:'2026-08-19', desc:'7/29-30 회의 토론 내용·9월 인하 여부 단서' },
-  { cat:'conf',  impact:3, title:'잭슨홀 연준 심포지엄 개막', date:'2026-08-27', desc:'캔자스시티 연준 주최·각국 중앙은행 총재·파월 연설 예정' },
-  { cat:'conf',  impact:3, title:'파월 잭슨홀 기조연설', date:'2026-08-28', desc:'연준 의장 금리 경로 시그널·시장 최대 이벤트' },
+  { cat:'conf',  impact:3, title:'잭슨홀 연준 심포지엄 개막', date:'2026-08-27', desc:'캔자스시티 연준 주최·각국 중앙은행 총재·Warsh 신임 의장 첫 연설 예정' },
+  { cat:'conf',  impact:3, title:'Warsh 잭슨홀 첫 기조연설', date:'2026-08-28', desc:'신임 연준 의장 금리 경로 시그널·9월 인하 여부 방향타·시장 최대 이벤트' },
   { cat:'macro', impact:3, title:'미국 7월 PCE 물가', date:'2026-08-28', desc:'Fed 선호 인플레 지표·잭슨홀 전날 사전 점검' },
   { cat:'other', impact:3, title:'현대차 인베스터 데이', date:'2026-08-26', desc:'HMGMA 가동 이후 첫 투자자 컨퍼런스·중장기 EV·하이브리드 전략 공개' },
   { cat:'policy', impact:3, title:'이재명 필리조선소 방문·명명식', date:'2026-08-26', desc:'필라델피아 한화 필리조선소·스테이트 오브 메인호 명명식 축사·MASGA 프로젝트 본격화' },
@@ -194,6 +194,7 @@ const fixed = [
   { cat:'policy', impact:3, title:'미국 캐나다 Section 338 관세 50% 발효', date:'2026-08-19', desc:'다수 캐나다 상품 대상 50% 신규 관세 발효·홈디포·건자재·소매 마진 헤드윈드' },
   { cat:'macro', impact:3, title:'MSCI 8월 리밸런싱 발표', date:'2026-08-26', desc:'MSCI 한국지수 신규 편입·삭제 결정·LG이노텍 등 편입 후보 종목 패시브 자금 유입 트리거' },
   { cat:'conf', impact:3, title:'JP모건 아시아 테크 투어·삼성 IR', date:'2026-08-20', desc:'JP모건 연례 아시아 테크 투어 삼성전자 참여·씨티 2026 코리아 인베스터 컨퍼런스 동참·반도체 대장주 반등 트리거' },
+  { cat:'policy', impact:3, title:'미 재무부 장기 국채 buyback 확대 시행', date:'2026-09-09', desc:'buyback 한도 20억달러→40억달러+ 2배 확대·9/9~11/4 시행·30년물 -9bp 반락 트리거·달러 약세·크립토 랠리 트리거' },
   { cat:'earnings', impact:3, title:'앤트로픽 Q2 매출 116억달러 공개', date:'2026-08-19', desc:'OpenAI Q2 67억달러 매출 첫 역전·밸류 6,500억달러 급등·모건스탠리 골드만 JPM 가을 IPO 준비' },
 
   // === 9월 매크로 ===

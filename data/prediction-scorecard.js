@@ -7,6 +7,33 @@
 //   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = [
   {
+    "date": "2026-08-20",
+    "made": "2026-08-20 07:28 KST",
+    "predictions": [
+      {
+        "label": "한화에어로스페이스",
+        "ticker": "012450",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "수요일 종가 1,177,000원 +2.7% 코스피 -5.8% 급락 유일 강세·미 육군 Mobile Tactical Cannon 프로토타입 계약·K9PL 폴란드 2차·유럽·중동 backlog 100조 조합이 방산 로테이션 momentum 축·지정학 리스크 프리미엄 확장 카운터"
+      },
+      {
+        "label": "삼성전자",
+        "ticker": "005930",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "수요일 종가 247,500원 -7.8% oversold·오늘 JP모건 아시아 테크 투어 IR 개막·씨티 코리아 인베스터 컨퍼런스·HBM4 램프·엔비디아 승인 스케줄·미 30년물 -9bp 5.196% 반락 완화가 반등 트리거 축·야간선물 -3.7% 여진은 카운터"
+      },
+      {
+        "label": "NVDA",
+        "ticker": "NVDA",
+        "market": "US",
+        "direction": "up",
+        "rationale": "수요일 종가 218.14달러 +0.3% 강보합·Q2 FY27 실적 8/26 D-6·컨센 매출 918~950억달러·데이터센터 250억달러+·Blackwell Ultra 램프·재무부 buyback 확대 30년물 반락이 성장주 프리미엄 회복 축·마이클 버리 숏 여진 카운터"
+      }
+    ]
+  },
+  {
     "date": "2026-08-19",
     "made": "2026-08-19 07:25 KST",
     "predictions": [
@@ -203,39 +230,5 @@ const PREDICTION_SCORECARD = [
         "actual": 0.3
       }
     ]
-  },
-  {
-    "date": "2026-08-11",
-    "made": "2026-08-11 07:31 KST",
-    "predictions": [
-      {
-        "label": "LIG넥스원",
-        "ticker": "079550",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "823,000원 마감 +11.1% 급등 후 사우디 WDS 2026 오늘 마지막날 대형 계약 서명 대기·SAMI·GAMI 현지 생산 협력·비궁 유도로켓 FCT 통과 3중 카운터가 프리미엄 확장 축",
-        "result": "miss",
-        "actual": -7.7
-      },
-      {
-        "label": "알테오젠",
-        "ticker": "196170",
-        "market": "KR",
-        "direction": "down",
-        "rationale": "348,000원 마감 +14.1% 급등 후 7거래일 연속 상승 피로도 축적·차익실현 압력 대기, 블랙록 매입 서사도 단기 소진 국면",
-        "result": "hit",
-        "actual": -5.9
-      },
-      {
-        "label": "CRWV",
-        "ticker": "CRWV",
-        "market": "US",
-        "direction": "up",
-        "rationale": "오늘 AMC Q2 실적 발표·매출 컨센 26억달러·백로그 994억달러·NVDA 5,000억달러 AI 인프라 파이낸싱 후방 카운터가 서프라이즈 카드",
-        "result": "miss",
-        "actual": -2.7
-      }
-    ]
   }
 ];
-채점 완료: 2026-08-19 기준 변경된 항목 있음
