@@ -1,31 +1,37 @@
 const UPDATES = [
   {
-    "date": "2026-08-19 19:22 KST",
-    "summary": "앤트로픽 Q2 매출 116억달러 - OpenAI 67억달러 매출 첫 역전\n앤트로픽 밸류 6,500억달러 급등 - 모건스탠리·골드만·JPM 가을 IPO\nOpenAI IPO 2027로 연기 - CFO 재무 안정 우선 결정\nxAI Grok 4.6 지능지수 61 - GPT-5.6 Sol과 동률·컨텍스트 50만\nMS MAI 7개 신모델 - 슐레이만 주도 초지능팀 자체 개발 궤도",
+    "date": "2026-08-20 07:24 KST",
+    "summary": "앤트로픽 ARR 650억달러 급등 - 5월 대비 40% 증가·매출 첫 오픈AI 역전\n앤트로픽 밸류 2조달러 IPO 준비 - 모건스탠리·골드만·JPM 가을 상장 목표\n앤트로픽 Claude 단백질 설계 14/15 성공 - Opus 5 원시 데이터 20분 처리\nWSJ 하이퍼스케일러 3조달러 오프밸런스 - 알파벳·메타·엔비디아·오라클 노출\n엔비디아 Q2 실적 8/26 D-6 대기 - 컨센 매출 918억달러·데이터센터 250억달러+",
     "entries": [
       {
-        "time": "2026-08-19 19:22 KST",
+        "time": "2026-08-20 07:24 KST",
         "type": "펀딩",
         "sector": "Anthropic",
-        "text": "Anthropic. Q2 매출 116억달러 공개·소폭 영업이익 흑자 전환 - OpenAI Q2 매출 67억달러·손실 확대 조합에 사상 처음 매출 역전 사이클 진입이 IPO 프리미엄 리레이팅 축, 밸류 6,500억달러 급등·모건스탠리·골드만·JPM 가을 IPO 주관 준비 조합이 forward 밸류 지지 근거. 8월 리스크 리포트 catastrophic-misalignment 등급 'very low'에서 'low'로 상향 조정 카운터. Claude Code 엔터프라이즈·개발자 락인·Claude Opus 4.8 프론티어 코딩 리더십 조합이 unit economics 개선 축, ChatGPT 성장 둔화 대비 IPO 순서 뒤바뀔 가능성 카운터. 밸류에이션 렌즈 - 6,500억달러 IPO 리레이팅 사이클 축, capability 렌즈 - Claude Code 엔터프라이즈 락인이 forward 매출 근거, cross-asset 렌즈 - Amazon·Google 클라우드 파트너 락인이 forward 유통 방어 축."
+        "text": "Anthropic. ARR 650억달러 급등 7월말 기준·5월 470억달러 대비 40% 증가·연말 2025년 90억달러 대비 7배 확장 사이클 축 - FY26 매출 가이던스 1,000~1,200억달러 상향·모건스탠리·골드만·JPM 가을 IPO 주관 준비·밸류 2조달러 목표 조합이 IPO 프리미엄 리레이팅 근거, OpenAI Q2 매출 67억달러 대비 매출 첫 역전 카운터. Claude Code 엔터프라이즈·개발자 락인·Claude Opus 4.8 프론티어 코딩 리더십·Claude 단백질 설계 실험 14/15 목표 성공 서사가 unit economics 개선 축, ChatGPT 성장 둔화 대비 IPO 순서 뒤바뀔 가능성 카운터. 밸류에이션 렌즈 - 2조달러 IPO 리레이팅 사이클 축, capability 렌즈 - Claude Code 엔터프라이즈 락인이 forward 매출 근거, cross-asset 렌즈 - Amazon·Google 클라우드 파트너 락인이 forward 유통 방어 축."
       },
       {
-        "time": "2026-08-19 19:22 KST",
-        "type": "거버넌스",
-        "sector": "OpenAI",
-        "text": "OpenAI. IPO 목표 2027년으로 최종 연기 결정 - 6/8 confidential S-1 제출에도 CFO 재무 안정 우선 결정 사이클이 상장 지연 축, Q2 매출 67억달러·손실 확대 조합에 Anthropic 116억달러 매출 첫 역전 카운터. ChatGPT for Teens 13~17세 대상 신제품 런칭·부모 동의 시스템 도입 조합이 카테고리 확장 축, Stargate Abilene 캠퍼스 1.2GW 가동 개시·총 7GW·4,000억달러+ 투자 확대 사이클이 forward 인프라 지배력 지지 근거. 파트너 마이크로소프트 Azure 매출 후행 서사 유지 카운터. capability 렌즈 - GPT-5.6 시리즈 리더십이 소비자 매출 근거, 정책 렌즈 - CFO 재무 안정 우선이 forward IPO 시나리오 결정 축, cross-asset 렌즈 - Anthropic 밸류 6,500억달러 대비 리레이팅 압박 카운터."
+        "time": "2026-08-20 07:24 KST",
+        "type": "마일스톤",
+        "sector": "Anthropic",
+        "text": "Anthropic. Claude Opus 5 단백질 설계 실험 발표 - Adaptyv Bio·Twist Bioscience 15개 타깃 중 14개 성공 22~35% 성공률 달성·업계 평균 10~15% 대비 2~3배 축, 원시 NMR·LC-MS 데이터 19~23분 처리·랩 리딩 대비 순도 오차 0.1% 이내 정밀도 사이클이 forward 신약 개발 지배력 근거. 바이오·헬스케어 카테고리 확장 트리거·Anthropic 프론티어 모델 리더십 서사 유지 - Adaptyv·Twist 파트너십이 실증 파일럿 카운터. capability 렌즈 - 단백질 설계 22~35% 성공률이 프론티어 리더십 축, 정책 렌즈 - Anthropic 리스크 리포트 catastrophic-misalignment 등급 'low' 상향이 forward 신뢰 근거, cross-asset 렌즈 - 신약 개발 카테고리 확장이 forward 매출 다각화 카운터."
       },
       {
-        "time": "2026-08-19 19:22 KST",
-        "type": "모델 출시",
-        "sector": "xAI",
-        "text": "xAI. Grok 4.6 공개 - 8/12 릴리즈·Intelligence Index 61로 GPT-5.6 Sol과 동률 사이클 진입이 프론티어 리그 3파전 재편 축, 프라이싱 입력 2달러·출력 6달러 유지·컨텍스트 50만 토큰 확장·에이전트 지속성 강화 조합이 개발자 유입 근거. Colossus 데이터센터 확장 사이클·SpaceX 인프라 연동 카운터. Claude Opus 4.8·Gemini 3.7 Flash 3파전 국면에서 Grok 시리즈 리더십 상단 확장 축, 8/13 Gemini 3.7 Flash 공개·프라이싱 입력 0.75달러·출력 3.75달러·186개 모델 중 출력 속도 1위 조합이 프론티어 카테고리 침투 카운터. capability 렌즈 - Intelligence Index 61이 프론티어 리더십 근거, 밸류에이션 렌즈 - 프라이싱 유지가 매출 방어 축, cross-asset 렌즈 - Colossus·SpaceX 인프라 락인이 forward 유통 방어 카운터."
+        "time": "2026-08-20 07:24 KST",
+        "type": "인프라",
+        "sector": "NVIDIA",
+        "text": "NVIDIA. Q2 FY27 실적 8/26 화요일 오후 5시 ET D-6 대기 - 컨센 매출 918~950억달러 +96% YoY·데이터센터 250억달러+ 대기 사이클 축, Blackwell Ultra 램프·Rubin 로드맵·하이퍼스케일러 CAPEX 730억달러+ 커밋 조합이 forward 매출 지지 카운터. 수요일 종가 218.14달러 +0.3% 강보합·필라델피아 반도체 SOX 11,795 부근 무기력 - WSJ 하이퍼스케일러 3조달러 오프밸런스시트 AI 커밋먼트 노출·마이클 버리 NVDA 숏 확대 여진 조합이 밸류에이션 프리미엄 훼손 카운터. NVDA forward purchase commitments 1,820억달러·오라클 2,730억달러·알파벳 8,110억달러·메타 3,470억달러 미시작 리스 광폭 노출이 AI 인프라 회의론 축. 밸류에이션 렌즈 - forward P/E 32배 sector premium 재확인 국면, capability 렌즈 - Blackwell·Rubin 로드맵이 forward 매출 근거, cross-asset 렌즈 - 3조달러 오프밸런스 노출이 AI 인프라 리셋 카운터."
       },
       {
-        "time": "2026-08-19 19:22 KST",
-        "type": "모델 출시",
+        "time": "2026-08-20 07:24 KST",
+        "type": "생태계",
         "sector": "Microsoft",
-        "text": "Microsoft. MAI 7개 신모델 자체 개발 공개 - 무스타파 슐레이만 주도 Superintelligence Team 신설 사이클 진입이 자체 모델 자립 축, hillclimbing 방식 프론티어 리서치 파이프라인 오픈 조합이 forward 매출 근거. Meta Superintelligence Labs Wang 주도 Muse Image·Video 출시 카운터. OpenAI 파트너십 후행 방어 사이클 지속·Azure AI Foundry 엔터프라이즈 통합 서사와 결합해 forward 매출 확장 축, Copilot 소비자 유입 사이클·Bing 매출 재확대 조합이 unit economics 개선 카운터. capability 렌즈 - MAI 자체 모델이 OpenAI 의존 축소 근거, 밸류에이션 렌즈 - Azure AI 매출 확장이 forward 매출 지지 축, cross-asset 렌즈 - Superintelligence Team 신설이 프론티어 리그 재편 트리거."
+        "text": "Microsoft. WSJ 하이퍼스케일러 3조달러 오프밸런스시트 AI 커밋먼트 노출 - 알파벳·아마존·메타·MSFT·오라클·엔비디아·브로드컴·스페이스X·AMD 9개사 3조달러 vs 12개월 CAPEX 6,000억달러 대조·미시작 리스 9,040~1.2조달러+구매 커밋 1.52~1.9조달러 조합이 AI 인프라 회의론 확산 트리거 축, 분기당 1.2조달러 증가 사이클이 forward 성장 방향 근거. NRG 텍사스 1.2GW 가스 발전소 하이퍼스케일러 계약·Energy Vault 1.25GW 5~6억달러 매출 계약이 파워 인프라 락인 카운터. 정책 렌즈 - 펜실베이니아 EO 2026-05 AI 데이터센터 로컬 승인 요구가 forward 확장 부담 축, 매크로 렌즈 - 30년물 5.33% 19년 고점이 자금조달비 압박 카운터, 밸류에이션 렌즈 - Azure +43% cc 컨센 상회는 유지되나 3조달러 오프밸런스 리셋 국면."
+      },
+      {
+        "time": "2026-08-20 07:24 KST",
+        "type": "모델 출시",
+        "sector": "Mistral AI",
+        "text": "Mistral AI. Leanstral 1.5 formal proof 모델 출시·Lean 4 정리 증명 특화 사이클 축·8월 초 릴리즈 이후 오픈소스 커뮤니티 채택 확대 트랙 - Les Ulis 10MW 인퍼런스 데이터센터 Q3 2026 오픈 예정·유럽 데이터 주권 서사·30억유로 200억유로 밸류 협상 진행 조합이 forward 자금조달 근거 카운터. 유럽 AI 리더십 확장·GDPR 정합 프론티어 랩 유일 카테고리 락인 사이클 유지 - MS·Anthropic·xAI 미국 랩 견제 카운터. capability 렌즈 - Leanstral 1.5 formal proof 특화가 카테고리 확장 축, 정책 렌즈 - EU AI Act 8/2 발효가 유럽 랩 정합성 근거, cross-asset 렌즈 - Anthropic·OpenAI 초대형 밸류 병존이 프리미엄 격차 확대 카운터."
       }
     ]
   }
