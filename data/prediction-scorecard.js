@@ -16,8 +16,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "화요일 268,500원 -2.2% 갭업 후 차익실현 반락 마감·외국인 1,767억원 순매수 지지·HBM3E 12H 양산 램프·마이크론 +4.1% D램 슈퍼사이클 후행 랠리 조합이 반등 축·필라델피아 반도체지수 강세 후행이 대장주 회복 카운터",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": -7.8
       },
       {
         "label": "삼성SDI",
@@ -25,8 +25,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "화요일 488,000원 -5.4% 급락 여진 오버솔드·리튬 카보네이트 21달러대 안정·IRA 8월 말 종료 앞두고 밀어내기 수요 재개 관측·2차전지 대장주 낙폭 확대 이후 기술적 반등 국면 카운터",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": -0.2
       },
       {
         "label": "MU",
@@ -34,8 +34,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "월요일 1,011.75달러 +4.1% 강세 마감·HBM 후행 랠리·D램 슈퍼사이클 확장 사이클·9/22 Q4 실적 D-33 대기·엔비디아 8/26 실적 D-7 카탈리스트 조합이 forward 매수세 지속 근거",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": -7
       }
     ]
   },
@@ -238,3 +238,4 @@ const PREDICTION_SCORECARD = [
     ]
   }
 ];
+채점 완료: 2026-08-19 기준 변경된 항목 있음
