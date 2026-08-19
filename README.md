@@ -442,6 +442,10 @@ admin_settings (단일 행, id=1)
 
 ## Changelog
 
+- **2026-08-19~20**: **예측 스코어카드 가격 창작 사고 방지 + `result/actual` 필드 누락 렌더 오류 수정**.
+  - **rationale 가격 소스 강제** — 예측 에이전트가 `rationale`에 종목 가격·등락률을 쓸 때 웹검색으로 가져오면 다른 날짜 데이터(이전 날짜·프리마켓 추정치)가 섞여 실제 snapshot과 불일치 발생. MU 예측에 "월요일 1,011.75달러 +4.1%"가 들어갔으나 실제 `prices-snapshot.json`은 937.7달러 -0.3%였음(2026-08-19 사고). CLAUDE.md 예측 생성 지침에 "rationale 가격·등락률은 `prices-snapshot.json`만 사용, 웹검색 금지" 규칙·bash 읽기 명령·session별 서술 룰 추가.
+  - **`result/actual` 필드 누락 렌더 오류 수정** — 예측 에이전트가 `result: null`, `actual: null` 두 필드를 생략하면 UI에서 `undefined !== null`이 `true`로 평가돼 `p.actual.toFixed(1)` 호출 시 TypeError 발생 → 예측 섹션 전체 사라짐. `data/prediction-scorecard.js`(2026-08-20) 누락 필드 직접 보정. CLAUDE.md에 "🔴 `result: null`, `actual: null` 반드시 포함 (엄수)" 항목 추가 + 렌더 실패 원인 명시.
+
 - **2026-07-28**: **유니콘 SpaceX 제거 → 비상장 방산·우주로 교체**. SPCX 티커로 정규 거래 시작(상장 완료 공개기업) → 유니콘·프리IPO 탭 정의상 퇴출. 우주·모빌리티·방산 슬롯을 비상장 방산·우주 기업(Anduril·Helsing 등)으로 교체. CLAUDE.md에 "SpaceX 등장 절대 금지" 사고 이력 항목 추가.
 
 - **2026-07-24**: **실적 캘린더 자동 수집 파이프라인 신설 — 277종목 실적일 Yahoo에서 긁어 autoEarnings로 주 2회 채움**. `scripts/fetch-earnings-calendar.js`(Yahoo Finance earnings API, 향후 45일)가 `stocks-data.js`·`kr-stocks-data.js` 유니버스 전 종목의 실적발표일을 긁어 `data/calendar-events.js`의 `const autoEarnings` 배열에 자동 주입. `.github/workflows/earnings-calendar.yml`(월·목 KST 08시 cron)이 실행 → 변경 있으면 자동 commit·push. `calendarEvents = fixed.concat(autoEarnings)` 로 렌더 — 에이전트가 `fixed`에 개별 종목 실적을 수동으로 넣는 것은 이제 중복이므로 CLAUDE.md에 금지 항목 추가. 워크플로 실패 시 텔레그램 알림.
