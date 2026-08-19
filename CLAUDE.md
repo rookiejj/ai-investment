@@ -662,6 +662,31 @@ node scripts/score-predictions.js > /tmp/scored.js
 - `result: null`, `actual: null` 로 시작
 - 예측 근거(`rationale`)는 오늘 데이터 조사 결과 기반으로 한 줄
 
+**🔴 rationale 가격·등락률은 prices-snapshot.json만 사용 (엄수 — 웹검색 금지)**
+
+`rationale`에 종목 가격·등락률을 쓸 때 **반드시 `data/prices-snapshot.json`에서 읽어 그대로 쓴다**. 웹검색으로 가격을 가져오면 날짜가 다른 데이터(이전 날짜 또는 프리마켓 추정치)가 섞여 실제 snapshot과 불일치가 생긴다.
+
+**읽는 법 (예측 선택 ticker 확인)**:
+```bash
+node -e "
+const d=require('./data/prices-snapshot.json');
+console.log('as of:', d.asOfKst, '|', d.session);
+['MU','005930','000660'].forEach(t=>{
+  const x=d.prices[t];
+  if(x) console.log(t, x.c, x.chg+'%');
+  else console.log(t, '⚠ 미포함');
+});
+"
+```
+
+**session별 서술 규칙**:
+- session이 `"KR 장중/장전"` (07시 실행 시) → **`c`는 직전 거래일 종가**. rationale에 `"직전 거래일 종가 XXX원"` 또는 `"XXXX원으로 마감"` 처럼 쓴다. "오늘 +X%" 같은 당일 장중 표현 금지.
+- session이 `"KR 당일 종가"` (19시 실행 시) → **`c`는 당일 종가**. 오늘 날짜 + 등락률로 서술 가능.
+
+**snapshot에 없는 ticker는 선택하지 않는다** — 채점도 불가하고 rationale에 쓸 가격도 없으니 다른 ticker로 대체.
+
+**사고 이력 (2026-08-19)**: MU 예측 rationale에 "월요일 1,011.75달러 +4.1%"가 들어갔으나 실제 snapshot은 937.7달러 -0.3%였음. 에이전트가 snapshot 대신 웹검색을 써서 다른 날짜 데이터를 가져온 게 원인.
+
 **🔴 종목 선별 원칙 (매일 동적 선택 — 고정 종목 없음)**
 
 삼성전자·NVDA 등 특정 종목을 매일 고정으로 넣지 않는다. **오늘 데이터 조사를 마친 뒤, 그 결과에서 가장 임팩트 있었던 종목**을 동적으로 고른다.
