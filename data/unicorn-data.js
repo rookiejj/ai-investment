@@ -98,8 +98,7 @@ const data = [
         "sector": "소셜"
       },
       {
-        "nm": "Databricks",
-        "rs": "8/13 Coatue 리드 50억달러 전략 라운드 - 1,900억달러 밸류(1,000억달러→90% 스텝업)·ARR 70억달러+·YoY 80%+·Lakebase·Genie·Unity AI Gateway 확장",
+        "rs": "8/13 Coatue 리드 50억달러 클로징 - 1,900억달러 밸류 확정·ARR 70억달러+·YoY 80%+·Higgsfield 54억달러 4배 스텝업 병존",
         "ipo": "2027 후보",
         "val": "$190B",
         "round": "50억달러 전략 라운드 (2026-08)·Coatue 리드",
