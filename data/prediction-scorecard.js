@@ -7,6 +7,39 @@
 //   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = [
   {
+    "date": "2026-08-21",
+    "made": "2026-08-21 07:26 KST",
+    "predictions": [
+      {
+        "label": "삼양식품",
+        "ticker": "003230",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 1,397,000원 +7.1% 급등·K-food 카테고리 라면·불닭 미국·유럽 매출 사상 최대 서사·2Q 영업이익 컨센 상회 여진이 momentum 축·코스피 반등 이틀차 순환매 소비주 확산 카운터",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "이수페타시스",
+        "ticker": "377300",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 44,950원 +9.0% 급등·HBM 기판 카테고리 확장·SK하이닉스·삼성전자 40조·100조 주주환원 서사 후방 수혜·NVDA Q2 D-5 데이터센터 매출 750억달러+ 컨센 대기가 반도체 후방 lock-in 축",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "TSLA",
+        "ticker": "TSLA",
+        "market": "US",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 $345.95·Austin Cybercab 로보택시 8월 말 공공 배치 임박·St. Elmo Road 무선충전 허브·80대 설치 계획·Gigafactory Texas 연 12.5만대 생산 능력이 자율주행 상용화 실체화 축·다우 -703pt 급락 후 리스크 리셋 카운터",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
     "date": "2026-08-20",
     "made": "2026-08-20 07:28 KST",
     "predictions": [
@@ -201,39 +234,6 @@ const PREDICTION_SCORECARD = [
         "rationale": "$103.83 시간외 +14% 급등·Q2 매출 25.75억달러 +112% 컨센 상회·백로그 6주 만에 1,042→1,292억달러로 250억달러 추가 계약 서프라이즈, CPI 부합·연준 동결 시나리오가 성장주 프리미엄 재확산 카운터",
         "result": "miss",
         "actual": -2.9
-      }
-    ]
-  },
-  {
-    "date": "2026-08-12",
-    "made": "2026-08-12 07:40 KST",
-    "predictions": [
-      {
-        "label": "SK하이닉스",
-        "ticker": "000660",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "1,425,000원 +0.4% 8/11 마감·삼성 +4.13% 랠리 동조·8월 상순 반도체 수출 +155% 서프라이즈 후광, HBM 사이클 확장이 매출 확장 카운터",
-        "result": "hit",
-        "actual": 5.5
-      },
-      {
-        "label": "셀트리온",
-        "ticker": "068270",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "210,500원 +4.7% 8/11 마감·대형 헬스케어 순환 매수 유입·5조 매출 목표·Q1 신규 고마진 +67% 서사, 방산·조선 조정에서 자금 로테이션 지속",
-        "result": "miss",
-        "actual": -4
-      },
-      {
-        "label": "NVDA",
-        "ticker": "NVDA",
-        "market": "US",
-        "direction": "up",
-        "rationale": "217.83달러 +0.2% 8/11 마감·CoreWeave Q2 매출 +112% 서프라이즈·백로그 1,040억달러 확장이 AI 인프라 매출 확장 카운터, CPI 컨센 부합 시 성장주 프리미엄 재확장",
-        "result": "hit",
-        "actual": 0.3
       }
     ]
   }
