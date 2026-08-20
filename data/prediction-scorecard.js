@@ -16,8 +16,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "수요일 종가 1,177,000원 +2.7% 코스피 -5.8% 급락 유일 강세·미 육군 Mobile Tactical Cannon 프로토타입 계약·K9PL 폴란드 2차·유럽·중동 backlog 100조 조합이 방산 로테이션 momentum 축·지정학 리스크 프리미엄 확장 카운터",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": -0.8
       },
       {
         "label": "삼성전자",
@@ -25,8 +25,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "수요일 종가 247,500원 -7.8% oversold·오늘 JP모건 아시아 테크 투어 IR 개막·씨티 코리아 인베스터 컨퍼런스·HBM4 램프·엔비디아 승인 스케줄·미 30년물 -9bp 5.196% 반락 완화가 반등 트리거 축·야간선물 -3.7% 여진은 카운터",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 9.5
       },
       {
         "label": "NVDA",
@@ -34,8 +34,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "수요일 종가 218.14달러 +0.3% 강보합·Q2 FY27 실적 8/26 D-6·컨센 매출 918~950억달러·데이터센터 250억달러+·Blackwell Ultra 램프·재무부 buyback 확대 30년물 반락이 성장주 프리미엄 회복 축·마이클 버리 숏 여진 카운터",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": -1
       }
     ]
   },
