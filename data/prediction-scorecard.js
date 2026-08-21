@@ -7,6 +7,39 @@
 //   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = [
   {
+    "date": "2026-08-24",
+    "made": "2026-08-22 07:21 KST",
+    "predictions": [
+      {
+        "label": "KB금융",
+        "ticker": "105560",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 164,300원 +2.7% 상승·밸류업 프로그램 상단 확장·주주환원 확대 서사·외국인 유가증권 2.2조원 순매수 이틀차 여진 조합이 은행 카테고리 리더십 축·forward P/B 0.6배 프리미엄 회복 사이클이 월요일 강세 카운터",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "NAVER",
+        "ticker": "035420",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 222,000원 +1.1%·플랫폼 카테고리 회복·AI 검색 커머스 로테이션 지속이 forward 매출 근거 축·워시 잭슨홀 D-6 완화 시나리오 대기가 성장주 프리미엄 재확장 카운터",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "COIN",
+        "ticker": "COIN",
+        "market": "US",
+        "direction": "up",
+        "rationale": "직전 종가 172.35달러 +7.6% 급등·비트코인 77,860달러 주간 +22% 2024년 3월 이후 최대 랠리·트럼프 CLARITY Act 통과 촉구·SEC 프레임워크 규제 정합성 회복 조합이 크립토 관련주 리더십 축·주말 유동성 얇음 리스크 카운터",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
     "date": "2026-08-21",
     "made": "2026-08-21 07:26 KST",
     "predictions": [
@@ -203,39 +236,5 @@ const PREDICTION_SCORECARD = [
         "actual": -5.2
       }
     ]
-  },
-  {
-    "date": "2026-08-13",
-    "made": "2026-08-13 07:15 KST",
-    "predictions": [
-      {
-        "label": "한화에어로스페이스",
-        "ticker": "012450",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "직전 종가 1,156,000원 +5.3%·아리온스멧 496억원 8월 양산 계약·비츠로넥스텍 누리호 엔진 535억원 후속 발주가 K-방산 미래전력 카테고리 진입 서사 축, 방산 순환매 재개·NATO 국방예산 확장 사이클이 익일 강세 카운터",
-        "result": "hit",
-        "actual": 2.5
-      },
-      {
-        "label": "HD현대중공업",
-        "ticker": "329180",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "직전 종가 496,000원·상반기 수주 148억달러가 연간 목표 204억달러의 72% 조기 달성·수주잔고 609억달러 견고·원달러 1,415원 10개월 최저가 마진 방어 축, 조선주 상대적 부진 해소 국면이 반등 카드",
-        "result": "hit",
-        "actual": 0
-      },
-      {
-        "label": "CRWV",
-        "ticker": "CRWV",
-        "market": "US",
-        "direction": "up",
-        "rationale": "$103.83 시간외 +14% 급등·Q2 매출 25.75억달러 +112% 컨센 상회·백로그 6주 만에 1,042→1,292억달러로 250억달러 추가 계약 서프라이즈, CPI 부합·연준 동결 시나리오가 성장주 프리미엄 재확산 카운터",
-        "result": "miss",
-        "actual": -2.9
-      }
-    ]
   }
 ];
-채점 완료: 2026-08-21 기준 변경된 항목 있음
