@@ -16,8 +16,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "직전 거래일 종가 1,397,000원 +7.1% 급등·K-food 카테고리 라면·불닭 미국·유럽 매출 사상 최대 서사·2Q 영업이익 컨센 상회 여진이 momentum 축·코스피 반등 이틀차 순환매 소비주 확산 카운터",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": -2.2
       },
       {
         "label": "이수페타시스",
@@ -25,8 +25,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "직전 거래일 종가 44,950원 +9.0% 급등·HBM 기판 카테고리 확장·SK하이닉스·삼성전자 40조·100조 주주환원 서사 후방 수혜·NVDA Q2 D-5 데이터센터 매출 750억달러+ 컨센 대기가 반도체 후방 lock-in 축",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": -5.5
       },
       {
         "label": "TSLA",
@@ -34,8 +34,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "직전 거래일 종가 $345.95·Austin Cybercab 로보택시 8월 말 공공 배치 임박·St. Elmo Road 무선충전 허브·80대 설치 계획·Gigafactory Texas 연 12.5만대 생산 능력이 자율주행 상용화 실체화 축·다우 -703pt 급락 후 리스크 리셋 카운터",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": -1.7
       }
     ]
   },
@@ -238,3 +238,4 @@ const PREDICTION_SCORECARD = [
     ]
   }
 ];
+채점 완료: 2026-08-21 기준 변경된 항목 있음
