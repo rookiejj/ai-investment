@@ -176,6 +176,8 @@ const fixed = [
   { cat:'macro', impact:2, title:'미국 7월 PPI', date:'2026-08-13', desc:'근원 PPI 동반·CPI 다음날 생산자물가 크로스체크' },
   { cat:'macro', impact:2, title:'미국 7월 소매판매', date:'2026-08-14', desc:'소비 모멘텀·서비스 vs 재화 지출 분기' },
   { cat:'macro', impact:3, title:'7월 FOMC 의사록 공개', date:'2026-08-19', desc:'7/29-30 회의 토론 내용·9월 인하 여부 단서' },
+  { cat:'macro', impact:3, title:'한국 BOK 8월 금융통화위원회', date:'2026-08-27', desc:'기준금리 결정·이창용 총재·잭슨홀 워시 데뷔와 겹치는 이벤트 정렬 분기점' },
+  { cat:'policy', impact:2, title:'트럼프 이란 경제 D-Day 세부 제재 발표', date:'2026-08-25', desc:'Bessent 재무장관 예고 역대 최강 이란 제재·유가·지정학 프리미엄 트리거' },
   { cat:'conf',  impact:3, title:'잭슨홀 연준 심포지엄 개막', date:'2026-08-27', desc:'캔자스시티 연준 주최·각국 중앙은행 총재·Warsh 신임 의장 첫 연설 예정' },
   { cat:'conf',  impact:3, title:'Warsh 잭슨홀 첫 기조연설', date:'2026-08-28', desc:'신임 연준 의장 금리 경로 시그널·9월 인하 여부 방향타·시장 최대 이벤트' },
   { cat:'macro', impact:3, title:'미국 7월 PCE 물가', date:'2026-08-28', desc:'Fed 선호 인플레 지표·잭슨홀 전날 사전 점검' },

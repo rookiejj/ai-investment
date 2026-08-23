@@ -16,8 +16,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "직전 거래일 종가 164,300원 +2.7% 상승·밸류업 프로그램 상단 확장·주주환원 확대 서사·외국인 유가증권 2.2조원 순매수 이틀차 여진 조합이 은행 카테고리 리더십 축·forward P/B 0.6배 프리미엄 회복 사이클이 월요일 강세 카운터",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 2.7
       },
       {
         "label": "NAVER",
@@ -25,8 +25,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "직전 거래일 종가 222,000원 +1.1%·플랫폼 카테고리 회복·AI 검색 커머스 로테이션 지속이 forward 매출 근거 축·워시 잭슨홀 D-6 완화 시나리오 대기가 성장주 프리미엄 재확장 카운터",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 1.1
       },
       {
         "label": "COIN",
@@ -34,8 +34,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "직전 종가 172.35달러 +7.6% 급등·비트코인 77,860달러 주간 +22% 2024년 3월 이후 최대 랠리·트럼프 CLARITY Act 통과 촉구·SEC 프레임워크 규제 정합성 회복 조합이 크립토 관련주 리더십 축·주말 유동성 얇음 리스크 카운터",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 8.2
       }
     ]
   },
