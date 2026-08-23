@@ -2,14 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
-    <loc>https://briefick.com/daily/2026-08-22</loc>
+    <loc>https://briefick.com/daily/2026-08-24</loc>
     <news:news>
       <news:publication>
         <news:name>브리픽</news:name>
         <news:language>ko</news:language>
       </news:publication>
-      <news:publication_date>2026-08-22T07:00:00+09:00</news:publication_date>
-      <news:title>2026년 8월 22일 (토) 시황 — 미국·한국 주식·AI·원자재·유니콘</news:title>
+      <news:publication_date>2026-08-24T07:00:00+09:00</news:publication_date>
+      <news:title>2026년 8월 24일 (월) 시황 — 미국·한국 주식·AI·원자재·유니콘</news:title>
     </news:news>
   </url>
 </urlset>
