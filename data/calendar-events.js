@@ -215,30 +215,9 @@ const fixed = [
 
 
 
+
 // === AUTO-EARNINGS (scripts/fetch-earnings-calendar.js 자동 생성 — 손대지 말 것) ===
 const autoEarnings = [
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "Walmart 실적",
-    "date": "2026-08-20",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "WMT"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "한진칼 실적",
-    "date": "2026-08-20",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "180640"
-    ],
-    "src": "auto-earnings"
-  },
   {
     "cat": "earnings",
     "impact": 2,
@@ -247,6 +226,17 @@ const autoEarnings = [
     "desc": "실적 발표 예정",
     "tickers": [
       "HEI"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "한진칼 실적",
+    "date": "2026-08-25",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "180640"
     ],
     "src": "auto-earnings"
   },
