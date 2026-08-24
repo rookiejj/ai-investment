@@ -1,31 +1,31 @@
 const UPDATES = [
   {
-    "date": "2026-08-24 19:25 KST",
-    "summary": "앤트로픽 IPO S-1 이달 제출 - 1,830억달러 밸류 후 조기 상장 목표\n앤트로픽 FY26 매출 260억달러 목표 - 오픈AI 매출 첫 역전 후 리더십 확장\nChatGPT 무료 기본 GPT-5.6 Luna - 7/30 80% 가격 인하가 사용자 흡수 축\nMeta Muse Glimmer 오픈소스 공개 - 300억 파라미터 Apache 2.0 GPU 실행\nGoogle Gemini 3.7 Flash 저지연 - 소형 모델 카테고리 확장 유지",
+    "date": "2026-08-25 07:30 KST",
+    "summary": "오픈AI GPT-5.6 Sol 배포 확장 - effort slider·Ultrafast·Sora API 신설\nDensityAI 스텔스 종료 준비 - Tesla Dojo 20명+ 이탈 창업, 자동차 AI 경쟁\nGoogle A2A 프로토콜 Linux Foundation 합류 - 에이전트 상호운용 표준 확산\nAnthropic ARR 650억달러 - 오픈AI 400억달러 대비 격차 확대·Ramp Q3 재추격",
     "entries": [
       {
-        "time": "2026-08-24 19:25 KST",
+        "time": "2026-08-25 07:30 KST",
+        "type": "제품 출시",
+        "sector": "OpenAI",
+        "text": "OpenAI. GPT-5.6 Sol 배포 진행 사이클 축·effort slider 응답 사고량 조절 Plus·Pro 노출·Ultrafast mode preview 최대 14배 속도 확장 조합이 forward 사용자 흡수 카타리스트 근거. Sora API 확장 20초 생성·1080p sora-2-pro·batch·reusable character refs 신설 사이클이 비디오 카테고리 락인 축, ARR 400억달러 도달 8월 기준·월 33억달러·엔터프라이즈 매출 컨슈머 첫 추월·B2B 고객수 월 +32% 근거·앤트로픽 재추월 상태 유지 카운터 병존. 8/20 Zero Data Retention for frontier models 발표·엔터프라이즈 신뢰 보강·8/18 ChatGPT for Teens 출시 부모 컨트롤 조합이 forward 채택 지지 트리거. capability 렌즈 - effort slider·Ultrafast·Sora API 확장이 카테고리 확장 축, monetization 렌즈 - ARR 400억달러가 unit economics 근거, cross-asset 렌즈 - 앤트로픽 격차가 리더십 경쟁 카운터."
+      },
+      {
+        "time": "2026-08-25 07:30 KST",
+        "type": "인프라",
+        "sector": "NVIDIA",
+        "text": "DensityAI 신규 창업. Tesla Dojo 팀 대량 이탈처·Ganesh Venkataramanan 前 Dojo 총괄·Bill Chang·Ben Floering 창업·8/24 Tesla AI 하드웨어 디렉터 Shishuang Sun Dojo·Autopilot 패키징 합류 확인·총 20명+ 전직 Tesla 엔지니어 사이클 축, 텍사스 본거지·자동차·로봇·산업용 AI 데이터센터 end-to-end 칩·HW·SW 카테고리 근거. 스텔스 종료 준비·수억달러 규모 시리즈 협상 조합이 forward 자동차 AI 인프라 카테고리 신규 진입 카운터, NVIDIA 자동차 AI 인프라 경쟁 포지션 사이클이 forward 시장 재편 트리거 병존. capability 렌즈 - end-to-end 칩·HW·SW 카테고리가 forward 차별화 축, 정책 렌즈 - Tesla Dojo 이탈이 자체 개발 로드맵 지연 카운터, cross-asset 렌즈 - 자동차 AI 인프라 신규 진입이 NVIDIA 경쟁 축 재편."
+      },
+      {
+        "time": "2026-08-25 07:30 KST",
+        "type": "생태계",
+        "sector": "Google DeepMind",
+        "text": "Google A2A 프로토콜. 8/20 Linux Foundation 산하 Agentic AI Foundation 정식 합류 사이클 축·250+ 멤버 AWS·Anthropic·Google·MS·OpenAI 참여 조합이 에이전트 상호운용 표준 통합 가속 카운터, A2A Agent-to-Agent 프로토콜이 forward 에이전트 간 통신·인증·오케스트레이션 표준화 축 근거. MCP Model Context Protocol Anthropic 리더십 vs A2A Google 리더십 병존이 표준 경쟁 사이클 카운터·Linux Foundation 중립 거버넌스가 forward 산업 채택 지지 트리거. capability 렌즈 - 에이전트 상호운용 표준이 카테고리 확장 축, 정책 렌즈 - Linux Foundation 중립 거버넌스가 채택 근거, cross-asset 렌즈 - MCP·A2A 표준 경쟁이 forward 에이전트 인프라 재편 카운터."
+      },
+      {
+        "time": "2026-08-25 07:30 KST",
         "type": "펀딩",
         "sector": "Anthropic",
-        "text": "Anthropic. 시리즈F 130억달러 ICONIQ 리드 클로징·밸류 1,830억달러 스텝업 확정 사이클 축, IPO S-1 SEC 시크릿 제출 이달 목표·2027년 이전 조기 상장 로드맵 사이클이 사상 최대 프리IPO 밸류 근거, FY26 매출 목표 260억달러·7월말 ARR 오픈AI 역전 서사 조합이 forward 리더십 확장 카운터. Claude Max 8/12 업데이트·1M 토큰 컨텍스트·128K 최대 출력·Claude Code 엔터프라이즈 락인 확장·바이오 단백질 설계 14/15 성공 트랙 사이클이 unit economics 개선 축, Amazon 재무제표 대비 매출·마진 미달 우려·OpenAI 2027 IPO 병존이 세 대장 상장 경쟁 카운터. 밸류에이션 렌즈 - 1,830억달러 밸류가 프리IPO 사상 최대 프리미엄 사이클 축, capability 렌즈 - Claude Code 엔터프라이즈 락인이 forward 매출 근거, cross-asset 렌즈 - 오픈AI 매출 역전이 프리미엄 격차 재편 카운터."
-      },
-      {
-        "time": "2026-08-24 19:25 KST",
-        "type": "가격",
-        "sector": "OpenAI",
-        "text": "OpenAI. GPT-5.6 Luna 7/30 80% 가격 인하·ChatGPT 무료 기본 모델 승격 사이클 축, 엔터프라이즈 quarter-over-quarter 성장 82 vs 앤트로픽 76 재역전·GPT-5.6 Sol 개발자 채택 확대 조합이 사용자 흡수 근거, Fable 5 프라이싱·리테넨션 우려 vs 앤트로픽 매출 역전 서사가 unit economics 카운터. 2027 IPO 로드맵 공식화·6/8 시크릿 S-1 SEC 제출·8,520억달러 밸류 3월 1,220억달러 라운드 기반 사이클 유지 축, 앤트로픽 이달 S-1 제출 병존이 세 대장 상장 경쟁 근거. ChatGPT Work 7/9 출시·GPT-5.6 기반 에이전트 실행·엔터프라이즈 락인 확장이 forward 매출 지지 카운터. 밸류에이션 렌즈 - 8,520억달러 프리미엄 방어 여부 축, capability 렌즈 - GPT-5.6 Sol 개발자 채택이 forward 성장 근거, cross-asset 렌즈 - 앤트로픽 이달 S-1 제출이 리더십 경쟁 카운터."
-      },
-      {
-        "time": "2026-08-24 19:25 KST",
-        "type": "모델 출시",
-        "sector": "Meta AI",
-        "text": "Meta AI. Muse Glimmer 오픈소스 공개·300억 파라미터·Apache 2.0 라이선스·24GB GPU 단일 실행 가능 사이클 축, LLaMA 카테고리 리더십 강화·개발자 커뮤니티 무제한 배포 근거·상업 라이선스 병존 조합이 오픈소스 리그 확장 카운터. Meta Llama 4 후속·초거대 프론티어 모델 대신 미드사이즈 카테고리 침투 사이클이 forward 채택 축, Mistral·DeepSeek 오픈소스 라이벌 대비 상대 우위 서사·GPU 접근성 프리미엄 근거. 재무 렌즈 - Reality Labs 400억달러 CAPEX 확장·Q2 실적 서프라이즈 흡수 조합이 forward 성장 카운터. capability 렌즈 - 24GB 단일 GPU 실행이 개발자 접근성 카타리스트 축, 정책 렌즈 - Apache 2.0 상업 라이선스가 채택 사이클 근거, cross-asset 렌즈 - 오픈소스 리그 리더십이 프론티어 CAPEX 대안 카운터."
-      },
-      {
-        "time": "2026-08-24 19:25 KST",
-        "type": "모델 출시",
-        "sector": "Google DeepMind",
-        "text": "Google DeepMind. Gemini 3.7 Flash 8/13 출시·저지연 배치 확장·소형 모델 카테고리 축, 검색·Workspace 통합 락인 서사 조합이 forward 매출 지지 카운터. FLI Summer 2026 AI Safety Index Google DeepMind C 등급·xAI·DeepSeek·Mistral F 등급 대비 상대 우위 사이클, 유럽 GDPR 정합·안전성 프레임워크가 정책 프리미엄 카운터. Alphabet 클라우드 CAPEX 200억달러 초반 확장 궤도·하이퍼스케일러 3조달러 오프밸런스 커밋먼트 노출 서사 병존이 forward 인프라 리레이팅 트리거, 잭슨홀 8/28 워시 첫 기조연설 D-4 시점이 forward 매크로 톤 결정 축 병존. capability 렌즈 - Gemini 3.7 Flash 저지연 카테고리 확장 축, 정책 렌즈 - AI Safety Index C 등급이 프리미엄 축, cross-asset 렌즈 - CAPEX 오프밸런스 노출이 forward 인프라 회의론 카운터."
+        "text": "Anthropic. ARR 650억달러 run rate 7월 기준 유지 사이클 축·오픈AI ARR 400억달러 대비 격차 확대 조합이 forward 리더십 확장 카운터, Ramp 데이터 Q3부터 오픈AI가 B2B에서 다시 좁혀오는 중 서사 병존이 forward 리더십 재편 트리거 근거. Claude Fable 5·Mythos 5 미 상무부 수출규제 해제 후 글로벌 복원 완료 사이클·8/4 Mariano-Florentino Cuéllar 前 캘리포니아 대법관 Chief Global Affairs Officer 영입 조합이 IPO 앞 정책·규제 라인 강화 축, Claude Enterprise Admin API GA·MCP 2026-07-28 스펙 stateless core·OAuth·OIDC 강화 지원이 forward 엔터프라이즈 락인 카타리스트. monetization 렌즈 - ARR 650억달러가 리더십 서사 축, capability 렌즈 - MCP 2026-07-28 스펙 지원이 엔터프라이즈 카테고리 확장 근거, 정책 렌즈 - Cuéllar CGAO 영입이 IPO 앞 규제 라인 강화 카운터."
       }
     ]
   }
