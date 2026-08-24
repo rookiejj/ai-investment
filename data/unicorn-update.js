@@ -1,31 +1,31 @@
 const updates = [
   {
-    "date": "2026-08-24 19:30 KST",
-    "summary": "Anduril 200억달러 IDIQ - 미 육군 방산 프리IPO 최대 규모 실행\nRevolut 1,150억달러 세컨더리 - 반년만 53% 스텝업, 핀테크 대장 재평가\nDatabricks 1,900억달러 유지 - CEO '2026 IPO 최악의 해' 상장 연기\nStripe S-1 시크릿 - 1,700억달러 밸류 늦봄 로드쇼 대기\nMoss 10억유로 유니콘 - 베를린 AI 핀테크, 유럽 SME 지출관리",
+    "date": "2026-08-25 07:40 KST",
+    "summary": "Waymo 커스텀 로보택시 칩 공개 - 자체 반도체로 비용 구조 재편·1,260억달러 밸류 지지\nHelsing HX-2 스트라이크 드론 실사격 - 리투아니아 미군 17발 중 15발 명중 실증\nPlaid 밸류 61억달러 컷다운 - 2021년 대비 절반, 5.75억달러 세컨더리 IPO 경로\nRamp ARR 10억달러 돌파 - 6월 44억달러 라운드 후 AI 자동화 프리미엄 재확인",
     "changes": [
       {
-        "time": "2026-08-24 07:00 KST",
-        "type": "펀딩",
+        "time": "2026-08-25 07:40 KST",
+        "type": "제품 출시",
         "sector": "우주·모빌리티·방산",
-        "detail": "Anduril·Helsing·Shield AI·Saronic·Impulse Space·Relativity Space·Stoke Space·Vast. Anduril 미 육군 5~10년 IDIQ 계약 최대 200억달러 체결·120~130건 기존 오더 통합·시리즈H 50억달러 밸류 610억달러·1,000억달러 후속 라운드 협상 지속 축, Helsing 7월 18억달러 라운드·밸류 180억달러·유럽 Anduril 라이벌 확장 사이클이 방산 프리IPO 리그 최대 확장 근거. Shield AI 15억달러 조달·밸류 127억달러·Saronic 6억달러 라운드·밸류 92.5억달러 병존 카운터. Impulse Space·Relativity Space 7월 초 Space Force NSSL Phase 3 Lane 1 IDIQ 편입·ceiling 56억달러·5개사 500만달러+ 프리페어러토리 배정·Impulse Helios 상단 스테이지 2027 발사 예정 사이클 지속 축. 정책 렌즈 - DoD 초확대 예산이 forward 매출 근거, 밸류에이션 렌즈 - Anduril 65% 스텝업이 프리미엄 최고 구간 확장 축, cross-asset 렌즈 - 지정학 리스크가 방산 카테고리 락인 카운터."
+        "detail": "Waymo·Helsing·Anduril·Impulse Space·Shield AI. Waymo 8/23 TechCrunch Mobility 커스텀 로보택시 칩 공개 사이클 축·자체 반도체로 로보택시 비용 구조 재편·NVIDIA·Mobileye 의존 축소 서사 근거·3월 160억달러 라운드로 1,260억달러 포스트머니 오토노머스 최대 프리IPO 밸류 지지 카운터. Helsing 리투아니아 미군 HX-2 스트라이크 드론 실사격 테스트·17대 중 15발 명중·2발 근접 사이클이 유럽 방산 유니콘 180억달러 밸류 실증 축, 7월 18억달러 라운드 조합이 forward 방산 리그 확장 근거. Anduril 5월 61억달러 라운드 후속 방산 소프트웨어 플랫폼 리더 확립·Shield AI Hivemind가 Anduril Fury에 탑재 생태계 lock-in 확대 카운터, Impulse Space 5억달러 시리즈D·밸류 43억달러·NSSL Phase 3 Lane 1 편입 최대 56억달러 국방 발사 계약 접근권 확보 병존. 정책 렌즈 - 미 국방·유럽 방산 예산이 forward 매출 근거, 밸류에이션 렌즈 - Waymo 1,260억달러가 자율주행 프리미엄 최고 축, capability 렌즈 - Helsing 실사격 실증이 forward 카타리스트."
       },
       {
-        "time": "2026-08-24 07:00 KST",
+        "time": "2026-08-25 07:40 KST",
         "type": "펀딩",
         "sector": "핀테크",
-        "detail": "Stripe·Revolut·Ramp·Plaid·Mercury·Moss. Revolut 세컨더리 셰어세일 밸류 최대 1,150억달러 진행·2025.11월 750억달러 대비 +53% 스텝업·7~8월 클로징 예정 사이클 축, Moss 8/5 3,000만유로 시리즈C 클로징·10억유로+ 밸류 신규 유니콘 등극·베를린 기반 AI 핀테크·유럽 SME 지출관리 카테고리 확장 서사 조합이 유럽 핀테크 프리IPO 리그 확장 근거. Stripe 2/27 시크릿 S-1 제출·1,700억달러 밸류 목표 늦봄~6월 로드쇼 윈도우·6/13 이후 S-1 미제출 서사 유지 카운터, Ramp 44억달러 시리즈F+ 7.5억달러·ARR 15억달러·CEO Glyman '연말 IPO-ready' 재확인·Plaid US IPO 검토 7/1 Bloomberg 보도·80억달러 tender 회복 카운터. Brex Capital One 51.5억달러 인수 완료·독립 legal fintech 대표주 이탈 사이클 지속. 밸류에이션 렌즈 - Revolut 53% 스텝업이 프리미엄 확장 축, capability 렌즈 - Stripe·Ramp·Plaid IPO-ready 파이프가 forward 매출 근거, cross-asset 렌즈 - Moss 유니콘 등극이 유럽 핀테크 리그 확장 카운터."
+        "detail": "Plaid·Ramp·Revolut·MoonPay·Kraken. Plaid 세컨더리 5.75억달러 매각·밸류 61억달러로 컷다운·2021년 134억달러 대비 절반 사이클 축·IPO 경로 확보용 우선주 정리 서사 근거, 하락한 밸류 조합이 forward 상장 여건 개선 카운터. Ramp ARR 10억달러 돌파 8월 기준·6월 44억달러 신규 라운드 후 성장 재확인·AI 자동화 스토리로 프리IPO 밸류 프리미엄 유지 축, Revolut 세컨더리 지분 매각으로 750억달러 밸류 확정 사이클·영국 은행 라이센스 취득·대출 사업 확장 준비 유럽 최대 핀테크 프리IPO 마일스톤 근거. MoonPay Cash App 통합으로 미국 사용자 ETH·SOL·XRP·USDT 직접 매수 소비자 온램프 채널 대폭 확장 카운터, Kraken 4~5월 IPO 준비 일시 중단·2027년 상장 지연 관측 크립토 밸류 회복 대기 병존. 밸류에이션 렌즈 - Plaid 컷다운이 down round 시그널, capability 렌즈 - Ramp AI 자동화가 forward 매출 근거, cross-asset 렌즈 - MoonPay Cash App 통합이 온램프 카테고리 확장 축."
       },
       {
-        "time": "2026-08-24 07:00 KST",
+        "time": "2026-08-25 07:40 KST",
         "type": "펀딩",
         "sector": "엔터프라이즈 SW",
-        "detail": "Databricks·Higgsfield·Canva·Notion. Databricks 밸류 1,900억달러 유지·시크릿 50억달러 전략적 펀딩 클로징·Coatue 리드·Blackstone·MGX·T.Rowe Price·Sixth Street Growth 참여·ARR 70억달러+·YoY 80%+ 조합이 forward IPO 지지 근거 축, CEO '2026 IPO 최악의 해' 발언·초대형 상장 3~4곳 병존이 기관 자본 흡수 서사가 상장 연기 카운터. Higgsfield 8/18 4억달러 시리즈B 클로징·밸류 54억달러·8개월만 4배 스텝업·ARR 7억달러 vs 1년 전 2,000만달러 대비 35배 성장·30만명 사용자 238개국 유지 사이클. Canva 320억달러 밸류·Notion 100억달러 밸류 유지 서사가 SaaS 프리IPO 대장주 락인 축. 밸류에이션 렌즈 - Databricks 1,900억달러 프리미엄 방어 축, capability 렌즈 - AI 비디오·문서·디자인 카테고리 락인이 forward 매출 근거, cross-asset 렌즈 - 세 대장 IPO 경쟁이 기관 자본 흡수 카운터."
+        "detail": "Sierra·Databricks·Canva·Notion. Sierra 5월 9.5억달러 시리즈E·밸류 158억달러·ARR 2억달러 연초 1.3억달러 대비 +54% 사이클 축·컨택센터 AI 에이전트 카테고리 리더 서사 근거, 엔터프라이즈 락인 조합이 forward 매출 확장 카운터. Databricks 밸류 1,900억달러 유지·시크릿 50억달러 전략적 펀딩 클로징·CEO '2026 IPO 최악의 해' 발언 사이클이 상장 연기 축, Canva 320억달러·Notion 100억달러 밸류 유지 서사가 SaaS 프리IPO 대장주 락인 병존. capability 렌즈 - Sierra AI 에이전트 카테고리 리더가 forward 프리미엄 근거, 밸류에이션 렌즈 - Databricks 1,900억달러 프리미엄 방어 축, cross-asset 렌즈 - 세 대장 IPO 경쟁이 기관 자본 흡수 카운터."
       },
       {
-        "time": "2026-08-24 07:00 KST",
+        "time": "2026-08-25 07:40 KST",
         "type": "펀딩",
         "sector": "바이오·헬스",
-        "detail": "Happy Health·Insitro·Color Health·Xaira Therapeutics. Happy Health 8/18 7,500만달러 시리즈A 클로징·오스틴 기반 디지털 헬스·수면무호흡 진단 3일 밤 98% 정확도·2.8M biometric 측정/밤 사이클 축·ARCH Venture Partners·OpenLoop 리드 조합이 AI 홈케어 카테고리 확장 근거. Adaptyv Bio·Twist Bioscience Claude 단백질 설계 실험 15개 타깃 중 14개 성공 22~35% 성공률·업계 평균 10~15% 대비 2~3배 카운터. Insitro·Xaira Therapeutics AI 신약 개발 카테고리 지배력 확장·CRISPR·프로틴 엔지니어링 파이프 사이클 유지, 미 FDA AI 신약 승인 프레임워크 진행이 forward 매출 근거. capability 렌즈 - AI 홈케어·신약 개발 카테고리 확장 축, 정책 렌즈 - FDA AI 프레임워크가 forward 매출 근거, cross-asset 렌즈 - Claude 단백질 설계 성공이 AI 바이오 리그 확장 카운터."
+        "detail": "Formation Bio·Insitro·Xaira Therapeutics·Sword Health. Formation Bio 사노피 5.45억유로·릴리 약 20억달러 파이프라인 매각 사이클 축·AI 임상 플랫폼 실증·파트너십 수익화 모델 검증 서사 근거·프리IPO 매출 트랙 유지 카운터. Insitro·Xaira Therapeutics AI 신약 개발 카테고리 지배력 확장·CRISPR·프로틴 엔지니어링 파이프 사이클 유지 축, 미 FDA AI 신약 승인 프레임워크 진행이 forward 매출 근거 병존. Sword Health 근골격 원격 재활·AI 물리치료 카테고리 락인 사이클 카운터. capability 렌즈 - Formation Bio 파트너십 수익화가 forward 밸류 근거, 정책 렌즈 - FDA AI 프레임워크가 신약 개발 카타리스트 축, cross-asset 렌즈 - AI 임상 플랫폼이 프리IPO 리그 확장 트리거."
       }
     ]
   }
