@@ -7,6 +7,39 @@
 //   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = [
   {
+    "date": "2026-08-25",
+    "made": "2026-08-25 07:40 KST",
+    "predictions": [
+      {
+        "label": "알테오젠",
+        "ticker": "196170",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 320,500원·상반기 매출 1,405억원·영업이익 735억원·순이익 1,013억원 견고·BlackRock 지분 확대·코스닥 +2.2% 반등 로테이션 지속 사이클이 성장주 프리미엄 카운터·삼성 여진 소화 국면 대안 자금 흡수 축",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "POSCO홀딩스",
+        "ticker": "005490",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 327,500원 +5.6% 강세·중국 조강 CAPEX 확대·철광석 +21% 폭등 후방 서사·이란 제재 확대 후 조선·인프라 카테고리 반사 수혜 사이클이 철강 리더 forward 프리미엄 근거·기관 순매수 재개 축",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "PLTR",
+        "ticker": "PLTR",
+        "market": "US",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 175.63달러 -0.1% 보합·JPM Palantir '군의 AI 두뇌' 커버리지 확장·이란 제재 강화 방산·AI 인프라 후방 수혜 사이클·잭슨홀 D-3 앞 위험선호 회복 기대가 forward 프리미엄 카운터",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
     "date": "2026-08-24",
     "made": "2026-08-22 07:21 KST",
     "predictions": [
@@ -201,39 +234,6 @@ const PREDICTION_SCORECARD = [
         "rationale": "961.21달러 +1.2% 강세·AMAT record 매출과 8월 상순 반도체 수출 155% 급증이 HBM·DRAM 판가 인상 사이클 검증 축, 엔비디아 8/26 실적 D-12 카운트다운이 반도체 프리미엄 방어 카운터",
         "result": "hit",
         "actual": 2.3
-      }
-    ]
-  },
-  {
-    "date": "2026-08-14",
-    "made": "2026-08-14 07:31 KST",
-    "predictions": [
-      {
-        "label": "삼성전자",
-        "ticker": "005930",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "직전 종가 268,000원 사상 최고·8월 상순 반도체 수출 99.5억달러 +155% 역대 최대·야간 미증시 S&P 500 7,800 첫 돌파·연준 9월 동결 시나리오 확정이 프리마켓 강세 지속 카운터, 원달러 1,410원대 유지가 외국인 순매수 자기강화 사이클",
-        "result": "hit",
-        "actual": 2.4
-      },
-      {
-        "label": "한화오션",
-        "ticker": "042660",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "직전 종가 90,700원 +0.7%·미 해군 MRO 2건 3개월 만 작년 초과·VLCC 3척 5,722억원 수주·2026 외국인 최대 순매수 종목 유지가 조선주 순환매 확산 카운터, MASGA·SHIPS Act 지속 서사가 K-조선 상단 축",
-        "result": "hit",
-        "actual": 5.6
-      },
-      {
-        "label": "AMAT",
-        "ticker": "AMAT",
-        "market": "US",
-        "direction": "up",
-        "rationale": "507.97달러 시간외 -5% 조정 후 되돌림 기대·Q3 매출 91.2억달러 컨센 상회·EPS $3.50 컨센 $3.36 상회·record OP 30.8억달러·2026 반도체 장비 성장 30%+ 상향 가이던스가 재평가 축, HBM·advanced packaging 재확대 사이클과 결합해 후방 매출화 지속",
-        "result": "miss",
-        "actual": -5.2
       }
     ]
   }

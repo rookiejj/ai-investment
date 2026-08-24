@@ -201,6 +201,9 @@ const fixed = [
   { cat:'policy', impact:3, title:'잭슨홀 심포지엄 개막·워시 첫 기조연설', date:'2026-08-28', desc:'캔자스시티 연준 연례 심포지엄·워시 신임 의장 첫 기조연설·매파 기조 후퇴 여부 분기점·연내 인하 경로 방향타' },
   { cat:'earnings', impact:3, title:'SK하이닉스 40조원 자사주 소각 발표', date:'2026-08-19', desc:'국내 상장사 역대 최대 규모 주주환원 프로그램·유통주식 감소 서사·목요일 +12.7% 폭등 트리거' },
 
+  { cat:'macro', impact:3, title:'한국은행 8월 금통위', date:'2026-08-27', desc:'이창용 총재 기준금리 결정·워시 잭슨홀 톤 대응·한미 금리차 조정 여부 분기점' },
+  { cat:'conf', impact:2, title:'CRM·DELL·MRVL·CRWD 실적 발표 주간', date:'2026-08-27', desc:'8/26 CRM·HPQ·CRWD, 8/27 DELL·MRVL·ADSK·DG 실적·엔터프라이즈 SW·반도체 카타리스트' },
+
   // === 9월 매크로 ===
   { cat:'macro', impact:3, title:'미국 8월 CPI', date:'2026-09-10', desc:'BLS 8:30 ET·9월 FOMC 전 최종 인플레 확인대' },
   { cat:'macro', impact:2, title:'미국 8월 PPI', date:'2026-09-11', desc:'근원 PPI 동반 발표' },
