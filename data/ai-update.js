@@ -1,38 +1,35 @@
 const UPDATES = [
   {
-    "date": "2026-08-24 07:25 KST",
-    "summary": "NVDA Q2 D-2 - Rubin·Blackwell 램프가 AI 인프라 리더십 방어 시험대\nAnthropic 10월 IPO 2조달러 겨냥 - Goldman·JPM·MS 주관 확정, 사상 최대\nOpenAI Private Safety Processing - 프라이버시 차별화로 엔터프라이즈 격차 좁혀\nxAI Grok Bot 정식 배포·Cursor 통합 확대 - Colossus 200K H100 인프라 지속\nGoogle DeepMind Koray 총괄 재편 - TPUv7·Gemini 3 라인업이 카테고리 지배 근거",
+    "date": "2026-08-24 19:25 KST",
+    "summary": "앤트로픽 IPO S-1 이달 제출 - 1,830억달러 밸류 후 조기 상장 목표\n앤트로픽 FY26 매출 260억달러 목표 - 오픈AI 매출 첫 역전 후 리더십 확장\nChatGPT 무료 기본 GPT-5.6 Luna - 7/30 80% 가격 인하가 사용자 흡수 축\nMeta Muse Glimmer 오픈소스 공개 - 300억 파라미터 Apache 2.0 GPU 실행\nGoogle Gemini 3.7 Flash 저지연 - 소형 모델 카테고리 확장 유지",
     "entries": [
       {
-        "time": "2026-08-24 07:25 KST",
-        "type": "인프라",
-        "sector": "NVIDIA",
-        "text": "NVIDIA. Q2 FY27 8/26(화 현지) 장 마감 후 실적 발표 D-2 사이클 축·매출 컨센 918.5억달러 vs 자체 가이던스 910억달러 ±2%·데이터센터 매출 컨센 310~330억달러·EPS 컨센 2.08달러·옵션 시장 6% 움직임 pricing($201~$228 밴드) 조합이 forward 리레이팅 카운터 근거. Rubin 플랫폼 풀 프로덕션 사이클·하반기 파트너 출시·Vera CPU+Rubin GPU+NVLink 6+ConnectX-9+BlueField-4+Spectrum-6 통합·NVL144 3.6 EFLOPS FP4·B300 대비 3.3배 컴퓨트 조합이 forward 카테고리 리더십 축, AWS·GCP·Azure·OCI·CoreWeave·Lambda·Nebius·Nscale 8곳 하이퍼스케일러 인스턴스 예정·13분기 연속 자체 가이던스 상회 이력 사이클이 forward 성장 지지 근거 병존. 서프라이즈 마진 축소 Q2 FY24 +22.8% → Q1 FY27 +4.6% 조합이 리스크 근거 카운터. capability 렌즈 - Rubin NVL144가 forward 성능 근거, 밸류에이션 렌즈 - forward P/E 32배 sector premium 방어 여부 축, cross-asset 렌즈 - 데이터센터 컨센 상회가 AI 카테고리 리레이팅 카운터."
-      },
-      {
-        "time": "2026-08-24 07:25 KST",
+        "time": "2026-08-24 19:25 KST",
         "type": "펀딩",
         "sector": "Anthropic",
-        "text": "Anthropic. 10월 IPO 프라이싱 D-40 전후·Fortune 8/13 최대 2조달러 밸류 겨냥·600억달러+ 조달 예정 사이클 축·SpaceX 1.77조달러 6월 IPO 넘어 사상 최대 IPO 등극 서사, Goldman·JPM·Morgan Stanley 주관·6/1 confidential S-1 제출·Series H 9,650억달러 클로징 조합이 forward 기관 자본 흡수 근거. ARR 470억달러 5월·연말 1,000~1,200억달러 전망·8/21~22 Claude 단백질 바인더 설계·Adaptyv Bio·Twist Bioscience 검증 15개 타깃 중 14개 성공·22~35% 성공률 vs 업계 평균 10~15% 대비 2~3배 조합이 forward 바이오 매출 근거 축·Claude Opus 4.8 OpenRouter 1M 컨텍스트 확장·Google TPU 5GW·400억달러 계약 사이클이 인프라 락인 카운터. capability 렌즈 - 단백질 설계 22~35% 성공률이 forward 바이오 매출 근거, 밸류에이션 렌즈 - 2조달러 IPO 밸류 방어 여부 축, cross-asset 렌즈 - Google TPU 5GW 계약이 인프라 지배력 카운터."
+        "text": "Anthropic. 시리즈F 130억달러 ICONIQ 리드 클로징·밸류 1,830억달러 스텝업 확정 사이클 축, IPO S-1 SEC 시크릿 제출 이달 목표·2027년 이전 조기 상장 로드맵 사이클이 사상 최대 프리IPO 밸류 근거, FY26 매출 목표 260억달러·7월말 ARR 오픈AI 역전 서사 조합이 forward 리더십 확장 카운터. Claude Max 8/12 업데이트·1M 토큰 컨텍스트·128K 최대 출력·Claude Code 엔터프라이즈 락인 확장·바이오 단백질 설계 14/15 성공 트랙 사이클이 unit economics 개선 축, Amazon 재무제표 대비 매출·마진 미달 우려·OpenAI 2027 IPO 병존이 세 대장 상장 경쟁 카운터. 밸류에이션 렌즈 - 1,830억달러 밸류가 프리IPO 사상 최대 프리미엄 사이클 축, capability 렌즈 - Claude Code 엔터프라이즈 락인이 forward 매출 근거, cross-asset 렌즈 - 오픈AI 매출 역전이 프리미엄 격차 재편 카운터."
       },
       {
-        "time": "2026-08-24 07:25 KST",
-        "type": "제품 출시",
+        "time": "2026-08-24 19:25 KST",
+        "type": "가격",
         "sector": "OpenAI",
-        "text": "OpenAI. 8/19-20 Private Safety Processing 발표 사이클 축·고객 데이터 무보존 남용 감시 시스템·Anthropic 대비 프라이버시 차별화·TechCrunch 8/20 비즈니스 사용자 시장에서 Anthropic 격차 좁히는 중 데이터 조합이 forward 엔터프라이즈 락인 근거, GPT-5.6 Luna·Terra·Sol 3티어 라인업·매출 run rate 400억달러 8월 중순 돌파·Q4 Nasdaq/NYSE 상장 겨냥 사이클이 forward 프리미엄 축. Confidential S-1 제출 6/8·8,520억달러 밸류·SoftBank 리드 라운드·Meta Reality Labs 인재 이탈·CRO 신규 영입·Brad Lightcap 퇴사·Astra 모델 사이버 우려 일시중단 서사 병존이 조직 리스크 카운터. capability 렌즈 - Private Safety Processing이 forward 엔터프라이즈 근거, 밸류에이션 렌즈 - 400억달러 run rate이 forward 밸류 지지 축, cross-asset 렌즈 - Anthropic 격차 축소가 카테고리 경쟁 근거."
+        "text": "OpenAI. GPT-5.6 Luna 7/30 80% 가격 인하·ChatGPT 무료 기본 모델 승격 사이클 축, 엔터프라이즈 quarter-over-quarter 성장 82 vs 앤트로픽 76 재역전·GPT-5.6 Sol 개발자 채택 확대 조합이 사용자 흡수 근거, Fable 5 프라이싱·리테넨션 우려 vs 앤트로픽 매출 역전 서사가 unit economics 카운터. 2027 IPO 로드맵 공식화·6/8 시크릿 S-1 SEC 제출·8,520억달러 밸류 3월 1,220억달러 라운드 기반 사이클 유지 축, 앤트로픽 이달 S-1 제출 병존이 세 대장 상장 경쟁 근거. ChatGPT Work 7/9 출시·GPT-5.6 기반 에이전트 실행·엔터프라이즈 락인 확장이 forward 매출 지지 카운터. 밸류에이션 렌즈 - 8,520억달러 프리미엄 방어 여부 축, capability 렌즈 - GPT-5.6 Sol 개발자 채택이 forward 성장 근거, cross-asset 렌즈 - 앤트로픽 이달 S-1 제출이 리더십 경쟁 카운터."
       },
       {
-        "time": "2026-08-24 07:25 KST",
-        "type": "제품 출시",
-        "sector": "xAI",
-        "text": "xAI. 8/21 Grok Bot 베타 졸업·SuperGrok Plus/Heavy·Cursor Pro+/Ultra/Teams 정식 배포 사이클 축, 8/21 03:53 ET Grok 서비스 다운·8/20 Grok Lite 무의미 텍스트 버그 여진 카운터 병존, Grok 4.5 라인업 확장·X 통합 사이클이 forward 매출 근거. Colossus 슈퍼컴퓨터 200K H100 확장·자체 데이터센터 CAPEX 확장·400억달러+ 라운드 진행 사이클이 forward 인프라 락인 축·Grok Voice·에이전트 기능 확장 서사 병존이 카테고리 지배력 근거. capability 렌즈 - Grok Bot·Cursor 통합이 개발자 락인 근거, 밸류에이션 렌즈 - 400억달러 라운드가 forward 밸류 축, cross-asset 렌즈 - Colossus 200K H100이 인프라 리더십 카운터."
+        "time": "2026-08-24 19:25 KST",
+        "type": "모델 출시",
+        "sector": "Meta AI",
+        "text": "Meta AI. Muse Glimmer 오픈소스 공개·300억 파라미터·Apache 2.0 라이선스·24GB GPU 단일 실행 가능 사이클 축, LLaMA 카테고리 리더십 강화·개발자 커뮤니티 무제한 배포 근거·상업 라이선스 병존 조합이 오픈소스 리그 확장 카운터. Meta Llama 4 후속·초거대 프론티어 모델 대신 미드사이즈 카테고리 침투 사이클이 forward 채택 축, Mistral·DeepSeek 오픈소스 라이벌 대비 상대 우위 서사·GPU 접근성 프리미엄 근거. 재무 렌즈 - Reality Labs 400억달러 CAPEX 확장·Q2 실적 서프라이즈 흡수 조합이 forward 성장 카운터. capability 렌즈 - 24GB 단일 GPU 실행이 개발자 접근성 카타리스트 축, 정책 렌즈 - Apache 2.0 상업 라이선스가 채택 사이클 근거, cross-asset 렌즈 - 오픈소스 리그 리더십이 프론티어 CAPEX 대안 카운터."
       },
       {
-        "time": "2026-08-24 07:25 KST",
-        "type": "리더십",
+        "time": "2026-08-24 19:25 KST",
+        "type": "모델 출시",
         "sector": "Google DeepMind",
-        "text": "Google DeepMind. 8/5 리더십 대개편 사이클·Demis Hassabis 일상 운영 이탈·Jeff Dean 퇴사 후 Discovery Loop 창업·Koray Kavukcuoglu가 DeepMind/Gemini 총괄 재편 조합이 forward 조직 카운터 근거, AI Studio·Gemini API 팀 DeepMind로 통합 흐름이 카테고리 리더십 재정렬 축. TPU 공급 부족 사이클·Anthropic 5GW·400억달러 계약이 자체 연구자도 클라우드 고객과 대기하는 상황 유발·Google TPUv7 세대 확장 병존이 forward 매출 근거 카운터, Gemini 3 Pro·Ultra 모델 라인업 확장·검색 통합 리레이팅 사이클이 카테고리 지배력 축 병존. capability 렌즈 - TPUv7·Gemini 3 라인업이 forward 성능 근거, 밸류에이션 렌즈 - 리더십 재편이 카테고리 프리미엄 카운터, cross-asset 렌즈 - Anthropic TPU 계약이 인프라 리더십 지지 근거."
+        "text": "Google DeepMind. Gemini 3.7 Flash 8/13 출시·저지연 배치 확장·소형 모델 카테고리 축, 검색·Workspace 통합 락인 서사 조합이 forward 매출 지지 카운터. FLI Summer 2026 AI Safety Index Google DeepMind C 등급·xAI·DeepSeek·Mistral F 등급 대비 상대 우위 사이클, 유럽 GDPR 정합·안전성 프레임워크가 정책 프리미엄 카운터. Alphabet 클라우드 CAPEX 200억달러 초반 확장 궤도·하이퍼스케일러 3조달러 오프밸런스 커밋먼트 노출 서사 병존이 forward 인프라 리레이팅 트리거, 잭슨홀 8/28 워시 첫 기조연설 D-4 시점이 forward 매크로 톤 결정 축 병존. capability 렌즈 - Gemini 3.7 Flash 저지연 카테고리 확장 축, 정책 렌즈 - AI Safety Index C 등급이 프리미엄 축, cross-asset 렌즈 - CAPEX 오프밸런스 노출이 forward 인프라 회의론 카운터."
       }
     ]
   }
 ];
+
+
+if (typeof module !== 'undefined') module.exports = UPDATES;
