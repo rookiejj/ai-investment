@@ -7,6 +7,39 @@
 //   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = [
   {
+    "date": "2026-08-26",
+    "made": "2026-08-26 07:32 KST",
+    "predictions": [
+      {
+        "label": "두산에너빌리티",
+        "ticker": "034020",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 80,700원 +10.5% 급등·美 웨스팅하우스 지분 공동 인수 제안 사이클이 원전 대장주 리레이팅 최대 트리거·체코 두코바니·테라파워 SMR 3중 모멘텀 병존·8월 원전·건설 인덱스 +17% 랠리 편승 근거·기관·외국인 동시 매수 여진 지속 축",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "AVGO",
+        "ticker": "AVGO",
+        "market": "US",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 357.7달러 +0.3% 소폭 반등·오늘 밤 NVDA Q2 실적 D-Day 상회 여부가 AI 반도체 카테고리 편승 최대 카타리스트·데이터센터 매출 컨센 750억달러+ 근거·8월 SOXX +10% 트랙 유지 축·잭슨홀 D-2 앞 리스크 프리셋 완료 국면 지지",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "VST",
+        "ticker": "VST",
+        "market": "US",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 140.16달러 +0.8% 강세·美 원전 확대 서사·데이터센터 전력 CAPEX 사이클이 IPP 리더 forward 프리미엄 근거·웨스팅하우스 지분 공동 인수 제안이 원전 카테고리 리레이팅 축·10년물 4.658% 하락이 유틸 카테고리 편승 지지",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
     "date": "2026-08-25",
     "made": "2026-08-25 07:40 KST",
     "predictions": [
@@ -201,39 +234,6 @@ const PREDICTION_SCORECARD = [
         "rationale": "225.04달러 프리마켓 226달러 안정·8/26 Q2 실적 D-8 컨센 매출 918억달러·EPS 2.06달러·Blackwell Ultra 램프·Rubin 로드맵·하이퍼스케일러 CAPEX 730억달러+ 커밋이 프리미엄 방어 축",
         "result": "hit",
         "actual": -0.1
-      }
-    ]
-  },
-  {
-    "date": "2026-08-17",
-    "made": "2026-08-14 19:40 KST",
-    "predictions": [
-      {
-        "label": "현대차",
-        "ticker": "005380",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "453,000원 +8.2% 8/14 마감·자동차 관세 15% 인하로 4조원 이상 비용 절감 기대·8/26 인베스터 데이 대기가 모멘텀 카운터, HMGMA 미국 가동 확대·현지 생산 상향 서사가 마진 회복 축",
-        "result": "hit",
-        "actual": 8.2
-      },
-      {
-        "label": "LG에너지솔루션",
-        "ticker": "373220",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "369,500원 +1.1% 8/14 마감·반도체 편중 완화로 배터리 순환매 확산 국면·북미 ESS 수주 흑자 전환 궤도 지속이 리레이팅 축, 미 IRA 유지 시나리오와 실질금리 하락이 배터리 프리미엄 방어 근거",
-        "result": "hit",
-        "actual": 1.1
-      },
-      {
-        "label": "마이크론",
-        "ticker": "MU",
-        "market": "US",
-        "direction": "up",
-        "rationale": "961.21달러 +1.2% 강세·AMAT record 매출과 8월 상순 반도체 수출 155% 급증이 HBM·DRAM 판가 인상 사이클 검증 축, 엔비디아 8/26 실적 D-12 카운트다운이 반도체 프리미엄 방어 카운터",
-        "result": "hit",
-        "actual": 2.3
       }
     ]
   }
