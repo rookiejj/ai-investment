@@ -41,10 +41,19 @@ const outputPath = outIdx !== -1 && args[outIdx + 1] ? args[outIdx + 1] : null;
 
 // ─── 데이터 ─────────────────────────────────────────────
 async function fetchUpdates() {
-  const r = await fetch(`${SUPABASE_URL}/functions/v1/read-tab-data?_=${Date.now()}`);
-  if (!r.ok) throw new Error(`read-tab-data ${r.status}`);
-  const j = await r.json();
-  return j.updates || {};
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    const r = await fetch(`${SUPABASE_URL}/functions/v1/read-tab-data?_=${Date.now()}`);
+    if (r.ok) {
+      const j = await r.json();
+      return j.updates || {};
+    }
+    if (attempt < 3) {
+      console.log(`[newspaper] read-tab-data ${r.status}, 재시도 ${attempt}/3...`);
+      await new Promise(res => setTimeout(res, 5000 * attempt));
+    } else {
+      throw new Error(`read-tab-data ${r.status}`);
+    }
+  }
 }
 
 const { pickDistinctHeadlines } = require('./headline-dedup');
