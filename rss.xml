@@ -6,8 +6,15 @@
     <description>한국·미국 주식, AI 기업, 원자재·크립토, 유니콘 5개 도메인의 일일 헤드라인. 매일 KST 07시·19시 자동 업데이트.</description>
     <language>ko-KR</language>
     <atom:link href="https://briefick.com/rss.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Tue, 25 Aug 2026 10:30:02 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 25 Aug 2026 22:29:01 GMT</lastBuildDate>
     <ttl>60</ttl>
+    <item>
+      <title>2026년 8월 26일 (수) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
+      <link>https://briefick.com/daily/2026-08-26</link>
+      <guid isPermaLink="true">https://briefick.com/daily/2026-08-26</guid>
+      <pubDate>Tue, 25 Aug 2026 22:00:00 GMT</pubDate>
+      <description>두산에너빌리티 80,700원 +10.5% - 웨스팅하우스 지분 공동 인수 제안, 원전 대장주 리레이팅 · 엔비디아 213.89달러 +0.4% - 오늘 밤 Q2 실적 D-Day, AI 사이클 최대 분수령 · WTI 81.11달러 -4.6% 급락 - 이란 제재 즉시 공급 차질 부재, 리스크 프리미엄 축소</description>
+    </item>
     <item>
       <title>2026년 8월 25일 (화) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
       <link>https://briefick.com/daily/2026-08-25</link>
@@ -420,13 +427,6 @@
       <guid isPermaLink="true">https://briefick.com/daily/2026-06-26</guid>
       <pubDate>Thu, 25 Jun 2026 22:00:00 GMT</pubDate>
       <description>KOSPI -5.81% 8,411 - 사이드카·서킷브레이커 동시 발동·올해 5번째 · 애플 iPad·MacBook 가격 인상 - 메모리 비용 전가·1년 만에 최대 하락 · WTI 장중 $69.85→$73.17 단기 spike - 호르무즈 지정학 재부상</description>
-    </item>
-    <item>
-      <title>2026년 6월 25일 (목) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
-      <link>https://briefick.com/daily/2026-06-25</link>
-      <guid isPermaLink="true">https://briefick.com/daily/2026-06-25</guid>
-      <pubDate>Wed, 24 Jun 2026 22:00:00 GMT</pubDate>
-      <description>SK하이닉스 2,922,000원 +10.14% - 7/10 나스닥 ADR 상장 확정·최대 45조 조달 · 마이크론 시간외 +13.96% $1,194 - FQ3 매출 $41.46B GM 84.9% 사상 최대 · WTI $69.98 -4.4% 추가 약세 - 美·Iran 60일 휴전 MOU 후속 호르무즈 통항 정상화</description>
     </item>
   </channel>
 </rss>
