@@ -1,31 +1,31 @@
 const UPDATES = [
   {
-    "date": "2026-08-25 07:30 KST",
-    "summary": "오픈AI GPT-5.6 Sol 배포 확장 - effort slider·Ultrafast·Sora API 신설\nDensityAI 스텔스 종료 준비 - Tesla Dojo 20명+ 이탈 창업, 자동차 AI 경쟁\nGoogle A2A 프로토콜 Linux Foundation 합류 - 에이전트 상호운용 표준 확산\nAnthropic ARR 650억달러 - 오픈AI 400억달러 대비 격차 확대·Ramp Q3 재추격",
+    "date": "2026-08-25 19:30 KST",
+    "summary": "앤트로픽 테세우스 인프라 출범 - Macquarie·GIC 공동 소유 데이터센터 임대 전환 시작\nxAI 매출 극비 - 앤트로픽에 월 12.5억달러 300MW 컴퓨트 임대 계약 공개\n오픈AI IPO 밸류 850억달러 목표 - 9월 상장 잠재, 앤트로픽 필링과 동시 상장 경로\n구글 Gemini 3.7 Flash - AI Mode 검색 파워링 시작, 저비용 워크호스 신규 배포",
     "entries": [
       {
-        "time": "2026-08-25 07:30 KST",
-        "type": "제품 출시",
-        "sector": "OpenAI",
-        "text": "OpenAI. GPT-5.6 Sol 배포 진행 사이클 축·effort slider 응답 사고량 조절 Plus·Pro 노출·Ultrafast mode preview 최대 14배 속도 확장 조합이 forward 사용자 흡수 카타리스트 근거. Sora API 확장 20초 생성·1080p sora-2-pro·batch·reusable character refs 신설 사이클이 비디오 카테고리 락인 축, ARR 400억달러 도달 8월 기준·월 33억달러·엔터프라이즈 매출 컨슈머 첫 추월·B2B 고객수 월 +32% 근거·앤트로픽 재추월 상태 유지 카운터 병존. 8/20 Zero Data Retention for frontier models 발표·엔터프라이즈 신뢰 보강·8/18 ChatGPT for Teens 출시 부모 컨트롤 조합이 forward 채택 지지 트리거. capability 렌즈 - effort slider·Ultrafast·Sora API 확장이 카테고리 확장 축, monetization 렌즈 - ARR 400억달러가 unit economics 근거, cross-asset 렌즈 - 앤트로픽 격차가 리더십 경쟁 카운터."
-      },
-      {
-        "time": "2026-08-25 07:30 KST",
+        "time": "2026-08-25 19:30 KST",
         "type": "인프라",
-        "sector": "NVIDIA",
-        "text": "DensityAI 신규 창업. Tesla Dojo 팀 대량 이탈처·Ganesh Venkataramanan 前 Dojo 총괄·Bill Chang·Ben Floering 창업·8/24 Tesla AI 하드웨어 디렉터 Shishuang Sun Dojo·Autopilot 패키징 합류 확인·총 20명+ 전직 Tesla 엔지니어 사이클 축, 텍사스 본거지·자동차·로봇·산업용 AI 데이터센터 end-to-end 칩·HW·SW 카테고리 근거. 스텔스 종료 준비·수억달러 규모 시리즈 협상 조합이 forward 자동차 AI 인프라 카테고리 신규 진입 카운터, NVIDIA 자동차 AI 인프라 경쟁 포지션 사이클이 forward 시장 재편 트리거 병존. capability 렌즈 - end-to-end 칩·HW·SW 카테고리가 forward 차별화 축, 정책 렌즈 - Tesla Dojo 이탈이 자체 개발 로드맵 지연 카운터, cross-asset 렌즈 - 자동차 AI 인프라 신규 진입이 NVIDIA 경쟁 축 재편."
-      },
-      {
-        "time": "2026-08-25 07:30 KST",
-        "type": "생태계",
-        "sector": "Google DeepMind",
-        "text": "Google A2A 프로토콜. 8/20 Linux Foundation 산하 Agentic AI Foundation 정식 합류 사이클 축·250+ 멤버 AWS·Anthropic·Google·MS·OpenAI 참여 조합이 에이전트 상호운용 표준 통합 가속 카운터, A2A Agent-to-Agent 프로토콜이 forward 에이전트 간 통신·인증·오케스트레이션 표준화 축 근거. MCP Model Context Protocol Anthropic 리더십 vs A2A Google 리더십 병존이 표준 경쟁 사이클 카운터·Linux Foundation 중립 거버넌스가 forward 산업 채택 지지 트리거. capability 렌즈 - 에이전트 상호운용 표준이 카테고리 확장 축, 정책 렌즈 - Linux Foundation 중립 거버넌스가 채택 근거, cross-asset 렌즈 - MCP·A2A 표준 경쟁이 forward 에이전트 인프라 재편 카운터."
-      },
-      {
-        "time": "2026-08-25 07:30 KST",
-        "type": "펀딩",
         "sector": "Anthropic",
-        "text": "Anthropic. ARR 650억달러 run rate 7월 기준 유지 사이클 축·오픈AI ARR 400억달러 대비 격차 확대 조합이 forward 리더십 확장 카운터, Ramp 데이터 Q3부터 오픈AI가 B2B에서 다시 좁혀오는 중 서사 병존이 forward 리더십 재편 트리거 근거. Claude Fable 5·Mythos 5 미 상무부 수출규제 해제 후 글로벌 복원 완료 사이클·8/4 Mariano-Florentino Cuéllar 前 캘리포니아 대법관 Chief Global Affairs Officer 영입 조합이 IPO 앞 정책·규제 라인 강화 축, Claude Enterprise Admin API GA·MCP 2026-07-28 스펙 stateless core·OAuth·OIDC 강화 지원이 forward 엔터프라이즈 락인 카타리스트. monetization 렌즈 - ARR 650억달러가 리더십 서사 축, capability 렌즈 - MCP 2026-07-28 스펙 지원이 엔터프라이즈 카테고리 확장 근거, 정책 렌즈 - Cuéllar CGAO 영입이 IPO 앞 규제 라인 강화 카운터."
+        "text": "Anthropic. 8/10 Theseus Infrastructure 파트너십 정식 출범·Macquarie Asset Management·GIC 공동 소유 데이터센터 플랫폼 축·미국 내 신규 사이트 발굴·앤트로픽 anchor tenant 장기 임대 계약 조합이 forward 컴퓨트 락인 강화 카타리스트 근거. 기존 AWS 250억달러 컴퓨트 딜에 더해 임대 아닌 co-own 구조 전환 사이클·Macquarie·GIC 각 프로젝트 지분 대부분 자금 조달·앤트로픽 소비자 전력비 인상 부담 조합이 forward 인프라 통제 확대 카운터. IPO 앞 컴퓨트 조달 다변화 축 강화·컴퓨트 락인이 forward 리더십 서사 지지 트리거. capability 렌즈 - purpose-built 데이터센터가 컴퓨트 특화 확보 축, cross-asset 렌즈 - 리스 vs 소유 구조 전환이 인프라 사이클 재편 카운터, monetization 렌즈 - IPO 앞 컴퓨트 통제 자산화 근거."
+      },
+      {
+        "time": "2026-08-25 19:30 KST",
+        "type": "펀딩",
+        "sector": "xAI",
+        "text": "xAI. SpaceX SEC 공시로 재무·계약 공개 사이클 축·Q1 2026 24억달러 손실·77억달러 CAPEX 조합이 forward 인프라 사이클 극단 표출 근거. Colossus 2 데이터센터 컴퓨트 임대 계약 공개 - 앤트로픽에 300MW 컴퓨트 임대 2029년 5월까지 월 12.5억달러 계약 조합이 forward 매출 다변화 축 카운터, 자체 학습·경쟁사 임대 이중 구조가 인프라 monetization 카타리스트. 8/12 Grok 4.6 출시 AA Index 61 GPT-5.6 Sol Max 동급 도달 사이클 병존·Cursor 통합 확장 서사 유지가 forward 코딩 카테고리 락인 트리거. monetization 렌즈 - 앤트로픽 12.5억달러 임대가 인프라 매출 다변화 근거, capability 렌즈 - Grok 4.6 AA Index 61 도달이 리더십 격차 축소 축, cross-asset 렌즈 - 자체 사용·경쟁사 임대 병존이 forward 사이클 재편 카운터."
+      },
+      {
+        "time": "2026-08-25 19:30 KST",
+        "type": "펀딩",
+        "sector": "OpenAI",
+        "text": "OpenAI. IPO 확정 서사 강화 사이클 축·Goldman Sachs·Morgan Stanley 주간사·6/8 SEC 극비 S-1 제출 사이클 재확인 조합이 forward 상장 카타리스트 근거. 밸류 목표 730억달러 하단·850억달러 상단 사이 프라이싱 국면·프라이빗 마켓 트레이드 밸류가 forward 상장 프리미엄 축, 9월 2026 상장 잠재 시나리오 유지 vs Reuters 6월 말 2027년 지연 검토 병존이 forward 타임라인 시나리오 분기점 카운터. 앤트로픽 6/1 필링 965억달러 대비 격차 병존·B2B 재추격 서사가 forward 밸류 리레이팅 트리거. monetization 렌즈 - 850억달러 상단 밸류가 프라이빗 마켓 리레이팅 근거, cross-asset 렌즈 - 앤트로픽·오픈AI 동시 상장이 AI 카테고리 리스팅 사이클 카운터, 정책 렌즈 - Goldman·Morgan Stanley 주간사 선정이 IPO 프리셋 축."
+      },
+      {
+        "time": "2026-08-25 19:30 KST",
+        "type": "제품 출시",
+        "sector": "Google DeepMind",
+        "text": "Google DeepMind. Gemini 3.7 Flash 배포 확장 사이클 축·Google Search AI Mode 파워링 시작 조합이 forward 검색 카테고리 락인 강화 카타리스트 근거·저비용 워크호스 프로파일이 대량 트래픽 서빙 unit economics 축. Made by Google 8/12 이벤트 후 Pixel 11 시리즈·Pixel Watch 5·Gemini 임베디드 기능 확장 유지 사이클 병존·Live Transcribe ASL 지원·Rambler 음성 입력 신규 서사가 forward 소비자 채택 지지 트리거. Gemini Enterprise 모바일 GA 3rd-party IdP 지원 조합이 엔터프라이즈 카테고리 확장 근거·8월 3차 스팸 업데이트 완료 조합이 검색 품질 리셋 카운터. capability 렌즈 - Gemini 3.7 Flash가 저비용 워크호스 카테고리 확장 축, monetization 렌즈 - AI Mode 검색 파워링이 광고 재편 카운터, cross-asset 렌즈 - Made by Google 이벤트가 하드웨어·소프트웨어 통합 지지."
       }
     ]
   }
