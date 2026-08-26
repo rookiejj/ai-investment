@@ -65,9 +65,16 @@ const SUPABASE_FN_URL = process.env.SUPABASE_FN_URL ||
   'https://ytvcgoldauysvnqckzze.supabase.co/functions/v1';
 
 async function fetchTabData() {
-  const r = await fetch(`${SUPABASE_FN_URL}/read-tab-data?_=${Date.now()}`);
-  if (!r.ok) throw new Error(`read-tab-data ${r.status}`);
-  return r.json();  // { version, tabs, updates }
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    const r = await fetch(`${SUPABASE_FN_URL}/read-tab-data?_=${Date.now()}`);
+    if (r.ok) return r.json();  // { version, tabs, updates }
+    if (attempt < 3) {
+      console.log(`[slides] read-tab-data ${r.status}, 재시도 ${attempt}/3...`);
+      await new Promise(res => setTimeout(res, 5000 * attempt));
+    } else {
+      throw new Error(`read-tab-data ${r.status}`);
+    }
+  }
 }
 
 function kstNow() {
