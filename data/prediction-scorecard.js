@@ -16,8 +16,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "직전 거래일 종가 80,700원 +10.5% 급등·美 웨스팅하우스 지분 공동 인수 제안 사이클이 원전 대장주 리레이팅 최대 트리거·체코 두코바니·테라파워 SMR 3중 모멘텀 병존·8월 원전·건설 인덱스 +17% 랠리 편승 근거·기관·외국인 동시 매수 여진 지속 축",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 6.3
       },
       {
         "label": "AVGO",
@@ -25,8 +25,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "직전 거래일 종가 357.7달러 +0.3% 소폭 반등·오늘 밤 NVDA Q2 실적 D-Day 상회 여부가 AI 반도체 카테고리 편승 최대 카타리스트·데이터센터 매출 컨센 750억달러+ 근거·8월 SOXX +10% 트랙 유지 축·잭슨홀 D-2 앞 리스크 프리셋 완료 국면 지지",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": -0.6
       },
       {
         "label": "VST",
@@ -34,8 +34,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "직전 거래일 종가 140.16달러 +0.8% 강세·美 원전 확대 서사·데이터센터 전력 CAPEX 사이클이 IPP 리더 forward 프리미엄 근거·웨스팅하우스 지분 공동 인수 제안이 원전 카테고리 리레이팅 축·10년물 4.658% 하락이 유틸 카테고리 편승 지지",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 2.5
       }
     ]
   },
