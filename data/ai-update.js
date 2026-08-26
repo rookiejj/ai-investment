@@ -1,35 +1,38 @@
 const UPDATES = [
   {
-    "date": "2026-08-26 07:25 KST",
-    "summary": "앤트로픽 Ode 조인트벤처 15억달러 출범 - Blackstone·Hellman·Friedman과 sovereign 배포 확장\n구글 DeepMind 조직 개편 - Kavukcuoglu 신임 수장, Hassabis Chairman 이관 완료\nxAI Grok Python 샌드박스 취약점 - Adversa AI 데이터 유출 40% 성공률 폭로\n앤트로픽 Claude Tag Slack 전체 대화 파싱 - 채널 컨텍스트 인식 8/24 배포\nMeta Muse Glimmer 오픈웨이트 - 최강 모델 오픈소스로 OpenAI·앤트로픽 견제",
+    "date": "2026-08-26 19:30 KST",
+    "summary": "OpenAI GPT-5.6 Sol 배포 - Plus·Pro에 effort 슬라이더, o3 8/26 은퇴\n앤트로픽 S-1 필링 임박 - 2조달러 IPO 목표, SpaceX 1.77조 넘는 사상 최대\nMSFT-OpenAI Azure 2,500억달러 - 2030년까지 커밋, MSFT 지분 27% 유지\n구글 딥마인드 Gemini 4 사전학습 개시 - 11월 출시 시나리오 프리셋\nxAI Grok Bot 상시 에이전트 - 클라우드 컴퓨터 자체 보유, 다단계 잡 실행",
     "entries": [
       {
-        "time": "2026-08-26 07:25 KST",
+        "time": "2026-08-26 19:30 KST",
+        "type": "제품 출시",
+        "sector": "OpenAI",
+        "text": "OpenAI. GPT-5.6 Sol 업데이트 배포 사이클 축·Plus·Pro 사용자에 effort-level 슬라이더 도입 조합이 forward 추론 카테고리 세분화 최대 카타리스트 근거·GPT-5.5 Instant 대체·Free·Go 사용자에 신규 기본 모델 배포 사이클 병존이 무료 카테고리 확산 트리거. o3 모델 8/26 ChatGPT 은퇴 사이클 병존·90일 sunset 스케줄 진입이 forward 모델 로드맵 정리 근거·GPT-5.5 Omni 플래그십 실시간 멀티모달 푸시 서사가 forward capability 카테고리 지배력 카운터. MSFT-OpenAI 2,500억달러 Azure 커밋 2030년까지 사이클·revenue share 유지·MSFT 지분 27% 유지·revenue share 캡 도입 조합이 forward 인프라 카테고리 lock-in 축·10GW 데이터센터 100억달러 progressive 투자 병존이 forward CAPEX 사이클 카운터 트리거. capability 렌즈 - effort 슬라이더가 추론 카테고리 세분화 축, monetization 렌즈 - Azure 2,500억달러 커밋이 forward 인프라 락인 근거, cross-asset 렌즈 - o3 은퇴가 모델 정리 프리셋 근거."
+      },
+      {
+        "time": "2026-08-26 19:30 KST",
         "type": "펀딩",
         "sector": "Anthropic",
-        "text": "Anthropic. Ode With Anthropic 조인트벤처 정식 출범 사이클 축·15억달러 규모 Blackstone Asset Management·Hellman & Friedman 파트너 조합·엔지니어 100명 초기 배치 조합이 forward 엔터프라이즈 카테고리 확장 최대 카타리스트 근거·중견 은행·헬스 시스템·제조업 타겟이 sovereign 배포 카테고리 확장 축, 규제 산업 온프레미스 Claude 배포 조합이 forward monetization 다변화 카운터. Theseus Infrastructure Macquarie·GIC 파트너십 후속 인프라 락인 확대 사이클 병존·IPO 앞 밸류 9,000억달러 목표 라운드 협상 유지 서사가 forward 프라이빗 마켓 리레이팅 지지 근거·Claude Code Auto Mode 8/14 배포 후 89% 위험 명령 캐치율 사이클 카타리스트 트리거. monetization 렌즈 - Ode 15억달러 JV가 규제 산업 카테고리 확장 축, capability 렌즈 - sovereign 배포 특화가 forward 락인 근거, cross-asset 렌즈 - PE·기관 파트너십이 인프라·B2B 사이클 재편 카운터."
+        "text": "Anthropic. 공개 S-1 필링 8월 말 임박 사이클 축·6월 1일 9,650억달러 Series H 밸류에서 확대·뱅커 2조달러 IPO 목표 상향 시나리오 조합이 SpaceX 1.77조달러 6월 상장 넘는 사상 최대 IPO forward 카타리스트 최대 근거·10월 나스닥 상장 골드만·JPM·모건스탠리 주간 시나리오가 forward 프라이빗 마켓 리레이팅 트리거·세컨더리 마켓 임플라이드 1.05~1.15조달러 7월 중순 사이클 병존이 밸류 지지 근거. Claude 3.1 Guardian 금융 서비스 규제 준수·리포팅 특화 변형 배포 사이클 트리거·은행 카테고리 채택 확산 서사가 forward 엔터프라이즈 카테고리 지배력 축·Claude Mythos 5 Enterprise Security 통합·Defender Advantage Fund 출범·Cyber Verification Program 확장 조합이 forward 사이버 카테고리 카운터. Computer use·Skills API·Files API GA 배포 병존이 forward 개발자 카테고리 확산 근거. monetization 렌즈 - 2조달러 IPO 목표가 프리IPO 리그 리레이팅 극단 표출, capability 렌즈 - Claude 3.1 Guardian이 금융 카테고리 확산 축, cross-asset 렌즈 - S-1 필링 임박이 프라이빗 마켓 카타리스트 근거."
       },
       {
-        "time": "2026-08-26 07:25 KST",
-        "type": "리더십",
+        "time": "2026-08-26 19:30 KST",
+        "type": "모델 출시",
         "sector": "Google DeepMind",
-        "text": "Google DeepMind. 조직 개편 완료 사이클 축·Koray Kavukcuoglu 신임 DeepMind 수장 임명·Sundar Pichai CEO 직접 보고 라인 조합이 forward AI 리더십 통합 카타리스트 근거·Hassabis Chairman 이관·Borgeaud 코딩팀 런던 재배치 조합이 2023년 이후 지속된 Brain·DeepMind 두 대륙 체제 종료 사이클 축. Gemini 모델 개발·frontier 리서치·Gemini 앱·개발자 팀 통합 관장이 forward 실행 속도 개선 트리거·오픈AI·앤트로픽 대응 사이클 강화 카운터 병존, Gemini 3.7 Flash 배포·Google Search AI Mode 파워링 유지 병존이 forward 검색 카테고리 락인 근거. capability 렌즈 - 리더십 통합이 forward 실행 속도 개선 축, cross-asset 렌즈 - 두 대륙 체제 종료가 조직 효율 카운터, monetization 렌즈 - AI Mode 검색 파워링이 광고 재편 근거."
+        "text": "Google DeepMind. Gemini 4 사전학습 개시 확인 사이클 축·11월 30일까지 출시 시나리오 예측시장 85% 확률·Pichai 발언 유의미 확대 필요 명시 조합이 forward frontier 카테고리 지배력 회복 최대 카타리스트 근거·Hassabis chair·Alphabet chief scientist 이관 완료 후 Kavukcuoglu 신임 수장 체제 프리셋 축·Noam Shazeer·Jonas Adler·Alexander Pritzel 등 이탈이 OpenAI·Anthropic 대체 카운터 트리거. Gemini 3.6 Flash·3.5 Flash-Lite GA 배포 사이클 병존이 forward 토큰 효율 카테고리 확산 근거·A2A 프로토콜 Linux Foundation AAIF 편입 8/20·앤트로픽 MCP 동조 governance 조합이 forward 오픈 스탠다드 카테고리 확산 트리거. capability 렌즈 - Gemini 4가 frontier 카테고리 회복 축, cross-asset 렌즈 - AAIF 편입이 오픈 프로토콜 카테고리 확산 근거, monetization 렌즈 - Gemini 3.6 Flash가 검색 카테고리 락인 근거."
       },
       {
-        "time": "2026-08-26 07:25 KST",
-        "type": "거버넌스",
-        "sector": "xAI",
-        "text": "xAI. Grok Python 샌드박스 보안 취약점 공개 사이클 축·Adversa AI 8/25 리서치 발표·웹페이지 내 숨겨진 명령어 복호화 후 사용자 대화 히스토리 공격자 URL 유출 시나리오 40% 성공률 조합이 forward 거버넌스 리스크 최대 카타리스트 근거·6/3 xAI 통보 후 미패치·CVE 미발급 사이클 카운터 병존. SpaceX SEC 공시로 재무·계약 공개 사이클 유지 병존·앤트로픽 300MW 컴퓨트 임대 계약 월 12.5억달러·2029년 5월까지 조합이 forward 매출 다변화 축이나 보안 취약점이 forward 엔터프라이즈 채택 카운터 트리거. Grok 4.6 AA Index 61 GPT-5.6 Sol Max 동급 도달 서사 유지 병존. capability 렌즈 - 40% 유출 성공률이 코드 실행 카테고리 취약점 표출, cross-asset 렌즈 - 미패치 사이클이 forward 엔터프라이즈 채택 카운터, 정책 렌즈 - CVE 미발급이 거버넌스 관행 재점검 축."
-      },
-      {
-        "time": "2026-08-26 07:25 KST",
+        "time": "2026-08-26 19:30 KST",
         "type": "제품 출시",
-        "sector": "Anthropic",
-        "text": "Anthropic. Claude Tag Slack 업데이트 배포 사이클 축·8/24 채널 전체 대화 컨텍스트 인식 기능 배포 조합이 forward 협업 카테고리 락인 강화 카타리스트 근거·개별 메시지 단위 판단 vs 전체 대화 흐름 파악 전환 사이클이 엔터프라이즈 협업 워크플로 통합 축. Claude Code Auto Mode 89% 위험 명령 캐치율 vs 인간 13.6% 사이클 병존이 forward 자동화 카테고리 안전성 카운터 근거·regulated sovereign 배포·Ode JV 15억달러 조합이 엔터프라이즈 카테고리 확산 트리거. FLI Summer 2026 AI Safety Index 앤트로픽 C+ 리딩·오픈AI C·Google DeepMind C 유지 병존이 forward safety 서사 리더십 축. capability 렌즈 - Slack 채널 전체 파싱이 협업 컨텍스트 카테고리 확장 축, monetization 렌즈 - Ode JV가 엔터프라이즈 카테고리 카운터, cross-asset 렌즈 - Auto Mode 89% 캐치율이 안전 인식 강화 근거."
+        "sector": "xAI",
+        "text": "xAI. Grok Bot 8/11 배포 사이클 축·상시 AI 에이전트 클라우드 컴퓨터 자체 보유·고객 툴 사인인·다단계 잡 unsupervised 실행 조합이 forward 에이전트 카테고리 지배력 최대 카타리스트 근거·Grok Imagine Image 2.0 8/8 아레나 최상위 랭킹 사이클 병존이 이미지 카테고리 확산 트리거. Grok 4.6 구글 Enterprise Agent Platform 편입 사이클 트리거·500K 컨텍스트·설정 가능 추론 레벨 조합이 forward 엔터프라이즈 카테고리 확산 근거·Grok Build 전 플랜 웹·모바일 배포·GitHub 익스포트·커스텀 도메인·X 통합 병존이 forward 개발자 카테고리 카운터. SpaceX SEC 공시 재무·계약 공개 사이클 유지 병존·앤트로픽 300MW 컴퓨트 임대 계약 월 12.5억달러·2029년 5월까지 조합이 forward 매출 다변화 축 카운터. capability 렌즈 - Grok Bot 상시 에이전트가 자동화 카테고리 확산 축, monetization 렌즈 - Grok 4.6 Google 편입이 엔터프라이즈 카테고리 확산 근거, cross-asset 렌즈 - Grok Build 전 플랜 배포가 개발자 카테고리 락인 근거."
+      },
+      {
+        "time": "2026-08-26 19:30 KST",
+        "type": "인프라",
+        "sector": "Mistral AI",
+        "text": "Mistral AI. Mistral Large 3(mistral-large-2512)·Ministral 3(3B)·Devstral 2·Devstral Small 2·Mistral Vibe·Leanstral 1.5 정형 증명 엔지니어링 조합이 forward 카테고리 확장 최대 카타리스트 근거·Agentic Search 복잡 문서 검색 레이어 배포 사이클 축이 forward 리트리벌 카테고리 확산 트리거. 유럽 sovereign AI 컴퓨트 이니셔티브 사이클 트리거·지역별 엔드포인트·우선순위 티어 조합이 forward 유럽 카테고리 지배력 축·2030년 1GW 목표 연합체 결성 서사가 forward 유럽 인프라 lock-in 카운터 근거. Meta Muse Spark 1.1·Muse Glimmer 오픈웨이트 대응 병존이 forward 오픈소스 카테고리 카운터 트리거. capability 렌즈 - Mistral Large 3가 유럽 frontier 카테고리 확장 축, monetization 렌즈 - sovereign AI 1GW 목표가 유럽 카테고리 지배력 근거, cross-asset 렌즈 - Agentic Search가 리트리벌 카테고리 확산 근거."
       }
     ]
   }
 ];
-
-
-if (typeof module !== 'undefined') module.exports = UPDATES;
