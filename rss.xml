@@ -6,8 +6,15 @@
     <description>한국·미국 주식, AI 기업, 원자재·크립토, 유니콘 5개 도메인의 일일 헤드라인. 매일 KST 07시·19시 자동 업데이트.</description>
     <language>ko-KR</language>
     <atom:link href="https://briefick.com/rss.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Wed, 26 Aug 2026 10:32:28 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 26 Aug 2026 22:27:19 GMT</lastBuildDate>
     <ttl>60</ttl>
+    <item>
+      <title>2026년 8월 27일 (목) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
+      <link>https://briefick.com/daily/2026-08-27</link>
+      <guid isPermaLink="true">https://briefick.com/daily/2026-08-27</guid>
+      <pubDate>Wed, 26 Aug 2026 22:00:00 GMT</pubDate>
+      <description>SK하이닉스·삼성전자 개장 대기 - 간밤 AI 반도체 서프라이즈에 HBM 랠리 시나리오 · 엔비디아 Q2 매출 962억달러·Q3 가이던스 1,080억 - 컨센 동시 상회, AI CAPEX 재가속 · 비트코인 78,900달러·이더리움 2,460달러 강세 - 잭슨홀 후 위험선호 유지</description>
+    </item>
     <item>
       <title>2026년 8월 26일 (수) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
       <link>https://briefick.com/daily/2026-08-26</link>
@@ -420,13 +427,6 @@
       <guid isPermaLink="true">https://briefick.com/daily/2026-06-27</guid>
       <pubDate>Fri, 26 Jun 2026 22:00:00 GMT</pubDate>
       <description>반기말 외인 리밸런싱 컨센서스 - 6/26 단일일 4.65조 매도 일회성 분석 우세 · 나이키 6/30 D-2 카운트다운 - EPS 컨센 90일 0.22→0.12 -45% 하향 · Brent $72 2월말 이래 최저·WTI $69 호르무즈 통항 정상화 75% 회복</description>
-    </item>
-    <item>
-      <title>2026년 6월 26일 (금) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
-      <link>https://briefick.com/daily/2026-06-26</link>
-      <guid isPermaLink="true">https://briefick.com/daily/2026-06-26</guid>
-      <pubDate>Thu, 25 Jun 2026 22:00:00 GMT</pubDate>
-      <description>KOSPI -5.81% 8,411 - 사이드카·서킷브레이커 동시 발동·올해 5번째 · 애플 iPad·MacBook 가격 인상 - 메모리 비용 전가·1년 만에 최대 하락 · WTI 장중 $69.85→$73.17 단기 spike - 호르무즈 지정학 재부상</description>
     </item>
   </channel>
 </rss>
