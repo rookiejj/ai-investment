@@ -205,6 +205,12 @@ const fixed = [
   { cat:'conf', impact:2, title:'CRM·DELL·MRVL·CRWD 실적 발표 주간', date:'2026-08-27', desc:'8/26 CRM·HPQ·CRWD, 8/27 DELL·MRVL·ADSK·DG 실적·엔터프라이즈 SW·반도체 카타리스트' },
 
   // === 9월 매크로 ===
+  { cat:'policy', impact:1, title:'미국 노동절 (휴장)', date:'2026-09-07', desc:'NYSE·Nasdaq 휴장·Labor Day 관측 휴일' },
+  { cat:'macro', impact:2, title:'미국 8월 ADP 민간 고용', date:'2026-09-03', desc:'첫째 목요일·NFP 전 노동시장 스캔' },
+  { cat:'macro', impact:3, title:'미국 8월 NFP 비농업 고용', date:'2026-09-04', desc:'8월 첫째 금요일·9월 FOMC 앞 노동시장 최종 확인대' },
+  { cat:'macro', impact:2, title:'미국 8월 ISM 제조업 PMI', date:'2026-09-01', desc:'8월 매크로 시즌 개막' },
+  { cat:'macro', impact:2, title:'미국 8월 ISM 서비스 PMI', date:'2026-09-03', desc:'서비스 부문 활동 지표' },
+  { cat:'macro', impact:2, title:'중국 8월 CPI·PPI', date:'2026-09-09', desc:'디플레이션 압력 여부·중국 부양책 강도 시그널' },
   { cat:'macro', impact:3, title:'미국 8월 CPI', date:'2026-09-10', desc:'BLS 8:30 ET·9월 FOMC 전 최종 인플레 확인대' },
   { cat:'macro', impact:2, title:'미국 8월 PPI', date:'2026-09-11', desc:'근원 PPI 동반 발표' },
   { cat:'macro', impact:3, title:'9월 FOMC 결과', date:'2026-09-17', desc:'KST 오전 3시·점도표·SEP 동반 발표·연내 인하 경로 최종 확정' },
