@@ -16,8 +16,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "직전 거래일 종가 261,500원 +1.8%·8월 이사회 100조원 환원안 임박 시나리오 축·간밤 글로벌 AI 반도체 대장 Q2 매출 962억달러·데이터센터 +117% YoY 서프라이즈 확인이 HBM 대장 리레이팅 최대 카타리스트·SK하이닉스 40조 자사주 소각 후 삼성 후속 환원 기대 병존·외국인 반도체 순매수 지속 근거",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 3.4
       },
       {
         "label": "NVDA",
@@ -25,8 +25,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "직전 거래일 종가 213.05달러 +2.2%·Q2 FY27 매출 962억달러 컨센 924억 상회·EPS 2.22달러 컨센 2.09 상회·데이터센터 890억 +117% YoY 사이클 축·Q3 가이던스 1,080억달러 컨센 42억 상회 조합이 AI CAPEX 재가속 최대 카타리스트·AWS 200만 GPU 조달 계약 병존이 하이퍼스케일러 락인 근거·시간외 랠리 지속 시나리오 트리거",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": -1.6
       },
       {
         "label": "알테오젠",
@@ -34,8 +34,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "down",
         "rationale": "직전 거래일 종가 311,500원 +32.6% 급등·30% 무상증자 신주 1,606만주 8/26 추가 상장 첫날 유동성 확대 축·급등 후 차익 실현 사이클 진입 시나리오 최대 트리거·MSD 로열티 여진 소화 국면 카운터·바이오 대형주 카테고리 순환 조정 병존이 forward 단기 조정 근거·8월 누계 +40% 랠리 후 기술적 반락 시그널",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": 1
       }
     ]
   },
@@ -238,3 +238,4 @@ const PREDICTION_SCORECARD = [
     ]
   }
 ];
+채점 완료: 2026-08-27 기준 변경된 항목 있음
