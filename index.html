@@ -945,7 +945,7 @@ body.sub-modal-open{overflow:hidden}
 .insight-asset{font:500 12px/1 'Geist Mono',monospace;padding:5px 11px;background:var(--acc-soft);color:var(--acc-deep);border-radius:9999px}
 @media(max-width:640px){
   .insight-layout{grid-template-columns:1fr}
-  .insight-list{flex-direction:row;overflow-x:auto;padding-bottom:8px;gap:8px}
+  .insight-list{flex-direction:row;overflow-x:auto;padding-bottom:8px;gap:8px;min-width:0;width:100%}
   .insight-list-item{min-width:72px;flex-shrink:0}
   .insight-list-title{display:none}
   .insight-card{padding:18px 20px}
@@ -3069,9 +3069,9 @@ async function loadDailyInsight(){
 
 function renderDailyInsights(insights){
   if(!insights||!insights.length) return;
-  _dailyInsights=insights;
+  _dailyInsights=insights.slice(0,7);
   const listEl=document.getElementById('insightList');
-  listEl.innerHTML=insights.map((item,i)=>{
+  listEl.innerHTML=_dailyInsights.map((item,i)=>{
     const d=new Date(item.date);
     const dateStr=`${d.getMonth()+1}월 ${d.getDate()}일`;
     const short=item.title.length>20?item.title.slice(0,20)+'…':item.title;
