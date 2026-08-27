@@ -7,6 +7,39 @@
 //   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = [
   {
+    "date": "2026-08-28",
+    "made": "2026-08-28 07:25 KST",
+    "predictions": [
+      {
+        "label": "포스코퓨처엠",
+        "ticker": "003670",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 184,000원 +9.1% 급등·미 전력망 확충 ESS 수요 확대 관측·2차전지 양극재 수직계열화 카테고리 리레이팅 사이클 축·삼성SDI +10.3%·LG엔솔 +5.6% 그룹 랠리 편승·외국인 순매수 확대 근거·중국 전력망 축출 반사이익 서사 유지가 forward 카테고리 확산 카타리스트",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "CRWD",
+        "ticker": "CRWD",
+        "market": "US",
+        "direction": "down",
+        "rationale": "직전 거래일 종가 225.57달러 +19.2% 급등·Q2 실적 서프라이즈·ARR 가이던스 630bp 상향 카타리스트 소화 사이클 축·post-earnings 대형 갭업 후 차익 실현 패턴 트리거·사이버보안 그룹(OKTA +29·PANW +13.3·ZS +10.1) 동반 대형 랠리 후 순환 조정 시나리오·forward P/E 프리미엄 부담이 short-term 카운터 근거",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "SMR",
+        "ticker": "SMR",
+        "market": "US",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 9.725달러 +4.9% 강세·AI 데이터센터 전력 수요 카테고리 확산 축·엔비디아 Q2 서프라이즈 후방 원전·SMR 카테고리 편승 트리거·미 국방부 우라늄 농축 계약·X-energy 상용 계약 서사 유지·OKLO +3.8%·LEU +4.6% 카테고리 그룹 랠리 병존이 forward 카테고리 확산 근거",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
     "date": "2026-08-27",
     "made": "2026-08-27 07:40 KST",
     "predictions": [
@@ -203,39 +236,5 @@ const PREDICTION_SCORECARD = [
         "actual": -1
       }
     ]
-  },
-  {
-    "date": "2026-08-19",
-    "made": "2026-08-19 07:25 KST",
-    "predictions": [
-      {
-        "label": "삼성전자",
-        "ticker": "005930",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "화요일 268,500원 -2.2% 갭업 후 차익실현 반락 마감·외국인 1,767억원 순매수 지지·HBM3E 12H 양산 램프·마이크론 +4.1% D램 슈퍼사이클 후행 랠리 조합이 반등 축·필라델피아 반도체지수 강세 후행이 대장주 회복 카운터",
-        "result": "miss",
-        "actual": -7.8
-      },
-      {
-        "label": "삼성SDI",
-        "ticker": "006400",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "화요일 488,000원 -5.4% 급락 여진 오버솔드·리튬 카보네이트 21달러대 안정·IRA 8월 말 종료 앞두고 밀어내기 수요 재개 관측·2차전지 대장주 낙폭 확대 이후 기술적 반등 국면 카운터",
-        "result": "hit",
-        "actual": -0.2
-      },
-      {
-        "label": "MU",
-        "ticker": "MU",
-        "market": "US",
-        "direction": "up",
-        "rationale": "월요일 1,011.75달러 +4.1% 강세 마감·HBM 후행 랠리·D램 슈퍼사이클 확장 사이클·9/22 Q4 실적 D-33 대기·엔비디아 8/26 실적 D-7 카탈리스트 조합이 forward 매수세 지속 근거",
-        "result": "miss",
-        "actual": -7
-      }
-    ]
   }
 ];
-채점 완료: 2026-08-27 기준 변경된 항목 있음
