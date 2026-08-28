@@ -218,6 +218,9 @@ const fixed = [
   { cat:'macro', impact:3, title:'미국 8월 CPI', date:'2026-09-10', desc:'BLS 8:30 ET·9월 FOMC 전 최종 인플레 확인대' },
   { cat:'macro', impact:2, title:'미국 8월 PPI', date:'2026-09-11', desc:'근원 PPI 동반 발표' },
   { cat:'macro', impact:3, title:'9월 FOMC 결과', date:'2026-09-17', desc:'KST 오전 3시·점도표·SEP 동반 발표·연내 인하 경로 최종 확정' },
+  { cat:'macro', impact:2, title:'중국 8월 NBS 제조업 PMI', date:'2026-08-31', desc:'매월 말일 발표·9월 FOMC 앞 중국 매크로 시그널' },
+  { cat:'macro', impact:2, title:'한국 8월 무역수지', date:'2026-09-01', desc:'산업통상자원부·수출 증감률·반도체 수출 방향 확인' },
+  { cat:'macro', impact:2, title:'한국 8월 CPI', date:'2026-09-02', desc:'통계청·근원 CPI YoY·한은 통화정책 시그널' },
 ];
 
 // 외부에서 접근할 변수명 (다른 update.js와 일관성)

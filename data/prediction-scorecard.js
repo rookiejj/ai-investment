@@ -7,6 +7,39 @@
 //   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = [
   {
+    "date": "2026-08-31",
+    "made": "2026-08-29 07:45 KST",
+    "predictions": [
+      {
+        "label": "SK하이닉스",
+        "ticker": "000660",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 1,653,000원 -4.4% 급락·전날 6,912 사상 최고 랠리 소화 국면 확인·NVDA Q2 서프라이즈 후 익일 대반전 카운터 소화 국면·40조 자사주 소각 사이클·HBM3E 12H 신제품 카탈리스트 사이클 지지·오버셀 반등 시나리오가 forward 카테고리 지지 축·외국인 대규모 매도 소화 후 월요일 반등 근거",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "MRVL",
+        "ticker": "MRVL",
+        "market": "US",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 215.88달러 -10.6% 급락·Q2 매출 27.4억달러·조정 EPS 0.94달러 컨센 상회에도 실적 후 대형 갭다운 오버셀 사이클 축·Q3 가이던스 31.5억달러 상향 카타리스트 유지·AI 커스텀 실리콘 부킹 사이클 근거·post-earnings 과매도 반등 패턴 트리거·AVGO 9/4 실적 대기 사이클 지지가 forward 카테고리 근거",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "MSTR",
+        "ticker": "MSTR",
+        "market": "US",
+        "direction": "down",
+        "rationale": "직전 거래일 종가 127.09달러 -7.5% 급락·비트코인 79,560달러 하회·전일 81,200달러 강세에서 대반전 국면 확인·Warsh 잭슨홀 매파 발언 후 크립토 위험 선호 재조정 사이클 축·9월 인상 확률 57.5% 급등 카운터·달러 강세·실질금리 압력이 forward 크립토 카테고리 카운터 근거·MSTR 프록시 하락 사이클 지속 시나리오",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
     "date": "2026-08-28",
     "made": "2026-08-28 07:25 KST",
     "predictions": [
@@ -201,39 +234,6 @@ const PREDICTION_SCORECARD = [
         "rationale": "직전 거래일 종가 $345.95·Austin Cybercab 로보택시 8월 말 공공 배치 임박·St. Elmo Road 무선충전 허브·80대 설치 계획·Gigafactory Texas 연 12.5만대 생산 능력이 자율주행 상용화 실체화 축·다우 -703pt 급락 후 리스크 리셋 카운터",
         "result": "miss",
         "actual": -1.7
-      }
-    ]
-  },
-  {
-    "date": "2026-08-20",
-    "made": "2026-08-20 07:28 KST",
-    "predictions": [
-      {
-        "label": "한화에어로스페이스",
-        "ticker": "012450",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "수요일 종가 1,177,000원 +2.7% 코스피 -5.8% 급락 유일 강세·미 육군 Mobile Tactical Cannon 프로토타입 계약·K9PL 폴란드 2차·유럽·중동 backlog 100조 조합이 방산 로테이션 momentum 축·지정학 리스크 프리미엄 확장 카운터",
-        "result": "miss",
-        "actual": -0.8
-      },
-      {
-        "label": "삼성전자",
-        "ticker": "005930",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "수요일 종가 247,500원 -7.8% oversold·오늘 JP모건 아시아 테크 투어 IR 개막·씨티 코리아 인베스터 컨퍼런스·HBM4 램프·엔비디아 승인 스케줄·미 30년물 -9bp 5.196% 반락 완화가 반등 트리거 축·야간선물 -3.7% 여진은 카운터",
-        "result": "hit",
-        "actual": 9.5
-      },
-      {
-        "label": "NVDA",
-        "ticker": "NVDA",
-        "market": "US",
-        "direction": "up",
-        "rationale": "수요일 종가 218.14달러 +0.3% 강보합·Q2 FY27 실적 8/26 D-6·컨센 매출 918~950억달러·데이터센터 250억달러+·Blackwell Ultra 램프·재무부 buyback 확대 30년물 반락이 성장주 프리미엄 회복 축·마이클 버리 숏 여진 카운터",
-        "result": "miss",
-        "actual": -1
       }
     ]
   }
