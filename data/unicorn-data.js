@@ -75,9 +75,9 @@ const data = [
       },
       {
         "nm": "Perplexity AI",
-        "rs": "Forge 세컨더리 주당 65.54달러 - 210억달러 밸류 접근·월 4,500만 사용자·NVDA·Bezos·SoftBank 투자자군",
+        "rs": "Forge 세컨더리 주당 65.54달러 - 248억달러 밸류 접근·월 4,500만 사용자·NVDA·Bezos·SoftBank 투자자군",
         "ipo": "2028",
-        "val": "$21B",
+        "val": "$24.8B",
         "round": "Series E-7 / Forge 세컨더리",
         "sector": "AI 검색"
       },
