@@ -3091,7 +3091,7 @@ function selectDailyInsight(idx){
   document.querySelectorAll('.insight-list-item').forEach((el,i)=>el.classList.toggle('ins-active',i===idx));
   document.getElementById('insightTitle').textContent=item.title||'';
   const paras=(item.body||'').split('\n\n').filter(Boolean);
-  document.getElementById('insightBody').innerHTML=paras.map(p=>`<p>${escapeHtml(p)}</p>`).join('');
+  document.getElementById('insightBody').innerHTML=paras.map(p=>`<p>${escapeHtml(p.replace(/\n/g,' '))}</p>`).join('');
   document.getElementById('insightAssets').innerHTML=(item.assets||[])
     .map(a=>`<span class="insight-asset">${escapeHtml(a)}</span>`).join('');
 }
