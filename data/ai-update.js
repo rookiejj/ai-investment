@@ -1,25 +1,25 @@
 const UPDATES = [
   {
-    "date": "2026-08-28 19:25 KST",
-    "summary": "OpenAI DeployCo 신설 - 40억달러 초기 투자, AI 컨설팅 자회사 카테고리 진출\nAnthropic Oracle OCI 파트너십 - 해석성 리서치 워크로드 병렬화 확산\nAnthropic Model Hardware Standard 리서치 프리뷰 - AI 에이전트 물리 디바이스 표준\nOpenAI Tomoro 인수 - 응용 AI 컨설팅 흡수, DeployCo 서비스 확산\nGLM-5.3 Flash Z.ai 26일 출시 - 오픈 웨이트 프론티어 카테고리 확산 유지",
+    "date": "2026-08-29 07:30 KST",
+    "summary": "Anthropic Ode JV 15억달러 - Blackstone·H&F·골드만 규제 산업 소버린\nMeta Muse Glimmer 오픈 웨이트 - 노트북 구동 모델, 소버린 확산 축\nAnthropic 10월 나스닥 상장 카운트다운 - 2조달러 목표 서사 유지\nOpenAI DeployCo 40억달러 사이클 확산 - 컨설팅 자회사 카테고리 지지\nDeepSeek V4 Flash 93% 가격 인상 - 오픈 웨이트 수익화 사이클 확산",
     "entries": [
       {
-        "time": "2026-08-28 19:25 KST",
-        "type": "구조조정",
-        "sector": "OpenAI",
-        "text": "OpenAI. DeployCo(OpenAI Deployment Co.) 신설·40억달러 초기 투자 사이클 축·AI 컨설팅 자회사 카테고리 진출이 forward 엔터프라이즈 매출 다변화 최대 카타리스트 근거·Tomoro 응용 AI 컨설팅 인수 병존이 forward 컨설팅 카테고리 확산 트리거·ChatGPT for Teachers 학군 확산 사이클 지속·Stargate 4.5GW 데이터센터 임대·1,220억달러 라운드 사이클 유지·Codex 개편·GPT-5.6 Sol 시리즈 확산 병존이 forward capability 지지 축·Anthropic·Google·xAI 4강 프론티어 재편 카운터. capability 렌즈 - DeployCo가 forward 엔터프라이즈 카테고리 확산 축, monetization 렌즈 - 40억달러 초기 투자가 forward 컨설팅 매출 카타리스트, cross-asset 렌즈 - Tomoro 인수가 forward 응용 AI 카테고리 락인 근거."
-      },
-      {
-        "time": "2026-08-28 19:25 KST",
+        "time": "2026-08-29 07:30 KST",
         "type": "인프라",
         "sector": "Anthropic",
-        "text": "Anthropic. Oracle Cloud Infrastructure(OCI) 파트너십 8월 사이클 축·bare metal 클러스터 활용 해석성 리서치 워크로드 병렬화 조합이 forward 컴퓨트 다변화 최대 카타리스트 근거·Model Hardware Standard 리서치 프리뷰 병존이 forward AI 에이전트 물리 디바이스 표준 사이클 트리거·Meta 100억달러 컴퓨트 딜 협상·xAI 300MW 12.5억달러/월 임대 3중 컴퓨트 다변화 근거·글로벌 어페어스 헤드 신규 임명 사이클 지속·8/13 첫 흑자 전환 서사가 forward 프라이빗 마켓 리레이팅 축·9,650억달러 Series H 밸류에서 2조달러 IPO 목표 시나리오 유지·10월 나스닥 상장 골드만·JPM·모건스탠리 주간 시나리오·Claude Opus 5 7/24 출시·8/12 Max 신규 디폴트 사이클이 forward capability 근거. capability 렌즈 - Model Hardware Standard가 forward 에이전트 표준 카테고리 지배력 축, monetization 렌즈 - OCI 파트너십이 forward 컴퓨트 비용 최적화 카타리스트, cross-asset 렌즈 - 4중 컴퓨트 파트너 락인이 forward 캐파 병목 해소 근거."
+        "text": "Anthropic. Ode with Anthropic 15억달러 JV 사이클 유지 축·Blackstone·Hellman & Friedman·Goldman Sachs·Apollo·General Atlantic 공동 지분 조합이 forward 규제 산업 소버린 배포 최대 카타리스트 근거·엔터프라이즈 100 엔지니어 배치·Fractional AI 인수 사이클 지지·중형 은행·헬스케어·제조업 카테고리 정조준 트리거·10월 나스닥 상장 카운트다운·2조달러 IPO 목표 시나리오 유지가 forward 프라이빗 마켓 리레이팅 축·Claude Opus 5 7/24 출시·8/12 Max 신규 디폴트·Model Hardware Standard 프리뷰가 forward 에이전트 표준 카테고리 지배력 지지 근거·8/13 첫 흑자 전환 서사·Oracle OCI 파트너십 병존이 forward 컴퓨트 다변화 지지 축. monetization 렌즈 - Ode 15억달러 JV가 forward 컨설팅 매출 카타리스트, capability 렌즈 - Model Hardware Standard가 forward 에이전트 표준 카테고리 지배력 축, cross-asset 렌즈 - 규제 산업 소버린 배포가 forward 락인 근거."
       },
       {
-        "time": "2026-08-28 19:25 KST",
+        "time": "2026-08-29 07:30 KST",
         "type": "모델 출시",
+        "sector": "Meta AI",
+        "text": "Meta AI. Muse Glimmer 오픈 웨이트 배포 사이클 축·노트북 구동 오픈소스 모델 카테고리 확산 조합이 forward 소버린 AI 카테고리 최대 카타리스트 근거·Muse Spark 1.2 웨이트 배포 예정 로드맵 지지·오픈소스 대안 서사가 forward 프론티어 카테고리 카운터 트리거·FY26 CapEx 1,350~1,450억달러 상향 사이클 유지·라마·MetaAI Assistant·Reality Labs XR 카테고리 확장 병존이 forward 지배력 지지 축·Warsh 매파 발언 후 AI CAPEX 카테고리 forward 재조정 관측 카운터 조합이 매크로 재조정 근거. capability 렌즈 - Muse Glimmer가 forward 오픈 웨이트 카테고리 지배력 축, monetization 렌즈 - 노트북 구동 오픈소스가 forward 소버린 배포 카타리스트, cross-asset 렌즈 - 오픈소스 대안이 forward 프론티어 카테고리 회전 근거."
+      },
+      {
+        "time": "2026-08-29 07:30 KST",
+        "type": "가격",
         "sector": "Mistral AI",
-        "text": "Mistral AI·Z.ai(GLM-5.3 Flash). Z.ai 8/26 GLM-5.3 Flash 출시 사이클 축·오픈 웨이트 프론티어 카테고리 확산 조합이 forward capability 카테고리 확산 최대 카타리스트 근거·중국 오픈 웨이트 모델 진영 확산 서사가 forward 오픈소스 카테고리 지배력 트리거·Mistral 유럽 프론티어 카테고리 유지·소버린 AI 서사 유지가 forward 카테고리 지지 축·xAI Grok 4.6 8/12 출시·지능 지수 61 매칭·$2/$6/M 프라이싱 유지 병존이 forward 프론티어 카테고리 확산 근거·8월 14개 신규 AI 모델 출시·8개 프로바이더 확산 조합이 forward 오픈소스 확산 카운터. capability 렌즈 - GLM-5.3 Flash가 forward 오픈 웨이트 카테고리 지배력 축, monetization 렌즈 - Mistral 유럽 프론티어가 forward 소버린 AI 카타리스트, cross-asset 렌즈 - 오픈 웨이트 확산이 forward 프론티어 카테고리 회전 근거."
+        "text": "Mistral AI·DeepSeek·Z.ai. DeepSeek V4 Flash 8/14 요금 93% 인상 사이클 축·0.14달러→0.27달러/M 프라이싱 재조정 조합이 forward 오픈 웨이트 수익화 카테고리 최대 카타리스트 근거·V4 Flash Vision Exp 8/21 출시·LLM Gateway 8/27 등재 사이클 지지·중국 오픈 웨이트 진영 확산 트리거·Z.ai GLM-5.3 Flash 8/26 출시 유지·Mistral 유럽 프론티어·소버린 AI 서사 병존이 forward 카테고리 지지 축·8월 14개 신규 AI 모델·8개 프로바이더 확산 조합이 forward 프론티어 카테고리 확산 근거·Grok Imagine 2.0 xAI 8/8 출시 유지가 forward 이미지 카테고리 확산 카운터. monetization 렌즈 - DeepSeek 93% 인상이 forward 오픈 웨이트 수익화 카타리스트, capability 렌즈 - V4 Flash Vision Exp가 forward 비전 카테고리 지배력 축, cross-asset 렌즈 - 오픈 웨이트 진영 확산이 forward 프론티어 회전 근거."
       }
     ]
   }
