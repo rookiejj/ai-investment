@@ -602,7 +602,7 @@ Deno.serve(async (req) => {
         result = await aligoSendFriendtalk({
           proxyUrl, proxySecret,
           receivers: batch, message,
-          buttonName: isKstSunday() ? "브리픽 앱에서 더 보기 →" : insight ? "투자 지식 전문 보기 →" : "더 자세한 브리핑 보러가기",
+          buttonName: insight ? "투자 지식 전문 보기 →" : "더 자세한 브리핑 보러가기",
         });
         if (result.code !== 0) {
           errMsg = `aligo code=${result.code}: ${result.message}`;
