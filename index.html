@@ -1893,6 +1893,13 @@ function expandRecurring(recurring, fromDate, days){
         const target=firstOfDow+(s.n-1)*7;
         if(day===target && !US_MARKET_HOLIDAYS.has(fmtKSTDate(d)))match=true;
       }
+      else if(s.type==='monthly_last_dow' && s.dow===dow){
+        // 매월 마지막 해당 요일
+        const daysInMonth=new Date(Date.UTC(y,m,0)).getUTCDate();
+        const lastDay=new Date(Date.UTC(y,m-1,daysInMonth));
+        const lastOfDow=daysInMonth-((lastDay.getUTCDay()-s.dow+7)%7);
+        if(day===lastOfDow && !US_MARKET_HOLIDAYS.has(fmtKSTDate(d)))match=true;
+      }
       else if(s.type==='monthly_day' && s.day===day){match=true}
       else if(s.type==='monthly_business_day'){
         // 매월 N번째 영업일 (월~금, 휴장일 제외)

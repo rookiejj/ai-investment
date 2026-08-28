@@ -36,6 +36,10 @@ const recurring = [
     schedule:{type:'monthly_nth_dow', n:4, dow:5} }, // 매월 넷째 금요일 (확정)
   { cat:'macro', impact:2, title:'미국 컴퍼런스보드 소비자신뢰지수',
     schedule:{type:'monthly_nth_dow', n:4, dow:2} }, // 매월 넷째 화요일경
+  { cat:'macro', impact:1, title:'미국 NY 엠파이어 스테이트 제조업지수',
+    schedule:{type:'monthly_nth_dow', n:3, dow:1} }, // 매월 셋째 월요일경 (15일 전후)
+  { cat:'macro', impact:1, title:'미국 달라스 연준 제조업지수',
+    schedule:{type:'monthly_last_dow', dow:1} }, // 매월 마지막 월요일
 
   // === 한국 매크로 (정기) ===
   { cat:'macro', impact:2, title:'한국 수출입 잠정',
