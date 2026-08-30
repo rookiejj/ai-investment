@@ -221,6 +221,8 @@ const fixed = [
   { cat:'macro', impact:2, title:'중국 8월 NBS 제조업 PMI', date:'2026-08-31', desc:'매월 말일 발표·9월 FOMC 앞 중국 매크로 시그널' },
   { cat:'macro', impact:2, title:'한국 8월 무역수지', date:'2026-09-01', desc:'산업통상자원부·수출 증감률·반도체 수출 방향 확인' },
   { cat:'macro', impact:2, title:'한국 8월 CPI', date:'2026-09-02', desc:'통계청·근원 CPI YoY·한은 통화정책 시그널' },
+  { cat:'macro', impact:1, title:'미국 NFIB 8월 소기업 낙관', date:'2026-09-08', desc:'둘째 화요일·중소기업 심리 지수·노동시장 세부 시그널' },
+  { cat:'macro', impact:2, title:'미국 9월 미시간대 소비자심리 1차', date:'2026-09-12', desc:'둘째 금요일·소비자 기대 인플레·연말 소비 모멘텀 시그널' },
 ];
 
 // 외부에서 접근할 변수명 (다른 update.js와 일관성)
