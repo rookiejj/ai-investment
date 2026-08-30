@@ -235,74 +235,9 @@ const fixed = [
 
 
 
+
 // === AUTO-EARNINGS (scripts/fetch-earnings-calendar.js 자동 생성 — 손대지 말 것) ===
 const autoEarnings = [
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "CrowdStrike 실적",
-    "date": "2026-08-26",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "CRWD"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "NVIDIA 실적",
-    "date": "2026-08-26",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "NVDA"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "Okta 실적",
-    "date": "2026-08-26",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "OKTA"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "Salesforce 실적",
-    "date": "2026-08-26",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "CRM"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "SentinelOne 실적",
-    "date": "2026-08-27",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "S"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "한진칼 실적",
-    "date": "2026-08-27",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "180640"
-    ],
-    "src": "auto-earnings"
-  },
   {
     "cat": "earnings",
     "impact": 2,
@@ -405,17 +340,6 @@ const autoEarnings = [
   {
     "cat": "earnings",
     "impact": 2,
-    "title": "Micron 실적",
-    "date": "2026-09-23",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "MU"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
     "title": "Costco 실적",
     "date": "2026-09-24",
     "desc": "실적 발표 예정",
@@ -427,11 +351,110 @@ const autoEarnings = [
   {
     "cat": "earnings",
     "impact": 2,
+    "title": "Micron 실적",
+    "date": "2026-09-30",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "MU"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
     "title": "Delta Air Lines 실적",
     "date": "2026-10-08",
     "desc": "실적 발표 예정",
     "tickers": [
       "DAL"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "Goldman Sachs 실적",
+    "date": "2026-10-13",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "GS"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "JPMorgan 실적",
+    "date": "2026-10-13",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "JPM"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "Wells Fargo 실적",
+    "date": "2026-10-13",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "WFC"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "ASML 실적",
+    "date": "2026-10-14",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "ASML"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "Bank of America 실적",
+    "date": "2026-10-14",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "BAC"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "BlackRock 실적",
+    "date": "2026-10-14",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "BLK"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "Morgan Stanley 실적",
+    "date": "2026-10-14",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "MS"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "한미반도체 실적",
+    "date": "2026-10-14",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "042700"
     ],
     "src": "auto-earnings"
   }
