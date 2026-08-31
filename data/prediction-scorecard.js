@@ -7,6 +7,39 @@
 //   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = [
   {
+    "date": "2026-09-01",
+    "made": "2026-09-01 07:25 KST",
+    "predictions": [
+      {
+        "label": "엘앤에프",
+        "ticker": "066970",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 146,700원 +8.8% 급등·2차전지 순환매 3거래일 확산 사이클 축·테슬라 공급망 재점화 시나리오 강화·포스코퓨처엠 +7.6%·삼성SDI +1.1% 그룹 랠리 편승 근거·NCMA 양극재 카테고리 리레이팅 트리거·미 ESS 수주 확대 관측이 forward 카테고리 지지 축·외국인 순매수 확대 근거",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "GOOGL",
+        "ticker": "GOOGL",
+        "market": "US",
+        "direction": "down",
+        "rationale": "직전 거래일 종가 337.17달러 -2.7% 조정·반독점 리스크 재부각 사이클 축·검색 카테고리 재평가 국면 지속 근거·AMZN -2.5%·MSFT -0.9% 메가캡 그로스 로테이션 소화 트리거·9월 FOMC 3주 카운트다운 국면·9월 4일 미 고용지표 대기 카운터·매파 여진 후 프리미엄 재조정 여지가 forward 카테고리 카운터 근거",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "XOM",
+        "ticker": "XOM",
+        "market": "US",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 160.74달러 +2.6% 강세·유가 회복 편승 사이클 축·OPEC+ 9월 회의 감산 결정 관측이 forward 카타리스트·CVX +2.5%·SLB +3.6% 에너지 카테고리 순환매 재개 근거·WTI 82.82달러 상단 지지 유지 트리거·매파 여진 후 실물 자산 로테이션 축·Q2 순이익 145억달러 전년 2배 서사 유지가 forward 상단 근거",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
     "date": "2026-08-31",
     "made": "2026-08-29 07:45 KST",
     "predictions": [
@@ -16,8 +49,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "직전 거래일 종가 1,653,000원 -4.4% 급락·전날 6,912 사상 최고 랠리 소화 국면 확인·NVDA Q2 서프라이즈 후 익일 대반전 카운터 소화 국면·40조 자사주 소각 사이클·HBM3E 12H 신제품 카탈리스트 사이클 지지·오버셀 반등 시나리오가 forward 카테고리 지지 축·외국인 대규모 매도 소화 후 월요일 반등 근거",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 1.3
       },
       {
         "label": "MRVL",
@@ -25,8 +58,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "직전 거래일 종가 215.88달러 -10.6% 급락·Q2 매출 27.4억달러·조정 EPS 0.94달러 컨센 상회에도 실적 후 대형 갭다운 오버셀 사이클 축·Q3 가이던스 31.5억달러 상향 카타리스트 유지·AI 커스텀 실리콘 부킹 사이클 근거·post-earnings 과매도 반등 패턴 트리거·AVGO 9/4 실적 대기 사이클 지지가 forward 카테고리 근거",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": -2.6
       },
       {
         "label": "MSTR",
@@ -34,8 +67,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "down",
         "rationale": "직전 거래일 종가 127.09달러 -7.5% 급락·비트코인 79,560달러 하회·전일 81,200달러 강세에서 대반전 국면 확인·Warsh 잭슨홀 매파 발언 후 크립토 위험 선호 재조정 사이클 축·9월 인상 확률 57.5% 급등 카운터·달러 강세·실질금리 압력이 forward 크립토 카테고리 카운터 근거·MSTR 프록시 하락 사이클 지속 시나리오",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": -1.1
       }
     ]
   },
@@ -201,39 +234,6 @@ const PREDICTION_SCORECARD = [
         "rationale": "직전 종가 172.35달러 +7.6% 급등·비트코인 77,860달러 주간 +22% 2024년 3월 이후 최대 랠리·트럼프 CLARITY Act 통과 촉구·SEC 프레임워크 규제 정합성 회복 조합이 크립토 관련주 리더십 축·주말 유동성 얇음 리스크 카운터",
         "result": "hit",
         "actual": 8.2
-      }
-    ]
-  },
-  {
-    "date": "2026-08-21",
-    "made": "2026-08-21 07:26 KST",
-    "predictions": [
-      {
-        "label": "삼양식품",
-        "ticker": "003230",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "직전 거래일 종가 1,397,000원 +7.1% 급등·K-food 카테고리 라면·불닭 미국·유럽 매출 사상 최대 서사·2Q 영업이익 컨센 상회 여진이 momentum 축·코스피 반등 이틀차 순환매 소비주 확산 카운터",
-        "result": "miss",
-        "actual": -2.2
-      },
-      {
-        "label": "이수페타시스",
-        "ticker": "377300",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "직전 거래일 종가 44,950원 +9.0% 급등·HBM 기판 카테고리 확장·SK하이닉스·삼성전자 40조·100조 주주환원 서사 후방 수혜·NVDA Q2 D-5 데이터센터 매출 750억달러+ 컨센 대기가 반도체 후방 lock-in 축",
-        "result": "miss",
-        "actual": -5.5
-      },
-      {
-        "label": "TSLA",
-        "ticker": "TSLA",
-        "market": "US",
-        "direction": "up",
-        "rationale": "직전 거래일 종가 $345.95·Austin Cybercab 로보택시 8월 말 공공 배치 임박·St. Elmo Road 무선충전 허브·80대 설치 계획·Gigafactory Texas 연 12.5만대 생산 능력이 자율주행 상용화 실체화 축·다우 -703pt 급락 후 리스크 리셋 카운터",
-        "result": "miss",
-        "actual": -1.7
       }
     ]
   }
