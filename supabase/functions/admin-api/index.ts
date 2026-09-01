@@ -770,6 +770,35 @@ Deno.serve(async (req) => {
       return json({ ok: true }, { cors });
     }
 
+    // ─── trial_stats ─── 무료 체험 현황
+    if (action === "trial_stats") {
+      const nowIso = new Date().toISOString();
+      const monthStart = new Date();
+      monthStart.setDate(1); monthStart.setHours(0, 0, 0, 0);
+      const monthStartIso = monthStart.toISOString();
+
+      const { data: rows, error: trErr } = await supabase
+        .from("subscribers")
+        .select("phone, status, paid_until, trial_starts_at, created_at")
+        .not("trial_starts_at", "is", null)
+        .order("trial_starts_at", { ascending: false })
+        .limit(50);
+      if (trErr) throw trErr;
+
+      const all = rows ?? [];
+      const total = all.length;
+      const active = all.filter((r) => {
+        const s = r as Record<string, unknown>;
+        return s.status === "active" && s.paid_until && new Date(s.paid_until as string).getTime() > Date.now();
+      }).length;
+      const thisMonth = all.filter((r) => {
+        const s = r as Record<string, unknown>;
+        return (s.trial_starts_at as string) >= monthStartIso;
+      }).length;
+
+      return json({ ok: true, total, active, this_month: thisMonth, recent: all.slice(0, 20) }, { cors });
+    }
+
     if (action === "resume_load") {
       const { data, error } = await supabase
         .from("resume_data")

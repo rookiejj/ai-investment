@@ -11,6 +11,7 @@
  */
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { sendTrialAlimtalk } from "../_shared/alimtalk.ts";
 
 const TRIAL_DAYS = 14;
 
@@ -108,6 +109,15 @@ Deno.serve(async (req) => {
         },
       });
       if (insErr) throw insErr;
+    }
+
+    // 알림톡 발송 (실패해도 체험 시작은 성공 처리)
+    // KST 날짜 → YYYY-MM-DD (UTC+9 보정 후 ISO slice)
+    const trialEndsKst = new Date(trialEnd.getTime() + 9 * 60 * 60 * 1000);
+    const trialEndsDate = trialEndsKst.toISOString().slice(0, 10);  // "2026-09-15"
+    const alimtalkResult = await sendTrialAlimtalk({ phone: cleaned, trialEndsDate });
+    if (!alimtalkResult.ok) {
+      console.warn("[start-free-trial] alimtalk failed:", alimtalkResult.error);
     }
 
     return json({ ok: true, status: "trial_started", trial_ends_at: trialEndIso }, { cors });

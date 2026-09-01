@@ -747,6 +747,19 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
     <section class="view hidden" data-view="events">
       <div class="stats-grid" id="eventsStatsGrid"></div>
 
+      <!-- 무료 체험 현황 -->
+      <div class="section">
+        <div class="section-title">무료 체험 현황 <span class="count" id="trialCount"></span></div>
+        <div class="section-subtitle">결제 없이 14일 무료 체험을 신청한 번호. 번호당 1회 한정.</div>
+        <div class="stats-grid" id="trialStatsGrid" style="margin-bottom:16px"></div>
+        <div class="tbl-scroll">
+          <table class="tbl">
+            <thead><tr><th>체험 시작</th><th>전화번호</th><th>상태</th><th>만료일</th></tr></thead>
+            <tbody id="trialBody"><tr><td colspan="4" class="loading">로딩 중…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
       <div class="section">
         <div class="section-title">프로모 이벤트 <span class="count" id="eventsCount"></span></div>
         <div class="section-subtitle">결제 시 paid_until 에 자동 가산되는 보너스. 같은 이벤트는 번호당 1회, 다른 이벤트엔 별개로 적용. 가장 큰 보너스 1개만 (stacking 안 함).</div>
@@ -1020,7 +1033,7 @@ function loadView(name){
   else if(name === 'payments'){ loadPaysStats(); loadExpiring(); loadPayments(); }
   else if(name === 'sends'){ loadSendsStats(); loadLogs(); loadManualTargets(); dsLoadTargets(); }
   else if(name === 'notice'){ noticeLoadTargets(); }
-  else if(name === 'events'){ eventsLoadList(); }
+  else if(name === 'events'){ eventsLoadList(); loadTrialStats(); }
   else if(name === 'surveys'){ surveyLoadList(); }
   else if(name === 'system'){ /* 버튼 클릭 시 lazy fetch — 즉시 fetch는 안 함 */ }
   else if(name === 'resume'){ resumeLoad(); }
@@ -1047,6 +1060,41 @@ function fmtKstDateTime(iso){
   return new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}).format(new Date(iso));
 }
 function fmtPhone(p){return (p||'').replace(/(\d{3})(\d{3,4})(\d{4})/,'$1-$2-$3')}
+
+async function loadTrialStats(){
+  const body = $('trialBody');
+  $('trialStatsGrid').innerHTML = '';
+  body.innerHTML = '<tr><td colspan="4" class="loading">로딩 중…</td></tr>';
+  const r = await call('trial_stats');
+  if(!r.ok){ body.innerHTML = `<tr><td colspan="4" class="empty">로드 실패: ${r.error||'-'}</td></tr>`; return; }
+
+  $('trialCount').textContent = `총 ${r.total}명`;
+  $('trialStatsGrid').innerHTML = [
+    { label:'총 체험 신청', value: r.total, unit:'명', cls:'' },
+    { label:'현재 활성', value: r.active, unit:'명', cls:'accent' },
+    { label:'이번 달 신청', value: r.this_month, unit:'명', cls:'info' },
+  ].map(c => `<div class="stat-card ${c.cls}"><div class="label">${c.label}</div><div class="value">${c.value}<span class="unit">${c.unit}</span></div></div>`).join('');
+
+  const rows = r.recent || [];
+  if(rows.length === 0){
+    body.innerHTML = '<tr><td colspan="4" class="empty" style="text-align:center">체험 신청 내역 없음</td></tr>';
+    return;
+  }
+  const nowMs = Date.now();
+  body.innerHTML = rows.map(row => {
+    const paidUntilMs = row.paid_until ? new Date(row.paid_until).getTime() : 0;
+    const isActive = row.status === 'active' && paidUntilMs > nowMs;
+    const statusBadge = isActive
+      ? `<span class="badge active">체험 중</span>`
+      : `<span class="badge cancelled">종료</span>`;
+    return `<tr>
+      <td>${fmtDateTime(row.trial_starts_at)}</td>
+      <td class="c-phone">${escapeHtml(fmtPhone(row.phone))}</td>
+      <td>${statusBadge}</td>
+      <td>${row.paid_until ? fmtDate(row.paid_until) : '-'}</td>
+    </tr>`;
+  }).join('');
+}
 
 async function eventsLoadList(){
   const wrap = $('eventListWrap');
