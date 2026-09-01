@@ -699,17 +699,16 @@ body.sub-modal-open{overflow:hidden}
   .sub-modal-header::before{display:none}
 }
 .sub-modal h2{font:600 20px/1.3 'Pretendard Variable',Pretendard,sans-serif;letter-spacing:-0.4px;margin:0;color:var(--fg);flex:1;min-width:0}
-.sub-modal p.sub-modal-sub{color:var(--mut);font-size:14px;line-height:1.5;margin:0 0 16px}
-.sub-modal-extend-note{display:inline-block;margin-top:4px;font-size:12px;color:var(--err);font-weight:500}
+.sub-modal p.sub-modal-sub{color:var(--mut);font-size:13px;line-height:1.5;margin:0 0 14px}
 
 /* ── 가격 플랜 선택 ── */
 .sub-modal-plans{
-  display:grid;grid-template-columns:1fr;gap:8px;margin:0 0 18px;
+  display:grid;grid-template-columns:1fr;gap:6px;margin:0 0 14px;
 }
 .sub-modal-plan{
   position:relative;display:block;cursor:pointer;
-  padding:14px 16px;border:1.5px solid var(--border);border-radius:12px;
-  background:var(--bg);transition:border-color .15s ease, background .15s ease, transform .15s ease;
+  padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;
+  background:var(--bg);transition:border-color .15s ease, background .15s ease;
 }
 .sub-modal-plan:hover{border-color:var(--border-md)}
 .sub-modal-plan.selected{
@@ -766,8 +765,8 @@ body.sub-modal-open{overflow:hidden}
   font-size:18px;line-height:1;transition:background .2s;padding:0;
 }
 .sub-modal-close:hover{background:var(--fg);color:#fff}
-.sub-modal-field{margin-bottom:14px}
-.sub-modal-field label{display:block;font:500 13px/1.4 'Inter',sans-serif;color:var(--fg2);margin-bottom:6px}
+.sub-modal-field{margin-bottom:10px}
+.sub-modal-field label{display:block;font:500 12px/1.4 'Inter',sans-serif;color:var(--mut);margin-bottom:5px}
 .sub-modal-field input[type="tel"]{
   width:100%;padding:12px 14px;background:var(--bg);
   border:1.5px solid var(--border-md);border-radius:10px;
@@ -779,9 +778,9 @@ body.sub-modal-open{overflow:hidden}
   cursor:not-allowed;
 }
 .sub-modal-consent{
-  display:flex;align-items:flex-start;gap:10px;padding:14px;
-  background:var(--acc-light);border-radius:10px;margin:16px 0 20px;
-  font-size:13px;color:var(--fg2);line-height:1.5;
+  display:flex;align-items:flex-start;gap:8px;
+  margin:10px 0 14px;
+  font-size:12px;color:var(--mut);line-height:1.5;
 }
 .sub-modal-consent input[type="checkbox"]{margin-top:2px;accent-color:var(--acc-deep);flex-shrink:0}
 .sub-modal-honeypot{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
@@ -884,21 +883,21 @@ body.sub-modal-open{overflow:hidden}
 .sub-modal.processing #subPaidDivider{display:none !important}
 .sub-trial-hero{
   background:var(--acc-soft);border:1.5px solid var(--acc);border-radius:12px;
-  padding:16px;margin-bottom:4px;
+  padding:14px;margin-bottom:2px;
 }
 .sub-trial-hero.hidden{display:none !important}
 .sub-trial-hero-top{
-  display:flex;flex-direction:column;gap:3px;margin-bottom:12px;
+  display:flex;flex-direction:column;gap:2px;margin-bottom:10px;
 }
 .sub-trial-badge{
-  font:600 11px/1 'Geist Mono',monospace;text-transform:uppercase;
-  letter-spacing:0.6px;color:var(--acc-deep);
+  font:600 10px/1 'Geist Mono',monospace;text-transform:uppercase;
+  letter-spacing:0.6px;color:var(--acc-deep);margin-bottom:2px;
 }
 .sub-trial-hero-title{
-  font:700 18px/1.3 'Inter',sans-serif;color:var(--fg);letter-spacing:-0.3px;
+  font:700 17px/1.3 'Inter',sans-serif;color:var(--fg);letter-spacing:-0.3px;
 }
 .sub-trial-hero-sub{
-  font:400 13px/1 'Inter',sans-serif;color:var(--mut);margin-top:1px;
+  font:400 12px/1 'Inter',sans-serif;color:var(--mut);
 }
 .sub-trial-btn{
   width:100%;padding:14px;background:var(--acc-deep);color:#fff;border:none;
@@ -907,8 +906,8 @@ body.sub-modal-open{overflow:hidden}
 .sub-trial-btn:hover{background:#0a8a5c}
 .sub-trial-btn:disabled{background:var(--mut2);cursor:not-allowed}
 .sub-modal-divider{
-  display:flex;align-items:center;gap:10px;margin:14px 0 10px;
-  color:var(--mut2);font:400 12px/1 'Inter',sans-serif;
+  display:flex;align-items:center;gap:10px;margin:10px 0 8px;
+  color:var(--mut2);font:400 11px/1 'Inter',sans-serif;
 }
 .sub-modal-divider::before,.sub-modal-divider::after{
   content:'';flex:1;height:1px;background:var(--border-md);
@@ -1461,7 +1460,7 @@ body.sub-modal-open{overflow:hidden}
       <h2 id="subscribeTitle">브리픽 구독하기</h2>
       <button class="sub-modal-close" type="button" aria-label="닫기" id="subscribeClose">✕</button>
     </div>
-    <p class="sub-modal-sub">매일 아침 8시, 최신 경제 뉴스를 카카오톡으로 받아보세요.<br><span class="sub-modal-extend-note">이미 구독 중이신 분들은 기간이 연장됩니다.</span></p>
+    <p class="sub-modal-sub">매일 아침 8시, 최신 경제 뉴스를 카카오톡으로 받아보세요.</p>
     <form id="subscribeForm" novalidate autocomplete="off">
       <div class="sub-modal-bonus-banner" id="subBonusBanner" style="display:none"></div>
       <div class="sub-modal-field">
@@ -3749,7 +3748,7 @@ boot();
   function resetToInput(){
     confirmState=null;
     trialMode=false;
-    setBonusBanner('neutral');
+    setBonusBanner('hidden');
     submit.disabled=false;submit.textContent=submitLabelFor(getSelectedPlan(),null);
     cancel.classList.remove('show');
     trialHero.classList.remove('hidden');
