@@ -16,8 +16,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "직전 거래일 종가 146,700원 +8.8% 급등·2차전지 순환매 3거래일 확산 사이클 축·테슬라 공급망 재점화 시나리오 강화·포스코퓨처엠 +7.6%·삼성SDI +1.1% 그룹 랠리 편승 근거·NCMA 양극재 카테고리 리레이팅 트리거·미 ESS 수주 확대 관측이 forward 카테고리 지지 축·외국인 순매수 확대 근거",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": -6.2
       },
       {
         "label": "GOOGL",
@@ -25,8 +25,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "down",
         "rationale": "직전 거래일 종가 337.17달러 -2.7% 조정·반독점 리스크 재부각 사이클 축·검색 카테고리 재평가 국면 지속 근거·AMZN -2.5%·MSFT -0.9% 메가캡 그로스 로테이션 소화 트리거·9월 FOMC 3주 카운트다운 국면·9월 4일 미 고용지표 대기 카운터·매파 여진 후 프리미엄 재조정 여지가 forward 카테고리 카운터 근거",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 0.1
       },
       {
         "label": "XOM",
@@ -34,8 +34,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "직전 거래일 종가 160.74달러 +2.6% 강세·유가 회복 편승 사이클 축·OPEC+ 9월 회의 감산 결정 관측이 forward 카타리스트·CVX +2.5%·SLB +3.6% 에너지 카테고리 순환매 재개 근거·WTI 82.82달러 상단 지지 유지 트리거·매파 여진 후 실물 자산 로테이션 축·Q2 순이익 145억달러 전년 2배 서사 유지가 forward 상단 근거",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 0.2
       }
     ]
   },
@@ -238,3 +238,4 @@ const PREDICTION_SCORECARD = [
     ]
   }
 ];
+채점 완료: 2026-09-01 기준 변경된 항목 있음
