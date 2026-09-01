@@ -7,6 +7,39 @@
 //   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = [
   {
+    "date": "2026-09-02",
+    "made": "2026-09-02 07:20 KST",
+    "predictions": [
+      {
+        "label": "HD현대중공업",
+        "ticker": "329180",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 453,000원 +0.8% 강보합·수주잔고 609억달러·MASGA 정책 후방·미 해군 MRO 추가 사이클이 조선 카테고리 지지 근거·필리조선소 State of Maine 명명식 후속 서사가 카테고리 리레이팅 축·인프라 순환매 재개 관측",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "한화에어로스페이스",
+        "ticker": "012450",
+        "market": "KR",
+        "direction": "down",
+        "rationale": "직전 거래일 종가 1,058,000원 -4% 급락 이후 방산 카테고리 차익매물 확산 지속 관측·8월 랠리 후 첫 큰 조정 국면 진입·9월 4일 미 8월 고용지표 대기 매크로 카운터·유럽 방산 예산 확대 서사에도 단기 이익 실현 우세",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "TSLA",
+        "ticker": "TSLA",
+        "market": "US",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 362.59달러 -1.5% 조정 이후 반등 시도·Model 3 가격 인하 카드·Robotaxi 확장 로드맵·Q3 배송 사이클 개시 근거·노동절 후 첫 세션 위험 선호 재조정·Optimus 상용화 로드맵이 중기 상단 축",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
     "date": "2026-09-01",
     "made": "2026-09-01 07:25 KST",
     "predictions": [
@@ -203,39 +236,5 @@ const PREDICTION_SCORECARD = [
         "actual": -2.3
       }
     ]
-  },
-  {
-    "date": "2026-08-24",
-    "made": "2026-08-22 07:21 KST",
-    "predictions": [
-      {
-        "label": "KB금융",
-        "ticker": "105560",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "직전 거래일 종가 164,300원 +2.7% 상승·밸류업 프로그램 상단 확장·주주환원 확대 서사·외국인 유가증권 2.2조원 순매수 이틀차 여진 조합이 은행 카테고리 리더십 축·forward P/B 0.6배 프리미엄 회복 사이클이 월요일 강세 카운터",
-        "result": "hit",
-        "actual": 2.7
-      },
-      {
-        "label": "NAVER",
-        "ticker": "035420",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "직전 거래일 종가 222,000원 +1.1%·플랫폼 카테고리 회복·AI 검색 커머스 로테이션 지속이 forward 매출 근거 축·워시 잭슨홀 D-6 완화 시나리오 대기가 성장주 프리미엄 재확장 카운터",
-        "result": "hit",
-        "actual": 1.1
-      },
-      {
-        "label": "COIN",
-        "ticker": "COIN",
-        "market": "US",
-        "direction": "up",
-        "rationale": "직전 종가 172.35달러 +7.6% 급등·비트코인 77,860달러 주간 +22% 2024년 3월 이후 최대 랠리·트럼프 CLARITY Act 통과 촉구·SEC 프레임워크 규제 정합성 회복 조합이 크립토 관련주 리더십 축·주말 유동성 얇음 리스크 카운터",
-        "result": "hit",
-        "actual": 8.2
-      }
-    ]
   }
 ];
-채점 완료: 2026-09-01 기준 변경된 항목 있음
