@@ -865,7 +865,8 @@ body.sub-modal-open{overflow:hidden}
 .sub-modal.completed .sub-modal-honeypot,
 .sub-modal.completed .sub-confirm-box,
 .sub-modal.completed #subSubmit,
-.sub-modal.completed #subCancel{display:none !important}
+.sub-modal.completed #subCancel,
+.sub-modal.completed #subTrialBtn{display:none !important}
 
 /* 결제 완료 후 서버 검증 중 — plan·전화번호·동의·confirm 박스 모두 숨겨 깔끔하게.
    .processing은 결제 진행 중 임시 상태. .completed로 전환되면 자동으로 풀림. */
@@ -877,7 +878,15 @@ body.sub-modal-open{overflow:hidden}
 .sub-modal.processing .sub-modal-honeypot,
 .sub-modal.processing .sub-confirm-box,
 .sub-modal.processing #subSubmit,
-.sub-modal.processing #subCancel{display:none !important}
+.sub-modal.processing #subCancel,
+.sub-modal.processing #subTrialBtn{display:none !important}
+.sub-trial-btn{
+  width:100%;padding:12px;margin-top:8px;background:transparent;
+  color:var(--fg2);border:1px solid var(--border-md);border-radius:10px;
+  font:500 14px/1 'Inter',sans-serif;cursor:pointer;transition:all .15s;
+}
+.sub-trial-btn:hover{border-color:var(--border-strong);background:var(--panel-tint)}
+.sub-trial-btn.hidden{display:none !important}
 .sub-modal.processing .sub-modal-status{
   margin:24px 0;padding:32px 18px;font-size:15px;font-weight:500;
   border-radius:12px;text-align:center;min-height:80px;
@@ -1487,6 +1496,7 @@ body.sub-modal-open{overflow:hidden}
       </label>
       <div class="sub-confirm-box" id="subConfirm"></div>
       <button class="sub-modal-submit" id="subSubmit" type="submit">2,900원 결제하기</button>
+      <button class="sub-trial-btn" id="subTrialBtn" type="button">14일 무료로 시작하기</button>
       <button class="sub-modal-cancel" id="subCancel" type="button">취소</button>
       <div class="sub-modal-status" id="subStatus"></div>
       <div class="sub-modal-success-actions" id="subSuccess">
@@ -3687,6 +3697,8 @@ boot();
   }
   function hideConfirmBox(){confirmBox.classList.remove('show');confirmBox.innerHTML=''}
   let confirmState=null;
+  let trialMode=false;
+  const trialBtn=document.getElementById('subTrialBtn');
   function resetStatus(){status.className='sub-modal-status';status.textContent=''}
   function showStatus(type,msg){status.className='sub-modal-status show '+type;status.textContent=msg}
   function syncPlanSelectedClass(){
@@ -3704,9 +3716,11 @@ boot();
   }
   function resetToInput(){
     confirmState=null;
+    trialMode=false;
     setBonusBanner('neutral');
     submit.disabled=false;submit.textContent=submitLabelFor(getSelectedPlan(),null);
     cancel.classList.remove('show');
+    trialBtn.classList.remove('hidden');
     setPlanInputsDisabled(false);
     hideConfirmBox();
     document.getElementById('subCompleteNotice').classList.remove('show');
@@ -3759,6 +3773,10 @@ boot();
     resetStatus();
   }
   cancel.addEventListener('click',()=>{phoneEl.disabled=false;consent.disabled=false;resetToInput()});
+  trialBtn.addEventListener('click',()=>{
+    trialMode=true;
+    if(form.reportValidity()) form.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
+  });
   if(openBtn) openBtn.addEventListener('click',openSubModal);  // 헤더 버튼 제거됨 — null 가드
   // 새 전환 CTA(왜 구독 섹션·모바일 sticky 바)도 같은 구독 모달 재사용
   document.querySelectorAll('[data-open-sub]').forEach(b=>b.addEventListener('click',openSubModal));
@@ -3851,7 +3869,8 @@ boot();
     }
 
     if(confirmState===null){
-      submit.disabled=true;submit.textContent='기존 구독 확인 중…';
+      submit.disabled=true;
+      submit.textContent=trialMode?'체험 자격 확인 중…':'기존 구독 확인 중…';
       const planKey=getSelectedPlan();
       const planMonths=PRICE_PLANS[planKey].months;
       // 이미 구독중 케이스 — paid_until 미래일 때만 "현재 만료" 라인 노출.
@@ -3887,6 +3906,38 @@ boot();
       const bonusDays=bonusEvent?(bonusEvent.bonus_days||0):0;
       const bonusMonths=bonusEvent?(bonusEvent.bonus_months||0):0;
       const bonusLabel=bonusEvent?(' + '+bonusText(bonusMonths,bonusDays)+' 보너스'):'';
+
+      // ── 무료 체험 분기 ──────────────────────────────────────────────
+      if(trialMode){
+        let freeTrialEligible=true; // check-subscription 실패 시 서버에서 최종 판정
+        try{
+          const checkRes2=await fetch(SUPABASE_URL+'/functions/v1/check-subscription',{
+            method:'POST',
+            headers:{'Content-Type':'application/json','Authorization':'Bearer '+BRIEFICK_SUPABASE_PUBLISHABLE_KEY,'apikey':BRIEFICK_SUPABASE_PUBLISHABLE_KEY},
+            body:JSON.stringify({phone}),
+          });
+          const chk2=await checkRes2.json();
+          if(checkRes2.ok&&chk2.ok) freeTrialEligible=!!chk2.free_trial_eligible;
+        }catch(_){}
+        if(!freeTrialEligible){
+          showStatus('error','이 번호는 이미 무료 체험을 사용하셨거나 현재 구독 중입니다.');
+          submit.disabled=false;submit.textContent=submitLabelFor(planKey,null);
+          trialMode=false;return;
+        }
+        const trialEnd=new Date();trialEnd.setDate(trialEnd.getDate()+14);
+        showConfirmBox('14일 무료 체험',fmtPhone(phone),toKstDate(trialEnd)+'까지 무료 이용 (자동 결제 없음)');
+        submit.textContent='무료 체험 시작 →';
+        confirmState='trial';
+        phoneEl.disabled=true;consent.disabled=true;
+        setPlanInputsDisabled(true);
+        submit.disabled=false;
+        cancel.classList.add('show');
+        trialBtn.classList.add('hidden');
+        setBonusBanner('hidden');
+        requestAnimationFrame(()=>{const sm=document.querySelector('#subscribeModal .sub-modal');if(sm)sm.scrollTo({top:sm.scrollHeight,behavior:'smooth'})});
+        return;
+      }
+      // ───────────────────────────────────────────────────────────────
 
       setBonusBanner(bonusEligible?'applied':'hidden', bonusEvent);
 
@@ -3934,6 +3985,7 @@ boot();
       setPlanInputsDisabled(true);
       submit.disabled=false;
       cancel.classList.add('show');
+      trialBtn.classList.add('hidden');
       // 2단계 진입 — 결제 버튼·confirm 박스가 viewport에 보이도록 모달 끝까지 스크롤
       requestAnimationFrame(()=>{
         const sm=document.querySelector('#subscribeModal .sub-modal');
@@ -3941,6 +3993,43 @@ boot();
       });
       return;
     }
+
+    // ── 무료 체험 2단계 — start-free-trial 호출 ──────────────────────
+    if(confirmState==='trial'){
+      submit.disabled=true;submit.textContent='체험 시작 중…';
+      const subModalEl=document.querySelector('#subscribeModal .sub-modal');
+      subModalEl.classList.add('processing');
+      try{
+        const res=await fetch(SUPABASE_URL+'/functions/v1/start-free-trial',{
+          method:'POST',
+          headers:{'Content-Type':'application/json','Authorization':'Bearer '+BRIEFICK_SUPABASE_PUBLISHABLE_KEY,'apikey':BRIEFICK_SUPABASE_PUBLISHABLE_KEY},
+          body:JSON.stringify({phone,ad_consent:true}),
+        });
+        const j=await res.json();
+        subModalEl.classList.remove('processing');
+        if(!res.ok||!j.ok){
+          showStatus('error',j.error||'오류가 발생했습니다.');
+          submit.disabled=false;submit.textContent='무료 체험 시작 →';
+        }else{
+          const endStr=j.trial_ends_at?toKstDate(new Date(j.trial_ends_at)):'';
+          status.className='sub-modal-status show success';
+          status.innerHTML='14일 무료 체험 시작!<br><span class="until-date">('+endStr+' 까지)</span>';
+          document.getElementById('subCompleteNotice').classList.add('show');
+          document.getElementById('subKakaoLink').classList.add('emphasis');
+          subModalEl.classList.add('completed');
+          phoneEl.disabled=true;consent.disabled=true;
+          submit.textContent='체험 시작됨';
+          cancel.classList.remove('show');
+        }
+      }catch(err){
+        const subModalEl2=document.querySelector('#subscribeModal .sub-modal');
+        subModalEl2.classList.remove('processing');
+        showStatus('error','오류: '+err.message);
+        submit.disabled=false;submit.textContent='무료 체험 시작 →';
+      }
+      return;
+    }
+    // ───────────────────────────────────────────────────────────────
 
     const planKey=getSelectedPlan();
     const plan=PRICE_PLANS[planKey];

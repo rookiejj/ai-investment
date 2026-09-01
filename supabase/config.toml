@@ -39,6 +39,9 @@ verify_jwt = false
 # 게이트웨이 verify_jwt 와 무관하게 권한 검증됨.
 verify_jwt = false
 
+[functions.start-free-trial]
+verify_jwt = false
+
 [functions.stock-prices]
 verify_jwt = false
 

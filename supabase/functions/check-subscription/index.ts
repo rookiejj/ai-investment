@@ -54,7 +54,7 @@ Deno.serve(async (req) => {
     );
     const { data, error } = await supabase
       .from("subscribers")
-      .select("status, paid_until, last_payment_id")
+      .select("status, paid_until, last_payment_id, trial_starts_at")
       .eq("phone", cleaned)
       .maybeSingle();
     if (error) throw error;
@@ -74,6 +74,7 @@ Deno.serve(async (req) => {
         subscription_active: false,
         eligible_events: eligibleOut,
         trial_eligible: eligibleOut.length > 0,  // 구 클라이언트 호환
+        free_trial_eligible: true,               // 신규 번호 — 체험 가능
       }, { cors });
     }
 
@@ -89,6 +90,7 @@ Deno.serve(async (req) => {
       subscription_active: subscriptionActive,
       eligible_events: eligibleOut,
       trial_eligible: eligibleOut.length > 0,
+      free_trial_eligible: !data.trial_starts_at && !subscriptionActive,  // 체험 미사용 + 비활성
     }, { cors });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
