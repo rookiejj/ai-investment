@@ -16,8 +16,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "직전 거래일 종가 453,000원 +0.8% 강보합·수주잔고 609억달러·MASGA 정책 후방·미 해군 MRO 추가 사이클이 조선 카테고리 지지 근거·필리조선소 State of Maine 명명식 후속 서사가 카테고리 리레이팅 축·인프라 순환매 재개 관측",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 0.8
       },
       {
         "label": "한화에어로스페이스",
@@ -25,8 +25,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "down",
         "rationale": "직전 거래일 종가 1,058,000원 -4% 급락 이후 방산 카테고리 차익매물 확산 지속 관측·8월 랠리 후 첫 큰 조정 국면 진입·9월 4일 미 8월 고용지표 대기 매크로 카운터·유럽 방산 예산 확대 서사에도 단기 이익 실현 우세",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": -4
       },
       {
         "label": "TSLA",
@@ -34,8 +34,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "직전 거래일 종가 362.59달러 -1.5% 조정 이후 반등 시도·Model 3 가격 인하 카드·Robotaxi 확장 로드맵·Q3 배송 사이클 개시 근거·노동절 후 첫 세션 위험 선호 재조정·Optimus 상용화 로드맵이 중기 상단 축",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": -0.2
       }
     ]
   },
