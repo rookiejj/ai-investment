@@ -240,30 +240,9 @@ const fixed = [
 
 
 
+
 // === AUTO-EARNINGS (scripts/fetch-earnings-calendar.js 자동 생성 — 손대지 말 것) ===
 const autoEarnings = [
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "Dell Tech 실적",
-    "date": "2026-09-01",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "DELL"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "Palo Alto 실적",
-    "date": "2026-09-01",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "PANW"
-    ],
-    "src": "auto-earnings"
-  },
   {
     "cat": "earnings",
     "impact": 2,
@@ -459,6 +438,28 @@ const autoEarnings = [
     "desc": "실적 발표 예정",
     "tickers": [
       "042700"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "Charles Schwab 실적",
+    "date": "2026-10-15",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "SCHW"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "TSMC 실적",
+    "date": "2026-10-15",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "TSM"
     ],
     "src": "auto-earnings"
   }
