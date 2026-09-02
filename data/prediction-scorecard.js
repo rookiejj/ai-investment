@@ -7,6 +7,39 @@
 //   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = [
   {
+    "date": "2026-09-03",
+    "made": "2026-09-03 07:20 KST",
+    "predictions": [
+      {
+        "label": "삼성전자",
+        "ticker": "005930",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 250,500원 -4% 급락 뒤 오버셀 반등 시나리오·브로드컴 Q3 AI 반도체 매출 167억달러 +221% 확인이 HBM 후방 리레이팅 트리거·미 3대 지수 반등 마감 편승 재료·8월 반도체 수출 사상 최고·자사주 매입 카드 지지가 forward 카테고리 근거",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "LG에너지솔루션",
+        "ticker": "373220",
+        "market": "KR",
+        "direction": "down",
+        "rationale": "직전 거래일 종가 347,500원 -5.3% 조정·2차전지 카테고리 이익실현 이틀째 지속·매파 확률 66% 재점화 국면·강달러·유가 상승 매크로 파도 카운터·9월 4일 미 고용지표 대기 위험선호 축소 시나리오·순환 조정 여진 지속 근거",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "AVGO",
+        "ticker": "AVGO",
+        "market": "US",
+        "direction": "down",
+        "rationale": "직전 거래일 종가 369.5달러 보합·Q3 매출 296억달러·EPS 3.32달러 컨센 상회에도 Q4 가이던스 348억달러 컨센 350억달러 소폭 하회로 시간외 -3.49%(354.43달러) 되돌림·커스텀 실리콘 카테고리 밸류 재조정 사이클 진입·순환 이익실현 시나리오",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
     "date": "2026-09-02",
     "made": "2026-09-02 07:20 KST",
     "predictions": [
@@ -201,39 +234,6 @@ const PREDICTION_SCORECARD = [
         "rationale": "직전 거래일 종가 140.16달러 +0.8% 강세·美 원전 확대 서사·데이터센터 전력 CAPEX 사이클이 IPP 리더 forward 프리미엄 근거·웨스팅하우스 지분 공동 인수 제안이 원전 카테고리 리레이팅 축·10년물 4.658% 하락이 유틸 카테고리 편승 지지",
         "result": "hit",
         "actual": 2.5
-      }
-    ]
-  },
-  {
-    "date": "2026-08-25",
-    "made": "2026-08-25 07:40 KST",
-    "predictions": [
-      {
-        "label": "알테오젠",
-        "ticker": "196170",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "직전 거래일 종가 320,500원·상반기 매출 1,405억원·영업이익 735억원·순이익 1,013억원 견고·BlackRock 지분 확대·코스닥 +2.2% 반등 로테이션 지속 사이클이 성장주 프리미엄 카운터·삼성 여진 소화 국면 대안 자금 흡수 축",
-        "result": "miss",
-        "actual": -4.7
-      },
-      {
-        "label": "POSCO홀딩스",
-        "ticker": "005490",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "직전 거래일 종가 327,500원 +5.6% 강세·중국 조강 CAPEX 확대·철광석 +21% 폭등 후방 서사·이란 제재 확대 후 조선·인프라 카테고리 반사 수혜 사이클이 철강 리더 forward 프리미엄 근거·기관 순매수 재개 축",
-        "result": "hit",
-        "actual": 1.4
-      },
-      {
-        "label": "PLTR",
-        "ticker": "PLTR",
-        "market": "US",
-        "direction": "up",
-        "rationale": "직전 거래일 종가 175.63달러 -0.1% 보합·JPM Palantir '군의 AI 두뇌' 커버리지 확장·이란 제재 강화 방산·AI 인프라 후방 수혜 사이클·잭슨홀 D-3 앞 위험선호 회복 기대가 forward 프리미엄 카운터",
-        "result": "miss",
-        "actual": -2.3
       }
     ]
   }
