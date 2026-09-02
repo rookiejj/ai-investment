@@ -119,12 +119,13 @@ async function loadDailyInsight(): Promise<DailyInsight | null> {
 
 // 일요일 전용 메시지: arr[0] 전체 + 공간 남으면 arr[1] 일부 (1000자 한도)
 function buildSundayMessage(insights: DailyInsight[]): string {
+  const dateHeader = `📊 브리픽 · ${kstDateLabel()}`;
   const header = "📚 주말 투자 지식 +1";
   const sep = "\n\n";
   const divider = "──────────────";
-  if (!insights.length) return header;
+  if (!insights.length) return [dateHeader, header].join(sep);
 
-  let msg = [header, insights[0].title, insights[0].body].join(sep);
+  let msg = [dateHeader, header, insights[0].title, insights[0].body].join(sep);
   if (insights[1]) {
     const available = LIMIT - msg.length - sep.length - divider.length - sep.length - insights[1].title.length - sep.length;
     if (available > 50) {
