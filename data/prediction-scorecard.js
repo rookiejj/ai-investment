@@ -7,6 +7,39 @@
 //   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = [
   {
+    "date": "2026-09-07",
+    "made": "2026-09-04 07:40 KST",
+    "predictions": [
+      {
+        "label": "한화오션",
+        "ticker": "042660",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 86,500원 +5.5% 급등·대만 양밍해운 LNG 이중연료 컨선 6척 1.55조원 수주 소식이 조선 3사 동반 강세 카타리스트·삼성중공업 +8.6%·HD한국조선해양 +4.4% 후방 사이클 확인이 카테고리 리레이팅 축·미 함정 MRO 사이클·트럼프 알래스카 LNG 프로젝트 서사 유지가 forward 상단 근거·다음 거래일 순환매 연속성 기대",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "삼성화재",
+        "ticker": "000810",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 702,000원 +6.8% 급등·자사주 소각·배당 확대·주주환원 강화 기대 카타리스트·KB금융 +5.2% 등 금융지주 카테고리 순환매 후방 검증·밸류업 프로그램 후속 재점화 축·손보 1위·자산운용 실적 재평가 서사 유지가 forward 상단 근거·다음 거래일 강세 연속 시나리오",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "MSFT",
+        "ticker": "MSFT",
+        "market": "US",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 500.10달러 +0.7% 반등·프로미넌트 셀사이드 브로커리지 목표가 상향·AI 인프라 CAPEX 실행 리스크 감소 서사 확산이 카타리스트·Azure·Copilot 사이클로 회계연도 기록 마감·S&P·나스닥 3대 지수 랠리 편승·국채금리 진정에 위험선호 회복 국면 지속 근거가 forward 방향 지지",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
     "date": "2026-09-03",
     "made": "2026-09-03 07:20 KST",
     "predictions": [
@@ -203,39 +236,6 @@ const PREDICTION_SCORECARD = [
         "actual": 1
       }
     ]
-  },
-  {
-    "date": "2026-08-26",
-    "made": "2026-08-26 07:32 KST",
-    "predictions": [
-      {
-        "label": "두산에너빌리티",
-        "ticker": "034020",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "직전 거래일 종가 80,700원 +10.5% 급등·美 웨스팅하우스 지분 공동 인수 제안 사이클이 원전 대장주 리레이팅 최대 트리거·체코 두코바니·테라파워 SMR 3중 모멘텀 병존·8월 원전·건설 인덱스 +17% 랠리 편승 근거·기관·외국인 동시 매수 여진 지속 축",
-        "result": "hit",
-        "actual": 6.3
-      },
-      {
-        "label": "AVGO",
-        "ticker": "AVGO",
-        "market": "US",
-        "direction": "up",
-        "rationale": "직전 거래일 종가 357.7달러 +0.3% 소폭 반등·오늘 밤 NVDA Q2 실적 D-Day 상회 여부가 AI 반도체 카테고리 편승 최대 카타리스트·데이터센터 매출 컨센 750억달러+ 근거·8월 SOXX +10% 트랙 유지 축·잭슨홀 D-2 앞 리스크 프리셋 완료 국면 지지",
-        "result": "miss",
-        "actual": -0.6
-      },
-      {
-        "label": "VST",
-        "ticker": "VST",
-        "market": "US",
-        "direction": "up",
-        "rationale": "직전 거래일 종가 140.16달러 +0.8% 강세·美 원전 확대 서사·데이터센터 전력 CAPEX 사이클이 IPP 리더 forward 프리미엄 근거·웨스팅하우스 지분 공동 인수 제안이 원전 카테고리 리레이팅 축·10년물 4.658% 하락이 유틸 카테고리 편승 지지",
-        "result": "hit",
-        "actual": 2.5
-      }
-    ]
   }
 ];
-채점 완료: 2026-09-03 기준 변경된 항목 있음
+
