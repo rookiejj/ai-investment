@@ -6,8 +6,15 @@
     <description>한국·미국 주식, AI 기업, 원자재·크립토, 유니콘 5개 도메인의 일일 헤드라인. 매일 KST 07시·19시 자동 업데이트.</description>
     <language>ko-KR</language>
     <atom:link href="https://briefick.com/rss.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Thu, 03 Sep 2026 10:20:29 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 03 Sep 2026 22:26:58 GMT</lastBuildDate>
     <ttl>60</ttl>
+    <item>
+      <title>2026년 9월 4일 (금) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
+      <link>https://briefick.com/daily/2026-09-04</link>
+      <guid isPermaLink="true">https://briefick.com/daily/2026-09-04</guid>
+      <pubDate>Thu, 03 Sep 2026 22:00:00 GMT</pubDate>
+      <description>LG에너지솔루션 365,500원 +5.2% 급등 - 태양광·ESS 성장 전망에 배터리 대표주 순환매 · 스노우플레이크 +23.8% 급등 - Q2 매출 +37% YoY, AI 오퍼링이 성장 가속 견인 · 이더리움 2,400달러 상회 - 9월 spot ETF 스테이킹 승인 임박이 회복 카타리스트</description>
+    </item>
     <item>
       <title>2026년 9월 3일 (목) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
       <link>https://briefick.com/daily/2026-09-03</link>
@@ -420,13 +427,6 @@
       <guid isPermaLink="true">https://briefick.com/daily/2026-07-04</guid>
       <pubDate>Fri, 03 Jul 2026 22:00:00 GMT</pubDate>
       <description>삼성전자 Q2 잠정 7/7 D-3 컨센 매출 169조·영업익 85.5조 카운트다운 진입 · NYSE·Nasdaq 7/3~7/4 3일 연휴 마감·7/6 월 정상장 재개·H2 첫 완전 거래 주간 · OPEC+ 7/5 D-1 4번째 188K bpd 증산 컨센 확정 대기·8월 산유량 결정 임박</description>
-    </item>
-    <item>
-      <title>2026년 7월 3일 (금) 시황 — 미국·한국 주식·AI·원자재·유니콘</title>
-      <link>https://briefick.com/daily/2026-07-03</link>
-      <guid isPermaLink="true">https://briefick.com/daily/2026-07-03</guid>
-      <pubDate>Thu, 02 Jul 2026 22:00:00 GMT</pubDate>
-      <description>KOSPI 8,088.35 +5.76% V자 반등·8,000선 재탈환·시총 250조 회복 · AWS EC2 GPU Capacity 블록 +20% 7/1 발효·메타 클라우드 정면 카운터·연간 누적 +38% · Gold $4,176 +1.30% $4,100 재탈환·NFP 하회에 인하 기대 재점화·달러 약세</description>
     </item>
   </channel>
 </rss>
