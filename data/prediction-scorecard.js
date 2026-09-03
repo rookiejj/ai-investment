@@ -16,8 +16,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "직전 거래일 종가 250,500원 -4% 급락 뒤 오버셀 반등 시나리오·브로드컴 Q3 AI 반도체 매출 167억달러 +221% 확인이 HBM 후방 리레이팅 트리거·미 3대 지수 반등 마감 편승 재료·8월 반도체 수출 사상 최고·자사주 매입 카드 지지가 forward 카테고리 근거",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": -4
       },
       {
         "label": "LG에너지솔루션",
@@ -25,8 +25,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "down",
         "rationale": "직전 거래일 종가 347,500원 -5.3% 조정·2차전지 카테고리 이익실현 이틀째 지속·매파 확률 66% 재점화 국면·강달러·유가 상승 매크로 파도 카운터·9월 4일 미 고용지표 대기 위험선호 축소 시나리오·순환 조정 여진 지속 근거",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": -5.3
       },
       {
         "label": "AVGO",
@@ -34,8 +34,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "down",
         "rationale": "직전 거래일 종가 369.5달러 보합·Q3 매출 296억달러·EPS 3.32달러 컨센 상회에도 Q4 가이던스 348억달러 컨센 350억달러 소폭 하회로 시간외 -3.49%(354.43달러) 되돌림·커스텀 실리콘 카테고리 밸류 재조정 사이클 진입·순환 이익실현 시나리오",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": -1.8
       }
     ]
   },
@@ -238,3 +238,4 @@ const PREDICTION_SCORECARD = [
     ]
   }
 ];
+채점 완료: 2026-09-03 기준 변경된 항목 있음
