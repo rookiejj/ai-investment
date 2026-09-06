@@ -241,74 +241,9 @@ const fixed = [
 
 
 
+
 // === AUTO-EARNINGS (scripts/fetch-earnings-calendar.js 자동 생성 — 손대지 말 것) ===
 const autoEarnings = [
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "Broadcom 실적",
-    "date": "2026-09-02",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "AVGO"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "HP Enterprise 실적",
-    "date": "2026-09-02",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "HPE"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "Lululemon 실적",
-    "date": "2026-09-03",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "LULU"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "Planet Labs 실적",
-    "date": "2026-09-03",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "PL"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "UiPath 실적",
-    "date": "2026-09-03",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "PATH"
-    ],
-    "src": "auto-earnings"
-  },
-  {
-    "cat": "earnings",
-    "impact": 2,
-    "title": "Zscaler 실적",
-    "date": "2026-09-03",
-    "desc": "실적 발표 예정",
-    "tickers": [
-      "ZS"
-    ],
-    "src": "auto-earnings"
-  },
   {
     "cat": "earnings",
     "impact": 2,
@@ -460,6 +395,116 @@ const autoEarnings = [
     "desc": "실적 발표 예정",
     "tickers": [
       "TSM"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "General Motors 실적",
+    "date": "2026-10-20",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "GM"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "Intuitive Surgical 실적",
+    "date": "2026-10-20",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "ISRG"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "Lockheed Martin 실적",
+    "date": "2026-10-20",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "LMT"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "Northrop Grumman 실적",
+    "date": "2026-10-20",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "NOC"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "Pentair 실적",
+    "date": "2026-10-20",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "PNR"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "RTX Corp 실적",
+    "date": "2026-10-20",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "RTX"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "Lam Research 실적",
+    "date": "2026-10-21",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "LRCX"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "Teradyne 실적",
+    "date": "2026-10-21",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "TER"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "Tesla 실적",
+    "date": "2026-10-21",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "TSLA"
+    ],
+    "src": "auto-earnings"
+  },
+  {
+    "cat": "earnings",
+    "impact": 2,
+    "title": "Vertiv 실적",
+    "date": "2026-10-21",
+    "desc": "실적 발표 예정",
+    "tickers": [
+      "VRT"
     ],
     "src": "auto-earnings"
   }
