@@ -225,6 +225,8 @@ const fixed = [
   { cat:'macro', impact:2, title:'미국 9월 미시간대 소비자심리 1차', date:'2026-09-12', desc:'둘째 금요일·소비자 기대 인플레·연말 소비 모멘텀 시그널' },
   { cat:'ipo', impact:3, title:'Anthropic IPO 로드쇼 시작 관측', date:'2026-09-15', desc:'프라이머리 밸류 9,650억달러·세컨더리 1조달러대·Morgan Stanley·Goldman·JPMorgan 3사 북러너·9월 말~10월 초 나스닥 상장 목표' },
   { cat:'policy', impact:2, title:'OPEC+ 9월 정례회의', date:'2026-09-06', desc:'감산 결정 관측 대기·이란·미국 응수 확대 국면·유가 90달러대 유지 배경' },
+  { cat:'macro', impact:2, title:'미국 8월 소매판매', date:'2026-09-16', desc:'BEA 8:30 ET·소비 모멘텀 지표·FOMC 결과 하루 전' },
+  { cat:'macro', impact:2, title:'미국 8월 산업생산', date:'2026-09-16', desc:'Fed 발표·설비가동률 동반·산업 경기 시그널' },
 ];
 
 // 외부에서 접근할 변수명 (다른 update.js와 일관성)
