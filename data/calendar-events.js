@@ -228,6 +228,7 @@ const fixed = [
   { cat:'macro', impact:2, title:'미국 8월 소매판매', date:'2026-09-16', desc:'BEA 8:30 ET·소비 모멘텀 지표·FOMC 결과 하루 전' },
   { cat:'macro', impact:2, title:'미국 8월 산업생산', date:'2026-09-16', desc:'Fed 발표·설비가동률 동반·산업 경기 시그널' },
   { cat:'macro', impact:2, title:'중국 8월 산업생산·소매판매·FAI', date:'2026-09-15', desc:'NBS 발표·중국 내수 회복 여부·부동산 카테고리 시그널' },
+  { cat:'product', impact:3, title:"Apple 'Surprise and shine' 이벤트", date:'2026-09-09', desc:'존 터너스 신임 CEO 첫 무대·iPhone 18 Pro/Pro Max·폴더블 iPhone Ultra·2나노 A20 Pro·Apple Watch Series 12·AirPods 5', tickers:['AAPL'] },
 ];
 
 // 외부에서 접근할 변수명 (다른 update.js와 일관성)

@@ -7,6 +7,39 @@
 //   miss — 예측 방향 반대 (|actual| ≥ 0.5%)
 const PREDICTION_SCORECARD = [
   {
+    "date": "2026-09-08",
+    "made": "2026-09-08 07:40 KST",
+    "predictions": [
+      {
+        "label": "SK하이닉스",
+        "ticker": "000660",
+        "market": "KR",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 1,783,000원 +8.3% 급등·카운터포인트 HBM4 SK 50% 점유·엔비디아 물량 70% 확보 서사 유지·삼성·SK D램 재고 10일 하방으로 공급 병목 상단 축·외국인 1조3,714억원 순매수 화요일 매수 지속 기대·미 증시 리오픈 반도체 카테고리 상단 연동 시나리오",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "MU",
+        "ticker": "MU",
+        "market": "US",
+        "direction": "up",
+        "rationale": "직전 거래일 종가 1,016.59달러 +6.1% 강세·HBM4 세대 전환 카테고리 리레이팅 축·엔비디아 Vera Rubin 1분기 상용 진입 서사 유지·SK하이닉스 178만원 +8.3% 폭등 후방 사이클 확인·미 증시 화요일 리오픈 나스닥 선물 +0.9% 회복 편승·오라클 9/10 Q1 실적 대기 카타리스트",
+        "result": null,
+        "actual": null
+      },
+      {
+        "label": "LG에너지솔루션",
+        "ticker": "373220",
+        "market": "KR",
+        "direction": "down",
+        "rationale": "직전 거래일 종가 362,500원 +1.1% 소폭 상승 국면·유가 93달러 급등·지정학 프리미엄 확대가 이차전지 카테고리 카운터 축·미 매파 재부각 확률 50/50·달러 강세 재부각 시나리오·8월 CPI 상방 리스크 대기·이차전지 이익실현 재부각 시나리오",
+        "result": null,
+        "actual": null
+      }
+    ]
+  },
+  {
     "date": "2026-09-07",
     "made": "2026-09-04 07:40 KST",
     "predictions": [
@@ -16,8 +49,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "직전 거래일 종가 86,500원 +5.5% 급등·대만 양밍해운 LNG 이중연료 컨선 6척 1.55조원 수주 소식이 조선 3사 동반 강세 카타리스트·삼성중공업 +8.6%·HD한국조선해양 +4.4% 후방 사이클 확인이 카테고리 리레이팅 축·미 함정 MRO 사이클·트럼프 알래스카 LNG 프로젝트 서사 유지가 forward 상단 근거·다음 거래일 순환매 연속성 기대",
-        "result": null,
-        "actual": null
+        "result": "hit",
+        "actual": 0.6
       },
       {
         "label": "삼성화재",
@@ -25,8 +58,8 @@ const PREDICTION_SCORECARD = [
         "market": "KR",
         "direction": "up",
         "rationale": "직전 거래일 종가 702,000원 +6.8% 급등·자사주 소각·배당 확대·주주환원 강화 기대 카타리스트·KB금융 +5.2% 등 금융지주 카테고리 순환매 후방 검증·밸류업 프로그램 후속 재점화 축·손보 1위·자산운용 실적 재평가 서사 유지가 forward 상단 근거·다음 거래일 강세 연속 시나리오",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": -1.1
       },
       {
         "label": "MSFT",
@@ -34,8 +67,8 @@ const PREDICTION_SCORECARD = [
         "market": "US",
         "direction": "up",
         "rationale": "직전 거래일 종가 500.10달러 +0.7% 반등·프로미넌트 셀사이드 브로커리지 목표가 상향·AI 인프라 CAPEX 실행 리스크 감소 서사 확산이 카타리스트·Azure·Copilot 사이클로 회계연도 기록 마감·S&P·나스닥 3대 지수 랠리 편승·국채금리 진정에 위험선호 회복 국면 지속 근거가 forward 방향 지지",
-        "result": null,
-        "actual": null
+        "result": "miss",
+        "actual": -2
       }
     ]
   },
@@ -203,39 +236,5 @@ const PREDICTION_SCORECARD = [
         "actual": 5.1
       }
     ]
-  },
-  {
-    "date": "2026-08-27",
-    "made": "2026-08-27 07:40 KST",
-    "predictions": [
-      {
-        "label": "삼성전자",
-        "ticker": "005930",
-        "market": "KR",
-        "direction": "up",
-        "rationale": "직전 거래일 종가 261,500원 +1.8%·8월 이사회 100조원 환원안 임박 시나리오 축·간밤 글로벌 AI 반도체 대장 Q2 매출 962억달러·데이터센터 +117% YoY 서프라이즈 확인이 HBM 대장 리레이팅 최대 카타리스트·SK하이닉스 40조 자사주 소각 후 삼성 후속 환원 기대 병존·외국인 반도체 순매수 지속 근거",
-        "result": "hit",
-        "actual": 3.4
-      },
-      {
-        "label": "NVDA",
-        "ticker": "NVDA",
-        "market": "US",
-        "direction": "up",
-        "rationale": "직전 거래일 종가 213.05달러 +2.2%·Q2 FY27 매출 962억달러 컨센 924억 상회·EPS 2.22달러 컨센 2.09 상회·데이터센터 890억 +117% YoY 사이클 축·Q3 가이던스 1,080억달러 컨센 42억 상회 조합이 AI CAPEX 재가속 최대 카타리스트·AWS 200만 GPU 조달 계약 병존이 하이퍼스케일러 락인 근거·시간외 랠리 지속 시나리오 트리거",
-        "result": "miss",
-        "actual": -1.6
-      },
-      {
-        "label": "알테오젠",
-        "ticker": "196170",
-        "market": "KR",
-        "direction": "down",
-        "rationale": "직전 거래일 종가 311,500원 +32.6% 급등·30% 무상증자 신주 1,606만주 8/26 추가 상장 첫날 유동성 확대 축·급등 후 차익 실현 사이클 진입 시나리오 최대 트리거·MSD 로열티 여진 소화 국면 카운터·바이오 대형주 카테고리 순환 조정 병존이 forward 단기 조정 근거·8월 누계 +40% 랠리 후 기술적 반락 시그널",
-        "result": "miss",
-        "actual": 1
-      }
-    ]
   }
 ];
-
